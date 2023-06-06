@@ -1,0 +1,1 @@
+export { default as EvIcon } from './EvIcon.vue';

@@ -1,5 +1,7 @@
 import { themes } from '@storybook/theming';
 
+import '../src/css/reset.scss';
+
 /** @type { import('@storybook/vue3').Preview } */
 const preview = {
   parameters: {

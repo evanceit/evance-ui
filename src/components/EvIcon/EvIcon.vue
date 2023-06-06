@@ -1,11 +1,16 @@
 <template>
-    <span class="ev-icon">
+    <i class="ev-icon">
         <component :is="glyph"></component>
-    </span>
+    </i>
 </template>
 
 <script setup lang="ts">
+
+// Styling
+import './EvIcon.scss';
+
 const props = defineProps({
     glyph: Object
 });
+
 </script>
