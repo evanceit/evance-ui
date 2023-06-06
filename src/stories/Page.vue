@@ -1,13 +1,8 @@
 <template>
   <article>
-    <my-header
-      :user="user"
-      @login="$emit('login')"
-      @logout="$emit('logout')"
-      @createAccount="$emit('createAccount')"
-    />
+    <my-header :user="user" @login="onLogin" @logout="onLogout" @createAccount="onCreateAccount" />
 
-    <section>
+    <section class="storybook-page">
       <h2>Pages in Storybook</h2>
       <p>
         We recommend building UIs with a
@@ -67,12 +62,22 @@ export default {
 
   components: { MyHeader },
 
-  props: {
-    user: {
-      type: Object,
-    },
+  data() {
+    return {
+      user: null,
+    };
   },
 
-  emits: ['login', 'logout', 'createAccount'],
+  methods: {
+    onLogin() {
+      this.user = { name: 'Jane Doe' };
+    },
+    onLogout() {
+      this.user = null;
+    },
+    onCreateAccount() {
+      this.user = { name: 'Jane Doe' };
+    },
+  },
 };
 </script>

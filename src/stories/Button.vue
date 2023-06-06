@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import './button.scss';
+import './button.css';
 import { reactive, computed } from 'vue';
 
 export default {
@@ -45,8 +45,8 @@ export default {
       })),
       onClick() {
         emit('click');
-      }
-    }
+      },
+    };
   },
 };
 </script>
