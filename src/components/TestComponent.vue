@@ -3,11 +3,12 @@
         My Test Component
     </button>
 
-    <evanceIcon></evanceIcon>
+    <ev-icon :glyph="evanceIcon"></ev-icon>
 </template>
 
 <script setup lang="ts">
-    import evanceIcon from '../icons/evance.svg';
+    import evanceIcon from '../icons/glyph/evance.svg';
+    import EvIcon from "./EvIcon.vue";
 </script>
 
 <style lang="scss">
