@@ -1,3 +1,5 @@
+import { themes } from '@storybook/theming';
+
 /** @type { import('@storybook/vue3').Preview } */
 const preview = {
   parameters: {
@@ -8,6 +10,18 @@ const preview = {
         date: /Date$/,
       },
     },
+    // Override the default dark theme
+    dark: { ...themes.dark },
+    // Override the default light theme
+    light: { ...themes.normal },
+    // Set Dark Mode Parameters
+    darkMode: {
+      classTarget: 'html',
+      current: 'light',
+      darkClass: 'ev-theme-dark',
+      lightClass: 'ev-theme-light',
+      stylePreview: true
+    }
   },
 };
 
