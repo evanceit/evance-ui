@@ -1,12 +1,7 @@
-<template>
-    <i class="ev-icon">
-        <component :is="glyph"></component>
-    </i>
-</template>
-
 <script setup lang="ts">
-
-// Styling
+/**
+ * # EvIcon
+ */
 import './EvIcon.scss';
 
 const props = defineProps({
@@ -14,3 +9,8 @@ const props = defineProps({
 });
 
 </script>
+<template>
+    <i class="ev-icon">
+        <component :is="glyph"></component>
+    </i>
+</template>

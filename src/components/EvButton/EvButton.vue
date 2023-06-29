@@ -1,13 +1,15 @@
+<script setup lang="ts">
+/**
+ * # EvButton
+ */
+import './EvButton.scss';
+import {EvanceIcon} from '../../icons';
+import {EvIcon} from '../EvIcon';
+</script>
 <template>
     <button class="ev-button">
         My Test Component
     </button>
 
-    <ev-icon :glyph="evance"></ev-icon>
+    <ev-icon :glyph="EvanceIcon"></ev-icon>
 </template>
-
-<script setup lang="ts">
-import './EvButton.scss';
-import {evance} from '../../icons';
-import {EvIcon} from '../EvIcon';
-</script>
