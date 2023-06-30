@@ -1,0 +1,84 @@
+/*
+  # Theme Colours
+
+  There are effectively three themes:
+  1. OS default (.ev-theme-os)
+  2. Light Theme (.ev-theme-light)
+  3. Dark Theme (.ev-theme-dark)
+
+  Note that the `.ev-theme-os` may be applied, but
+  has no explicit CSS classes and relies on @media
+  `prefers-color-scheme` rule.
+
+  Important: when maintaining theme variables,
+  the variables in `light-theme` and `dark-theme`
+  MUST match.
+
+  Light Theme
+  ---
+  Defining the `light-theme` mixin allows us to
+  include the appropriate variables under both the
+  `.ev-theme-light` class and for OS default = `light`.
+ */
+@mixin light-theme {
+
+    /* Backgrounds */
+    --body-background: #F3F5F9;
+
+    /* Text */
+    --eyebrow-color: #A4ABC1;
+    --heading-color: #212945;
+    --text-color: #5D6788;
+    --text-light-color: #8B8DA7;
+
+}
+
+
+/*
+  Dark Theme
+  ---
+  Defining the `dark-theme` mixin allows us to
+  include the appropriate variables under both the
+  `.ev-theme-dark` class and for OS default = `dark`.
+ */
+@mixin dark-theme {
+
+    /* Backgrounds */
+    --body-background: #181724;
+
+    /* Text */
+    --eyebrow-color: #7781A2;
+    --heading-color: #C4CBE3;
+    --text-color: #A0A6BC;
+    --text-light-color: #61647E;
+
+}
+
+
+/*
+  Theme application
+  ---
+  Apply the mixins above as appropriate.
+  Do not add variables below.
+ */
+
+@media (prefers-color-scheme: light) {
+    :root {
+        @include light-theme;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include dark-theme;
+    }
+}
+
+:root,
+.ev-theme-light {
+    @include light-theme;
+}
+
+.ev-theme-dark {
+    @include dark-theme;
+}

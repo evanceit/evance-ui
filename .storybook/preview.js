@@ -3,7 +3,7 @@ import React from 'react';
 import { DocsContainer } from '@storybook/addon-docs';
 import { useDarkMode } from 'storybook-dark-mode'
 
-import '../src/css/reset.scss';
+import '../src/css/core.scss';
 
 /**
  * Light Mode Theme
@@ -22,9 +22,9 @@ const lightTheme = create({
  */
 const darkTheme = create({
   base: 'dark',
-  appBg: '#1E1D2B',
-  appContentBg: '#1E1D2B',
-  barBg: '#1E1D2B'
+  appBg: '#181724',
+  appContentBg: '#181724',
+  barBg: '#181724'
 });
 
 
