@@ -1,0 +1,27 @@
+import {Canvas, Meta, IconGallery, IconItem, ArgsTable, Story} from '@storybook/blocks';
+
+import * as EvIconStories from './EvIcon.stories';
+
+<Meta of={EvIconStories} />
+
+# EvIcon
+
+Icons in Evance use
+
+<Canvas>
+    <Story name='Primary' />
+</Canvas>
+
+<ArgsTable story='Primary' />
+
+
+```html
+<script>
+import { EvIcon } from "@evance/components";
+import { EvanceIcon } from "@evance/icons";
+</script>
+<template>
+    <ev-icon :glyph="EvanceIcon" />
+</template>
+```
+

@@ -1,0 +1,20 @@
+.ev-icon {
+    aspect-ratio: 1;
+    display: inline-flex;
+    line-height: 1;
+    width: 24px;
+
+    > svg {
+        width: auto;
+        height: auto;
+    }
+}
+
+.ev-icon {
+    &.size-small {
+        width: 16px;
+    }
+    &.size-large {
+        width: 32px;
+    }
+}
