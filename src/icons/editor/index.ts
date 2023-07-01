@@ -1,6 +1,13 @@
 export { default as Bold } from './glyph/Bold.svg';
 export { default as ClearFormatting } from './glyph/ClearFormatting.svg';
 export { default as Code } from './glyph/Code.svg';
+export { default as ColorBucket } from './glyph/ColorBucket.svg';
+export { default as ColorDroplet } from './glyph/ColorDroplet.svg';
+export { default as ColorDropletFill } from './glyph/ColorDropletFill.svg';
+export { default as ColorDropletHalf } from './glyph/ColorDropletHalf.svg';
+export { default as ColorDropletOff } from './glyph/ColorDropletOff.svg';
+export { default as ColorPalette } from './glyph/ColorPalette.svg';
+export { default as ColorPipette } from './glyph/ColorPipette.svg';
 export { default as DimensionAngle } from './glyph/DimensionAngle.svg';
 export { default as DimensionHeight } from './glyph/DimensionHeight.svg';
 export { default as DimensionWidth } from './glyph/DimensionWidth.svg';
