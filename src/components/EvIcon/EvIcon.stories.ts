@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvIcon } from "../EvIcon";
-import {EvanceIcon, HelpIcon} from "../../icons";
+import {EvanceCircleIcon, EvanceIcon, HelpIcon, MinusIcon, PlusIcon} from "../../icons";
 import {markRaw} from "vue";
 
 const meta: Meta<typeof EvIcon> = {
@@ -19,10 +19,13 @@ const meta: Meta<typeof EvIcon> = {
                 type: 'select'
             },
             description: 'The SVG contents to display in the icon.',
-            options: ['EvanceIcon', 'HelpIcon'],
+            options: ['EvanceIcon', 'EvanceCircleIcon', 'HelpIcon', 'MinusIcon', 'PlusIcon'],
             mapping: {
                 'EvanceIcon': markRaw(EvanceIcon),
-                'HelpIcon': markRaw(HelpIcon)
+                'EvanceCircleIcon': markRaw(EvanceCircleIcon),
+                'HelpIcon': markRaw(HelpIcon),
+                'MinusIcon': markRaw(MinusIcon),
+                'PlusIcon': markRaw(PlusIcon)
             },
             value: 'EvanceIcon'
         }
