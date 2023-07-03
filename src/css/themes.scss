@@ -37,7 +37,6 @@
     --background-warning: #FF8C2126;
     --background-warning-bold: #FF8C21;
 
-
     /* Text */
     --eyebrow-color: #A4ABC1;
     --heading-color: #212945;
@@ -50,6 +49,22 @@
     --text-success: #13AE84;
     --text-warning: #FF7A00;
 
+    /* Buttons */
+    --button-default-background: #ACB3CE26;
+    --button-default-background-hover: #ACB3CE66;
+    --button-default-background-active: #acb3cead;
+    --button-primary-background: #814EFA;
+    --button-primary-background-hover: #6e45cf;
+    --button-primary-background-active: #4c23a5;
+    --button-danger-background: #F04141;
+    --button-danger-background-hover: #dd3131;
+    --button-danger-background-active: #af0808;
+    --button-subtle-background: transparent;
+    --button-subtle-background-hover: #ACB3CE26;
+    --button-subtle-background-active: #ACB3CE66;
+
+    /* Borders */
+    --border-focused: #814EFA;
 }
 
 
@@ -89,6 +104,22 @@
     --text-success: #2AC299;
     --text-warning: #FFA34F;
 
+    /* Buttons */
+    --button-default-background: #3D3B524D;
+    --button-default-background-hover: #3d3b5299;
+    --button-default-background-active: #4d4b6796;
+    --button-primary-background: #814EFA;
+    --button-primary-background-hover: #956fff;
+    --button-primary-background-active: #bda6ff;
+    --button-danger-background: #F04141;
+    --button-danger-background-hover: #ff5555;
+    --button-danger-background-active: #fd7c7c;
+    --button-subtle-background: transparent;
+    --button-subtle-background-hover: #3D3B524D;
+    --button-subtle-background-active: #4d4b6796;
+
+    /* Borders */
+    --border-focused: #AA86FF;
 }
 
 

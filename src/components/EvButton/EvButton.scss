@@ -1,11 +1,110 @@
-.ev-theme-light {
-    button.ev-button {
-        background: #0f0;
+.ev-button {
+    display: inline-flex;
+    border: 0;
+    height: var(--input-height-medium);
+    border-radius: var(--input-radius);
+    font-weight: var(--font-weight-semibold);
+    padding-inline: var(--spacer-75);
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.15s ease-in-out;
+    font-size: var(--text-medium);
+
+    &:focus-visible {
+        outline: 2px solid var(--border-focused);
+        outline-offset: 2px;
+    }
+
+    > * {
+        display: inline-flex;
+    }
+
+    &.is-icon {
+        padding: 0 !important;
+        aspect-ratio: 1;
+    }
+
+    &.is-fullwidth {
+        width: 100%;
     }
 }
 
-.ev-theme-dark {
-    button.ev-button {
-        background: #0ff;
+.ev-button--text {
+    padding-inline: var(--spacer-50);
+}
+
+/**
+    ## Button Appearance
+ */
+.ev-button {
+
+    /* Default */
+    &.appearance-default {
+        background-color: var(--button-default-background);
+        color: var(--text-color);
+        &:hover {
+            background-color: var(--button-default-background-hover);
+        }
+        &:active {
+            background-color: var(--button-default-background-active);
+        }
+    }
+
+    /* Danger */
+    &.appearance-danger {
+        background-color: var(--button-danger-background);
+        color: var(--body-background);
+        &:hover {
+            background-color: var(--button-danger-background-hover);
+        }
+        &:active {
+            background-color: var(--button-danger-background-active);
+        }
+    }
+
+    /* Primary */
+    &.appearance-primary {
+        background-color: var(--button-primary-background);
+        color: var(--body-background);
+        &:hover {
+            background-color: var(--button-primary-background-hover);
+        }
+        &:active {
+            background-color: var(--button-primary-background-active);
+        }
+    }
+
+    /* Subtle */
+    &.appearance-subtle {
+        background-color: var(--button-subtle-background);
+        color: var(--text-color);
+        &:hover {
+            background-color: var(--button-subtle-background-hover);
+        }
+        &:active {
+            background-color: var(--button-subtle-background-active);
+        }
+    }
+}
+
+/**
+    ## Button Sizes
+ */
+.ev-button {
+    /* Small */
+    &.size-small {
+        height: var(--input-height-small);
+        padding-inline: var(--spacer-50);
+
+        .ev-button--text {
+            padding-inline: var(--spacer-25);
+        }
+    }
+    /* Large */
+    &.size-large {
+        height: var(--input-height-large);
+        font-size: var(--text-large);
+        padding-inline: var(--spacer-150);
     }
 }

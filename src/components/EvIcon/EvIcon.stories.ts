@@ -8,16 +8,12 @@ const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
     argTypes: {
         size: {
-            control: {
-                type: 'select',
-            },
+            control: 'select',
             options: ['small', 'medium', 'large'],
             description: "There are three icon sizes: `small` (16px), `medium` (24px), and `large` (32px). This pixel size refers to the canvas the icon sits on, not the size of the icon shape itself."
         },
         glyph: {
-            control: {
-                type: 'select'
-            },
+            control: 'select',
             description: 'The SVG contents to display in the icon.',
             options: ['Evance', 'EvanceCircle', 'Help', 'Minus', 'Plus'],
             mapping: {
@@ -26,8 +22,7 @@ const meta: Meta<typeof EvIcon> = {
                 'Help': markRaw(Help),
                 'Minus': markRaw(Minus),
                 'Plus': markRaw(Plus)
-            },
-            value: 'Evance'
+            }
         }
     },
     args: {

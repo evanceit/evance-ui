@@ -48,6 +48,7 @@ $grid-breakpoints: (
  */
 $spacer-25: 0.25rem;
 $spacer-50: 0.5rem;
+$spacer-75: 0.75rem;
 $spacer-100: 1rem;
 $spacer-150: 1.5rem;
 $spacer-200: 2rem;
@@ -60,6 +61,7 @@ $spacers: (
     0: 0,
     25: $spacer-25,
     50: $spacer-50,
+    75: $spacer-75,
     100: $spacer-100,
     150: $spacer-150,
     200: $spacer-200,
@@ -71,18 +73,32 @@ $spacers: (
 
 :root {
 
-    /* Text Variables */
+    /* Font Stacks */
     --system-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
     --monospace-font: ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace;
+
+    /* Font weights */
     --font-weight-regular: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
 
+    /* Input fields */
+    --input-height-small: 36px;
+    --input-height-medium: 42px;
+    --input-height-large: 48px;
+    --input-radius: 3px;
+
     /* Spacers */
     @each $percentage in map_keys($spacers) {
         --spacer-#{$percentage}: #{map-get($spacers, $percentage)};
     }
+
+    /* Text */
+    /** @todo: need scalable fonts */
+    --text-small: 0.75rem;
+    --text-medium: 0.875rem;
+    --text-large: 1rem;
 }
 

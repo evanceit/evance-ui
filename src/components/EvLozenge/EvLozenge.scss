@@ -24,7 +24,7 @@
     /* Default */
     &.appearance-default {
         color: var(--text-muted);
-        background: var(--background-muted, rgba(71, 73, 102, 0.20));
+        background: var(--background-muted);
 
         &.is-bold {
             background-color: var(--background-muted-bold);

@@ -6,9 +6,22 @@
  */
 import './EvIcon.scss';
 
-const props = defineProps({
+/**
+ * ## Icon Size
+ */
+type IconSize = 'small'
+    | 'medium'
+    | 'large';
+
+/**
+ * ## Icon Props
+ */
+interface IconProps {
     glyph: Object,
-    size: String
+    size?: IconSize
+}
+const props = withDefaults(defineProps<IconProps>(), {
+    size: 'medium'
 });
 
 </script>

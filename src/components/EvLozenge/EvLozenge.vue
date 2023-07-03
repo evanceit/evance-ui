@@ -71,19 +71,20 @@ const getMaxWidthWithUnits = () => {
     return isMaxWidthNumeric() ? `${props.maxWidth}px` : props.maxWidth;
 }
 
+const getAppearanceClass = () => {
+    return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
+};
+
 </script>
 <template>
     <span
         class="ev-lozenge"
-        :class="{
-            'is-bold': bold,
-            'appearance-default': appearance === 'default',
-            'appearance-critical': appearance === 'critical',
-            'appearance-information': appearance === 'information',
-            'appearance-notice': appearance === 'notice',
-            'appearance-success': appearance === 'success',
-            'appearance-warning': appearance === 'warning'
-        }"
+        :class="[
+            getAppearanceClass(),
+            {
+                'is-bold': bold
+            }
+        ]"
         :style="{
             'max-width': getMaxWidthOuter()
         }">
