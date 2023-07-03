@@ -1,0 +1,14 @@
+export { default as Bitbucket } from './glyph/Bitbucket.svg';
+export { default as Dribbble } from './glyph/Dribbble.svg';
+export { default as Facebook } from './glyph/Facebook.svg';
+export { default as Flickr } from './glyph/Flickr.svg';
+export { default as Github } from './glyph/Github.svg';
+export { default as Google } from './glyph/Google.svg';
+export { default as Instagram } from './glyph/Instagram.svg';
+export { default as Linkedin } from './glyph/Linkedin.svg';
+export { default as Pinterest } from './glyph/Pinterest.svg';
+export { default as Tiktok } from './glyph/Tiktok.svg';
+export { default as Twitch } from './glyph/Twitch.svg';
+export { default as Twitter } from './glyph/Twitter.svg';
+export { default as Vimeo } from './glyph/Vimeo.svg';
+export { default as Youtube } from './glyph/Youtube.svg';
