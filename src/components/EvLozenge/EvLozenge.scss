@@ -1,0 +1,89 @@
+.ev-lozenge {
+    border-radius: 3px;
+    display: inline-flex;
+    max-width: 100%;
+    padding-inline: var(--spacer-50, 8px);
+}
+
+.ev-lozenge--label {
+    font-weight: var(--font-weight-bold, 700);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: 0.6875rem;
+    line-height: 1.375rem;
+    letter-spacing: 0.1em;
+}
+
+/**
+    ## Appearance
+ */
+.ev-lozenge {
+
+    /* Default */
+    &.appearance-default {
+        color: var(--text-muted);
+        background: var(--background-muted, rgba(71, 73, 102, 0.20));
+
+        &.is-bold {
+            background-color: var(--background-muted-bold);
+            color: var(--body-background);
+        }
+    }
+
+    /* Critical */
+    &.appearance-critical {
+        background-color: var(--background-critical);
+        color: var(--text-critical);
+
+        &.is-bold {
+            background-color: var(--background-critical-bold);
+            color: var(--body-background);
+        }
+    }
+
+    /* Information */
+    &.appearance-information {
+        background-color: var(--background-information);
+        color: var(--text-information);
+
+        &.is-bold {
+            background-color: var(--background-information-bold);
+            color: var(--body-background);
+        }
+    }
+
+    /* Notice */
+    &.appearance-notice {
+        background-color: var(--background-notice);
+        color: var(--text-notice);
+
+        &.is-bold {
+            background-color: var(--background-notice-bold);
+            color: var(--body-background);
+        }
+    }
+
+    /* Success */
+    &.appearance-success {
+        background-color: var(--background-success);
+        color: var(--text-success);
+
+        &.is-bold {
+            background-color: var(--background-success-bold);
+            color: var(--body-background);
+        }
+    }
+
+    /* Warning */
+    &.appearance-warning {
+        background-color: var(--background-warning);
+        color: var(--text-warning);
+
+        &.is-bold {
+            background-color: var(--background-warning-bold);
+            color: var(--body-background);
+        }
+    }
+}
