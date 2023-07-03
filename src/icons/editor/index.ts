@@ -52,6 +52,7 @@ export { default as Titlecase } from './glyph/Titlecase.svg';
 export { default as Underline } from './glyph/Underline.svg';
 export { default as Unlink } from './glyph/Unlink.svg';
 export { default as Uppercase } from './glyph/Uppercase.svg';
+export { default as VectorPath } from './glyph/VectorPath.svg';
 export { default as VerticalAlignBottom } from './glyph/VerticalAlignBottom.svg';
 export { default as VerticalAlignMiddle } from './glyph/VerticalAlignMiddle.svg';
 export { default as VerticalAlignTop } from './glyph/VerticalAlignTop.svg';
