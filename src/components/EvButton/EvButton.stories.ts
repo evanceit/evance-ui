@@ -5,11 +5,6 @@ import {ArrowContinue, Check, Plus, Save} from "../../icons";
 import {markRaw} from "vue";
 
 const meta: Meta<typeof EvButton> = {
-    methods: {
-        Check() {
-            return Check
-        }
-    },
     component: EvButton,
     argTypes: {
         default: {
@@ -80,7 +75,7 @@ export default meta;
 type Story = StoryObj<typeof EvButton>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args: any) =>  ({
         components: { EvButton },
         setup() {
             return { Check, ArrowContinue, args };

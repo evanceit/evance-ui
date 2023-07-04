@@ -36,7 +36,7 @@ export default meta;
 type Story = StoryObj<typeof EvLozenge>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args: any) =>  ({
         components: { EvLozenge },
         setup() {
             return { args };

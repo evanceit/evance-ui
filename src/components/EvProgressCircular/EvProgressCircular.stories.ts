@@ -62,7 +62,7 @@ export default meta;
 type Story = StoryObj<typeof EvProgressCircular>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args: any) =>  ({
         components: { EvProgressCircular },
         setup() {
             return { args };
