@@ -22,6 +22,9 @@
  */
 @mixin light-theme {
 
+    /* General */
+    --color-primary: #814EFA;
+
     /* Backgrounds */
     --body-background: #F3F5F9;
     --background-critical: #F0414126;
@@ -76,6 +79,9 @@
   `.ev-theme-dark` class and for OS default = `dark`.
  */
 @mixin dark-theme {
+
+    /* General */
+    --color-primary: #9772FF;
 
     /* Backgrounds */
     --body-background: #181724;

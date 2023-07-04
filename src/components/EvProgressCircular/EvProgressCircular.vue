@@ -3,13 +3,154 @@
  * # EvProgressCircular
  */
 import './EvProgressCircular.scss';
+import {useSlots, ref} from "vue";
+
+type Size = 'default';
+
+type ProgressAppearance = 'default'
+    | 'critical'
+    | 'information'
+    | 'primary'
+    | 'success'
+    | 'warning';
+
+interface ProgressProps {
+    appearance?: ProgressAppearance,
+    indeterminate?: boolean,
+    percentage?: number,
+    rotate?: number,
+    size?: Size | number,
+    thickness?: number
+}
+const props = withDefaults(defineProps<ProgressProps>(), {
+    appearance: 'default',
+    size: 'default',
+    indeterminate: false,
+    percentage: 0,
+    rotate: 0,
+    thickness: 2
+});
+
+const slots = useSlots();
+const container = ref<HTMLElement | null>(null);
+const defaultSize = 48;
+const defaultRadius = (defaultSize / 2);
+const defaultRotation = -90;
+
+/**
+ * ## Get Appearance Class
+ */
+function getAppearanceClass() {
+    if (props.appearance === 'default') {
+        return null;
+    }
+    return `appearance-${props.appearance}`;
+}
+
+/**
+ * ## Get Size with Units
+ * The default units is `px` when only a number is supplied.
+ */
+function getSizeWithUnits() {
+    if (props.size === 'default') {
+        return null;
+    }
+    return /^\d+$/.test(props.size) ?  props.size + 'px' : props.size;
+}
+
+/**
+ * ## Get Circumference
+ * Calculate the circumference of the inner circles.
+ */
+function getCircumference() {
+    return Math.PI * (getRadius() * 2);
+}
+
+/**
+ * ## Get Width
+ * Returns the width of the container.
+ */
+function getContainerWidth() {
+    return (!container.value) ? defaultSize : container.value.clientWidth;
+}
+
+/**
+ * ## Get Progress Offset
+ * Calculate progress offset based on the percentage of the circumference.
+ */
+function getProgressOffset() {
+    return (props.indeterminate) ? 0 : (getCircumference() * (1 - props.percentage/100));
+}
+
+/**
+ * ## Get Radius
+ * Calculate the radius of the
+ */
+function getRadius() {
+    return defaultRadius - (getStrokeWidth() / 2);
+}
+
+/**
+ * ## Get Rotation
+ * Returns the starting point rotation style.
+ */
+function getRotation() {
+    const rotation = defaultRotation + props.rotate;
+    return `rotate(${rotation}deg)`;
+}
+
+/**
+ * ## Get Stroke Width
+ * Calculate the requested stroke width as this will be different from
+ * the actual stroke-width attribute.
+ */
+function getStrokeWidth() {
+    const maxThickness = defaultSize / 2;
+    const thickness = ((props.thickness / getContainerWidth()) * defaultSize);
+    return (thickness > maxThickness) ? maxThickness : thickness;
+}
 
 </script>
 <template>
-    <div class="ev-progress-circular">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <circle class="ev-progress-circular--underlay" fill="transparent" cx="50%" cy="50%" r="20" stroke-width="7.058823529411765" stroke-dasharray="125.66370614359172" stroke-dashoffset="0"></circle>
-            <circle class="ev-progress-circular--overlay" fill="transparent" cx="50%" cy="50%" r="20" stroke-width="7.058823529411765" stroke-dasharray="125.66370614359172" stroke-dashoffset="0px"></circle>
+    <div
+        ref="container"
+        class="ev-progress-circular"
+        :class="[
+            {
+                'is-indeterminate': props.indeterminate,
+                'size-default': props.size === 'default'
+            },
+            getAppearanceClass()
+        ]"
+        :style="[
+            {
+                'width': getSizeWithUnits(),
+                'height': getSizeWithUnits()
+            }
+        ]"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 48 48"
+             :style="[
+                 {
+                    'transform': getRotation()
+                 }
+             ]"
+        >
+            <circle
+                class="ev-progress-circular--track"
+                fill="transparent" cx="50%" cy="50%"
+                :r="getRadius()"
+                :stroke-width="getStrokeWidth()"
+                :stroke-dasharray="getCircumference()"
+                stroke-dashoffset="0"></circle>
+            <circle
+                class="ev-progress-circular--bar"
+                fill="transparent" cx="50%" cy="50%"
+                :r="getRadius()"
+                :stroke-width="getStrokeWidth()"
+                :stroke-dasharray="getCircumference()"
+                :stroke-dashoffset="getProgressOffset()"></circle>
         </svg>
         <div class="ev-progress-circular--content">
             <slot />

@@ -1,42 +1,111 @@
 .ev-progress-circular {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
 
+    > svg {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 0;
+    }
 }
 
-.ev-progress-circular--overlay {
+/* Appearance */
+.ev-progress-circular {
+    /* critical */
+    &.appearance-critical {
+        .ev-progress-circular--bar {
+            color: var(--background-critical-bold);
+        }
+    }
+    /* information */
+    &.appearance-information {
+        .ev-progress-circular--bar {
+            color: var(--background-information-bold);
+        }
+    }
+    /* primary */
+    &.appearance-primary {
+        .ev-progress-circular--bar {
+            color: var(--color-primary);
+        }
+    }
+    /* success */
+    &.appearance-success {
+        .ev-progress-circular--bar {
+            color: var(--background-success-bold);
+        }
+    }
+    /* warning */
+    &.appearance-warning {
+        .ev-progress-circular--bar {
+            color: var(--background-warning-bold);
+        }
+    }
+}
+
+/* Sizes */
+.ev-progress-circular {
+    &.size-default {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.ev-progress-circular--bar {
     stroke: currentColor;
-    animation: progress-circular-dash 1.5s ease-in-out infinite,
-                progress-circular-rotate 1.5s linear infinite;
-    stroke-dasharray: 25,200;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    transform-origin: center center;
-    transform: rotate(-90deg);
+    transition: stroke-dasharray .25s ease-in-out, stroke-dashoffset .25s ease-in-out;
 }
 
-.ev-progress-circular--underlay {
+.ev-progress-circular--track {
     stroke: currentColor;
-    opacity: 0.4;
+    opacity: 0.15;
+}
+
+.ev-progress-circular {
+    &.is-indeterminate {
+        .ev-progress-circular--bar {
+            animation: progress-circular-stretch 1.25s ease-in-out infinite,
+                        progress-circular-rotate 1.25s linear infinite;
+            stroke-dasharray: 25,200;
+            stroke-dashoffset: 0;
+            stroke-linecap: round;
+            transform-origin: center center;
+            transform: rotate(-90deg);
+        }
+
+        .ev-progress-circular--track {
+            display: none;
+        }
+    }
 }
 
 
-
-@keyframes progress-circular-dash {
+@keyframes progress-circular-stretch {
     0% {
-        stroke-dasharray: 1,200;
+        stroke-dasharray: 0,200;
         stroke-dashoffset: 0;
     }
     50% {
         stroke-dasharray: 100,200;
-        stroke-dashoffset: -15px;
+        stroke-dashoffset: -35px;
     }
-    to {
+    100% {
         stroke-dasharray: 100,200;
-        stroke-dashoffset: -124px;
+        stroke-dashoffset: -125px;
     }
 }
 
 @keyframes progress-circular-rotate {
-    to {
+    100% {
         transform: rotate(270deg);
     }
 }
