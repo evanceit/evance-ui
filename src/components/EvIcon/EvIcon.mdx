@@ -9,19 +9,19 @@ import * as EvIconStories from './EvIcon.stories';
 Evance's EvIcon component uses SVG-based glyphs designed within a viewBox width and height of `24px`.
 
 <Canvas>
-    <Story of={EvIconStories.Primary} />
+    <Story name='Primary' />
 </Canvas>
 
-<ArgTypes of={EvIconStories.Primary} />
+<ArgsTable story='Primary' />
 
 
 ```html
 <script>
 import { EvIcon } from "@evance/components";
-import { EvanceIcon } from "@evance/icons";
+import { Evance } from "@evance/icons";
 </script>
 <template>
-    <ev-icon :glyph="EvanceIcon" />
+    <ev-icon :glyph="Evance" />
 </template>
 ```
 
