@@ -1,3 +1,6 @@
+/**
+    # EvButton
+ */
 .ev-button {
     display: inline-flex;
     border: 0;
@@ -10,6 +13,7 @@
     text-decoration: none;
     transition: background 0.15s ease-in-out;
     font-size: var(--text-medium);
+    position: relative;
 
     &:focus-visible {
         outline: 2px solid var(--border-focused);
@@ -18,15 +22,8 @@
 
     > * {
         display: inline-flex;
-    }
-
-    &.is-icon {
-        padding: 0 !important;
-        aspect-ratio: 1;
-    }
-
-    &.is-fullwidth {
-        width: 100%;
+        opacity: 1;
+        transition: opacity 0.25s ease-in-out;
     }
 }
 
@@ -34,8 +31,62 @@
     padding-inline: var(--spacer-50);
 }
 
+
 /**
-    ## Button Appearance
+    ## Full Width
+ */
+.ev-button {
+    &.is-fullwidth {
+        width: 100%;
+    }
+}
+
+
+/**
+    ## Icon
+
+    When the button only contains an icon.
+ */
+.ev-button {
+    &.is-icon {
+        padding: 0 !important;
+        aspect-ratio: 1;
+    }
+}
+
+
+/**
+    ## Loading State
+
+    Fades out all internal elements except the loading spinner, which fades in
+    over the top of all other content.
+ */
+.ev-button {
+    &.is-loading {
+        > * {
+            opacity: 0;
+        }
+
+        > .ev-button--loading {
+            opacity: 1;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+
+/**
+    ## Appearance
+
+    Appearance modifier classes based on available `appearance` options:
+    - default
+    - danger
+    - primary
+    - subtle
  */
 .ev-button {
 
@@ -88,10 +139,17 @@
     }
 }
 
+
 /**
-    ## Button Sizes
+    ## Sizes
+
+    Size modifier classes based on available `size` options:
+    - small
+    - medium (default)
+    - large
  */
 .ev-button {
+
     /* Small */
     &.size-small {
         height: var(--input-height-small);
@@ -101,6 +159,7 @@
             padding-inline: var(--spacer-25);
         }
     }
+
     /* Large */
     &.size-large {
         height: var(--input-height-large);

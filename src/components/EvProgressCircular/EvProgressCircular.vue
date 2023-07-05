@@ -87,7 +87,7 @@ function getProgressOffset() {
  * Calculate the radius of the
  */
 function getRadius() {
-    return defaultRadius - (getStrokeWidth() / 2);
+    return defaultRadius - (getThickness() / 2);
 }
 
 /**
@@ -100,11 +100,11 @@ function getRotation() {
 }
 
 /**
- * ## Get Stroke Width
+ * ## Get Thickness (Stroke Width)
  * Calculate the requested stroke width as this will be different from
  * the actual stroke-width attribute.
  */
-function getStrokeWidth() {
+function getThickness() {
     const maxThickness = defaultSize / 2;
     const thickness = ((props.thickness / getContainerWidth()) * defaultSize);
     return (thickness > maxThickness) ? maxThickness : thickness;
@@ -112,8 +112,12 @@ function getStrokeWidth() {
 
 </script>
 <template>
-    <div
+    <span
         ref="container"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        :aria-valuenow="percentage"
         class="ev-progress-circular"
         :class="[
             {
@@ -141,19 +145,19 @@ function getStrokeWidth() {
                 class="ev-progress-circular--track"
                 fill="transparent" cx="50%" cy="50%"
                 :r="getRadius()"
-                :stroke-width="getStrokeWidth()"
+                :stroke-width="getThickness()"
                 :stroke-dasharray="getCircumference()"
                 stroke-dashoffset="0"></circle>
             <circle
                 class="ev-progress-circular--bar"
                 fill="transparent" cx="50%" cy="50%"
                 :r="getRadius()"
-                :stroke-width="getStrokeWidth()"
+                :stroke-width="getThickness()"
                 :stroke-dasharray="getCircumference()"
                 :stroke-dashoffset="getProgressOffset()"></circle>
         </svg>
-        <div class="ev-progress-circular--content">
+        <span class="ev-progress-circular--content">
             <slot />
-        </div>
-    </div>
+        </span>
+    </span>
 </template>

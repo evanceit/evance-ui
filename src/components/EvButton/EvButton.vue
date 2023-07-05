@@ -5,6 +5,7 @@
 import './EvButton.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {useSlots} from "vue";
+import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 
 /**
  * ## Button Appearance
@@ -49,7 +50,7 @@ const slots = useSlots();
  * - `<a>` when an `href` is supplied
  * - `<button>` when `href` is NOT supplied, or is an empty string
  */
-const getComponentElement = () => {
+function getComponentElement() {
     return isLink() ? 'a' : 'button';
 }
 
@@ -57,23 +58,23 @@ const getComponentElement = () => {
  * ## Is Link?
  * Returns `true` if an `href` was supplied AND is NOT an empty string.
  */
-const isLink = () => {
+function isLink() {
     return (props.href && props.href.length > 0);
-};
+}
 
 /**
  * ## Get Appearance Class
  */
-const getAppearanceClass = () => {
+function getAppearanceClass() {
     return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
-};
+}
 
 /**
  * ## Get Size Class
  */
-const getSizeClass = () => {
+function getSizeClass() {
     return props.size && props.size !== 'medium' ? `size-${props.size}` : null;
-};
+}
 
 /**
  * Has Default Slot?
@@ -126,6 +127,9 @@ function isIconOnly() {
         </span>
         <span class="ev-button--suffix" v-if="iconAfter">
             <ev-icon :glyph="iconAfter" />
+        </span>
+        <span class="ev-button--loading">
+            <ev-progress-circular indeterminate v-if="loading" />
         </span>
     </component>
 </template>
