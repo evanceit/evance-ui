@@ -27,6 +27,7 @@ type Size = 'small'
  */
 interface ButtonProps {
     appearance?: Appearance,
+    disabled?: boolean,
     href?: string,
     icon?: Object,
     iconAfter?: Object,
@@ -37,11 +38,19 @@ interface ButtonProps {
 }
 const props = withDefaults(defineProps<ButtonProps>(), {
     appearance: 'default',
+    disabled: false,
     fullWidth: false,
     loading: false
 });
 
 const slots = useSlots();
+
+/**
+ * ## Get Appearance Class
+ */
+function getAppearanceClass() {
+    return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
+}
 
 /**
  * ## Get Component Element
@@ -52,21 +61,6 @@ const slots = useSlots();
  */
 function getComponentElement() {
     return isLink() ? 'a' : 'button';
-}
-
-/**
- * ## Is Link?
- * Returns `true` if an `href` was supplied AND is NOT an empty string.
- */
-function isLink() {
-    return (props.href && props.href.length > 0);
-}
-
-/**
- * ## Get Appearance Class
- */
-function getAppearanceClass() {
-    return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
 }
 
 /**
@@ -102,6 +96,14 @@ function isIconOnly() {
         && !props.fullWidth;
 }
 
+/**
+ * ## Is Link?
+ * Returns `true` if an `href` was supplied AND is NOT an empty string.
+ */
+function isLink() {
+    return (props.href && props.href.length > 0);
+}
+
 </script>
 <template>
     <component
@@ -114,10 +116,12 @@ function isIconOnly() {
             {
                 'is-icon': isIconOnly(),
                 'is-fullwidth': props.fullWidth,
-                'is-loading': props.loading
+                'is-loading': props.loading,
+                'is-disabled': props.disabled
             }
         ]"
         tabindex="0"
+        :disabled="!isLink() ? disabled : null"
     >
         <span class="ev-button--prefix" v-if="icon || iconBefore">
             <ev-icon :glyph="icon ? icon : iconBefore" />

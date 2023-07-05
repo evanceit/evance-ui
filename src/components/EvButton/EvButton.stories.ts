@@ -11,6 +11,9 @@ const meta: Meta<typeof EvButton> = {
             control: 'text',
             description: 'Label'
         },
+        disabled: {
+            control: 'boolean'
+        },
         href: {
             control: 'text',
             description: 'Renders as an `<a>` link when an `href` is supplied and is not an empty string, ' +
@@ -53,13 +56,15 @@ const meta: Meta<typeof EvButton> = {
             control: 'boolean'
         },
         loading: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Puts the button into a loading state, effectively disabling it."
         }
     },
     args: {
         appearance: 'default',
-        href: null,
         default: 'Continue',
+        disabled: false,
+        href: null,
         icon: null,
         iconAfter: 'None',
         iconBefore: 'None',

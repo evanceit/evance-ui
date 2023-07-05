@@ -14,6 +14,7 @@
     transition: background 0.15s ease-in-out;
     font-size: var(--text-medium);
     position: relative;
+    user-select: none;
 
     &:focus-visible {
         outline: 2px solid var(--border-focused);
@@ -31,6 +32,17 @@
     padding-inline: var(--spacer-50);
 }
 
+/**
+    ## Disabled
+ */
+.ev-button {
+    &[disabled],
+    &.is-disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        filter: grayscale(0.5);
+    }
+}
 
 /**
     ## Full Width
@@ -63,6 +75,8 @@
  */
 .ev-button {
     &.is-loading {
+        pointer-events: none;
+
         > * {
             opacity: 0;
         }

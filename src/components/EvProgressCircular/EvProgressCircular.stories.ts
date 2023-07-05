@@ -20,6 +20,10 @@ const meta: Meta<typeof EvProgressCircular> = {
             description: 'Using the `indeterminate` prop causes the component to animate indefinitely.'
         },
         percentage: {
+            if: {
+                arg: 'indeterminate',
+                truthy: false
+            },
             control: {
                 type: 'range',
                 min: 0,
@@ -28,6 +32,10 @@ const meta: Meta<typeof EvProgressCircular> = {
             description: 'Progress is shown as a percentage from 0 to 100. Percentage is ignored when `indeterminate` is set to `true`.'
         },
         rotate: {
+            if: {
+                arg: 'indeterminate',
+                truthy: false
+            },
             control: {
                 type: 'range',
                 min: 0,
