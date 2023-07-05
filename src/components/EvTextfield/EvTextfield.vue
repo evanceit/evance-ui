@@ -24,18 +24,24 @@ const slots = useSlots();
 
 // Props
 interface TextfieldProps {
-    autoSelect?: boolean,
+    autofocus?: boolean,
+    autoselect?: boolean,
     clearable?:boolean,
     disabled?: boolean,
     icon?: Object,
+    name?: string,
+    placeholder?: string,
     prefix?: string,
     suffix?: string,
-    modelValue?: string
+    modelValue?: string,
+    type?: string
 }
 const props = withDefaults(defineProps<TextfieldProps>(), {
-    autoSelect: false,
+    autofocus: false,
+    autoselect: false,
     clearable: false,
-    disabled: false
+    disabled: false,
+    type: 'text'
 });
 
 // Emit
@@ -61,10 +67,19 @@ function onClickClearable($event) {
  */
 function onFocus($event) {
     isFocused.value = true;
-    if (props.autoSelect) {
+    if (props.autoselect) {
         getInputElement().select();
     }
 }
+
+const vAutofocus = {
+    mounted: (el) => {
+        if (!props.autofocus) {
+            return;
+        }
+        el.focus();
+    }
+};
 
 </script>
 <template>
@@ -88,9 +103,13 @@ function onFocus($event) {
         <div class="ev-textfield--input">
             <input
                 ref="input"
-                type="text"
+                :type="type"
+                :name="name"
                 :value="modelValue"
+                :placeholder="placeholder"
                 :disabled="disabled"
+                :autofocus="autofocus"
+                v-autofocus
                 @focus="onFocus($event)"
                 @input="$emit('update:modelValue', $event.target.value)"
             />

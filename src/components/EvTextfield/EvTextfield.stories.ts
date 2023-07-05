@@ -6,7 +6,10 @@ import {Search} from "../../icons";
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
     argTypes: {
-        autoSelect: {
+        autofocus: {
+            control: 'boolean'
+        },
+        autoselect: {
             control: 'boolean'
         },
         disabled: {
@@ -30,6 +33,10 @@ const meta: Meta<typeof EvTextfield> = {
             control: 'text',
             description: "The `model-value` is the `v-model` value of the component."
         },
+        name: {
+            control: 'text',
+            description: "Sets the name attribute of the internal input."
+        },
         prefix: {
             control: 'text',
             description: "Appears before the input field but after the `icon`. "
@@ -41,16 +48,22 @@ const meta: Meta<typeof EvTextfield> = {
             description: "Appears after the input field. "
                 + "May be used as a prop when a text suffix is required, or as a slot for a more complex suffix. "
                 + "In this demo we use a prop."
+        },
+        type: {
+            control: 'select',
+            options: ['text', 'number', 'search']
         }
     },
     args: {
-        autoSelect: false,
+        autofocus: false,
+        autoselect: false,
         clearable: false,
         disabled: false,
         icon: 'none',
         prefix: '',
         suffix: '',
-        modelValue: ''
+        modelValue: '',
+        type: 'text'
     },
     tags: ['autodocs']
 };
@@ -65,6 +78,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-textfield v-bind="args" v-model="args.modelValue" placeholder="foo"></ev-textfield>'
+        template: '<ev-textfield v-bind="args" v-model="args.modelValue"></ev-textfield>'
     })
 };
