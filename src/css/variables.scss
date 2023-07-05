@@ -89,6 +89,7 @@ $spacers: (
     --input-height-medium: 42px;
     --input-height-large: 48px;
     --input-radius: 3px;
+    --input-border: 1px solid var(--input-border-color);
 
     /* Spacers */
     @each $percentage in map_keys($spacers) {
