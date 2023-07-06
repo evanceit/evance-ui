@@ -22,30 +22,35 @@
 .ev-progress-circular {
     /* critical */
     &.appearance-critical {
+        .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-critical-bold);
         }
     }
     /* information */
     &.appearance-information {
+        .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-information-bold);
         }
     }
     /* primary */
     &.appearance-primary {
+        .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--color-primary);
         }
     }
     /* success */
     &.appearance-success {
+        .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-success-bold);
         }
     }
     /* warning */
     &.appearance-warning {
+        .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-warning-bold);
         }
@@ -67,7 +72,7 @@
 
 .ev-progress-circular--track {
     stroke: currentColor;
-    opacity: 0.15;
+    opacity: 0.10;
 }
 
 .ev-progress-circular {

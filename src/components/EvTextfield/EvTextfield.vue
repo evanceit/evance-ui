@@ -19,12 +19,6 @@ import {useModelProxy} from "../../composables/modelProxy.ts";
 import {splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
 
-const attrs = useAttrs();
-const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLInputElement | null>(null);
-const slots = useSlots();
-const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
-
 // Props
 interface TextfieldProps {
     autofocus?: boolean,
@@ -57,9 +51,13 @@ const emit = defineEmits([
     'update:modelValue'
 ]);
 
+const attrs = useAttrs();
+const container = ref<HTMLElement | null>(null);
+const input = ref<HTMLInputElement | null>(null);
+const slots = useSlots();
+const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
-const { isFocused, focusClasses, focus, blur } = useFocus(props);
-
+const { isFocused, focus, blur } = useFocus(props);
 const isClearable = computed(() => {
     return (props.clearable && !!modelProxy.value);
 });
@@ -114,9 +112,9 @@ const vAutofocus = {
         class="ev-textfield"
         :class="[
             {
-                'is-disabled': disabled
-            },
-            focusClasses
+                'is-disabled': disabled,
+                'is-focused': isFocused
+            }
         ]"
         v-bind="containerAttrs"
     >
