@@ -10,6 +10,18 @@
     }
 }
 
+/**
+    ## Clickable
+ */
+.ev-icon {
+    &.is-clickable {
+        cursor: pointer;
+    }
+}
+
+/**
+    ## Sizes
+ */
 .ev-icon {
     &.size-small {
         width: 16px;

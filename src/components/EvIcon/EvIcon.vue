@@ -5,6 +5,7 @@
  *  Uses `glyph` to render an SVG-based icon.
  */
 import './EvIcon.scss';
+import {useAttrs} from "vue";
 
 /**
  * ## Icon Size
@@ -24,9 +25,12 @@ const props = withDefaults(defineProps<IconProps>(), {
     size: 'medium'
 });
 
+const attrs = useAttrs();
+
 </script>
 <template>
     <i class="ev-icon" :class="{
+        'is-clickable': !!attrs.onClick,
         'size-small': size === 'small',
         'size-large': size === 'large'
     }">

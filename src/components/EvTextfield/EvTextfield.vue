@@ -12,9 +12,10 @@ export default {
 </script>
 <script setup lang="ts">
 import './EvTextfield.scss';
-import {ref, useAttrs, useSlots} from "vue";
+import {computed, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
+import {useModelProxy} from "../../composables/modelProxy.ts";
 
 const attrs = useAttrs();
 const container = ref<HTMLElement | null>(null);
@@ -46,8 +47,15 @@ const props = withDefaults(defineProps<TextfieldProps>(), {
 
 // Emit
 const emit = defineEmits([
+    'click:clear',
     'update:modelValue'
 ]);
+
+const modelProxy = useModelProxy(props, 'modelValue');
+
+const isClearable = computed(() => {
+    return (props.clearable && !!modelProxy.value);
+});
 
 /**
  * ## Get Input Element
@@ -56,9 +64,13 @@ function getInputElement(): HTMLElement | null {
     return input.value;
 }
 
+/**
+ * ## On Click Clearable
+ * @param $event
+ */
 function onClickClearable($event) {
-    getInputElement().value = '';
-    emit('update:modelValue', '');
+    modelProxy.value = '';
+    emit('click:clear', $event);
 }
 
 /**
@@ -68,10 +80,13 @@ function onClickClearable($event) {
 function onFocus($event) {
     isFocused.value = true;
     if (props.autoselect) {
-        getInputElement().select();
+        getInputElement()?.select();
     }
 }
 
+/**
+ * ## Directive `v-autofocus`
+ */
 const vAutofocus = {
     mounted: (el) => {
         if (!props.autofocus) {
@@ -105,7 +120,7 @@ const vAutofocus = {
                 ref="input"
                 :type="type"
                 :name="name"
-                :value="modelValue"
+                :value="modelProxy"
                 :placeholder="placeholder"
                 :disabled="disabled"
                 :autofocus="autofocus"
@@ -115,8 +130,8 @@ const vAutofocus = {
             />
         </div>
         <transition name="slide-fade">
-            <div class="ev-textfield--clearable" v-if="clearable && getInputElement().value" @click="onClickClearable()">
-                <slot name="clear"><ev-icon :glyph="Cancel" /></slot>
+            <div class="ev-textfield--clearable" v-if="isClearable">
+                <ev-icon :glyph="Cancel" @click="onClickClearable($event)" />
             </div>
         </transition>
         <div class="ev-textfield--suffix" v-if="suffix || slots.suffix">
