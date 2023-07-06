@@ -12,16 +12,18 @@ export default {
 </script>
 <script setup lang="ts">
 import './EvTextfield.scss';
-import {computed, ref, useAttrs, useSlots} from "vue";
+import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
 import {useModelProxy} from "../../composables/modelProxy.ts";
+import {splitInputAttrs} from "../../util";
+import {useFocus} from "../../composables/focus.ts";
 
 const attrs = useAttrs();
 const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLElement | null>(null);
-const isFocused = ref<boolean>(false);
+const input = ref<HTMLInputElement | null>(null);
 const slots = useSlots();
+const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 
 // Props
 interface TextfieldProps {
@@ -29,10 +31,12 @@ interface TextfieldProps {
     autoselect?: boolean,
     clearable?:boolean,
     disabled?: boolean,
+    focused?: boolean,
     icon?: Object,
     name?: string,
     placeholder?: string,
     prefix?: string,
+    readonly?: boolean,
     suffix?: string,
     modelValue?: string,
     type?: string
@@ -42,6 +46,8 @@ const props = withDefaults(defineProps<TextfieldProps>(), {
     autoselect: false,
     clearable: false,
     disabled: false,
+    focused: false,
+    readonly: false,
     type: 'text'
 });
 
@@ -52,6 +58,7 @@ const emit = defineEmits([
 ]);
 
 const modelProxy = useModelProxy(props, 'modelValue');
+const { isFocused, focusClasses, focus, blur } = useFocus(props);
 
 const isClearable = computed(() => {
     return (props.clearable && !!modelProxy.value);
@@ -60,7 +67,7 @@ const isClearable = computed(() => {
 /**
  * ## Get Input Element
  */
-function getInputElement(): HTMLElement | null {
+function getInputElement(): HTMLInputElement | null {
     return input.value;
 }
 
@@ -68,9 +75,13 @@ function getInputElement(): HTMLElement | null {
  * ## On Click Clearable
  * @param $event
  */
-function onClickClearable($event) {
-    modelProxy.value = '';
-    emit('click:clear', $event);
+function onClickClearable($event: MouseEvent) {
+    $event.stopPropagation();
+    nextTick(() => {
+        modelProxy.value = null;
+        emit('click:clear', $event);
+    });
+    getInputElement()?.focus();
 }
 
 /**
@@ -78,7 +89,7 @@ function onClickClearable($event) {
  * @param $event
  */
 function onFocus($event) {
-    isFocused.value = true;
+    focus();
     if (props.autoselect) {
         getInputElement()?.select();
     }
@@ -104,12 +115,12 @@ const vAutofocus = {
         :class="[
             {
                 'is-disabled': disabled
-            }
+            },
+            focusClasses
         ]"
+        v-bind="containerAttrs"
     >
-        <div
-            class="ev-textfield--icon"
-            v-if="icon || slots.icon">
+        <div class="ev-textfield--icon" v-if="icon || slots.icon">
             <slot name="icon"><ev-icon :glyph="icon" /></slot>
         </div>
         <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
@@ -124,8 +135,11 @@ const vAutofocus = {
                 :placeholder="placeholder"
                 :disabled="disabled"
                 :autofocus="autofocus"
+                :readonly="readonly"
                 v-autofocus
+                v-bind="inputAttrs"
                 @focus="onFocus($event)"
+                @blur="blur()"
                 @input="$emit('update:modelValue', $event.target.value)"
             />
         </div>

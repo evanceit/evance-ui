@@ -11,6 +11,7 @@
     height: var(--input-height-medium);
     padding-inline: var(--spacer-75);
     border: var(--input-border);
+    transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
 
     > * {
         flex: 0 0 auto;
@@ -39,6 +40,16 @@
             padding: 0;
             margin: 0;
         }
+    }
+}
+
+/**
+    # Focused
+ */
+.ev-textfield {
+    &.is-focused {
+        border-color: var(--input-border-color-focus);
+        box-shadow: var(--input-focus-shadow);
     }
 }
 
