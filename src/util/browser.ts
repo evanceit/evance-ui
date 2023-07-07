@@ -15,5 +15,5 @@ export class Browser {
         return (this.hasWindow && ('ontouchstart' in window || window.navigator.maxTouchPoints > 0));
     };
 
-    static readonly supportsFocusVisible: boolean = this.hasWindow && (CSS?.supports && CSS.supports('selector(:focus-visible)'));
+    static readonly supportsFocusVisible: boolean = this.hasWindow && (window.CSS?.supports?.('selector(:focus-visible)'));
 }

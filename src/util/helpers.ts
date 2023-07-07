@@ -22,7 +22,7 @@ export function splitObject<
             remaining[key] = subject[key];
         }
     }
-    return [matching, remaining];
+    return [ matching, remaining ];
 }
 
 

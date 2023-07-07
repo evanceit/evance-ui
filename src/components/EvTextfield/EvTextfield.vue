@@ -40,7 +40,7 @@ interface TextfieldProps {
     appearance?: Appearance,
     autofocus?: boolean,
     autoselect?: boolean,
-    clearable?:boolean,
+    clearable?: boolean,
     disabled?: boolean,
     focused?: boolean,
     icon?: Object,
@@ -70,6 +70,7 @@ const props = withDefaults(defineProps<TextfieldProps>(), {
 // Emit
 const emit = defineEmits([
     'click:clear',
+    'update:focused',
     'update:modelValue'
 ]);
 
@@ -77,9 +78,9 @@ const attrs = useAttrs();
 const container = ref<HTMLElement | null>(null);
 const input = ref<HTMLInputElement | null>(null);
 const slots = useSlots();
-const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
+const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
-const { isFocused, focus, blur } = useFocus(props);
+const { isFocused, focusClasses, focus, blur } = useFocus(props);
 const isClearable = computed(() => {
     return (props.clearable && !!modelProxy.value);
 });
@@ -106,10 +107,10 @@ function onClickClearable($event: MouseEvent) {
 
 /**
  * ## On Focus
- * @param $event
+ * @param e
  */
-function onFocus($event) {
-    focus();
+function onFocus(e: Event) {
+    focus(e);
     if (props.autoselect) {
         getInputElement()?.select();
     }
@@ -135,9 +136,9 @@ const vAutofocus = {
         :class="[
             {
                 'is-disabled': disabled,
-                'is-focused': isFocused,
                 'is-loading': loading
             },
+            focusClasses,
             sizeModifier(props.size, ['medium']),
             appearanceModifier(props.appearance, ['default'])
         ]"
@@ -158,16 +159,15 @@ const vAutofocus = {
                 ref="input"
                 :type="type"
                 :name="name"
-                :value="modelProxy"
+                v-model="modelProxy"
                 :placeholder="placeholder"
                 :disabled="disabled"
                 :autofocus="autofocus"
                 :readonly="readonly"
                 v-autofocus
                 v-bind="inputAttrs"
-                @focus="onFocus($event)"
-                @blur="blur()"
-                @input="$emit('update:modelValue', $event.target.value)"
+                @focus="onFocus"
+                @blur="blur"
             />
         </div>
         <transition name="slide-fade">

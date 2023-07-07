@@ -89,6 +89,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-textfield v-bind="args" v-model="args.modelValue"></ev-textfield>'
+        template: '<ev-textfield v-bind="args"></ev-textfield>'
     })
 };

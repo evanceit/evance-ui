@@ -1,5 +1,6 @@
 import {useModelProxy} from "./modelProxy.ts";
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import {Browser} from "../util";
 
 /**
  * # Focus Props Type
@@ -15,19 +16,26 @@ export interface FocusProps {
  */
 export function useFocus(props: FocusProps) {
     const isFocused = useModelProxy(props, 'focused');
+    const isFocusedVisible = ref(false);
     const focusClasses = computed(() => {
         return {
             'is-focused': isFocused.value,
+            'is-focused-visible': isFocusedVisible.value
         };
     });
 
-    function focus() {
+    function focus(e?: Event): void {
         isFocused.value = true;
+        const el: HTMLElement | null = e?.target;
+        if (Browser.supportsFocusVisible && el?.matches(':focus-visible')) {
+            isFocusedVisible.value = true;
+        }
     }
 
-    function blur() {
+    function blur(e?: Event): void {
         isFocused.value = false;
+        isFocusedVisible.value = false;
     }
 
-    return { isFocused, focusClasses, focus, blur };
+    return { isFocused, isFocusedVisible, focusClasses, focus, blur };
 }
