@@ -18,6 +18,15 @@ import {Cancel} from "../../icons";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
+import EvProgress from "../EvProgress/EvProgress.vue";
+import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+
+/**
+ * ## Button Size
+ */
+type Size = 'small'
+    | 'medium'
+    | 'large';
 
 // Props
 interface TextfieldProps {
@@ -27,12 +36,14 @@ interface TextfieldProps {
     disabled?: boolean,
     focused?: boolean,
     icon?: Object,
+    loading?: boolean,
     name?: string,
     placeholder?: string,
     prefix?: string,
     readonly?: boolean,
     suffix?: string,
     modelValue?: string,
+    size?: Size,
     type?: string
 }
 const props = withDefaults(defineProps<TextfieldProps>(), {
@@ -41,7 +52,9 @@ const props = withDefaults(defineProps<TextfieldProps>(), {
     clearable: false,
     disabled: false,
     focused: false,
+    loading: false,
     readonly: false,
+    size: 'medium',
     type: 'text'
 });
 
@@ -67,6 +80,13 @@ const isClearable = computed(() => {
  */
 function getInputElement(): HTMLInputElement | null {
     return input.value;
+}
+
+function getSizeClass(): string {
+    if (props.size === 'medium') {
+        return null;
+    }
+    return `size-${props.size}`;
 }
 
 /**
@@ -113,13 +133,19 @@ const vAutofocus = {
         :class="[
             {
                 'is-disabled': disabled,
-                'is-focused': isFocused
-            }
+                'is-focused': isFocused,
+                'is-loading': loading
+            },
+            getSizeClass()
         ]"
+        role="textbox"
         v-bind="containerAttrs"
     >
-        <div class="ev-textfield--icon" v-if="icon || slots.icon">
-            <slot name="icon"><ev-icon :glyph="icon" /></slot>
+        <div class="ev-textfield--icon" v-if="icon">
+            <transition name="fade-in-out" mode="out-in">
+                <ev-icon v-if="!loading" :glyph="icon" />
+                <ev-progress-circular v-else  indeterminate :appearance="isFocused ? 'primary' : 'default'" />
+            </transition>
         </div>
         <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
             <slot name="prefix">{{ prefix }}</slot>
@@ -148,6 +174,9 @@ const vAutofocus = {
         </transition>
         <div class="ev-textfield--suffix" v-if="suffix || slots.suffix">
             <slot name="suffix">{{ suffix }}</slot>
+        </div>
+        <div class="ev-textfield--loader" v-if="loading && !icon">
+            <ev-progress indeterminate :appearance="isFocused ? 'primary' : 'default'" size="2" />
         </div>
     </div>
 </template>

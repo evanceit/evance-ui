@@ -10,7 +10,8 @@ const meta: Meta<typeof EvTextfield> = {
             control: 'boolean'
         },
         autoselect: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "When `autoselect` is `true` any text within the input is selected on focus."
         },
         disabled: {
             control: 'boolean'
@@ -25,9 +26,13 @@ const meta: Meta<typeof EvTextfield> = {
                 'none': null,
                 'Search': Search
             },
-            description: "Appears first. "
-                + "May be used as a prop, or as a slot for more complex icon control. "
-                + "In this demo we use a prop."
+            description: "Appears before input prefix. "
+        },
+        loading: {
+            control: 'boolean',
+            description: "When `loading` is `true` a linear progress bar is added to the bottom of the textfield " +
+                "in an indeterminate state. However, if an `icon` has been set, a circular progress progress bar " +
+                "is used instead."
         },
         modelValue: {
             control: 'text',
@@ -42,6 +47,10 @@ const meta: Meta<typeof EvTextfield> = {
             description: "Appears before the input field but after the `icon`. "
                 + "May be used as a prop for a simple text-based prefix, or as a slot for a more complex prefix. "
                 + "In this demo we use a prop."
+        },
+        size: {
+            control: 'select',
+            options: ['small', 'medium', 'large']
         },
         suffix: {
             control: 'text',
@@ -60,7 +69,9 @@ const meta: Meta<typeof EvTextfield> = {
         clearable: false,
         disabled: false,
         icon: 'none',
+        loading: false,
         prefix: '',
+        size: 'medium',
         suffix: '',
         modelValue: '',
         type: 'text'
