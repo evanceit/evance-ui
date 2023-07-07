@@ -16,10 +16,17 @@ import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {splitInputAttrs} from "../../util";
+import {appearanceModifier, sizeModifier, splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+
+/**
+ * ## Appearance
+ */
+type Appearance = 'default'
+    | 'none'
+    | 'subtle';
 
 /**
  * ## Button Size
@@ -30,6 +37,7 @@ type Size = 'small'
 
 // Props
 interface TextfieldProps {
+    appearance?: Appearance,
     autofocus?: boolean,
     autoselect?: boolean,
     clearable?:boolean,
@@ -47,6 +55,7 @@ interface TextfieldProps {
     type?: string
 }
 const props = withDefaults(defineProps<TextfieldProps>(), {
+    appearance: 'default',
     autofocus: false,
     autoselect: false,
     clearable: false,
@@ -80,13 +89,6 @@ const isClearable = computed(() => {
  */
 function getInputElement(): HTMLInputElement | null {
     return input.value;
-}
-
-function getSizeClass(): string {
-    if (props.size === 'medium') {
-        return null;
-    }
-    return `size-${props.size}`;
 }
 
 /**
@@ -136,7 +138,8 @@ const vAutofocus = {
                 'is-focused': isFocused,
                 'is-loading': loading
             },
-            getSizeClass()
+            sizeModifier(props.size, ['medium']),
+            appearanceModifier(props.appearance, ['default'])
         ]"
         role="textbox"
         v-bind="containerAttrs"

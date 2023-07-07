@@ -4,6 +4,7 @@
  */
 import './EvProgressCircular.scss';
 import {useSlots, ref} from "vue";
+import {appearanceModifier, isIntegerish} from "../../util";
 
 type Size = 'default';
 
@@ -38,16 +39,6 @@ const defaultRadius = (defaultSize / 2);
 const defaultRotation = -90;
 
 /**
- * ## Get Appearance Class
- */
-function getAppearanceClass() {
-    if (props.appearance === 'default') {
-        return null;
-    }
-    return `appearance-${props.appearance}`;
-}
-
-/**
  * ## Get Size with Units
  * The default units is `px` when only a number is supplied.
  */
@@ -55,7 +46,7 @@ function getSizeWithUnits() {
     if (props.size === 'default') {
         return null;
     }
-    return /^\d+$/.test(props.size) ?  props.size + 'px' : props.size;
+    return isIntegerish(props.size) ?  props.size + 'px' : props.size;
 }
 
 /**
@@ -124,7 +115,7 @@ function getThickness() {
                 'is-indeterminate': props.indeterminate,
                 'size-default': props.size === 'default'
             },
-            getAppearanceClass()
+            appearanceModifier(props.appearance, ['default'])
         ]"
         :style="[
             {

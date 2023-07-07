@@ -6,6 +6,7 @@
  */
 import './EvIcon.scss';
 import {useAttrs} from "vue";
+import {sizeModifier} from "../../util";
 
 /**
  * ## Icon Size
@@ -29,11 +30,14 @@ const attrs = useAttrs();
 
 </script>
 <template>
-    <i class="ev-icon" :class="{
-        'is-clickable': !!attrs.onClick,
-        'size-small': size === 'small',
-        'size-large': size === 'large'
-    }">
+    <i
+        class="ev-icon"
+       :class="[
+            {
+                'is-clickable': !!attrs.onClick
+            },
+            sizeModifier(props.size, ['medium'])
+        ]">
         <component :is="glyph"></component>
     </i>
 </template>

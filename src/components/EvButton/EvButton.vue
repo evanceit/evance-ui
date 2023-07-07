@@ -6,6 +6,7 @@ import './EvButton.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {useSlots} from "vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+import {appearanceModifier, sizeModifier} from "../../util";
 
 /**
  * ## Button Appearance
@@ -46,13 +47,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const slots = useSlots();
 
 /**
- * ## Get Appearance Class
- */
-function getAppearanceClass() {
-    return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
-}
-
-/**
  * ## Get Component Element
  *
  * An `<ev-button>` may render as:
@@ -61,13 +55,6 @@ function getAppearanceClass() {
  */
 function getComponentElement() {
     return isLink() ? 'a' : 'button';
-}
-
-/**
- * ## Get Size Class
- */
-function getSizeClass() {
-    return props.size && props.size !== 'medium' ? `size-${props.size}` : null;
 }
 
 /**
@@ -111,8 +98,8 @@ function isLink() {
         :href="isLink() ? href : null"
         class="ev-button"
         :class="[
-            getAppearanceClass(),
-            getSizeClass(),
+            appearanceModifier(props.appearance),
+            sizeModifier(props.size, ['medium']),
             {
                 'is-icon': isIconOnly(),
                 'is-fullwidth': props.fullWidth,

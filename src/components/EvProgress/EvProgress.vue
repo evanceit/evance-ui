@@ -3,6 +3,7 @@
  * # EvProgress
  */
 import './EvProgress.scss';
+import {appearanceModifier, sizeModifier, IntegerishPattern, isIntegerish} from "../../util";
 
 type ProgressAppearance = 'default'
     | 'critical'
@@ -28,23 +29,6 @@ const props = withDefaults(defineProps<ProgressProps>(), {
     size: 'medium'
 });
 
-/**
- * ## Get Appearance Class
- */
-function getAppearanceClass() {
-    if (props.appearance === 'default') {
-        return null;
-    }
-    return `appearance-${props.appearance}`;
-}
-
-/**
- * ## Get Percentage Width
- */
-function getPercentageWithUnit() {
-    return props.percentage + '%';
-}
-
 function getPercentageTranslation() {
     const percent = 0 - (100 - props.percentage);
     return `translateX(${percent}%)`;
@@ -53,16 +37,12 @@ function getPercentageTranslation() {
 /**
  * ## Get Size Class
  */
-function getSizeClass() {
-    return (isSizeNumeric()) ? null : `size-${props.size}`;
-}
-
 function getSizeHeight() {
     return (!isSizeNumeric()) ? null : props.size + 'px';
 }
 
 function isSizeNumeric(): boolean {
-    return /^\d+$/.test(props.size);
+    return isIntegerish(props.size);
 }
 
 </script>
@@ -77,8 +57,8 @@ function isSizeNumeric(): boolean {
             {
                 'is-indeterminate': props.indeterminate
             },
-            getAppearanceClass(),
-            getSizeClass()
+            appearanceModifier(props.appearance, ['default']),
+            sizeModifier(props.size, [IntegerishPattern])
         ]"
         :style="{
             height: getSizeHeight()

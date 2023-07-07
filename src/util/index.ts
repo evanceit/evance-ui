@@ -1,3 +1,5 @@
 export * from './browser';
 export * from './helpers';
-export * from './string';
+export * from './modifiers';
+export * from './numbers';
+export * from './strings';

@@ -5,6 +5,7 @@
  * `<ev-lozenge />`
  */
 import './EvLozenge.scss';
+import {appearanceModifier, isIntegerish} from "../../util";
 
 /**
  * ## Lozenge Appearance
@@ -34,14 +35,14 @@ const props = withDefaults(defineProps<LozengeProps>(), {
  * i.e. it does not have any web units.
  */
 const isMaxWidthNumeric = () => {
-    return typeof props.maxWidth === 'number' || /^\d+$/.test(props.maxWidth);
+    return isIntegerish(props.maxWidth);
 };
 
 /**
  * ## Is the `maxWidth` prop a percentage?
  */
 const isMaxWidthPercent = () => {
-    return typeof props.maxWidth === 'string' && /%$/.test(props.maxWidth);
+    return /%$/.test(props.maxWidth);
 };
 
 /**
@@ -71,16 +72,12 @@ const getMaxWidthWithUnits = () => {
     return isMaxWidthNumeric() ? `${props.maxWidth}px` : props.maxWidth;
 }
 
-const getAppearanceClass = () => {
-    return props.appearance ? `appearance-${props.appearance}` : 'appearance-default';
-};
-
 </script>
 <template>
     <span
         class="ev-lozenge"
         :class="[
-            getAppearanceClass(),
+            appearanceModifier(props.appearance),
             {
                 'is-bold': bold
             }
