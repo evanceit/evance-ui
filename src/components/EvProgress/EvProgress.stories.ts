@@ -25,12 +25,19 @@ const meta: Meta<typeof EvProgress> = {
                 max: 100
             },
             description: 'Progress is shown as a percentage from 0 to 100. Percentage is ignored when `indeterminate` is set to `true`.'
+        },
+        size: {
+            control: 'select',
+            options: ['small', 'medium', 'large', 24, 500],
+            description: "The size of the progress bar relates to its height. Whilst the size accepts a numeric value (in pixels), " +
+                "there are three predefined sizes that are typically used: `small`, `medium` (default) and `large`."
         }
     },
     args: {
         appearance: 'default',
         indeterminate: false,
-        percentage: 0
+        percentage: 0,
+        size: 'medium'
     },
     tags: ['autodocs']
 };

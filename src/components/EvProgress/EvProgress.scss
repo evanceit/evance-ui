@@ -1,0 +1,125 @@
+/**
+    # EvProgress
+ */
+.ev-progress {
+    background: transparent;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ev-progress--track,
+.ev-progress--bar {
+    background: currentColor;
+    bottom: 0;
+    height: inherit;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition-property: width, left, right;
+    transition: inherit;
+    border-radius: 999px;
+    width: 100%;
+}
+
+.ev-progress--track {
+    opacity: 0.1;
+}
+
+.ev-progress--bar {
+    will-change: transform;
+}
+
+
+/**
+    ## Appearance
+ */
+.ev-progress {
+    /* critical */
+    &.appearance-critical {
+        color: var(--background-critical-bold);
+    }
+    /* information */
+    &.appearance-information {
+        color: var(--background-information-bold);
+    }
+    /* primary */
+    &.appearance-primary {
+        color: var(--color-primary);
+    }
+    /* success */
+    &.appearance-success {
+        color: var(--background-success-bold);
+    }
+    /* warning */
+    &.appearance-warning {
+        color: var(--background-warning-bold);
+    }
+}
+
+
+/**
+    ## Indeterminate
+ */
+.ev-progress--indeterminate--primary {
+    animation: ev-progress-indeterminate-primary 2s infinite linear;
+    left: -100%;
+}
+.ev-progress--indeterminate--secondary {
+    animation: ev-progress-indeterminate-secondary 2s infinite linear;
+    left: -60%;
+}
+
+@keyframes ev-progress-indeterminate-primary {
+    0% {
+        transform: translateX(0) scaleX(0.1);
+    }
+    20% {
+        animation-timing-function: cubic-bezier(0.5, 0, 0.7, 0.5);
+        transform: translateX(0) scaleX(0.1);
+    }
+    60% {
+        animation-timing-function: cubic-bezier(0.3, 0.4, 0.5, 0.9);
+        transform: translateX(80%)  scaleX(0.6);
+    }
+    100% {
+        transform: translateX(200%) scaleX(0.05);
+    }
+}
+
+@keyframes ev-progress-indeterminate-secondary {
+    0% {
+        animation-timing-function: cubic-bezier(0.15, 0, 0.5, 0.4);
+        transform: translateX(0) scaleX(0.1);
+    }
+    25% {
+        animation-timing-function: cubic-bezier(0.3, 0.25, 0.8, 0.7);
+        transform: translateX(35%) scaleX(0.4);
+    }
+    45% {
+        animation-timing-function: cubic-bezier(0.4, 0.6, 0.6, 0.9);
+        transform: translateX(85%) scaleX(0.65);
+    }
+    100% {
+        transform: translateX(200%) scaleX(0.1);
+    }
+}
+
+
+/**
+    ## Size
+ */
+.ev-progress {
+    &.size-small {
+        height: 4px;
+    }
+    &.size-medium {
+        height: 8px;
+    }
+    &.size-large {
+        height: 16px;
+    }
+}
