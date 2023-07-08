@@ -1,4 +1,86 @@
 
+.ev-checkbox {
+    display: inline-flex;
+}
+
+.ev-checkbox--control {
+    align-items: center;
+    aspect-ratio: 1;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    width: 40px;
+}
+
+
+/* EvCheckbox input */
+.ev-checkbox--control {
+    input {
+        aspect-ratio: 1;
+        cursor: pointer;
+        left: 50%;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+    }
+}
+
+/* Radio circles */
+.ev-checkbox--boxes {
+    align-items: center;
+    aspect-ratio: 1;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    width: var(--icon-size-default);
+
+    &:before {
+        aspect-ratio: 1;
+        background: var(--input-focus-background);
+        border-radius: 50%;
+        content: '';
+        opacity: 0;
+        position: absolute;
+        transition: width 0.25s ease-in-out,
+                    opacity 0.25s ease-in-out;
+        width: 100%;
+        will-change: width, opacity;
+    }
+}
+
+.ev-checkbox--outer-box,
+.ev-checkbox--inner-box {
+    aspect-ratio: 1;
+    border-radius: var(--input-radius);
+    display: inline-flex;
+    left: 50%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 22px;
+    align-items: center;
+    justify-content: center;
+}
+
+.ev-checkbox--outer-box {
+    border: 2px solid var(--input-border-color);
+    transition: transform 0.25s cubic-bezier(.5,.32,.38,1.22),
+                border-color 0.25s ease-in-out;
+    will-change: border-color, transform;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+.ev-checkbox--inner-box {
+    color: var(--color-primary);
+    background-color: transparent;
+    opacity: 0;
+    transition: transform 0.25s cubic-bezier(.5,.32,.38,1.22),
+                opacity 0.25s ease-in-out;
+    will-change: transform, opacity;
+}
 
 .ev-checkbox--checkmark-path {
     stroke-dashoffset: 16;
@@ -6,10 +88,52 @@
     transition: stroke-dashoffset 0.25s ease-in-out;
 }
 
+/** Hover state */
+.ev-checkbox {
+    &.is-focused-visible,
+    &:hover {
+        .ev-checkbox--boxes {
+            &:before {
+                opacity: 1;
+                width: 42px;
+            }
+        }
+        .ev-checkbox--outer-box {
+            border-color: var(--color-primary);
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+
+        .ev-checkbox--inner-box {
+            opacity: 1;
+        }
+    }
+}
+
+/** Checked state */
 .ev-checkbox {
     &.is-checked {
+        .ev-checkbox--outer-box {
+            border-color: var(--color-primary);
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .ev-checkbox--inner-box {
+            background-color: var(--color-primary);
+            color: var(--body-background);
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
         .ev-checkbox--checkmark-path {
             stroke-dashoffset: 0;
         }
+    }
+}
+
+
+/** Disabled modifier */
+.ev-checkbox {
+    &.is-disabled {
+        filter: grayscale(0.5);
+        opacity: 0.5;
+        pointer-events: none;
     }
 }

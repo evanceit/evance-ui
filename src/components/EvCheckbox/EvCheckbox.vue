@@ -25,7 +25,7 @@ interface CheckboxProps {
     disabled?: boolean,
     id?: string,
     focused?: boolean,
-    modelValue?: string,
+    modelValue?: boolean,
     readonly?: boolean,
     value?: string
 }
@@ -64,11 +64,15 @@ const { focusClasses, focus, blur } = useFocus(props);
     >
         <div class="ev-checkbox--control">
 
-            <div class="ev-checkbox--checkmark">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path class="ev-checkbox--checkmark-path" d="M3 7.5L6.5 11L13.5 4" stroke="currentColor" stroke-width="2" />
-                </svg>
+            <div class="ev-checkbox--boxes">
+                <div class="ev-checkbox--outer-box"></div>
+                <div class="ev-checkbox--inner-box">
+                    <svg class="ev-checkbox--checkmark" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="ev-checkbox--checkmark-path" d="M3 7.5L6.5 11L13.5 4" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </div>
             </div>
+
 
             <input ref="input"
                    type="checkbox"
