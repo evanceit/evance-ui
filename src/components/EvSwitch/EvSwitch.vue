@@ -22,6 +22,7 @@ import {useFocus} from "../../composables/focus.ts";
  */
 interface SwitchProps {
     disabled?: boolean,
+    id?: string,
     focused?: boolean,
     modelValue?: boolean,
 }
@@ -63,6 +64,7 @@ const { focusClasses, focus, blur } = useFocus(props);
             ref="input"
             type="checkbox"
             role="switch"
+            :id="id"
             :disabled="disabled"
             v-model="modelProxy"
             v-bind="inputAttrs"

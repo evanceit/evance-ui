@@ -44,6 +44,7 @@ interface TextfieldProps {
     disabled?: boolean,
     focused?: boolean,
     icon?: Object,
+    id?: string,
     loading?: boolean,
     name?: string,
     placeholder?: string,
@@ -158,6 +159,7 @@ const vAutofocus = {
             <input
                 ref="input"
                 :type="type"
+                :id="id"
                 :name="name"
                 v-model="modelProxy"
                 :placeholder="placeholder"

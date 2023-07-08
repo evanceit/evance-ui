@@ -108,10 +108,9 @@
 }
 
 
-/** Hover and focused state modifier */
+/** Hover state modifier */
 .ev-switch {
-    &:hover,
-    &.is-focused {
+    &:hover {
         .ev-switch--thumb {
             &:before {
                 width: 250%;
