@@ -1,0 +1,1 @@
+export { default as EvCheckbox } from './EvCheckbox.vue';

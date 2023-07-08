@@ -2,102 +2,108 @@
     # EvRadio
  */
 .ev-radio {
-
+    display: inline-flex;
 }
 
+
+/** EvRadio control */
 .ev-radio--control {
-    display: inline-flex;
-    width: 40px;
-    aspect-ratio: 1;
     align-items: center;
+    aspect-ratio: 1;
+    display: inline-flex;
     justify-content: center;
     position: relative;
+    width: 40px;
 }
 
+
+/* EvRadio internal control */
 .ev-radio--control {
     input {
-        position: absolute;
+        aspect-ratio: 1;
         cursor: pointer;
         left: 50%;
+        opacity: 0;
+        position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
         width: 40px;
-        aspect-ratio: 1;
-        opacity: 0;
     }
 }
 
+
+/* Radio circles */
 .ev-radio--circles {
-    display: inline-flex;
-    width: 24px;
-    aspect-ratio: 1;
     align-items: center;
+    aspect-ratio: 1;
+    display: inline-flex;
     justify-content: center;
     position: relative;
+    width: 24px;
 
     &:before {
-        content: '';
-        background: var(--input-focus-background);
-        width: 100%;
         aspect-ratio: 1;
-        transition: width 0.25s ease-in-out,
-                    opacity 0.25s ease-in-out;
-        will-change: width, opacity;
+        background: var(--input-focus-background);
         border-radius: 50%;
+        content: '';
         opacity: 0;
         position: absolute;
+        transition: width 0.25s ease-in-out,
+                    opacity 0.25s ease-in-out;
+        width: 100%;
+        will-change: width, opacity;
     }
 }
 
 .ev-radio--outer-circle,
 .ev-radio--inner-circle {
-    position: absolute;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: inline-flex;
     left: 50%;
+    margin: auto;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    display: inline-flex;
-    border-radius: 50%;
-    margin: auto;
-    aspect-ratio: 1;
 }
 
 .ev-radio--outer-circle {
-    width: 16px;
     border: 2px solid var(--input-border-color);
     transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
                 height 0.25s cubic-bezier(.5,.32,.38,1.22),
                 border-color 0.25s ease-in-out;
-    will-change: width, height, border-color;
+    width: 16px;
+    will-change: border-color, height, width;
 }
 
 .ev-radio--inner-circle {
-    width: 6px;
-    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
-        height 0.25s cubic-bezier(.5,.32,.38,1.22),
-        opacity 0.25s ease-in-out;
-    will-change: width, height, opacity;
     background-color: var(--color-primary);
     opacity: 0;
+    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
+                height 0.25s cubic-bezier(.5,.32,.38,1.22),
+                opacity 0.25s ease-in-out;
+    width: 6px;
+    will-change: width, height, opacity;
 }
+
 
 /** Hover state */
 .ev-radio {
     &.is-focused-visible,
     &:hover {
-
         .ev-radio--circles {
             &:before {
                 opacity: 1;
                 width: 42px;
             }
         }
-
         .ev-radio--outer-circle {
-            width: 18px;
             border-color: var(--color-primary);
+            width: 18px;
         }
     }
 }
+
 
 /** Checked state */
 .ev-radio {
@@ -107,8 +113,18 @@
             width: 22px;
         }
         .ev-radio--inner-circle {
-            width: 12px;
             opacity: 1;
+            width: 12px;
         }
+    }
+}
+
+
+/** Disabled modifier */
+.ev-radio {
+    &.is-disabled {
+        filter: grayscale(0.5);
+        opacity: 0.5;
+        pointer-events: none;
     }
 }

@@ -77,6 +77,7 @@ function onClick(e: Event): void {
     if (modelChecked.value && props.clearable) {
         modelChecked.value = false;
     }
+
 }
 
 /**
@@ -126,12 +127,10 @@ function onSpace(e: Event): void {
             </div>
             <input ref="input"
                    type="radio"
-                   role="switch"
                    :id="id"
-                   :disabled="disabled"
-                   :readonly="readonly"
+                   :disabled="!!(disabled || readonly)"
                    :value="value"
-                   v-model="modelProxy"
+                   :checked="modelChecked"
                    v-bind="inputAttrs"
                    @blur="blur"
                    @click="onClick"

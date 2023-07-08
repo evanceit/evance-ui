@@ -1,0 +1,15 @@
+
+
+.ev-checkbox--checkmark-path {
+    stroke-dashoffset: 16;
+    stroke-dasharray: 16;
+    transition: stroke-dashoffset 0.25s ease-in-out;
+}
+
+.ev-checkbox {
+    &.is-checked {
+        .ev-checkbox--checkmark-path {
+            stroke-dashoffset: 0;
+        }
+    }
+}

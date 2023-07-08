@@ -1,4 +1,5 @@
 export * from './EvButton';
+export * from './EvCheckbox';
 export * from './EvIcon';
 export * from './EvLozenge';
 export * from './EvProgress';
