@@ -67,12 +67,12 @@
     }
 
     &:before {
-        background: var(--color-primary);
+        background: var(--input-focus-background);
         width: 100%;
         opacity: 0;
         transition: width 0.25s ease-in-out,
                     opacity 0.25s ease-in-out;
-        will-change: transform, opacity;
+        will-change: width, opacity;
     }
 }
 
@@ -113,8 +113,8 @@
     &:hover {
         .ev-switch--thumb {
             &:before {
-                width: 250%;
-                opacity: 0.2;
+                width: 42px;
+                opacity: 1;
             }
         }
     }

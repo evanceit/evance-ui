@@ -2,12 +2,13 @@
     # EvRadio
  */
 .ev-radio {
+
 }
 
 .ev-radio--control {
     display: inline-flex;
     width: 40px;
-    height: 40px;
+    aspect-ratio: 1;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -15,43 +16,85 @@
 
 .ev-radio--control {
     input {
-
+        position: absolute;
+        cursor: pointer;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        aspect-ratio: 1;
+        opacity: 0;
     }
 }
 
 .ev-radio--circles {
     display: inline-flex;
     width: 24px;
-    height: 24px;
+    aspect-ratio: 1;
     align-items: center;
     justify-content: center;
     position: relative;
+
+    &:before {
+        content: '';
+        background: var(--input-focus-background);
+        width: 100%;
+        aspect-ratio: 1;
+        transition: width 0.25s ease-in-out,
+                    opacity 0.25s ease-in-out;
+        will-change: width, opacity;
+        border-radius: 50%;
+        opacity: 0;
+        position: absolute;
+    }
 }
-.ev-radio--outer-circle {
+
+.ev-radio--outer-circle,
+.ev-radio--inner-circle {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     display: inline-flex;
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--input-border-color);
-    border-radius: 999px;
+    border-radius: 50%;
     margin: auto;
-    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
-                height 0.25s cubic-bezier(.5,.32,.38,1.22);
-    will-change: width, height;
+    aspect-ratio: 1;
 }
-.ev-radio--inner-circle {
 
+.ev-radio--outer-circle {
+    width: 16px;
+    border: 2px solid var(--input-border-color);
+    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
+                height 0.25s cubic-bezier(.5,.32,.38,1.22),
+                border-color 0.25s ease-in-out;
+    will-change: width, height, border-color;
+}
+
+.ev-radio--inner-circle {
+    width: 6px;
+    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
+        height 0.25s cubic-bezier(.5,.32,.38,1.22),
+        opacity 0.25s ease-in-out;
+    will-change: width, height, opacity;
+    background-color: var(--color-primary);
+    opacity: 0;
 }
 
 /** Hover state */
 .ev-radio {
+    &.is-focused-visible,
     &:hover {
+
+        .ev-radio--circles {
+            &:before {
+                opacity: 1;
+                width: 42px;
+            }
+        }
+
         .ev-radio--outer-circle {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            border-color: var(--color-primary);
         }
     }
 }
@@ -61,6 +104,11 @@
     &.is-checked {
         .ev-radio--outer-circle {
             border-color: var(--color-primary);
+            width: 22px;
+        }
+        .ev-radio--inner-circle {
+            width: 12px;
+            opacity: 1;
         }
     }
 }

@@ -65,6 +65,14 @@ const modelChecked = computed({
     }
 });
 
+
+/**
+ * # On Click
+ *
+ * Handle clearable radio buttons when the input is checked and is then clicked again.
+ *
+ * @param e
+ */
 function onClick(e: Event): void {
     if (modelChecked.value && props.clearable) {
         modelChecked.value = false;
@@ -73,10 +81,29 @@ function onClick(e: Event): void {
 
 /**
  * ## On Input
+ *
+ * Handle changes to the checked state.
+ *
  * @param e
  */
 function onInput(e: Event): void {
     modelChecked.value = (e.target as HTMLInputElement).checked;
+}
+
+/**
+ * # On Space
+ *
+ * We need this event handler to handle clearable radio, because
+ * the `click` event is not triggered when the input is checked.
+ *
+ * @param e
+ */
+function onSpace(e: Event): void {
+    if (modelChecked.value && props.clearable) {
+        modelChecked.value = false;
+        // Prevent default to avoid the click event being triggered.
+        e.preventDefault();
+    }
 }
 
 </script>
@@ -109,7 +136,9 @@ function onInput(e: Event): void {
                    @blur="blur"
                    @click="onClick"
                    @focus="focus"
-                   @input="onInput" />
+                   @input="onInput"
+                   @keyup.space="onSpace"
+            />
         </div>
 
 
