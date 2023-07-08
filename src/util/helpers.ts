@@ -1,3 +1,26 @@
+import {ComponentInternalInstance} from "vue";
+import {getCurrentComponent} from "../util";
+
+/**
+ * # Get Next ID
+ */
+let currentId: number = 0;
+let assignedIds = new WeakMap<ComponentInternalInstance, number>();
+export function getNextId(): number {
+    const component = getCurrentComponent('getNextId()');
+    if (assignedIds.has(component)) {
+        return assignedIds.get(component);
+    }
+    const id = ++currentId;
+    assignedIds.set(component, id);
+    return id;
+}
+getNextId.reset = () => {
+    currentId = 0;
+    assignedIds = new WeakMap();
+}
+
+
 /**
  * # Split Object
  *

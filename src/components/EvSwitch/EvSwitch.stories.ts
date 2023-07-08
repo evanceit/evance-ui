@@ -30,6 +30,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-switch v-bind="args" id="foo" data-foo="bar" /> <label for="foo">Test</label>'
+        template: '<ev-switch v-bind="args" />'
     })
 };

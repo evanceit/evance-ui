@@ -46,8 +46,7 @@ const { focusClasses, focus, blur } = useFocus(props);
 
 </script>
 <template>
-    <div
-        ref="container"
+    <div ref="container"
         class="ev-switch"
         :class="[
             {
@@ -60,8 +59,7 @@ const { focusClasses, focus, blur } = useFocus(props);
     >
         <div class="ev-switch--track"></div>
         <div class="ev-switch--thumb"></div>
-        <input
-            ref="input"
+        <input ref="input"
             type="checkbox"
             role="switch"
             :id="id"

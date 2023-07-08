@@ -1,6 +1,6 @@
-import {ComponentInternalInstance, computed, getCurrentInstance, ref, toRaw, watch} from "vue";
+import {ComponentInternalInstance, computed, ref, toRaw, watch} from "vue";
 import type { Ref } from 'vue';
-import {toKebabCase} from "../util";
+import {getCurrentComponent, toKebabCase} from "../util";
 import {useToggleScope} from "./toggleScope.ts";
 
 type InnerVal<T> = T extends any[] ? Readonly<T> : T;
@@ -31,10 +31,7 @@ export function useModelProxy<
     transformIn: (modelValue?: PropsObject[ModelName]) => Inner = (value: any) => value,
     transformOut: (modelValue: Inner) => PropsObject[ModelName] = (value: any) => value
 ) {
-    const vueInstance: ComponentInternalInstance | null = getCurrentInstance();
-    if (!vueInstance) {
-        throw new Error('useModelProxy() requires a vue instance');
-    }
+    const component: ComponentInternalInstance = getCurrentComponent();
     const modelRef: Ref<PropsObject[ModelName]> = ref(props[modelName] !== undefined ? props[modelName] : defaultValue) as Ref<PropsObject[ModelName]>;
     const modelNameKebab: string = toKebabCase(modelName);
     const isCheckKebabName: boolean = (modelName !== modelNameKebab);
@@ -42,8 +39,8 @@ export function useModelProxy<
         // Ignore evaluation of props[modelName]
         void props[modelName];
         return (
-            (hasProp(vueInstance, modelName) && hasProp(vueInstance, `onUpdate:${modelName}`))
-            || (isCheckKebabName && hasProp(vueInstance, modelNameKebab) && hasProp(vueInstance, `onUpdate:${modelNameKebab}`))
+            (hasProp(component, modelName) && hasProp(component, `onUpdate:${modelName}`))
+            || (isCheckKebabName && hasProp(component, modelNameKebab) && hasProp(component, `onUpdate:${modelNameKebab}`))
         );
     });
 
@@ -74,7 +71,7 @@ export function useModelProxy<
                 return;
             }
             modelRef.value = newValue;
-            vueInstance.emit(`update:${modelName}`, newValue);
+            component.emit(`update:${modelName}`, newValue);
         }
     }) as any as Ref<InnerVal<any>> & { readonly externalValue: PropsObject[ModelName] };
 

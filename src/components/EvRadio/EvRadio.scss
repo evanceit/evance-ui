@@ -1,0 +1,66 @@
+/**
+    # EvRadio
+ */
+.ev-radio {
+}
+
+.ev-radio--control {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ev-radio--control {
+    input {
+
+    }
+}
+
+.ev-radio--circles {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.ev-radio--outer-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--input-border-color);
+    border-radius: 999px;
+    margin: auto;
+    transition: width 0.25s cubic-bezier(.5,.32,.38,1.22),
+                height 0.25s cubic-bezier(.5,.32,.38,1.22);
+    will-change: width, height;
+}
+.ev-radio--inner-circle {
+
+}
+
+/** Hover state */
+.ev-radio {
+    &:hover {
+        .ev-radio--outer-circle {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+/** Checked state */
+.ev-radio {
+    &.is-checked {
+        .ev-radio--outer-circle {
+            border-color: var(--color-primary);
+        }
+    }
+}
