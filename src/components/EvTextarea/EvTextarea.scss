@@ -1,16 +1,13 @@
 /**
-    # EvTextField
+    # EvTextarea
  */
-.ev-textfield {
-    align-items: center;
+.ev-textarea {
+    align-items: flex-start;
     background: var(--input-background);
     border: var(--input-border);
     border-radius: var(--input-radius);
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--spacer-50);
-    height: var(--input-height-medium);
-    padding-inline: var(--spacer-75);
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
     will-change: border-color, box-shadow, background;
@@ -22,31 +19,13 @@
     }
 }
 
-/** Size modifiers */
-.ev-textfield {
-    &.size-small {
-        height: var(--input-height-small);
-        padding-inline: var(--spacer-50);
-    }
-    &.size-large {
-        height: var(--input-height-large);
-    }
-}
-
-
-/** Icon */
-.ev-textfield--icon {
-    width: var(--icon-size-default);
-}
-
-
 /** Input */
-.ev-textfield {
-    > .ev-textfield--input {
+.ev-textarea {
+    > .ev-textarea--input {
         align-self: stretch;
         flex: 1 0 auto;
 
-        > input {
+        > textarea {
             background: transparent;
             border: 0;
             color: inherit;
@@ -54,15 +33,17 @@
             height: 100%;
             margin: 0;
             outline: none;
-            padding: 0;
+            padding: var(--spacer-75);
             width: 100%;
+            resize: vertical;
+            min-height: var(--input-height-medium);
         }
     }
 }
 
 
 /** Loader */
-.ev-textfield--loader {
+.ev-textarea--loader {
     bottom: 0;
     left: 0;
     position: absolute;
@@ -71,15 +52,16 @@
 
 
 /** Clearable */
-.ev-textfield {
-    .ev-textfield--clearable {
+.ev-textarea {
+    .ev-textarea--clearable {
         opacity: 0;
         transition: opacity 0.25s ease-in-out;
+        padding: var(--spacer-75);
     }
 
     &:hover,
     &.is-focused {
-        .ev-textfield--clearable {
+        .ev-textarea--clearable {
             opacity: 1;
         }
     }
@@ -87,7 +69,7 @@
 
 
 /* Enter and leave animations */
-.ev-textfield {
+.ev-textarea {
 
     .slide-fade {
         &-enter-active {
@@ -118,22 +100,14 @@
 }
 
 
-/** Rounded modifier */
-.ev-textfield {
-    &.is-rounded {
-        border-radius: 999px;
-    }
-}
-
-
 /**
     ## Appearance
 
-    EvTextfield can have the following appearance modifiers:
+    EvTexarea can have the following appearance modifiers:
     - appearance-subtle
     - appearance-none
  */
-.ev-textfield {
+.ev-textarea {
 
     &.appearance-button {
         border-color: transparent;
@@ -168,7 +142,7 @@
 
 
 /** Focused */
-.ev-textfield {
+.ev-textarea {
     &.is-focused {
         border-color: var(--input-border-color-focus);
         box-shadow: var(--input-focus-shadow);
@@ -177,10 +151,19 @@
 
 
 /** Disabled */
-.ev-textfield {
+.ev-textarea {
     &.is-disabled {
         filter: grayscale(0.5);
         opacity: 0.5;
         pointer-events: none;
+    }
+}
+
+/** Autogrow */
+.ev-textarea {
+    &.is-autogrow {
+        textarea {
+            resize: none;
+        }
     }
 }

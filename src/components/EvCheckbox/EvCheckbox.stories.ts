@@ -12,6 +12,9 @@ const meta: Meta<typeof EvCheckbox> = {
         disabled: {
             control: 'boolean'
         },
+        focused: {
+            control: 'boolean'
+        },
         value: {
             control: 'string',
             description: "The value of the input is assigned to `modelValue` when checked."
@@ -21,6 +24,7 @@ const meta: Meta<typeof EvCheckbox> = {
         modelValue: null,
         value: 'Y',
         disabled: false,
+        focused: false,
     },
     tags: ['autodocs']
 };
@@ -35,6 +39,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-checkbox v-bind="args" /> {{ args.modelValue }}'
+        template: '<ev-checkbox v-bind="args" />'
     })
 };

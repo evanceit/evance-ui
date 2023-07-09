@@ -39,3 +39,22 @@ export function useFocus(props: FocusProps) {
 
     return { isFocused, isFocusedVisible, focusClasses, focus, blur };
 }
+
+
+/**
+ * ## Auto Focus
+ */
+export interface AutofocusProps {
+    autofocus: boolean
+}
+
+export function useAutofocus(props: AutofocusProps) {
+    return {
+        mounted: (el) => {
+            if (!props.autofocus) {
+                return;
+            }
+            el.focus();
+        }
+    };
+}

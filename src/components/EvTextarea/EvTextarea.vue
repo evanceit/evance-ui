@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * # `<ev-textfield>`
+ * # `<ev-textarea>`
  *
  * We want to pass attributes not defined as 'props'
  * to the `<input>` field, so we need to turn off `inheritAttrs`.
@@ -11,15 +11,14 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import './EvTextfield.scss';
-import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
-import EvIcon from "../EvIcon/EvIcon.vue";
-import {Cancel} from "../../icons";
-import {useModelProxy} from "../../composables/modelProxy.ts";
+import './EvTextarea.scss';
+import {computed, nextTick, ref, useAttrs, useSlots, onUpdated, onMounted} from "vue";
 import {appearanceModifier, sizeModifier, splitInputAttrs} from "../../util";
+import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
+import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
-import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+import EvIcon from "../EvIcon/EvIcon.vue";
 
 /**
  * ## Appearance
@@ -29,46 +28,31 @@ type Appearance = 'default'
     | 'none'
     | 'subtle';
 
-/**
- * ## Button Size
- */
-type Size = 'small'
-    | 'medium'
-    | 'large';
-
 // Props
-interface TextfieldProps {
+interface TextareaProps {
     appearance?: Appearance,
     autofocus?: boolean,
-    autoselect?: boolean,
+    autogrow?: boolean,
+    autosubmit?: Function,
     clearable?: boolean,
     disabled?: boolean,
     focused?: boolean,
-    icon?: Object,
     id?: string,
     loading?: boolean,
     name?: string,
     placeholder?: string,
-    prefix?: string,
     readonly?: boolean,
-    suffix?: string,
-    modelValue?: string,
-    rounded?: boolean,
-    size?: Size,
-    type?: string
+    modelValue?: string
 }
-const props = withDefaults(defineProps<TextfieldProps>(), {
+const props = withDefaults(defineProps<TextareaProps>(), {
     appearance: 'default',
     autofocus: false,
-    autoselect: false,
+    autogrow: true,
     clearable: false,
     disabled: false,
     focused: false,
     loading: false,
-    readonly: false,
-    rounded: false,
-    size: 'medium',
-    type: 'text'
+    readonly: false
 });
 
 // Emit
@@ -109,16 +93,37 @@ function onClickClearable($event: MouseEvent) {
     getInputElement()?.focus();
 }
 
-/**
- * ## On Focus
- * @param e
- */
-function onFocus(e: Event) {
-    focus(e);
-    if (props.autoselect) {
-        getInputElement()?.select();
+function onKeydown() {
+    resize();
+}
+
+function onKeyup() {
+    resize();
+}
+
+function onKeyupEnter() {
+    // Use the autosubmit callback if present
+    if (props.autosubmit) {
+        props.autosubmit();
     }
 }
+
+function resize() {
+    if (!props.autogrow) {
+        return;
+    }
+    const field = getInputElement();
+    field.style.height = 'auto';
+    field.style.height = (field.scrollHeight + 1) + 'px';
+}
+
+onUpdated(() => {
+    resize();
+});
+
+onMounted(() => {
+    resize();
+});
 
 /**
  * ## Directive `v-autofocus`
@@ -129,33 +134,22 @@ const vAutofocus = useAutofocus(props);
 <template>
     <div
         ref="container"
-        class="ev-textfield"
+        class="ev-textarea"
         :class="[
             {
                 'is-disabled': disabled,
                 'is-loading': loading,
-                'is-rounded': rounded
+                'is-autogrow': autogrow
             },
             focusClasses,
-            sizeModifier(props.size, ['medium']),
             appearanceModifier(props.appearance, ['default'])
         ]"
         role="textbox"
         v-bind="containerAttrs"
     >
-        <div class="ev-textfield--icon" v-if="icon">
-            <transition name="fade-in-out" mode="out-in">
-                <ev-icon v-if="!loading" :glyph="icon" />
-                <ev-progress-circular v-else  indeterminate :appearance="isFocused ? 'primary' : 'default'" />
-            </transition>
-        </div>
-        <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
-            <slot name="prefix">{{ prefix }}</slot>
-        </div>
-        <div class="ev-textfield--input">
-            <input
+        <div class="ev-textarea--input">
+            <textarea
                 ref="input"
-                :type="type"
                 :id="id"
                 :name="name"
                 v-model="modelProxy"
@@ -165,19 +159,18 @@ const vAutofocus = useAutofocus(props);
                 :readonly="readonly"
                 v-autofocus
                 v-bind="inputAttrs"
-                @focus="onFocus"
+                @focus="focus"
                 @blur="blur"
-            />
+                @keydown="onKeydown"
+                @keyup="onKeyup"
+                @keyup.enter="onKeyupEnter"></textarea>
         </div>
         <transition name="slide-fade">
-            <div class="ev-textfield--clearable" v-if="isClearable">
+            <div class="ev-textarea--clearable" v-if="isClearable">
                 <ev-icon :glyph="Cancel" @click="onClickClearable($event)" />
             </div>
         </transition>
-        <div class="ev-textfield--suffix" v-if="suffix || slots.suffix">
-            <slot name="suffix">{{ suffix }}</slot>
-        </div>
-        <div class="ev-textfield--loader" v-if="loading && !icon">
+        <div class="ev-textarea--loader" v-if="loading && !icon">
             <ev-progress indeterminate :appearance="isFocused ? 'primary' : 'default'" size="2" />
         </div>
     </div>

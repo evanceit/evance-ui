@@ -33,6 +33,7 @@ interface ButtonProps {
     icon?: Object,
     iconAfter?: Object,
     iconBefore?: Object
+    rounded?: boolean,
     size?: Size,
     fullWidth?: boolean,
     loading?: boolean
@@ -41,7 +42,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     appearance: 'default',
     disabled: false,
     fullWidth: false,
-    loading: false
+    loading: false,
+    rounded: false
 });
 
 const slots = useSlots();
@@ -104,7 +106,8 @@ function isLink() {
                 'is-icon': isIconOnly(),
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
-                'is-disabled': props.disabled
+                'is-disabled': props.disabled,
+                'is-rounded': props.rounded
             }
         ]"
         tabindex="0"

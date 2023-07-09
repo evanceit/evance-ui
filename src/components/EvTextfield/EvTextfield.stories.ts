@@ -6,6 +6,10 @@ import {Search} from "../../icons";
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
     argTypes: {
+        appearance: {
+            control: 'select',
+            options: ['default', 'subtle', 'none', 'button']
+        },
         autofocus: {
             control: 'boolean'
         },
@@ -48,6 +52,9 @@ const meta: Meta<typeof EvTextfield> = {
                 + "May be used as a prop for a simple text-based prefix, or as a slot for a more complex prefix. "
                 + "In this demo we use a prop."
         },
+        rounded: {
+            control: 'boolean',
+        },
         size: {
             control: 'select',
             options: ['small', 'medium', 'large']
@@ -64,6 +71,7 @@ const meta: Meta<typeof EvTextfield> = {
         }
     },
     args: {
+        appearance: 'default',
         autofocus: false,
         autoselect: false,
         clearable: false,
@@ -71,6 +79,7 @@ const meta: Meta<typeof EvTextfield> = {
         icon: 'none',
         loading: false,
         prefix: '',
+        rounded: false,
         size: 'medium',
         suffix: '',
         modelValue: '',

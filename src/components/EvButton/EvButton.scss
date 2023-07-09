@@ -55,19 +55,6 @@
 
 
 /**
-    ## Icon
-
-    When the button only contains an icon.
- */
-.ev-button {
-    &.is-icon {
-        padding: 0 !important;
-        aspect-ratio: 1;
-    }
-}
-
-
-/**
     ## Loading State
 
     Fades out all internal elements except the loading spinner, which fades in
@@ -179,5 +166,34 @@
         height: var(--input-height-large);
         font-size: var(--text-large);
         padding-inline: var(--spacer-150);
+    }
+}
+
+
+/**
+    ## Rounded modifier
+*/
+.ev-button {
+    &.is-rounded {
+        border-radius: 999px;
+        padding-inline: var(--spacer-100);
+
+        /* Accommodate small size modifier */
+        &.size-small {
+            padding-inline: var(--spacer-75);
+        }
+    }
+}
+
+
+/**
+    ## Icon
+
+    When the button only contains an icon.
+ */
+.ev-button {
+    &.is-icon {
+        padding: 0 !important;
+        aspect-ratio: 1;
     }
 }

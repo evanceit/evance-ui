@@ -6,4 +6,5 @@ export * from './EvProgress';
 export * from './EvProgressCircular';
 export * from './EvRadio';
 export * from './EvSwitch';
+export * from './EvTextarea';
 export * from './EvTextfield';
