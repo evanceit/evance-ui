@@ -13,7 +13,7 @@
     justify-content: center;
     padding-inline: var(--spacer-75);
     position: relative;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: background 0.15s ease-in-out;
     user-select: none;
 
