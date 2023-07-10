@@ -7,7 +7,25 @@ const meta: Meta<typeof EvDivider> = {
     argTypes: {
         appearance: {
             control: 'select',
+            options: ['default', 'critical', 'information', 'notice', 'success', 'warning']
+        },
+        borderStyle: {
+            control: 'select',
             options: ['solid', 'dashed', 'dotted']
+        },
+        opacity: {
+            control: {
+                type: 'range',
+                min: 1,
+                max: 100
+            }
+        },
+        thickness: {
+            control: {
+                type: 'range',
+                min: 1,
+                max: 16
+            }
         },
         vertical: {
             control: 'boolean'
@@ -17,9 +35,12 @@ const meta: Meta<typeof EvDivider> = {
         }
     },
     args: {
-        appearance: 'solid',
+        appearance: 'default',
+        borderStyle: 'solid',
+        opacity: 20,
         vertical: false,
-        default: null
+        default: null,
+        thickness: 1
     },
     tags: ['autodocs']
 };

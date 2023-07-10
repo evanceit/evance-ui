@@ -11,12 +11,12 @@
     @at-root hr#{&},
     & .ev-divider--line {
         border-style: var(--border-style, solid);
-        color: currentColor;
+        color: var(--border-color, currentColor);
         display: flex;
         flex-basis: 0;
         flex-grow: 1;
         margin: 0;
-        opacity: 0.2;
+        opacity: var(--border-opacity, 0.2);
     }
 }
 
@@ -33,7 +33,7 @@
 
         @at-root hr#{&},
         & .ev-divider--line {
-            border-width: thin 0 0 0;
+            border-width: var(--border-width, thin) 0 0 0;
         }
     }
 }
@@ -52,7 +52,7 @@
 
         @at-root hr#{&},
         & .ev-divider--line {
-            border-width: 0 thin 0 0;
+            border-width: 0 var(--border-width, thin) 0 0;
         }
     }
 }

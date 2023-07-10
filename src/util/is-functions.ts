@@ -18,6 +18,18 @@ export function isArray(value: any): boolean {
     return Array.isArray(value);
 }
 
+/**
+ * # Is CSS Variable
+ * @param value
+ */
+export function isCssVariable(value: any): boolean
+{
+    if (!isString(value)) {
+        return false;
+    }
+    return /^--[\w-]+$/.test(value);
+}
+
 
 /**
  * # Is Date?
