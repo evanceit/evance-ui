@@ -85,7 +85,9 @@ $spacers: (
     --font-weight-extrabold: 800;
 
     /* Icons */
-    --icon-size-default: 24px;
+    --icon-size-small: 16px;
+    --icon-size-medium: 24px;
+    --icon-size-large: 32px;
 
     /* Input fields */
     --input-height-small: 36px;
@@ -100,10 +102,14 @@ $spacers: (
         --spacer-#{$percentage}: #{map-get($spacers, $percentage)};
     }
 
+    /** Sheets */
+    --sheet-radius: 4px;
+
     /* Text */
     /** @todo: need scalable fonts */
     --text-small: 0.75rem;
     --text-medium: 0.875rem;
     --text-large: 1rem;
+    --text-subtitle: 1.25rem;
 }
 

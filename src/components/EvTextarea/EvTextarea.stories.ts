@@ -1,13 +1,14 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextarea } from "../EvTextarea";
+import {InputAppearance} from "../../util";
 
 const meta: Meta<typeof EvTextarea> = {
     component: EvTextarea,
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'subtle', 'none', 'button']
+            options: Object.values(InputAppearance)
         },
         autofocus: {
             control: 'boolean'
@@ -37,7 +38,7 @@ const meta: Meta<typeof EvTextarea> = {
         }
     },
     args: {
-        appearance: 'default',
+        appearance: InputAppearance.default,
         autofocus: false,
         autogrow: true,
         clearable: false,

@@ -1,13 +1,14 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvProgress } from "../EvProgress";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvProgress> = {
     component: EvProgress,
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'primary', 'success', 'warning'],
+            options: Object.values(Appearance),
             description: "The `default` appearance inherits the current color."
         },
         indeterminate: {
@@ -34,7 +35,7 @@ const meta: Meta<typeof EvProgress> = {
         }
     },
     args: {
-        appearance: 'default',
+        appearance: Appearance.default,
         indeterminate: false,
         percentage: 0,
         size: 'medium'

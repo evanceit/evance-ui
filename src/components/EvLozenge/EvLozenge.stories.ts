@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvLozenge } from "../EvLozenge";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvLozenge> = {
     component: EvLozenge,
@@ -15,7 +16,7 @@ const meta: Meta<typeof EvLozenge> = {
         },
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'notice', 'success', 'warning'],
+            options: Object.values(Appearance),
             description: "Appearance may be: `default`, `critical`, `information`, `notice`, `success`, or `warning`."
         },
         maxWidth: {

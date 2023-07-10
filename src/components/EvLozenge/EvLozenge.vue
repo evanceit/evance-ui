@@ -5,23 +5,13 @@
  * `<ev-lozenge />`
  */
 import './EvLozenge.scss';
-import {appearanceModifier, isIntegerish} from "../../util";
-
-/**
- * ## Lozenge Appearance
- */
-type Appearance = 'default'
-    | 'critical'
-    | 'information'
-    | 'notice'
-    | 'success'
-    | 'warning';
+import {appearanceModifier, AppearanceProp, isIntegerish} from "../../util";
 
 /**
  * ## Lozenge Props
  */
 interface LozengeProps {
-    appearance?: Appearance,
+    appearance?: AppearanceProp,
     bold?: boolean,
     maxWidth?: number | string;
 }

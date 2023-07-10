@@ -94,7 +94,7 @@
     /* Default */
     &.appearance-default {
         background-color: var(--button-default-background);
-        color: var(--text-color);
+        color: var(--text-default);
         &:hover {
             background-color: var(--button-default-background-hover);
         }
@@ -130,7 +130,7 @@
     /* Subtle */
     &.appearance-subtle {
         background-color: var(--button-subtle-background);
-        color: var(--text-color);
+        color: var(--text-default);
         &:hover {
             background-color: var(--button-subtle-background-hover);
         }

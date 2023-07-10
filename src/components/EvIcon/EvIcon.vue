@@ -5,8 +5,8 @@
  *  Uses `glyph` to render an SVG-based icon.
  */
 import './EvIcon.scss';
-import {useAttrs} from "vue";
-import {sizeModifier} from "../../util";
+import {computed, useAttrs} from "vue";
+import {Appearance, appearanceModifier, AppearanceProp, sizeModifier} from "../../util";
 
 /**
  * ## Icon Size
@@ -19,14 +19,23 @@ type IconSize = 'small'
  * ## Icon Props
  */
 interface IconProps {
+    appearance?: AppearanceProp,
     glyph: Object,
     size?: IconSize
 }
 const props = withDefaults(defineProps<IconProps>(), {
+    appearance: 'default',
     size: 'medium'
 });
 
 const attrs = useAttrs();
+
+const iconColor = computed(() => {
+    if (!props.appearance || props.appearance === 'default') {
+        return null;
+    }
+    return `var(--text-${props.appearance})`;
+});
 
 </script>
 <template>
@@ -36,8 +45,15 @@ const attrs = useAttrs();
             {
                 'is-clickable': !!attrs.onClick
             },
+            appearanceModifier(props.appearance, [Appearance.default]),
             sizeModifier(props.size, ['medium'])
-        ]">
+        ]"
+        :style="[
+            {
+                '--icon-color': iconColor
+            }
+        ]"
+    >
         <component :is="glyph"></component>
     </i>
 </template>

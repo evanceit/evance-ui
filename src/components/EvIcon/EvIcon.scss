@@ -2,7 +2,8 @@
     aspect-ratio: 1;
     display: inline-flex;
     line-height: 1;
-    width: var(--icon-size-default);
+    width: var(--icon-size-medium);
+    color: var(--icon-color, currentColor);
 
     > svg {
         width: auto;

@@ -13,24 +13,16 @@ export default {
 <script setup lang="ts">
 import './EvTextarea.scss';
 import {computed, nextTick, ref, useAttrs, onUpdated, onMounted} from "vue";
-import {appearanceModifier, splitInputAttrs} from "../../util";
+import {appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 
-/**
- * ## Appearance
- */
-type Appearance = 'default'
-    | 'button'
-    | 'none'
-    | 'subtle';
-
 // Props
 interface TextareaProps {
-    appearance?: Appearance,
+    appearance?: InputAppearanceProp,
     autofocus?: boolean,
     autogrow?: boolean,
     autosubmit?: Function,
@@ -169,7 +161,7 @@ const vAutofocus = useAutofocus(props);
                 'is-autogrow': autogrow
             },
             focusClasses,
-            appearanceModifier(props.appearance, ['default'])
+            appearanceModifier(props.appearance, [InputAppearance.default])
         ]"
         role="textbox"
         v-bind="containerAttrs"

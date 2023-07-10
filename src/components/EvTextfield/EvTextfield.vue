@@ -16,35 +16,28 @@ import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {appearanceModifier, sizeModifier, splitInputAttrs} from "../../util";
+import {
+    appearanceModifier,
+    InputAppearance,
+    InputAppearanceProp, InputSize,
+    InputSizeProp,
+    sizeModifier,
+    splitInputAttrs
+} from "../../util";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 
-/**
- * ## Appearance
- */
-type Appearance = 'default'
-    | 'button'
-    | 'none'
-    | 'subtle';
-
-/**
- * ## Button Size
- */
-type Size = 'small'
-    | 'medium'
-    | 'large';
 
 // Props
 interface TextfieldProps {
-    appearance?: Appearance,
+    appearance?: InputAppearanceProp,
     autofocus?: boolean,
     autoselect?: boolean,
     clearable?: boolean,
     disabled?: boolean,
     focused?: boolean,
-    icon?: Object,
+    icon?: object,
     id?: string,
     loading?: boolean,
     name?: string,
@@ -54,7 +47,7 @@ interface TextfieldProps {
     suffix?: string,
     modelValue?: string,
     rounded?: boolean,
-    size?: Size,
+    size?: InputSizeProp,
     type?: string
 }
 const props = withDefaults(defineProps<TextfieldProps>(), {
@@ -137,8 +130,8 @@ const vAutofocus = useAutofocus(props);
                 'is-rounded': rounded
             },
             focusClasses,
-            sizeModifier(props.size, ['medium']),
-            appearanceModifier(props.appearance, ['default'])
+            sizeModifier(props.size, [InputSize.default]),
+            appearanceModifier(props.appearance, [InputAppearance.default])
         ]"
         role="textbox"
         v-bind="containerAttrs"

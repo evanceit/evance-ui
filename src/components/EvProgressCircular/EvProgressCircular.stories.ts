@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvProgressCircular } from "../EvProgressCircular";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvProgressCircular> = {
     component: EvProgressCircular,
@@ -12,7 +13,7 @@ const meta: Meta<typeof EvProgressCircular> = {
         },
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'primary', 'success', 'warning'],
+            options: Object.values(Appearance),
             description: "The `default` appearance inherits the current color."
         },
         indeterminate: {

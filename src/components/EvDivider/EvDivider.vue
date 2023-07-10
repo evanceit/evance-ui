@@ -7,18 +7,7 @@
 import './EvDivider.scss';
 import {computed, useSlots} from "vue";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent";
-import {appearanceModifier, isCssVariable, isIntegerish} from "../../util";
-
-
-/**
- * ## Divider Appearance
- */
-type Appearance = 'default'
-    | 'critical'
-    | 'information'
-    | 'notice'
-    | 'success'
-    | 'warning';
+import {Appearance, appearanceModifier, AppearanceProp, isCssVariable, isIntegerish} from "../../util";
 
 /**
  * ## Divider Border Style
@@ -31,7 +20,7 @@ type BorderStyle = 'solid'
  * ## Divider Props
  */
 interface DividerProps {
-    appearance?: Appearance,
+    appearance?: AppearanceProp,
     borderStyle?: BorderStyle,
     thickness: number,
     opacity?: number | string,
@@ -80,7 +69,7 @@ const classNames = computed(() => {
            'is-horizontal': !props.vertical,
            'is-vertical': props.vertical
        },
-       appearanceModifier(props.appearance, ['default'])
+       appearanceModifier(props.appearance, [Appearance.default])
    ];
 });
 

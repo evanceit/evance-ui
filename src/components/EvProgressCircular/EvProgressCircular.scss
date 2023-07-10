@@ -34,11 +34,11 @@
             color: var(--background-information-bold);
         }
     }
-    /* primary */
-    &.appearance-primary {
+    /* notice */
+    &.appearance-notice {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--color-primary);
+            color: var(--background-notice-bold);
         }
     }
     /* success */

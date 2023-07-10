@@ -2,13 +2,14 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextfield } from "../EvTextfield";
 import {Search} from "../../icons";
+import {InputAppearance, InputSize} from "../../util";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'subtle', 'none', 'button']
+            options: Object.values(InputAppearance)
         },
         autofocus: {
             control: 'boolean'
@@ -57,7 +58,7 @@ const meta: Meta<typeof EvTextfield> = {
         },
         size: {
             control: 'select',
-            options: ['small', 'medium', 'large']
+            options: Object.values(InputSize)
         },
         suffix: {
             control: 'text',
@@ -71,7 +72,7 @@ const meta: Meta<typeof EvTextfield> = {
         }
     },
     args: {
-        appearance: 'default',
+        appearance: InputAppearance.default,
         autofocus: false,
         autoselect: false,
         clearable: false,
@@ -80,7 +81,7 @@ const meta: Meta<typeof EvTextfield> = {
         loading: false,
         prefix: '',
         rounded: false,
-        size: 'medium',
+        size: InputSize.default,
         suffix: '',
         modelValue: '',
         type: 'text'

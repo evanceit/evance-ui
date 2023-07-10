@@ -1,3 +1,4 @@
+export * from './appearance';
 export * from './browser';
 export * from './components';
 export * from './helpers';

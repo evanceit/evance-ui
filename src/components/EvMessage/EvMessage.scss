@@ -1,0 +1,37 @@
+.ev-message {
+    background-color: var(--background-muted);
+    border-radius: var(--sheet-radius, 4px);
+    display: flex;
+    gap: var(--spacer-100);
+    padding: var(--spacer-100);
+}
+
+/** Appearance */
+.ev-message {
+
+    &.appearance-critical {
+        background-color: var(--background-critical);
+    }
+    &.appearance-information {
+        background-color: var(--background-information);
+    }
+    &.appearance-notice {
+        background-color: var(--background-notice);
+    }
+    &.appearance-success {
+        background-color: var(--background-success);
+    }
+    &.appearance-warning {
+        background-color: var(--background-warning);
+    }
+}
+
+.ev-message--content {
+    padding-top: 2px;
+
+}
+
+.ev-message--title {
+    margin: 0;
+    font-size: var(--text-large);
+}

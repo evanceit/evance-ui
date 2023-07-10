@@ -3,10 +3,15 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 import { EvIcon } from "../EvIcon";
 import {EvanceCircle, Evance, Help, Minus, Plus} from "../../icons";
 import {markRaw} from "vue";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
     argTypes: {
+        appearance: {
+            control: 'select',
+            options: Object.values(Appearance)
+        },
         size: {
             control: 'select',
             options: ['small', 'medium', 'large'],

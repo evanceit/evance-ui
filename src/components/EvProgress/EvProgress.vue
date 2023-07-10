@@ -3,24 +3,20 @@
  * # EvProgress
  */
 import './EvProgress.scss';
-import {appearanceModifier, sizeModifier, IntegerishPattern, isIntegerish} from "../../util";
-
-type ProgressAppearance = 'default'
-    | 'critical'
-    | 'information'
-    | 'primary'
-    | 'success'
-    | 'warning';
-
-type ProgressSize = 'small'
-    | 'medium'
-    | 'large';
+import {
+    appearanceModifier,
+    sizeModifier,
+    IntegerishPattern,
+    isIntegerish,
+    AppearanceProp,
+    InputSizeProp
+} from "../../util";
 
 interface ProgressProps {
-    appearance?: ProgressAppearance,
+    appearance?: AppearanceProp,
     indeterminate?: boolean,
     percentage?: number,
-    size?: ProgressSize | number
+    size?: InputSizeProp | number
 }
 const props = withDefaults(defineProps<ProgressProps>(), {
     appearance: 'default',

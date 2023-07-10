@@ -39,11 +39,40 @@ body {
 
 .ev-theme, body {
     background-color: var(--body-background);
-    color: var(--text-color);
+    color: var(--text-default);
 }
 
 input,
 textarea,
 select {
     font-size: var(--input-font-size);
+}
+
+
+/**
+    Color classes
+ */
+.color-default {
+    color: var(--text-default) !important;
+}
+.color-critical {
+    color: var(--text-critical) !important;
+}
+.color-information {
+    color: var(--text-information) !important;
+}
+.color-subtle {
+    color: var(--text-subtle) !important;
+}
+.color-muted {
+    color: var(--text-muted) !important;
+}
+.color-notice {
+    color: var(--text-notice) !important;
+}
+.color-success {
+    color: var(--text-success) !important;
+}
+.color-warning {
+    color: var(--text-warning) !important;
 }

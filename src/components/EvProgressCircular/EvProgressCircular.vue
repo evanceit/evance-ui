@@ -4,19 +4,12 @@
  */
 import './EvProgressCircular.scss';
 import {useSlots, ref} from "vue";
-import {appearanceModifier, isIntegerish} from "../../util";
+import {appearanceModifier, AppearanceProp, isIntegerish} from "../../util";
 
 type Size = 'default';
 
-type ProgressAppearance = 'default'
-    | 'critical'
-    | 'information'
-    | 'primary'
-    | 'success'
-    | 'warning';
-
 interface ProgressProps {
-    appearance?: ProgressAppearance,
+    appearance?: AppearanceProp,
     indeterminate?: boolean,
     percentage?: number,
     rotate?: number,

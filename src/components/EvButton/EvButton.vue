@@ -6,36 +6,29 @@ import './EvButton.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {useSlots} from "vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {appearanceModifier, sizeModifier} from "../../util";
+import {appearanceModifier, InputSize, InputSizeProp, sizeModifier} from "../../util";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
 
 /**
  * ## Button Appearance
  */
-type Appearance = 'default'
+export type ButtonAppearanceProp = 'default'
     | 'danger'
     | 'primary'
     | 'subtle';
 
 /**
- * ## Button Size
- */
-type Size = 'small'
-    | 'medium'
-    | 'large';
-
-/**
  * ## Button Props
  */
 interface ButtonProps {
-    appearance?: Appearance,
+    appearance?: ButtonAppearanceProp,
     disabled?: boolean,
     href?: string,
     icon?: Object,
     iconAfter?: Object,
     iconBefore?: Object
     rounded?: boolean,
-    size?: Size,
+    size?: InputSizeProp,
     fullWidth?: boolean,
     loading?: boolean
 }
@@ -92,7 +85,7 @@ function isLink() {
         class="ev-button"
         :class="[
             appearanceModifier(props.appearance),
-            sizeModifier(props.size, ['medium']),
+            sizeModifier(props.size, [InputSize.default]),
             {
                 'is-icon': isIconOnly(),
                 'is-fullwidth': props.fullWidth,

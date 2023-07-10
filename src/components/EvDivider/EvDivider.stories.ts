@@ -1,13 +1,14 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvDivider } from "../EvDivider";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvDivider> = {
     component: EvDivider,
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'notice', 'success', 'warning']
+            options: Object.values(Appearance)
         },
         borderStyle: {
             control: 'select',
