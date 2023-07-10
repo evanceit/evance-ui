@@ -12,8 +12,8 @@ export default {
 </script>
 <script setup lang="ts">
 import './EvTextarea.scss';
-import {computed, nextTick, ref, useAttrs, useSlots, onUpdated, onMounted} from "vue";
-import {appearanceModifier, sizeModifier, splitInputAttrs} from "../../util";
+import {computed, nextTick, ref, useAttrs, onUpdated, onMounted} from "vue";
+import {appearanceModifier, splitInputAttrs} from "../../util";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
@@ -65,7 +65,6 @@ const emit = defineEmits([
 const attrs = useAttrs();
 const container = ref<HTMLElement | null>(null);
 const input = ref<HTMLInputElement | null>(null);
-const slots = useSlots();
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
 const { isFocused, focusClasses, focus, blur } = useFocus(props);
@@ -93,21 +92,41 @@ function onClickClearable($event: MouseEvent) {
     getInputElement()?.focus();
 }
 
-function onKeydown() {
+/**
+ * ## On Keydown
+ * Attempt to resize the textarea on key down.
+ * @param e
+ */
+function onKeydown(e: Event) {
     resize();
 }
 
-function onKeyup() {
+/**
+ * ## On Keyup
+ * Attempt to resize the textarea on key up.
+ * @param e
+ */
+function onKeyup(e: Event) {
     resize();
 }
 
-function onKeyupEnter() {
+/**
+ * ## On Enter
+ * When the user presses the Enter key, we can call an `autosubmit` function (if supplied).
+ * @param e
+ */
+function onKeyupEnter(e: Event) {
     // Use the autosubmit callback if present
     if (props.autosubmit) {
         props.autosubmit();
     }
 }
 
+/**
+ * ## Resize
+ * If the component is set to `autogrow` then we resize the textarea appropriately
+ * so that all the text is visible.
+ */
 function resize() {
     if (!props.autogrow) {
         return;
@@ -117,10 +136,18 @@ function resize() {
     field.style.height = (field.scrollHeight + 1) + 'px';
 }
 
+/**
+ * ## On Update
+ * Ensures the textarea is resized when the component updates.
+ */
 onUpdated(() => {
     resize();
 });
 
+/**
+ * ## On Mounted
+ * Ensures the textarea is resized when the component loads.
+ */
 onMounted(() => {
     resize();
 });

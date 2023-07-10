@@ -7,6 +7,7 @@ import EvIcon from "../EvIcon/EvIcon.vue";
 import {useSlots} from "vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 import {appearanceModifier, sizeModifier} from "../../util";
+import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
 
 /**
  * ## Button Appearance
@@ -47,6 +48,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 });
 
 const slots = useSlots();
+const hasDefaultSlot = hasSlotWithContent(slots, 'default');
 
 /**
  * ## Get Component Element
@@ -60,17 +62,6 @@ function getComponentElement() {
 }
 
 /**
- * Has Default Slot?
- */
-function hasDefaultSlot() {
-    const defaultSlot = (slots.default) ? slots.default() : null;
-    if (!defaultSlot) {
-        return false;
-    }
-    return (defaultSlot.length > 0 && !!defaultSlot[0].children);
-}
-
-/**
  * ## Is Icon Only?
  * Used to determine whether to apply `is-icon` modifier class.
  * Returns `true` if only one icon is applied, the button is not full-width
@@ -81,7 +72,7 @@ function isIconOnly() {
         ((!!props.icon || !!props.iconBefore) && !props.iconAfter)
         || ((!props.icon && !props.iconBefore) && !!props.iconAfter)
     )
-        && !hasDefaultSlot()
+        && !hasDefaultSlot.value
         && !props.fullWidth;
 }
 
@@ -116,7 +107,7 @@ function isLink() {
         <span class="ev-button--prefix" v-if="icon || iconBefore">
             <ev-icon :glyph="icon ? icon : iconBefore" />
         </span>
-        <span class="ev-button--text" v-if="hasDefaultSlot()">
+        <span class="ev-button--text" v-if="hasDefaultSlot">
             <slot />
         </span>
         <span class="ev-button--suffix" v-if="iconAfter">
