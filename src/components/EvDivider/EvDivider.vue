@@ -6,7 +6,7 @@
  */
 import './EvDivider.scss';
 import {appearanceModifier} from "../../util";
-import {useSlots} from "vue";
+import {computed, useSlots} from "vue";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent";
 
 /**
@@ -31,22 +31,30 @@ const props = withDefaults(defineProps<DividerProps>(), {
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
 
+const classNames = computed(() => {
+   return [
+       {
+           'is-horizontal': !props.vertical,
+           'is-vertical': props.vertical
+       },
+       appearanceModifier(props.appearance)
+   ];
+});
+
+const styling = computed(() => {
+    return [
+        {
+            '--border-style': props.appearance
+        }
+    ];
+});
+
 </script>
 <template>
-    <div class="ev-divider"
-        :class="[
-            {
-                'is-horizontal': !vertical,
-                'is-vertical': vertical
-            },
-            appearanceModifier(appearance)
-        ]"
-         :style="{
-            '--border-style': appearance
-         }"
-    >
-        <div class="ev-divider--line"></div>
-        <div class="ev-divider--content" v-if="hasDefaultSlot"><slot /></div>
-        <div class="ev-divider--line" v-if="hasDefaultSlot"></div>
+    <div v-if="hasDefaultSlot" class="ev-divider" :class="classNames" :style="styling">
+        <hr class="ev-divider--line" />
+        <div class="ev-divider--content"><slot /></div>
+        <hr class="ev-divider--line" />
     </div>
+    <hr v-else class="ev-divider" :class="classNames" :style="styling" />
 </template>
