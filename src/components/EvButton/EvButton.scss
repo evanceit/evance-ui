@@ -2,18 +2,19 @@
     # EvButton
  */
 .ev-button {
-    display: inline-flex;
-    border: 0;
-    height: var(--input-height-medium);
-    border-radius: var(--input-radius);
-    font-weight: var(--font-weight-semibold);
-    padding-inline: var(--spacer-75);
     align-items: center;
+    border: 0;
+    border-radius: var(--input-radius);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: var(--text-medium);
+    font-weight: var(--font-weight-semibold);
+    height: var(--input-height-medium);
     justify-content: center;
+    padding-inline: var(--spacer-75);
+    position: relative;
     text-decoration: none;
     transition: background 0.15s ease-in-out;
-    font-size: var(--text-medium);
-    position: relative;
     user-select: none;
 
     &:focus-visible {

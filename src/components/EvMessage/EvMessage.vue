@@ -8,6 +8,7 @@ import './EvMessage.scss';
 import {Appearance, appearanceModifier, AppearanceProp} from "../../util";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {
+    Cancel,
     CheckCircle as CheckCircleIcon,
     Danger as DangerIcon,
     Help as HelpIcon,
@@ -15,16 +16,30 @@ import {
     Note as NoteIcon,
     Warning as WarningIcon
 } from "../../icons";
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import EvButton from "../EvButton/EvButton.vue";
+import {useModelProxy} from "../../composables/modelProxy.ts";
 
 interface MessageProps {
     appearance?: AppearanceProp,
-    icon?: object
+    closable?: boolean,
+    icon?: object,
+    modelValue?: boolean,
+    title: string
 }
 const props = withDefaults(defineProps<MessageProps>(), {
     appearance: 'default',
-    icon: null
+    closable: false,
+    icon: null,
+    modelValue: true
 });
+
+
+// Emit
+const emit = defineEmits([
+    'click:close',
+    'update:modelValue'
+]);
 
 /**
  * ## Icon Glyph
@@ -48,9 +63,22 @@ const iconGlyph = computed(() => {
     return HelpIcon;
 });
 
+const modelProxy = useModelProxy(props, 'modelValue');
+
+/**
+ * ## On Click Close
+ * @param e
+ */
+function close(e: Event): void {
+    emit('click:close', e);
+    modelProxy.value = false;
+}
+
+
 </script>
 <template>
-    <div
+    <section
+        v-if="modelProxy"
         class="ev-message"
         :class="[
             appearanceModifier(props.appearance, [Appearance.default])
@@ -60,8 +88,16 @@ const iconGlyph = computed(() => {
             <ev-icon :appearance="props.appearance" :glyph="iconGlyph" />
         </div>
         <div class="ev-message--content">
-            <h2 class="ev-message--title">Title</h2>
+            <h2 class="ev-message--title">{{ title }}</h2>
             <slot />
         </div>
-    </div>
+        <div class="ev-message--closer" v-if="closable">
+            <ev-button rounded
+                       :icon="Cancel"
+                       size="small"
+                       appearance="subtle"
+                       @click="close"
+            />
+        </div>
+    </section>
 </template>

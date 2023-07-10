@@ -34,7 +34,8 @@ html, body {
 
 body {
     font-family: var(--system-font);
-    line-height: 1.25;
+    font-size: var(--text-medium-size);
+    line-height: 1.5;
 }
 
 .ev-theme, body {
@@ -49,8 +50,116 @@ select {
 }
 
 
+/*
+    # Paragraphs & other text
+    I am using `rem` instead of `em` units for bottom margin because it gives a more consistent result
+    when editing content and applying text size variants to paragraphs.
+*/
+p {
+    margin: 0 0 1.5rem 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+b,
+strong {
+    font-weight: var(--text-weight-bold);
+}
+
+
+/*
+    # Headings (<h1> to <h6>)
+
+	1. By default we'll add a bottom margin...
+    2. Unless they have adjacent elements.
+
+    Note: we should be using 'rem' units because they give a more consistent look versus 'em'
+*/
+h1, .heading-1,
+h2, .heading-2,
+h3, .heading-3,
+h4, .heading-4,
+h5, .heading-5,
+h6, .heading-6 {
+    font-family: var(--heading-typeface);
+    font-weight: var(--heading-weight);
+    font-style: var(--heading-style);
+    line-height: var(--heading-lineheight);
+    color: var(--heading-default);
+    margin: 0 0 0.25em 0; /* 1 */
+
+    b,
+    strong {
+        font-weight: var(--heading-weight-bold);
+    }
+}
+h1, .heading-1 {
+    font-size: var(--heading-1-size);
+}
+h2, .heading-2 {
+    font-size: var(--heading-2-size);
+}
+h3, .heading-3 {
+    font-size: var(--heading-3-size);
+}
+h4, .heading-4 {
+    font-size: var(--heading-4-size);
+}
+h5, .heading-5 {
+    font-size: var(--heading-5-size);
+}
+h6, .heading-6 {
+    font-size: var(--heading-6-size);
+}
+
+
 /**
-    Color classes
+    # Eyebrows
+
+    An eyebrow is usually a short title which prefixes a longer heading.
+    This is a common design pattern on websites and is included by default.
+*/
+.text-eyebrow {
+    color: var(--eyebrow-default);
+    font-family: var(--text-eyebrow-typeface);
+    font-size: var(--text-eyebrow-size);
+    font-style: normal;
+    font-weight: var(--text-eyebrow-weight);
+    text-transform: var(--text-eyebrow-transform);
+    margin-bottom: 0.5em;
+    letter-spacing: 0.0625rem;
+}
+
+
+/**
+    # Text sizes
+
+    Additional text sizes available by default should include:
+    - subtitle
+    - large
+    - medium (default)
+    - small
+*/
+.text-subtitle {
+    font-size: var(--text-subtitle-size);
+}
+.text-large {
+    font-size: var(--text-large-size);
+}
+.text-medium {
+    font-size: var(--text-medium-size);
+}
+.text-small {
+    font-size: var(--text-small-size);
+}
+
+
+
+/**
+    # Text Color
+
+    Modifier classes for each Appearance setting:
  */
 .color-default {
     color: var(--text-default) !important;

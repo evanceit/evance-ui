@@ -1,9 +1,15 @@
 .ev-message {
+    align-items: flex-start;
     background-color: var(--background-muted);
     border-radius: var(--sheet-radius, 4px);
     display: flex;
+    flex-wrap: nowrap;
     gap: var(--spacer-100);
     padding: var(--spacer-100);
+
+    > * {
+        flex: 0 0 auto;
+    }
 }
 
 /** Appearance */
@@ -27,11 +33,28 @@
 }
 
 .ev-message--content {
+    flex: 1 0 auto;
     padding-top: 2px;
+    width: min-content;
+}
 
+.ev-message--icon {
+    display: inline-flex;
 }
 
 .ev-message--title {
-    margin: 0;
-    font-size: var(--text-large);
+    font-size: var(--heading-5-size);
+    margin-bottom: 0;
+
+    & + * {
+        margin-top: var(--spacer-50);
+    }
+}
+
+.ev-message--closer {
+    display: inline-flex;
+
+    button {
+        margin: -6px;
+    }
 }

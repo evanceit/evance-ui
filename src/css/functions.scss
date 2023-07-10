@@ -18,3 +18,15 @@
 @function screen-diff($min, $max) {
     @return strip-unit($max - $min) / 16;
 }
+
+
+/**
+    clamp(min, calc(min + (max - min) * ((100vw - breakpoint-min) / breakpoint-divider)), max);
+ */
+@function font-size-clamp($min, $max, $minAt, $maxAt) {
+    @if ($min == $max) {
+        @return $max;
+    }
+    $divider: (($maxAt - $minAt) / $maxAt) * 100;
+    @return clamp(#{$min}, calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$minAt}) / #{strip-unit($divider)})), #{$max});
+}
