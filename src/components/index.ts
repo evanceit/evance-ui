@@ -6,6 +6,7 @@ export * from './EvLozenge';
 export * from './EvMessage';
 export * from './EvProgress';
 export * from './EvProgressCircular';
+export * from './EvQuickfind';
 export * from './EvRadio';
 export * from './EvSelect';
 export * from './EvSwitch';

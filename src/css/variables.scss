@@ -138,12 +138,12 @@ $text: (
     @each $key, $value in $headings {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --heading-#{$key}-size: #{scalable($min, $max, $scale-from, $scale-to)};
+        --heading-size-#{$key}: #{scalable($min, $max, $scale-from, $scale-to)};
     }
     @each $key, $value in $text {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --text-#{$key}-size: #{scalable($min, $max, $scale-from, $scale-to)};
+        --text-size-#{$key}: #{scalable($min, $max, $scale-from, $scale-to)};
     }
     --text-eyebrow-transform: uppercase;
     --text-eyebrow-typeface: var(--system-font);

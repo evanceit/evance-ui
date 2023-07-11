@@ -34,7 +34,7 @@ html, body {
 
 body {
     font-family: var(--system-font);
-    font-size: var(--text-medium-size);
+    font-size: var(--text-size-medium);
     line-height: 1.5;
 }
 
@@ -95,22 +95,22 @@ h6, .heading-6 {
     }
 }
 h1, .heading-1 {
-    font-size: var(--heading-1-size);
+    font-size: var(--heading-size-1);
 }
 h2, .heading-2 {
-    font-size: var(--heading-2-size);
+    font-size: var(--heading-size-2);
 }
 h3, .heading-3 {
-    font-size: var(--heading-3-size);
+    font-size: var(--heading-size-3);
 }
 h4, .heading-4 {
-    font-size: var(--heading-4-size);
+    font-size: var(--heading-size-4);
 }
 h5, .heading-5 {
-    font-size: var(--heading-5-size);
+    font-size: var(--heading-size-5);
 }
 h6, .heading-6 {
-    font-size: var(--heading-6-size);
+    font-size: var(--heading-size-6);
 }
 
 
@@ -142,16 +142,16 @@ h6, .heading-6 {
     - small
 */
 .text-subtitle {
-    font-size: var(--text-subtitle-size);
+    font-size: var(--text-size-subtitle);
 }
 .text-large {
-    font-size: var(--text-large-size);
+    font-size: var(--text-size-large);
 }
 .text-medium {
-    font-size: var(--text-medium-size);
+    font-size: var(--text-size-medium);
 }
 .text-small {
-    font-size: var(--text-small-size);
+    font-size: var(--text-size-small);
 }
 
 

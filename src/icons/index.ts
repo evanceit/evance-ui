@@ -136,6 +136,7 @@ export { default as Products } from './glyph/Products.svg';
 export { default as ProductsFill } from './glyph/ProductsFill.svg';
 export { default as ProductsOff } from './glyph/ProductsOff.svg';
 export { default as Public } from './glyph/Public.svg';
+export { default as Quickfind } from './glyph/Quickfind.svg';
 export { default as Receipt } from './glyph/Receipt.svg';
 export { default as Redirect } from './glyph/Redirect.svg';
 export { default as Redo } from './glyph/Redo.svg';
