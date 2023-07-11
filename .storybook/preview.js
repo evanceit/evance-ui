@@ -3,8 +3,21 @@ import React from 'react';
 import { DocsContainer } from '@storybook/addon-docs';
 import { useDarkMode } from 'storybook-dark-mode'
 import { useArgs } from '@storybook/preview-api';
+import { setup } from '@storybook/vue3';
 
+
+/**
+ * @todo: Experimenting with app setup and directives
+ *        Ideally, I would like to have something like Vuetify's setup process
+ */
 import '../src/css/core.scss';
+import {clickOutside} from "../src/directives";
+
+setup((app) => {
+  app.directive('click-outside', clickOutside);
+});
+
+
 
 /**
  * Light Mode Theme

@@ -108,6 +108,34 @@ export function isEqualNaN(value: any): boolean {
 
 
 /**
+ * # Is Function?
+ * @param value
+ */
+export function isFunction(value: any): boolean {
+    return (typeof value === 'function');
+}
+
+/**
+ * # Is Object?
+ * @param value
+ */
+export function isObject(value: any): boolean {
+    return (typeof value === 'object');
+}
+
+/**
+ * # Is ShadowRoot
+ * @param value
+ */
+export function isShadowRoot(value: any): boolean {
+    return (
+        typeof ShadowRoot !== 'undefined'
+        && value instanceof ShadowRoot
+    );
+}
+
+
+/**
  * # Is String?
  * @param value
  */
