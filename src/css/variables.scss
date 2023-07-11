@@ -21,6 +21,8 @@
     - `md` - Medium: Tablets in portrait or small notebooks
     - `lg` - Large: Desktops & tablets in landscape. More than accommodates scroll bars.
     - `xl` - Extra Large - Large Desktops, including 1080p, 4k and ultra-wide screens
+
+    Scaling, such as font-size scaling, is done between `sm-min` and `xl-min`.
  */
 $breakpoint-xs-min: 0px;
 $breakpoint-xs-max: 599px;
@@ -40,9 +42,8 @@ $grid-breakpoints: (
     xl: $breakpoint-xl-min
 ) !default;
 
-$breakpoint-diff: $breakpoint-xl-min - $breakpoint-sm-min;
-$breakpoint-divider: ($breakpoint-diff / $breakpoint-xl-min) * 100;
-
+$scale-from: $breakpoint-sm-min;
+$scale-to: $breakpoint-xl-min;
 
 /*
     ## Spacers
@@ -137,12 +138,12 @@ $text: (
     @each $key, $value in $headings {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --heading-#{$key}-size: #{font-size-clamp($min, $max, $breakpoint-sm-min, $breakpoint-xl-min)};
+        --heading-#{$key}-size: #{scalable($min, $max, $scale-from, $scale-to)};
     }
     @each $key, $value in $text {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --text-#{$key}-size: #{font-size-clamp($min, $max, $breakpoint-sm-min, $breakpoint-xl-min)};
+        --text-#{$key}-size: #{scalable($min, $max, $scale-from, $scale-to)};
     }
     --text-eyebrow-transform: uppercase;
     --text-eyebrow-typeface: var(--system-font);

@@ -3,30 +3,29 @@
   ===
 
  */
+@use 'sass:math' as math;
+
+
 @function strip-unit($value) {
-    @return $value / ($value * 0 + 1);
-}
-
-@function px2rem($value) {
-    @return strip-unit($value / 16) + 'rem';
-}
-
-@function rem2px($value) {
-    @return strip-unit($value * 16) + 'px';
-}
-
-@function screen-diff($min, $max) {
-    @return strip-unit($max - $min) / 16;
+    @return math.div($value,  ($value * 0 + 1));
 }
 
 
 /**
-    clamp(min, calc(min + (max - min) * ((100vw - breakpoint-min) / breakpoint-divider)), max);
+    # Scalable
+
+    Calculate a clamp() function to offer scaling between
+    the smallest size ($min) from the smallest screen size ($minAt)
+    and the largest size ($max) at the largest screen size ($maxAt).
+
+    The calculation should look like this:
+
+    clamp(min, calc(min + (max - min) * ((100vw - minAt) / divider)), max);
  */
-@function font-size-clamp($min, $max, $minAt, $maxAt) {
+@function scalable($min, $max, $minAt, $maxAt) {
     @if ($min == $max) {
         @return $max;
     }
-    $divider: (($maxAt - $minAt) / $maxAt) * 100;
+    $divider: math.div(($maxAt - $minAt), $maxAt) * 100;
     @return clamp(#{$min}, calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$minAt}) / #{strip-unit($divider)})), #{$max});
 }

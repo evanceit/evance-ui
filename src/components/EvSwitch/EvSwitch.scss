@@ -39,7 +39,7 @@
     display: inline-flex;
     width: 1em;
     height: 1em;
-    background: var(--body-background);
+    background: var(--surface-default);
     border-radius: 50%;
     position: absolute;
     align-items: center;
@@ -63,7 +63,7 @@
     }
 
     &:after {
-        background: var(--body-background);
+        background: var(--surface-default);
     }
 
     &:before {

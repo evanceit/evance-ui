@@ -107,7 +107,7 @@
     /* Danger */
     &.appearance-danger {
         background-color: var(--button-danger-background);
-        color: var(--body-background);
+        color: var(--surface-default);
         &:hover {
             background-color: var(--button-danger-background-hover);
         }
@@ -119,7 +119,7 @@
     /* Primary */
     &.appearance-primary {
         background-color: var(--button-primary-background);
-        color: var(--body-background);
+        color: var(--surface-default);
         &:hover {
             background-color: var(--button-primary-background-hover);
         }

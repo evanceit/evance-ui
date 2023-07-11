@@ -28,7 +28,7 @@
 
         &.is-bold {
             background-color: var(--background-muted-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 
@@ -39,7 +39,7 @@
 
         &.is-bold {
             background-color: var(--background-critical-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 
@@ -50,7 +50,7 @@
 
         &.is-bold {
             background-color: var(--background-information-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 
@@ -61,7 +61,7 @@
 
         &.is-bold {
             background-color: var(--background-notice-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 
@@ -72,7 +72,7 @@
 
         &.is-bold {
             background-color: var(--background-success-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 
@@ -83,7 +83,7 @@
 
         &.is-bold {
             background-color: var(--background-warning-bold);
-            color: var(--body-background);
+            color: var(--surface-default);
         }
     }
 }

@@ -25,8 +25,13 @@
     /* General */
     --color-primary: #814EFA;
 
+    /* Surfaces */
+    --surface-default: #F3F5F9;
+    --surface-overlay: #FFFFFF;
+    --surface-panel: #FFFFFF;
+    --surface-sunken: #E7EBF3;
+
     /* Backgrounds */
-    --body-background: #F3F5F9;
     --background-critical: #F0414126;
     --background-critical-bold: #F04141;
     --background-information: #2A82EA26;
@@ -95,8 +100,13 @@
     /* General */
     --color-primary: #9772FF;
 
+    /* Surfaces */
+    --surface-default: #181724;
+    --surface-overlay: #202131;
+    --surface-panel: #1C1D2C;
+    --surface-sunken: #13121C;
+
     /* Backgrounds */
-    --body-background: #181724;
     --background-critical: #F0414126;
     --background-critical-bold: #F04141;
     --background-information: #2A82EA26;
