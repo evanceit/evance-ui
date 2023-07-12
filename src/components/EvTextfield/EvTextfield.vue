@@ -146,6 +146,7 @@ const vAutofocus = useAutofocus(props);
             <slot name="prefix">{{ prefix }}</slot>
         </div>
         <div class="ev-textfield--input">
+            <slot />
             <input
                 ref="input"
                 :type="type"

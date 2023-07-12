@@ -1,0 +1,17 @@
+.ev-select {
+    cursor: pointer;
+}
+
+.ev-select {
+    .ev-textfield--input {
+
+        > input {
+            align-self: flex-start;
+            flex: 0 0;
+            position: absolute;
+            width: 100%;
+            transition: none;
+            pointer-events: none;
+        }
+    }
+}

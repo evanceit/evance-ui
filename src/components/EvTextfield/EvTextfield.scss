@@ -45,6 +45,9 @@
     > .ev-textfield--input {
         align-self: stretch;
         flex: 1 0 auto;
+        display: flex;
+        align-items: center;
+        position: relative;
 
         > input {
             background: transparent;
@@ -55,7 +58,7 @@
             margin: 0;
             outline: none;
             padding: 0;
-            width: 100%;
+            flex: 1;
         }
     }
 }
