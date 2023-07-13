@@ -13,7 +13,7 @@ const open = ref(false);
 
     <ev-textfield class="ev-select" readonly>
         <template #default>
-            <div class="ev-select--selection">My Selected value</div>
+            <div class="ev-select--selected">My Selected value</div>
         </template>
         <template #suffix>
             <ev-icon :glyph="ChevronDown" />

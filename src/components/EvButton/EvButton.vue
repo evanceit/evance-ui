@@ -4,44 +4,25 @@
  */
 import './EvButton.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {useSlots} from "vue";
+import {computed, useAttrs, useSlots} from "vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {appearanceModifier, InputSize, InputSizeProp, sizeModifier} from "../../util";
+import {appearanceModifier, InputSize, sizeModifier} from "../../util";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
+import {makeEvButtonProps} from "./EvButton.ts";
+import {useRouterLinkOrHref} from "../../composables/router.ts";
 
-/**
- * ## Button Appearance
- */
-export type ButtonAppearanceProp = 'default'
-    | 'danger'
-    | 'primary'
-    | 'subtle';
 
-/**
- * ## Button Props
- */
-interface ButtonProps {
-    appearance?: ButtonAppearanceProp,
-    disabled?: boolean,
-    href?: string,
-    icon?: Object,
-    iconAfter?: Object,
-    iconBefore?: Object
-    rounded?: boolean,
-    size?: InputSizeProp,
-    fullWidth?: boolean,
-    loading?: boolean
-}
-const props = withDefaults(defineProps<ButtonProps>(), {
-    appearance: 'default',
-    disabled: false,
-    fullWidth: false,
-    loading: false,
-    rounded: false
-});
-
+const props = defineProps(makeEvButtonProps());
+const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
+const link = useRouterLinkOrHref(props, attrs);
+
+
+const isDisabled = computed(() => {
+    // we'll add groups later
+    return props.disabled;
+});
 
 /**
  * ## Get Component Element
@@ -74,14 +55,37 @@ function isIconOnly() {
  * Returns `true` if an `href` was supplied AND is NOT an empty string.
  */
 function isLink() {
-    return (props.href && props.href.length > 0);
+    return (link.isLink.value);
+}
+
+/**
+ * # On Click
+ * @param e
+ */
+function onClick(e: MouseEvent): void {
+    if (
+        isDisabled.value
+        || (
+            isLink()
+            && (
+                e.metaKey
+                || e.ctrlKey
+                || e.shiftKey
+                || e.button !== 0
+                || attrs.target === '_blank'
+            )
+        )
+    ) {
+        return;
+    }
+    link.navigate?.(e);
 }
 
 </script>
 <template>
     <component
         :is="getComponentElement()"
-        :href="isLink() ? href : null"
+        :href="link.href.value"
         class="ev-button"
         :class="[
             appearanceModifier(props.appearance),
@@ -96,6 +100,7 @@ function isLink() {
         ]"
         tabindex="0"
         :disabled="!isLink() ? disabled : null"
+        @click="onClick"
     >
         <span class="ev-button--prefix" v-if="icon || iconBefore">
             <ev-icon :glyph="icon ? icon : iconBefore" />
