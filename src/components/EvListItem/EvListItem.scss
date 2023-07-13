@@ -1,15 +1,15 @@
 @use "../../css/mixins";
 
+$indicator-width: 3px;
+
 .ev-list-item {
     align-items: center;
     border-radius: var(--input-radius);
-    display: grid;
-    gap: var(--spacer-50);
-    grid-template-areas: "prepend content append";
-    grid-template-columns: max-content auto max-content;
-    min-height: 48px;
+    display: flex;
+    gap: 4px;
+    min-height: var(--input-height-medium);
     outline: 0;
-    padding: var(--spacer-75);
+    padding: 8px 12px;
     position: relative;
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
 
@@ -21,7 +21,14 @@
 
     > * {
         display: flex;
+        flex: 0 0 auto;
+        width: min-content;
     }
+}
+
+.ev-list-item--content {
+    flex: 1 0 auto;
+    padding-inline: 4px;
 }
 
 .ev-list-item {
@@ -37,12 +44,14 @@
 
 .ev-list-item--indicator {
     position: absolute;
-    width: 3px;
+    width: $indicator-width;
     height: 100%;
     border-top-left-radius: var(--input-radius);
     border-bottom-left-radius: var(--input-radius);
+    left: 0;
     opacity: 0;
     overflow: hidden;
+    top: 0;
     transition: opacity 0.25s ease-in-out;
     will-change: opacity;
 

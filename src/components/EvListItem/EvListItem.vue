@@ -4,7 +4,7 @@ import {makeEvListItemProps} from "./EvListItem.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {useRouterLinkOrHref} from "../../composables/router.ts";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {Dot, Ellipsis} from "../../icons";
+import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
 
 // Emit
 const emit = defineEmits([
@@ -15,6 +15,8 @@ const props = defineProps(makeEvListItemProps());
 const attrs = useAttrs();
 const slots = useSlots();
 const link = useRouterLinkOrHref(props, attrs);
+const hasAppendSlot = hasSlotWithContent(slots, 'append');
+const hasPrependSlot = hasSlotWithContent(slots, 'prepend');
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (
@@ -29,6 +31,7 @@ const isActive = computed(() => {
         && (props.active || link.isActive?.value)
     );
 });
+
 
 function getComponentElement() {
     return isLink.value ? 'a' : props.tag;
@@ -78,14 +81,14 @@ function onKeyDown(e: KeyboardEvent): void {
         @keydown.enter="onKeyDown"
         @keydown.space="onKeyDown"
     >
-        <div class="ev-list-item--prepend">
-            <ev-icon :glyph="Dot" />
+        <div class="ev-list-item--prepend" v-if="hasPrependSlot || props.prependIcon">
+            <slot name="prepend"><ev-icon :glyph="props.prependIcon" /></slot>
         </div>
         <div class="ev-list-item--content">
-            This is a short title
+            <slot name="default">{{ props.title }}</slot>
         </div>
-        <div class="ev-list-item--append">
-            <ev-icon :glyph="Ellipsis" />
+        <div class="ev-list-item--append" v-if="hasAppendSlot || props.appendIcon">
+            <slot name="append"><ev-icon :glyph="props.appendIcon" /></slot>
         </div>
         <div class="ev-list-item--indicator"></div>
     </component>

@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvListItem } from "../EvListItem";
+import {ChevronRight, Dot} from "../../icons";
 
 const meta: Meta<typeof EvListItem> = {
     component: EvListItem,
@@ -8,6 +9,15 @@ const meta: Meta<typeof EvListItem> = {
         active: {
             control: 'boolean',
             description: "Controls the active state of the item."
+        },
+        appendIcon: {
+            control: 'select',
+            options: ['none', 'ChevronRight', 'Dot'],
+            mapping: {
+                'none': null,
+                'ChevronRight': ChevronRight,
+                'Dot': Dot
+            }
         },
         disabled: {
             control: 'boolean',
@@ -22,17 +32,32 @@ const meta: Meta<typeof EvListItem> = {
             control: 'boolean',
             description: "Manually designate the component as a link. Using `href` or `to` will do this automatically."
         },
+        prependIcon: {
+            control: 'select',
+            options: ['none', 'ChevronRight', 'Dot'],
+            mapping: {
+                'none': null,
+                'ChevronRight': ChevronRight,
+                'Dot': Dot
+            }
+        },
         to: {
             control: 'text',
             description: 'Instead of using a regular `a` tags with an `href` attribute, ' +
                 'use a `to` attribute provided by vue-router\'s `router-link` '
+        },
+        title: {
+            control: 'text'
         }
     },
     args: {
         active: false,
+        appendIcon: null,
         disabled: false,
         href: '',
-        to: ''
+        prependIcon: null,
+        to: '',
+        title: 'Example list item'
     },
     tags: ['autodocs']
 };
@@ -43,10 +68,10 @@ type Story = StoryObj<typeof EvListItem>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvListItem },
+        components: { EvListItem, Dot, ChevronRight },
         setup() {
-            return { args };
+            return { args, Dot, ChevronRight };
         },
-        template: '<ev-list-item v-bind="args">{{ args.default }}</ev-list-item>'
+        template: '<ev-list-item v-bind="args">{{ args.title }}</ev-list-item>'
     })
 };
