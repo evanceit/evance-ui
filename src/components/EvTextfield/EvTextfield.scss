@@ -1,3 +1,5 @@
+@use "../../css/mixins";
+
 /**
     # EvTextField
  */
@@ -182,8 +184,6 @@
 /** Disabled */
 .ev-textfield {
     &.is-disabled {
-        filter: grayscale(0.5);
-        opacity: 0.5;
-        pointer-events: none;
+        @include mixins.is-disabled;
     }
 }

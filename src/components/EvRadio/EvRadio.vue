@@ -1,21 +1,20 @@
-<script lang="ts">
+<script setup lang="ts">
 /**
  * # `<ev-radio>`
- *
- * We want to pass attributes not defined as 'props'
- * to the `<input>` field, so we need to turn off `inheritAttrs`.
- * This cannot be done inside the `<script setup>` tag.
  */
-export default {
-    inheritAttrs: false
-}
-</script>
-<script setup lang="ts">
 import './EvRadio.scss';
 import {computed, ref, useAttrs} from "vue";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {getNextId, isDeepEqual, splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
+
+/**
+ * We want to pass attributes not defined as 'props'
+ * to the `<input>` field, so we need to turn off `inheritAttrs`.
+ */
+defineOptions({
+    inheritAttrs: false
+});
 
 /**
  * # Radio Props

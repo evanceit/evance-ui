@@ -1,16 +1,7 @@
-<script lang="ts">
+<script setup lang="ts">
 /**
  * # `<ev-textarea>`
- *
- * We want to pass attributes not defined as 'props'
- * to the `<input>` field, so we need to turn off `inheritAttrs`.
- * This cannot be done inside the `<script setup>` tag.
  */
-export default {
-    inheritAttrs: false
-}
-</script>
-<script setup lang="ts">
 import './EvTextarea.scss';
 import {computed, nextTick, ref, useAttrs, onUpdated, onMounted} from "vue";
 import {appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
@@ -19,6 +10,16 @@ import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
+
+
+/**
+ * We want to pass attributes not defined as 'props'
+ * to the `<input>` field, so we need to turn off `inheritAttrs`.
+ */
+defineOptions({
+    inheritAttrs: false
+});
+
 
 // Props
 interface TextareaProps {

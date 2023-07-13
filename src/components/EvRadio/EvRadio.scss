@@ -1,3 +1,5 @@
+@use "../../css/mixins";
+
 /**
     # EvRadio
  */
@@ -125,8 +127,6 @@
 /** Disabled modifier */
 .ev-radio {
     &.is-disabled {
-        filter: grayscale(0.5);
-        opacity: 0.5;
-        pointer-events: none;
+        @include mixins.is-disabled;
     }
 }

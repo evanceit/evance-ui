@@ -4,6 +4,7 @@ import { EvSelect } from "../EvSelect";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
+    title: 'Forms/EvSelect',
     argTypes: {
 
     },

@@ -1,3 +1,5 @@
+@use "../../css/mixins";
+
 /**
     # EvButton
  */
@@ -40,9 +42,7 @@
 .ev-button {
     &[disabled],
     &.is-disabled {
-        pointer-events: none;
-        opacity: 0.5;
-        filter: grayscale(0.5);
+        @include mixins.is-disabled;
     }
 }
 

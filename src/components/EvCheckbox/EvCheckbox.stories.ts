@@ -4,6 +4,7 @@ import { EvCheckbox } from "../EvCheckbox";
 
 const meta: Meta<typeof EvCheckbox> = {
     component: EvCheckbox,
+    title: 'Forms/EvCheckbox',
     argTypes: {
         modelValue: {
             control: 'string',

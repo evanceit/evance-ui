@@ -1,22 +1,20 @@
-<script lang="ts">
+<script setup lang="ts">
 /**
  * # `<ev-checkbox>`
- *
- * We want to pass attributes not defined as 'props'
- * to the `<input>` field, so we need to turn off `inheritAttrs`.
- * This cannot be done inside the `<script setup>` tag.
  */
-export default {
-    inheritAttrs: false
-}
-</script>
-<script setup lang="ts">
 import './EvCheckbox.scss';
 import {ref, useAttrs} from "vue";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
 
+/**
+ * We want to pass attributes not defined as 'props'
+ * to the `<input>` field, so we need to turn off `inheritAttrs`.
+ */
+defineOptions({
+    inheritAttrs: false
+});
 
 /**
  * # Checkbox Props

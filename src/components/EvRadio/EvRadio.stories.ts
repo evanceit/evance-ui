@@ -4,6 +4,7 @@ import { EvRadio } from "../EvRadio";
 
 const meta: Meta<typeof EvRadio> = {
     component: EvRadio,
+    title: "Forms/EvRadio",
     argTypes: {
         modelValue: {
             control: 'string',

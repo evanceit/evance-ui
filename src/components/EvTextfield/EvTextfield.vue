@@ -1,16 +1,7 @@
-<script lang="ts">
+<script setup lang="ts">
 /**
  * # `<ev-textfield>`
- *
- * We want to pass attributes not defined as 'props'
- * to the `<input>` field, so we need to turn off `inheritAttrs`.
- * This cannot be done inside the `<script setup>` tag.
  */
-export default {
-    inheritAttrs: false
-}
-</script>
-<script setup lang="ts">
 import './EvTextfield.scss';
 import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
@@ -27,6 +18,15 @@ import {
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+
+
+/**
+ * We want to pass attributes not defined as 'props'
+ * to the `<input>` field, so we need to turn off `inheritAttrs`.
+ */
+defineOptions({
+    inheritAttrs: false
+});
 
 
 // Props

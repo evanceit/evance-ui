@@ -1,3 +1,83 @@
-.ev-list-item {
+@use "../../css/mixins";
 
+.ev-list-item {
+    align-items: center;
+    border-radius: var(--input-radius);
+    display: grid;
+    gap: var(--spacer-50);
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
+    min-height: 48px;
+    outline: 0;
+    padding: var(--spacer-75);
+    position: relative;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+
+    @at-root a#{&} {
+        color: inherit;
+        font-weight: var(--text-weight);
+        text-decoration: none;
+    }
+
+    > * {
+        display: flex;
+    }
+}
+
+.ev-list-item {
+    &.is-clickable {
+        cursor: pointer;
+
+        &:hover {
+            color: inherit;
+            background: var(--background-muted);
+        }
+    }
+}
+
+.ev-list-item--indicator {
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    border-top-left-radius: var(--input-radius);
+    border-bottom-left-radius: var(--input-radius);
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.25s ease-in-out;
+    will-change: opacity;
+
+    &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: var(--text-selected);
+        transition: transform 0.25s ease-in-out;
+        transform: translateX(-100%);
+        top: 0;
+        left: 0;
+        will-change: transform;
+    }
+}
+
+.ev-list-item {
+    &.is-active {
+        background: var(--background-selected);
+        color: var(--text-selected);
+
+        .ev-list-item--indicator {
+            opacity: 1;
+            &:before {
+                transform: translateX(0);
+            }
+        }
+    }
+}
+
+.ev-list-item {
+    &[disabled],
+    &.is-disabled {
+        @include mixins.is-disabled;
+    }
 }

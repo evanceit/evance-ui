@@ -4,6 +4,7 @@ import { EvSwitch } from "../EvSwitch";
 
 const meta: Meta<typeof EvSwitch> = {
     component: EvSwitch,
+    title: 'Forms/EvSwitch',
     argTypes: {
         modelValue: {
             control: 'boolean',

@@ -6,6 +6,7 @@ import {InputAppearance, InputSize} from "../../util";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
+    title: 'Forms/EvTextfield',
     argTypes: {
         appearance: {
             control: 'select',

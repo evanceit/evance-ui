@@ -5,6 +5,7 @@ import {InputAppearance} from "../../util";
 
 const meta: Meta<typeof EvTextarea> = {
     component: EvTextarea,
+    title: 'Forms/EvTextarea',
     argTypes: {
         appearance: {
             control: 'select',

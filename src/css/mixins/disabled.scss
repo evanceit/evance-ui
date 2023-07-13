@@ -1,0 +1,6 @@
+@mixin is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    filter: grayscale(0.5);
+    user-select: none;
+}

@@ -1,3 +1,4 @@
+@use "../../css/mixins";
 
 .ev-checkbox {
     display: inline-flex;
@@ -132,8 +133,6 @@
 /** Disabled modifier */
 .ev-checkbox {
     &.is-disabled {
-        filter: grayscale(0.5);
-        opacity: 0.5;
-        pointer-events: none;
+        @include mixins.is-disabled;
     }
 }
