@@ -1,6 +1,23 @@
 import {GetterPropertyKey, propsFactory} from "../util";
 import {PropType} from "vue";
 
+
+/**
+ * # List Item
+ */
+export interface ListItem<T = any> {
+    title: string;
+    value: any;
+    props: {
+        [key: string]: any,
+        title: string,
+        value: any
+    };
+    children?: ListItem<T>[];
+    raw: T;
+}
+
+
 /**
  * # List Item Key
  *
@@ -17,7 +34,7 @@ export type ListItemKey = GetterPropertyKey;
 
 
 /**
- * # List Item Props
+ * # List Items Props
  *
  * - `items` - the array of items to render within a list.
  * - `item-title` - the title property/key to use as the title in each list item.
@@ -25,13 +42,13 @@ export type ListItemKey = GetterPropertyKey;
  * - `item-props` - the props to assign to each list item.
  * - `return-object` - return the full item object on selection if `true`, or the `item-value` if `false`.
  */
-export interface ListItemProps {
-    items: any[]
-    itemTitle: ListItemKey
-    itemValue: ListItemKey
-    itemChildren: ListItemKey
-    itemProps: ListItemKey
-    returnObject: boolean
+export interface ListItemsProps {
+    items: any[];
+    itemTitle: ListItemKey;
+    itemValue: ListItemKey;
+    itemChildren: ListItemKey;
+    itemProps: ListItemKey;
+    returnObject: boolean;
 }
 
 
@@ -47,11 +64,11 @@ export interface ListItemProps {
  * - `item-props` - 'props'
  * - `return-object` - `false`
  *
- * @see ListItemProps
+ * @see ListItemsProps
  */
 export const makeListItemsProps = propsFactory({
     items: {
-        type: Array as PropType<ListItemProps['items']>,
+        type: Array as PropType<ListItemsProps['items']>,
         default: () => ([]),
     },
     itemTitle: {

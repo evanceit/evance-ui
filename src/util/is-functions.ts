@@ -14,7 +14,7 @@ export function is(a?: any, b?: any): boolean {
  * # Is Array?
  * @param value
  */
-export function isArray(value: any): boolean {
+export function isArray(value: unknown): boolean {
     return Array.isArray(value);
 }
 
@@ -22,7 +22,7 @@ export function isArray(value: any): boolean {
  * # Is CSS Variable
  * @param value
  */
-export function isCssVariable(value: any): boolean
+export function isCssVariable(value: unknown): boolean
 {
     if (!isString(value)) {
         return false;
@@ -35,7 +35,7 @@ export function isCssVariable(value: any): boolean
  * # Is Date?
  * @param value
  */
-export function isDate(value: any): boolean {
+export function isDate(value: unknown): boolean {
     return (value instanceof Date);
 }
 
@@ -94,6 +94,18 @@ export function isDeepEqual(a: any, b: any, options?: object = {}): boolean {
     return keysInA.every((key) => isDeepEqual(a[key], b[key]));
 }
 
+/**
+ * # Is Empty
+ * @param value
+ */
+export function isEmpty (value: any): boolean {
+    return (
+        value === null
+        || value === undefined
+        || (typeof value === 'string' && value.trim() === '')
+    );
+}
+
 
 /**
  * # Is Equal NaN
@@ -102,44 +114,58 @@ export function isDeepEqual(a: any, b: any, options?: object = {}): boolean {
  *
  * @param value
  */
-export function isEqualNaN(value: any): boolean {
+export function isEqualNaN(value: unknown): boolean {
     return (value !== value);
 }
-
 
 /**
  * # Is Function?
  * @param value
  */
-export function isFunction(value: any): boolean {
+export function isFunction(value: unknown): boolean {
     return (typeof value === 'function');
+}
+
+/**
+ * # Is Number
+ * @param value
+ */
+export function isNumber(value: unknown): boolean {
+    return (typeof value === 'number');
 }
 
 /**
  * # Is Object?
  * @param value
  */
-export function isObject(value: any): boolean {
+export function isObject(value: unknown): boolean {
     return (typeof value === 'object');
+}
+
+/**
+ *
+ * @param value
+ */
+export function isPrimitive (value: unknown): value is string | number | boolean {
+    return Object(value) !== value;
 }
 
 /**
  * # Is ShadowRoot
  * @param value
  */
-export function isShadowRoot(value: any): boolean {
+export function isShadowRoot(value: unknown): boolean {
     return (
         typeof ShadowRoot !== 'undefined'
         && value instanceof ShadowRoot
     );
 }
 
-
 /**
  * # Is String?
  * @param value
  */
-export function isString(value: any): boolean {
+export function isString(value: unknown): boolean {
     if (typeof value === 'string') {
         return true;
     }
@@ -152,4 +178,8 @@ export function isString(value: any): boolean {
     } catch (e) {
         return false;
     }
+}
+
+export function isTypeOf(value: unknown, accept: string[]): boolean {
+    return accept.includes(typeof value);
 }

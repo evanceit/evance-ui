@@ -23,8 +23,24 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvList },
         setup() {
-            return { args };
+
+            const items =  [
+                {
+                    title: 'Example 1',
+                    value: 1
+                },
+                {
+                    title: 'Example 2',
+                    value: 2
+                },
+                {
+                    title: 'Example 3',
+                    value: 3
+                }
+            ];
+
+            return { args, items };
         },
-        template: '<ev-list v-bind="args"></ev-list>'
+        template: '<ev-list :items="items"></ev-list>'
     })
 };
