@@ -2,6 +2,8 @@ export * from './EvButton';
 export * from './EvCheckbox';
 export * from './EvDivider';
 export * from './EvIcon';
+export * from './EvList';
+export * from './EvListItem';
 export * from './EvLozenge';
 export * from './EvMessage';
 export * from './EvProgress';

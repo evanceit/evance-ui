@@ -10,6 +10,10 @@ const meta: Meta<typeof EvListItem> = {
             control: 'boolean',
             description: "Controls the active state of the item."
         },
+        activeExact: {
+            control: 'boolean',
+            description: "Works with router links."
+        },
         appendIcon: {
             control: 'select',
             options: ['none', 'ChevronRight', 'Dot'],

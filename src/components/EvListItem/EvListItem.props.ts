@@ -7,6 +7,10 @@ export const makeEvListItemProps = propsFactory({
         type: Boolean,
         default: undefined
     },
+    activeExact: {
+        type: Boolean,
+        default: undefined
+    },
     appendIcon: IconValue,
     disabled: Boolean,
     link: {

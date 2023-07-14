@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import './EvListItem.scss';
-import {makeEvListItemProps} from "./EvListItem.ts";
+import {makeEvListItemProps} from "./EvListItem.props.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {useRouterLinkOrHref} from "../../composables/router.ts";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
+import {useList} from "../../composables/lists.ts";
 
 // Emit
 const emit = defineEmits([
@@ -22,7 +23,7 @@ const isClickable = computed(() => {
     return (
         !props.disabled
         && props.link !== false
-        && (props.link || link.isClickable.value)
+        && (props.link || link.isClickable.value || (props.value != null && !!list))
     );
 });
 const isActive = computed(() => {
@@ -31,6 +32,13 @@ const isActive = computed(() => {
         && (props.active || link.isActive?.value)
     );
 });
+const isActiveExact = computed(() => {
+    return (
+        props.exactActive !== false
+        && (props.exactActive || link.isExactActive?.value)
+    );
+});
+const list = useList();
 
 
 function getComponentElement() {
@@ -38,7 +46,7 @@ function getComponentElement() {
 }
 
 function getTabIndex() {
-    return (isClickable.value ? -2 : null);
+    return (isClickable.value ? (list ? -2 : 0) : null);
 }
 
 /**
@@ -63,6 +71,7 @@ function onKeyDown(e: KeyboardEvent): void {
     onClick(e as any as MouseEvent);
 }
 
+
 </script>
 <template>
     <component
@@ -71,6 +80,7 @@ function onKeyDown(e: KeyboardEvent): void {
         :class="[
             {
                 'is-active': isActive,
+                'is-active--exact': isActiveExact,
                 'is-clickable': isClickable,
                 'is-disabled': props.disabled
             }

@@ -1,5 +1,6 @@
 import {ComponentInternalInstance} from "vue";
-import {getCurrentComponent} from "../util";
+import {getCurrentComponent, isArray, isFunction, isString} from "../util";
+
 
 /**
  * # Get Next ID
@@ -18,6 +19,114 @@ export function getNextId(): number {
 getNextId.reset = () => {
     currentId = 0;
     assignedIds = new WeakMap();
+}
+
+
+/**
+ * # Getter Property Key
+ *
+ * Defines where to look for Property information within getter functions.
+ *
+ * For example: an object might have a `title` property.
+ * So a property key may represent either an array index, or an object property.
+ *
+ * - `boolean` - Ignored
+ * - `string` - Property name, or use Object path notation.
+ * - `array` of strings or numbers represent nested lookup - each array element represents a key in the hierarchy
+ */
+export type GetterPropertyKey =
+    | boolean
+    | string
+    | (string | number)[]
+    | ((item: Record<string, any>, fallback?: any) => any);
+
+
+/**
+ * # Get Property
+ *
+ * A getter function, which gets a property from the `subject`, which may be
+ * any kind of object.
+ *
+ */
+export function getPropertyValue(
+    subject: any,
+    property: GetterPropertyKey,
+    fallback?: any
+): any {
+    if (property == null) {
+        return (subject === undefined) ? fallback : subject;
+    }
+    if (subject !== Object(subject) || isFunction(property)) {
+        if (!isFunction(property)) {
+            return fallback;
+        }
+        const value = property(subject, fallback);
+        return (typeof value === undefined) ? fallback : value;
+    }
+    if (isString(property)) {
+        return getPropertyFromPath(subject, property, fallback);
+    }
+    if (isArray(property)) {
+        return getNestedPropertyValue(subject, property, fallback);
+    }
+    throw new Error("Can't tell how to getProperty() from subject");
+}
+
+
+/**
+ * # Get Property from Path
+ *
+ * This is a rough copy of Evance's `EvObjectPathGetter` functionality.
+ *
+ * @param subject
+ * @param objectPath
+ * @param fallback
+ */
+export function getPropertyFromPath(subject: any, objectPath: string, fallback?: any) {
+    if (subject == null || !objectPath) {
+        return fallback;
+    }
+    const propertyKeys = objectPathToPropertyKeys(objectPath);
+    return getNestedPropertyValue(subject, propertyKeys, fallback);
+}
+
+
+/**
+ * # Get Nested Property Value
+ *
+ * @param subject
+ * @param propertyKeys
+ * @param fallback
+ */
+export function getNestedPropertyValue(subject: any, propertyKeys: PropertyKey[], fallback?: any): any {
+    let lastValue = subject;
+    for (const property of propertyKeys) {
+        if (lastValue === undefined) {
+            break;
+        }
+        lastValue = lastValue[property];
+    }
+    return (lastValue === undefined) ? fallback : lastValue;
+}
+
+
+/**
+ * # Object Path To Array
+ *
+ * This is a rough copy of Evance's `EvObjectPath` functionality.
+ *
+ * @param path
+ */
+export function objectPathToPropertyKeys(path: string): PropertyKey[] {
+    const pattern = /^([\da-z_-]+)(?:[\/.]([\da-z_-]+)|\[(\d+)\])*$/i;
+    const matches = path.match(pattern);
+    if (!matches) {
+        throw new Error('Invalid Object Path');
+    }
+    path = path.replace(']', '')
+        .replace('[', '.')
+        .replace('/', '.');
+    return path.split('.');
 }
 
 

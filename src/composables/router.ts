@@ -108,6 +108,7 @@ export function useRouterLinkOrHref(
         route: link?.route,
         navigate: link?.navigate,
         isActive: link && computed(() => props.exact ? link.isExactActive?.value : link.isActive?.value),
+        isExactActive: link?.isExactActive,
         href: computed(() => props.to ? link?.route.value.href : props.href)
     };
 }

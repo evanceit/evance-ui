@@ -1,0 +1,12 @@
+@use "../../css/mixins";
+
+.ev-list {
+
+}
+
+.ev-list {
+    &[disabled],
+    &.is-disabled {
+        @include mixins.is-disabled;
+    }
+}
