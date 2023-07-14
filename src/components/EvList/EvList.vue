@@ -23,6 +23,7 @@ const slots = useSlots();
 const items = useListItems(props);
 const container = ref<HTMLElement | null>(null);
 const isFocused = shallowRef(false);
+const lastFocus = shallowRef<HTMLElement | null>(null);
 const tabindex = computed(() => {
     return (props.disabled || isFocused.value) ? -1 : 0;
 });
@@ -32,21 +33,37 @@ const tabindex = computed(() => {
  */
 createList();
 
-
-
+/**
+ * # On Focus
+ * Set or restore focus
+ * @param e
+ */
 function onFocus(e: FocusEvent): void {
     if (
         !isFocused.value
         && !(e.relatedTarget && container.value?.contains(e.relatedTarget as Node))
+        && container.value
     ) {
-        console.log('onFocus');
+        if (lastFocus.value) {
+            lastFocus.value.focus();
+        } else {
+            setFocus();
+        }
     }
 }
 
+/**
+ * # On Focus In
+ * @param e
+ */
 function onFocusIn(e: FocusEvent): void {
     isFocused.value = true;
 }
 
+/**
+ * # On Focus Out
+ * @param e
+ */
 function onFocusOut(e: FocusEvent): void {
     isFocused.value = false;
 }
@@ -75,7 +92,7 @@ function onKeyDown(e: KeyboardEvent): void {
  * @param position
  */
 function setFocus(position?: FocusPosition): void {
-    focusChild(container?.value, position);
+    lastFocus.value = focusChild(container?.value, position);
 }
 
 </script>

@@ -20,7 +20,6 @@ const hasAppendSlot = hasSlotWithContent(slots, 'append');
 const hasPrependSlot = hasSlotWithContent(slots, 'prepend');
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
-    console.log(list);
     return (
         !props.disabled
         && props.link !== false

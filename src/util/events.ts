@@ -56,39 +56,46 @@ export type FocusPosition = 'next' | 'previous' | 'first' | 'last';
  * @param el
  * @param position
  */
-export function focusChild(el?: Element, position?: FocusPosition) {
+export function focusChild(el?: Element, position?: FocusPosition): HTMLElement | null {
     if (!el) {
-        return;
+        return null;
     }
+
+    let focusedElement: HTMLElement;
     const focusableElements = getFocusableChildren(el);
-    console.log(focusableElements);
-    const index = focusableElements.indexOf(document.activeElement as HTMLElement)
+    const index = focusableElements.indexOf(document.activeElement as HTMLElement);
+
     if (!position) {
         if (el === document.activeElement || !el.contains(document.activeElement)) {
-            focusableElements[0]?.focus();
+            focusedElement = focusableElements[0];
         }
     } else if (position === 'first') {
-        focusableElements[0]?.focus();
+        focusedElement = focusableElements[0];
     } else if (position === 'last') {
-        focusableElements.at(-1)?.focus();
+        focusedElement = focusableElements.at(-1);
     } else {
-        let focusableElement;
+        let lastElement;
         let lastIndex = index;
         const increment = (position === 'next') ? 1 : -1;
         do {
             lastIndex += increment;
-            focusableElement = focusableElements[lastIndex];
+            lastElement = focusableElements[lastIndex];
         } while (
-            (!focusableElement || focusableElement.offsetParent == null)
+            (!lastElement || lastElement.offsetParent == null)
             && (lastIndex < focusableElements.length)
             && (lastIndex >= 0)
             );
-        if (focusableElement) {
-            focusableElement.focus();
+        if (lastElement) {
+            focusedElement = lastElement;
         } else {
-            focusChild(el, position === 'next' ? 'first' : 'last');
+            return focusChild(el, position === 'next' ? 'first' : 'last');
         }
     }
+    if (focusedElement) {
+        focusedElement.focus();
+        return focusedElement;
+    }
+    return null;
 }
 
 
