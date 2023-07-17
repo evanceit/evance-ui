@@ -21,7 +21,6 @@ export const singleAny = (isRequired?: boolean): SelectStrategy => {
     const selectFn: SelectStrategyFn = (data: SelectStrategyData) => {
         const id = toRaw(data.id);
         const singleSelection = data.selected.has(id) ? new Map([[id, data.selected.get(id)!]]) : new Map();
-
         return parentStrategy.select({
             ...data,
             id: id,

@@ -112,6 +112,7 @@ defineExpose({
         :is="props.tag"
         ref="container"
         class="ev-list"
+        role="listbox"
         :class="[
              {
                  'is-disabled': props.disabled
