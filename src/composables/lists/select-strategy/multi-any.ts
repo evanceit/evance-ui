@@ -1,4 +1,10 @@
-import {SelectStrategy, SelectStrategyData, SelectTransformInFn, SelectTransformOutFn} from "../select-strategies.ts";
+import {
+    SelectStrategy,
+    SelectStrategyData,
+    SelectStrategyFn,
+    SelectTransformInFn,
+    SelectTransformOutFn
+} from "../select-strategies.ts";
 import {toRaw} from "vue";
 
 /**
@@ -10,7 +16,7 @@ import {toRaw} from "vue";
  */
 export const multiAny = (isRequired?: boolean): SelectStrategy => {
 
-    const selectFn = (data: SelectStrategyData) => {
+    const selectFn: SelectStrategyFn = (data: SelectStrategyData) => {
         const id = toRaw(data.id);
         if (isRequired && !data.value) {
             const reducer = (arr, [key, value]) => {

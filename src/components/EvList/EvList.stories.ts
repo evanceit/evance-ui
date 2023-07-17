@@ -8,6 +8,10 @@ const meta: Meta<typeof EvList> = {
     argTypes: {
         disabled: {
             control: 'boolean'
+        },
+        selectStrategy: {
+            control: 'select',
+            options: ['single-any', 'multi-any']
         }
     },
     args: {
@@ -45,10 +49,10 @@ export const Primary: Story = {
                 }
             ];
 
-            let selected = ref([]);
+            let selected = ref([1]);
 
             return { args, items, selected };
         },
-        template: '<ev-list :items="items" v-model:selected="selected" @click:select="onClickSelect"></ev-list> {{ selected }}'
+        template: '<ev-list v-bind="args" :items="items" v-model:selected="selected"></ev-list> {{ selected }}'
     })
 };

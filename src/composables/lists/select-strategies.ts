@@ -1,6 +1,7 @@
 import {computed, ComputedRef, PropType} from "vue";
 import {isObject, propsFactory} from "../../util";
 import {multiAny} from "./select-strategy";
+import {singleAny} from "./select-strategy/single-any.ts";
 
 /**
  * # Select Strategy
@@ -90,7 +91,9 @@ export function useSelectStrategy(props: SelectStrategyProps): ComputedRef<Selec
             return props.selectStrategy;
         }
 
-        // @todo: More strategies to come
+        switch (props.selectStrategy) {
+            case 'single-any': return singleAny(props.required);
+        }
 
         return multiAny(props.required);
     });
