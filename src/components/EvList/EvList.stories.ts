@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvList } from "../EvList";
+import {ref} from "vue";
 
 const meta: Meta<typeof EvList> = {
     component: EvList,
@@ -22,6 +23,11 @@ type Story = StoryObj<typeof EvList>;
 export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvList },
+        methods: {
+            onClickSelect(e) {
+                console.log(e);
+            }
+        },
         setup() {
 
             const items =  [
@@ -39,8 +45,10 @@ export const Primary: Story = {
                 }
             ];
 
-            return { args, items };
+            let selected = ref([]);
+
+            return { args, items, selected };
         },
-        template: '<ev-list :items="items"></ev-list>'
+        template: '<ev-list :items="items" v-model:selected="selected" @click:select="onClickSelect"></ev-list> {{ selected }}'
     })
 };

@@ -2,8 +2,8 @@ import {getPropertyValue, isPrimitive, propsFactory} from "../../util";
 import {
     ListItem as DefaultListItem,
     ListItemsProps as DefaultListItemProps,
-    makeListItemsProps
-} from "../../composables/list-items.ts";
+    makeListItemsProps, makeNestedProps
+} from "../../composables/lists";
 import {computed} from "vue";
 
 
@@ -86,6 +86,9 @@ export const makeEvListProps = propsFactory({
         default: 'div'
     },
 
-    ...makeListItemsProps()
+    ...makeListItemsProps(),
+    ...makeNestedProps({
+        selectStrategy: 'multi-any'
+    })
 
 }, 'EvList');

@@ -36,7 +36,7 @@ $indicator-width: 3px;
     &.is-clickable {
         cursor: pointer;
 
-        &:focus,
+        &:focus-visible,
         &:hover {
             color: inherit;
             background: var(--background-muted);

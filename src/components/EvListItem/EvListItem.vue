@@ -5,7 +5,7 @@ import {computed, useAttrs, useSlots} from "vue";
 import {useRouterLinkOrHref} from "../../composables/router.ts";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
-import {useList} from "../../composables/lists.ts";
+import {useList, useNestedListItem} from "../../composables/lists";
 
 // Emit
 const emit = defineEmits([
@@ -16,6 +16,9 @@ const props = defineProps(makeEvListItemProps());
 const attrs = useAttrs();
 const slots = useSlots();
 const link = useRouterLinkOrHref(props, attrs);
+const list = useList();
+const id = computed(() => props.value === undefined ? link.href.value : props.value);
+const { select, isSelected, isIndeterminate, isGroupActivator, root, parent } = useNestedListItem(id, false);
 const hasAppendSlot = hasSlotWithContent(slots, 'append');
 const hasPrependSlot = hasSlotWithContent(slots, 'prepend');
 const isLink = computed(() => props.link !== false && link.isLink.value);
@@ -29,7 +32,7 @@ const isClickable = computed(() => {
 const isActive = computed(() => {
     return (
         props.active !== false
-        && (props.active || link.isActive?.value)
+        && (props.active || link.isActive?.value || isSelected.value)
     );
 });
 const isActiveExact = computed(() => {
@@ -38,7 +41,6 @@ const isActiveExact = computed(() => {
         && (props.exactActive || link.isExactActive?.value)
     );
 });
-const list = useList();
 
 
 function getComponentElement() {
@@ -59,7 +61,9 @@ function onClick(e: MouseEvent): void {
         return;
     }
     link.navigate?.(e);
-    // @todo select()
+    if (props.value != null) {
+        select(!isSelected.value, e);
+    }
 }
 
 /**

@@ -16,17 +16,23 @@ import {makeEvListProps, useListItems} from "./EvList.props.ts";
 import EvListItem from "../EvListItem/EvListItem.vue";
 import {computed, ref, shallowRef, useSlots} from "vue";
 import {focusChild, FocusPosition} from "../../util";
-import {createList} from "../../composables/lists.ts";
+import {createList, useNestedList} from "../../composables/lists";
 
 const props = defineProps(makeEvListProps());
 const slots = useSlots();
 const items = useListItems(props);
+const { select } = useNestedList(props);
 const container = ref<HTMLElement | null>(null);
 const isFocused = shallowRef(false);
 const lastFocus = shallowRef<HTMLElement | null>(null);
 const tabindex = computed(() => {
     return (props.disabled || isFocused.value) ? -1 : 0;
 });
+
+defineEmits([
+    'update:selected',
+    'click:select'
+]);
 
 /**
  * Establish provide() and inject() functionality for list items.
@@ -47,7 +53,7 @@ function onFocus(e: FocusEvent): void {
         if (lastFocus.value) {
             lastFocus.value.focus();
         } else {
-            setFocus();
+            focus();
         }
     }
 }
@@ -82,7 +88,7 @@ function onKeyDown(e: KeyboardEvent): void {
     };
     const position = keys[e.key];
     if (position && container.value) {
-        setFocus(position);
+        focus(position);
         e.preventDefault();
     }
 }
@@ -91,9 +97,14 @@ function onKeyDown(e: KeyboardEvent): void {
  * # Set Focus
  * @param position
  */
-function setFocus(position?: FocusPosition): void {
+function focus(position?: FocusPosition): void {
     lastFocus.value = focusChild(container?.value, position);
 }
+
+defineExpose({
+    focus,
+    select
+});
 
 </script>
 <template>

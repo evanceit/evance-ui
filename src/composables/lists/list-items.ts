@@ -1,4 +1,4 @@
-import {GetterPropertyKey, propsFactory} from "../util";
+import {GetterPropertyKey, propsFactory} from "../../util";
 import {PropType} from "vue";
 
 
