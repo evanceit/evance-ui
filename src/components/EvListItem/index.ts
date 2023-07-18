@@ -1,2 +1,2 @@
-export * from './EvListItem.props.ts';
+export * from './EvListItem.ts';
 export { default as EvListItem } from './EvListItem.vue';

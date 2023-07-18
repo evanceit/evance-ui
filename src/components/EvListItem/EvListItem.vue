@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import './EvListItem.scss';
-import {makeEvListItemProps} from "./EvListItem.props.ts";
+import {makeEvListItemProps} from "./EvListItem.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {useRouterLinkOrHref} from "../../composables/router.ts";
 import EvIcon from "../EvIcon/EvIcon.vue";

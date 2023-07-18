@@ -12,7 +12,7 @@
  * @see EvListItem
  */
 import './EvList.scss';
-import {makeEvListProps, useListItems} from "./EvList.props.ts";
+import {makeEvListProps, useListItems} from "./EvList.ts";
 import EvListItem from "../EvListItem/EvListItem.vue";
 import {computed, ref, shallowRef, useSlots} from "vue";
 import {focusChild, FocusPosition} from "../../util";
