@@ -1,0 +1,35 @@
+.ev-surface {
+    transition: background-color 0.25s ease-in-out,
+                box-shadow 0.25s ease-in-out;
+    will-change: background-color;
+    box-shadow: none;
+
+    &.elevation-default {
+        background-color: var(--surface-default);
+    }
+
+    &.elevation-overlay {
+        background-color: var(--surface-overlay);
+        box-shadow: var(--surface-overlay-shadow);
+    }
+
+    &.elevation-panel {
+        background-color: var(--surface-panel);
+    }
+
+    &.elevation-sunken  {
+        background-color: var(--surface-sunken);
+    }
+}
+
+
+.is-rounded,
+.is-rounded-small {
+    border-radius: var(--rounded-small);
+}
+.is-rounded-medium {
+    border-radius: var(--rounded-medium);
+}
+.is-rounded-large {
+    border-radius: var(--rounded-large);
+}

@@ -121,13 +121,16 @@ $text: (
     --input-border: 1px solid var(--input-border-color);
     --input-font-size: 1rem;
 
+    /** Rounded */
+    --rounded-small: 4px;
+    --rounded-medium: 8px;
+    --rounded-large: 16px;
+
+
     /* Spacers */
     @each $percentage in map_keys($spacers) {
         --spacer-#{$percentage}: #{map-get($spacers, $percentage)};
     }
-
-    /** Sheets */
-    --sheet-radius: 4px;
 
     /* Text */
     --heading-lineheight: 1.2em;

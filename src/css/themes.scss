@@ -28,6 +28,7 @@
     /* Surfaces */
     --surface-default: #F3F5F9;
     --surface-overlay: #FFFFFF;
+    --surface-overlay-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F;
     --surface-panel: #FFFFFF;
     --surface-sunken: #E7EBF3;
 
@@ -105,6 +106,7 @@
     /* Surfaces */
     --surface-default: #181724;
     --surface-overlay: #202131;
+    --surface-overlay-shadow: inset 0px 0px 0px 1px #BCD6F01F, 0px 8px 12px #0304045C, 0px 0px 1px #03040480;
     --surface-panel: #1C1D2C;
     --surface-sunken: #13121C;
 
