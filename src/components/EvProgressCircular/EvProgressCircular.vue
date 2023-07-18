@@ -4,7 +4,7 @@
  */
 import './EvProgressCircular.scss';
 import {useSlots, ref} from "vue";
-import {appearanceModifier, AppearanceProp, isIntegerish} from "../../util";
+import {appearanceModifier, AppearanceProp, isIntegerish, toWebUnit} from "../../util";
 
 type Size = 'default';
 
@@ -39,7 +39,7 @@ function getSizeWithUnits() {
     if (props.size === 'default') {
         return null;
     }
-    return isIntegerish(props.size) ?  props.size + 'px' : props.size;
+    return toWebUnit(props.size);
 }
 
 /**

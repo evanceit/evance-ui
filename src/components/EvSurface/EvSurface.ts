@@ -1,4 +1,5 @@
 import {makeClassName, propsFactory} from "../../util";
+import {makeDimensionsProps} from "../../composables/dimensions.ts";
 
 /**
  * # Surface Elevation
@@ -20,6 +21,8 @@ export function makeElevationClass(elevation: string) {
     return makeClassName(elevation, 'elevation');
 }
 
+export type ScrollAxis = 'x' | 'y';
+
 /**
  * # Make Surface Props
  */
@@ -28,16 +31,15 @@ export const makeEvSurfaceProps = propsFactory({
         type: String<SurfaceElevation>,
         default: 'default'
     },
+    // Rounded
     rounded: {
         type: [String, Number, Boolean],
         default: undefined
     },
-    width: {
-        type: Number,
+    // Scrollable
+    scrollable: {
+        type: [String<ScrollAxis>, Boolean],
         default: undefined
     },
-    height: {
-        type: Number,
-        default: undefined
-    }
+    ...makeDimensionsProps()
 }, 'EvSurface');

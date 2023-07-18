@@ -8,3 +8,4 @@ export * from './modifiers';
 export * from './numbers';
 export * from './props';
 export * from './strings';
+export * from './units';

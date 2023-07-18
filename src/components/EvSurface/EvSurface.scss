@@ -1,8 +1,9 @@
 .ev-surface {
+    box-shadow: none;
+    margin: 0 auto;
     transition: background-color 0.25s ease-in-out,
                 box-shadow 0.25s ease-in-out;
     will-change: background-color;
-    box-shadow: none;
 
     &.elevation-default {
         background-color: var(--surface-default);
