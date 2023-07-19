@@ -1,6 +1,7 @@
 import {propsFactory} from "../../util";
-import {Component, PropType, TransitionProps} from "vue";
+import {PropType, TransitionProps} from "vue";
 import {TeleportTarget} from "../../composables/teleport.ts";
+import {makeTransitionProps} from "../../composables/transitions.ts";
 
 /**
  * # Make EvOverlay Props
@@ -10,12 +11,8 @@ export const makeEvOverlayProps = propsFactory({
     contained: Boolean,
     disabled: Boolean,
     modelValue: Boolean,
-    transition: {
-        type: [Boolean, String, Object] as PropType<string | boolean | TransitionProps & { component?: Component }>,
-        default: 'fade-transition',
-        validator: (value) => {
-            return (value !== true);
-        }
-    },
-    veil: Boolean
+    veil: Boolean,
+
+    ...makeTransitionProps()
+
 }, 'EvOverlay');

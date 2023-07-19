@@ -6,14 +6,29 @@ const meta: Meta<typeof EvOverlay> = {
     component: EvOverlay,
     argTypes: {
         modelValue: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Applied via `v-model` allows two-way binding of whether the show/hide the overlay."
+        },
+        transition: {
+            control: 'select',
+            options: ['true', 'false', 'transition-fade'],
+            mapping: {
+                'true': true,
+                'false': false,
+                'transition-fade': 'transition-fade'
+            },
+            description: "Transition of the overlay content may be a string containing an existing or custom transition class. " +
+                "OR a boolean where `true` enables transitions using the default transition, `false` disables transitions. " +
+                "OR a transition object."
         },
         veil: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether to cover/conceal the background with a veil."
         }
     },
     args: {
         modelValue: false,
+        transition: 'true',
         veil: false
     },
     tags: ['autodocs']
@@ -29,6 +44,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-overlay v-bind="args">Hello</ev-overlay>'
+        template: '<ev-overlay v-bind="args">Hello World</ev-overlay>'
     })
 };

@@ -19,6 +19,14 @@ export function isArray(value: unknown): boolean {
 }
 
 /**
+ * # Is Boolean?
+ * @param value
+ */
+export function isBoolean(value: unknown): boolean {
+    return typeof value === 'boolean';
+}
+
+/**
  * # Is CSS Variable
  * @param value
  */
