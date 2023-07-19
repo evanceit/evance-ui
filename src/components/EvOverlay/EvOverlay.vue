@@ -8,6 +8,7 @@ import {useModelProxy} from "../../composables/modelProxy.ts";
 import {computed, ref, shallowRef, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
+import {useDimensions} from "../../composables/dimensions.ts";
 
 defineOptions({
     inheritAttrs: false
@@ -24,6 +25,7 @@ const model = useModelProxy(props, 'modelValue');
 const container = ref<HTMLElement | null>(null);
 const content = ref<HTMLElement | null>(null);
 const contentTransition = useTransition(props);
+const dimensions = useDimensions(props);
 const isActiveContent = computed({
     get: () => model.value,
     set: (value) => {
@@ -33,7 +35,7 @@ const isActiveContent = computed({
     }
 });
 const teleportTarget = useTeleport(computed(() => {
-    return (props.attach || props.contained);
+    return props.attach || props.contained;
 }));
 
 /**
@@ -65,17 +67,46 @@ watch(isActiveContent, () => {
     isActiveTeleport.value = true;
 });
 
-
-// Listeners
-function onClickOutside(e: MouseEvent) {
-    emit('click:outside', e);
-    // @todo: persistent overlays
+/**
+ * ## Dismiss
+ * @param focusActivator
+ */
+function dismiss(focusActivator: boolean = false) {
+    if (props.persistent) {
+        // Let's let the user know they can't dismiss the overlay this way
+        // @todo: animate content shake
+        return;
+    }
     isActiveContent.value = false;
+    if (focusActivator && content.value?.contains(document.activeElement)) {
+        // @todo: focus on the original activator
+    }
 }
 
+// Listeners
 function onAfterLeave(e) {
     isActiveTeleport.value = false;
 }
+
+function onClickOutside(e: MouseEvent) {
+    emit('click:outside', e);
+    dismiss(false);
+}
+
+function onKeydown(e: KeyboardEvent) {
+    if (e.key !== 'Escape') {
+        return;
+    }
+    dismiss(true);
+}
+
+watch(isActiveContent, (active) => {
+    if (active) {
+        window.addEventListener('keydown', onKeydown);
+    } else {
+        window.removeEventListener('keydown', onKeydown);
+    }
+}, { immediate: true });
 
 </script>
 <template>
@@ -103,6 +134,9 @@ function onAfterLeave(e) {
                 <div
                     ref="content"
                     class="ev-overlay--content"
+                    :style="[
+                        dimensions
+                    ]"
                     v-show="isActiveContent"
                     v-click-outside="onClickOutside"
                 >

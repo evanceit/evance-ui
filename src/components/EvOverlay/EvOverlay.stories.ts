@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvOverlay } from "../EvOverlay";
+import {EvButton} from "../EvButton";
 
 const meta: Meta<typeof EvOverlay> = {
     component: EvOverlay,
@@ -8,6 +9,11 @@ const meta: Meta<typeof EvOverlay> = {
         modelValue: {
             control: 'boolean',
             description: "Applied via `v-model` allows two-way binding of whether the show/hide the overlay."
+        },
+        persistent: {
+            control: 'boolean',
+            description: "A persistent overlay cannot be dismissed by clicking outside the overlay content, nor by pressing escape. " +
+                "The overlay must be dismissed by other functionality."
         },
         transition: {
             control: 'select',
@@ -28,6 +34,7 @@ const meta: Meta<typeof EvOverlay> = {
     },
     args: {
         modelValue: false,
+        persistent: false,
         transition: 'true',
         veil: false
     },
@@ -40,10 +47,11 @@ type Story = StoryObj<typeof EvOverlay>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvOverlay },
+        components: { EvOverlay, EvButton },
         setup() {
             return { args };
         },
-        template: '<ev-overlay v-bind="args">Hello World</ev-overlay>'
+        template: '<ev-button @click="args.modelValue = !args.modelValue">Overlay</ev-button>' +
+            '<ev-overlay v-bind="args"><ev-button @click="args.modelValue = !args.modelValue">Close</ev-button></ev-overlay>'
     })
 };
