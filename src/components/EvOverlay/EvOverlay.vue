@@ -9,6 +9,7 @@ import {computed, ref, shallowRef, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
+import {animate, clickBlockedAnimation} from "../../util";
 
 defineOptions({
     inheritAttrs: false
@@ -74,7 +75,7 @@ watch(isActiveContent, () => {
 function dismiss(focusActivator: boolean = false) {
     if (props.persistent) {
         // Let's let the user know they can't dismiss the overlay this way
-        // @todo: animate content shake
+        clickBlockedAnimation(content.value);
         return;
     }
     isActiveContent.value = false;
