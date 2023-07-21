@@ -5,11 +5,16 @@
 import './EvOverlay.scss';
 import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {computed, ref, shallowRef, watch} from "vue";
+import {computed, ref, shallowRef, toRef, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
-import {animate, clickBlockedAnimation} from "../../util";
+import {clickBlockedAnimation} from "../../util";
+import {useStack} from "../../composables/stack.ts";
+import {useRouter} from "vue-router";
+import {useToggleScope} from "../../composables/toggleScope.ts";
+import {useBackButton} from "../../composables/router.ts";
+import {useActivator} from "./activator.ts";
 
 defineOptions({
     inheritAttrs: false
@@ -21,10 +26,13 @@ const emit = defineEmits([
     'update:modelValue'
 ]);
 
-const props = defineProps(makeEvOverlayProps());
+const props = defineProps({
+    disableGlobalStack: Boolean,
+    ...makeEvOverlayProps()
+});
 const model = useModelProxy(props, 'modelValue');
-const container = ref<HTMLElement | null>(null);
-const content = ref<HTMLElement | null>(null);
+const containerEl = ref<HTMLElement | null>(null);
+const contentEl = ref<HTMLElement | null>(null);
 const contentTransition = useTransition(props);
 const dimensions = useDimensions(props);
 const isActiveContent = computed({
@@ -35,6 +43,11 @@ const isActiveContent = computed({
         }
     }
 });
+const { isTopGlobal, isTopLocal, stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
+// @todo: <--- YOU ARE HERE (activator and positioning).
+const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props, isActiveContent, isTopLocal);
+useActivator(props, isActiveContent, isTopLocal);
+const router = useRouter();
 const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
 }));
@@ -69,22 +82,34 @@ watch(isActiveContent, () => {
 });
 
 /**
+ * ## Click Outside Condition
+ * Allows or denies the click outside event to trigger.
+ */
+function clickOutsideCondition(): boolean {
+    return (isActiveContent.value && isTopGlobal.value);
+}
+
+/**
  * ## Dismiss
  * @param focusActivator
  */
 function dismiss(focusActivator: boolean = false) {
     if (props.persistent) {
         // Let's let the user know they can't dismiss the overlay this way
-        clickBlockedAnimation(content.value);
+        // @todo: option to prevent shake
+        clickBlockedAnimation(contentEl.value);
         return;
     }
     isActiveContent.value = false;
-    if (focusActivator && content.value?.contains(document.activeElement)) {
+    if (focusActivator && contentEl.value?.contains(document.activeElement)) {
         // @todo: focus on the original activator
     }
 }
 
-// Listeners
+/**
+ * Event Listeners
+ * @param e
+ */
 function onAfterLeave(e) {
     isActiveTeleport.value = false;
 }
@@ -95,12 +120,11 @@ function onClickOutside(e: MouseEvent) {
 }
 
 function onKeydown(e: KeyboardEvent) {
-    if (e.key !== 'Escape') {
-        return;
+    if (e.key === 'Escape' && isTopGlobal.value) {
+        dismiss(true);
     }
-    dismiss(true);
 }
-
+// Listen for keydown events only when the content is active
 watch(isActiveContent, (active) => {
     if (active) {
         window.addEventListener('keydown', onKeydown);
@@ -109,6 +133,23 @@ watch(isActiveContent, (active) => {
     }
 }, { immediate: true });
 
+/**
+ * Integrate with Back button for single page apps.
+ */
+useToggleScope(() => props.closeOnBack, () => {
+    useBackButton(router, next => {
+        if (isTopGlobal.value && isActiveContent.value) {
+            next(false);
+            dismiss(false);
+        } else {
+            next();
+        }
+    });
+});
+
+
+console.log(props);
+
 </script>
 <template>
     <teleport
@@ -116,12 +157,15 @@ watch(isActiveContent, (active) => {
         :disabled="!teleportTarget"
         :to="teleportTarget">
         <div
-            ref="container"
+            ref="containerEl"
             class="ev-overlay"
             :class="[
                 {
                     'is-active': isActiveContent
                 }
+            ]"
+            :style="[
+                stackStyles
             ]"
         >
             <transition appear
@@ -133,13 +177,13 @@ watch(isActiveContent, (active) => {
                         v-bind="contentTransition"
                         @after-leave="onAfterLeave">
                 <div
-                    ref="content"
+                    ref="contentEl"
                     class="ev-overlay--content"
                     :style="[
                         dimensions
                     ]"
                     v-show="isActiveContent"
-                    v-click-outside="onClickOutside"
+                    v-click-outside="{ handler: onClickOutside, condition: clickOutsideCondition }"
                 >
                     <slot />
                 </div>

@@ -1,13 +1,13 @@
-import {RouteLocationRaw, RouterLink, useLink, UseLinkOptions} from "vue-router";
+import {NavigationGuardNext, RouteLocationRaw, Router, RouterLink, useLink, UseLinkOptions} from "vue-router";
 import {
     computed,
-    ComputedRef, PropType,
+    ComputedRef, nextTick, onScopeDispose, PropType,
     Ref,
     resolveDynamicComponent,
     SetupContext,
     toRef
 } from "vue";
-import {ClickEventListeners, hasEventListener, isString, propsFactory} from "../util";
+import {Browser, ClickEventListeners, hasEventListener, isString, propsFactory} from "../util";
 
 
 /**
@@ -111,4 +111,60 @@ export function useRouterLinkOrHref(
         isExactActive: link?.isExactActive,
         href: computed(() => props.to ? link?.route.value.href : props.href)
     };
+}
+
+/**
+ * # Use Back Button
+ *
+ * Listen to PopStateEvents dispatched to the window every time the
+ * active history entry changes between two history entries for the same document.
+ *
+ * We need this for navigation on single page apps.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent
+ */
+let isTransitioning = false;
+export function useBackButton(
+    router: Router | undefined,
+    callback: (next: NavigationGuardNext) => void
+) {
+    let isPopped = false;
+    let removeBefore: (() => void) | undefined;
+    let removeAfter: (() => void) | undefined;
+
+    function onPopState (e: PopStateEvent) {
+        if (e.state?.replaced) {
+            return;
+        }
+        isPopped = true;
+        // Use setTimeout to be asynchronous
+        setTimeout(() => (isPopped = false));
+    }
+
+    if (Browser.hasWindow) {
+
+        nextTick(() => {
+            window.addEventListener('popstate', onPopState);
+            removeBefore = router?.beforeEach((to, from, next) => {
+                if (!isTransitioning) {
+                    // Use setTimeout to be asynchronous
+                    setTimeout(() => {
+                        return isPopped ? callback(next) : next();
+                    });
+                } else {
+                    isPopped ? callback(next) : next();
+                }
+                isTransitioning = true;
+            });
+            removeAfter = router?.afterEach(() => {
+                isTransitioning = false;
+            });
+        });
+
+        onScopeDispose(() => {
+            window.removeEventListener('popstate', onPopState);
+            removeBefore?.();
+            removeAfter?.();
+        });
+    }
 }

@@ -5,14 +5,14 @@ import {isFunction, isObject, isShadowRoot} from "../util";
  * ## Click Outside Args
  *
  * Allows us to accept custom arguments from v-click-outside attributes.
- * - `callback` the function to execute
- * - `isActive` an optional function which determines whether the callback should be called.
+ * - `handler` the function to execute
+ * - `condition` an optional function which determines whether the `handler` should be called.
  *              Effectively, this allows us to pause the event.
  * - `include`  an optional array of elements to include when evaluating the click outside event.
  */
 interface ClickOutsideArgs {
-    callback: (e: MouseEvent) => void,
-    isActive?: (e: Event) => boolean,
+    handler: (e: MouseEvent) => void,
+    condition?: (e: Event) => boolean,
     include?: () => HTMLElement[]
 }
 
@@ -43,7 +43,7 @@ function getRoot(el: HTMLElement): null | Document | ShadowRoot {
  * @param binding
  */
 function isActive(e: MouseEvent, binding: ClickOutsideBinding): boolean {
-    const isActiveCallback = (isObject(binding.value) && binding.value.isActive) || (() => true);
+    const isActiveCallback = (isObject(binding.value) && binding.value.condition) || (() => true);
     return isActiveCallback(e);
 }
 
@@ -83,7 +83,7 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
  * @param binding
  */
 function onClickHandler(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBinding) {
-    const handler = isFunction(binding.value) ? binding.value : binding.value.callback;
+    const handler = isFunction(binding.value) ? binding.value : binding.value.handler;
     if (!el.__clickOutside!.wasMousedownOutside || !isEventOutside(e, el, binding)) {
         return;
     }

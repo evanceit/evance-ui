@@ -30,6 +30,14 @@ export function callEvent<T extends any[]>(eventHandler: EventProp<T> | undefine
     }
 }
 
+/**
+ * # Event Name
+ * @param propName
+ */
+export function eventName (propName: string) {
+    return propName[2].toLowerCase() + propName.slice(3);
+}
+
 
 /**
  * # Focusable Elements

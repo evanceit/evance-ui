@@ -1,4 +1,4 @@
-import {ComponentInternalInstance} from "vue";
+import {ComponentInternalInstance, ComponentPublicInstance} from "vue";
 import {getCurrentComponent, isArray, isFunction, isString} from "../util";
 
 
@@ -169,4 +169,14 @@ export function splitObject<
  */
 export function splitInputAttrs(attrs: Record<string, unknown>) {
     return splitObject(attrs, ['class', 'style', 'id', /^data-/]);
+}
+
+/**
+ * # Ref Element
+ * @param obj
+ */
+export function refElement<T extends object | undefined> (obj: T): Exclude<T, ComponentPublicInstance> | HTMLElement {
+    return obj && '$el' in obj
+        ? obj.$el as HTMLElement
+        : obj as HTMLElement;
 }

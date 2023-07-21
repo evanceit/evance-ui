@@ -150,6 +150,9 @@ export function isObject(value: unknown): boolean {
     return (typeof value === 'object');
 }
 
+const isOnPattern = /^on[^a-z]/;
+export const isOn = (key: string) => isOnPattern.test(key);
+
 /**
  *
  * @param value

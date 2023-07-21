@@ -1,5 +1,6 @@
 export * from './animate.ts';
 export * from './appearance';
+export * from './bindProps';
 export * from './browser';
 export * from './components';
 export * from './dimensions';

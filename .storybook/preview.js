@@ -1,4 +1,4 @@
-import { create, themes } from '@storybook/theming';
+import { create } from '@storybook/theming';
 import React from 'react';
 import { DocsContainer } from '@storybook/addon-docs';
 import { useDarkMode } from 'storybook-dark-mode'
@@ -12,6 +12,7 @@ import { setup } from '@storybook/vue3';
  */
 import '../src/css/core.scss';
 import {clickOutside} from "../src/directives";
+import {createRouter} from "vue-router";
 
 setup((app) => {
   app.directive('click-outside', clickOutside);
