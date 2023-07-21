@@ -68,7 +68,7 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
     if (isShadowRoot(root) && root.host === e.target) {
         return false;
     }
-    const elements = ((isObject(binding.value) && binding.value.include)) || [];
+    const elements = ((isObject(binding.value) && binding.value.include) || (() => []))();
     elements.push(el);
     return !elements.some(el => {
         return el?.contains(e.target as Node);

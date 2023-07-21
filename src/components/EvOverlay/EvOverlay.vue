@@ -5,7 +5,7 @@
 import './EvOverlay.scss';
 import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {computed, ref, shallowRef, toRef, watch} from "vue";
+import {computed, mergeProps, ref, shallowRef, toRef, useSlots, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
@@ -30,6 +30,7 @@ const props = defineProps({
     disableGlobalStack: Boolean,
     ...makeEvOverlayProps()
 });
+const slots = useSlots();
 const model = useModelProxy(props, 'modelValue');
 const containerEl = ref<HTMLElement | null>(null);
 const contentEl = ref<HTMLElement | null>(null);
@@ -46,7 +47,6 @@ const isActiveContent = computed({
 const { isTopGlobal, isTopLocal, stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
 // @todo: <--- YOU ARE HERE (activator and positioning).
 const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props, isActiveContent, isTopLocal);
-useActivator(props, isActiveContent, isTopLocal);
 const router = useRouter();
 const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
@@ -102,7 +102,7 @@ function dismiss(focusActivator: boolean = false) {
     }
     isActiveContent.value = false;
     if (focusActivator && contentEl.value?.contains(document.activeElement)) {
-        // @todo: focus on the original activator
+        activatorEl.value?.focus();
     }
 }
 
@@ -113,6 +113,13 @@ function dismiss(focusActivator: boolean = false) {
 function onAfterLeave(e) {
     isActiveTeleport.value = false;
 }
+
+
+const clickOutsideDirectiveArgs = {
+    handler: onClickOutside,
+    condition: clickOutsideCondition,
+    include: () => [activatorEl.value]
+};
 
 function onClickOutside(e: MouseEvent) {
     emit('click:outside', e);
@@ -148,10 +155,22 @@ useToggleScope(() => props.closeOnBack, () => {
 });
 
 
-console.log(props);
+/**
+ * Dynamically create a local component we can render using:
+ * `<activator-slot>` or `<component :is="activatorSlot" />`
+ */
+const activatorSlot = () => {
+    return slots.activator?.({
+        isActive: isActiveContent.value,
+        props: mergeProps({ ref: activatorRef }, activatorEvents.value, props.activatorProps)
+    });
+};
 
 </script>
 <template>
+
+    <activator-slot />
+
     <teleport
         v-if="isActiveTeleport"
         :disabled="!teleportTarget"
@@ -183,7 +202,7 @@ console.log(props);
                         dimensions
                     ]"
                     v-show="isActiveContent"
-                    v-click-outside="{ handler: onClickOutside, condition: clickOutsideCondition }"
+                    v-click-outside="clickOutsideDirectiveArgs"
                 >
                     <slot />
                 </div>

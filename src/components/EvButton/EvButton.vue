@@ -4,7 +4,7 @@
  */
 import './EvButton.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {computed, useAttrs, useSlots} from "vue";
+import {computed, toRaw, useAttrs, useSlots} from "vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 import {appearanceModifier, InputSize, sizeModifier} from "../../util";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
@@ -17,7 +17,6 @@ const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
 const link = useRouterLinkOrHref(props, attrs);
-
 
 const isDisabled = computed(() => {
     // we'll add groups later

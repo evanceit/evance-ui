@@ -2,7 +2,7 @@ import {isOn} from "./is-functions.ts";
 import {eventName} from "./events.ts";
 
 /**
- * @tood: Move into events at some point
+ * @todo: Move into events at some point
  */
 
 const handlers = new WeakMap<HTMLElement, Set<[string, () => void]>>();

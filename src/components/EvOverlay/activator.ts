@@ -15,11 +15,13 @@ import {
 import {bindProps, Browser, getCurrentComponent, propsFactory, refElement, unbindProps} from "../../util";
 import {FocusEvent} from "react";
 import {EvMenuSymbol} from "../EvMenu";
-import {a} from "@storybook/vue3/dist/render-c842c5d5";
 
+
+type ActivatorSelector = 'parent' | string | Element | ComponentPublicInstance;
 
 export interface ActivatorProps extends DelayOpenCloseProps {
-    activator?: 'parent' | string | Element | ComponentPublicInstance;
+    activator?: ActivatorSelector;
+    activatorProps: Record<string, any>;
     openOnClick: boolean | undefined;
     openOnHover: boolean;
     openOnFocus: boolean | undefined;
@@ -28,6 +30,10 @@ export interface ActivatorProps extends DelayOpenCloseProps {
 
 export const makeActivatorProps = propsFactory({
     activator: [String, Object] as PropType<ActivatorProps['activator']>,
+    activatorProps: {
+        type: Object as PropType<ActivatorProps['activatorProps']>,
+        default: () => ({}),
+    },
     openOnClick: {
         type: Boolean,
         default: undefined
@@ -96,6 +102,9 @@ class Activator {
     public isHovered = false;
     public isFocused = false;
     public firstEnter = true;
+
+    private watcher: ActivatorWatcher;
+    private scope: EffectScope;
 
     constructor(
         public props: ActivatorProps,
@@ -223,15 +232,43 @@ class Activator {
     }
 
     /**
+     *
+     * @param selector
+     * @private
+     */
+    public getActivatorEl(selector: ActivatorSelector = this.props.activator) {
+        let activator;
+        if (selector) {
+            if (selector === 'parent') {
+                let el = this.component?.proxy?.$el?.parentNode;
+                while (el.hasAttribute('data-no-activator')) {
+                    el = el.parentNode;
+                }
+                activator = el;
+            } else if (typeof selector === 'string') {
+                // Selector
+                activator = document.querySelector(selector);
+            } else if ('$el' in selector) {
+                // Component (ref)
+                activator = selector.$el;
+            } else {
+                // HTMLElement | Element
+                activator = selector;
+            }
+        }
+        return this.setActivatorEl(activator);
+    }
+
+    /**
      * ## Get Available Events
      */
     public getAvailableEvents(): ActivatorEvents {
         return {
-            onBlur: this.onBlur,
-            onClick: this.onClick,
-            onFocus: this.onFocus,
-            onMouseenter: this.onMouseenter,
-            onMouseleave: this.onMouseleave
+            onBlur: this.onBlur.bind(this),
+            onClick: this.onClick.bind(this),
+            onFocus: this.onFocus.bind(this),
+            onMouseenter: this.onMouseenter.bind(this),
+            onMouseleave: this.onMouseleave.bind(this)
         };
     }
 
@@ -324,26 +361,34 @@ class Activator {
         this.delayClose();
     }
 
+    /**
+     * ## Set Activator Element
+     * @param activator
+     */
+    public setActivatorEl(activator) {
+        // The activator should only be a valid element (Ignore comments and text nodes)
+        this.activatorEl.value = (activator?.nodeType === Node.ELEMENT_NODE) ? activator : null;
+        return this.activatorEl.value;
+    }
 
     /**
      * ## Watch Activator Prop
      * @private
      */
     private watchActivatorProp() {
-        let scope: EffectScope;
         watch(() => !!this.props.activator, (value) => {
             if (value && Browser.hasWindow) {
-                scope = effectScope();
-                scope.run(() => {
-                    watchActivator(this.props, this.component, this.activatorEl, this.activatorEvents);
+                this.scope = effectScope();
+                this.scope.run(() => {
+                    this.watcher = new ActivatorWatcher(this);
                 });
-            } else if (scope) {
-                scope.stop();
+            } else if (this.scope) {
+                this.scope.stop();
             }
         }, { flush: 'post', immediate: true });
 
         onScopeDispose(() => {
-            scope?.stop()
+            this.scope?.stop()
         });
     }
 
@@ -357,7 +402,7 @@ class Activator {
                 return;
             }
             nextTick(() => {
-                this.activatorEl.value = refElement(activatorRef.value);
+                this.activatorEl.value = refElement(this.activatorRef.value);
             });
         })
     }
@@ -378,69 +423,52 @@ class Activator {
     }
 }
 
-function watchActivator (
-    props: ActivatorProps,
-    component: ComponentInternalInstance,
-    activatorEl: Ref<HTMLElement | undefined>,
-    activatorEvents: ComputedRef<Partial<ActivatorEvents>>
-) {
 
-    watch(() => props.activator, (val, oldVal) => {
-        if (oldVal && val !== oldVal) {
-            const activator = getActivator(oldVal);
-            activator && unbindActivatorProps(activator);
-        }
-        if (val) {
-            nextTick(() => bindActivatorProps());
-        }
-    }, { immediate: true });
+class ActivatorWatcher {
+    constructor(
+        public readonly activator: Activator
+    ) {
+        this.watchActivator();
+    }
 
-    watch(() => props.activatorProps, () => {
-        bindActivatorProps();
-    });
-
-    onScopeDispose(() => {
-        unbindActivatorProps();
-    });
-
-    function bindActivatorProps (el = getActivator(), _props = props.activatorProps) {
+    private addActivatorPropsEventListeners(
+        el = this.activator.getActivatorEl(),
+        activatorProps = this.activator.props.activatorProps
+    ) {
         if (!el) {
             return;
         }
-        bindProps(el, mergeProps(activatorEvents.value, _props));
+        bindProps(el, mergeProps(this.activator.activatorEvents.value, activatorProps));
     }
 
-    function unbindActivatorProps (el = getActivator(), _props = props.activatorProps) {
+    private removeActivatorPropsEventListeners(
+        el = this.activator.getActivatorEl(),
+        activatorProps = this.activator.props.activatorProps
+    ) {
         if (!el) {
             return;
         }
-        unbindProps(el, mergeProps(activatorEvents.value, _props));
+        unbindProps(el, mergeProps(this.activator.activatorEvents.value, activatorProps));
     }
 
-    function getActivator (selector = props.activator): HTMLElement | undefined {
-        let activator;
-        if (selector) {
-            if (selector === 'parent') {
-                let el = component?.proxy?.$el?.parentNode;
-                while (el.hasAttribute('data-no-activator')) {
-                    el = el.parentNode;
-                }
-                activator = el;
-            } else if (typeof selector === 'string') {
-                // Selector
-                activator = document.querySelector(selector);
-            } else if ('$el' in selector) {
-                // Component (ref)
-                activator = selector.$el;
-            } else {
-                // HTMLElement | Element
-                activator = selector;
+    private watchActivator() {
+
+        watch(() => this.activator.props.activator, (value, oldValue) => {
+            if (oldValue && value !== oldValue) {
+                const activator = this.activator.getActivatorEl(oldValue);
+                activator && this.removeActivatorPropsEventListeners(activator);
             }
-        }
+            if (value) {
+                nextTick(() => this.addActivatorPropsEventListeners());
+            }
+        }, { immediate: true });
 
-        // The activator should only be a valid element (Ignore comments and text nodes)
-        activatorEl.value = (activator?.nodeType === Node.ELEMENT_NODE) ? activator : null;
+        watch(() => this.activator.props.activatorProps, () => {
+            this.addActivatorPropsEventListeners();
+        });
 
-        return activatorEl.value;
+        onScopeDispose(() => {
+            this.removeActivatorPropsEventListeners();
+        });
     }
 }

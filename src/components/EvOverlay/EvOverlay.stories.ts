@@ -36,7 +36,7 @@ const meta: Meta<typeof EvOverlay> = {
         modelValue: false,
         persistent: false,
         transition: 'true',
-        veil: false
+        veil: true
     },
     tags: ['autodocs']
 };
@@ -51,7 +51,32 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-button @click="args.modelValue = !args.modelValue">Overlay</ev-button>' +
-            '<ev-overlay v-bind="args"><ev-button @click="args.modelValue = !args.modelValue">Close</ev-button></ev-overlay>'
+        template: '<ev-button id="foo">Button "id" as Activator</ev-button>' +
+            '<ev-overlay v-bind="args" activator="#foo"><ev-button @click="args.modelValue = !args.modelValue">Close</ev-button></ev-overlay>'
+    })
+};
+
+export const ActivatorInside: Story = {
+    render: (args: any) =>  ({
+        components: { EvOverlay, EvButton },
+        setup() {
+            return { args };
+        },
+        template: '<ev-overlay v-bind="args">' +
+            '<template #activator="{ isActive, props }"><ev-button v-bind="props">Button in Activator Slot</ev-button></template>' +
+            '<template #default><ev-button @click="args.modelValue = !args.modelValue">Close</ev-button></template>' +
+            '</ev-overlay>'
+    })
+};
+
+export const ActivatorParent: Story = {
+    render: (args: any) =>  ({
+        components: { EvOverlay, EvButton },
+        setup() {
+            return { args };
+        },
+        template: '<ev-button>Button as "parent" activator <ev-overlay v-bind="args" activator="parent">' +
+            '<ev-button @click="args.modelValue = !args.modelValue">Close</ev-button>' +
+            '</ev-overlay></ev-button>'
     })
 };
