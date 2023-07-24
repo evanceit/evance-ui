@@ -1,4 +1,4 @@
-import {makeClassName, propsFactory} from "../../util";
+import {Axis, makeClassName, propsFactory} from "../../util";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 
 /**
@@ -21,8 +21,6 @@ export function makeElevationClass(elevation: string) {
     return makeClassName(elevation, 'elevation');
 }
 
-export type ScrollAxis = 'x' | 'y';
-
 /**
  * # Make Surface Props
  */
@@ -38,7 +36,7 @@ export const makeEvSurfaceProps = propsFactory({
     },
     // Scrollable
     scrollable: {
-        type: [String<ScrollAxis>, Boolean],
+        type: [String<Axis>, Boolean],
         default: undefined
     },
     ...makeDimensionsProps()

@@ -15,3 +15,19 @@ export function toWebUnit(value: string | number | null | undefined, unit: strin
     }
     return value;
 }
+
+/**
+ * # Pixel Round
+ * @param value
+ */
+export function pixelRound(value: number): number {
+    return Math.round(value * devicePixelRatio) / devicePixelRatio;
+}
+
+/**
+ * # Pixel Ceil
+ * @param value
+ */
+export function pixelCeil(value: number): number {
+    return Math.round(value * devicePixelRatio) / devicePixelRatio;
+}

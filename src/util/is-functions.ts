@@ -102,6 +102,14 @@ export function isDeepEqual(a: any, b: any, options?: object = {}): boolean {
     return keysInA.every((key) => isDeepEqual(a[key], b[key]));
 }
 
+export function isElement(el: unknown): boolean {
+    return (
+        el
+        && el instanceof Element
+        && el.nodeType === Node.ELEMENT_NODE
+    );
+}
+
 /**
  * # Is Empty
  * @param value

@@ -5,7 +5,7 @@
 import './EvOverlay.scss';
 import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {computed, mergeProps, ref, shallowRef, toRef, useSlots, watch} from "vue";
+import {computed, mergeProps, onMounted, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
@@ -15,6 +15,8 @@ import {useRouter} from "vue-router";
 import {useToggleScope} from "../../composables/toggleScope.ts";
 import {useBackButton} from "../../composables/router.ts";
 import {useActivator} from "./activator.ts";
+import {useScopeId} from "../../composables/scopeId.ts";
+import {usePositionStrategies} from "./position.ts";
 
 defineOptions({
     inheritAttrs: false
@@ -30,12 +32,15 @@ const props = defineProps({
     disableGlobalStack: Boolean,
     ...makeEvOverlayProps()
 });
+const attrs = useAttrs();
 const slots = useSlots();
+const router = useRouter();
 const model = useModelProxy(props, 'modelValue');
 const containerEl = ref<HTMLElement | null>(null);
 const contentEl = ref<HTMLElement | null>(null);
 const contentTransition = useTransition(props);
 const dimensions = useDimensions(props);
+const { scopeId } = useScopeId();
 const isActiveContent = computed({
     get: () => model.value,
     set: (value) => {
@@ -45,12 +50,18 @@ const isActiveContent = computed({
     }
 });
 const { isTopGlobal, isTopLocal, stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
-// @todo: <--- YOU ARE HERE (activator and positioning).
 const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props, isActiveContent, isTopLocal);
-const router = useRouter();
 const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
 }));
+
+// @todo: <--- YOU ARE HERE (positioning, scrolling).
+const { contentStyles, updatePosition } = usePositionStrategies(props, {
+    isRtl: computed(() => false), // @todo: Implement RTL via Locales
+    contentEl,
+    activatorEl,
+    isActive: isActiveContent
+});
 
 /**
  * When disabled update the model value via the isActive computed prop
@@ -166,6 +177,12 @@ const activatorSlot = () => {
     });
 };
 
+const contentAttributes = mergeProps(contentEvents.value, props.contentProps);
+const overlayAttributes = {
+    ...scopeId,
+    ...attrs
+};
+
 </script>
 <template>
 
@@ -181,15 +198,20 @@ const activatorSlot = () => {
             :class="[
                 {
                     'is-active': isActiveContent
-                }
+                },
+                props.class
             ]"
             :style="[
-                stackStyles
+                stackStyles,
+                props.style
             ]"
+            v-bind="overlayAttributes"
         >
             <transition appear
                         name="transition-fade">
-                <div v-if="isActiveVeil" class="ev-overlay--veil"></div>
+                <div v-if="isActiveVeil"
+                     class="ev-overlay--veil"
+                     v-bind="veilEvents"></div>
             </transition>
 
             <transition appear
@@ -198,9 +220,14 @@ const activatorSlot = () => {
                 <div
                     ref="contentEl"
                     class="ev-overlay--content"
-                    :style="[
-                        dimensions
+                    :class="[
+                        props.contentClass
                     ]"
+                    :style="[
+                        dimensions,
+                        contentStyles
+                    ]"
+                    v-bind="contentAttributes"
                     v-show="isActiveContent"
                     v-click-outside="clickOutsideDirectiveArgs"
                 >

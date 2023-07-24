@@ -1,3 +1,4 @@
+export * from './anchor.ts';
 export * from './animate.ts';
 export * from './appearance';
 export * from './bindProps';
@@ -7,8 +8,11 @@ export * from './dimensions';
 export * from './events';
 export * from './helpers';
 export * from './is-functions';
+export * from './isFixedPosition';
 export * from './modifiers';
 export * from './numbers';
 export * from './props';
 export * from './strings';
+export * from './scroll';
+export * from './style';
 export * from './units';

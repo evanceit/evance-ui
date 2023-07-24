@@ -1,4 +1,12 @@
-import {ComponentInternalInstance, ComponentPublicInstance} from "vue";
+import {
+    ComponentInternalInstance,
+    ComponentPublicInstance,
+    computed,
+    ComputedGetter,
+    reactive, toRefs,
+    ToRefs,
+    watchEffect
+} from "vue";
 import {getCurrentComponent, isArray, isFunction, isString} from "../util";
 
 
@@ -131,6 +139,17 @@ export function objectPathToPropertyKeys(path: string): PropertyKey[] {
 
 
 /**
+ * # Ref Element
+ * @param obj
+ */
+export function refElement<T extends object | undefined> (obj: T): Exclude<T, ComponentPublicInstance> | HTMLElement {
+    return obj && '$el' in obj
+        ? obj.$el as HTMLElement
+        : obj as HTMLElement;
+}
+
+
+/**
  * # Split Object
  *
  * Split an object into two using an Array of keys or RegExp to test keys against.
@@ -171,12 +190,21 @@ export function splitInputAttrs(attrs: Record<string, unknown>) {
     return splitObject(attrs, ['class', 'style', 'id', /^data-/]);
 }
 
+
 /**
- * # Ref Element
- * @param obj
+ * # Destruct Computed
+ *
+ * Convert a computed ref to a record of refs.
+ * The getter function must always return an object with the same keys.
  */
-export function refElement<T extends object | undefined> (obj: T): Exclude<T, ComponentPublicInstance> | HTMLElement {
-    return obj && '$el' in obj
-        ? obj.$el as HTMLElement
-        : obj as HTMLElement;
+export function destructComputed<T extends object> (getter: ComputedGetter<T & NotAUnion<T>>): ToRefs<T>;
+export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
+    const refs = reactive({}) as T;
+    const base = computed(getter);
+    watchEffect(() => {
+        for (const key in base.value) {
+            refs[key] = base.value[key];
+        }
+    }, { flush: 'sync' });
+    return toRefs(refs);
 }

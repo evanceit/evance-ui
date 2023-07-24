@@ -1,23 +1,31 @@
 import {propsFactory} from "../../util";
-import {PropType, TransitionProps} from "vue";
+import {PropType, StyleValue} from "vue";
 import {TeleportTarget} from "../../composables/teleport.ts";
 import {makeTransitionProps} from "../../composables/transitions.ts";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
+import {makePositionStrategyProps} from "./position.ts";
 
 /**
  * # Make EvOverlay Props
  */
 export const makeEvOverlayProps = propsFactory({
     attach: [Boolean, String, Object] as PropType<TeleportTarget>,
+    class: [String, Array] as PropType<any>,
     closeOnBack: {
         type: Boolean,
         default: true
     },
     contained: Boolean,
+    contentClass: null,
+    contentProps: null,
     disabled: Boolean,
     modelValue: Boolean,
     persistent: Boolean,
+    style: {
+        type: [String, Array, Object] as PropType<StyleValue>,
+        default: null,
+    },
     veil: {
         type: Boolean,
         default: true
@@ -29,6 +37,7 @@ export const makeEvOverlayProps = propsFactory({
 
     ...makeActivatorProps(),
     ...makeDimensionsProps(),
+    ...makePositionStrategyProps(),
     ...makeTransitionProps()
 
 }, 'EvOverlay');
