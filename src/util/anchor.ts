@@ -100,6 +100,6 @@ export class Anchor {
                 anchor.side = 'left';
             }
         }
-        return Anchor;
+        return anchor;
     }
 }
