@@ -61,8 +61,52 @@ class ConnectedPosition {
         this.offset = this.computedOffset();
         this.zoneCalculator = new ZoneCalculator();
         this.calculatePreferences();
-        this.setupResizeObserver();
+        this.addResizeObserver();
         this.watch();
+    }
+
+    /**
+     * ## Add Resize Observer
+     *
+     * Watch for changes to the size and element of the activator as well as the overlay content.
+     *
+     * @private
+     */
+    private addResizeObserver() {
+        this.observe = false;
+        this.observer = new ResizeObserver(() => {
+            if (this.observe) {
+                this.updatePosition();
+            }
+        });
+
+        watch(
+            [this.data.activatorEl, this.data.contentEl],
+            (
+                [newActivatorEl, newContentEl],
+                [oldActivatorEl, oldContentEl]
+            ) => {
+                if (oldActivatorEl) {
+                    this.observer.unobserve(oldActivatorEl);
+                }
+                if (newActivatorEl) {
+                    this.observer.observe(newActivatorEl);
+                }
+                if (oldContentEl) {
+                    this.observer.unobserve(oldContentEl);
+                }
+                if (newContentEl) {
+                    this.observer.observe(newContentEl);
+                }
+            },
+            {
+                immediate: true,
+            }
+        );
+
+        onScopeDispose(() => {
+            this.observer.disconnect();
+        });
     }
 
     /**
@@ -114,6 +158,11 @@ class ConnectedPosition {
 
     /**
      * ## Computed Offset
+     *
+     * Returns an array, with the following indexes:
+     * - `0` - represents `side` offset.
+     * - `1` - represents `alignment` offset.
+     *
      * @private
      */
     private computedOffset() {
@@ -130,84 +179,6 @@ class ConnectedPosition {
             }
             return isNumber(this.props.offset) ? [this.props.offset, 0] : [0, 0];
         });
-    }
-
-    /**
-     * ## Resolve Fixed Activator
-     * @private
-     */
-    private resolveFixedActivator() {
-        const isActivatorFixed = isFixedPosition(this.data.activatorEl.value);
-        if (isActivatorFixed) {
-            toFixedPosition(this.contentStyles.value, this.data.isRtl.value);
-        }
-    }
-
-    /**
-     * ## Setup Resize Observer
-     *
-     * Watch for changes to the size and element of the activator as well as the overlay content.
-     *
-     * @private
-     */
-    private setupResizeObserver() {
-        this.observe = false;
-        this.observer = new ResizeObserver(() => {
-            if (this.observe) {
-                this.updatePosition();
-            }
-        });
-
-        watch(
-            [this.data.activatorEl, this.data.contentEl],
-            (
-                    [newActivatorEl, newContentEl],
-                    [oldActivatorEl, oldContentEl]
-            ) => {
-                if (oldActivatorEl) {
-                    this.observer.unobserve(oldActivatorEl);
-                }
-                if (newActivatorEl) {
-                    this.observer.observe(newActivatorEl);
-                }
-                if (oldContentEl) {
-                    this.observer.unobserve(oldContentEl);
-                }
-                if (newContentEl) {
-                    this.observer.observe(newContentEl);
-                }
-            },
-            {
-                immediate: true,
-            }
-        );
-
-        onScopeDispose(() => {
-            this.observer.disconnect();
-        });
-    }
-
-    /**
-     * ## Update Position
-     */
-    public updatePosition() {
-        this.observe = false;
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => this.observe = true);
-        });
-
-        if (!this.data.activatorEl.value || !this.data.contentEl.value) {
-            return;
-        }
-
-        this.targetRect = Rect.fromElement(this.data.activatorEl.value);
-        this.contentRect = this.getContentRect();
-        this.contentScrollParents = this.getContentScrollParents();
-        this.viewportRect = this.getViewportRect();
-
-        const zones = this.zoneCalculator.calculate(this.targetRect, this.viewportRect);
-
     }
 
     /**
@@ -282,6 +253,50 @@ class ConnectedPosition {
     }
 
     /**
+     * ## Resolve Fixed Activator
+     * @private
+     */
+    private resolveFixedActivator() {
+        const isActivatorFixed = isFixedPosition(this.data.activatorEl.value);
+        if (isActivatorFixed) {
+            toFixedPosition(this.contentStyles.value, this.data.isRtl.value);
+        }
+    }
+
+    /**
+     * ## Update Position
+     */
+    public updatePosition() {
+        this.observe = false;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => this.observe = true);
+        });
+
+        if (!this.data.activatorEl.value || !this.data.contentEl.value) {
+            return;
+        }
+
+        this.targetRect = Rect.fromElement(this.data.activatorEl.value);
+        this.contentRect = this.getContentRect();
+        this.contentScrollParents = this.getContentScrollParents();
+        this.viewportRect = this.getViewportRect();
+
+        // @todo: make sure the target rect in viewport space before calculating zones
+        //      <--- YOU ARE HERE
+
+        const zones = this.zoneCalculator.calculate(
+            this.targetRect,
+            this.viewportRect,
+            this.offset.value
+        );
+
+        // @todo: Go through each zone to see if the content will fit.
+        console.log(zones);
+
+    }
+
+    /**
      * ## Watch
      *
      * Watch for changes that affect position calculations.
@@ -312,13 +327,53 @@ class ConnectedPosition {
     }
 }
 
-
+class Zone {
+    constructor(
+        public anchor: Anchor,
+        public rect: Rect
+    ) {}
+}
 
 class ZoneCalculator {
-    public calculate(target: Rect, viewport: Rect) {
+    public calculate(
+        target: Rect,
+        viewport: Rect,
+        offset: [number, number]
+    ): Zone[] {
 
-        console.log(target, 'target');
-        console.log(viewport, 'viewport');
+        const [offsetSide, offsetAlign] = offset;
 
+        // Sides
+        const sides = {
+            top: { y: viewport.top, height: (target.top - viewport.top - offsetSide), align: 'x' },
+            bottom: { y: (target.bottom + offsetSide), height: (viewport.bottom - target.bottom - offsetSide), align: 'x' },
+            left: { x: viewport.left, width: (target.left - viewport.left - offsetSide), align: 'y' },
+            right: { x: (target.right + offsetSide), width: (viewport.right - target.right - offsetSide), align: 'y' },
+            center: { x: viewport.left, width: viewport.width, align: 'y' }
+        };
+
+        // Align
+        const alignments = {
+            x: {
+                center: { x: viewport.left, width: viewport.width },
+                start: { x: (target.left + offsetAlign), width: (viewport.width - target.left - offsetAlign) },
+                end: { x: viewport.left, width: (target.right - viewport.left - offsetAlign) }
+            },
+            y: {
+                center: { y: viewport.top, height: (viewport.bottom - viewport.top) },
+                start: { y: (target.top + offsetAlign), height: (viewport.bottom - target.top - offsetAlign) },
+                end: { y: viewport.top, height: (target.bottom - viewport.top - offsetAlign) }
+            }
+        }
+
+        const zones: Zone[] = [];
+        for (const [side, sideAttrs] of Object.entries(sides)) {
+            for (const [align, alignAttrs] of Object.entries(alignments[sideAttrs.align])) {
+                const anchor = new Anchor(side, align);
+                const rect = Rect.fromRect(Object.assign({}, sideAttrs, alignAttrs) as Rect);
+                zones.push(new Zone(anchor, rect));
+            }
+        }
+        return zones;
     }
 }
