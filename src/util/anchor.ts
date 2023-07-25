@@ -47,6 +47,13 @@ export class Anchor {
     }
 
     /**
+     * ## Center Align
+     */
+    public centerAlign() {
+        return new Anchor(this.side, 'center');
+    }
+
+    /**
      * ## Flip Alignment
      */
     public flipAlignment() {
@@ -101,5 +108,9 @@ export class Anchor {
             }
         }
         return anchor;
+    }
+
+    public toString(): string {
+        return `${this.side} ${this.alignment}`;
     }
 }

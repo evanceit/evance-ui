@@ -69,6 +69,17 @@ export class Rect implements Coordinates, Dimensions, Position {
     }
 
     /**
+     * ## Add Offset
+     * @param offset
+     */
+    public addOffset(offset: Coordinates): Rect {
+        const rect = Rect.fromRect(this);
+        rect.x += offset.x;
+        rect.y += offset.y;
+        return rect;
+    }
+
+    /**
      * ## From Element
      * @param el
      * @param beforeTransforms

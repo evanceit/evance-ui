@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvOverlay } from "../EvOverlay";
 import {EvButton} from "../EvButton";
+import {EvSurface} from "../EvSurface";
 
 const meta: Meta<typeof EvOverlay> = {
     component: EvOverlay,
@@ -47,12 +48,16 @@ type Story = StoryObj<typeof EvOverlay>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvOverlay, EvButton },
+        components: { EvOverlay, EvButton, EvSurface },
         setup() {
 
             return { args };
         },
         template: '<ev-button id="example">Button "id" as Activator</ev-button>' +
-            '<ev-overlay v-bind="args" activator="#example"><ev-button @click="args.modelValue = !args.modelValue">Close</ev-button></ev-overlay>'
+            '<ev-overlay v-bind="args" activator="#example">' +
+            '<ev-surface elevation="overlay" width="400" height="100" style="padding: 20px;">' +
+            '<ev-button @click="args.modelValue = !args.modelValue">Close</ev-button>' +
+            '</ev-surface>' +
+            '</ev-overlay>'
     })
 };

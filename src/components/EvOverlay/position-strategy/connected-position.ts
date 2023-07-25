@@ -7,7 +7,7 @@ import {
     isNumber,
     Rect,
     getScrollParents,
-    destructComputed, Anchor
+    destructComputed, Anchor, Dimensions
 } from "../../../util";
 
 /**
@@ -277,23 +277,79 @@ class ConnectedPosition {
             return;
         }
 
-        this.targetRect = Rect.fromElement(this.data.activatorEl.value);
+        this.targetRect = Rect.fromElement( this.data.activatorEl.value);
         this.contentRect = this.getContentRect();
         this.contentScrollParents = this.getContentScrollParents();
         this.viewportRect = this.getViewportRect();
 
-        // @todo: make sure the target rect in viewport space before calculating zones
-        //      <--- YOU ARE HERE
-
-        const zones = this.zoneCalculator.calculate(
+        const zones = this.zoneCalculator.getAvailable(
             this.targetRect,
             this.viewportRect,
-            this.offset.value
+            this.offset.value,
+            this.contentRect
         );
 
-        // @todo: Go through each zone to see if the content will fit.
-        console.log(zones);
+        let placement = {
+            position: this.preferredPosition.value,
+            origin: this.preferredOrigin.value
+        };
 
+        // If side is auto, find the largest side that
+        if (placement.position.side === 'auto') {
+            const autoZone = this.getAutoZone(placement.position, zones);
+            placement.position = autoZone.position;
+            placement.origin = placement.position.flipSide();
+        }
+
+        // Ok, now we need to calculate the new placement based on available width/height
+        // will the content fit and what to do if not.
+        let zone = this.getBestZone(placement.position, zones);
+
+        // Now we need to calculate the position of the content element within the zone.
+
+        // @todo: <--- YOU ARE HERE!
+        //        Calculate the position of the content element within the zone.
+    }
+
+    private getAutoZone(position: Anchor, zones: Zone[]): Zone {
+        let matches = zones.filter((zone) => {
+            if (position.side === 'center') {
+                return false;
+            }
+            return (position.alignment === 'auto' || zone.position.alignment === position.alignment);
+        });
+        return matches[0];
+    }
+
+    private getBestZone(position: Anchor, zones: Zone[]): Zone {
+        // Priority
+        let positions = [
+            position,
+            position.centerAlign(),
+            position.flipSide(),
+            position.flipSide().centerAlign(),
+            position.flipCorner(),
+            position.flipCorner().centerAlign(),
+            position.flipCorner().flipSide(),
+            position.flipCorner().flipSide().centerAlign()
+        ];
+
+        // Exactly fits content
+        for (const newPosition of positions) {
+            // Find the zone that correlates to the position
+            const zone = zones.find((zone) => {
+                return (zone.position.toString() === newPosition.toString());
+            });
+            if (zone?.isFitsContent) {
+                return zone;
+            }
+        }
+
+        // Fallback to center
+        const centerPosition = new Anchor('center', 'center');
+        return zones.find((zone) => {
+            return (zone.position.toString() === centerPosition.toString());
+        });
     }
 
     /**
@@ -328,17 +384,47 @@ class ConnectedPosition {
 }
 
 class Zone {
+
+    public available: Dimensions;
+    public isFitsContent: boolean;
+
     constructor(
-        public anchor: Anchor,
-        public rect: Rect
-    ) {}
+        public position: Anchor,
+        public rect: Rect,
+        public content: Rect
+    ) {
+        this.available = {
+            width: (this.rect.width - content.width),
+            height: (this.rect.height - content.height)
+        };
+        this.isFitsContent = (
+            this.rect.width >= content.width
+            && this.rect.height >= content.height
+        );
+    }
+
+    get availableArea() {
+        return this.available.width * this.available.height;
+    }
 }
 
 class ZoneCalculator {
-    public calculate(
+
+    /**
+     * ## Get Available
+     *
+     * Returns all available zones around the target.
+     *
+     * @param target
+     * @param viewport
+     * @param offset
+     * @param content
+     */
+    public getAvailable(
         target: Rect,
         viewport: Rect,
-        offset: [number, number]
+        offset: [number, number],
+        content: Rect
     ): Zone[] {
 
         const [offsetSide, offsetAlign] = offset;
@@ -371,9 +457,14 @@ class ZoneCalculator {
             for (const [align, alignAttrs] of Object.entries(alignments[sideAttrs.align])) {
                 const anchor = new Anchor(side, align);
                 const rect = Rect.fromRect(Object.assign({}, sideAttrs, alignAttrs) as Rect);
-                zones.push(new Zone(anchor, rect));
+                zones.push(new Zone(anchor, rect, content));
             }
         }
+
+        // Sort by area
+        zones.sort((zoneA, zoneB) => {
+            return (zoneB.availableArea - zoneA.availableArea);
+        });
         return zones;
     }
 }
