@@ -17,6 +17,7 @@ import {useBackButton} from "../../composables/router.ts";
 import {useActivator} from "./activator.ts";
 import {useScopeId} from "../../composables/scopeId.ts";
 import {usePositionStrategies} from "./position.ts";
+import {useScrollStrategies} from "./scroll.ts";
 
 defineOptions({
     inheritAttrs: false
@@ -55,12 +56,19 @@ const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
 }));
 
-// @todo: <--- YOU ARE HERE (positioning, scrolling).
 const { contentStyles, updatePosition } = usePositionStrategies(props, {
     isRtl: computed(() => false), // @todo: Implement RTL via Locales
     contentEl,
     activatorEl,
     isActive: isActiveContent
+});
+
+useScrollStrategies(props, {
+    containerEl,
+    contentEl,
+    activatorEl,
+    isActive: isActiveContent,
+    updatePosition
 });
 
 /**

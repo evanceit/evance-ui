@@ -7,7 +7,7 @@ import {
     isNumber,
     Rect,
     getScrollParents,
-    destructComputed, Anchor, Dimensions
+    destructComputed, Anchor, Dimensions, toWebUnit, pixelRound, pixelCeil, clamp
 } from "../../../util";
 
 /**
@@ -27,7 +27,10 @@ export function connectedPositionStrategy(
     // If the `side` of the anchor is set to 'auto' then we need to choose the side with most space
     // for the content. We should have a preference stack which is calculated based on
     // rtl, and whether the content fits the side.
-    return new ConnectedPosition(data, props, contentStyles);
+    const manager = new ConnectedPosition(data, props, contentStyles);
+    return {
+        updatePosition: manager.updatePosition.bind(manager)
+    };
 }
 
 
@@ -306,14 +309,47 @@ class ConnectedPosition {
         let zone = this.getBestZone(placement.position, zones);
 
         // Now we need to calculate the position of the content element within the zone.
+        placement.position = zone.position;
+        placement.origin = placement.position.flipSide();
 
-        // @todo: <--- YOU ARE HERE!
-        //        Calculate the position of the content element within the zone.
+        let { x, y } = zone.rect;
+
+        // @todo: handle overflows
+
+        if (placement.position.alignment === 'center') {
+            if (placement.position.axis === 'x') {
+                y = this.targetRect.y + ((this.targetRect.height - this.contentRect.height) / 2);
+                if (y < zone.rect.y) {
+                    y = zone.rect.y;
+                }
+            } else {
+                x = this.targetRect.x + ((this.targetRect.width - this.contentRect.width) / 2);
+                if (x < zone.rect.x) {
+                    x = zone.rect.x;
+                }
+            }
+        }
+
+        // @todo: RTL
+        Object.assign(this.contentStyles.value, {
+            transformOrigin: placement.origin.toCssValue(),
+            top: toWebUnit(pixelRound(y)),
+            left: toWebUnit(pixelRound(x)),
+            minWidth: toWebUnit(placement.position.axis === 'y' ? Math.min(this.minWidth.value, this.targetRect.width) : this.minWidth.value),
+            maxWidth: toWebUnit(pixelCeil(clamp(zone.available.width, this.minWidth.value === Infinity ? 0 : this.minWidth.value, this.maxWidth.value))),
+            maxHeight: toWebUnit(pixelCeil(clamp(zone.available.height, this.minHeight.value === Infinity ? 0 : this.minHeight, this.maxHeight.value)))
+        });
+
+        return {
+            available: zone.available,
+            contentRect: this.contentRect
+        };
     }
 
     private getAutoZone(position: Anchor, zones: Zone[]): Zone {
         let matches = zones.filter((zone) => {
-            if (position.side === 'center') {
+            // Ignore center position for now.
+            if (zone.position.side === 'center') {
                 return false;
             }
             return (position.alignment === 'auto' || zone.position.alignment === position.alignment);

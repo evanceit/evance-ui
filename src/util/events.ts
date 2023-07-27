@@ -1,5 +1,6 @@
-import {capitalize, PropType} from "vue";
+import {capitalize, onScopeDispose, PropType} from "vue";
 import {isArray} from "./is-functions.ts";
+import {getScrollParents} from "./scroll.ts";
 
 /**
  * # Click Event Listeners
@@ -26,7 +27,7 @@ export function callEvent<T extends any[]>(eventHandler: EventProp<T> | undefine
             handlerElement(...args);
         }
     } else if (typeof eventHandler === 'function') {
-        eventHandler(...args)
+        eventHandler(...args);
     }
 }
 
@@ -145,4 +146,22 @@ export function hasEventListener(props: Record<string, any>, name: string): bool
         || props[`${name}OnceCapture`]
         || props[`${name}CaptureOnce`]
     );
+}
+
+
+/**
+ * ## Add Scroll Event Listeners to Element (and its parents)
+ * @param el
+ * @param onScroll
+ */
+export function addScrollEventListener (el: HTMLElement | undefined, onScroll: (e: Event) => void) {
+    const scrollElements = [document, ...getScrollParents(el)];
+    scrollElements.forEach(el => {
+        el.addEventListener('scroll', onScroll, { passive: true });
+    });
+    onScopeDispose(() => {
+        scrollElements.forEach(el => {
+            el.removeEventListener('scroll', onScroll);
+        });
+    });
 }

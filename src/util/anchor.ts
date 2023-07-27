@@ -46,6 +46,24 @@ export class Anchor {
         return horizontalSides.includes(this.side) ? 'x' : 'y';
     }
 
+    public get physicalAlignment(): string {
+        if (this.alignment === 'auto') {
+            throw new Error('Cannot convert `auto` to a physical alignment');
+        }
+        if (this.axis === 'x') {
+            return {
+                center: 'center',
+                start: 'left',
+                end: 'right'
+            }[this.alignment];
+        }
+        return {
+            center: 'center',
+            start: 'top',
+            end: 'bottom'
+        }[this.alignment];
+    }
+
     /**
      * ## Center Align
      */
@@ -108,6 +126,10 @@ export class Anchor {
             }
         }
         return anchor;
+    }
+
+    public toCssValue(): string {
+        return `${this.side} ${this.physicalAlignment}`;
     }
 
     public toString(): string {

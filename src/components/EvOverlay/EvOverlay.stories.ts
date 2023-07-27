@@ -16,6 +16,16 @@ const meta: Meta<typeof EvOverlay> = {
             description: "A persistent overlay cannot be dismissed by clicking outside the overlay content, nor by pressing escape. " +
                 "The overlay must be dismissed by other functionality."
         },
+        scrollStrategy: {
+            control: "select",
+            options: ['none', 'close', 'block', 'reposition'],
+            mapping: {
+                'none' : null,
+                'close': 'close',
+                'block': 'block',
+                'reposition': 'reposition'
+            }
+        },
         transition: {
             control: 'select',
             options: ['true', 'false', 'transition-fade'],

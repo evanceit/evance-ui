@@ -208,3 +208,8 @@ export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
     }, { flush: 'sync' });
     return toRefs(refs);
 }
+
+
+export function clamp (value: number, min = 0, max = 1) {
+    return Math.max(min, Math.min(max, value))
+}

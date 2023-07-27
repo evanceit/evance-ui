@@ -5,6 +5,7 @@ import {makeTransitionProps} from "../../composables/transitions.ts";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
 import {makePositionStrategyProps} from "./position.ts";
+import {makeScrollStrategyProps} from "./scroll.ts";
 
 /**
  * # Make EvOverlay Props
@@ -38,6 +39,7 @@ export const makeEvOverlayProps = propsFactory({
     ...makeActivatorProps(),
     ...makeDimensionsProps(),
     ...makePositionStrategyProps(),
+    ...makeScrollStrategyProps(),
     ...makeTransitionProps()
 
 }, 'EvOverlay');
