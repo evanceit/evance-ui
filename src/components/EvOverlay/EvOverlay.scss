@@ -36,3 +36,11 @@
     pointer-events: auto;
     contain: layout;
 }
+
+html.ev-overlay-scroll-blocked {
+    position: fixed;
+    top: var(--ev-body-scroll-y);
+    left: var(--ev-body-scroll-x);
+    width: 100%;
+    height: 100%;
+}

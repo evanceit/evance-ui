@@ -1,5 +1,4 @@
 import {isEmpty} from "./is-functions.ts";
-import {isIntegerish} from "./numbers.ts";
 
 /**
  * # To Web Unit
@@ -10,10 +9,13 @@ export function toWebUnit(value: string | number | null | undefined, unit: strin
     if (isEmpty(value)) {
         return null;
     }
-    if (isIntegerish(value)) {
-        return `${value}${unit}`;
+    if (isNaN(+value!)) {
+        return String(value);
     }
-    return value;
+    if (!isFinite(+value!)) {
+        return null;
+    }
+    return `${value}${unit}`;
 }
 
 /**

@@ -42,6 +42,7 @@ html {
     text-size-adjust: 100%; /* 1 */
     box-sizing: border-box; /* 2 */
     line-height: 1.15; /* 3 */
+    overflow-y: scroll;
 }
 
 *,
