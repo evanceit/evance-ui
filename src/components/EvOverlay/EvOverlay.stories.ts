@@ -20,6 +20,8 @@ const meta: Meta<typeof EvOverlay> = {
             control: "select",
             options: [
                 'auto',
+                'auto-start',
+                'auto-end',
                 'top',
                 'top-start',
                 'top-end',

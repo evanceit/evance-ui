@@ -322,15 +322,23 @@ class ConnectedPosition {
             if (placement.position.side === 'top') {
                 y = zone.rect.bottom - this.contentRect.height;
             }
-            const divider = (placement.position.alignment === 'center') ? 2 : 1;
-            if (placement.position.axis === 'x') {
-                y = this.targetRect.y + ((this.targetRect.height - this.contentRect.height) / divider);
-            } else {
-                x = this.targetRect.x + ((this.targetRect.width - this.contentRect.width) / divider);
+            if (placement.position.alignment !== 'start') {
+                const divider = (placement.position.alignment === 'center') ? 2 : 1;
+                if (placement.position.axis === 'x') {
+                    y = this.targetRect.y + ((this.targetRect.height - this.contentRect.height) / divider);
+                } else {
+                    x = this.targetRect.x + ((this.targetRect.width - this.contentRect.width) / divider);
+                }
             }
         }
 
-
+        // Should this be optional!?
+        if (y < zone.rect.y) {
+            y = zone.rect.y;
+        }
+        if (x < zone.rect.x) {
+            x = zone.rect.x;
+        }
 
         // @todo: RTL
         Object.assign(this.contentStyles.value, {
@@ -338,8 +346,8 @@ class ConnectedPosition {
             top: toWebUnit(pixelRound(y)),
             left: toWebUnit(pixelRound(x)),
             minWidth: toWebUnit(placement.position.axis === 'y' ? Math.min(this.minWidth.value, this.targetRect.width) : this.minWidth.value),
-            // maxWidth: toWebUnit(pixelCeil(clamp(zone.available.width, this.minWidth.value === Infinity ? 0 : this.minWidth.value, this.maxWidth.value))),
-            // maxHeight: toWebUnit(pixelCeil(clamp(zone.available.height, this.minHeight.value === Infinity ? 0 : this.minHeight, this.maxHeight.value)))
+            //maxWidth: toWebUnit(pixelCeil(clamp(zone.available.width, this.minWidth.value === Infinity ? 0 : this.minWidth.value, this.maxWidth.value))),
+            //maxHeight: toWebUnit(pixelCeil(clamp(zone.available.height, this.minHeight.value === Infinity ? 0 : this.minHeight, this.maxHeight.value)))
         });
 
         return {
