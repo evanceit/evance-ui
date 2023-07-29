@@ -11,6 +11,7 @@ const meta: Meta<typeof EvOverlay> = {
             control: 'boolean',
             description: "Applied via `v-model` allows two-way binding of whether the show/hide the overlay."
         },
+        offset: 'number',
         persistent: {
             control: 'boolean',
             description: "A persistent overlay cannot be dismissed by clicking outside the overlay content, nor by pressing escape. " +
@@ -66,6 +67,7 @@ const meta: Meta<typeof EvOverlay> = {
     },
     args: {
         modelValue: false,
+        offset: 0,
         persistent: false,
         position: 'auto',
         transition: 'true',
@@ -87,7 +89,7 @@ export const Primary: Story = {
         },
         template: '<ev-button id="example">Button "id" as Activator</ev-button>' +
             '<ev-overlay v-bind="args" activator="#example">' +
-            '<ev-surface elevation="overlay" width="400" height="100" style="padding: 20px;">' +
+            '<ev-surface elevation="overlay" width="400" height="1200" style="padding: 20px;">' +
             '<ev-button @click="args.modelValue = !args.modelValue">Close</ev-button>' +
             '</ev-surface>' +
             '</ev-overlay>'

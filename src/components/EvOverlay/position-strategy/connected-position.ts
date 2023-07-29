@@ -306,7 +306,9 @@ class ConnectedPosition {
 
         // Ok, now we need to calculate the new placement based on available width/height
         // will the content fit and what to do if not.
-        let zone = this.getBestZone(placement.position, zones);
+        let zone = (placement.position.side === 'center')
+            ? this.getCenterZone(zones)
+            : this.getBestZone(placement.position, zones);
 
         // Now we need to calculate the position of the content element within the zone.
         placement.position = zone.position;
@@ -314,13 +316,14 @@ class ConnectedPosition {
 
         let { x, y } = zone.rect;
 
-        // @todo: handle overflows
         if (placement.position.side === 'center') {
             y = zone.rect.y + ((zone.rect.height - this.contentRect.height) / 2);
             x = zone.rect.x + ((zone.rect.width - this.contentRect.width) / 2);
         } else {
             if (placement.position.side === 'top') {
                 y = zone.rect.bottom - this.contentRect.height;
+            } else if (placement.position.side === 'left') {
+                x = zone.rect.right - this.contentRect.width;
             }
             if (placement.position.alignment !== 'start') {
                 const divider = (placement.position.alignment === 'center') ? 2 : 1;
@@ -333,25 +336,26 @@ class ConnectedPosition {
         }
 
         // Should this be optional!?
-        if (y < zone.rect.y) {
-            y = zone.rect.y;
+        if (y < this.viewportRect.y) {
+            y = this.viewportRect.y;
         }
-        if (x < zone.rect.x) {
-            x = zone.rect.x;
+        if (x < this.viewportRect.x) {
+            x = this.viewportRect.x;
         }
 
         // @todo: RTL
         Object.assign(this.contentStyles.value, {
+            '--ev-overlay-position': placement.position.toCssValue(),
             transformOrigin: placement.origin.toCssValue(),
             top: toWebUnit(pixelRound(y)),
             left: toWebUnit(pixelRound(x)),
             minWidth: toWebUnit(placement.position.axis === 'y' ? Math.min(this.minWidth.value, this.targetRect.width) : this.minWidth.value),
-            //maxWidth: toWebUnit(pixelCeil(clamp(zone.available.width, this.minWidth.value === Infinity ? 0 : this.minWidth.value, this.maxWidth.value))),
-            //maxHeight: toWebUnit(pixelCeil(clamp(zone.available.height, this.minHeight.value === Infinity ? 0 : this.minHeight, this.maxHeight.value)))
+            maxWidth: toWebUnit(pixelCeil(clamp(zone.rect.width, this.minWidth.value === Infinity ? 0 : this.minWidth.value, this.maxWidth.value))),
+            maxHeight: toWebUnit(pixelCeil(clamp(zone.rect.height, this.minHeight.value === Infinity ? 0 : this.minHeight.value, this.maxHeight.value)))
         });
 
         return {
-            available: zone.available,
+            zoneRect: zone.rect,
             contentRect: this.contentRect
         };
     }
@@ -367,6 +371,13 @@ class ConnectedPosition {
         return matches[0];
     }
 
+    /**
+     * ## Get Best Zone
+     * Returns the zone that fits the content, or the zone with the largest available area.
+     * @param position
+     * @param zones
+     * @private
+     */
     private getBestZone(position: Anchor, zones: Zone[]): Zone {
         // Priority
         let positions = [
@@ -391,11 +402,24 @@ class ConnectedPosition {
             }
         }
 
-        // Fallback to center
-        const centerPosition = new Anchor('center', 'center');
-        return zones.find((zone) => {
-            return (zone.position.toString() === centerPosition.toString());
-        });
+        // Or the preferred side fits
+        // @todo perhaps we could be a little more clever about it.
+        //      For example, we could keep the preferred side if the dimension for the axis fits
+
+        // Fallback to auto because it finds the largest available zone
+        return this.getAutoZone(position, zones);
+    }
+
+    /**
+     * ## Get Center Zone
+     * Returns the zone for centering content in the viewport, which is basically the whole viewport.
+     * @param zones
+     * @private
+     */
+    private getCenterZone(zones: Zone[]): Zone {
+        return zones.filter((zone) => {
+            return (zone.position.side === 'center' && zone.position.alignment === 'center');
+        })[0];
     }
 
     /**
@@ -492,7 +516,7 @@ class ZoneCalculator {
                 end: { x: viewport.left, width: (target.right - viewport.left - offsetAlign) }
             },
             y: {
-                center: { y: viewport.top, height: (viewport.bottom - viewport.top) },
+                center: { y: viewport.top, height: viewport.height },
                 start: { y: (target.top + offsetAlign), height: (viewport.bottom - target.top - offsetAlign) },
                 end: { y: viewport.top, height: (target.bottom - viewport.top - offsetAlign) }
             }

@@ -71,7 +71,6 @@ export function hasScrollbar(el?: Element | null, axis?: Axis | null = 'y'): boo
     const style = window.getComputedStyle(el);
     const hasScrollbarX =  style.overflowX === 'scroll' || (style.overflowX === 'auto' && el!.scrollWidth > el!.clientWidth);
     const hasScrollbarY =  style.overflowY === 'scroll' || (style.overflowY === 'auto' && el!.scrollHeight > el!.clientHeight);
-    console.log(style.overflowY, 'hasScrollbar');
     return (
         ((!axis || axis === 'x') && hasScrollbarX)
         || ((!axis || axis ==='y') && hasScrollbarY)
