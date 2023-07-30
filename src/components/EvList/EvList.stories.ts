@@ -27,11 +27,6 @@ type Story = StoryObj<typeof EvList>;
 export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvList },
-        methods: {
-            onClickSelect(e) {
-                console.log(e);
-            }
-        },
         setup() {
 
             const items =  [

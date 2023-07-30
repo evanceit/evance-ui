@@ -403,8 +403,15 @@ class ConnectedPosition {
         }
 
         // Or the preferred side fits
-        // @todo perhaps we could be a little more clever about it.
-        //      For example, we could keep the preferred side if the dimension for the axis fits
+        for (const newPosition of positions) {
+            const zone = zones.find((zone) => {
+                return (zone.position.toString() === newPosition.toString());
+            });
+            const dimension = (newPosition.axis === 'x') ? 'width' : 'height';
+            if (zone?.available[dimension] >= 0) {
+                return zone;
+            }
+        }
 
         // Fallback to auto because it finds the largest available zone
         return this.getAutoZone(position, zones);
@@ -417,9 +424,9 @@ class ConnectedPosition {
      * @private
      */
     private getCenterZone(zones: Zone[]): Zone {
-        return zones.filter((zone) => {
+        return zones.find((zone) => {
             return (zone.position.side === 'center' && zone.position.alignment === 'center');
-        })[0];
+        });
     }
 
     /**

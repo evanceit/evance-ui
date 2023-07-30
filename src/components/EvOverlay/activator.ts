@@ -14,7 +14,7 @@ import {
 } from "vue";
 import {bindProps, Browser, getCurrentComponent, propsFactory, refElement, unbindProps} from "../../util";
 import {FocusEvent} from "react";
-import {EvMenuSymbol} from "../EvMenu";
+import {EvMenuSymbol} from "../EvMenu/shared.ts";
 
 
 type ActivatorSelector = 'parent' | string | Element | ComponentPublicInstance;
@@ -194,7 +194,7 @@ class Activator {
     private createDelayFunctions() {
         return useDelayOpenClose(this.props, (value) => {
             const canOpenHover = (this.props.openOnHover && this.isHovered);
-            const canOpenFocus = (openOnFocus.value && this.isFocused);
+            const canOpenFocus = (this.openOnFocus.value && this.isFocused);
             if (
                 (value === (canOpenHover || canOpenFocus))
                 && !(this.props.openOnHover && this.isActive.value && !this.isTopOfStack.value)

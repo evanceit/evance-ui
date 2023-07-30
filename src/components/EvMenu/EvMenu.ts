@@ -1,9 +1,15 @@
-import {InjectionKey} from "vue";
+import {propsFactory} from "../../util";
+import {makeEvOverlayProps} from "../EvOverlay";
 
-interface MenuProvide {
-    register(): void;
-    unregister(): void;
-    closeParents(): void;
-}
+export const makeEvMenuProps = propsFactory({
+    id: String,
 
-export const EvMenuSymbol: InjectionKey<MenuProvide> = Symbol.for('ev:menu');
+    ...makeEvOverlayProps({
+        closeDelay: 250,
+        closeOnContentClick: true,
+        positionStrategy: 'connected' as const,
+        openDelay: 250,
+        veil: false,
+        scrollStrategy: 'reposition' as const
+    })
+}, 'EvMenu');

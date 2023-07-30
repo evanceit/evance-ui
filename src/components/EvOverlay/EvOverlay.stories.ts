@@ -11,7 +11,34 @@ const meta: Meta<typeof EvOverlay> = {
             control: 'boolean',
             description: "Applied via `v-model` allows two-way binding of whether the show/hide the overlay."
         },
-        offset: 'number',
+        offset: {
+            control: 'number',
+            description: "The distance to offset the content from the activator in pixels."
+        },
+        "open-delay": {
+            control: 'number',
+            description: "The duration to delay before opening the overlay in ms for hover and focus events."
+        },
+        "close-delay": {
+            control: 'number',
+            description: "The duration to delay before closing the overlay in ms for hover and focus events."
+        },
+        "close-on-content-click": {
+            control: 'boolean',
+            description: "Closes component when you click on its content. This is primarily used when the content represents a state or navigational change (e.g. a Menu)."
+        },
+        "open-on-click": {
+            control: 'boolean',
+            description: "Open the overlay when the `activator` is clicked."
+        },
+        "open-on-hover": {
+            control: 'boolean',
+            description: "Open the overlay when the mouse hovers over the activator."
+        },
+        "open-on-focus": {
+            control: 'boolean',
+            description: "Open the overlay when the activator is focused (usually with a keyboard event)."
+        },
         persistent: {
             control: 'boolean',
             description: "A persistent overlay cannot be dismissed by clicking outside the overlay content, nor by pressing escape. " +
@@ -36,9 +63,18 @@ const meta: Meta<typeof EvOverlay> = {
                 'right-start',
                 'right-end',
                 'center'
+            ],
+            description: "Position in relation to the activator. " +
+                "A value of `auto` with calculate the side with the most available space. " +
+                "The only exception is `center` which is centered to the viewport of the overlay. "
+        },
+        "position-strategy": {
+            control: "select",
+            options: [
+                'connected', 'fixed'
             ]
         },
-        scrollStrategy: {
+        "scroll-strategy": {
             control: "select",
             options: ['none', 'close', 'block', 'reposition'],
             mapping: {
@@ -46,7 +82,9 @@ const meta: Meta<typeof EvOverlay> = {
                 'close': 'close',
                 'block': 'block',
                 'reposition': 'reposition'
-            }
+            },
+            description: "The scroll strategy can either `close` the overlay on scroll, `block` scroll events, or `reposition` the content of the overlay on scroll. " +
+                "You may also provide your own function."
         },
         transition: {
             control: 'select',
@@ -68,6 +106,12 @@ const meta: Meta<typeof EvOverlay> = {
     args: {
         modelValue: false,
         offset: 0,
+        "open-delay": 0,
+        "close-delay": 0,
+        "open-on-click": true,
+        "open-on-hover": false,
+        "open-on-focus": false,
+        "close-on-content-click": false,
         persistent: false,
         position: 'auto',
         transition: 'true',
@@ -89,7 +133,7 @@ export const Primary: Story = {
         },
         template: '<ev-button id="example">Button "id" as Activator</ev-button>' +
             '<ev-overlay v-bind="args" activator="#example">' +
-            '<ev-surface elevation="overlay" width="400" height="1200" style="padding: 20px;">' +
+            '<ev-surface elevation="overlay" width="400" height="120" style="padding: 20px;">' +
             '<ev-button @click="args.modelValue = !args.modelValue">Close</ev-button>' +
             '</ev-surface>' +
             '</ev-overlay>'
