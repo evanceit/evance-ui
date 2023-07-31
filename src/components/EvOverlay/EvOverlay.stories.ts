@@ -9,7 +9,7 @@ const meta: Meta<typeof EvOverlay> = {
     argTypes: {
         modelValue: {
             control: 'boolean',
-            description: "Applied via `v-model` allows two-way binding of whether the show/hide the overlay."
+            description: "Applied via `v-model` allows two-way binding of whether to show/hide the overlay."
         },
         offset: {
             control: 'number',
@@ -134,7 +134,24 @@ export const Primary: Story = {
         template: '<ev-button id="example">Button "id" as Activator</ev-button>' +
             '<ev-overlay v-bind="args" activator="#example">' +
             '<ev-surface elevation="overlay" width="400" height="120" style="padding: 20px;">' +
-            '<ev-button @click="args.modelValue = !args.modelValue">Close</ev-button>' +
+            '<ev-button @click="args.modelValue = false">Close</ev-button>' +
+            '</ev-surface>' +
+            '</ev-overlay>'
+    })
+};
+
+export const ActivatorInside: Story = {
+    render: (args: any) =>  ({
+        components: { EvOverlay, EvButton, EvSurface },
+        setup() {
+
+            return { args };
+        },
+        template:
+            '<ev-overlay v-bind="args">' +
+            '<template #activator="{ isActive, props }"><ev-button v-bind="props">Activator inside</ev-button></template>' +
+            '<ev-surface elevation="overlay" width="400" height="120" style="padding: 20px;">' +
+            '<ev-button @click="args.modelValue = false">Close</ev-button>' +
             '</ev-surface>' +
             '</ev-overlay>'
     })

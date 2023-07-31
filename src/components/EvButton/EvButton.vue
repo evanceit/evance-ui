@@ -104,7 +104,7 @@ function onClick(e: MouseEvent): void {
         <span class="ev-button--prefix" v-if="icon || iconBefore">
             <ev-icon :glyph="icon ? icon : iconBefore" />
         </span>
-        <span class="ev-button--text" v-if="hasDefaultSlot">
+        <span class="ev-button--text" v-if="hasDefaultSlot" data-no-activator>
             <slot />
         </span>
         <span class="ev-button--suffix" v-if="iconAfter">

@@ -179,7 +179,7 @@ class Activator {
             if (this.isCloseOnContentClick()) {
                 const menu = inject(EvMenuSymbol, null);
                 events.onClick = () => {
-                    isActive.value = false;
+                    this.isActive.value = false;
                     menu?.closeParents();
                 };
             }

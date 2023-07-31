@@ -5,7 +5,7 @@
 import './EvOverlay.scss';
 import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {computed, mergeProps, onMounted, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
+import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
 import {useTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
@@ -173,7 +173,6 @@ useToggleScope(() => props.closeOnBack, () => {
     });
 });
 
-
 /**
  * Dynamically create a local component we can render using:
  * `<activator-slot>` or `<component :is="activatorSlot" />`
@@ -190,7 +189,6 @@ const overlayAttributes = {
     ...scopeId,
     ...attrs
 };
-
 </script>
 <template>
 

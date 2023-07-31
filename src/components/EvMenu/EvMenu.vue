@@ -6,7 +6,7 @@ import {makeEvMenuProps} from "../EvMenu";
 import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useScopeId} from "../../composables/scopeId.ts";
-import {focusChild, getNextId} from "../../util";
+import {focusChild, getNextId, splitObject} from "../../util";
 import {EvOverlay} from "../EvOverlay";
 import {EvMenuSymbol} from "./shared.ts";
 
@@ -39,7 +39,7 @@ provide(EvMenuSymbol, {
     }
 });
 
-watch(isActive, (values) => {
+watch(isActive, (value) => {
    return value ? parent?.register() : parent?.unregister();
 });
 
@@ -52,11 +52,16 @@ function onKeydown(e: KeyboardEvent) {
         return;
     }
     if (e.key === 'Tab') {
+        console.log('foo');
         isActive.value = false;
         overlay.value?.activatorEl?.focus();
     }
 }
 
+/**
+ * ## On Activator Keydown
+ * @param e
+ */
 function onActivatorKeydown(e: KeyboardEvent) {
     if (props.disabled) {
         return;
@@ -77,16 +82,20 @@ function onActivatorKeydown(e: KeyboardEvent) {
     }
 }
 
+/**
+ * ## Activator Props
+ *
+ * Manipulate the activator props to include the keydown event listener
+ * and ARIA attributes for accessibility.
+ */
 const activatorProps = computed(() => {
-    mergeProps({
+    return mergeProps({
         'aria-haspopup': 'menu',
         'aria-expanded': String(isActive.value),
         'aria-owns': id.value,
         onKeydown: onActivatorKeydown
     }, props.activatorProps);
 });
-
-
 
 </script>
 <template>
@@ -99,11 +108,17 @@ const activatorProps = computed(() => {
         :style="[
             props.style
         ]"
-        :activator-props="activatorProps"
+        v-bind="props"
+        v-bind:activator-props="activatorProps"
         v-model="isActive"
         @click:outside="onClickOutside"
-
+        @keydown.tab="onKeydown"
     >
-
+        <template #activator="{ isActive, props }" v-if="slots.activator">
+            <slot name="activator" :props="props" />
+        </template>
+        <template #default>
+            Hello
+        </template>
     </ev-overlay>
 </template>
