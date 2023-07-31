@@ -72,6 +72,17 @@ useScrollStrategies(props, {
 });
 
 /**
+ * What should parent components have access to?
+ */
+defineExpose({
+    activatorEl,
+    contentEl,
+    isTopGlobal,
+    isTopLocal,
+    updatePosition
+});
+
+/**
  * When disabled update the model value via the isActive computed prop
  */
 watch(() => props.disabled, (value) => {

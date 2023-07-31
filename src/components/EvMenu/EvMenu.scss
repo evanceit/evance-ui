@@ -1,0 +1,10 @@
+
+.ev-menu {
+    > .ev-overlay--content {
+        > .ev-list {
+            background-color: var(--surface-overlay);
+            box-shadow: var(--surface-overlay-shadow);
+            border-radius: var(--rounded-small);
+        }
+    }
+}

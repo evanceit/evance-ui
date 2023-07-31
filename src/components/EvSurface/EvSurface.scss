@@ -3,7 +3,7 @@
     margin: 0 auto;
     transition: background-color 0.25s ease-in-out,
                 box-shadow 0.25s ease-in-out;
-    will-change: background-color;
+    will-change: background-color, box-shadow;
 
     &.elevation-default {
         background-color: var(--surface-default);

@@ -2,11 +2,12 @@
 /**
  * # EvMenu
  */
+import './EvMenu.scss';
 import {makeEvMenuProps} from "../EvMenu";
 import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useScopeId} from "../../composables/scopeId.ts";
-import {focusChild, getNextId, splitObject} from "../../util";
+import {focusChild, getNextId} from "../../util";
 import {EvOverlay} from "../EvOverlay";
 import {EvMenuSymbol} from "./shared.ts";
 
@@ -52,7 +53,6 @@ function onKeydown(e: KeyboardEvent) {
         return;
     }
     if (e.key === 'Tab') {
-        console.log('foo');
         isActive.value = false;
         overlay.value?.activatorEl?.focus();
     }
@@ -60,6 +60,7 @@ function onKeydown(e: KeyboardEvent) {
 
 /**
  * ## On Activator Keydown
+ *
  * @param e
  */
 function onActivatorKeydown(e: KeyboardEvent) {
@@ -97,6 +98,8 @@ const activatorProps = computed(() => {
     }, props.activatorProps);
 });
 
+
+
 </script>
 <template>
     <ev-overlay
@@ -112,13 +115,13 @@ const activatorProps = computed(() => {
         v-bind:activator-props="activatorProps"
         v-model="isActive"
         @click:outside="onClickOutside"
-        @keydown.tab="onKeydown"
+        @keydown="onKeydown"
     >
         <template #activator="{ isActive, props }" v-if="slots.activator">
             <slot name="activator" :props="props" />
         </template>
         <template #default>
-            Hello
+            <slot name="default" />
         </template>
     </ev-overlay>
 </template>

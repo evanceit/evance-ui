@@ -213,3 +213,33 @@ export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
 export function clamp (value: number, min = 0, max = 1) {
     return Math.max(min, Math.min(max, value))
 }
+
+/**
+ * # Union To Intersection
+ *
+ * Intersection `I` of all types in the union `U` - transform a union of object types into an intersection of those types.
+ * This can be helpful when you want to combine multiple types into a single type, where all properties from each type
+ * become part of the resulting type.
+ */
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
+
+/**
+ * # Get Descriptor
+ *
+ * Returns the closest property descriptor for an object.
+ *
+ * @param obj
+ * @param key
+ */
+export function getPropertyDescriptor(obj: any, key: PropertyKey) {
+    let currentObj = obj;
+    while (currentObj) {
+        const descriptor = Reflect.getOwnPropertyDescriptor(currentObj, key);
+        if (descriptor) {
+            return descriptor;
+        }
+        currentObj = Object.getPrototypeOf(currentObj);
+    }
+    return undefined;
+}

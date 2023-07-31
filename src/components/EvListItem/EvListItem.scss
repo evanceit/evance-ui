@@ -30,6 +30,7 @@ $indicator-width: 3px;
 .ev-list-item--content {
     flex: 1 0 auto;
     padding-inline: 4px;
+    width: max-content;
 }
 
 .ev-list-item {

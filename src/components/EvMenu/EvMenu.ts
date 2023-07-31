@@ -7,6 +7,7 @@ export const makeEvMenuProps = propsFactory({
     ...makeEvOverlayProps({
         closeDelay: 250,
         closeOnContentClick: true,
+        position: 'bottom-start',
         positionStrategy: 'connected' as const,
         openDelay: 250,
         veil: false,
