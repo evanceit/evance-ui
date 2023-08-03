@@ -16,7 +16,7 @@ export function blockScrollStrategy (data: ScrollStrategyData, props: ScrollStra
     const scrollbarWidth = window.innerWidth - document.documentElement.offsetWidth;
     const scrollableParent = (el => hasScrollbar(el) && el)(offsetParent || document.documentElement)
     if (scrollableParent) {
-        data.containerEl.value!.classList.add('ev-overlay--scroll-blocked');
+        data.containerEl.value?.classList.add('ev-overlay--scroll-blocked');
     }
 
     scrollElements.forEach((el, i) => {
@@ -41,7 +41,7 @@ export function blockScrollStrategy (data: ScrollStrategyData, props: ScrollStra
             el.scrollTop = -y;
         });
         if (scrollableParent) {
-            data.containerEl.value!.classList.remove('ev-overlay--scroll-blocked');
+            data.containerEl.value?.classList.remove('ev-overlay--scroll-blocked');
         }
     });
 }
