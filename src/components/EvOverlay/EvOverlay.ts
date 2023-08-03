@@ -1,7 +1,7 @@
 import {propsFactory} from "../../util";
 import {PropType, StyleValue} from "vue";
 import {TeleportTarget} from "../../composables/teleport.ts";
-import {makeTransitionProps} from "../../composables/transitions.ts";
+import {makeEvTransitionProps} from "../../composables/transitions.ts";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
 import {makePositionStrategyProps} from "./position.ts";
@@ -40,6 +40,6 @@ export const makeEvOverlayProps = propsFactory({
     ...makeDimensionsProps(),
     ...makePositionStrategyProps(),
     ...makeScrollStrategyProps(),
-    ...makeTransitionProps()
+    ...makeEvTransitionProps()
 
 }, 'EvOverlay');

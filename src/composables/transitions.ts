@@ -1,19 +1,19 @@
-import {computed, PropType, TransitionProps} from "vue";
-import {isBoolean, isEmpty, isString, propsFactory} from "../util";
+import {Component, computed, FunctionalComponent, mergeProps, PropType, Transition, TransitionProps, h} from "vue";
+import {isBoolean, isEmpty, isObject, isString, propsFactory} from "../util";
 
-
-export type EvTransition = string | boolean | TransitionProps;
+export type EvTransitionProp = string | boolean | TransitionProps & { component?: Component };
 
 export interface EvTransitionProps {
-    transition?: EvTransition
+    transition?: EvTransitionProp;
+    disabled?: boolean;
 }
 
 /**
  * # Make Transition Props
  */
-export const makeTransitionProps = propsFactory({
+export const makeEvTransitionProps = propsFactory({
     transition: {
-        type: [Boolean, String, Object] as PropType<string | boolean | TransitionProps>,
+        type: [Boolean, String, Object] as PropType<EvTransitionProp>,
         default: true
     }
 }, 'transitions');
@@ -39,3 +39,28 @@ export function useTransition(props: EvTransitionProps, defaultTransition: strin
         return props.transition;
     });
 }
+
+/**
+ * # EvTransition
+ *
+ * A functional component for handling transitions, which can either be a name, object or component.
+ *
+ * @param props
+ * @param slots
+ * @constructor
+ */
+export const EvTransition: FunctionalComponent<EvTransitionProps> = (props, { slots }) => {
+    const { transition, disabled, ...remainingProps } = props;
+    const { component: transitionComponent = Transition, ...customProps } = isObject(transition) ? transition : {};
+    const transitionProps = isString(transition) ? { name: disabled ? '' : transition } : customProps as any;
+
+    return h(
+        transitionComponent,
+        mergeProps(
+            transitionProps,
+            remainingProps as any,
+            { disabled }
+        ),
+        slots
+    );
+};

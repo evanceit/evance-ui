@@ -7,7 +7,7 @@ import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
-import {useTransition} from "../../composables/transitions.ts";
+import {useTransition, EvTransition} from "../../composables/transitions.ts";
 import {useDimensions} from "../../composables/dimensions.ts";
 import {clickBlockedAnimation} from "../../util";
 import {useStack} from "../../composables/stack.ts";
@@ -26,7 +26,8 @@ defineOptions({
 // Emit
 const emit = defineEmits([
     'click:outside',
-    'update:modelValue'
+    'update:modelValue',
+    'afterLeave'
 ]);
 
 const props = defineProps({
@@ -142,6 +143,7 @@ function dismiss(focusActivator: boolean = false) {
  */
 function onAfterLeave(e) {
     isActiveTeleport.value = false;
+    emit('afterLeave');
 }
 
 
@@ -231,9 +233,10 @@ const overlayAttributes = {
                      v-bind="veilEvents"></div>
             </transition>
 
-            <transition appear
-                        v-bind="contentTransition"
-                        @after-leave="onAfterLeave">
+            <ev-transition appear
+                           :transition="contentTransition"
+                           :target="activatorEl"
+                           @after-leave="onAfterLeave">
                 <div
                     ref="contentEl"
                     class="ev-overlay--content"
@@ -250,7 +253,7 @@ const overlayAttributes = {
                 >
                     <slot />
                 </div>
-            </transition>
+            </ev-transition>
 
         </div>
     </teleport>
