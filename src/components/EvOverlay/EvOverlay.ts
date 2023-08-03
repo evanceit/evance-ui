@@ -1,7 +1,7 @@
 import {propsFactory} from "../../util";
 import {PropType, StyleValue} from "vue";
 import {TeleportTarget} from "../../composables/teleport.ts";
-import {makeEvTransitionProps} from "../../composables/transitions.ts";
+import {makeEvTransitionProps} from "../EvTransition";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
 import {makePositionStrategyProps} from "./position.ts";

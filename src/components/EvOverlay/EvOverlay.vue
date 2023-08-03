@@ -7,7 +7,7 @@ import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
 import {useTeleport} from "../../composables/teleport.ts";
-import {useTransition, EvTransition} from "../../composables/transitions.ts";
+import {useEvTransition, EvTransition} from "../EvTransition";
 import {useDimensions} from "../../composables/dimensions.ts";
 import {clickBlockedAnimation} from "../../util";
 import {useStack} from "../../composables/stack.ts";
@@ -40,7 +40,7 @@ const router = useRouter();
 const model = useModelProxy(props, 'modelValue');
 const containerEl = ref<HTMLElement | null>(null);
 const contentEl = ref<HTMLElement | null>(null);
-const contentTransition = useTransition(props);
+const contentTransition = useEvTransition(props);
 const dimensions = useDimensions(props);
 const { scopeId } = useScopeId();
 const isActiveContent = computed({
