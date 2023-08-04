@@ -1,5 +1,7 @@
 import {propsFactory} from "../../util";
 import {makeEvOverlayProps} from "../EvOverlay";
+import {Component} from "vue";
+import EvMenuTransition from "./EvMenuTransition.vue";
 
 export const makeEvMenuProps = propsFactory({
     id: String,
@@ -11,6 +13,7 @@ export const makeEvMenuProps = propsFactory({
         positionStrategy: 'connected' as const,
         openDelay: 250,
         veil: false,
-        scrollStrategy: 'reposition' as const
+        scrollStrategy: 'reposition' as const,
+        transition: { component: EvMenuTransition as Component }
     })
 }, 'EvMenu');

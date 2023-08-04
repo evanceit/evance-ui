@@ -18,7 +18,6 @@ interface ClickOutsideArgs {
 
 /**
  * ## Click Outside Binding
- *
  */
 interface ClickOutsideBinding extends DirectiveBinding {
     value: ((e: MouseEvent) => void) | ClickOutsideArgs

@@ -11,10 +11,10 @@ import { setup } from '@storybook/vue3';
  *        Ideally, I would like to have something like Vuetify's setup process
  */
 import '../src/css/core.scss';
-import {clickOutside} from "../src/directives";
-import {createRouter} from "vue-router";
+import {clickOutside, slotsDirective} from "../src/directives";
 
 setup((app) => {
+  app.directive('slots', slotsDirective);
   app.directive('click-outside', clickOutside);
 });
 
