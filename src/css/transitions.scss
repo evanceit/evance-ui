@@ -1,5 +1,7 @@
 
-
+/*
+    # Transition Defaults
+ */
 @mixin transition-default() {
     &-enter-active {
         transition-duration: 0.25s !important;
@@ -19,6 +21,9 @@
 }
 
 
+/**
+    # Fade Transition
+ */
 .transition-fade {
     @include transition-default();
 
@@ -30,5 +35,41 @@
     &-enter-active,
     &-leave-active {
         transition-property: opacity !important;
+    }
+}
+
+
+/**
+    EvMenu Transition
+
+    The EvMenuTransition component uses a CSS transition when no target element is available.
+    Otherwise it will use a JavaScript animation.
+ */
+.ev-menu-transition {
+    &-enter-active {
+        transition-duration: 250ms !important;
+        transition-timing-function: var(--easing-standard) !important;
+    }
+
+    &-leave-active {
+        transition-duration: 125ms !important;
+        transition-timing-function: var(--easing-decelerate) !important;
+    }
+
+    &-enter-active,
+    &-leave-active {
+        transition-property: transform, opacity !important;
+        pointer-events: none;
+    }
+
+    &-enter-from,
+    &-leave-to {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    &-enter-to,
+    &-leave-from {
+        opacity: 1;
     }
 }

@@ -154,5 +154,9 @@ $text: (
     --text-weight: 400;
     --text-weight-bold: 700;
 
+    /* Easing */
+    --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+    --easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
 }
 
