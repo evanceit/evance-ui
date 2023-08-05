@@ -50,17 +50,10 @@ export class Anchor {
         if (this.alignment === 'auto') {
             throw new Error('Cannot convert `auto` to a physical alignment');
         }
-        if (this.axis === 'x') {
-            return {
-                center: 'center',
-                start: 'left',
-                end: 'right'
-            }[this.alignment];
-        }
         return {
             center: 'center',
-            start: 'top',
-            end: 'bottom'
+            start: 'left',
+            end: 'right'
         }[this.alignment];
     }
 

@@ -107,3 +107,8 @@ function run () {
         }
     })
 }
+
+
+export const easingStandard = 'cubic-bezier(0.4, 0, 0.2, 1)'
+export const easingDecelerate = 'cubic-bezier(0.0, 0, 0.2, 1)' // Entering
+export const easingAccelerate = 'cubic-bezier(0.4, 0, 1, 1)' // Leaving
