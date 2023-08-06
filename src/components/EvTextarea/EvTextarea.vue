@@ -4,7 +4,7 @@
  */
 import './EvTextarea.scss';
 import {computed, nextTick, ref, useAttrs, onUpdated, onMounted} from "vue";
-import {appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
+import {Appearance, appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
@@ -191,7 +191,7 @@ const vAutofocus = useAutofocus(props);
             </div>
         </transition>
         <div class="ev-textarea--loader" v-if="loading && !icon">
-            <ev-progress indeterminate :appearance="isFocused ? 'primary' : 'default'" size="2" />
+            <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
         </div>
     </div>
 </template>

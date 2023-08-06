@@ -1,5 +1,5 @@
 import {
-    ComponentInternalInstance,
+    ComponentInternalInstance, ComponentOptionsWithObjectProps,
     ComponentPublicInstance,
     computed,
     ComputedGetter,
@@ -159,15 +159,24 @@ export function refElement<T extends object | undefined> (obj: T): Exclude<T, Co
  *
  * @param subject
  * @param paths
+ * @param exclude
  */
 export function splitObject<
     Subject extends object,
-    SubjectKey extends Extract<keyof Subject, string>
-> (subject: Subject, paths: (SubjectKey | RegExp)[]): [matched: Partial<Subject>, unmatched: Partial<Subject>] {
+    SubjectKey extends Extract<keyof Subject, string>,
+    Exclusions extends Extract<keyof Subject, string>
+> (
+    subject: Subject,
+    paths: (SubjectKey | RegExp)[],
+    exclude?:  Exclusions[]
+): [matched: Partial<Subject>, unmatched: Partial<Subject>] {
     const matching = Object.create(null);
     const remaining = Object.create(null);
     for (const key in subject) {
-        if (paths.some(path => (path instanceof RegExp) ? path.test(key) : path === key)) {
+        if (
+            paths.some(path => (path instanceof RegExp) ? path.test(key) : path === key)
+            && !exclude?.some(path => path === key)
+        ) {
             matching[key] = subject[key];
         } else {
             remaining[key] = subject[key];
@@ -191,6 +200,11 @@ export function splitInputAttrs(attrs: Record<string, unknown>) {
 }
 
 
+export function clamp (value: number, min = 0, max = 1) {
+    return Math.max(min, Math.min(max, value))
+}
+
+
 /**
  * # Destruct Computed
  *
@@ -209,10 +223,6 @@ export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
     return toRefs(refs);
 }
 
-
-export function clamp (value: number, min = 0, max = 1) {
-    return Math.max(min, Math.min(max, value))
-}
 
 /**
  * # Union To Intersection
@@ -242,4 +252,19 @@ export function getPropertyDescriptor(obj: any, key: PropertyKey) {
         currentObj = Object.getPrototypeOf(currentObj);
     }
     return undefined;
+}
+
+
+/**
+ * # Filter Component Props
+ *
+ * Extracts the component's props from a props record.
+ *
+ * Excludes `class` and `style`.
+ *
+ * @param component
+ * @param props
+ */
+export function filterComponentProps(component: ComponentOptionsWithObjectProps, props: Record<string, any>)  {
+    return splitObject(props, Object.keys(component.props), ['class', 'style'])[0];
 }

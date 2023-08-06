@@ -5,18 +5,18 @@
 @mixin transition-default() {
     &-enter-active {
         transition-duration: 0.25s !important;
-        transition-timing-function: ease-in-out !important;
+        transition-timing-function: var(--easing-standard, ease-in-out) !important;
     }
 
     &-leave-active {
         transition-duration: 0.25s !important;
-        transition-timing-function: ease-in-out !important;
+        transition-timing-function: var(--easing-standard, ease-in-out) !important;
     }
 
     &-move {
         transition-duration: 0.5s !important;
         transition-property: transform !important;
-        transition-timing-function: ease-in-out !important;
+        transition-timing-function: var(--easing-standard, ease-in-out) !important;
     }
 }
 

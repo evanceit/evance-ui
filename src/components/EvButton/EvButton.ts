@@ -22,9 +22,8 @@ export const makeEvButtonProps = propsFactory({
         type: Boolean,
         default: false
     },
-    icon: IconValue,
-    iconAfter: IconValue,
-    iconBefore: IconValue,
+    iconStart: IconValue,
+    iconEnd: IconValue,
     rounded: Boolean,
     size: String<InputSizeProp>,
     fullWidth: Boolean,

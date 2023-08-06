@@ -40,7 +40,7 @@ export const makeInputAppearanceProps = propsFactory({
         type: String<InputAppearance>,
         default: InputAppearance.default
     }
-});
+}, 'InputAppearance');
 
 /**
  * # Input Sizes
@@ -58,4 +58,4 @@ export const makeInputSizeProps = propsFactory({
         type: String<InputSize>,
         default: InputSize.default
     }
-});
+}, 'InputSize');

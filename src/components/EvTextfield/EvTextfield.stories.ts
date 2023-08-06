@@ -25,7 +25,7 @@ const meta: Meta<typeof EvTextfield> = {
         clearable: {
             control: 'boolean'
         },
-        icon: {
+        'icon-start': {
             control: 'select',
             options: ['none', 'Search'],
             mapping: {
@@ -33,6 +33,15 @@ const meta: Meta<typeof EvTextfield> = {
                 'Search': Search
             },
             description: "Appears before input prefix. "
+        },
+        'icon-end': {
+            control: 'select',
+            options: ['none', 'Search'],
+            mapping: {
+                'none': null,
+                'Search': Search
+            },
+            description: "Appears after input suffix. "
         },
         loading: {
             control: 'boolean',
@@ -78,7 +87,8 @@ const meta: Meta<typeof EvTextfield> = {
         autoselect: false,
         clearable: false,
         disabled: false,
-        icon: 'none',
+        'icon-start': 'none',
+        'icon-end': 'none',
         loading: false,
         prefix: '',
         rounded: false,

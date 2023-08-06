@@ -29,19 +29,7 @@ const meta: Meta<typeof EvButton> = {
             options: ['small', 'medium', 'large'],
             description: 'Changes the size of the button, which may be either `small`, `medium`, or `large`.'
         },
-        icon: {
-            description: 'Alias of `icon-before`.'
-        },
-        iconAfter: {
-            control: 'select',
-            description: "Places an icon after the button's text",
-            options: ['None', 'ArrowContinue'],
-            mapping: {
-                'None': null,
-                'ArrowContinue': markRaw(ArrowContinue)
-            }
-        },
-        iconBefore: {
+        'icon-start': {
             control: 'select',
             description: "Places an icon before the button's text",
             options: ['None', 'Check', 'Plus', 'Save'],
@@ -50,6 +38,15 @@ const meta: Meta<typeof EvButton> = {
                 'Check': markRaw(Check),
                 'Plus': markRaw(Plus),
                 'Save': markRaw(Save)
+            }
+        },
+        'icon-end': {
+            control: 'select',
+            description: "Places an icon after the button's text",
+            options: ['None', 'ArrowContinue'],
+            mapping: {
+                'None': null,
+                'ArrowContinue': markRaw(ArrowContinue)
             }
         },
         fullWidth: {
@@ -68,9 +65,8 @@ const meta: Meta<typeof EvButton> = {
         default: 'Continue',
         disabled: false,
         href: null,
-        icon: null,
-        iconAfter: 'None',
-        iconBefore: 'None',
+        'icon-start': 'None',
+        'icon-end': 'None',
         size: 'medium',
         fullWidth: false,
         loading: false,

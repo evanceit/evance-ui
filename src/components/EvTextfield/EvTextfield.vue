@@ -7,17 +7,11 @@ import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {
-    appearanceModifier,
-    InputAppearance,
-    InputAppearanceProp, InputSize,
-    InputSizeProp,
-    sizeModifier,
-    splitInputAttrs
-} from "../../util";
+import {Appearance, appearanceModifier, InputAppearance, InputSize, sizeModifier, splitInputAttrs} from "../../util";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
+import {makeEvTextfieldProps} from "./EvTextfield.ts";
 
 
 /**
@@ -28,41 +22,8 @@ defineOptions({
     inheritAttrs: false
 });
 
-
 // Props
-interface TextfieldProps {
-    appearance?: InputAppearanceProp,
-    autofocus?: boolean,
-    autoselect?: boolean,
-    clearable?: boolean,
-    disabled?: boolean,
-    focused?: boolean,
-    icon?: object,
-    id?: string,
-    loading?: boolean,
-    name?: string,
-    placeholder?: string,
-    prefix?: string,
-    readonly?: boolean,
-    suffix?: string,
-    modelValue?: string,
-    rounded?: boolean,
-    size?: InputSizeProp,
-    type?: string
-}
-const props = withDefaults(defineProps<TextfieldProps>(), {
-    appearance: 'default',
-    autofocus: false,
-    autoselect: false,
-    clearable: false,
-    disabled: false,
-    focused: false,
-    loading: false,
-    readonly: false,
-    rounded: false,
-    size: 'medium',
-    type: 'text'
-});
+const props = defineProps(makeEvTextfieldProps());
 
 // Emit
 const emit = defineEmits([
@@ -136,10 +97,10 @@ const vAutofocus = useAutofocus(props);
         role="textbox"
         v-bind="containerAttrs"
     >
-        <div class="ev-textfield--icon" v-if="icon">
+        <div class="ev-textfield--icon" v-if="iconStart">
             <transition name="fade-in-out" mode="out-in">
-                <ev-icon v-if="!loading" :glyph="icon" />
-                <ev-progress-circular v-else  indeterminate :appearance="isFocused ? 'primary' : 'default'" />
+                <ev-icon v-if="!loading" :glyph="iconStart" />
+                <ev-progress-circular v-else  indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" />
             </transition>
         </div>
         <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
@@ -171,8 +132,11 @@ const vAutofocus = useAutofocus(props);
         <div class="ev-textfield--suffix" v-if="suffix || slots.suffix">
             <slot name="suffix">{{ suffix }}</slot>
         </div>
-        <div class="ev-textfield--loader" v-if="loading && !icon">
-            <ev-progress indeterminate :appearance="isFocused ? 'primary' : 'default'" size="2" />
+        <div class="ev-textfield--icon" v-if="iconEnd">
+            <ev-icon :glyph="iconEnd" />
+        </div>
+        <div class="ev-textfield--loader" v-if="loading && !iconStart">
+            <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
         </div>
     </div>
 </template>

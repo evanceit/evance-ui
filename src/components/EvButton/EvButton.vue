@@ -24,6 +24,22 @@ const isDisabled = computed(() => {
 });
 
 /**
+ * ## Is Icon Only?
+ * Used to determine whether to apply `is-icon` modifier class.
+ * Returns `true` if only one icon is applied, the button is not full-width
+ * and no text has been supplied.
+ */
+const isIconOnly = computed(() =>{
+    return (
+            (!!props.iconStart && !props.iconEnd)
+            || (!props.iconStart && !!props.iconEnd)
+        )
+        && !hasDefaultSlot.value
+        && !props.fullWidth;
+});
+
+
+/**
  * ## Get Component Element
  *
  * An `<ev-button>` may render as:
@@ -32,21 +48,6 @@ const isDisabled = computed(() => {
  */
 function getComponentElement() {
     return isLink() ? 'a' : 'button';
-}
-
-/**
- * ## Is Icon Only?
- * Used to determine whether to apply `is-icon` modifier class.
- * Returns `true` if only one icon is applied, the button is not full-width
- * and no text has been supplied.
- */
-function isIconOnly() {
-    return (
-        ((!!props.icon || !!props.iconBefore) && !props.iconAfter)
-        || ((!props.icon && !props.iconBefore) && !!props.iconAfter)
-    )
-        && !hasDefaultSlot.value
-        && !props.fullWidth;
 }
 
 /**
@@ -90,7 +91,7 @@ function onClick(e: MouseEvent): void {
             appearanceModifier(props.appearance),
             sizeModifier(props.size, [InputSize.default]),
             {
-                'is-icon': isIconOnly(),
+                'is-icon': isIconOnly,
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
                 'is-disabled': props.disabled,
@@ -101,14 +102,14 @@ function onClick(e: MouseEvent): void {
         :disabled="!isLink() ? disabled : null"
         @click="onClick"
     >
-        <span class="ev-button--prefix" v-if="icon || iconBefore">
-            <ev-icon :glyph="icon ? icon : iconBefore" />
+        <span class="ev-button--prefix" v-if="iconStart">
+            <ev-icon :glyph="iconStart" />
         </span>
         <span class="ev-button--text" v-if="hasDefaultSlot" data-no-activator>
             <slot />
         </span>
-        <span class="ev-button--suffix" v-if="iconAfter">
-            <ev-icon :glyph="iconAfter" />
+        <span class="ev-button--suffix" v-if="iconEnd">
+            <ev-icon :glyph="iconEnd" />
         </span>
         <span class="ev-button--loading">
             <ev-progress-circular indeterminate v-if="loading" />
