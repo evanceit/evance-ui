@@ -62,20 +62,10 @@ export const Primary: Story = {
         components: { EvSelect },
         setup() {
 
-            const items = [
-                {
-                    title: 'England',
-                    value: 1
-                },
-                {
-                    title: 'Scotland',
-                    value: 2
-                },
-                {
-                    title: 'Wales',
-                    value: 3
-                }
-            ];
+            const items = [];
+            for (let i = 0; i < 1000; i++) {
+                items.push(i + 1);
+            }
 
             return { args, items };
         },

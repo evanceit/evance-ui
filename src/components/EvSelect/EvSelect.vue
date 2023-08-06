@@ -151,6 +151,7 @@ function select(item: ListItem) {
     <ev-menu
         ref="evMenuRef"
         v-model="isMenuOpen"
+        max-height="310"
         :activator="evTextfieldRef"
         :closeOnContentClick="false"
         :openOnClick="false"

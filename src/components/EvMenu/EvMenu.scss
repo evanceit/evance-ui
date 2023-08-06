@@ -1,10 +1,16 @@
 
 .ev-menu {
     > .ev-overlay--content {
+        border-radius: var(--rounded-small);
+        display: flex;
+        flex-direction: column;
+
         > .ev-list {
             background-color: var(--surface-overlay);
+            border-radius: inherit;
             box-shadow: var(--surface-overlay-shadow);
-            border-radius: var(--rounded-small);
+            height: 100%;
+            overflow: auto;
         }
     }
 }
