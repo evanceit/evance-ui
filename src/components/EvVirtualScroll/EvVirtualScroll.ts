@@ -10,6 +10,9 @@ export interface EvVirtualScrollSlot<T> {
     index: number;
 }
 
+/**
+ * # Make EvVirtualScroll Props
+ */
 export const makeEvVirtualScrollProps = propsFactory({
     items: {
         type: Array as PropType<readonly unknown[]>,
@@ -21,4 +24,13 @@ export const makeEvVirtualScrollProps = propsFactory({
     ...makeComponentProps(),
     ...makeDimensionsProps()
 }, 'EvVirtualScroll');
+
+
+/**
+ * # Make EvVirtualScrollItem Props
+ */
+export const makeEvVirtualScrollItemProps = propsFactory({
+    renderless: Boolean,
+    ...makeComponentProps()
+}, 'EvVirtualScrollItem');
 

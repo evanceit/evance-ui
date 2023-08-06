@@ -13,11 +13,11 @@
  */
 import './EvList.scss';
 import {makeEvListProps, useListItems} from "./EvList.ts";
-import EvListItem from "../EvListItem/EvListItem.vue";
 import {computed, ref, shallowRef, useSlots} from "vue";
 import {focusChild, FocusPosition} from "../../util";
 import {createList, useNestedList} from "../../composables/lists";
 import {useDimensions} from "../../composables/dimensions.ts";
+import EvListChildren from "./EvListChildren.vue";
 
 defineEmits([
     'update:selected',
@@ -131,11 +131,8 @@ defineExpose({
         @focusin="onFocusIn"
         @focusout="onFocusOut"
     >
-        <ev-list-item
-            v-for="item in items"
-            v-bind="item.props"
-        >
-        </ev-list-item>
-        <slot />
+        <ev-list-children :items="items">
+            <slot />
+        </ev-list-children>
     </component>
 </template>

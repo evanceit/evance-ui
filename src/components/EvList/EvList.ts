@@ -1,10 +1,10 @@
-import {getPropertyValue, isPrimitive, propsFactory} from "../../util";
+import {getPropertyValue, isPrimitive, propsFactory, splitObject} from "../../util";
 import {
     ListItem as DefaultListItem,
     ListItemsProps as DefaultListItemProps,
     makeListItemsProps, makeNestedProps
 } from "../../composables/lists";
-import {computed} from "vue";
+import {computed, PropType} from "vue";
 import {makeComponentProps} from "../../composables/component.ts";
 import {makeDimensionsProps} from "../../composables/dimensions.ts";
 
@@ -38,12 +38,16 @@ export function transformListItem(props: ListItemProps, item: any): ListItem {
     const title = isPrimitive(item) ? item : getPropertyValue(item, props.itemTitle);
     const value = getPropertyValue(item, props.itemValue, undefined);
     const children = getPropertyValue(item, props.itemChildren);
-    const itemProps = getPropertyValue(item, props.itemProps); // @todo: handle true value (see vuetify)
+    const itemProps = (props.itemProps === true)
+        ? splitObject(item, ['children'])[1]
+        : getPropertyValue(item, props.itemProps);
+
     const subProps = {
         title,
         value,
         ...itemProps
     };
+
     return {
         type,
         title: subProps.title,
@@ -51,7 +55,7 @@ export function transformListItem(props: ListItemProps, item: any): ListItem {
         props: subProps,
         children: (type === 'item' && children) ? transformListItems(props, children) : undefined,
         raw: item
-    }
+    };
 }
 
 /**
@@ -79,13 +83,17 @@ export function useListItems(props: ListItemProps) {
 
 
 /**
- * # Make EvListProps
+ * # Make EvList Props
  */
 export const makeEvListProps = propsFactory({
     disabled: Boolean,
     tag: {
         type: String,
         default: 'div'
+    },
+    itemType: {
+        type: String,
+        default: 'type',
     },
 
     ...makeListItemsProps(),
@@ -96,3 +104,11 @@ export const makeEvListProps = propsFactory({
     ...makeDimensionsProps()
 
 }, 'EvList');
+
+
+/**
+ * # Make EvListChildren Props
+ */
+export const makeEvListChildrenProps = propsFactory({
+    items: Array as PropType<readonly ListItem[]>
+}, 'EvListChildren');

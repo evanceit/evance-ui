@@ -155,7 +155,7 @@ function select(item: ListItem) {
         :activator="evTextfieldRef"
         :closeOnContentClick="false"
         :openOnClick="false"
-        @afterLeave="onMenuAfterLeave"
+        @after-leave="onMenuAfterLeave"
     >
         <ev-list
             ref="evListRef"

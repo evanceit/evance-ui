@@ -1,11 +1,9 @@
 import {DirectiveBinding} from "vue/dist/vue";
 import {VNode} from "vue";
 
-export const slotsDirective = {
+export const slots = {
     beforeMount(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
         const slots = binding.value || {};
-
-        console.log(slots);
 
         const subComponentVNode = vnode.componentInstance;
         if (!subComponentVNode) {
@@ -21,4 +19,4 @@ export const slotsDirective = {
     }
 };
 
-export default slotsDirective;
+export default slots;

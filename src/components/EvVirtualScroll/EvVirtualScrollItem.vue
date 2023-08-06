@@ -1,18 +1,14 @@
 <script setup lang="ts">
 
-import {propsFactory} from "../../util";
-import {makeComponentProps} from "../../composables/component.ts";
 import {useAttrs, useSlots, watch} from "vue";
 import {useResizeObserver} from "../../composables/resizeObserver.ts";
+import {makeEvVirtualScrollItemProps} from "./EvVirtualScroll.ts";
 
 defineOptions({
     inheritAttrs: false
 });
 
-const props = defineProps(propsFactory({
-    renderless: Boolean,
-    ...makeComponentProps()
-}, 'EvVirtualScrollItem'));
+const props = defineProps(makeEvVirtualScrollItemProps());
 
 const slots = useSlots();
 const emit = defineEmits([

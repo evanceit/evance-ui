@@ -13,6 +13,7 @@ const emit = defineEmits([
 ]);
 
 const props = defineProps(makeEvListItemProps());
+
 const attrs = useAttrs();
 const slots = useSlots();
 const link = useRouterLinkOrHref(props, attrs);

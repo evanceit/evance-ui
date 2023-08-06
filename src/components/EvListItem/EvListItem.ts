@@ -7,6 +7,7 @@ export const makeEvListItemProps = propsFactory({
         type: Boolean,
         default: undefined
     },
+    children: [],
     activeExact: {
         type: Boolean,
         default: undefined
