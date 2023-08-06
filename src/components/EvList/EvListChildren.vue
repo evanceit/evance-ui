@@ -17,10 +17,10 @@ createList();
 </script>
 <template>
     <slot>
-        <ev-list-item
-            v-for="item in props.items"
-            v-bind="item.props"
-        >
-        </ev-list-item>
+        <template v-for="{ children, props: itemProps, type, raw: item } in props.items">
+            <ev-list-item
+                v-bind="itemProps"
+            ></ev-list-item>
+        </template>
     </slot>
 </template>
