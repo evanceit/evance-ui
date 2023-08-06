@@ -24,6 +24,9 @@ const meta: Meta<typeof EvSelect> = {
             },
             description: "Appears before input prefix. "
         },
+        multiple: {
+            control: 'boolean'
+        },
         prefix: {
             control: 'text',
             description: "Appears before the input field but after the `icon`. "
@@ -44,6 +47,7 @@ const meta: Meta<typeof EvSelect> = {
         appearance: InputAppearance.default,
         disabled: false,
         'icon-start': 'none',
+        multiple: false,
         rounded: false,
     },
     tags: ['autodocs']

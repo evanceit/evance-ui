@@ -15,17 +15,19 @@ import {useModelProxy} from "../../composables/modelProxy.ts";
 import {FocusEvent} from "react";
 import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
 import EvListItem from "../EvListItem/EvListItem.vue";
+import {ListItem} from "../EvList";
 
 // Props
 const props = defineProps(makeEvSelectProps());
 
-// TextField Stuff
+// TextField
 const evTextfieldRef = ref();
 const evTextfieldProps = computed(() => {
    return filterComponentProps(EvTextfield, props);
 });
+const isFocused = shallowRef(false);
 
-// Menu Stuff
+// Menu
 const evMenuRef = ref<EvMenu>();
 const menuOpenProxy = useModelProxy(props, 'menuOpen');
 const isMenuOpen = computed({
@@ -36,6 +38,20 @@ const isMenuOpen = computed({
         }
         menuOpenProxy.value = value;
     }
+});
+
+
+
+
+
+
+// List
+const evListRef = ref<EvList>();
+const displayItems = computed(() => {
+    if (props.hideSelected) {
+        return items.value.filter(item => !selections.value.some(s => s === item));
+    }
+    return items.value;
 });
 const { items, transformIn, transformOut } = useItems(props);
 const model = useModelProxy(
@@ -51,29 +67,19 @@ const model = useModelProxy(
 const selections = computed(() => {
     return model.value.map((value) => {
         return items.value.find((item) => {
-            return (props.valueComparator(item.value, value.value)) || value;
-        });
+            return (props.valueComparator(item.value, value.value));
+        }) || value;
     });
 });
 const selected = computed(() => {
     return selections.value.map(selection => selection.props.value);
 });
-const isFocused = shallowRef(false);
-
-const displayItems = computed(() => {
-    if (props.hideSelected) {
-        return items.value.filter(item => !selections.value.some(s => s === item));
-    }
-    return items.value;
-});
-
-// List
-const evListRef = ref<EvList>();
 
 
-// Events
-
-
+/**
+ * ## On Menu After Leave
+ * Maintain focus on the EvSelect when leaving the menu - usually when tabbing out.
+ */
 function onMenuAfterLeave() {
     if (isFocused.value) {
         evTextfieldRef.value?.input?.focus();
@@ -82,7 +88,7 @@ function onMenuAfterLeave() {
 
 /**
  * ## On List Focus In
- * Maintain focus on the select when an menu item is selected.
+ * Maintain focus on the select when a menu item is selected.
  * @param e
  */
 function onListFocusIn(e:FocusEvent) {
@@ -97,6 +103,28 @@ function onMousedownControl () {
     isMenuOpen.value = !isMenuOpen.value;
 }
 
+/**
+ * ## Select
+ * @param item
+ */
+function select(item: ListItem) {
+    if (props.multiple) {
+        const index = selected.value.findIndex(selection => {
+            return props.valueComparator(selection, item.value);
+        });
+        if (index === -1) {
+            model.value = [...model.value, item];
+        } else {
+            const value = [...model.value];
+            value.splice(index, 1);
+            model.value = value;
+        }
+    } else {
+        model.value = [item];
+        isMenuOpen.value = false;
+    }
+}
+
 </script>
 <template>
     <ev-textfield
@@ -108,7 +136,16 @@ function onMousedownControl () {
         @mousedown:control="onMousedownControl"
     >
         <template #default>
-            <div class="ev-select--selected">My Selected value</div>
+            <div class="ev-select--selected">
+                <span
+                    class="ev-select--selected-text"
+                    v-for="(item, index) in selections"
+                >
+                    {{ item.title }}
+                    <span v-if="props.multiple && (index < selections.length - 1)"
+                          class="ev-select-seelected-comma">,</span>
+                </span>
+            </div>
         </template>
     </ev-textfield>
     <ev-menu
@@ -131,7 +168,10 @@ function onMousedownControl () {
                                :items="displayItems"
             >
                 <template #default="{ item, index }">
-                    <ev-list-item v-bind="item" />
+                    <ev-list-item
+                        v-bind="item"
+                        @click="select(item)"
+                    />
                 </template>
             </ev-virtual-scroll>
         </ev-list>
