@@ -98,7 +98,13 @@ const activatorProps = computed(() => {
     }, props.activatorProps);
 });
 
-
+/**
+ * ## Expose aspects of EvMenu to parent components
+ */
+defineExpose({
+    id,
+    openChildren
+});
 
 </script>
 <template>

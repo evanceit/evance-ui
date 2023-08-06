@@ -1,5 +1,14 @@
-import {GetterPropertyKey, propsFactory} from "../../util";
-import {PropType} from "vue";
+import {
+    getPropertyValue,
+    GetterPropertyKey,
+    isArray,
+    isDeepEqual,
+    isObject,
+    propsFactory,
+    splitObject
+} from "../../util";
+import {computed, PropType} from "vue";
+import {ListItemProps} from "../../components";
 
 
 /**
@@ -90,3 +99,96 @@ export const makeListItemsProps = propsFactory({
     returnObject: Boolean
 }, 'list-items');
 
+
+/**
+ * # Transform Item
+ *
+ * @param props
+ * @param item
+ */
+export function transformItem(
+    props: Omit<ListItemProps, 'items'>,
+    item: any
+): ListItem {
+    const title = getPropertyValue(item, props.itemTitle, item);
+    const value = props.returnObject ? item : getPropertyValue(item, props.itemValue, title);
+    const children = getPropertyValue(item, props.itemChildren);
+    const itemProps = (props.itemProps === true)
+        ? (isObject(item) && item != null && !isArray(item))
+            ? ('children' in item) ? splitObject(item, ['children'])[1] : item
+            : undefined
+        : getPropertyValue(item, props.itemProps);
+
+    const transformedItemProps = {
+        title,
+        value,
+        ...itemProps
+    };
+
+    return {
+        title: String(transformedItemProps.title ?? ''),
+        value: transformedItemProps.value,
+        props: transformedItemProps,
+        children: isArray(children) ?  transformItems(props, children) : undefined,
+        raw: item
+    };
+}
+
+
+/**
+ * # Transform Items
+ */
+export function transformItems(
+    props: Omit<ListItemProps, 'items'>,
+    items: ListItemProps['items']
+) {
+    const listItems: ListItem[] = [];
+    for (const item of items) {
+        listItems.push(transformItem(props, item));
+    }
+    return listItems;
+}
+
+
+/**
+ * # Use Items
+ *
+ * @param props
+ */
+export function useItems(props: ListItemProps) {
+    const items = computed(() => {
+        return transformItems(props, props.items);
+    });
+
+    return useTransformItems(items, (value) => {
+        return transformItem(props, value)
+    });
+}
+
+
+/**
+ * # Use Transform Items
+ *
+ * @param items
+ * @param transform
+ */
+export function useTransformItems <T extends { value: unknown }> (items: Ref<T[]>, transform: (value: unknown) => T) {
+    function transformIn (value: any[]): T[] {
+        return value
+            // When the model value is null, returns an InternalItem based on null
+            // only if null is one of the items
+            .filter(v => v !== null || items.value.some(item => item.value === null))
+            .map(v => {
+                const existingItem = items.value.find(item => isDeepEqual(v, item.value));
+                // Nullish existingItem means value is a custom input value from combobox
+                // In this case, use transformItem to create an InternalItem based on value
+                return existingItem ?? transform(v);
+            });
+    }
+
+    function transformOut (value: T[]) {
+        return value.map(({ value }) => value);
+    }
+
+    return { items, transformIn, transformOut };
+}

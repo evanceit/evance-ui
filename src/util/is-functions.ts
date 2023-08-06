@@ -158,6 +158,14 @@ export function isObject(value: unknown): boolean {
     return (typeof value === 'object');
 }
 
+/**
+ * # Is Object Not Array
+ * @param value
+ */
+export function isObjectNotArray(value: any): object is object {
+    return value !== null && isObject(value) && !isArray(value);
+}
+
 const isOnPattern = /^on[^a-z]/;
 export const isOn = (key: string) => isOnPattern.test(key);
 

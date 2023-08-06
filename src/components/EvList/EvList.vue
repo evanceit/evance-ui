@@ -17,22 +17,24 @@ import EvListItem from "../EvListItem/EvListItem.vue";
 import {computed, ref, shallowRef, useSlots} from "vue";
 import {focusChild, FocusPosition} from "../../util";
 import {createList, useNestedList} from "../../composables/lists";
-
-const props = defineProps(makeEvListProps());
-const slots = useSlots();
-const items = useListItems(props);
-const { select } = useNestedList(props);
-const container = ref<HTMLElement | null>(null);
-const isFocused = shallowRef(false);
-const lastFocus = shallowRef<HTMLElement | null>(null);
-const tabindex = computed(() => {
-    return (props.disabled || isFocused.value) ? -1 : 0;
-});
+import {useDimensions} from "../../composables/dimensions.ts";
 
 defineEmits([
     'update:selected',
     'click:select'
 ]);
+
+const props = defineProps(makeEvListProps());
+const slots = useSlots();
+const items = useListItems(props);
+const { select } = useNestedList(props);
+const containerRef = ref<HTMLElement | null>(null);
+const isFocused = shallowRef(false);
+const lastFocus = shallowRef<HTMLElement | null>(null);
+const tabindex = computed(() => {
+    return (props.disabled || isFocused.value) ? -1 : 0;
+});
+const { dimensions } = useDimensions(props);
 
 /**
  * Establish provide() and inject() functionality for list items.
@@ -47,8 +49,8 @@ createList();
 function onFocus(e: FocusEvent): void {
     if (
         !isFocused.value
-        && !(e.relatedTarget && container.value?.contains(e.relatedTarget as Node))
-        && container.value
+        && !(e.relatedTarget && containerRef.value?.contains(e.relatedTarget as Node))
+        && containerRef.value
     ) {
         if (lastFocus.value) {
             lastFocus.value.focus();
@@ -87,7 +89,7 @@ function onKeyDown(e: KeyboardEvent): void {
         'End': 'last'
     };
     const position = keys[e.key];
-    if (position && container.value) {
+    if (position && containerRef.value) {
         focus(position);
         e.preventDefault();
     }
@@ -98,7 +100,7 @@ function onKeyDown(e: KeyboardEvent): void {
  * @param position
  */
 function focus(position?: FocusPosition): void {
-    lastFocus.value = focusChild(container?.value, position);
+    lastFocus.value = focusChild(containerRef?.value, position);
 }
 
 defineExpose({
@@ -110,14 +112,19 @@ defineExpose({
 <template>
     <component
         :is="props.tag"
-        ref="container"
-        class="ev-list"
+        ref="containerRef"
         role="listbox"
         :class="[
+            'ev-list',
              {
                  'is-disabled': props.disabled
-             }
+             },
+             props.class
          ]"
+        :style="[
+            props.style,
+            dimensions
+        ]"
         :tabindex="tabindex"
         @keydown="onKeyDown"
         @focus="onFocus"
@@ -129,5 +136,6 @@ defineExpose({
             v-bind="item.props"
         >
         </ev-list-item>
+        <slot />
     </component>
 </template>

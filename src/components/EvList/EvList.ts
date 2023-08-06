@@ -5,6 +5,8 @@ import {
     makeListItemsProps, makeNestedProps
 } from "../../composables/lists";
 import {computed} from "vue";
+import {makeComponentProps} from "../../composables/component.ts";
+import {makeDimensionsProps} from "../../composables/dimensions.ts";
 
 
 /**
@@ -89,6 +91,8 @@ export const makeEvListProps = propsFactory({
     ...makeListItemsProps(),
     ...makeNestedProps({
         selectStrategy: 'multi-any'
-    })
+    }),
+    ...makeComponentProps(),
+    ...makeDimensionsProps()
 
 }, 'EvList');

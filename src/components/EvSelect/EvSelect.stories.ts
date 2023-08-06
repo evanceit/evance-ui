@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvSelect } from "../EvSelect";
 import {InputAppearance} from "../../util";
+import {Search} from "../../icons";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -13,6 +14,15 @@ const meta: Meta<typeof EvSelect> = {
         },
         disabled: {
             control: 'boolean'
+        },
+        'icon-start': {
+            control: 'select',
+            options: ['none', 'Search'],
+            mapping: {
+                'none': null,
+                'Search': Search
+            },
+            description: "Appears before input prefix. "
         },
         prefix: {
             control: 'text',
@@ -33,6 +43,7 @@ const meta: Meta<typeof EvSelect> = {
     args: {
         appearance: InputAppearance.default,
         disabled: false,
+        'icon-start': 'none',
         rounded: false,
     },
     tags: ['autodocs']
@@ -46,8 +57,24 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvSelect },
         setup() {
-            return { args };
+
+            const items = [
+                {
+                    title: 'England',
+                    value: 1
+                },
+                {
+                    title: 'Scotland',
+                    value: 2
+                },
+                {
+                    title: 'Wales',
+                    value: 3
+                }
+            ];
+
+            return { args, items };
         },
-        template: '<ev-select v-bind="args" />'
+        template: '<ev-select v-bind="args" :items="items" />'
     })
 };

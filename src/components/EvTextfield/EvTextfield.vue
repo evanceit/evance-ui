@@ -12,6 +12,7 @@ import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 import {makeEvTextfieldProps} from "./EvTextfield.ts";
+import {MouseEvent} from "react";
 
 
 /**
@@ -28,13 +29,15 @@ const props = defineProps(makeEvTextfieldProps());
 // Emit
 const emit = defineEmits([
     'click:clear',
+    'click:control',
+    'mousedown:control',
     'update:focused',
     'update:modelValue'
 ]);
 
 const attrs = useAttrs();
-const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLInputElement | null>(null);
+const containerRef = ref<HTMLElement | null>(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 const slots = useSlots();
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
@@ -47,7 +50,7 @@ const isClearable = computed(() => {
  * ## Get Input Element
  */
 function getInputElement(): HTMLInputElement | null {
-    return input.value;
+    return inputRef.value;
 }
 
 /**
@@ -75,14 +78,49 @@ function onFocus(e: Event) {
 }
 
 /**
+ * ## On Control Click
+ *
+ * When the user clicks on the textfield.
+ *
+ * @param e
+ */
+function onControlClick(e: MouseEvent) {
+    onFocus();
+    emit('click:control', e);
+}
+
+/**
+ * ## On Control Mousedown
+ *
+ * When the mousedown is triggered on the textfield.
+ *
+ * @param e
+ */
+function onControlMousedown(e: MouseEvent) {
+    emit('mousedown:control', e);
+    if (e.target === inputRef.value) {
+        return;
+    }
+    onFocus();
+    e.preventDefault();
+}
+
+/**
  * ## Directive `v-autofocus`
  */
 const vAutofocus = useAutofocus(props);
 
+/**
+ * ## Expose stuff
+ */
+defineExpose({
+    input: inputRef
+});
+
 </script>
 <template>
     <div
-        ref="container"
+        ref="containerRef"
         class="ev-textfield"
         :class="[
             {
@@ -96,6 +134,8 @@ const vAutofocus = useAutofocus(props);
         ]"
         role="textbox"
         v-bind="containerAttrs"
+        @click="onControlClick"
+        @mousedown="onControlMousedown"
     >
         <div class="ev-textfield--icon" v-if="iconStart">
             <transition name="fade-in-out" mode="out-in">
@@ -106,10 +146,10 @@ const vAutofocus = useAutofocus(props);
         <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
             <slot name="prefix">{{ prefix }}</slot>
         </div>
-        <div class="ev-textfield--input">
+        <div class="ev-textfield--input" data-no-activator>
             <slot />
             <input
-                ref="input"
+                ref="inputRef"
                 :type="type"
                 :id="id"
                 :name="name"

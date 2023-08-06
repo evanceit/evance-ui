@@ -11,11 +11,16 @@ import { setup } from '@storybook/vue3';
  *        Ideally, I would like to have something like Vuetify's setup process
  */
 import '../src/css/core.scss';
-import {clickOutside, slotsDirective} from "../src/directives";
+import * as directives from "../src/directives";
+import {createEvanceUi} from "../src/framework";
 
 setup((app) => {
-  app.directive('slots', slotsDirective);
-  app.directive('click-outside', clickOutside);
+
+  const evanceUi = createEvanceUi({
+    directives
+  });
+
+  app.use(evanceUi);
 });
 
 

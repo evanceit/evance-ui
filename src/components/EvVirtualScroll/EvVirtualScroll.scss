@@ -1,0 +1,11 @@
+.ev-virtual-scroll {
+    display: block;
+    flex: 1 1 auto;
+    max-width: 100%;
+    overflow: auto;
+    position: relative;
+
+    &--container {
+        display: block;
+    }
+}

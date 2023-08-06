@@ -7,7 +7,7 @@ import {
     ToRefs,
     watchEffect
 } from "vue";
-import {getCurrentComponent, isArray, isFunction, isString} from "../util";
+import {getCurrentComponent, isArray, isFunction, isObjectNotArray, isString} from "../util";
 
 
 /**
@@ -15,7 +15,7 @@ import {getCurrentComponent, isArray, isFunction, isString} from "../util";
  */
 let currentId: number = 0;
 let assignedIds = new WeakMap<ComponentInternalInstance, number>();
-export function getNextId(): number {
+export function getNextId() {
     const component = getCurrentComponent('getNextId()');
     if (assignedIds.has(component)) {
         return assignedIds.get(component);
@@ -64,20 +64,24 @@ export function getPropertyValue(
     if (property == null) {
         return (subject === undefined) ? fallback : subject;
     }
-    if (subject !== Object(subject) || isFunction(property)) {
+    if (subject !== Object(subject)) {
         if (!isFunction(property)) {
             return fallback;
         }
         const value = property(subject, fallback);
-        return (typeof value === undefined) ? fallback : value;
+        return (typeof value === 'undefined') ? fallback : value;
     }
     if (isString(property)) {
-        return getPropertyFromPath(subject, property, fallback);
+        return getPropertyValueByPath(subject, property, fallback);
     }
     if (isArray(property)) {
         return getNestedPropertyValue(subject, property, fallback);
     }
-    throw new Error("Can't tell how to getProperty() from subject");
+    if (!isFunction(property)) {
+        return fallback;
+    }
+    const value = property(subject, fallback);
+    return (typeof value === 'undefined') ? fallback : value;
 }
 
 
@@ -90,7 +94,7 @@ export function getPropertyValue(
  * @param objectPath
  * @param fallback
  */
-export function getPropertyFromPath(subject: any, objectPath: string, fallback?: any) {
+export function getPropertyValueByPath(subject: any, objectPath: string, fallback?: any) {
     if (subject == null || !objectPath) {
         return fallback;
     }
@@ -267,4 +271,64 @@ export function getPropertyDescriptor(obj: any, key: PropertyKey) {
  */
 export function filterComponentProps(component: ComponentOptionsWithObjectProps, props: Record<string, any>)  {
     return splitObject(props, Object.keys(component.props), ['class', 'style'])[0];
+}
+
+
+/**
+ * # If Any
+ */
+type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
+
+
+/**
+ * # Wrap In Array
+ * @param value
+ */
+export function wrapInArray<T> (value: T | null | undefined): T extends readonly any[] ? IfAny<T, T[], T> : NonNullable<T>[] {
+    return (value == null) ? [] : isArray(value) ? value as any : [value];
+}
+
+
+export function mergeDeep (
+    source: Record<string, any> = {},
+    target: Record<string, any> = {},
+    arrayFn?: (a: unknown[], b: unknown[]) => unknown[],
+) {
+    const out: Record<string, any> = {};
+
+    for (const key in source) {
+        out[key] = source[key];
+    }
+
+    for (const key in target) {
+        const sourceProperty = source[key];
+        const targetProperty = target[key];
+
+        // Only continue deep merging if
+        // both properties are objects
+        if (isObjectNotArray(sourceProperty) && isObjectNotArray(targetProperty)) {
+            out[key] = mergeDeep(sourceProperty, targetProperty, arrayFn);
+            continue;
+        }
+
+        if (isArray(sourceProperty) && isArray(targetProperty) && arrayFn) {
+            out[key] = arrayFn(sourceProperty, targetProperty);
+            continue;
+        }
+
+        out[key] = targetProperty;
+    }
+
+    return out;
+}
+
+
+/**
+ * # Create Range
+ *
+ * @param length
+ * @param start
+ */
+export function createRange (length: number, start = 0): number[] {
+    return Array.from({ length }, (v, k) => start + k);
 }
