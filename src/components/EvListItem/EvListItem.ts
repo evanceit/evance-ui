@@ -1,13 +1,13 @@
 import {propsFactory} from "../../util";
 import {makeRouterLinkOrHrefProps} from "../../composables/router";
 import {IconValue} from "../../composables/icons.ts";
+import {makeComponentProps} from "../../composables/component.ts";
 
 export const makeEvListItemProps = propsFactory({
     active: {
         type: Boolean,
         default: undefined
     },
-    children: undefined, // @todo: <--- YOU ARE HERE (trying to figure this one out).
     activeExact: {
         type: Boolean,
         default: undefined
@@ -26,6 +26,7 @@ export const makeEvListItemProps = propsFactory({
     title: [String, Number, Boolean],
     value: null,
 
-    ...makeRouterLinkOrHrefProps()
+    ...makeRouterLinkOrHrefProps(),
+    ...makeComponentProps()
 
 }, 'EvListItem');

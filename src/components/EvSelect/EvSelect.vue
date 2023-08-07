@@ -40,11 +40,6 @@ const isMenuOpen = computed({
     }
 });
 
-
-
-
-
-
 // List
 const evListRef = ref<EvList>();
 const displayItems = computed(() => {

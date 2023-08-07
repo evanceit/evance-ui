@@ -52,7 +52,7 @@ defineExpose({
             :renderless="props.renderless"
             @update:height="(height) => handleItemResize(item.index, height)"
         >
-            <slot v-bind="{ item: item.raw, index: item.index }"  />
+            <slot v-bind="{ item: item.raw.props, index: item.index }"  />
         </ev-virtual-scroll-item>
         <div class="ev-virtual-scroll--spacer"
              :style="{ paddingBottom: toWebUnit(paddingBottom) }"
