@@ -9,6 +9,7 @@ export * from './events';
 export * from './helpers';
 export * from './is-functions';
 export * from './isFixedPosition';
+export * from './keyboard';
 export * from './modifiers';
 export * from './numbers';
 export * from './props';

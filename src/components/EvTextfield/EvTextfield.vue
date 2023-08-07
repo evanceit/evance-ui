@@ -117,7 +117,10 @@ const vAutofocus = useAutofocus(props);
  * ## Expose stuff
  */
 defineExpose({
-    input: inputRef
+    input: inputRef,
+    focus: () => {
+        getInputElement()?.focus();
+    }
 });
 
 </script>

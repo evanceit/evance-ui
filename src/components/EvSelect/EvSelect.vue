@@ -7,7 +7,7 @@ import './EvSelect.scss';
 import EvTextfield from "../EvTextfield/EvTextfield.vue";
 import {computed, ref, shallowRef} from "vue";
 import {makeEvSelectProps} from "./EvSelect.ts";
-import {filterComponentProps, wrapInArray} from "../../util";
+import {filterComponentProps, KeyLogger, wrapInArray} from "../../util";
 import {EvMenu} from "../EvMenu";
 import EvList from "../EvList/EvList.vue";
 import {useItems} from "../../composables/lists";
@@ -16,6 +16,7 @@ import {FocusEvent} from "react";
 import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
 import EvListItem from "../EvListItem/EvListItem.vue";
 import {ListItem} from "../EvList";
+import {useScrolling} from "./useScrolling.ts";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -42,6 +43,7 @@ const isMenuOpen = computed({
 
 // List
 const evListRef = ref<EvList>();
+const evVirtualScrollRef = ref<EvVirtualScroll>();
 const displayItems = computed(() => {
     if (props.hideSelected) {
         return items.value.filter(item => !selections.value.some(s => s === item));
@@ -69,7 +71,8 @@ const selections = computed(() => {
 const selected = computed(() => {
     return selections.value.map(selection => selection.props.value);
 });
-
+const keyLogger = new KeyLogger();
+let form;
 
 /**
  * ## On Menu After Leave
@@ -77,7 +80,7 @@ const selected = computed(() => {
  */
 function onMenuAfterLeave() {
     if (isFocused.value) {
-        evTextfieldRef.value?.input?.focus();
+        evTextfieldRef.value?.focus();
     }
 }
 
@@ -90,13 +93,75 @@ function onListFocusIn(e:FocusEvent) {
     isFocused.value = true;
 }
 
+/**
+ * ## One List Mousedown
+ * @param e
+ */
 function onListMouseDown(e: MouseEvent) {
     e.preventDefault();
 }
 
-function onMousedownControl () {
+const { onListScroll, onListKeydown } = useScrolling(evListRef, evTextfieldRef);
+
+
+/**
+ * ## On Field Blur
+ * @param e
+ */
+function onFieldBlur(e: FocusEvent) {
+    if (!evListRef.value?.$el.contains(e.relatedTarget as HTMLElement)) {
+        isMenuOpen.value = false;
+    }
+}
+
+/**
+ * ## On Field Keydown
+ * @param e
+ */
+function onFieldKeydown(e: KeyboardEvent) {
+    if (props.readonly || form?.isReadonly.value) {
+        return;
+    }
+
+    if (['Enter', ' ', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) {
+        e.preventDefault();
+    }
+
+    if (['Enter', 'ArrowDown', ' '].includes(e.key)) {
+        isMenuOpen.value = true;
+    }
+
+    if (['Escape', 'Tab'].includes(e.key)) {
+        isMenuOpen.value = false;
+    }
+
+    if (e.key === 'Home') {
+        evListRef.value?.focus('first');
+    } else if (e.key === 'End') {
+        evListRef.value?.focus('last');
+    }
+
+    if (props.multiple || !keyLogger.log(e)) {
+        return;
+    }
+
+    const itemIndex = items.value.findIndex(item => item.title.toLowerCase().startsWith(keyLogger.value));
+    if (itemIndex >= 0) {
+        model.value = [items.value[itemIndex]];
+        if (isMenuOpen.value) {
+            const scrollIndex = (itemIndex > 0) ? itemIndex - 1 : 0;
+            evVirtualScrollRef.value?.scrollToIndex(scrollIndex);
+        }
+    }
+}
+
+/**
+ * On Field Mousedown
+ */
+function onFieldMousedown () {
     isMenuOpen.value = !isMenuOpen.value;
 }
+
 
 /**
  * ## Select
@@ -122,13 +187,19 @@ function select(item: ListItem) {
 
 </script>
 <template>
+
+    {{ selected }}
+    {{ selections }}
+
     <ev-textfield
         ref="evTextfieldRef"
         class="ev-select"
         v-bind="evTextfieldProps"
         v-model:focused="isFocused"
         readonly
-        @mousedown:control="onMousedownControl"
+        @blur="onFieldBlur"
+        @keydown="onFieldKeydown"
+        @mousedown:control="onFieldMousedown"
     >
         <template #default>
             <div class="ev-select--selected">
@@ -156,11 +227,14 @@ function select(item: ListItem) {
             ref="evListRef"
             :selected="selected"
             :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
-            @click="onListMouseDown"
             @focusin="onListFocusIn"
+            @keydown="onListKeydown"
+            @mousedown="onListMouseDown"
+            @scroll.passive="onListScroll"
             tabindex="-1"
         >
             <ev-virtual-scroll renderless
+                               ref="evVirtualScrollRef"
                                :items="displayItems"
             >
                 <template #default="{ item, index }">
@@ -172,7 +246,4 @@ function select(item: ListItem) {
             </ev-virtual-scroll>
         </ev-list>
     </ev-menu>
-
-    {{ selected }}
-    {{ selections }}
 </template>
