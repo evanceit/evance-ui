@@ -14,15 +14,6 @@ const meta: Meta<typeof EvListItem> = {
             control: 'boolean',
             description: "Works with router links."
         },
-        appendIcon: {
-            control: 'select',
-            options: ['none', 'ChevronRight', 'Dot'],
-            mapping: {
-                'none': null,
-                'ChevronRight': ChevronRight,
-                'Dot': Dot
-            }
-        },
         disabled: {
             control: 'boolean',
             description: "Remove the ability to click or target the component."
@@ -32,11 +23,7 @@ const meta: Meta<typeof EvListItem> = {
             description: "Converts the list item into an `a` tag with a normal `href` attribute. " +
                 "If you want to stay within your vue app, use the `to` attribute instead."
         },
-        link: {
-            control: 'boolean',
-            description: "Manually designate the component as a link. Using `href` or `to` will do this automatically."
-        },
-        prependIcon: {
+        'icon-start': {
             control: 'select',
             options: ['none', 'ChevronRight', 'Dot'],
             mapping: {
@@ -44,6 +31,19 @@ const meta: Meta<typeof EvListItem> = {
                 'ChevronRight': ChevronRight,
                 'Dot': Dot
             }
+        },
+        'icon-end': {
+            control: 'select',
+            options: ['none', 'ChevronRight', 'Dot'],
+            mapping: {
+                'none': null,
+                'ChevronRight': ChevronRight,
+                'Dot': Dot
+            }
+        },
+        link: {
+            control: 'boolean',
+            description: "Manually designate the component as a link. Using `href` or `to` will do this automatically."
         },
         to: {
             control: 'text',
@@ -56,10 +56,10 @@ const meta: Meta<typeof EvListItem> = {
     },
     args: {
         active: false,
-        appendIcon: null,
         disabled: false,
         href: '',
-        prependIcon: null,
+        'icon-start': null,
+        'icon-end': null,
         to: '',
         title: 'Example list item'
     },

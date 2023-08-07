@@ -6,6 +6,7 @@ import {useRouterLinkOrHref} from "../../composables/router.ts";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
 import {useList, useNestedListItem} from "../../composables/lists";
+import {useIcon} from "../EvIcon";
 
 // Emit
 const emit = defineEmits([
@@ -20,8 +21,8 @@ const link = useRouterLinkOrHref(props, attrs);
 const list = useList();
 const id = computed(() => props.value === undefined ? link.href.value : props.value);
 const { select, isSelected, isIndeterminate, isGroupActivator, root, parent } = useNestedListItem(id, false);
-const hasAppendSlot = hasSlotWithContent(slots, 'append');
-const hasPrependSlot = hasSlotWithContent(slots, 'prepend');
+const hasSuffixSlot = hasSlotWithContent(slots, 'suffix');
+const hasPrefixSlot = hasSlotWithContent(slots, 'prefix');
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (
@@ -42,6 +43,8 @@ const isActiveExact = computed(() => {
         && (props.exactActive || link.isExactActive?.value)
     );
 });
+const iconStart = useIcon(props, 'iconStart');
+const iconEnd = useIcon(props, 'iconEnd');
 
 
 function getComponentElement() {
@@ -76,7 +79,6 @@ function onKeyDown(e: KeyboardEvent): void {
     onClick(e as any as MouseEvent);
 }
 
-
 </script>
 <template>
     <component
@@ -96,14 +98,20 @@ function onKeyDown(e: KeyboardEvent): void {
         @keydown.enter="onKeyDown"
         @keydown.space="onKeyDown"
     >
-        <div class="ev-list-item--prepend" v-if="hasPrependSlot || props.prependIcon">
-            <slot name="prepend"><ev-icon :glyph="props.prependIcon" /></slot>
+        <div class="ev-list-item--icon-start" v-if="iconStart">
+            <ev-icon :glyph="iconStart" />
+        </div>
+        <div class="ev-list-item--prefix" v-if="hasPrefixSlot">
+            <slot name="prefix" />
         </div>
         <div class="ev-list-item--content">
             <slot name="default">{{ props.title }}</slot>
         </div>
-        <div class="ev-list-item--append" v-if="hasAppendSlot || props.appendIcon">
-            <slot name="append"><ev-icon :glyph="props.appendIcon" /></slot>
+        <div class="ev-list-item--suffix" v-if="hasSuffixSlot">
+            <slot name="suffix" />
+        </div>
+        <div class="ev-list-item--icon-end" v-if="iconEnd">
+            <ev-icon :glyph="iconEnd" />
         </div>
         <div class="ev-list-item--indicator"></div>
     </component>

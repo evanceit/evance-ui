@@ -12,13 +12,13 @@ export const makeEvListItemProps = propsFactory({
         type: Boolean,
         default: undefined
     },
-    appendIcon: IconValue,
     disabled: Boolean,
+    iconEnd: IconValue,
+    iconStart: IconValue,
     link: {
         type: Boolean,
         default: undefined
     },
-    prependIcon: IconValue,
     tag: {
         type: String,
         default: 'div'

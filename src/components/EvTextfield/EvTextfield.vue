@@ -13,6 +13,7 @@ import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 import {makeEvTextfieldProps} from "./EvTextfield.ts";
 import {MouseEvent} from "react";
+import {useIcon} from "../EvIcon";
 
 
 /**
@@ -45,6 +46,8 @@ const { isFocused, focusClasses, focus, blur } = useFocus(props);
 const isClearable = computed(() => {
     return (props.clearable && !!modelProxy.value);
 });
+const iconStart = useIcon(props, 'iconStart');
+const iconEnd = useIcon(props, 'iconEnd');
 
 /**
  * ## Get Input Element
@@ -124,9 +127,9 @@ defineExpose({
         class="ev-textfield"
         :class="[
             {
-                'is-disabled': disabled,
-                'is-loading': loading,
-                'is-rounded': rounded
+                'is-disabled': props.disabled,
+                'is-loading': props.loading,
+                'is-rounded': props.rounded
             },
             focusClasses,
             sizeModifier(props.size, [InputSize.default]),
@@ -137,27 +140,27 @@ defineExpose({
         @click="onControlClick"
         @mousedown="onControlMousedown"
     >
-        <div class="ev-textfield--icon" v-if="iconStart">
+        <div class="ev-textfield--icon-start" v-if="iconStart">
             <transition name="fade-in-out" mode="out-in">
-                <ev-icon v-if="!loading" :glyph="iconStart" />
+                <ev-icon v-if="!props.loading" :glyph="iconStart" />
                 <ev-progress-circular v-else  indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" />
             </transition>
         </div>
-        <div class="ev-textfield--prefix" v-if="prefix || slots.prefix">
-            <slot name="prefix">{{ prefix }}</slot>
+        <div class="ev-textfield--prefix" v-if="props.prefix || slots.prefix">
+            <slot name="prefix">{{ props.prefix }}</slot>
         </div>
         <div class="ev-textfield--input" data-no-activator>
             <slot />
             <input
                 ref="inputRef"
-                :type="type"
-                :id="id"
-                :name="name"
+                :type="props.type"
+                :id="props.id"
+                :name="props.name"
                 v-model="modelProxy"
-                :placeholder="placeholder"
-                :disabled="disabled"
-                :autofocus="autofocus"
-                :readonly="readonly"
+                :placeholder="props.placeholder"
+                :disabled="props.disabled"
+                :autofocus="props.autofocus"
+                :readonly="props.readonly"
                 v-autofocus
                 v-bind="inputAttrs"
                 @focus="onFocus"
@@ -169,13 +172,13 @@ defineExpose({
                 <ev-icon :glyph="Cancel" @click="onClickClearable($event)" />
             </div>
         </transition>
-        <div class="ev-textfield--suffix" v-if="suffix || slots.suffix">
-            <slot name="suffix">{{ suffix }}</slot>
+        <div class="ev-textfield--suffix" v-if="props.suffix || slots.suffix">
+            <slot name="suffix">{{ props.suffix }}</slot>
         </div>
-        <div class="ev-textfield--icon" v-if="iconEnd">
+        <div class="ev-textfield--icon-end" v-if="iconEnd">
             <ev-icon :glyph="iconEnd" />
         </div>
-        <div class="ev-textfield--loader" v-if="loading && !iconStart">
+        <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
             <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
         </div>
     </div>
