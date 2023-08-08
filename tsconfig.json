@@ -4,8 +4,13 @@
     "target": "ES2021",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2021",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "skipLibCheck": true,
+    "sourceMap": true, /* Generates corresponding '.map' file. */
 
     /* Bundler mode */
     "moduleResolution": "Node",
@@ -22,6 +27,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "types": [
+        "jest",
+        "node",
+        "vue-router"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
@@ -33,6 +48,8 @@
     "node_modules"
   ],
   "references": [
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

@@ -57,16 +57,27 @@ function getInputElement(): HTMLInputElement | null {
 }
 
 /**
- * ## On Click Clearable
+ * ## On Clearable Click
  * @param $event
  */
-function onClickClearable($event: MouseEvent) {
+function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
         modelProxy.value = null;
         emit('click:clear', $event);
     });
-    getInputElement()?.focus();
+    if (!props.readonly) {
+        getInputElement()?.focus();
+    }
+}
+
+/**
+ * ## On Clearable Mousedown
+ * @param e
+ */
+function onClearableMousedown(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
 }
 
 /**
@@ -172,7 +183,11 @@ defineExpose({
         </div>
         <transition name="slide-fade">
             <div class="ev-textfield--clearable" v-if="isClearable">
-                <ev-icon :glyph="Cancel" @click="onClickClearable($event)" />
+                <ev-icon
+                    :glyph="Cancel"
+                    @click="onClearableClick"
+                    @mousedown="onClearableMousedown"
+                />
             </div>
         </transition>
         <div class="ev-textfield--suffix" v-if="props.suffix || slots.suffix">

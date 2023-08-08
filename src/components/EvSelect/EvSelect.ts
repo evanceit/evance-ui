@@ -12,6 +12,7 @@ export const makeEvSelectProps = propsFactory({
     hideSelected: Boolean,
     menuOpen: Boolean,
     multiple: Boolean,
+    openOnClear: Boolean,
     valueComparator: {
         type: Function as PropType<typeof isDeepEqual>,
         default: isDeepEqual,

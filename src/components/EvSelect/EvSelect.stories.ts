@@ -12,6 +12,9 @@ const meta: Meta<typeof EvSelect> = {
             control: 'select',
             options: Object.values(InputAppearance)
         },
+        clearable: {
+            control: 'boolean'
+        },
         disabled: {
             control: 'boolean'
         },
@@ -27,11 +30,18 @@ const meta: Meta<typeof EvSelect> = {
         multiple: {
             control: 'boolean'
         },
+        'open-on-clear': {
+            control: 'boolean'
+        },
         prefix: {
             control: 'text',
             description: "Appears before the input field but after the `icon`. "
                 + "May be used as a prop for a simple text-based prefix, or as a slot for a more complex prefix. "
                 + "In this demo we use a prop."
+        },
+        'return-object': {
+            control: 'boolean',
+            description: "When `true` the `v-model` bound to the EvSelect will receive the full item instead of the item's value."
         },
         rounded: {
             control: 'boolean',
@@ -45,9 +55,12 @@ const meta: Meta<typeof EvSelect> = {
     },
     args: {
         appearance: InputAppearance.default,
+        clearable: false,
         disabled: false,
         'icon-start': 'none',
         multiple: false,
+        'open-on-clear': false,
+        'return-object': false,
         rounded: false,
     },
     tags: ['autodocs']
@@ -60,15 +73,29 @@ type Story = StoryObj<typeof EvSelect>;
 export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvSelect },
+        data() {
+
+            let selected = {
+                title: 'Item '
+            }
+
+            return {
+                selected: null
+            }
+        },
         setup() {
 
             const items = [];
             for (let i = 0; i < 1000; i++) {
-                items.push(i + 1);
+                const num = i + 1;
+                items.push({
+                    title: `Item ${num}`,
+                    value: num
+                });
             }
 
             return { args, items };
         },
-        template: '<ev-select v-bind="args" :items="items" />'
+        template: '{{ selected }} <ev-select v-bind="args" v-model="selected" :items="items" />'
     })
 };

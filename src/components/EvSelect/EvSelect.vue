@@ -12,7 +12,7 @@ import {EvMenu} from "../EvMenu";
 import EvList from "../EvList/EvList.vue";
 import {useItems} from "../../composables/lists";
 import {useModelProxy} from "../../composables/modelProxy.ts";
-import {FocusEvent} from "react";
+import {FocusEvent, MouseEvent} from "react";
 import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
 import EvListItem from "../EvListItem/EvListItem.vue";
 import {ListItem} from "../EvList";
@@ -39,6 +39,9 @@ const isMenuOpen = computed({
         }
         menuOpenProxy.value = value;
     }
+});
+const isMenuDisabled = computed(() => {
+
 });
 
 // List
@@ -72,7 +75,8 @@ const selected = computed(() => {
     return selections.value.map(selection => selection.props.value);
 });
 const keyLogger = new KeyLogger();
-let form;
+
+let form; // @todo: <--- YOU ARE HERE (forms and validation)
 
 /**
  * ## On Menu After Leave
@@ -111,6 +115,17 @@ const { onListScroll, onListKeydown } = useScrolling(evListRef, evTextfieldRef);
 function onFieldBlur(e: FocusEvent) {
     if (!evListRef.value?.$el.contains(e.relatedTarget as HTMLElement)) {
         isMenuOpen.value = false;
+    }
+}
+
+/**
+ * ## On Field Clear
+ * When the user clicks on the `clearable` icon.
+ * @param e
+ */
+function onFieldClear(e: MouseEvent) {
+    if (props.openOnClear) {
+        isMenuOpen.value = true;
     }
 }
 
@@ -185,21 +200,30 @@ function select(item: ListItem) {
     }
 }
 
+const modelValue = computed(() => {
+    return model.value.map(value => value.props.value).join(', ');
+});
+
+function onModelValueUpdate(value) {
+    if (value === null) {
+        model.value = [];
+    }
+}
+
 </script>
 <template>
-
-    {{ selected }}
-    {{ selections }}
-
     <ev-textfield
         ref="evTextfieldRef"
         class="ev-select"
         v-bind="evTextfieldProps"
+        v-bind:modelValue="modelValue"
         v-model:focused="isFocused"
         readonly
         @blur="onFieldBlur"
+        @click:clear="onFieldClear"
         @keydown="onFieldKeydown"
         @mousedown:control="onFieldMousedown"
+        @update:modelValue="onModelValueUpdate"
     >
         <template #default>
             <div class="ev-select--selected">
@@ -233,6 +257,9 @@ function select(item: ListItem) {
             @scroll.passive="onListScroll"
             tabindex="-1"
         >
+
+            <ev-list-item title="No options available"></ev-list-item>
+
             <ev-virtual-scroll renderless
                                ref="evVirtualScrollRef"
                                :items="displayItems"
