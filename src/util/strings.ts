@@ -35,18 +35,18 @@ export type TemplateVariables = {
 /**
  * # Template Function
  *
- * A template function is returned from `createStringTemplate`, which accepts template
- * variables when transforming the string template.
+ * A template function is returned from `createStringTemplate`, which converts the template
+ * into a string, replacing any variables with those contained within the variables supplied.
  *
  * @see createStringTemplate
  */
-export type TemplateFunction = (variables?: TemplateVariables = {}) => string;
+export type TemplateFunction = (variables?: TemplateVariables) => string;
 
 
 /**
  * # String Template
  *
- * An approximation of Evance's String Template:
+ * An approximation of Evance's String Templates.
  *
  * Allows us to build strings as a template with replacement variables.
  *
