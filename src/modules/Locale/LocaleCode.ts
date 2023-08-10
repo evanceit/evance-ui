@@ -6,6 +6,13 @@ import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
 export class LocaleCode extends TranslationCode {
 
     /**
+     * # To Translation Code
+     */
+    public toTranslationCode(): TranslationCode {
+        return new TranslationCode(this.languageCode, this.countryCode);
+    }
+
+    /**
      * ## To Translation Codes
      */
     public toTranslationCodes(): TranslationCode[] {

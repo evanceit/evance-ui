@@ -25,7 +25,7 @@ export class LanguagePack {
         if (!translationData) {
             return null;
         }
-        return new Translatable(translationData, this.translationCode);
+        return new Translatable(reference, translationData, this.translationCode);
     }
 
     /**

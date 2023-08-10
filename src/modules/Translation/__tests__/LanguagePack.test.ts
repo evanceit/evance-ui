@@ -18,8 +18,8 @@ const dictionary = {
 
 test('LanguagePack.getTranslatable()', () => {
 
-    const locale = new TranslationCode('en');
-    const pack = new LanguagePack(locale, dictionary);
+    const code = new TranslationCode('en');
+    const pack = new LanguagePack(code, dictionary);
 
     const greeting = pack.getTranslatable('greeting');
     expect(greeting?.defaultText).toBe('Hello { name }');

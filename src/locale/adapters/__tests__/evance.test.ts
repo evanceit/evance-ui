@@ -5,7 +5,8 @@ import {
 } from "@/locale/adapters/evance.ts";
 
 import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
-import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
+import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
+import {Translator} from "@/modules/Translation/Translator.ts";
 
 
 const dictionary = {
@@ -21,6 +22,7 @@ const dictionary = {
 
 test('translate', () => {
 
+    /*
     const locale = new TranslationCode('en');
     const languagePack = new LanguagePack(locale, dictionary);
 
@@ -29,4 +31,39 @@ test('translate', () => {
         ordinal: true
     }, languagePack);
     console.log(translation);
+
+     */
+    const localeCode = new LocaleCode('en');
+    const translator = new Translator(localeCode);
+    const languagePack = new LanguagePack(
+        localeCode,
+        dictionary
+    );
+    translator.addLanguagePack(languagePack);
+
+    const translation = translator.translate(localeCode, 'placement', {
+        value: 2,
+        ordinal: true
+    });
+
+    console.log(translation);
+
+    const translation2 = translator.translate(localeCode, 'foo', {
+        value: 2,
+        ordinal: true
+    });
+
+    console.log(translation2);
+
+    // @todo: <--- YOU ARE HERE
+    /*
+        Allow translator to accept strings for locale codes
+        in addition to locale objects.
+
+        Allow language packs to accept strings for translation codes
+        in addition to translation code objects.
+
+        Allow translator translate to accept strings for localeCode
+     */
+
 });

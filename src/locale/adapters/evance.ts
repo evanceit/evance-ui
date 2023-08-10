@@ -18,9 +18,15 @@
  */
 import {createStringTemplate, isNumber} from "@/util";
 import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
-import {TranslationOptions} from "@/modules/Translation/Translation.ts";
+import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 
 
+/**
+ * @todo <--- YOU ARE HERE - put into a translator object
+ * @param path
+ * @param options
+ * @param languagePack
+ */
 export function translate(path: string, options: TranslationOptions, languagePack: LanguagePack): string | null {
     const translatable = languagePack.getTranslatable(path);
     if (translatable === null) {
@@ -45,7 +51,7 @@ export function translate(path: string, options: TranslationOptions, languagePac
         const rule = rules.select(options[keyToPluralize]);
         const text = translatable.getText(rule);
         if (text === null) {
-            console.error(`Pluralization rule '${rule}' unavailable for '${path}'.`);
+            console.error(`Pluralization rule '${rule}' or 'other' unavailable for '${path}'.`);
             return null;
         }
         const template = createStringTemplate(text);
