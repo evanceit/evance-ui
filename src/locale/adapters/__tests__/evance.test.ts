@@ -5,7 +5,6 @@ import {
 } from "@/locale/adapters/evance.ts";
 
 import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
-import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
 import {Translator} from "@/modules/Translation/Translator.ts";
 
 
@@ -22,33 +21,17 @@ const dictionary = {
 
 test('translate', () => {
 
-    /*
-    const locale = new TranslationCode('en');
-    const languagePack = new LanguagePack(locale, dictionary);
+    const translator = new Translator('en');
+    translator.addLanguagePack(new LanguagePack('en',  dictionary));
 
-    const translation = translate('placement', {
-        value: 4,
-        ordinal: true
-    }, languagePack);
-    console.log(translation);
-
-     */
-    const localeCode = new LocaleCode('en');
-    const translator = new Translator(localeCode);
-    const languagePack = new LanguagePack(
-        localeCode,
-        dictionary
-    );
-    translator.addLanguagePack(languagePack);
-
-    const translation = translator.translate(localeCode, 'placement', {
+    const translation = translator.translate('placement', {
         value: 2,
         ordinal: true
     });
 
     console.log(translation);
 
-    const translation2 = translator.translate(localeCode, 'foo', {
+    const translation2 = translator.translate('foo', {
         value: 2,
         ordinal: true
     });

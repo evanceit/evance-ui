@@ -1,20 +1,28 @@
 import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
 import * as fs from "fs";
-import {getPropertyValueByPath} from "@/util";
+import {getPropertyValueByPath, isString} from "@/util";
 import {Translatable} from "@/modules/Translation/Translatable.ts";
 
 /**
  * # Language Pack
  */
 export class LanguagePack {
+
+    public data: LanguagePackData;
+
+    public translationCode: TranslationCode;
+
     /**
      * @param translationCode
      * @param data
      */
     constructor(
-        public translationCode: TranslationCode,
-        public data: LanguagePackData = {}
-    ) {}
+        translationCode: TranslationCode | string,
+        data: LanguagePackData = {}
+    ) {
+        this.data = data;
+        this.translationCode = isString(translationCode) ? TranslationCode.fromString(translationCode) : translationCode;
+    }
 
     /**
      * ## Get Translatable

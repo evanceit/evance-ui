@@ -2,7 +2,7 @@ import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
 import {Translatable} from "@/modules/Translation/Translatable.ts";
 import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
 import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
-import {createStringTemplate} from "@/util";
+import {createStringTemplate, isString} from "@/util";
 
 /**
  * # Translation Options
@@ -26,14 +26,21 @@ export interface TranslationOptions {
  */
 export class Translator {
 
+    private currentLocale: LocaleCode;
+
     private defaultLocale: LocaleCode;
 
     private languagePacks: LanguagePack[] = [];
 
     private translatables: Map<string, Translatable> = new Map();
 
-    constructor(defaultLocale: LocaleCode) {
-        this.defaultLocale = defaultLocale;
+    /**
+     * @param defaultLocale
+     */
+    constructor(
+        defaultLocale?: LocaleCode | string | null = null
+    ) {
+        this.setDefaultLocale(defaultLocale ?? 'en');
     }
 
     /**
@@ -60,7 +67,7 @@ export class Translator {
      * @param locale
      * @param reference
      */
-    public getClosestTranslatable(locale: LocaleCode, reference: string): Translatable | null {
+    private getClosestTranslatable(locale: LocaleCode, reference: string): Translatable | null {
 
         const translatableKey = `${locale.toString()}:${reference}`;
 
@@ -80,13 +87,20 @@ export class Translator {
     }
 
     /**
-     * # Get Language Packs
+     * ## Get Language Packs
+     */
+    public getLanguagePacks(): LanguagePack[] {
+        return this.languagePacks;
+    }
+
+    /**
+     * # Get Language Packs for TranslationCode
      *
      * Returns the all available language pack matching the translation code.
      *
      * @param translationCode
      */
-    public getLanguagePacks(translationCode: TranslationCode): LanguagePack[] {
+    private getLanguagePacksForTranslationCode(translationCode: TranslationCode): LanguagePack[] {
         return this.languagePacks.filter((languagePack) => {
             return (languagePack.translationCode.toString() === translationCode.toString());
         });
@@ -101,8 +115,8 @@ export class Translator {
      * @param translationCode
      * @param reference
      */
-    public getTranslatable(translationCode: TranslationCode, reference: string): Translatable | null {
-        const packs = this.getLanguagePacks(translationCode);
+    private getTranslatable(translationCode: TranslationCode, reference: string): Translatable | null {
+        const packs = this.getLanguagePacksForTranslationCode(translationCode);
         for (const pack of packs) {
             const translatable = pack.getTranslatable(reference);
             if (translatable) {
@@ -120,13 +134,36 @@ export class Translator {
      *
      * @param locale
      */
-    public getTranslationCodes(locale: LocaleCode): TranslationCode[] {
+    private getTranslationCodes(locale: LocaleCode): TranslationCode[] {
         const translationCodes = locale.toTranslationCodes();
         // Add our default if it is not in the list
         if (!translationCodes.find((code) => (code.toString() === this.defaultLocale.toString()))) {
             translationCodes.push(this.defaultLocale);
         }
         return translationCodes;
+    }
+
+    /**
+     * ## Set Current Locale
+     *
+     * Set the current locale so that we don't have to use it in each translate call,
+     * unless we want to.
+     *
+     * @param locale
+     */
+    public setCurrentLocale(locale: LocaleCode | string): void {
+        this.currentLocale = isString(locale) ? LocaleCode.fromString(locale) : locale;
+    }
+
+    /**
+     * ## Set Default Locale
+     *
+     * The default locale to use if translations are unavailable for the current locale.
+     *
+     * @param locale
+     */
+    public setDefaultLocale(locale: LocaleCode | string): void {
+        this.defaultLocale = isString(locale) ? LocaleCode.fromString(locale) : locale;
     }
 
     /**
@@ -137,10 +174,15 @@ export class Translator {
      * @param options
      */
     public translate(
-        locale: LocaleCode,
         reference: string,
-        options?: TranslationOptions = {}
+        options?: TranslationOptions = {},
+        locale?: LocaleCode | string = null
     ): string | null {
+        if (!locale) {
+            locale = this.currentLocale ?? this.defaultLocale;
+        } else {
+            locale = isString(locale) ? LocaleCode.fromString(locale) : locale;
+        }
         const translatable = this.getClosestTranslatable(locale, reference);
         return translatable?.translate(options) || null;
     }
