@@ -5,4 +5,89 @@ import * as InternationalizationStories from "./Internationalization.stories";
 
 # Internationalization
 
+This is a work in progress - currently testing Translator reactivity.
+
 <Canvas of={InternationalizationStories.Primary} />
+
+## Translations
+
+Translator supports name based variable replacement, cardinal and ordinal pluralization.
+
+Note, pluralization only supports a single variable.
+
+### String Templates
+
+String templates are name based:
+
+```javascript
+{
+    greeting: "Hello { name }"
+}
+```
+
+```javascript
+{{ t('greeting', { name: 'Kitty' }) }}
+```
+
+```
+Hello Kitty
+```
+
+## Pluralization
+
+Languages use different patterns for expressing both plural numbers of items (cardinal numbers)
+and for expressing the order of items (ordinal numbers).
+
+Your Language Pack may include the full range of pluralization rule properties:
+
+- ```zero```
+- ```one```
+- ```two```
+- ```few```
+- ```many```
+- ```other``` - the "general" plural form, also used if the language only has one form
+
+### Cardinal
+
+Cardinal is the default type of pluralization.
+
+```javascript
+{
+    months: {
+        one: "{ value } month",
+        other: "{ value } months"
+    }
+}
+```
+
+```javascript
+{{ t.('months', { value: 1 }) }}
+```
+
+```
+1 month
+```
+
+
+### Ordinal
+
+Ordinal pluralization needs to be requested via Translation Options using an ```ordinal``` property.
+
+```javascript
+{
+    place: {
+        one: "{ value }st",
+        two: "{ value }nd",
+        few: "{ value }rd",
+        other: "{ value }th"
+    }
+}
+```
+
+```javascript
+{{ t.('place', { value: 23, ordinal: true }) }}
+```
+
+```
+23rd
+```

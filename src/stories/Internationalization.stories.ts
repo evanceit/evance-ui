@@ -44,7 +44,6 @@ export const Primary: Story = {
             return { args, t, changeLocale, currentLocale };
         },
         template: `
-            
             <p>Current Locale: {{ currentLocale }}</p>
             
             <p>{{ t('greeting', { name: 'Geoff' }) }}</p>
