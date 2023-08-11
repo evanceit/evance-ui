@@ -1,8 +1,7 @@
-import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
+import {LanguagePack, LanguagePackData} from "@/modules/Translation/LanguagePack.ts";
 import {Translatable} from "@/modules/Translation/Translatable.ts";
 import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
-import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
-import {createStringTemplate, isString} from "@/util";
+import {Ref} from "vue";
 
 /**
  * # Translation Options
@@ -26,22 +25,18 @@ export interface TranslationOptions {
  */
 export class Translator {
 
-    private currentLocale: LocaleCode;
-
-    private defaultLocale: LocaleCode;
-
     private languagePacks: LanguagePack[] = [];
 
     private translatables: Map<string, Translatable> = new Map();
 
     /**
      * @param defaultLocale
+     * @param currentLocale
      */
     constructor(
-        defaultLocale?: LocaleCode | string | null = null
-    ) {
-        this.setDefaultLocale(defaultLocale ?? 'en');
-    }
+        private defaultLocale: Ref<string>,
+        private currentLocale: Ref<string>
+    ) { }
 
     /**
      * ## Add Language Pack
@@ -49,10 +44,11 @@ export class Translator {
      * The new language pack is added to the beginning of the array of available language packs.
      * This makes it possible for subsequent language packs to override references.
      *
-     * @param languagePack
+     * @param locale
+     * @param messages
      */
-    public addLanguagePack(languagePack: LanguagePack): void {
-        this.languagePacks.unshift(languagePack);
+    public addLanguagePack(locale: string, messages: LanguagePackData): void {
+        this.languagePacks.unshift(new LanguagePack(locale, messages));
     }
 
     /**
@@ -67,9 +63,9 @@ export class Translator {
      * @param locale
      * @param reference
      */
-    private getClosestTranslatable(locale: LocaleCode, reference: string): Translatable | null {
+    private getClosestTranslatable(locale: string, reference: string): Translatable | null {
 
-        const translatableKey = `${locale.toString()}:${reference}`;
+        const translatableKey = `${locale}:${reference}`;
 
         if (this.translatables.has(translatableKey)) {
             return this.translatables.get(translatableKey);
@@ -100,9 +96,9 @@ export class Translator {
      *
      * @param translationCode
      */
-    private getLanguagePacksForTranslationCode(translationCode: TranslationCode): LanguagePack[] {
+    private getLanguagePacksForTranslationCode(translationCode: string): LanguagePack[] {
         return this.languagePacks.filter((languagePack) => {
-            return (languagePack.translationCode.toString() === translationCode.toString());
+            return (languagePack.translationCode === translationCode);
         });
     }
 
@@ -115,7 +111,7 @@ export class Translator {
      * @param translationCode
      * @param reference
      */
-    private getTranslatable(translationCode: TranslationCode, reference: string): Translatable | null {
+    private getTranslatable(translationCode: string, reference: string): Translatable | null {
         const packs = this.getLanguagePacksForTranslationCode(translationCode);
         for (const pack of packs) {
             const translatable = pack.getTranslatable(reference);
@@ -134,11 +130,11 @@ export class Translator {
      *
      * @param locale
      */
-    private getTranslationCodes(locale: LocaleCode): TranslationCode[] {
-        const translationCodes = locale.toTranslationCodes();
+    private getTranslationCodes(locale: string): string[] {
+        const translationCodes = LocaleCode.fromString(locale).toTranslationCodes();
         // Add our default if it is not in the list
-        if (!translationCodes.find((code) => (code.toString() === this.defaultLocale.toString()))) {
-            translationCodes.push(this.defaultLocale);
+        if (!translationCodes.find((code) => (code === this.defaultLocale.value))) {
+            translationCodes.push(this.defaultLocale.value);
         }
         return translationCodes;
     }
@@ -151,8 +147,8 @@ export class Translator {
      *
      * @param locale
      */
-    public setCurrentLocale(locale: LocaleCode | string): void {
-        this.currentLocale = isString(locale) ? LocaleCode.fromString(locale) : locale;
+    public setCurrentLocale(locale: string): void {
+        this.currentLocale.value = locale;
     }
 
     /**
@@ -162,8 +158,8 @@ export class Translator {
      *
      * @param locale
      */
-    public setDefaultLocale(locale: LocaleCode | string): void {
-        this.defaultLocale = isString(locale) ? LocaleCode.fromString(locale) : locale;
+    public setDefaultLocale(locale: string): void {
+        this.defaultLocale.value = locale;
     }
 
     /**
@@ -176,12 +172,10 @@ export class Translator {
     public translate(
         reference: string,
         options?: TranslationOptions = {},
-        locale?: LocaleCode | string = null
+        locale?: string = null
     ): string | null {
         if (!locale) {
-            locale = this.currentLocale ?? this.defaultLocale;
-        } else {
-            locale = isString(locale) ? LocaleCode.fromString(locale) : locale;
+            locale = this.currentLocale.value ?? this.defaultLocale.value;
         }
         const translatable = this.getClosestTranslatable(locale, reference);
         return translatable?.translate(options) || null;

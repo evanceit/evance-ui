@@ -4,23 +4,15 @@ import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
  * # Locale Code
  */
 export class LocaleCode extends TranslationCode {
-
-    /**
-     * # To Translation Code
-     */
-    public toTranslationCode(): TranslationCode {
-        return new TranslationCode(this.languageCode, this.countryCode);
-    }
-
     /**
      * ## To Translation Codes
      */
-    public toTranslationCodes(): TranslationCode[] {
+    public toTranslationCodes(): string[] {
         const codes = [
-            new TranslationCode(this.languageCode, this.countryCode)
+            this.toString()
         ];
         if (this.isRegional) {
-            codes.push(new TranslationCode(this.languageCode, null));
+            codes.push(this.languageCode);
         }
         return codes;
     }

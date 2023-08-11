@@ -1,5 +1,4 @@
 import {isPluralizationRules, PluralizationRuleKey, PluralizationRules} from "@/modules/Translation/Pluralization.ts";
-import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
 import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 import {createStringTemplate, isNumber} from "@/util";
 
@@ -9,9 +8,9 @@ import {createStringTemplate, isNumber} from "@/util";
 export class Translatable {
 
     constructor(
+        public translationCode: string,
         public reference: string,
-        public data: string | PluralizationRules,
-        public translationCode: TranslationCode
+        public data: string | PluralizationRules
     ) {}
 
     get defaultText(): string | null {
@@ -53,7 +52,7 @@ export class Translatable {
                 console.error(`Could not find a number to pluralize in translation options for '${this.reference}'.`);
                 return null;
             }
-            const rules = new Intl.PluralRules(this.translationCode.toString(), {
+            const rules = new Intl.PluralRules(this.translationCode, {
                 type: (options.ordinal || false) ? 'ordinal' : 'cardinal'
             });
             const rule = rules.select(options[keyToPluralize]);

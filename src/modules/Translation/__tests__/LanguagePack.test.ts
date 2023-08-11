@@ -3,7 +3,6 @@
  */
 import {expect, test} from "@jest/globals";
 import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
-import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
 
 const dictionary = {
     greeting: "Hello { name }",
@@ -18,8 +17,7 @@ const dictionary = {
 
 test('LanguagePack.getTranslatable()', () => {
 
-    const code = new TranslationCode('en');
-    const pack = new LanguagePack(code, dictionary);
+    const pack = new LanguagePack('en', dictionary);
 
     const greeting = pack.getTranslatable('greeting');
     expect(greeting?.defaultText).toBe('Hello { name }');

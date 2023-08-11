@@ -53,3 +53,8 @@ export interface RtlProps {
 export function useLocale() {
     const locale = inject(LocaleSymbol);
 }
+
+// @todo: <--- YOU ARE HERE
+// Figure out how to provide the new Translator object into a Locale
+// Also, maybe more important test how we can use the translator in a story and switch locales to see
+// if we can get the translation to change.

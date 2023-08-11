@@ -1,6 +1,6 @@
 import {expect, test} from "@jest/globals";
-import {LanguagePack} from "@/modules/Translation/LanguagePack.ts";
 import {Translator} from "@/modules/Translation/Translator.ts";
+import {shallowRef} from "vue";
 
 
 const dictionary = {
@@ -23,9 +23,12 @@ const frenchDictionary = {
 
 test('Translator.translate()', () => {
 
-    const translator = new Translator('en');
-    translator.addLanguagePack(new LanguagePack('en',  dictionary));
-    translator.addLanguagePack(new LanguagePack('fr',  frenchDictionary));
+    const defaultLocale = shallowRef('en');
+    const currentLocale = shallowRef('en');
+
+    const translator = new Translator(defaultLocale, currentLocale);
+    translator.addLanguagePack('en',  dictionary);
+    translator.addLanguagePack('fr',  frenchDictionary);
 
     // Greeting
     let greeting = translator.translate('greeting', {
