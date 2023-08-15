@@ -9,9 +9,14 @@ import {PropType} from "vue";
  */
 export const makeEvSelectProps = propsFactory({
 
+    hideNoItems: Boolean,
     hideSelected: Boolean,
     menuOpen: Boolean,
     multiple: Boolean,
+    noItemsText: {
+        type: String,
+        default: 'select.noItemsText'
+    },
     openOnClear: Boolean,
     valueComparator: {
         type: Function as PropType<typeof isDeepEqual>,

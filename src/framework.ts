@@ -1,6 +1,7 @@
 import {createDisplay, DisplayOptions, DisplaySymbol, SSROptions} from "./composables/display.ts";
 import {Browser, getNextId, mergeDeep} from "./util";
 import {App, nextTick} from "vue";
+import {createLocaleManager, LocaleSymbol} from "@/composables/locale.ts";
 
 export interface EvanceUiOptions {
     blueprint?: Blueprint,
@@ -27,6 +28,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     } = options;
 
     const display = createDisplay(options.display, options.ssr);
+    const locale = createLocaleManager();
 
     const install = (app: App) => {
 
@@ -42,6 +44,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
 
         // Add default `provide` symbols
         app.provide(DisplaySymbol, display);
+        app.provide(LocaleSymbol, locale);
 
         if (Browser.hasWindow && options.ssr) {
             if (app.$nuxt) {

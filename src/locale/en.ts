@@ -1,6 +1,6 @@
 export default {
     select: {
-        noItems: 'No items available'
+        noItemsText: 'No items available'
     },
     greeting: "Hello { name }",
     placement: {

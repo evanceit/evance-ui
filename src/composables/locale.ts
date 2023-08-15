@@ -1,60 +1,51 @@
-import {inject, InjectionKey, Ref} from "vue";
+import {inject, InjectionKey} from "vue";
+import {LocaleManager} from "@/modules/Locale/LocaleManager.ts";
+import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 
-export function createLocale(options?: LocaleOptions & RtlOptions) {
-    const i18n = options?.adapter && isLocaleInstance(options?.adapter)
-        ? options?.adapter
-        : create
-}
-
-function isLocaleInstance(obj: any): obj is LocaleInstance {
-    return obj.name != null;
-}
-
-export interface LocaleInstance {
-    name: string;
-    messages: Ref<LocaleMessages>;
-    current: Ref<string>;
-    fallback: Ref<string>;
-    t: (key: string, ...params: unknown[]) => string;
-    n: (value: number) => string;
-    provide: (props: LocaleOptions) => LocaleInstance;
-}
-
-export interface LocaleMessages {
-    [key: string]: LocaleMessages | string;
-}
-
-export interface LocaleOptions {
-    messages?: LocaleMessages;
-    locale?: string;
-    fallback?: string;
-    adapter?: LocaleInstance;
-}
-
+/**
+ * # Locale Symbol
+ */
 export const LocaleSymbol: InjectionKey<LocaleInstance & RtlInstance> = Symbol.for('ev:locale');
 
-export interface RtlInstance {
-    isRtl: Ref<boolean>;
-    rtl: Ref<Record<string, boolean>>;
-    rtlClasses: Ref<string>;
+/**
+ * # Create Locale Manager
+ * @todo: we need a lot more settings and options.
+ */
+export function createLocaleManager() {
+    return new LocaleManager();
 }
 
-export interface RtlOptions {
-    rtl?: Record<string, boolean>
-}
 
-export interface RtlProps {
-    rtl?: boolean;
+/**
+ * # Use Locale Manager
+ */
+export function useLocaleManager(): LocaleManager {
+    const localeManager:LocaleManager = inject(LocaleSymbol);
+    if (!localeManager) {
+        throw new Error('Evance UI could not find injected locale instance');
+    }
+    return localeManager;
 }
 
 /**
- * # Use Locale
+ * # Use Locale Functions
  */
-export function useLocale() {
-    const locale = inject(LocaleSymbol);
+export function useLocaleFunctions() {
+    const manager = useLocaleManager();
+    return {
+        t: (
+            reference: string,
+            options?: TranslationOptions = {},
+            locale?: string = null
+        ): string | null => {
+            return manager.translator.translate(reference, options, locale);
+        },
+        n: (
+            value: number,
+            options?: Intl.NumberFormatOptions,
+            locale?: string = null
+        ) => {
+            return manager.numberFormatter.format(value, options, locale)
+        }
+    }
 }
-
-// @todo: <--- YOU ARE HERE
-// Figure out how to provide the new Translator object into a Locale
-// Also, maybe more important test how we can use the translator in a story and switch locales to see
-// if we can get the translation to change.

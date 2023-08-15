@@ -128,6 +128,10 @@ export class Translator extends Localized {
             locale = this.currentLocale.value ?? this.defaultLocale.value;
         }
         const translatable = this.getClosestTranslatable(locale, reference);
-        return translatable?.translate(options) || null;
+        if (translatable) {
+            return translatable.translate(options);
+        }
+        const fallback = new Translatable(locale, reference, reference);
+        return fallback.translate(options);
     }
 }

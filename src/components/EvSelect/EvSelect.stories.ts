@@ -30,6 +30,10 @@ const meta: Meta<typeof EvSelect> = {
         multiple: {
             control: 'boolean'
         },
+        'no-items-text': {
+            control: 'text',
+            description: "Change the text that appears when no items are available, or use the `no-items` slot. Defaults to the `select.noItemsText` locale translation path."
+        },
         'open-on-clear': {
             control: 'boolean'
         },
@@ -96,6 +100,8 @@ export const Primary: Story = {
 
             return { args, items };
         },
-        template: '{{ selected }} <ev-select v-bind="args" v-model="selected" :items="items" />'
+        template: `
+            {{ selected }} 
+            <ev-select v-bind="args" v-model="selected" :items="items" />`
     })
 };

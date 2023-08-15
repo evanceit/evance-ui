@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import {EvButton} from "@/components";
-import {LocaleManager} from "@/modules/Locale/LocaleManager.ts";
+import {useLocaleFunctions, useLocaleManager} from "@/composables/locale.ts";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,
@@ -21,15 +21,13 @@ export const Primary: Story = {
         components: { EvButton },
         setup() {
 
-            const localeManager = new LocaleManager();
+            const localeManager = useLocaleManager();
 
             localeManager.addLanguagePack('fr', {
                 greeting: 'Bonjour { name }'
             });
 
-            const t = (ref, options) => {
-                return localeManager.translator.translate(ref, options);
-            };
+            const { t } = useLocaleFunctions();
 
             const changeLocale = (locale) => {
                 localeManager.setCurrentLocale(locale);
@@ -40,6 +38,7 @@ export const Primary: Story = {
             return { args, t, changeLocale, currentLocale };
         },
         template: `
+            
             <p>Current Locale: {{ currentLocale }}</p>
             
             <p>{{ t('greeting', { name: 'Geoff' }) }}</p>

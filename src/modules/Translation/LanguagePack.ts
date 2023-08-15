@@ -19,11 +19,15 @@ export class LanguagePack {
      * @param reference
      */
     public getTranslatable(reference: string): Translatable | null {
-        const translationData = getPropertyValueByPath(this.data, reference, null);
-        if (!translationData) {
+        try {
+            const translationData = getPropertyValueByPath(this.data, reference, null);
+            if (!translationData) {
+                return null;
+            }
+            return new Translatable(this.translationCode, reference, translationData);
+        } catch (e) {
             return null;
         }
-        return new Translatable(this.translationCode, reference, translationData);
     }
 }
 

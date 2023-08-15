@@ -17,6 +17,7 @@ import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
 import EvListItem from "../EvListItem/EvListItem.vue";
 import {ListItem} from "../EvList";
 import {useScrolling} from "./useScrolling.ts";
+import {useLocaleFunctions} from "@/composables/locale.ts";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -210,6 +211,9 @@ function onModelValueUpdate(value) {
     }
 }
 
+
+const { t } = useLocaleFunctions();
+
 </script>
 <template>
     <ev-textfield
@@ -257,8 +261,9 @@ function onModelValueUpdate(value) {
             @scroll.passive="onListScroll"
             tabindex="-1"
         >
-
-            <ev-list-item title="No options available"></ev-list-item>
+            <slot name="no-items" v-if="!displayItems.length && !props.hideNoItems">
+                <ev-list-item :title="t(props.noItemsText)"></ev-list-item>
+            </slot>
 
             <ev-virtual-scroll renderless
                                ref="evVirtualScrollRef"
