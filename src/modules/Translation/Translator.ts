@@ -1,7 +1,6 @@
 import {LanguagePack, LanguagePackData} from "@/modules/Translation/LanguagePack.ts";
 import {Translatable} from "@/modules/Translation/Translatable.ts";
-import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
-import {Ref} from "vue";
+import {Localized} from "@/modules/Locale/Localized.ts";
 
 /**
  * # Translation Options
@@ -23,20 +22,11 @@ export interface TranslationOptions {
 /**
  * # Translator
  */
-export class Translator {
+export class Translator extends Localized {
 
     private languagePacks: LanguagePack[] = [];
 
     private translatables: Map<string, Translatable> = new Map();
-
-    /**
-     * @param defaultLocale
-     * @param currentLocale
-     */
-    constructor(
-        private defaultLocale: Ref<string>,
-        private currentLocale: Ref<string>
-    ) { }
 
     /**
      * ## Add Language Pack
@@ -120,46 +110,6 @@ export class Translator {
             }
         }
         return null;
-    }
-
-    /**
-     * ## Get Translation Codes
-     *
-     * Returns all the translation codes for the Locale we should use when getting a translatable.
-     * This includes a fallback to our default TranslationCode.
-     *
-     * @param locale
-     */
-    private getTranslationCodes(locale: string): string[] {
-        const translationCodes = LocaleCode.fromString(locale).toTranslationCodes();
-        // Add our default if it is not in the list
-        if (!translationCodes.find((code) => (code === this.defaultLocale.value))) {
-            translationCodes.push(this.defaultLocale.value);
-        }
-        return translationCodes;
-    }
-
-    /**
-     * ## Set Current Locale
-     *
-     * Set the current locale so that we don't have to use it in each translate call,
-     * unless we want to.
-     *
-     * @param locale
-     */
-    public setCurrentLocale(locale: string): void {
-        this.currentLocale.value = locale;
-    }
-
-    /**
-     * ## Set Default Locale
-     *
-     * The default locale to use if translations are unavailable for the current locale.
-     *
-     * @param locale
-     */
-    public setDefaultLocale(locale: string): void {
-        this.defaultLocale.value = locale;
     }
 
     /**
