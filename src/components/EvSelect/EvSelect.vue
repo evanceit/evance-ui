@@ -7,11 +7,11 @@ import './EvSelect.scss';
 import EvTextfield from "../EvTextfield/EvTextfield.vue";
 import {computed, ref, shallowRef} from "vue";
 import {makeEvSelectProps} from "./EvSelect.ts";
-import {filterComponentProps, KeyLogger, wrapInArray} from "../../util";
+import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
 import {EvMenu} from "../EvMenu";
 import EvList from "../EvList/EvList.vue";
-import {useItems} from "../../composables/lists";
-import {useModelProxy} from "../../composables/modelProxy.ts";
+import {useItems} from "@/composables/lists";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 import {FocusEvent, MouseEvent} from "react";
 import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
 import EvListItem from "../EvListItem/EvListItem.vue";
@@ -42,7 +42,10 @@ const isMenuOpen = computed({
     }
 });
 const isMenuDisabled = computed(() => {
-
+    return (
+        (props.hideNoItems && !items.value.length)
+        || props.readonly
+    );
 });
 
 // List
@@ -175,6 +178,9 @@ function onFieldKeydown(e: KeyboardEvent) {
  * On Field Mousedown
  */
 function onFieldMousedown () {
+    if (isMenuDisabled.value) {
+        return;
+    }
     isMenuOpen.value = !isMenuOpen.value;
 }
 
@@ -246,6 +252,7 @@ const { t } = useLocaleFunctions();
         ref="evMenuRef"
         v-model="isMenuOpen"
         max-height="310"
+        :disabled="isMenuDisabled"
         :activator="evTextfieldRef"
         :closeOnContentClick="false"
         :openOnClick="false"
