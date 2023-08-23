@@ -1,6 +1,6 @@
 import {ComponentInternalInstance, computed, ref, toRaw, watch} from "vue";
 import type { Ref } from 'vue';
-import {getCurrentComponent, toKebabCase} from "../util";
+import {getCurrentComponent, toKebabCase} from "@/util";
 import {useToggleScope} from "./toggleScope.ts";
 
 type InnerVal<T> = T extends any[] ? Readonly<T> : T;
@@ -31,7 +31,7 @@ export function useModelProxy<
     transformIn: (modelValue?: PropsObject[ModelName]) => Inner = (value: any) => value,
     transformOut: (modelValue: Inner) => PropsObject[ModelName] = (value: any) => value
 ) {
-    const component: ComponentInternalInstance = getCurrentComponent();
+    const component: ComponentInternalInstance = getCurrentComponent('useModelProxy');
     const modelRef: Ref<PropsObject[ModelName]> = ref(props[modelName] !== undefined ? props[modelName] : defaultValue) as Ref<PropsObject[ModelName]>;
     const modelNameKebab: string = toKebabCase(modelName);
     const isCheckKebabName: boolean = (modelName !== modelNameKebab);

@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextfield } from "../EvTextfield";
 import {Search} from "../../icons";
-import {InputAppearance, InputSize} from "../../util";
+import {InputAppearance, InputSize} from "@/util";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
@@ -110,6 +110,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-textfield v-bind="args"></ev-textfield>'
+        template: `<ev-textfield v-bind="args"></ev-textfield>`
     })
 };

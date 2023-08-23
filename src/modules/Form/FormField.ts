@@ -1,3 +1,5 @@
+import {computed, ComputedRef, Ref, ref} from "vue";
+
 /**
  * # Validation Function
  */
@@ -6,15 +8,21 @@ export type ValidationFunction = (value: any) => true | string;
 /**
  * # Form Field
  */
-export class Field {
+export class FormField {
 
-    private validators: ValidationFunction[] = [];
-
-    private messages: string[];
+    public readonly messages: Ref<string[]>;
 
     constructor(
-        public name: string
-    ) { }
+        public name: string,
+        public validationModel: ComputedRef<any>,
+        private validators: ValidationFunction[] = []
+    ) {
+        this.messages = ref([]);
+    }
+
+    get value() {
+        return this.validationModel.value;
+    }
 
     /**
      * ## Add Message
@@ -24,7 +32,7 @@ export class Field {
      * @param message
      */
     public addMessage(...message: string[]) {
-        this.messages.push(...message);
+        this.messages.value.push(...message);
     }
 
     /**
@@ -38,21 +46,21 @@ export class Field {
         this.validators.push(...validator);
     }
 
-    public hasMessages(): boolean {
-        return !!this.messages.length;
+    /**
+     * ## Reset Validation
+     */
+    public resetValidation() {
+        this.messages.value = [];
     }
 
-    public reset() {
-        this.messages = [];
-    }
-
-    public validate(value) {
-        this.reset();
+    public async validate() {
+        this.resetValidation();
         for (const validationFn of this.validators) {
-            const result = validationFn(value);
+            const result = await validationFn(this.value);
             if (result !== true) {
                 this.addMessage(result);
             }
         }
+        return this.messages.value;
     }
 }

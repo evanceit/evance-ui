@@ -1,8 +1,8 @@
 import {test} from "@jest/globals";
-import {Field} from "@/modules/Form/Field.ts";
+import {FormField} from "@/modules/Form/FormField.ts";
 
 test('Field', () => {
-    const field = new Field('my-field');
+    const field = new FormField('my-field');
 
     const requiredValidator = () => {
         return (value) => {

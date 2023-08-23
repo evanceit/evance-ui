@@ -4,6 +4,7 @@ export * from './appearance';
 export * from './bindProps';
 export * from './browser';
 export * from './components';
+export * from './console';
 export * from './dimensions';
 export * from './events';
 export * from './helpers';

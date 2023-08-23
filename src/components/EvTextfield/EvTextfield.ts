@@ -1,5 +1,5 @@
-import {InputAppearance, makeInputAppearanceProps, makeInputSizeProps, propsFactory} from "../../util";
-import {IconValue} from "../../composables/icons.ts";
+import {makeInputAppearanceProps, makeInputSizeProps, propsFactory} from "@/util";
+import {IconValue} from "@/composables/icons.ts";
 import {PropType} from "vue";
 
 
