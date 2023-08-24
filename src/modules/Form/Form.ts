@@ -1,4 +1,4 @@
-import {FormField, ValidationFunction} from "@/modules/Form/FormField.ts";
+import {FormField} from "@/modules/Form/FormField.ts";
 import {Ref, ref, ShallowRef, shallowRef} from "vue";
 import {consoleWarn} from "@/util";
 

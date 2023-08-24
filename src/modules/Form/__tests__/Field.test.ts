@@ -1,11 +1,15 @@
 import {test} from "@jest/globals";
 import {FormField} from "@/modules/Form/FormField.ts";
+import {ref} from "vue";
 
 test('Field', () => {
-    const field = new FormField('my-field');
+
+    const fieldValue = ref('Hello');
+
+    const field = new FormField('my-field', fieldValue);
 
     const requiredValidator = () => {
-        return (value) => {
+        return (value: any) => {
             if (value.length) {
                 return true;
             }
@@ -14,7 +18,7 @@ test('Field', () => {
     };
 
     const lengthValidator = (length: number) => {
-        return (value) => {
+        return (value: any) => {
             if (value.length >= length) {
                 return true;
             }
@@ -27,7 +31,9 @@ test('Field', () => {
         lengthValidator(8)
     );
 
-    field.validate('Hello');
+    field.validate();
 
-    console.log(field);
+    field.value = 'Goodbye';
+
+    console.log(fieldValue.value);
 });

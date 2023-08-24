@@ -1,4 +1,4 @@
-import {computed, ComputedRef, Ref, ref} from "vue";
+import {Ref, ref} from "vue";
 
 /**
  * # Validation Function
@@ -14,14 +14,18 @@ export class FormField {
 
     constructor(
         public name: string,
-        public validationModel: ComputedRef<any>,
-        private validators: ValidationFunction[] = []
+        public modelValue: Ref<any>,
+        public validators: ValidationFunction[] = []
     ) {
         this.messages = ref([]);
     }
 
     get value() {
-        return this.validationModel.value;
+        return this.modelValue.value;
+    }
+
+    set value(value) {
+        this.modelValue.value = value;
     }
 
     /**

@@ -4,9 +4,9 @@
  */
 import './EvCheckbox.scss';
 import {ref, useAttrs} from "vue";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {splitInputAttrs} from "../../util";
-import {useFocus} from "../../composables/focus.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {splitInputAttrs} from "@/util";
+import {useFocus} from "@/composables/focus.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
