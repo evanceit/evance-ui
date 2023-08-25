@@ -1,4 +1,4 @@
-import {Ref, ref} from "vue";
+import {Ref, ref, shallowRef} from "vue";
 
 /**
  * # Validation Function
@@ -10,14 +10,20 @@ export type ValidationFunction = (value: any) => true | string;
  */
 export class FormField {
 
-    public readonly messages: Ref<string[]>;
+    public readonly errorMessages: Ref<string[]>;
+    public readonly valid: Ref<boolean | null>;
 
     constructor(
         public name: string,
         public modelValue: Ref<any>,
         public validators: ValidationFunction[] = []
     ) {
-        this.messages = ref([]);
+        this.errorMessages = ref([]);
+        this.valid = shallowRef(null);
+    }
+
+    get isValid() {
+        return this.valid.value;
     }
 
     get value() {
@@ -36,7 +42,7 @@ export class FormField {
      * @param message
      */
     public addMessage(...message: string[]) {
-        this.messages.value.push(...message);
+        this.errorMessages.value.push(...message);
     }
 
     /**
@@ -51,12 +57,34 @@ export class FormField {
     }
 
     /**
+     * ## Reset
+     */
+    public reset() {
+        this.value = null;
+        this.resetValidation();
+    }
+
+    /**
      * ## Reset Validation
      */
     public resetValidation() {
-        this.messages.value = [];
+        this.valid.value = null;
+        this.errorMessages.value = [];
     }
 
+    /**
+     * ## Update
+     * @param isValid
+     * @param errorMessages
+     */
+    public update(isValid: boolean, errorMessages: string[] = []) {
+        this.valid.value = isValid;
+        this.errorMessages.value = errorMessages;
+    }
+
+    /**
+     * ## Validate
+     */
     public async validate() {
         this.resetValidation();
         for (const validationFn of this.validators) {
@@ -65,6 +93,7 @@ export class FormField {
                 this.addMessage(result);
             }
         }
-        return this.messages.value;
+        this.valid.value = (this.errorMessages.value.length === 0);
+        return this.errorMessages.value;
     }
 }
