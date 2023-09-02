@@ -1,6 +1,6 @@
 import {useModelProxy} from "./modelProxy.ts";
 import {computed, ref} from "vue";
-import {Browser} from "../util";
+import {Browser, EventProp, propsFactory} from "../util";
 
 /**
  * # Focus Props Type
@@ -9,6 +9,15 @@ export interface FocusProps {
     focused: boolean
     'onUpdate:focused': ((focused: boolean) => any) | undefined
 }
+
+
+/**
+ * # Make Focus Props
+ */
+export const makeFocusProps = propsFactory({
+    focused: Boolean,
+    'onUpdate:focused': EventProp<[boolean]>(),
+}, 'focus');
 
 
 /**
@@ -48,6 +57,10 @@ export interface AutofocusProps {
     autofocus: boolean
 }
 
+/**
+ * # Use Auto Focus
+ * @param props
+ */
 export function useAutofocus(props: AutofocusProps) {
     return {
         mounted: (el) => {

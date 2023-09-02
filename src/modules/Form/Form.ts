@@ -1,6 +1,7 @@
-import {FormField, ValidationFunction} from "@/modules/Form/FormField.ts";
-import {Ref, ref, ShallowRef, shallowRef, watch} from "vue";
+import {FormField, Validator} from "@/modules/Form/FormField.ts";
+import {Ref, ref, shallowRef, watch} from "vue";
 import {consoleWarn} from "@/util";
+import {FormProps} from "@/composables/form.ts";
 
 /**
  * # Form
@@ -9,14 +10,25 @@ export class Form {
 
     public readonly errors: Ref<ValidationError[]>;
     public readonly fields: Ref<FormField[]>;
+    public readonly isDisabled: Ref<boolean>;
+    public readonly isReadonly: Ref<boolean>;
     public readonly isValid: Ref<boolean | null>;
-    public readonly isValidating: ShallowRef<boolean>;
+    public readonly isValidating: Ref<boolean>;
+    public readonly validateOn: Ref<FormProps['validateOn']>;
 
-    constructor(modelValue: Ref<boolean | null> | undefined = undefined) {
+    constructor(
+        isValid: Ref<boolean | null> | undefined,
+        isDisabled: Ref<boolean> | undefined,
+        isReadonly: Ref<boolean> | undefined,
+        validateOn: Ref<FormProps['validateOn']> | undefined
+    ) {
         this.errors = ref<ValidationError[]>([]);
         this.fields = ref<FormField[]>([]);
-        this.isValid = modelValue ?? shallowRef(null);
+        this.isDisabled = isDisabled ?? shallowRef(false);
+        this.isReadonly = isReadonly ?? shallowRef(false);
+        this.isValid = isValid ?? shallowRef(null);
         this.isValidating = shallowRef(false);
+        this.validateOn = validateOn ?? shallowRef('input');
         this.watchFields();
     }
 
@@ -40,7 +52,7 @@ export class Form {
      * @param modelValue
      * @param validators
      */
-    public createField(name: string, modelValue: Ref<any>, validators: ValidationFunction[] = []): FormField {
+    public createField(name: string, modelValue: Ref<any>, validators: Validator[] = []): FormField {
         const field = new FormField(name, modelValue, validators);
         this.addField(field);
         return field;
@@ -75,6 +87,13 @@ export class Form {
         this.fields.value  = this.fields.value.filter((field) => {
             return field.name !== name;
         });
+    }
+
+    /**
+     * ## Reset
+     */
+    public reset() {
+        this.fields.value.forEach(field => field.reset());
     }
 
     /**

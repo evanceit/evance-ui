@@ -1,9 +1,6 @@
 import {Ref, ref, shallowRef} from "vue";
+import {Validator} from "@/composables/validation.ts";
 
-/**
- * # Validation Function
- */
-export type ValidationFunction = (value: any) => true | string;
 
 /**
  * # Form Field
@@ -16,7 +13,7 @@ export class FormField {
     constructor(
         public name: string,
         public modelValue: Ref<any>,
-        public validators: ValidationFunction[] = []
+        public validators: Validator[] = []
     ) {
         this.errorMessages = ref([]);
         this.valid = shallowRef(null);
@@ -52,7 +49,7 @@ export class FormField {
      *
      * @param validator
      */
-    public addValidator(...validator: ValidationFunction[]) {
+    public addValidator(...validator: Validator[]) {
         this.validators.push(...validator);
     }
 

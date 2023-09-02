@@ -1,5 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 import {EvForm} from "@/components/EvForm";
+import {ref} from "vue";
 
 const meta: Meta<typeof EvForm> = {
     component: EvForm,
@@ -16,12 +17,17 @@ export default meta;
 
 type Story = StoryObj<typeof EvForm>;
 
+const formRef = ref();
+
 export const Primary: Story = {
     render: (args) =>  ({
         components: { EvForm },
         setup() {
-            return { args };
+
+
+            console.log(formRef);
+            return { args, formRef };
         },
-        template: '<ev-form>Foo</ev-form>'
+        template: '<ev-form ref="formRef">Foo</ev-form>'
     }),
 };
