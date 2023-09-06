@@ -1,5 +1,5 @@
-import {computed, InjectionKey, PropType, provide, toRef} from "vue";
-import {ValidationProps} from "@/composables/validation.ts";
+import {computed, inject, InjectionKey, PropType, provide, toRef} from "vue";
+import {ValidationError, ValidationProps} from "@/composables/validation.ts";
 import {propsFactory} from "@/util";
 import {Form} from "@/modules/Form/Form.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
@@ -24,8 +24,17 @@ export interface FormProps {
     disabled: boolean;
     readonly: boolean;
     modelValue: boolean | null;
-    'onUpdate:modelValue': ((val: boolean | null) => void) | undefined;
+    'onUpdate:modelValue'?: ((val: boolean | null) => void) | undefined;
     validateOn: ValidationProps['validateOn'];
+}
+
+
+/**
+ * # Form Validation Result
+ */
+export interface FormValidationResult {
+    valid: boolean;
+    errors: ValidationError[];
 }
 
 
@@ -67,4 +76,12 @@ export function createForm(props: FormProps) {
     provide(FormKey, form);
 
     return form;
+}
+
+
+/**
+ * # Use Form
+ */
+export function useForm() {
+    return inject(FormKey, null);
 }

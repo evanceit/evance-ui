@@ -6,12 +6,12 @@ import './EvTextfield.scss';
 import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {Appearance, appearanceModifier, InputAppearance, InputSize, sizeModifier, splitInputAttrs} from "../../util";
-import {useAutofocus, useFocus} from "../../composables/focus.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {Appearance, appearanceModifier, InputAppearance, InputSize, sizeModifier, splitInputAttrs} from "@/util";
+import {useAutofocus, useFocus} from "@/composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {makeEvTextfieldProps} from "./EvTextfield.ts";
+import {makeEvTextfieldProps} from "@/components";
 import {MouseEvent} from "react";
 import {useIcon} from "../EvIcon";
 
@@ -84,7 +84,7 @@ function onClearableMousedown(e: MouseEvent) {
  * ## On Focus
  * @param e
  */
-function onFocus(e: Event) {
+function onFocus(e?: Event) {
     focus(e);
     if (props.autoselect) {
         getInputElement()?.select();

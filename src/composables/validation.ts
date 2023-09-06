@@ -1,6 +1,19 @@
-import {propsFactory} from "@/util";
-import {PropType} from "vue";
+import {getNextId, propsFactory} from "@/util";
+import {computed, PropType} from "vue";
 import {makeFocusProps} from "@/composables/focus.ts";
+import {useForm} from "@/composables/form.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+
+
+/**
+ * # Validation Error
+ *
+ * Represents a single error message with a name identifier.
+ */
+export interface ValidationError {
+    name: number | string;
+    message: string;
+}
 
 /**
  * # Validation Result
@@ -31,7 +44,6 @@ export interface ValidationProps {
     readonly: boolean | null;
     validators: readonly Validator[];
     modelValue: any;
-    'onUpdate:modelValue': ((value: any) => void) | undefined;
     validateOn?: ValidateOnEvent | `${ValidateOnEvent} lazy` | `lazy ${ValidateOnEvent}` | 'lazy';
     validationValue: any;
 }
@@ -60,3 +72,44 @@ export const makeValidationProps = propsFactory({
 
     ...makeFocusProps()
 }, 'validation');
+
+
+/**
+ * # Use Validation
+ * @param props
+ */
+export function useValidation(
+    props: ValidationProps
+) {
+
+    const uid = getNextId();
+    const fieldName = computed(() => {
+        return props.name ?? `input-${uid}`;
+    });
+    const form = useForm();
+    const model = useModelProxy(props, 'modelValue');
+    const validationModel = computed(() => {
+        return (props.validationValue === undefined) ? model.value : props.validationValue;
+    });
+    const isDisabled = computed(() => {
+        return !!(props.disabled ?? form?.isDisabled.value);
+    });
+    const isReadonly = computed(() => {
+        return !!(props.readonly ?? form?.isReadonly.value);
+    });
+    const validateOn = computed(() => {
+        let value = (props.validateOn ?? form?.validateOn.value) || 'input';
+        if (value === 'lazy') {
+            value = 'input lazy';
+        }
+        const set = new Set(value?.split(' ') ?? []);
+        return {
+            blur: set.has('blur') || set.has('input'),
+            input: set.has('input'),
+            submit: set.has('submit'),
+            lazy: set.has('lazy')
+        };
+    });
+
+
+}

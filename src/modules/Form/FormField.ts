@@ -1,5 +1,6 @@
 import {Ref, ref, shallowRef} from "vue";
 import {Validator} from "@/composables/validation.ts";
+import {consoleWarn, isFunction, isString} from "@/util";
 
 
 /**
@@ -9,6 +10,7 @@ export class FormField {
 
     public readonly errorMessages: Ref<string[]>;
     public readonly valid: Ref<boolean | null>;
+    public readonly validating: Ref<boolean>;
 
     constructor(
         public name: string,
@@ -17,10 +19,15 @@ export class FormField {
     ) {
         this.errorMessages = ref([]);
         this.valid = shallowRef(null);
+        this.validating = shallowRef(false);
     }
 
     get isValid() {
         return this.valid.value;
+    }
+
+    get isValidating() {
+        return this.validating.value;
     }
 
     get value() {
@@ -84,13 +91,22 @@ export class FormField {
      */
     public async validate() {
         this.resetValidation();
-        for (const validationFn of this.validators) {
-            const result = await validationFn(this.value);
+        this.validating.value = true;
+        for (const validator of this.validators) {
+            const validatorFn = isFunction(validator) ? validator : () => validator;
+            const result = await validatorFn(this.value);
+            if (result === true) {
+                continue;
+            }
+            if (!isString(result)) {
+                consoleWarn(`${result} is not a valid value. Validator functions must return boolean true or a string.`);
+            }
             if (result !== true) {
                 this.addMessage(result);
             }
         }
         this.valid.value = (this.errorMessages.value.length === 0);
+        this.validating.value = false;
         return this.errorMessages.value;
     }
 }

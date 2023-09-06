@@ -15,8 +15,7 @@ export interface FocusProps {
  * # Make Focus Props
  */
 export const makeFocusProps = propsFactory({
-    focused: Boolean,
-    'onUpdate:focused': EventProp<[boolean]>(),
+    focused: Boolean
 }, 'focus');
 
 

@@ -2,6 +2,7 @@ import {FormField, Validator} from "@/modules/Form/FormField.ts";
 import {Ref, ref, shallowRef, watch} from "vue";
 import {consoleWarn} from "@/util";
 import {FormProps} from "@/composables/form.ts";
+import {ValidationError} from "@/composables/validation.ts";
 
 /**
  * # Form
@@ -172,15 +173,4 @@ export class Form {
             );
         }, { deep: true });
     }
-}
-
-
-/**
- * # Validation Error
- *
- * Represents a single error message with a name identifier.
- */
-export interface ValidationError {
-    name: number | string;
-    message: string;
 }

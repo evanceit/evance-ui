@@ -1,27 +1,14 @@
 import {makeInputAppearanceProps, makeInputSizeProps, propsFactory} from "@/util";
 import {IconValue} from "@/composables/icons.ts";
-import {PropType} from "vue";
+import {makeValidationProps} from "@/composables/validation.ts";
 
 
 export const makeEvTextfieldProps = propsFactory({
-
-    // Input props
-    disabled: {
-        type: Boolean as PropType<boolean | null>,
-        default: null,
-    },
-    name: String,
-    readonly: {
-        type: Boolean as PropType<boolean | null>,
-        default: null,
-    },
-    modelValue: null,
 
     // Other props
     autofocus: Boolean,
     autoselect: Boolean,
     clearable: Boolean,
-    focused: Boolean,
     iconStart: IconValue,
     iconEnd: IconValue,
     id: String,
@@ -36,5 +23,6 @@ export const makeEvTextfieldProps = propsFactory({
     },
 
     ...makeInputAppearanceProps(),
-    ...makeInputSizeProps()
+    ...makeInputSizeProps(),
+    ...makeValidationProps()
 }, 'EvTextfield');
