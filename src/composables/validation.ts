@@ -1,8 +1,10 @@
 import {getNextId, propsFactory} from "@/util";
-import {computed, PropType} from "vue";
+import {computed, onBeforeMount, onMounted, PropType, watch} from "vue";
 import {makeFocusProps} from "@/composables/focus.ts";
 import {useForm} from "@/composables/form.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import {FormField} from "@/modules/Form/FormField.ts";
+import {useToggleScope} from "@/composables/toggleScope.ts";
 
 
 /**
@@ -111,5 +113,42 @@ export function useValidation(
         };
     });
 
+    const formField = new FormField(
+        fieldName.value,
+        validationModel,
+        props.validators
+    );
 
+    onBeforeMount(() => {
+        form?.addField(formField);
+    });
+
+    onMounted(async () => {
+        if (!validateOn.value.lazy) {
+            await formField.validate();
+        }
+    });
+
+    useToggleScope(() => validateOn.value.input, () => {
+        watch(validationModel, () => {
+            if (validationModel.value != null) {
+                formField.validate();
+            } else if (props.focused) {
+                const unwatch = watch(() => props.focused, (value) => {
+                    if (!value) {
+                        formField.validate();
+                    }
+                    unwatch();
+                });
+            }
+        });
+    });
+
+    useToggleScope(() => validateOn.value.blur, () => {
+        watch(() => props.focused, (value) => {
+            if (!value) {
+                formField.validate();
+            }
+        });
+    });
 }
