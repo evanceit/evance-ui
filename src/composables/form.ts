@@ -1,5 +1,5 @@
 import {computed, inject, InjectionKey, PropType, provide, toRef} from "vue";
-import {ValidationError, ValidationProps} from "@/composables/validation.ts";
+import {ValidationError, FormFieldProps} from "@/composables/validation.ts";
 import {propsFactory} from "@/util";
 import {Form} from "@/modules/Form/Form.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
@@ -25,7 +25,7 @@ export interface FormProps {
     readonly: boolean;
     modelValue: boolean | null;
     'onUpdate:modelValue'?: ((val: boolean | null) => void) | undefined;
-    validateOn: ValidationProps['validateOn'];
+    validateOn: FormFieldProps['validateOn'];
 }
 
 

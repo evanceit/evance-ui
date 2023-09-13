@@ -22,6 +22,9 @@ const meta: Meta<typeof EvTextfield> = {
         disabled: {
             control: 'boolean'
         },
+        error: {
+            control: 'boolean'
+        },
         clearable: {
             control: 'boolean'
         },
@@ -87,6 +90,7 @@ const meta: Meta<typeof EvTextfield> = {
         autoselect: false,
         clearable: false,
         disabled: false,
+        error: false,
         'icon-start': 'none',
         'icon-end': 'none',
         loading: false,

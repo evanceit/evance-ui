@@ -14,6 +14,7 @@ import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
 import {makeEvTextfieldProps} from "@/components";
 import {MouseEvent} from "react";
 import {useIcon} from "../EvIcon";
+import {useFormField} from "@/composables/validation.ts";
 
 
 /**
@@ -48,6 +49,7 @@ const isClearable = computed(() => {
 });
 const iconStart = useIcon(props, 'iconStart');
 const iconEnd = useIcon(props, 'iconEnd');
+const formField = useFormField(props);
 
 /**
  * ## Get Input Element
@@ -141,10 +143,10 @@ defineExpose({
         class="ev-textfield"
         :class="[
             {
-                'is-disabled': props.disabled,
                 'is-loading': props.loading,
                 'is-rounded': props.rounded
             },
+            formField.classes.value,
             focusClasses,
             sizeModifier(props.size, [InputSize.default]),
             appearanceModifier(props.appearance, [InputAppearance.default])

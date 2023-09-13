@@ -36,24 +36,24 @@ export type Validator = ValidationResult
 export type ValidateOnEvent = 'blur' | 'input' | 'submit';
 
 /**
- * # Validation Props
+ * # Form Field Props
  */
-export interface ValidationProps {
+export interface FormFieldProps {
     disabled: boolean | null;
     error: boolean;
     focused: boolean;
     name: string | undefined;
     readonly: boolean | null;
-    validators: readonly Validator[];
+    validators: Validator[];
     modelValue: any;
     validateOn?: ValidateOnEvent | `${ValidateOnEvent} lazy` | `lazy ${ValidateOnEvent}` | 'lazy';
     validationValue: any;
 }
 
 /**
- * # Make Validation Props
+ * # Make Form Field Props
  */
-export const makeValidationProps = propsFactory({
+export const makeFormFieldProps = propsFactory({
     disabled: {
         type: Boolean as PropType<boolean | null>,
         default: null,
@@ -69,7 +69,7 @@ export const makeValidationProps = propsFactory({
         default: () => ([]),
     },
     modelValue: null,
-    validateOn: String as PropType<ValidationProps['validateOn']>,
+    validateOn: String as PropType<FormFieldProps['validateOn']>,
     validationValue: null,
 
     ...makeFocusProps()
@@ -77,11 +77,11 @@ export const makeValidationProps = propsFactory({
 
 
 /**
- * # Use Validation
+ * # Use Form Field
  * @param props
  */
-export function useValidation(
-    props: ValidationProps
+export function useFormField(
+    props: FormFieldProps
 ) {
 
     const uid = getNextId();
@@ -90,65 +90,11 @@ export function useValidation(
     });
     const form = useForm();
     const model = useModelProxy(props, 'modelValue');
-    const validationModel = computed(() => {
-        return (props.validationValue === undefined) ? model.value : props.validationValue;
-    });
-    const isDisabled = computed(() => {
-        return !!(props.disabled ?? form?.isDisabled.value);
-    });
-    const isReadonly = computed(() => {
-        return !!(props.readonly ?? form?.isReadonly.value);
-    });
-    const validateOn = computed(() => {
-        let value = (props.validateOn ?? form?.validateOn.value) || 'input';
-        if (value === 'lazy') {
-            value = 'input lazy';
-        }
-        const set = new Set(value?.split(' ') ?? []);
-        return {
-            blur: set.has('blur') || set.has('input'),
-            input: set.has('input'),
-            submit: set.has('submit'),
-            lazy: set.has('lazy')
-        };
-    });
 
-    const formField = new FormField(
+    return new FormField(
+        form,
         fieldName.value,
-        validationModel,
-        props.validators
+        model,
+        props
     );
-
-    onBeforeMount(() => {
-        form?.addField(formField);
-    });
-
-    onMounted(async () => {
-        if (!validateOn.value.lazy) {
-            await formField.validate();
-        }
-    });
-
-    useToggleScope(() => validateOn.value.input, () => {
-        watch(validationModel, () => {
-            if (validationModel.value != null) {
-                formField.validate();
-            } else if (props.focused) {
-                const unwatch = watch(() => props.focused, (value) => {
-                    if (!value) {
-                        formField.validate();
-                    }
-                    unwatch();
-                });
-            }
-        });
-    });
-
-    useToggleScope(() => validateOn.value.blur, () => {
-        watch(() => props.focused, (value) => {
-            if (!value) {
-                formField.validate();
-            }
-        });
-    });
 }

@@ -1,4 +1,4 @@
-import {FormField, Validator} from "@/modules/Form/FormField.ts";
+import {FormField} from "@/modules/Form/FormField.ts";
 import {Ref, ref, shallowRef, watch} from "vue";
 import {consoleWarn} from "@/util";
 import {FormProps} from "@/composables/form.ts";
@@ -9,12 +9,12 @@ import {ValidationError} from "@/composables/validation.ts";
  */
 export class Form {
 
-    public readonly errors: Ref<ValidationError[]>;
-    public readonly fields: Ref<FormField[]>;
+    public readonly errors = ref<ValidationError[]>([]);
+    public readonly fields = ref<FormField[]>([]);
     public readonly isDisabled: Ref<boolean>;
     public readonly isReadonly: Ref<boolean>;
     public readonly isValid: Ref<boolean | null>;
-    public readonly isValidating: Ref<boolean>;
+    public readonly isValidating = shallowRef(false);
     public readonly validateOn: Ref<FormProps['validateOn']>;
 
     constructor(
@@ -23,12 +23,9 @@ export class Form {
         isReadonly: Ref<boolean> | undefined,
         validateOn: Ref<FormProps['validateOn']> | undefined
     ) {
-        this.errors = ref<ValidationError[]>([]);
-        this.fields = ref<FormField[]>([]);
         this.isDisabled = isDisabled ?? shallowRef(false);
         this.isReadonly = isReadonly ?? shallowRef(false);
         this.isValid = isValid ?? shallowRef(null);
-        this.isValidating = shallowRef(false);
         this.validateOn = validateOn ?? shallowRef('input');
         this.watchFields();
     }
@@ -42,21 +39,6 @@ export class Form {
             consoleWarn(`Duplicate form field with name "${field.name}"`);
         }
         this.fields.value.push(field);
-    }
-
-    /**
-     * ## Create Field
-     *
-     * Creates and returns a new FormField, which is automatically added to the Form.
-     *
-     * @param name
-     * @param modelValue
-     * @param validators
-     */
-    public createField(name: string, modelValue: Ref<any>, validators: Validator[] = []): FormField {
-        const field = new FormField(name, modelValue, validators);
-        this.addField(field);
-        return field;
     }
 
     /**
@@ -105,17 +87,6 @@ export class Form {
     }
 
     /**
-     * ## Update Field
-     *
-     * @param name
-     * @param isValid
-     * @param errorMessages
-     */
-    public updateField(name: string, isValid: boolean, errorMessages: string[] = []) {
-        this.getField(name)?.update(isValid, errorMessages);
-    }
-
-    /**
      * ## Validate
      */
     public async validate() {
@@ -154,7 +125,7 @@ export class Form {
             let invalid = 0;
             const results = [];
             for (const field of this.fields.value) {
-                if (field.isValid === false) {
+                if (field.isValid.value === false) {
                     ++invalid;
                     const fieldErrors = field.errorMessages.value;
                     for (const fieldError of fieldErrors) {
@@ -163,7 +134,7 @@ export class Form {
                             message: fieldError
                         });
                     }
-                } else if (field.isValid === true) {
+                } else if (field.isValid.value === true) {
                     ++valid;
                 }
             }

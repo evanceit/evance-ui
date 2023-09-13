@@ -1,6 +1,6 @@
 import {makeInputAppearanceProps, makeInputSizeProps, propsFactory} from "@/util";
 import {IconValue} from "@/composables/icons.ts";
-import {makeValidationProps} from "@/composables/validation.ts";
+import {makeFormFieldProps} from "@/composables/validation.ts";
 
 
 export const makeEvTextfieldProps = propsFactory({
@@ -24,5 +24,5 @@ export const makeEvTextfieldProps = propsFactory({
 
     ...makeInputAppearanceProps(),
     ...makeInputSizeProps(),
-    ...makeValidationProps()
+    ...makeFormFieldProps()
 }, 'EvTextfield');
