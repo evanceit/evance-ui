@@ -145,5 +145,11 @@
     &.is-error {
         outline: 2px solid var(--input-border-color-error);
         outline-offset: 2px;
+
+        .ev-switch--track {
+            &:after {
+                background: var(--input-border-color-error);
+            }
+        }
     }
 }

@@ -136,3 +136,18 @@
         @include mixins.is-disabled;
     }
 }
+
+/** Error modifier */
+.ev-checkbox {
+    &.is-error {
+        .ev-checkbox--outer-box {
+            border-color: var(--input-border-color-error);
+        }
+
+        &.is-checked {
+            .ev-checkbox--inner-box {
+                background-color: var(--input-border-color-error);
+            }
+        }
+    }
+}
