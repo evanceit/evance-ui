@@ -4,9 +4,11 @@
  */
 import './EvSwitch.scss';
 import {ref, useAttrs} from "vue";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {splitInputAttrs} from "../../util";
-import {useFocus} from "../../composables/focus.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {splitInputAttrs} from "@/util";
+import {useFocus} from "@/composables/focus.ts";
+import {makeEvSwitchProps} from "@/components";
+import {useFormField} from "@/composables/validation.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -19,16 +21,7 @@ defineOptions({
 /**
  * # Switch Props
  */
-interface SwitchProps {
-    disabled?: boolean,
-    id?: string,
-    focused?: boolean,
-    modelValue?: boolean,
-}
-const props = withDefaults(defineProps<SwitchProps>(), {
-    disabled: false,
-    focused: false
-});
+const props = defineProps(makeEvSwitchProps());
 
 // Emit
 const emit = defineEmits([
@@ -37,36 +30,60 @@ const emit = defineEmits([
 ]);
 
 const attrs = useAttrs();
-const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLInputElement | null>(null);
+const containerRef = ref<HTMLElement | null>(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const { focusClasses, focus, blur } = useFocus(props);
+const formField = useFormField(modelProxy, props);
+
+/**
+ * ## Get Input Element
+ */
+function getInputElement(): HTMLInputElement | null {
+  return inputRef.value;
+}
+
+/**
+ * ## Expose stuff
+ */
+defineExpose({
+  input: inputRef,
+  focus: () => {
+    getInputElement()?.focus();
+  },
+  ...formField.expose()
+});
 
 </script>
 <template>
-    <div ref="container"
+    <div ref="containerRef"
         class="ev-switch"
         :class="[
             {
-                'is-checked': modelProxy,
-                'is-disabled': disabled
+                'is-checked': modelProxy
             },
-            focusClasses
+            formField.classes,
+            focusClasses,
+            props.class
         ]"
+         :style="props.style"
         v-bind="containerAttrs"
     >
         <div class="ev-switch--track"></div>
         <div class="ev-switch--thumb"></div>
-        <input ref="input"
-            type="checkbox"
-            role="switch"
-            :id="id"
-            :disabled="disabled"
-            v-model="modelProxy"
-            v-bind="inputAttrs"
-            @focus="focus"
-            @blur="blur"
+        <input ref="inputRef"
+               type="checkbox"
+               role="switch"
+               :id="formField.id"
+               :name="formField.name"
+               :disabled="formField.isDisabled"
+               :readonly="formField.isReadonly"
+               v-model="modelProxy"
+               v-bind="inputAttrs"
+               @focus="focus"
+               @blur="blur"
+               :aria-checked="modelProxy"
         >
     </div>
 </template>

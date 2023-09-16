@@ -138,3 +138,12 @@
         @include mixins.is-disabled;
     }
 }
+
+
+/** Error modifier */
+.ev-switch {
+    &.is-error {
+        outline: 2px solid var(--input-border-color-error);
+        outline-offset: 2px;
+    }
+}
