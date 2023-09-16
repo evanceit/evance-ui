@@ -169,7 +169,7 @@
 .ev-textfield {
     &.is-focused {
         border-color: var(--input-border-color-focus);
-        box-shadow: var(--input-focus-shadow);
+        box-shadow: var(--input-shadow-focus);
     }
 }
 
@@ -178,5 +178,17 @@
 .ev-textfield {
     &.is-disabled {
         @include mixins.is-disabled;
+    }
+}
+
+
+/** Error */
+.ev-textfield {
+    &.is-error {
+        border-color: var(--input-border-color-error);
+
+        &.is-focused {
+            box-shadow: var(--input-shadow-error);
+        }
     }
 }

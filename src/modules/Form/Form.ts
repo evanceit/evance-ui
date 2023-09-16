@@ -35,19 +35,19 @@ export class Form {
      * @param field
      */
     public addField(field: FormField) {
-        if (this.hasField(field.name)) {
-            consoleWarn(`Duplicate form field with name "${field.name}"`);
+        if (this.hasField(field.id)) {
+            consoleWarn(`Duplicate form field with name "${field.id}"`);
         }
         this.fields.value.push(field);
     }
 
     /**
      * ## Get Field
-     * @param name
+     * @param id
      */
-    public getField(name: string): FormField | undefined {
+    public getField(id: string): FormField | undefined {
         return this.fields.value.find((field) => {
-            return field.name === name;
+            return field.id === id;
         });
     }
 
@@ -56,10 +56,10 @@ export class Form {
      *
      * Returns `true` if the field `name` already exists in the form.
      *
-     * @param name
+     * @param id
      */
-    public hasField(name: string): boolean {
-        return this.fields.value.some(field => field.name === name);
+    public hasField(id: string): boolean {
+        return this.fields.value.some(field => field.id === id);
     }
 
     /**
@@ -125,7 +125,7 @@ export class Form {
             let invalid = 0;
             const results = [];
             for (const field of this.fields.value) {
-                if (field.isValid.value === false) {
+                if (field.isValid === false) {
                     ++invalid;
                     const fieldErrors = field.errorMessages.value;
                     for (const fieldError of fieldErrors) {
@@ -134,7 +134,7 @@ export class Form {
                             message: fieldError
                         });
                     }
-                } else if (field.isValid.value === true) {
+                } else if (field.isValid === true) {
                     ++valid;
                 }
             }

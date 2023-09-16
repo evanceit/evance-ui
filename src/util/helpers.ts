@@ -15,10 +15,10 @@ import {getCurrentComponent, isArray, isFunction, isObjectNotArray, isString} fr
  */
 let currentId: number = 0;
 let assignedIds = new WeakMap<ComponentInternalInstance, number>();
-export function getNextId() {
+export function getNextId(): number {
     const component = getCurrentComponent('getNextId()');
     if (assignedIds.has(component)) {
-        return assignedIds.get(component);
+        return assignedIds.get(component)!;
     }
     const id = ++currentId;
     assignedIds.set(component, id);

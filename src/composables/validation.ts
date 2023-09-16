@@ -1,5 +1,5 @@
 import {getNextId, propsFactory} from "@/util";
-import {computed, onBeforeMount, onMounted, PropType, watch} from "vue";
+import {computed, MaybeRef, onBeforeMount, onMounted, PropType, Ref, unref, watch} from "vue";
 import {makeFocusProps} from "@/composables/focus.ts";
 import {useForm} from "@/composables/form.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
@@ -39,6 +39,7 @@ export type ValidateOnEvent = 'blur' | 'input' | 'submit';
  * # Form Field Props
  */
 export interface FormFieldProps {
+    id: string | undefined;
     disabled: boolean | null;
     error: boolean;
     focused: boolean;
@@ -54,6 +55,7 @@ export interface FormFieldProps {
  * # Make Form Field Props
  */
 export const makeFormFieldProps = propsFactory({
+    id: String,
     disabled: {
         type: Boolean as PropType<boolean | null>,
         default: null,
@@ -78,22 +80,16 @@ export const makeFormFieldProps = propsFactory({
 
 /**
  * # Use Form Field
+ * @param model
  * @param props
  */
 export function useFormField(
+    model: Ref<any>,
     props: FormFieldProps
 ) {
-
-    const uid = getNextId();
-    const fieldName = computed(() => {
-        return props.name ?? `input-${uid}`;
-    });
     const form = useForm();
-    const model = useModelProxy(props, 'modelValue');
-
     return new FormField(
         form,
-        fieldName.value,
         model,
         props
     );

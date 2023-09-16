@@ -83,8 +83,10 @@
     /* Input */
     --input-background: transparent;
     --input-border-color: #C4C5D4;
+    --input-border-color-error: #F04141;
     --input-border-color-focus: #814EFA;
-    --input-focus-shadow: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
+    --input-shadow-error: 0 0 0 5px rgba(240,65,65,0.1), 0 0 0 1px rgba(240,65,65,0.75);
+    --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
 
     /* Scrollbars */
     --scrollbar-thumb: #5D678846;
@@ -162,8 +164,10 @@
     /* Input */
     --input-background: transparent;
     --input-border-color: #3D3E52;
+    --input-border-color-error: #FF6161;
     --input-border-color-focus: #AA86FF;
-    --input-focus-shadow: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
+    --input-shadow-error: 0 0 0 5px rgba(255,97,97,0.1), 0 0 0 1px rgba(255,97,97,0.75);
+    --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
     --input-focus-background: #814EFA26;
 
     /* Scrollbars */

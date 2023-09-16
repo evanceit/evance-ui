@@ -8,6 +8,43 @@ const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
     title: 'Forms/EvTextfield',
     argTypes: {
+
+        // Form Field Attributes
+        disabled: {
+            control: 'boolean',
+            description: 'Removes the ability to click or target the input.'
+        },
+        error: {
+            control: 'boolean',
+            description: 'Puts the input in a manual error state.'
+        },
+        id: {
+            control: 'text',
+            description: 'The ID associated with the form field and the component wrapper'
+        },
+        modelValue: {
+            control: 'text',
+            description: "The `model-value` is the `v-model` value of the component."
+        },
+        name: {
+            control: 'text',
+            description: "Sets the name attribute of the internal input."
+        },
+        readonly: {
+            control: 'boolean'
+        },
+        'validate-on': {
+            type: 'select',
+            description: 'Change what type of event triggers validation to run.',
+            options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
+        },
+        validators: {
+            description: 'An array of validator functions, which evaluate an input value ' +
+                'as an argument and must return either true or a string containing an error message. ' +
+                'The input field will enter an error state if a function returns'
+        },
+        // End
+
         appearance: {
             control: 'select',
             options: Object.values(InputAppearance)
@@ -18,12 +55,6 @@ const meta: Meta<typeof EvTextfield> = {
         autoselect: {
             control: 'boolean',
             description: "When `autoselect` is `true` any text within the input is selected on focus."
-        },
-        disabled: {
-            control: 'boolean'
-        },
-        error: {
-            control: 'boolean'
         },
         clearable: {
             control: 'boolean'
@@ -52,14 +83,6 @@ const meta: Meta<typeof EvTextfield> = {
                 "in an indeterminate state. However, if an `icon` has been set, a circular progress progress bar " +
                 "is used instead."
         },
-        modelValue: {
-            control: 'text',
-            description: "The `model-value` is the `v-model` value of the component."
-        },
-        name: {
-            control: 'text',
-            description: "Sets the name attribute of the internal input."
-        },
         prefix: {
             control: 'text',
             description: "Appears before the input field but after the `icon`. "
@@ -85,12 +108,21 @@ const meta: Meta<typeof EvTextfield> = {
         }
     },
     args: {
+        // Form Field Args
+        disabled: false,
+        error: false,
+        id: undefined,
+        modelValue: '',
+        name: undefined,
+        readonly: false,
+        'validate-on': 'input',
+        validators: undefined,
+        // End
+
         appearance: InputAppearance.default,
         autofocus: false,
         autoselect: false,
         clearable: false,
-        disabled: false,
-        error: false,
         'icon-start': 'none',
         'icon-end': 'none',
         loading: false,
@@ -98,7 +130,6 @@ const meta: Meta<typeof EvTextfield> = {
         rounded: false,
         size: InputSize.default,
         suffix: '',
-        modelValue: '',
         type: 'text'
     },
     tags: ['autodocs']

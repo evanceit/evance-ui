@@ -10,6 +10,9 @@ import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
+import {makeEvTextareaProps} from "@/components";
+import {useFormField} from "@/composables/validation.ts";
+import {MouseEvent} from "react";
 
 
 /**
@@ -20,69 +23,94 @@ defineOptions({
     inheritAttrs: false
 });
 
-
-// Props
-interface TextareaProps {
-    appearance?: InputAppearanceProp,
-    autofocus?: boolean,
-    autogrow?: boolean,
-    autosubmit?: Function,
-    clearable?: boolean,
-    disabled?: boolean,
-    focused?: boolean,
-    id?: string,
-    loading?: boolean,
-    name?: string,
-    placeholder?: string,
-    readonly?: boolean,
-    modelValue?: string
-}
-const props = withDefaults(defineProps<TextareaProps>(), {
-    appearance: 'default',
-    autofocus: false,
-    autogrow: true,
-    clearable: false,
-    disabled: false,
-    focused: false,
-    loading: false,
-    readonly: false
-});
+const props = defineProps(makeEvTextareaProps());
 
 // Emit
 const emit = defineEmits([
     'click:clear',
+    'click:control',
+    'mousedown:control',
     'update:focused',
     'update:modelValue'
 ]);
 
 const attrs = useAttrs();
-const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLInputElement | null>(null);
+const containerRef = ref<HTMLElement | null>(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
 const { isFocused, focusClasses, focus, blur } = useFocus(props);
 const isClearable = computed(() => {
     return (props.clearable && !!modelProxy.value);
 });
+const formField = useFormField(modelProxy, props);
 
 /**
  * ## Get Input Element
  */
 function getInputElement(): HTMLInputElement | null {
-    return input.value;
+    return inputRef.value;
 }
 
 /**
- * ## On Click Clearable
+ * ## On Clearable Click
  * @param $event
  */
-function onClickClearable($event: MouseEvent) {
+function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
         modelProxy.value = null;
         emit('click:clear', $event);
     });
     getInputElement()?.focus();
+}
+
+/**
+ * ## On Clearable Mousedown
+ * @param e
+ */
+function onClearableMousedown(e: MouseEvent) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+/**
+ * ## On Focus
+ * @param e
+ */
+function onFocus(e?: Event) {
+  focus(e);
+  if (props.autoselect) {
+    getInputElement()?.select();
+  }
+}
+
+/**
+ * ## On Control Click
+ *
+ * When the user clicks on the textarea.
+ *
+ * @param e
+ */
+function onControlClick(e: MouseEvent) {
+  onFocus();
+  emit('click:control', e);
+}
+
+/**
+ * ## On Control Mousedown
+ *
+ * When the mousedown is triggered on the textarea.
+ *
+ * @param e
+ */
+function onControlMousedown(e: MouseEvent) {
+  emit('mousedown:control', e);
+  if (e.target === inputRef.value) {
+    return;
+  }
+  onFocus();
+  e.preventDefault();
 }
 
 /**
@@ -125,6 +153,9 @@ function resize() {
         return;
     }
     const field = getInputElement();
+    if (!field) {
+      return;
+    }
     field.style.height = 'auto';
     field.style.height = (field.scrollHeight + 1) + 'px';
 }
@@ -150,36 +181,51 @@ onMounted(() => {
  */
 const vAutofocus = useAutofocus(props);
 
+/**
+ * ## Expose stuff
+ */
+defineExpose({
+  input: inputRef,
+  focus: () => {
+    getInputElement()?.focus();
+  },
+  ...formField.expose()
+});
+
 </script>
 <template>
     <div
-        ref="container"
+        ref="containerRef"
         class="ev-textarea"
         :class="[
             {
-                'is-disabled': disabled,
                 'is-loading': loading,
                 'is-autogrow': autogrow
             },
+            formField.classes,
             focusClasses,
-            appearanceModifier(props.appearance, [InputAppearance.default])
+            appearanceModifier(props.appearance, [InputAppearance.default]),
+            props.class
         ]"
+        :style="props.style"
         role="textbox"
         v-bind="containerAttrs"
+        @click="onControlClick"
+        @mousedown="onControlMousedown"
     >
         <div class="ev-textarea--input">
             <textarea
-                ref="input"
-                :id="id"
-                :name="name"
+                ref="inputRef"
+                :id="formField.id"
+                :name="formField.name"
+                :disabled="formField.isDisabled"
+                :readonly="formField.isReadonly"
                 v-model="modelProxy"
                 :placeholder="placeholder"
-                :disabled="disabled"
                 :autofocus="autofocus"
-                :readonly="readonly"
                 v-autofocus
                 v-bind="inputAttrs"
-                @focus="focus"
+                @focus="onFocus"
                 @blur="blur"
                 @keydown="onKeydown"
                 @keyup="onKeyup"
@@ -187,7 +233,11 @@ const vAutofocus = useAutofocus(props);
         </div>
         <transition name="slide-fade">
             <div class="ev-textarea--clearable" v-if="isClearable">
-                <ev-icon :glyph="Cancel" @click="onClickClearable($event)" />
+                <ev-icon
+                    :glyph="Cancel"
+                    @click="onClearableClick"
+                    @mousedown="onClearableMousedown"
+                />
             </div>
         </transition>
         <div class="ev-textarea--loader" v-if="loading && !icon">

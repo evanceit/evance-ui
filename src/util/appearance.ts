@@ -18,10 +18,10 @@ export type AppearanceKey = keyof typeof Appearance;
 export type AppearanceProp = typeof Appearance[AppearanceKey];
 export const makeAppearanceProps = propsFactory({
     appearance: {
-        type: String<AppearanceProp>,
+        type: String,
         default: Appearance.default
     }
-});
+}, 'Appearance');
 
 
 /**
@@ -37,7 +37,7 @@ export type InputAppearanceKey = keyof typeof InputAppearance;
 export type InputAppearanceProp = typeof InputAppearance[InputAppearanceKey];
 export const makeInputAppearanceProps = propsFactory({
     appearance: {
-        type: String<InputAppearance>,
+        type: String,
         default: InputAppearance.default
     }
 }, 'InputAppearance');
@@ -55,7 +55,7 @@ export type InputSizeKey = keyof typeof InputSize;
 export type InputSizeProp = typeof InputSize[InputSizeKey];
 export const makeInputSizeProps = propsFactory({
     size: {
-        type: String<InputSize>,
+        type: String,
         default: InputSize.default
     }
 }, 'InputSize');

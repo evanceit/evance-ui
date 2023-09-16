@@ -7,7 +7,14 @@ import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {Appearance, appearanceModifier, InputAppearance, InputSize, sizeModifier, splitInputAttrs} from "@/util";
+import {
+    Appearance,
+    appearanceModifier,
+    InputAppearance,
+    InputSize,
+    sizeModifier,
+    splitInputAttrs
+} from "@/util";
 import {useAutofocus, useFocus} from "@/composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
@@ -49,7 +56,7 @@ const isClearable = computed(() => {
 });
 const iconStart = useIcon(props, 'iconStart');
 const iconEnd = useIcon(props, 'iconEnd');
-const formField = useFormField(props);
+const formField = useFormField(modelProxy, props);
 
 /**
  * ## Get Input Element
@@ -133,7 +140,8 @@ defineExpose({
     input: inputRef,
     focus: () => {
         getInputElement()?.focus();
-    }
+    },
+    ...formField.expose()
 });
 
 </script>
@@ -146,11 +154,13 @@ defineExpose({
                 'is-loading': props.loading,
                 'is-rounded': props.rounded
             },
-            formField.classes.value,
+            formField.classes,
             focusClasses,
             sizeModifier(props.size, [InputSize.default]),
-            appearanceModifier(props.appearance, [InputAppearance.default])
+            appearanceModifier(props.appearance, [InputAppearance.default]),
+            props.class
         ]"
+        :style="props.style"
         role="textbox"
         v-bind="containerAttrs"
         @click="onControlClick"
@@ -170,13 +180,13 @@ defineExpose({
             <input
                 ref="inputRef"
                 :type="props.type"
-                :id="props.id"
-                :name="props.name"
+                :id="formField.id"
+                :name="formField.name"
+                :disabled="formField.isDisabled"
+                :readonly="formField.isReadonly"
                 v-model="modelProxy"
-                :placeholder="props.placeholder"
-                :disabled="props.disabled"
                 :autofocus="props.autofocus"
-                :readonly="props.readonly"
+                :placeholder="props.placeholder"
                 v-autofocus
                 v-bind="inputAttrs"
                 @focus="onFocus"
