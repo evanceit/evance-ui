@@ -84,9 +84,10 @@
     background-color: var(--color-primary);
     opacity: 0;
     transition: transform 0.25s cubic-bezier(.5,.32,.38,1.22),
+                background-color 0.25s ease-in-out,
                 opacity 0.25s ease-in-out;
     width: 12px;
-    will-change: transform, opacity;
+    will-change: transform, background-color, opacity;
     transform: translate(-50%, -50%) scale(0.5);
 }
 
@@ -128,5 +129,18 @@
 .ev-radio {
     &.is-disabled {
         @include mixins.is-disabled;
+    }
+}
+
+
+/** Error modifier */
+.ev-radio {
+    &.is-error {
+        .ev-radio--outer-circle {
+            border-color: var(--input-border-color-error);
+        }
+        .ev-radio--inner-circle {
+            background-color: var(--input-border-color-error);
+        }
     }
 }

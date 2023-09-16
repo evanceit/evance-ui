@@ -7,6 +7,8 @@ import {computed, ref, useAttrs} from "vue";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {getNextId, isDeepEqual, splitInputAttrs} from "../../util";
 import {useFocus} from "../../composables/focus.ts";
+import {makeEvRadioProps} from "@/components";
+import {useFormField} from "@/composables/validation.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -28,12 +30,7 @@ interface RadioProps {
     readonly?: boolean,
     value?: string
 }
-const props = withDefaults(defineProps<RadioProps>(), {
-    clearable: false,
-    disabled: false,
-    focused: false,
-    readonly: false
-});
+const props = defineProps(makeEvRadioProps());
 
 // Emit
 const emit = defineEmits([
@@ -42,11 +39,12 @@ const emit = defineEmits([
 ]);
 
 const attrs = useAttrs();
-const container = ref<HTMLElement | null>(null);
-const input = ref<HTMLInputElement | null>(null);
+const containerRef = ref<HTMLElement | null>(null);
+const inputRef = ref<HTMLInputElement | null>(null);
 const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const { focusClasses, focus, blur } = useFocus(props);
+const formField = useFormField(modelProxy, props);
 const nextId = getNextId();
 const id = computed(() => props.id || `radio-${nextId}`);
 const valueComparator = isDeepEqual;
@@ -106,17 +104,37 @@ function onSpace(e: Event): void {
     }
 }
 
+/**
+ * ## Get Input Element
+ */
+function getInputElement(): HTMLInputElement | null {
+  return inputRef.value;
+}
+
+/**
+ * ## Expose stuff
+ */
+defineExpose({
+  input: inputRef,
+  focus: () => {
+    getInputElement()?.focus();
+  },
+  ...formField.expose()
+});
+
 </script>
 <template>
-    <div ref="container"
+    <div ref="containerRef"
          class="ev-radio"
          :class="[
             {
-                'is-disabled': disabled,
                 'is-checked': modelChecked
             },
-            focusClasses
+            formField.classes,
+            focusClasses,
+            props.class
         ]"
+         :style="props.style"
         v-bind="containerAttrs"
     >
         <div class="ev-radio--control">
@@ -124,10 +142,12 @@ function onSpace(e: Event): void {
                 <div class="ev-radio--outer-circle"></div>
                 <div class="ev-radio--inner-circle"></div>
             </div>
-            <input ref="input"
+            <input ref="inputRef"
                    type="radio"
-                   :id="id"
-                   :disabled="!!(disabled || readonly)"
+                   :id="formField.id"
+                   :name="formField.name"
+                   :disabled="formField.isDisabled"
+                   :readonly="formField.isReadonly"
                    :value="value"
                    :checked="modelChecked"
                    v-bind="inputAttrs"
