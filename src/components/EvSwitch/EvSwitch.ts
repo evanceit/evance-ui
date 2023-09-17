@@ -1,10 +1,7 @@
 import {propsFactory} from "@/util";
-import {makeComponentProps} from "@/composables/component.ts";
-import {makeFormFieldProps} from "@/composables/validation.ts";
+import {makeEvCheckboxProps} from "@/components";
 
 
 export const makeEvSwitchProps = propsFactory({
-
-    ...makeFormFieldProps(),
-    ...makeComponentProps()
+    ...makeEvCheckboxProps()
 }, 'EvSwitch');

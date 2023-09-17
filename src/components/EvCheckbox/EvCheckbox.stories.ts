@@ -55,6 +55,10 @@ const meta: Meta<typeof EvCheckbox> = {
         value: {
             control: 'string',
             description: "The value of the input is assigned to `modelValue` when checked."
+        },
+        'value-comparator': {
+            description: 'A function used to compare the value to determine if the EvCheckbox is checked. ' +
+                'The function should accept two arguments and return a boolean.'
         }
     },
     args: {
@@ -68,10 +72,11 @@ const meta: Meta<typeof EvCheckbox> = {
         'validate-on': 'input',
         validators: undefined,
         // End
-        value: undefined,
         focused: false,
         'true-value': undefined,
-        'false-value': undefined
+        'false-value': undefined,
+        value: undefined,
+        'value-comparator': undefined,
     },
     tags: ['autodocs']
 };

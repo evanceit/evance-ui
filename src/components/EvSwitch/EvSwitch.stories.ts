@@ -42,6 +42,25 @@ const meta: Meta<typeof EvSwitch> = {
                 'The input field will enter an error state if a function returns'
         },
         // End
+        focused: {
+            control: 'boolean'
+        },
+        'true-value': {
+            type: 'string',
+            description: 'Sets the value when checked'
+        },
+        'false-value': {
+            type: 'string',
+            description: 'Sets the value when unchecked'
+        },
+        value: {
+            control: 'string',
+            description: "The value of the input is assigned to `modelValue` when checked."
+        },
+        'value-comparator': {
+            description: 'A function used to compare the value to determine if the EvCheckbox is checked. ' +
+                'The function should accept two arguments and return a boolean.'
+        }
     },
     args: {
         // Form Field Args
@@ -54,6 +73,11 @@ const meta: Meta<typeof EvSwitch> = {
         'validate-on': 'input',
         validators: undefined,
         // End
+        focused: false,
+        'true-value': undefined,
+        'false-value': undefined,
+        value: undefined,
+        'value-comparator': undefined,
     },
     tags: ['autodocs']
 };

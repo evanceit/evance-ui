@@ -45,7 +45,6 @@ function getInputElement(): HTMLInputElement | null {
   return inputRef.value;
 }
 
-
 /**
  * ## On Input
  * @param e
