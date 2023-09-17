@@ -4,9 +4,9 @@
  */
 import './EvRadio.scss';
 import {computed, ref, useAttrs} from "vue";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {getNextId, isDeepEqual, splitInputAttrs} from "../../util";
-import {useFocus} from "../../composables/focus.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {isDeepEqual, splitInputAttrs} from "@/util";
+import {useFocus} from "@/composables/focus.ts";
 import {makeEvRadioProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
@@ -21,15 +21,6 @@ defineOptions({
 /**
  * # Radio Props
  */
-interface RadioProps {
-    clearable?: boolean,
-    disabled?: boolean,
-    id?: string,
-    focused?: boolean,
-    modelValue?: string,
-    readonly?: boolean,
-    value?: string
-}
 const props = defineProps(makeEvRadioProps());
 
 // Emit
@@ -45,12 +36,10 @@ const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const { focusClasses, focus, blur } = useFocus(props);
 const formField = useFormField(modelProxy, props);
-const nextId = getNextId();
-const id = computed(() => props.id || `radio-${nextId}`);
 const valueComparator = isDeepEqual;
 
 // Computed
-const modelChecked = computed({
+const isChecked = computed({
     get() {
         return valueComparator(modelProxy.value, props.value);
     },
@@ -71,8 +60,8 @@ const modelChecked = computed({
  * @param e
  */
 function onClick(e: Event): void {
-    if (modelChecked.value && props.clearable) {
-        modelChecked.value = false;
+    if (isChecked.value && props.clearable) {
+        isChecked.value = false;
     }
 
 }
@@ -85,7 +74,7 @@ function onClick(e: Event): void {
  * @param e
  */
 function onInput(e: Event): void {
-    modelChecked.value = (e.target as HTMLInputElement).checked;
+    isChecked.value = (e.target as HTMLInputElement).checked;
 }
 
 /**
@@ -97,8 +86,8 @@ function onInput(e: Event): void {
  * @param e
  */
 function onSpace(e: Event): void {
-    if (modelChecked.value && props.clearable) {
-        modelChecked.value = false;
+    if (isChecked.value && props.clearable) {
+        isChecked.value = false;
         // Prevent default to avoid the click event being triggered.
         e.preventDefault();
     }
@@ -128,14 +117,14 @@ defineExpose({
          class="ev-radio"
          :class="[
             {
-                'is-checked': modelChecked
+               'is-checked': isChecked
             },
             formField.classes,
             focusClasses,
             props.class
         ]"
          :style="props.style"
-        v-bind="containerAttrs"
+         v-bind="containerAttrs"
     >
         <div class="ev-radio--control">
             <div class="ev-radio--circles">
@@ -149,7 +138,7 @@ defineExpose({
                    :disabled="formField.isDisabled"
                    :readonly="formField.isReadonly"
                    :value="value"
-                   :checked="modelChecked"
+                   :checked="isChecked"
                    v-bind="inputAttrs"
                    @blur="blur"
                    @click="onClick"
@@ -158,7 +147,5 @@ defineExpose({
                    @keyup.space="onSpace"
             />
         </div>
-
-
     </div>
 </template>
