@@ -3,11 +3,11 @@
  * # `<ev-checkbox>`
  */
 import './EvCheckbox.scss';
-import {ref, useAttrs} from "vue";
+import {computed, ref, useAttrs} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {splitInputAttrs} from "@/util";
 import {useFocus} from "@/composables/focus.ts";
-import {makeEvCheckboxProps} from "@/components";
+import {makeEvCheckboxProps, useToggleControl} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -36,12 +36,22 @@ const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const { focusClasses, focus, blur } = useFocus(props);
 const formField = useFormField(modelProxy, props);
+const { trueValue, isChecked} = useToggleControl(modelProxy, props);
 
 /**
  * ## Get Input Element
  */
 function getInputElement(): HTMLInputElement | null {
   return inputRef.value;
+}
+
+
+/**
+ * ## On Input
+ * @param e
+ */
+function onInput(e: Event) {
+    isChecked.value = (e.target as HTMLInputElement).checked;
 }
 
 /**
@@ -61,7 +71,7 @@ defineExpose({
          class="ev-checkbox"
          :class="[
             {
-                'is-checked': modelProxy
+                'is-checked': isChecked
             },
             formField.classes,
             focusClasses,
@@ -88,11 +98,14 @@ defineExpose({
                    :name="formField.name"
                    :disabled="formField.isDisabled"
                    :readonly="formField.isReadonly"
-                   v-model="modelProxy"
-                   v-bind="inputAttrs"
+                   :checked="isChecked"
+                   :value="trueValue"
+                   :aria-disabled="formField.isDisabled"
+                   :aria-checked="isChecked"
+                   @input="onInput"
                    @focus="focus"
                    @blur="blur"
-                   :aria-checked="modelProxy" />
+                   v-bind="inputAttrs" />
         </div>
     </div>
 </template>

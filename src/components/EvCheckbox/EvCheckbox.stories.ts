@@ -44,6 +44,14 @@ const meta: Meta<typeof EvCheckbox> = {
         focused: {
             control: 'boolean'
         },
+        'true-value': {
+            type: 'string',
+            description: 'Sets the value when checked'
+        },
+        'false-value': {
+            type: 'string',
+            description: 'Sets the value when unchecked'
+        },
         value: {
             control: 'string',
             description: "The value of the input is assigned to `modelValue` when checked."
@@ -60,8 +68,10 @@ const meta: Meta<typeof EvCheckbox> = {
         'validate-on': 'input',
         validators: undefined,
         // End
-        value: 'Y',
+        value: undefined,
         focused: false,
+        'true-value': undefined,
+        'false-value': undefined
     },
     tags: ['autodocs']
 };
