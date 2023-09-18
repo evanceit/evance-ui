@@ -3,14 +3,14 @@
  * # `<ev-textarea>`
  */
 import './EvTextarea.scss';
-import {computed, nextTick, ref, useAttrs, onUpdated, onMounted} from "vue";
+import {computed, nextTick, ref, useAttrs, onUpdated, onMounted, useSlots} from "vue";
 import {Appearance, appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
 import {useModelProxy} from "../../composables/modelProxy.ts";
 import {useAutofocus, useFocus} from "../../composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {makeEvTextareaProps} from "@/components";
+import {EvLabel, makeEvTextareaProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 import {MouseEvent} from "react";
 
@@ -24,6 +24,7 @@ defineOptions({
 });
 
 const props = defineProps(makeEvTextareaProps());
+const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
@@ -204,44 +205,56 @@ defineExpose({
             },
             formField.classes,
             focusClasses,
-            appearanceModifier(props.appearance, [InputAppearance.default]),
             props.class
         ]"
         :style="props.style"
         role="textbox"
         v-bind="containerAttrs"
-        @click="onControlClick"
-        @mousedown="onControlMousedown"
     >
-        <div class="ev-textarea--input">
-            <textarea
-                ref="inputRef"
-                :id="formField.id"
-                :name="formField.name"
-                :disabled="formField.isDisabled"
-                :readonly="formField.isReadonly"
-                v-model="modelProxy"
-                :placeholder="placeholder"
-                :autofocus="autofocus"
-                v-autofocus
-                v-bind="inputAttrs"
-                @focus="onFocus"
-                @blur="blur"
-                @keydown="onKeydown"
-                @keyup="onKeyup"
-                @keyup.enter="onKeyupEnter"></textarea>
+        <div class="ev-textarea--label" v-if="props.label || slots.label">
+            <ev-label :for="formField.id">
+                <slot name="label">{{ props.label }}</slot>
+            </ev-label>
         </div>
-        <transition name="slide-fade">
-            <div class="ev-textarea--clearable" v-if="isClearable">
-                <ev-icon
-                    :glyph="Cancel"
-                    @click="onClearableClick"
-                    @mousedown="onClearableMousedown"
-                />
+
+        <div
+            :class="[
+                'ev-textarea--control',
+                appearanceModifier(props.appearance, [InputAppearance.default]),
+            ]"
+            @click="onControlClick"
+            @mousedown="onControlMousedown"
+        >
+            <div class="ev-textarea--input">
+                <textarea
+                    ref="inputRef"
+                    :id="formField.id"
+                    :name="formField.name"
+                    :disabled="formField.isDisabled"
+                    :readonly="formField.isReadonly"
+                    v-model="modelProxy"
+                    :placeholder="placeholder"
+                    :autofocus="autofocus"
+                    v-autofocus
+                    v-bind="inputAttrs"
+                    @focus="onFocus"
+                    @blur="blur"
+                    @keydown="onKeydown"
+                    @keyup="onKeyup"
+                    @keyup.enter="onKeyupEnter"></textarea>
             </div>
-        </transition>
-        <div class="ev-textarea--loader" v-if="loading && !icon">
-            <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+            <transition name="slide-fade">
+                <div class="ev-textarea--clearable" v-if="isClearable">
+                    <ev-icon
+                        :glyph="Cancel"
+                        @click="onClearableClick"
+                        @mousedown="onClearableMousedown"
+                    />
+                </div>
+            </transition>
+            <div class="ev-textarea--loader" v-if="loading && !icon">
+                <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+            </div>
         </div>
     </div>
 </template>

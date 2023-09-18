@@ -12,6 +12,7 @@ export const makeEvTextareaProps = propsFactory({
     },
     autosubmit: Function,
     clearable: Boolean,
+    label: String,
     loading: Boolean,
     placeholder: String,
 

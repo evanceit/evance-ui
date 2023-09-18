@@ -3,7 +3,7 @@
 /**
     # EvTextarea
  */
-.ev-textarea {
+.ev-textarea--control {
     align-items: flex-start;
     background: var(--input-background);
     border: var(--input-border);
@@ -22,24 +22,22 @@
 }
 
 /** Input */
-.ev-textarea {
-    > .ev-textarea--input {
-        align-self: stretch;
-        flex: 1 0 auto;
+.ev-textarea--input {
+    align-self: stretch;
+    flex: 1 0 auto;
 
-        > textarea {
-            background: transparent;
-            border: 0;
-            color: inherit;
-            display: block;
-            height: 100%;
-            margin: 0;
-            outline: none;
-            padding: var(--spacer-75);
-            width: 100%;
-            resize: vertical;
-            min-height: var(--input-height-medium);
-        }
+    > textarea {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        display: block;
+        height: 100%;
+        margin: 0;
+        outline: none;
+        padding: var(--spacer-75);
+        width: 100%;
+        resize: vertical;
+        min-height: var(--input-height-medium);
     }
 }
 
@@ -109,7 +107,7 @@
     - appearance-subtle
     - appearance-none
  */
-.ev-textarea {
+.ev-textarea--control {
 
     &.appearance-button {
         border-color: transparent;
@@ -146,8 +144,10 @@
 /** Focused */
 .ev-textarea {
     &.is-focused {
-        border-color: var(--input-border-color-focus);
-        box-shadow: var(--input-shadow-focus);
+        .ev-textarea--control {
+            border-color: var(--input-border-color-focus);
+            box-shadow: var(--input-shadow-focus);
+        }
     }
 }
 
@@ -163,10 +163,14 @@
 /** Error */
 .ev-textarea {
     &.is-error {
-        border-color: var(--input-border-color-error);
+        .ev-textarea--control {
+            border-color: var(--input-border-color-error);
+        }
 
         &.is-focused {
-            box-shadow: var(--input-shadow-error);
+            .ev-textarea--control {
+                box-shadow: var(--input-shadow-error);
+            }
         }
     }
 }
@@ -178,5 +182,13 @@
         textarea {
             resize: none;
         }
+    }
+}
+
+/** Labelling */
+.ev-textarea--label {
+    label {
+        display: block;
+        padding-bottom: 0.5rem;
     }
 }

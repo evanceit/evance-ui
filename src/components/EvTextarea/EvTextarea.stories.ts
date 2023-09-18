@@ -21,6 +21,10 @@ const meta: Meta<typeof EvTextarea> = {
             control: 'text',
             description: 'The ID associated with the form field and the component wrapper'
         },
+        label: {
+            control: 'text',
+            description: 'Optional label - may be supplied as a prop or within a slot.'
+        },
         modelValue: {
             control: 'text',
             description: "The `model-value` is the `v-model` value of the component."
@@ -54,6 +58,10 @@ const meta: Meta<typeof EvTextarea> = {
         autogrow: {
             control: 'boolean'
         },
+        autoselect: {
+            control: 'boolean',
+            description: "When `autoselect` is `true` any text within the input is selected on focus."
+        },
         clearable: {
             control: 'boolean'
         },
@@ -76,9 +84,11 @@ const meta: Meta<typeof EvTextarea> = {
         validators: undefined,
         // End
 
+        label: undefined,
         appearance: InputAppearance.default,
         autofocus: false,
         autogrow: true,
+        autoselect: false,
         clearable: false,
         loading: false
     },
@@ -95,6 +105,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-textarea v-bind="args" />'
+        template: `<ev-textarea v-bind="args" />`
     })
 };
