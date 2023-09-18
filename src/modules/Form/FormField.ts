@@ -1,8 +1,9 @@
-import {computed, nextTick, onBeforeMount, onMounted, Ref, ref, shallowRef, watch} from "vue";
+import {computed, nextTick, onBeforeMount, onBeforeUnmount, onMounted, Ref, ref, shallowRef, watch} from "vue";
 import {FormFieldProps, Validator} from "@/composables/validation.ts";
-import {consoleWarn, getNextId, isFunction, isString, wrapInArray} from "@/util";
+import {Browser, consoleWarn, getNextId, isFunction, isString, wrapInArray} from "@/util";
 import {Form} from "@/modules/Form/Form.ts";
 import {useToggleScope} from "@/composables/toggleScope.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 
 
 /**
@@ -10,11 +11,17 @@ import {useToggleScope} from "@/composables/toggleScope.ts";
  */
 export class FormField {
 
-    public readonly uid = getNextId();
+    public readonly focused: Ref<boolean>;
+
+    public readonly focusedVisible: Ref<boolean>;
 
     private readonly messages: Ref<string[]> = ref([]);
 
+    public readonly model: Ref<any>;
+
     public readonly pristine = shallowRef(true);
+
+    public readonly uid = getNextId();
 
     public readonly validating = shallowRef(false);
 
@@ -22,9 +29,11 @@ export class FormField {
 
     constructor(
         public readonly form: Form | null,
-        public readonly model: Ref<any>,
         private props: FormFieldProps
     ) {
+        this.model = useModelProxy(this.props, 'modelValue');
+        this.focused =  useModelProxy(this.props, 'focused');
+        this.focusedVisible = ref(false);
 
         // We use a computed() Ref here for a valid watch()
         this.validationModel = computed(() => {
@@ -35,9 +44,13 @@ export class FormField {
             this.form?.addField(this);
         });
 
+        onBeforeUnmount(() => {
+            this.form?.removeField(this.id);
+        });
+
         onMounted(async () => {
             if (!this.validateOn.lazy) {
-                await this.validate();
+                await this.validate(true);
             }
         });
 
@@ -45,8 +58,8 @@ export class FormField {
             watch(this.validationModel, () => {
                 if (this.validationModel.value != null) {
                     this.validate();
-                } else if (this.props.focused) {
-                    const unwatch = watch(() => this.props.focused, (value) => {
+                } else if (this.isFocused) {
+                    const unwatch = watch(() => this.focused.value, (value) => {
                         if (!value) {
                             this.validate();
                         }
@@ -57,7 +70,7 @@ export class FormField {
         });
 
         useToggleScope(() => this.validateOn.blur, () => {
-            watch(() => props.focused, (value) => {
+            watch(() => this.focused.value, (value) => {
                 if (!value) {
                     this.validate();
                 }
@@ -70,7 +83,9 @@ export class FormField {
             'is-error': this.isValid === false,
             'is-dirty': this.isDirty,
             'is-disabled': this.isDisabled,
-            'is-readonly': this.isReadonly
+            'is-readonly': this.isReadonly,
+            'is-focused': this.isFocused,
+            'is-focused-visible': this.isFocusedVisible
         }
     }
 
@@ -93,6 +108,14 @@ export class FormField {
         return !!(this.props.disabled ?? this.form?.isDisabled.value);
     }
 
+    get isFocused() {
+        return this.focused.value;
+    }
+
+    get isFocusedVisible() {
+        return this.focusedVisible.value;
+    }
+
     get isReadonly() {
         return !!(this.props.readonly ?? this.form?.isReadonly.value);
     }
@@ -109,9 +132,9 @@ export class FormField {
             return true;
         }
         if (this.isPristine) {
-            return this.errorMessages.length || this.validateOn.lazy ? null : true;
+            return this.messages.value.length || this.validateOn.lazy ? null : true;
         } else {
-            return !this.errorMessages.length;
+            return !this.messages.value.length;
         }
     }
 
@@ -168,6 +191,15 @@ export class FormField {
     }
 
     /**
+     * ## Blur
+     * @param e
+     */
+    public blur(e?: Event): void {
+        this.focused.value = false;
+        this.focusedVisible.value = false;
+    }
+
+    /**
      * ## Expose
      */
     public expose() {
@@ -176,6 +208,19 @@ export class FormField {
             resetValidation: this.resetValidation.bind(this),
             validate: this.validate.bind(this)
         };
+    }
+
+    /**
+     * ## Focus
+     *
+     * @param e
+     */
+    public focus(e?: Event): void {
+        this.focused.value = true;
+        const el: HTMLElement | null = e?.target;
+        if (Browser.supportsFocusVisible && el?.matches(':focus-visible')) {
+            this.focusedVisible.value = true;
+        }
     }
 
     /**

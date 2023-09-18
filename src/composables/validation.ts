@@ -1,10 +1,8 @@
-import {getNextId, propsFactory} from "@/util";
-import {computed, MaybeRef, onBeforeMount, onMounted, PropType, Ref, unref, watch} from "vue";
+import {propsFactory} from "@/util";
+import {PropType} from "vue";
 import {makeFocusProps} from "@/composables/focus.ts";
 import {useForm} from "@/composables/form.ts";
-import {useModelProxy} from "@/composables/modelProxy.ts";
 import {FormField} from "@/modules/Form/FormField.ts";
-import {useToggleScope} from "@/composables/toggleScope.ts";
 
 
 /**
@@ -80,17 +78,14 @@ export const makeFormFieldProps = propsFactory({
 
 /**
  * # Use Form Field
- * @param model
  * @param props
  */
 export function useFormField(
-    model: Ref<any>,
     props: FormFieldProps
 ) {
     const form = useForm();
     return new FormField(
         form,
-        model,
         props
     );
 }

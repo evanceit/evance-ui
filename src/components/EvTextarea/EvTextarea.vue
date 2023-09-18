@@ -4,9 +4,8 @@
  */
 import './EvTextarea.scss';
 import {computed, nextTick, ref, useAttrs, onUpdated, onMounted, useSlots} from "vue";
-import {Appearance, appearanceModifier, InputAppearance, InputAppearanceProp, splitInputAttrs} from "../../util";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {useAutofocus, useFocus} from "../../composables/focus.ts";
+import {Appearance, appearanceModifier, InputAppearance, splitInputAttrs} from "@/util";
+import {useAutofocus} from "@/composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
@@ -39,12 +38,10 @@ const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
-const modelProxy = useModelProxy(props, 'modelValue');
-const { isFocused, focusClasses, focus, blur } = useFocus(props);
+const formField = useFormField(props);
 const isClearable = computed(() => {
-    return (props.clearable && !!modelProxy.value);
+    return (props.clearable && !!formField.value);
 });
-const formField = useFormField(modelProxy, props);
 
 /**
  * ## Get Input Element
@@ -60,7 +57,7 @@ function getInputElement(): HTMLInputElement | null {
 function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
-        modelProxy.value = null;
+        formField.value = null;
         emit('click:clear', $event);
     });
     getInputElement()?.focus();
@@ -80,7 +77,7 @@ function onClearableMousedown(e: MouseEvent) {
  * @param e
  */
 function onFocus(e?: Event) {
-  focus(e);
+  formField.focus(e);
   if (props.autoselect) {
     getInputElement()?.select();
   }
@@ -204,7 +201,6 @@ defineExpose({
                 'is-autogrow': autogrow
             },
             formField.classes,
-            focusClasses,
             props.class
         ]"
         :style="props.style"
@@ -232,13 +228,13 @@ defineExpose({
                     :name="formField.name"
                     :disabled="formField.isDisabled"
                     :readonly="formField.isReadonly"
-                    v-model="modelProxy"
+                    v-model="formField.value"
                     :placeholder="placeholder"
                     :autofocus="autofocus"
                     v-autofocus
                     v-bind="inputAttrs"
                     @focus="onFocus"
-                    @blur="blur"
+                    @blur="formField.blur"
                     @keydown="onKeydown"
                     @keyup="onKeyup"
                     @keyup.enter="onKeyupEnter"></textarea>
@@ -253,7 +249,7 @@ defineExpose({
                 </div>
             </transition>
             <div class="ev-textarea--loader" v-if="loading && !icon">
-                <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" size="2" />
             </div>
         </div>
     </div>

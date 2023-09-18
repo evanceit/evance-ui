@@ -18,6 +18,9 @@ const meta: Meta<typeof EvTextfield> = {
             control: 'boolean',
             description: 'Puts the input in a manual error state.'
         },
+        focused: {
+            control: 'boolean',
+        },
         id: {
             control: 'text',
             description: 'The ID associated with the form field and the component wrapper'
@@ -117,6 +120,7 @@ const meta: Meta<typeof EvTextfield> = {
     args: {
         // Form Field Args
         disabled: false,
+        focused: false,
         error: false,
         id: undefined,
         modelValue: '',
@@ -161,6 +165,9 @@ export const Primary: Story = {
             };
 
             const helloValidator = (value) => {
+                if (value === 'Hi') {
+                    return 'Hi is not the same as Hello, enter "Hello"';
+                }
                 return (value === 'Hello') ? true : 'Please enter "Hello"';
             };
 

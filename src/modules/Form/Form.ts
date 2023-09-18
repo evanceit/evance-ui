@@ -64,11 +64,11 @@ export class Form {
 
     /**
      * ## Remove Field
-     * @param name
+     * @param id
      */
-    public removeField(name: string) {
+    public removeField(id: string) {
         this.fields.value  = this.fields.value.filter((field) => {
-            return field.name !== name;
+            return field.id !== id;
         });
     }
 

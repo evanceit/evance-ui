@@ -4,9 +4,7 @@
  */
 import './EvRadio.scss';
 import {computed, ref, useAttrs, useSlots} from "vue";
-import {useModelProxy} from "@/composables/modelProxy.ts";
 import {isDeepEqual, splitInputAttrs} from "@/util";
-import {useFocus} from "@/composables/focus.ts";
 import {EvLabel, makeEvRadioProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
@@ -31,22 +29,20 @@ const emit = defineEmits([
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
-const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
-const { focusClasses, focus, blur } = useFocus(props);
-const formField = useFormField(modelProxy, props);
+const formField = useFormField(props);
 const valueComparator = isDeepEqual;
 
 // Computed
 const isChecked = computed({
     get() {
-        return valueComparator(modelProxy.value, props.value);
+        return valueComparator(formField.value, props.value);
     },
     set(value: boolean) {
         if (props.readonly) { return; }
         let newValue = value ? props.value : null;
         // I might do some funky stuff here later
-        modelProxy.value = newValue;
+        formField.value = newValue;
     }
 });
 
@@ -120,7 +116,6 @@ defineExpose({
                'is-labelled': props.label || slots.label
             },
             formField.classes,
-            focusClasses,
             props.class
         ]"
          :style="props.style"
@@ -140,9 +135,9 @@ defineExpose({
                    :value="value"
                    :checked="isChecked"
                    v-bind="inputAttrs"
-                   @blur="blur"
+                   @blur="formField.blur"
                    @click="onClick"
-                   @focus="focus"
+                   @focus="formField.focus"
                    @input="onInput"
                    @keyup.space="onSpace"
             />

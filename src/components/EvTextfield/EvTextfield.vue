@@ -6,7 +6,6 @@ import './EvTextfield.scss';
 import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel} from "../../icons";
-import {useModelProxy} from "@/composables/modelProxy.ts";
 import {
     Appearance,
     appearanceModifier,
@@ -15,10 +14,8 @@ import {
     sizeModifier,
     splitInputAttrs
 } from "@/util";
-import {useAutofocus, useFocus} from "@/composables/focus.ts";
-import EvProgress from "../EvProgress/EvProgress.vue";
-import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {EvLabel, makeEvTextfieldProps, EvErrors} from "@/components";
+import {useAutofocus} from "@/composables/focus.ts";
+import {EvLabel, makeEvTextfieldProps, EvErrors, EvProgress, EvProgressCircular} from "@/components";
 import {MouseEvent} from "react";
 import {useIcon} from "../EvIcon";
 import {useFormField} from "@/composables/validation.ts";
@@ -49,14 +46,12 @@ const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
-const modelProxy = useModelProxy(props, 'modelValue');
-const { isFocused, focusClasses, focus, blur } = useFocus(props);
+const formField = useFormField(props);
 const isClearable = computed(() => {
-    return (props.clearable && !!modelProxy.value);
+    return (props.clearable && !!formField.value);
 });
 const iconStart = useIcon(props, 'iconStart');
 const iconEnd = useIcon(props, 'iconEnd');
-const formField = useFormField(modelProxy, props);
 
 /**
  * ## Get Input Element
@@ -72,7 +67,7 @@ function getInputElement(): HTMLInputElement | null {
 function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
-        modelProxy.value = null;
+        formField.value = null;
         emit('click:clear', $event);
     });
     if (!props.readonly) {
@@ -94,7 +89,7 @@ function onClearableMousedown(e: MouseEvent) {
  * @param e
  */
 function onFocus(e?: Event) {
-    focus(e);
+    formField.focus(e);
     if (props.autoselect) {
         getInputElement()?.select();
     }
@@ -154,7 +149,6 @@ defineExpose({
                 'is-loading': props.loading
             },
             formField.classes,
-            focusClasses,
             props.class
         ]"
         :style="props.style"
@@ -182,7 +176,7 @@ defineExpose({
             <div class="ev-textfield--icon-start" v-if="iconStart">
                 <transition name="fade-in-out" mode="out-in">
                     <ev-icon v-if="!props.loading" :glyph="iconStart" />
-                    <ev-progress-circular v-else  indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" />
+                    <ev-progress-circular v-else  indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" />
                 </transition>
             </div>
             <div class="ev-textfield--prefix" v-if="props.prefix || slots.prefix">
@@ -197,13 +191,13 @@ defineExpose({
                     :name="formField.name"
                     :disabled="formField.isDisabled"
                     :readonly="formField.isReadonly"
-                    v-model="modelProxy"
+                    v-model="formField.value"
                     :autofocus="props.autofocus"
                     :placeholder="props.placeholder"
                     v-autofocus
                     v-bind="inputAttrs"
                     @focus="onFocus"
-                    @blur="blur"
+                    @blur="formField.blur"
                 />
             </div>
             <transition name="slide-fade">
@@ -222,11 +216,11 @@ defineExpose({
                 <ev-icon :glyph="iconEnd" />
             </div>
             <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
-                <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" size="2" />
             </div>
         </div>
 
-        <div class="ev-textfield--errors">
+        <div class="ev-textfield--errors" v-if="formField.errorMessages.length && !formField.isPristine">
             <ev-errors :messages="formField.errorMessages" />
         </div>
     </div>

@@ -4,9 +4,7 @@
  */
 import './EvCheckbox.scss';
 import {ref, useAttrs, useSlots} from "vue";
-import {useModelProxy} from "@/composables/modelProxy.ts";
 import {splitInputAttrs} from "@/util";
-import {useFocus} from "@/composables/focus.ts";
 import {makeEvCheckboxProps, useToggleControl, EvLabel} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
@@ -31,11 +29,9 @@ const emit = defineEmits([
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
-const modelProxy = useModelProxy(props, 'modelValue');
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
-const { focusClasses, focus, blur } = useFocus(props);
-const formField = useFormField(modelProxy, props);
-const { trueValue, isChecked} = useToggleControl(modelProxy, props);
+const formField = useFormField(props);
+const { trueValue, isChecked} = useToggleControl(formField.model, props);
 
 /**
  * ## Get Input Element
@@ -73,7 +69,6 @@ defineExpose({
                 'is-labelled': props.label || slots.label
             },
             formField.classes,
-            focusClasses,
             props.class
         ]"
          :style="props.style"
@@ -102,8 +97,8 @@ defineExpose({
                    :aria-disabled="formField.isDisabled"
                    :aria-checked="isChecked"
                    @input="onInput"
-                   @focus="focus"
-                   @blur="blur"
+                   @focus="formField.focus"
+                   @blur="formField.blur"
                    v-bind="inputAttrs" />
         </div>
 
