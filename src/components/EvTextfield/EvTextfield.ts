@@ -11,6 +11,7 @@ export const makeEvTextfieldProps = propsFactory({
     clearable: Boolean,
     iconStart: IconValue,
     iconEnd: IconValue,
+    label: String,
     loading: Boolean,
     placeholder: String,
     prefix: String,

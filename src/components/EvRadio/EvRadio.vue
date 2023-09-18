@@ -18,9 +18,7 @@ defineOptions({
     inheritAttrs: false
 });
 
-/**
- * # Radio Props
- */
+// Props & slots
 const props = defineProps(makeEvRadioProps());
 const slots = useSlots();
 

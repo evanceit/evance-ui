@@ -18,9 +18,7 @@ defineOptions({
     inheritAttrs: false
 });
 
-/**
- * # Switch Props
- */
+// Props & slots
 const props = defineProps(makeEvSwitchProps());
 const slots = useSlots();
 

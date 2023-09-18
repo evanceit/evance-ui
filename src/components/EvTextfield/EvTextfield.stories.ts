@@ -77,11 +77,18 @@ const meta: Meta<typeof EvTextfield> = {
             },
             description: "Appears after input suffix. "
         },
+        label: {
+            control: 'text',
+            description: 'Optional label - may be supplied as a prop or within a slot.'
+        },
         loading: {
             control: 'boolean',
             description: "When `loading` is `true` a linear progress bar is added to the bottom of the textfield " +
                 "in an indeterminate state. However, if an `icon` has been set, a circular progress progress bar " +
                 "is used instead."
+        },
+        placeholder: {
+            control: 'text'
         },
         prefix: {
             control: 'text',
@@ -125,7 +132,9 @@ const meta: Meta<typeof EvTextfield> = {
         clearable: false,
         'icon-start': 'none',
         'icon-end': 'none',
+        label: undefined,
         loading: false,
+        placeholder: '',
         prefix: '',
         rounded: false,
         size: InputSize.default,
@@ -145,6 +154,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-textfield v-bind="args"></ev-textfield>`
+        template: `<ev-textfield v-bind="args" />`
     })
 };

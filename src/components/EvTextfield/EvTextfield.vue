@@ -18,7 +18,7 @@ import {
 import {useAutofocus, useFocus} from "@/composables/focus.ts";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {makeEvTextfieldProps} from "@/components";
+import {EvLabel, makeEvTextfieldProps} from "@/components";
 import {MouseEvent} from "react";
 import {useIcon} from "../EvIcon";
 import {useFormField} from "@/composables/validation.ts";
@@ -32,8 +32,9 @@ defineOptions({
     inheritAttrs: false
 });
 
-// Props
+// Props & slots
 const props = defineProps(makeEvTextfieldProps());
+const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
@@ -47,7 +48,6 @@ const emit = defineEmits([
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
-const slots = useSlots();
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
 const modelProxy = useModelProxy(props, 'modelValue');
 const { isFocused, focusClasses, focus, blur } = useFocus(props);
@@ -151,65 +151,79 @@ defineExpose({
         :class="[
             'ev-textfield',
             {
-                'is-loading': props.loading,
-                'is-rounded': props.rounded
+                'is-loading': props.loading
             },
             formField.classes,
             focusClasses,
-            sizeModifier(props.size, [InputSize.default]),
-            appearanceModifier(props.appearance, [InputAppearance.default]),
             props.class
         ]"
         :style="props.style"
         role="textbox"
         v-bind="containerAttrs"
-        @click="onControlClick"
-        @mousedown="onControlMousedown"
     >
-        <div class="ev-textfield--icon-start" v-if="iconStart">
-            <transition name="fade-in-out" mode="out-in">
-                <ev-icon v-if="!props.loading" :glyph="iconStart" />
-                <ev-progress-circular v-else  indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" />
-            </transition>
+        <div class="ev-textfield--label" v-if="props.label || slots.label">
+            <ev-label :for="formField.id">
+                <slot name="label">{{ props.label }}</slot>
+            </ev-label>
         </div>
-        <div class="ev-textfield--prefix" v-if="props.prefix || slots.prefix">
-            <slot name="prefix">{{ props.prefix }}</slot>
-        </div>
-        <div class="ev-textfield--input" data-no-activator>
-            <slot />
-            <input
-                ref="inputRef"
-                :type="props.type"
-                :id="formField.id"
-                :name="formField.name"
-                :disabled="formField.isDisabled"
-                :readonly="formField.isReadonly"
-                v-model="modelProxy"
-                :autofocus="props.autofocus"
-                :placeholder="props.placeholder"
-                v-autofocus
-                v-bind="inputAttrs"
-                @focus="onFocus"
-                @blur="blur"
-            />
-        </div>
-        <transition name="slide-fade">
-            <div class="ev-textfield--clearable" v-if="isClearable">
-                <ev-icon
-                    :glyph="Cancel"
-                    @click="onClearableClick"
-                    @mousedown="onClearableMousedown"
+
+        <div
+            :class="[
+                'ev-textfield--control',
+                {
+                    'is-rounded': props.rounded
+                },
+                appearanceModifier(props.appearance, [InputAppearance.default]),
+                sizeModifier(props.size, [InputSize.default]),
+            ]"
+            @click="onControlClick"
+            @mousedown="onControlMousedown"
+        >
+            <div class="ev-textfield--icon-start" v-if="iconStart">
+                <transition name="fade-in-out" mode="out-in">
+                    <ev-icon v-if="!props.loading" :glyph="iconStart" />
+                    <ev-progress-circular v-else  indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" />
+                </transition>
+            </div>
+            <div class="ev-textfield--prefix" v-if="props.prefix || slots.prefix">
+                <slot name="prefix">{{ props.prefix }}</slot>
+            </div>
+            <div class="ev-textfield--input" data-no-activator>
+                <slot />
+                <input
+                    ref="inputRef"
+                    :type="props.type"
+                    :id="formField.id"
+                    :name="formField.name"
+                    :disabled="formField.isDisabled"
+                    :readonly="formField.isReadonly"
+                    v-model="modelProxy"
+                    :autofocus="props.autofocus"
+                    :placeholder="props.placeholder"
+                    v-autofocus
+                    v-bind="inputAttrs"
+                    @focus="onFocus"
+                    @blur="blur"
                 />
             </div>
-        </transition>
-        <div class="ev-textfield--suffix" v-if="props.suffix || slots.suffix">
-            <slot name="suffix">{{ props.suffix }}</slot>
-        </div>
-        <div class="ev-textfield--icon-end" v-if="iconEnd">
-            <ev-icon :glyph="iconEnd" />
-        </div>
-        <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
-            <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+            <transition name="slide-fade">
+                <div class="ev-textfield--clearable" v-if="isClearable">
+                    <ev-icon
+                        :glyph="Cancel"
+                        @click="onClearableClick"
+                        @mousedown="onClearableMousedown"
+                    />
+                </div>
+            </transition>
+            <div class="ev-textfield--suffix" v-if="props.suffix || slots.suffix">
+                <slot name="suffix">{{ props.suffix }}</slot>
+            </div>
+            <div class="ev-textfield--icon-end" v-if="iconEnd">
+                <ev-icon :glyph="iconEnd" />
+            </div>
+            <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
+                <ev-progress indeterminate :appearance="isFocused ? Appearance.notice : Appearance.default" size="2" />
+            </div>
         </div>
     </div>
 </template>

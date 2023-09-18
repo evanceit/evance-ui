@@ -3,7 +3,7 @@
 /**
     # EvTextField
  */
-.ev-textfield {
+.ev-textfield--control {
     align-items: center;
     background: var(--input-background);
     border: var(--input-border);
@@ -25,7 +25,7 @@
 }
 
 /** Size modifiers */
-.ev-textfield {
+.ev-textfield--control {
     &.size-small {
         height: var(--input-height-small);
         padding-inline: var(--spacer-50);
@@ -36,25 +36,23 @@
 }
 
 /** Input */
-.ev-textfield {
-    > .ev-textfield--input {
-        align-self: stretch;
-        flex: 1 0 auto;
-        display: flex;
-        align-items: center;
-        position: relative;
+.ev-textfield--input {
+    align-self: stretch;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
 
-        > input {
-            background: transparent;
-            border: 0;
-            color: inherit;
-            display: block;
-            height: 100%;
-            margin: 0;
-            outline: none;
-            padding: 0;
-            flex: 1;
-        }
+    > input {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        display: block;
+        height: 100%;
+        margin: 0;
+        outline: none;
+        padding: 0;
+        flex: 1;
     }
 }
 
@@ -117,7 +115,7 @@
 
 
 /** Rounded modifier */
-.ev-textfield {
+.ev-textfield--control {
     &.is-rounded {
         border-radius: 999px;
     }
@@ -131,7 +129,7 @@
     - appearance-subtle
     - appearance-none
  */
-.ev-textfield {
+.ev-textfield--control {
 
     &.appearance-button {
         border-color: transparent;
@@ -168,8 +166,10 @@
 /** Focused */
 .ev-textfield {
     &.is-focused {
-        border-color: var(--input-border-color-focus);
-        box-shadow: var(--input-shadow-focus);
+        .ev-textfield--control {
+            border-color: var(--input-border-color-focus);
+            box-shadow: var(--input-shadow-focus);
+        }
     }
 }
 
@@ -185,10 +185,22 @@
 /** Error */
 .ev-textfield {
     &.is-error {
-        border-color: var(--input-border-color-error);
+        .ev-textfield--control {
+            border-color: var(--input-border-color-error);
+        }
 
         &.is-focused {
-            box-shadow: var(--input-shadow-error);
+            .ev-textfield--control {
+                box-shadow: var(--input-shadow-error);
+            }
         }
+    }
+}
+
+/** Labelling */
+.ev-textfield--label {
+    label {
+        display: block;
+        padding-bottom: 0.5rem;
     }
 }

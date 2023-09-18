@@ -18,9 +18,7 @@ defineOptions({
     inheritAttrs: false
 });
 
-/**
- * # Checkbox Props
- */
+// Props & slots
 const props = defineProps(makeEvCheckboxProps());
 const slots = useSlots();
 
