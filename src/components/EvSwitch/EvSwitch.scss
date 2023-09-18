@@ -8,7 +8,20 @@
     font-size: 16px;
     outline: none;
     position: relative;
-    border-radius: 999px;
+
+    &.is-labelled {
+        display: flex;
+        align-items: start;
+    }
+}
+
+.ev-switch--control {
+    align-items: center;
+    aspect-ratio: 1;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    width: 40px;
 }
 
 
@@ -17,7 +30,7 @@
     background: var(--input-border-color);
     border-radius: 999px;
     display: inline-flex;
-    height: 1.375em;
+    height: 1.5em;
     width: 2.5em;
     overflow: hidden;
     position: relative;
@@ -46,9 +59,8 @@
     position: absolute;
     align-items: center;
     justify-content: center;
-    top: 0;
     left: 0;
-    margin: 0.1875em;
+    margin: 0.25em;
     transition: transform 0.25s ease-in-out;
     will-change: transform;
 
@@ -89,7 +101,7 @@
         }
 
         .ev-switch--thumb {
-            transform: translateX(calc(2.125em - 100%));
+            transform: translateX(calc(2em - 100%));
         }
     }
 }
@@ -126,8 +138,10 @@
 /** Focus visible state modifier */
 .ev-switch {
     &.is-focused-visible {
-        outline: 2px solid var(--border-focused);
-        outline-offset: 2px;
+        .ev-switch--track {
+            outline: 2px solid var(--border-focused);
+            outline-offset: 2px;
+        }
     }
 }
 
@@ -143,13 +157,25 @@
 /** Error modifier */
 .ev-switch {
     &.is-error {
-        outline: 2px solid var(--input-border-color-error);
-        outline-offset: 2px;
 
         .ev-switch--track {
+            outline: 2px solid var(--input-border-color-error);
+            outline-offset: 2px;
+
             &:after {
                 background: var(--input-border-color-error);
             }
         }
+    }
+}
+
+
+/** Labelling */
+.ev-switch--label {
+    flex: 1;
+
+    label {
+        display: block;
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
     }
 }

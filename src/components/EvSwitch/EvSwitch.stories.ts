@@ -42,6 +42,10 @@ const meta: Meta<typeof EvSwitch> = {
                 'The input field will enter an error state if a function returns'
         },
         // End
+        label: {
+            control: 'text',
+            description: 'Optional label - may be supplied as a prop or within a slot.'
+        },
         focused: {
             control: 'boolean'
         },
@@ -73,6 +77,8 @@ const meta: Meta<typeof EvSwitch> = {
         'validate-on': 'input',
         validators: undefined,
         // End
+
+        label: 'Example switch',
         focused: false,
         'true-value': undefined,
         'false-value': undefined,
@@ -92,6 +98,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: '<ev-switch v-bind="args" />'
+        template: `<ev-switch v-bind="args" />`
     })
 };
