@@ -5,7 +5,7 @@
  */
 import './EvSelect.scss';
 import EvTextfield from "../EvTextfield/EvTextfield.vue";
-import {computed, ref, shallowRef} from "vue";
+import {computed, ref, shallowRef, useSlots} from "vue";
 import {makeEvSelectProps} from "./EvSelect.ts";
 import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
 import {EvMenu} from "../EvMenu";
@@ -21,6 +21,7 @@ import {useLocaleFunctions} from "@/composables/locale.ts";
 
 // Props
 const props = defineProps(makeEvSelectProps());
+const slots = useSlots();
 
 // TextField
 const evTextfieldRef = ref();
@@ -235,6 +236,9 @@ const { t } = useLocaleFunctions();
         @mousedown:control="onFieldMousedown"
         @update:modelValue="onModelValueUpdate"
     >
+        <template #label v-if="props.label || slots.label">
+            <slot name="label">{{ props.label }}</slot>
+        </template>
         <template #default>
             <div class="ev-select--selected">
                 <span

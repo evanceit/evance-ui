@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvSelect } from "../EvSelect";
-import {InputAppearance} from "../../util";
+import {InputAppearance} from "@/util";
 import {Search} from "../../icons";
 
 const meta: Meta<typeof EvSelect> = {
@@ -20,6 +20,10 @@ const meta: Meta<typeof EvSelect> = {
         id: {
             control: 'text',
             description: 'The ID associated with the form field and the component wrapper'
+        },
+        label: {
+            control: 'text',
+            description: 'Optional label - may be supplied as a prop or within a slot.'
         },
         modelValue: {
             description: "The `model-value` is the `v-model` value of the component."
@@ -104,6 +108,7 @@ const meta: Meta<typeof EvSelect> = {
         appearance: InputAppearance.default,
         clearable: false,
         'icon-start': 'none',
+        label: undefined,
         multiple: false,
         'open-on-clear': false,
         'return-object': false,
@@ -144,6 +149,6 @@ export const Primary: Story = {
         },
         template: `
             {{ selected }} 
-            <ev-select v-bind="args" v-model="selected" :items="items" />`
+            <ev-select v-bind="args" v-model="selected" :items="items"></ev-select>`
     })
 };
