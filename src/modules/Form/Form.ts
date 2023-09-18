@@ -127,7 +127,7 @@ export class Form {
             for (const field of this.fields.value) {
                 if (field.isValid === false) {
                     ++invalid;
-                    const fieldErrors = field.errorMessages.value;
+                    const fieldErrors = field.errorMessages;
                     for (const fieldError of fieldErrors) {
                         results.push({
                             name: field.name,

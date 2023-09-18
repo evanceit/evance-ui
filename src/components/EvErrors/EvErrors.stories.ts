@@ -12,7 +12,9 @@ const meta: Meta<typeof EvErrors> = {
         }
     },
     args: {
-        messages: []
+        messages: [
+            "Required"
+        ]
     },
     tags: ['autodocs']
 };

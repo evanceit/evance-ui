@@ -16,6 +16,7 @@ const messages = computed(() => {
 </script>
 <template>
     <TransitionGroup
+        appear
         tag="div"
         :class="[
             'ev-errors',
@@ -28,8 +29,9 @@ const messages = computed(() => {
     >
         <div
             class="ev-errors--message"
-            v-for="message of messages"
+            v-for="(message, index) in messages"
             :key="message"
+            :style="`--animation-order: ${index}`"
         >{{ message }}</div>
     </TransitionGroup>
 </template>

@@ -152,8 +152,20 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvTextfield },
         setup() {
-            return { args };
+
+            const requiredValidator = (value) => {
+                if (!value) {
+                    return 'Required';
+                }
+                return true;
+            };
+
+            const helloValidator = (value) => {
+                return (value === 'Hello') ? true : 'Please enter "Hello"';
+            };
+
+            return { args, requiredValidator, helloValidator };
         },
-        template: `<ev-textfield v-bind="args" />`
+        template: `<ev-textfield v-bind="args" :validators="[requiredValidator, helloValidator]" />`
     })
 };

@@ -12,7 +12,7 @@ export class FormField {
 
     public readonly uid = getNextId();
 
-    public readonly errorMessages: Ref<string[]> = ref([]);
+    private readonly messages: Ref<string[]> = ref([]);
 
     public readonly pristine = shallowRef(true);
 
@@ -74,6 +74,10 @@ export class FormField {
         }
     }
 
+    get errorMessages() {
+        return this.messages.value;
+    }
+
     get id() {
         return this.props.id || `input-${this.uid}`;
     }
@@ -105,9 +109,9 @@ export class FormField {
             return true;
         }
         if (this.isPristine) {
-            return this.errorMessages.value.length || this.validateOn.lazy ? null : true;
+            return this.errorMessages.length || this.validateOn.lazy ? null : true;
         } else {
-            return !this.errorMessages.value.length;
+            return !this.errorMessages.length;
         }
     }
 
@@ -149,7 +153,7 @@ export class FormField {
      * @param message
      */
     public addErrorMessage(...message: string[]) {
-        this.errorMessages.value.push(...message);
+        this.messages.value.push(...message);
     }
 
     /**
@@ -192,7 +196,7 @@ export class FormField {
         if (!this.validateOn.lazy) {
             this.validate(true);
         } else {
-            this.errorMessages.value = [];
+            this.messages.value = [];
         }
     }
 
@@ -214,9 +218,9 @@ export class FormField {
             }
             results.push(result);
         }
-        this.errorMessages.value = results;
+        this.messages.value = results;
         this.validating.value = false;
         this.pristine.value = silent;
-        return this.errorMessages.value;
+        return this.messages.value;
     }
 }
