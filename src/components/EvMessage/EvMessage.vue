@@ -93,7 +93,7 @@ function close(e: Event): void {
         </div>
         <div class="ev-message--closer" v-if="closable">
             <ev-button rounded
-                       :icon="Cancel"
+                       :icon-start="Cancel"
                        size="small"
                        appearance="subtle"
                        @click="close"

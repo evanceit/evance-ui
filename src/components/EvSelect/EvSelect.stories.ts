@@ -32,6 +32,9 @@ const meta: Meta<typeof EvSelect> = {
             control: 'text',
             description: "Sets the name attribute of the internal input."
         },
+        placeholder: {
+            control: 'text',
+        },
         readonly: {
             control: 'boolean'
         },
@@ -111,6 +114,7 @@ const meta: Meta<typeof EvSelect> = {
         label: undefined,
         multiple: false,
         'open-on-clear': false,
+        placeholder: undefined,
         'return-object': false,
         rounded: false,
     },
@@ -147,8 +151,6 @@ export const Primary: Story = {
 
             return { args, items };
         },
-        template: `
-            {{ selected }} 
-            <ev-select v-bind="args" v-model="selected" :items="items"></ev-select>`
+        template: `<ev-select v-bind="args" v-model="selected" :items="items" />`
     })
 };
