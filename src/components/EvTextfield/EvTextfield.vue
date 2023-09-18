@@ -148,8 +148,8 @@ defineExpose({
 <template>
     <div
         ref="containerRef"
-        class="ev-textfield"
         :class="[
+            'ev-textfield',
             {
                 'is-loading': props.loading,
                 'is-rounded': props.rounded

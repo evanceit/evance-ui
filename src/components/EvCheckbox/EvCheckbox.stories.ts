@@ -41,6 +41,11 @@ const meta: Meta<typeof EvCheckbox> = {
                 'The input field will enter an error state if a function returns'
         },
         // End
+
+        label: {
+            control: 'text',
+            description: 'Optional label for the checkbox'
+        },
         focused: {
             control: 'boolean'
         },
@@ -72,6 +77,8 @@ const meta: Meta<typeof EvCheckbox> = {
         'validate-on': 'input',
         validators: undefined,
         // End
+
+        label: 'Example checkbox',
         focused: false,
         'true-value': undefined,
         'false-value': undefined,

@@ -7,6 +7,7 @@ import {computed, ExtractPropTypes, PropType, Ref} from "vue";
  * # Make EvCheckbox Props
  */
 export const makeEvCheckboxProps = propsFactory({
+    label: String,
     trueValue: null,
     falseValue: null,
     value: null,

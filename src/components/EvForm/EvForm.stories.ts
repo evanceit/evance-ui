@@ -24,10 +24,10 @@ export const Primary: Story = {
         components: { EvForm },
         setup() {
 
-
-            console.log(formRef);
             return { args, formRef };
         },
-        template: '<ev-form ref="formRef">Foo</ev-form>'
+        template: `<ev-form>
+          Hello
+        </ev-form>`
     }),
 };

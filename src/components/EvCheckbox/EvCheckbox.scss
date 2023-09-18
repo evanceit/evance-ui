@@ -2,6 +2,11 @@
 
 .ev-checkbox {
     display: inline-flex;
+
+    &.is-labelled {
+        display: flex;
+        align-items: start;
+    }
 }
 
 .ev-checkbox--control {
@@ -149,5 +154,14 @@
                 background-color: var(--input-border-color-error);
             }
         }
+    }
+}
+
+.ev-checkbox--label {
+    flex: 1;
+
+    label {
+        display: block;
+        padding: 0.5rem;
     }
 }

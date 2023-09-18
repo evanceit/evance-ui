@@ -3,11 +3,11 @@
  * # `<ev-checkbox>`
  */
 import './EvCheckbox.scss';
-import {computed, ref, useAttrs} from "vue";
+import {ref, useAttrs, useSlots} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {splitInputAttrs} from "@/util";
 import {useFocus} from "@/composables/focus.ts";
-import {makeEvCheckboxProps, useToggleControl} from "@/components";
+import {makeEvCheckboxProps, useToggleControl, EvLabel} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -22,6 +22,7 @@ defineOptions({
  * # Checkbox Props
  */
 const props = defineProps(makeEvCheckboxProps());
+const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
@@ -70,7 +71,8 @@ defineExpose({
          class="ev-checkbox"
          :class="[
             {
-                'is-checked': isChecked
+                'is-checked': isChecked,
+                'is-labelled': props.label || slots.label
             },
             formField.classes,
             focusClasses,
@@ -105,6 +107,12 @@ defineExpose({
                    @focus="focus"
                    @blur="blur"
                    v-bind="inputAttrs" />
+        </div>
+
+        <div class="ev-checkbox--label" v-if="props.label || slots.label">
+            <ev-label :for="formField.id" clickable>
+                <slot name="label">{{ props.label }}</slot>
+            </ev-label>
         </div>
     </div>
 </template>
