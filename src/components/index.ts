@@ -1,6 +1,9 @@
+export * from './EvTransition';
+
 export * from './EvButton';
 export * from './EvCheckbox';
 export * from './EvDivider';
+export * from './EvErrors';
 export * from './EvForm';
 export * from './EvIcon';
 export * from './EvLabel';
@@ -19,5 +22,4 @@ export * from './EvSurface';
 export * from './EvSwitch';
 export * from './EvTextarea';
 export * from './EvTextfield';
-export * from './EvTransition';
 export * from './EvVirtualScroll';

@@ -1,11 +1,11 @@
-import {propsFactory} from "../../util";
+import {propsFactory} from "@/util";
 import {PropType, StyleValue} from "vue";
-import {TeleportTarget} from "../../composables/teleport.ts";
-import {makeEvTransitionProps} from "../EvTransition";
-import {makeDimensionsProps} from "../../composables/dimensions.ts";
+import {TeleportTarget} from "@/composables/teleport.ts";
+import {makeDimensionsProps} from "@/composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
 import {makePositionStrategyProps} from "./position.ts";
 import {makeScrollStrategyProps} from "./scroll.ts";
+import {makeEvTransitionProps} from "@/components";
 
 /**
  * # Make EvOverlay Props
