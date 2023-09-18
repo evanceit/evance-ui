@@ -220,7 +220,7 @@ defineExpose({
             </div>
         </div>
 
-        <div class="ev-textfield--errors" v-if="formField.errorMessages.length && !formField.isPristine">
+        <div class="ev-textfield--errors" v-if="formField.isShowErrorMessages">
             <ev-errors :messages="formField.errorMessages" />
         </div>
     </div>

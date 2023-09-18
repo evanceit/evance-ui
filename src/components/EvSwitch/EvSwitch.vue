@@ -5,7 +5,7 @@
 import './EvSwitch.scss';
 import {ref, useAttrs, useSlots} from "vue";
 import {splitInputAttrs} from "@/util";
-import {EvLabel, makeEvSwitchProps, useToggleControl} from "@/components";
+import {EvErrors, EvLabel, makeEvSwitchProps, useToggleControl} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -99,6 +99,10 @@ defineExpose({
             <ev-label :for="formField.id" clickable>
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
+
+            <div class="ev-switch--errors" v-if="formField.isShowErrorMessages">
+                <ev-errors :messages="formField.errorMessages" />
+            </div>
         </div>
 
     </div>

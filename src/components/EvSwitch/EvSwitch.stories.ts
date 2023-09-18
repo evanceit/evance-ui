@@ -96,8 +96,13 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvSwitch },
         setup() {
-            return { args };
+
+            const requiredValidator = (value) => {
+                return (value) ? true : 'Required';
+            };
+
+            return { args, requiredValidator };
         },
-        template: `<ev-switch v-bind="args" />`
+        template: `<ev-switch v-bind="args" :validators="[requiredValidator]" />`
     })
 };

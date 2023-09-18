@@ -124,6 +124,10 @@ export class FormField {
         return this.pristine.value;
     }
 
+    get isShowErrorMessages() {
+        return this.errorMessages.length && !this.isPristine;
+    }
+
     get isValid() {
         if (this.props.error) {
             return false;

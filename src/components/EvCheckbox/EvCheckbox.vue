@@ -5,7 +5,7 @@
 import './EvCheckbox.scss';
 import {ref, useAttrs, useSlots} from "vue";
 import {splitInputAttrs} from "@/util";
-import {makeEvCheckboxProps, useToggleControl, EvLabel} from "@/components";
+import {makeEvCheckboxProps, useToggleControl, EvLabel, EvErrors} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -106,6 +106,10 @@ defineExpose({
             <ev-label :for="formField.id" clickable>
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
+
+            <div class="ev-checkbox--errors" v-if="formField.isShowErrorMessages">
+                <ev-errors :messages="formField.errorMessages" />
+            </div>
         </div>
     </div>
 </template>

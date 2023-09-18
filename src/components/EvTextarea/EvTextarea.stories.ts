@@ -103,8 +103,16 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvTextarea },
         setup() {
-            return { args };
+
+            const requiredValidator = (value) => {
+                if (!value) {
+                    return 'Required';
+                }
+                return true;
+            };
+
+            return { args, requiredValidator };
         },
-        template: `<ev-textarea v-bind="args" />`
+        template: `<ev-textarea v-bind="args" :validators="[requiredValidator]" />`
     })
 };

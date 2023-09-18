@@ -9,7 +9,7 @@ import {useAutofocus} from "@/composables/focus.ts";
 import {Cancel} from "../../icons";
 import EvProgress from "../EvProgress/EvProgress.vue";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {EvLabel, makeEvTextareaProps} from "@/components";
+import {EvErrors, EvLabel, makeEvTextareaProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 import {MouseEvent} from "react";
 
@@ -251,6 +251,10 @@ defineExpose({
             <div class="ev-textarea--loader" v-if="loading && !icon">
                 <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" size="2" />
             </div>
+        </div>
+
+        <div class="ev-textarea--errors" v-if="formField.isShowErrorMessages">
+            <ev-errors :messages="formField.errorMessages" />
         </div>
     </div>
 </template>

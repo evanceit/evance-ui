@@ -149,8 +149,15 @@ export const Primary: Story = {
                 });
             }
 
-            return { args, items };
+            const requiredValidator = (value) => {
+                if (!value) {
+                    return 'Required';
+                }
+                return true;
+            };
+
+            return { args, items, requiredValidator };
         },
-        template: `<ev-select v-bind="args" v-model="selected" :items="items" />`
+        template: `<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`
     })
 };
