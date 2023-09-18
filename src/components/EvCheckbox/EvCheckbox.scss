@@ -94,6 +94,7 @@
     transition: stroke-dashoffset 0.25s ease-in-out;
 }
 
+
 /** Hover state */
 .ev-checkbox {
     &.is-focused-visible,
@@ -114,6 +115,7 @@
         }
     }
 }
+
 
 /** Checked state */
 .ev-checkbox {
@@ -142,6 +144,7 @@
     }
 }
 
+
 /** Error modifier */
 .ev-checkbox {
     &.is-error {
@@ -157,6 +160,8 @@
     }
 }
 
+
+/** Labelling */
 .ev-checkbox--label {
     flex: 1;
 

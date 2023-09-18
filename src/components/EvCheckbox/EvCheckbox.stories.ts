@@ -44,7 +44,7 @@ const meta: Meta<typeof EvCheckbox> = {
 
         label: {
             control: 'text',
-            description: 'Optional label for the checkbox'
+            description: 'Optional label - may be supplied as a prop or within a slot.'
         },
         focused: {
             control: 'boolean'

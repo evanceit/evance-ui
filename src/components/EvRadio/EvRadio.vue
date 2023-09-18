@@ -3,11 +3,11 @@
  * # `<ev-radio>`
  */
 import './EvRadio.scss';
-import {computed, ref, useAttrs} from "vue";
+import {computed, ref, useAttrs, useSlots} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {isDeepEqual, splitInputAttrs} from "@/util";
 import {useFocus} from "@/composables/focus.ts";
-import {makeEvRadioProps} from "@/components";
+import {EvLabel, makeEvRadioProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -22,6 +22,7 @@ defineOptions({
  * # Radio Props
  */
 const props = defineProps(makeEvRadioProps());
+const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
@@ -114,10 +115,11 @@ defineExpose({
 </script>
 <template>
     <div ref="containerRef"
-         class="ev-radio"
          :class="[
+            'ev-radio',
             {
-               'is-checked': isChecked
+               'is-checked': isChecked,
+               'is-labelled': props.label || slots.label
             },
             formField.classes,
             focusClasses,
@@ -146,6 +148,11 @@ defineExpose({
                    @input="onInput"
                    @keyup.space="onSpace"
             />
+        </div>
+        <div class="ev-radio--label" v-if="props.label || slots.label">
+            <ev-label :for="formField.id" clickable>
+                <slot name="label">{{ props.label }}</slot>
+            </ev-label>
         </div>
     </div>
 </template>

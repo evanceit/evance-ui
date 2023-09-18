@@ -5,6 +5,11 @@
  */
 .ev-radio {
     display: inline-flex;
+
+    &.is-labelled {
+        display: flex;
+        align-items: start;
+    }
 }
 
 
@@ -142,5 +147,16 @@
         .ev-radio--inner-circle {
             background-color: var(--input-border-color-error);
         }
+    }
+}
+
+
+/** Labelling */
+.ev-radio--label {
+    flex: 1;
+
+    label {
+        display: block;
+        padding: 0.5rem;
     }
 }

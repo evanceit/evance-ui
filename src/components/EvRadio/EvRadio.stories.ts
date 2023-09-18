@@ -43,6 +43,10 @@ const meta: Meta<typeof EvRadio> = {
         },
         // End
 
+        label: {
+            control: 'text',
+            description: 'Optional label - may be supplied as a prop or within a slot.'
+        },
         clearable: {
             control: 'boolean',
             description: "When set to `true` the component may be unchecked if currently checked. " +
@@ -65,6 +69,7 @@ const meta: Meta<typeof EvRadio> = {
         validators: undefined,
         // End
 
+        label: 'Example radio button',
         value: 'Y',
         clearable: false,
     },

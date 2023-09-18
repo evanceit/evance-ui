@@ -68,8 +68,8 @@ defineExpose({
 </script>
 <template>
     <div ref="containerRef"
-         class="ev-checkbox"
          :class="[
+            'ev-checkbox',
             {
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label
