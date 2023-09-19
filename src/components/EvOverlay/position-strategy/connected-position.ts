@@ -8,7 +8,7 @@ import {
     Rect,
     getScrollParents,
     destructComputed, Anchor, Dimensions, toWebUnit, pixelRound, pixelCeil, clamp
-} from "../../../util";
+} from "@/util";
 
 /**
  * # Connected Position Strategy
@@ -57,7 +57,7 @@ class ConnectedPosition {
         public contentStyles: Ref<StyleProp>
     ) {
         this.resolveFixedActivator();
-        this.minWidth = this.computedNumericProp('minWith');
+        this.minWidth = this.computedNumericProp('minWidth');
         this.maxWidth = this.computedNumericProp('maxWidth');
         this.minHeight = this.computedNumericProp('minHeight');
         this.maxHeight = this.computedNumericProp('maxHeight');
@@ -125,7 +125,7 @@ class ConnectedPosition {
             } else if (this.props.origin === 'auto') {
                 origin = position.flipSide();
             } else {
-                origin = Anchor.fromSelector(this.props.origin, data.isRtl.value);
+                origin = Anchor.fromSelector(this.props.origin, this.data.isRtl.value);
             }
             // Some combinations of props may produce an invalid origin
             if (
@@ -152,7 +152,7 @@ class ConnectedPosition {
      * @param key
      * @private
      */
-    private computedNumericProp(key) {
+    private computedNumericProp(key: string) {
         return computed(() => {
             const value = parseFloat(this.props[key]!);
             return isNaN(value) ? Infinity : value;

@@ -42,7 +42,7 @@ const transition = computed(() => {
     if (props.transition) {
         return props.transition;
     }
-    return isActive.value ? 'scale-transition' : 'fade-transition';
+    return isActive.value ? 'transition-scale' : 'transition-fade';
 });
 
 const activatorProps = computed(() => {

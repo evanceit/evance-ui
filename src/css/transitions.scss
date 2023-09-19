@@ -20,6 +20,18 @@
     }
 }
 
+/**
+    # Fade Out Transition
+ */
+@mixin fade-out() {
+    &-leave-to {
+        opacity: 0;
+    }
+    &-leave-active {
+        transition-duration: 100ms !important;
+    }
+}
+
 
 /**
     # Fade Transition
@@ -35,6 +47,24 @@
     &-enter-active,
     &-leave-active {
         transition-property: opacity !important;
+    }
+}
+
+/**
+    # Scale Transition
+ */
+.transition-scale {
+    @include transition-default();
+    @include fade-out();
+
+    &-enter-from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    &-enter-active,
+    &-leave-active {
+        transition-property: transform, opacity !important;
     }
 }
 

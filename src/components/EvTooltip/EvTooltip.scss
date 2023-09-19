@@ -1,3 +1,9 @@
 .ev-tooltip {
-
+    > .ev-overlay--content {
+        background-color: var(--tooltip-background);
+        border-radius: var(--rounded-small);
+        padding: 0.25rem 1rem;
+        box-shadow: var(--tooltip-shadow);
+        color: var(--tooltip-color);
+    }
 }

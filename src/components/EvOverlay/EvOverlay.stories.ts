@@ -128,7 +128,6 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvOverlay, EvButton, EvSurface },
         setup() {
-
             return { args };
         },
         template: '<ev-button id="example">Button "id" as Activator</ev-button>' +
@@ -144,7 +143,6 @@ export const ActivatorInside: Story = {
     render: (args: any) =>  ({
         components: { EvOverlay, EvButton, EvSurface },
         setup() {
-
             return { args };
         },
         template:

@@ -250,43 +250,45 @@ const { t } = useLocaleFunctions();
                           class="ev-select-seelected-comma">,</span>
                 </span>
             </div>
+
+            <ev-menu
+                ref="evMenuRef"
+                v-model="isMenuOpen"
+                max-height="310"
+                :disabled="isMenuDisabled"
+                activator="parent"
+                :closeOnContentClick="false"
+                :openOnClick="false"
+                @after-leave="onMenuAfterLeave"
+            >
+                <ev-list
+                    ref="evListRef"
+                    :selected="selected"
+                    :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
+                    @focusin="onListFocusIn"
+                    @keydown="onListKeydown"
+                    @mousedown="onListMouseDown"
+                    @scroll.passive="onListScroll"
+                    tabindex="-1"
+                >
+                    <slot name="no-items" v-if="!displayItems.length && !props.hideNoItems">
+                        <ev-list-item :title="t(props.noItemsText)"></ev-list-item>
+                    </slot>
+
+                    <ev-virtual-scroll renderless
+                                       ref="evVirtualScrollRef"
+                                       :items="displayItems"
+                    >
+                        <template #default="{ item, index }">
+                            <ev-list-item
+                                v-bind="item"
+                                @click="select(item)"
+                            />
+                        </template>
+                    </ev-virtual-scroll>
+                </ev-list>
+            </ev-menu>
         </template>
     </ev-textfield>
-    <ev-menu
-        ref="evMenuRef"
-        v-model="isMenuOpen"
-        max-height="310"
-        :disabled="isMenuDisabled"
-        :activator="evTextfieldRef"
-        :closeOnContentClick="false"
-        :openOnClick="false"
-        @after-leave="onMenuAfterLeave"
-    >
-        <ev-list
-            ref="evListRef"
-            :selected="selected"
-            :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
-            @focusin="onListFocusIn"
-            @keydown="onListKeydown"
-            @mousedown="onListMouseDown"
-            @scroll.passive="onListScroll"
-            tabindex="-1"
-        >
-            <slot name="no-items" v-if="!displayItems.length && !props.hideNoItems">
-                <ev-list-item :title="t(props.noItemsText)"></ev-list-item>
-            </slot>
 
-            <ev-virtual-scroll renderless
-                               ref="evVirtualScrollRef"
-                               :items="displayItems"
-            >
-                <template #default="{ item, index }">
-                    <ev-list-item
-                        v-bind="item"
-                        @click="select(item)"
-                    />
-                </template>
-            </ev-virtual-scroll>
-        </ev-list>
-    </ev-menu>
 </template>
