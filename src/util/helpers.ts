@@ -204,6 +204,13 @@ export function splitInputAttrs(attrs: Record<string, unknown>) {
 }
 
 
+/**
+ * # Clamp
+ *
+ * @param value
+ * @param min
+ * @param max
+ */
 export function clamp (value: number, min = 0, max = 1) {
     return Math.max(min, Math.min(max, value))
 }
@@ -331,4 +338,24 @@ export function mergeDeep (
  */
 export function createRange (length: number, start = 0): number[] {
     return Array.from({ length }, (v, k) => start + k);
+}
+
+
+/**
+ * # Omit
+ *
+ * Clones an object, whilst omitting excluded properties.
+ *
+ * @param obj
+ * @param exclude
+ */
+export function omit<
+    T extends object,
+    U extends Extract<keyof T, string>
+> (obj: T, exclude: U[]): Omit<T, U> {
+    const clone = { ...obj }
+
+    exclude.forEach(prop => delete clone[prop])
+
+    return clone
 }

@@ -22,4 +22,5 @@ export * from './EvSurface';
 export * from './EvSwitch';
 export * from './EvTextarea';
 export * from './EvTextfield';
+export * from './EvTooltip';
 export * from './EvVirtualScroll';

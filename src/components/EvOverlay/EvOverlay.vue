@@ -4,18 +4,18 @@
  */
 import './EvOverlay.scss';
 import {makeEvOverlayProps} from "./EvOverlay.ts";
-import {useModelProxy} from "../../composables/modelProxy.ts";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
-import {useTeleport} from "../../composables/teleport.ts";
-import {useEvTransition, EvTransition} from "../EvTransition";
-import {useDimensions} from "../../composables/dimensions.ts";
-import {clickBlockedAnimation} from "../../util";
-import {useStack} from "../../composables/stack.ts";
+import {useTeleport} from "@/composables/teleport.ts";
+import {useEvTransition, EvTransition} from "@/components";
+import {useDimensions} from "@/composables/dimensions.ts";
+import {clickBlockedAnimation, getScrollParent, toWebUnit} from "@/util";
+import {useStack} from "@/composables/stack.ts";
 import {useRouter} from "vue-router";
-import {useToggleScope} from "../../composables/toggleScope.ts";
-import {useBackButton} from "../../composables/router.ts";
+import {useToggleScope} from "@/composables/toggleScope.ts";
+import {useBackButton} from "@/composables/router.ts";
 import {useActivator} from "./activator.ts";
-import {useScopeId} from "../../composables/scopeId.ts";
+import {useScopeId} from "@/composables/scopeId.ts";
 import {usePositionStrategies} from "./position.ts";
 import {useScrollStrategies} from "./scroll.ts";
 
@@ -187,6 +187,23 @@ useToggleScope(() => props.closeOnBack, () => {
 });
 
 /**
+ * Calculate the `top` position
+ */
+const top = ref<number>();
+watch(() => (
+    isActiveContent.value
+    && (props.absolute || props.contained)
+    && teleportTarget.value == null
+), (value) => {
+    if (value) {
+        const scrollParent = getScrollParent(containerEl.value);
+        if (scrollParent && scrollParent !== document.scrollingElement) {
+            top.value = scrollParent.scrollTop;
+        }
+    }
+});
+
+/**
  * Dynamically create a local component we can render using:
  * `<activator-slot>` or `<component :is="activatorSlot" />`
  */
@@ -222,6 +239,9 @@ const overlayAttributes = {
             ]"
             :style="[
                 stackStyles,
+                {
+                    top: toWebUnit(top)
+                },
                 props.style
             ]"
             v-bind="overlayAttributes"
