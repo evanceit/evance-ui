@@ -70,7 +70,6 @@ const activatorProps = computed(() => {
         :activator-props="activatorProps"
         absolute
         disable-global-stack
-
     >
         <slot>{{ props.text }}</slot>
     </ev-overlay>

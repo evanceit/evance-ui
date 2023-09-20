@@ -10,7 +10,7 @@ export const makeEvTooltipProps = propsFactory({
         position: 'top' as const,
         positionStrategy: 'connected' as const,
         minWidth: 0,
-        offset: 10,
+        offset: 8,
         openDelay: 250,
         openOnClick: false,
         openOnHover: true,

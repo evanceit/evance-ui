@@ -1,4 +1,5 @@
 export * from './EvTransition';
+export * from './EvOverlay';
 
 export * from './EvButton';
 export * from './EvCheckbox';
@@ -12,11 +13,11 @@ export * from './EvListItem';
 export * from './EvLozenge';
 export * from './EvMenu';
 export * from './EvMessage';
-export * from './EvOverlay';
 export * from './EvProgress';
 export * from './EvProgressCircular';
 export * from './EvQuickfind';
 export * from './EvRadio';
+export * from './EvRadioGroup';
 export * from './EvSelect';
 export * from './EvSurface';
 export * from './EvSwitch';

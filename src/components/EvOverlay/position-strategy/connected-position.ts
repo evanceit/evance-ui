@@ -354,6 +354,8 @@ class ConnectedPosition {
             maxHeight: toWebUnit(pixelCeil(clamp(zone.rect.height, this.minHeight.value === Infinity ? 0 : this.minHeight.value, this.maxHeight.value)))
         });
 
+        this.data.contentEl.value?.setAttribute('data-position', placement.position.toString());
+
         return {
             zoneRect: zone.rect,
             contentRect: this.contentRect
