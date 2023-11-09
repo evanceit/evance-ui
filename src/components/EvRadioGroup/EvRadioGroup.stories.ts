@@ -76,7 +76,13 @@ export const Primary: Story = {
         components: { EvRadioGroup, EvRadio },
         setup() {
             const requiredValidator = (value) => {
-                return (value === 'Y') ? true : 'Not no, yes';
+                if (value === 'Y') {
+                    return true;
+                }
+                if (value === 'N') {
+                    return 'Not no, yes';
+                }
+                return 'Select something';
             };
 
             return { args, requiredValidator };
@@ -87,8 +93,8 @@ export const Primary: Story = {
             }
         },
         template: `<ev-radio-group v-bind="args" :validators="[requiredValidator]">
-          <ev-radio value="Y" label="Yes" />
-          <ev-radio value="N" label="No" />
+          <ev-radio value="Y" label="Yes" :clearable="true" />
+          <ev-radio value="N" label="No" :clearable="true" />
         </ev-radio-group>`
     })
 };

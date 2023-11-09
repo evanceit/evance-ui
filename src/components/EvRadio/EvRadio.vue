@@ -46,9 +46,7 @@ const isChecked = computed({
     },
     set(value: boolean) {
         if (props.readonly) { return; }
-        let newValue = value ? props.value : null;
-        // I might do some funky stuff here later
-        formField.value = newValue;
+        formField.value = value ? props.value : '';
     }
 });
 
@@ -137,6 +135,7 @@ defineExpose({
                    :name="formField.name"
                    :disabled="formField.isDisabled || formField.isReadonly"
                    :value="props.value"
+                   :checked="isChecked"
                    v-bind="inputAttrs"
                    @blur="formField.blur"
                    @click="onClick"
