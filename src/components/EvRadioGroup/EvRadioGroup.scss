@@ -1,3 +1,16 @@
 .ev-radio-group--label {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacer-50);
+}
+.ev-radio-group {
+    &.is-inline {
+
+        .ev-radio-group--control {
+            display: flex;
+            gap: var(--spacer-50);
+        }
+
+        .ev-radio {
+            display: inline-flex;
+        }
+    }
 }

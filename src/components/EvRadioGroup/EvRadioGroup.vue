@@ -34,7 +34,10 @@ provide(EvRadioGroupSymbol, formField);
     <div
         :class="[
             'ev-radio-group',
-            props.class
+            props.class,
+            {
+                'is-inline': props.inline
+            }
         ]"
         :style="props.style"
         :id="id"

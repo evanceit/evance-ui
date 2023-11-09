@@ -11,6 +11,7 @@ export const EvRadioGroupSymbol: InjectionKey<EvRadioGroupContext> = Symbol.for(
 
 export const makeEvRadioGroupProps = propsFactory({
     label: String,
+    inline: Boolean,
 
     ...makeFormFieldProps(),
     ...makeComponentProps()

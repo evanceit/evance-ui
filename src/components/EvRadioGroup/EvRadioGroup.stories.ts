@@ -21,6 +21,10 @@ const meta: Meta<typeof EvRadioGroup> = {
             control: 'text',
             description: 'The ID associated with the form field and the component wrapper'
         },
+        inline: {
+            control: 'boolean',
+            description: 'Whether to show the radio buttons inline'
+        },
         modelValue: {
             control: 'select',
             description: "The `model-value` is the `v-model` value of the component.",
@@ -55,6 +59,7 @@ const meta: Meta<typeof EvRadioGroup> = {
         disabled: false,
         error: false,
         id: undefined,
+        inline: false,
         modelValue: false,
         name: undefined,
         readonly: false,
