@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
 import './EvRadioGroup.scss';
-import {EvLabel, makeEvRadioGroupProps} from "@/components";
-import {computed, useSlots} from "vue";
+import {EvLabel, EvRadioGroupSymbol, makeEvRadioGroupProps} from "@/components";
+import {computed, provide, useSlots} from "vue";
 import {getNextId} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import {useFormField} from "@/composables/validation.ts";
+import EvErrors from "@/components/EvErrors/EvErrors.vue";
 
 defineOptions({
     inheritAttrs: false
@@ -23,7 +25,9 @@ const uid = getNextId();
 const id = computed(() => {
     return props.id || `radio-group-${uid}`;
 });
-const model = useModelProxy(props, "modelValue");
+
+const formField = useFormField(props);
+provide(EvRadioGroupSymbol, formField);
 
 </script>
 <template>
@@ -40,6 +44,10 @@ const model = useModelProxy(props, "modelValue");
             <ev-label>
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
+
+            <div class="ev-radio-group-errors" v-if="formField.isShowErrorMessages">
+                <ev-errors :messages="formField.errorMessages" />
+            </div>
         </div>
 
         <div class="ev-radio-group--control">

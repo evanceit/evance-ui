@@ -28,9 +28,10 @@ export class FormField {
 
     constructor(
         public readonly form: Form | null,
-        private props: FormFieldProps
+        private props: FormFieldProps,
+        private group?: FormField = undefined
     ) {
-        this.model = useModelProxy(this.props, 'modelValue');
+        this.model = this.group ? this.group.model : useModelProxy(this.props, 'modelValue');
         this.focused =  useModelProxy(this.props, 'focused');
         this.focusedVisible = ref(false);
 
@@ -104,7 +105,7 @@ export class FormField {
     }
 
     get isDisabled() {
-        return !!(this.props.disabled ?? this.form?.isDisabled.value);
+        return !!(this.props.disabled ?? this.group?.isDisabled ?? this.form?.isDisabled.value);
     }
 
     get isFocused() {
@@ -116,7 +117,7 @@ export class FormField {
     }
 
     get isReadonly() {
-        return !!(this.props.readonly ?? this.form?.isReadonly.value);
+        return !!(this.props.readonly ?? this.group?.isReadonly ?? this.form?.isReadonly.value);
     }
 
     get isPristine() {
@@ -128,6 +129,9 @@ export class FormField {
     }
 
     get isValid() {
+        if (this.group && this.group.isValid === false) {
+            return false;
+        }
         if (this.props.error) {
             return false;
         }
@@ -146,7 +150,7 @@ export class FormField {
     }
 
     get name() {
-        return this.props.name ?? this.id;
+        return this.group?.name ?? this.props.name ?? this.id;
     }
 
     get validateOn() {

@@ -22,8 +22,9 @@ const meta: Meta<typeof EvRadioGroup> = {
             description: 'The ID associated with the form field and the component wrapper'
         },
         modelValue: {
-            control: 'string',
-            description: "The `model-value` is the `v-model` value of the component."
+            control: 'select',
+            description: "The `model-value` is the `v-model` value of the component.",
+            options: ['', 'Y', 'N']
         },
         name: {
             control: 'text',
@@ -74,11 +75,20 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvRadioGroup, EvRadio },
         setup() {
-            return { args };
+            const requiredValidator = (value) => {
+                return (value === 'Y') ? true : 'Not no, yes';
+            };
+
+            return { args, requiredValidator };
         },
-        template: `<ev-radio-group v-bind="args">
-          <ev-radio name="foo" value="Y" label="Yes" />
-          <ev-radio name="foo" value="N" label="No" />
+        data() {
+            return {
+                radio: 'N',
+            }
+        },
+        template: `<ev-radio-group v-bind="args" :validators="[requiredValidator]">
+          <ev-radio value="Y" label="Yes" />
+          <ev-radio value="N" label="No" />
         </ev-radio-group>`
     })
 };

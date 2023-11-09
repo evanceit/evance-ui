@@ -3,9 +3,9 @@
  * # `<ev-radio>`
  */
 import './EvRadio.scss';
-import {computed, ref, useAttrs, useSlots} from "vue";
+import {computed, inject, ref, useAttrs, useSlots} from "vue";
 import {isDeepEqual, splitInputAttrs} from "@/util";
-import {EvLabel, makeEvRadioProps} from "@/components";
+import {EvLabel, EvRadioGroupSymbol, makeEvRadioProps} from "@/components";
 import {useFormField} from "@/composables/validation.ts";
 
 /**
@@ -19,6 +19,12 @@ defineOptions({
 // Props & slots
 const props = defineProps(makeEvRadioProps());
 const slots = useSlots();
+const group = inject(EvRadioGroupSymbol, undefined);
+
+const formFieldProps = {
+    ...props,
+    modelValue: group ? group.modelValue : props.modelValue
+};
 
 // Emit
 const emit = defineEmits([
@@ -30,7 +36,7 @@ const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
-const formField = useFormField(props);
+const formField = useFormField(props, group);
 const valueComparator = isDeepEqual;
 
 // Computed
@@ -58,7 +64,6 @@ function onClick(e: Event): void {
     if (isChecked.value && props.clearable) {
         isChecked.value = false;
     }
-
 }
 
 /**
@@ -130,10 +135,8 @@ defineExpose({
                    type="radio"
                    :id="formField.id"
                    :name="formField.name"
-                   :disabled="formField.isDisabled"
-                   :readonly="formField.isReadonly"
-                   :value="value"
-                   :checked="isChecked"
+                   :disabled="formField.isDisabled || formField.isReadonly"
+                   :value="props.value"
                    v-bind="inputAttrs"
                    @blur="formField.blur"
                    @click="onClick"
