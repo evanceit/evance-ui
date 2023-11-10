@@ -51,10 +51,22 @@ export const Primary: Story = {
                 console.log(results);
             }
         },
-        template: `<ev-form validate-on="submit lazy" @submit.prevent="submit">
-          <ev-textfield v-model="username" :validators="[requiredValidator]" label="Username" />
-            <ev-button :loading="loading" full-width>Submit</ev-button>
-            <ev-button type="reset">Reset</ev-button>
-        </ev-form> {{ username }}`
+        template: `<ev-form 
+            validate-on="submit lazy" 
+            @submit.prevent="submit">
+            <ev-textfield 
+                v-model="username" 
+                :validators="[requiredValidator]" 
+                label="Username" />
+            <ev-button 
+                :loading="loading" 
+                full-width>
+                Submit</ev-button>
+            <ev-button 
+                type="reset" 
+                appearance="subtle" 
+                full-width>
+                Reset</ev-button>
+        </ev-form>`
     }),
 };

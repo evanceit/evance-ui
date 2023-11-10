@@ -1,5 +1,5 @@
 import {FormField} from "@/modules/Form/FormField.ts";
-import {Ref, ref, shallowRef} from "vue";
+import {Ref, ref, shallowRef, toRaw} from "vue";
 import {consoleWarn} from "@/util";
 import {FormProps} from "@/composables/form.ts";
 import {ValidationError} from "@/composables/validation.ts";
@@ -120,7 +120,7 @@ export class Form {
         this.isValidating.value = false;
         return {
             valid,
-            errors: this.errors.value
+            errors: toRaw(this.errors.value)
         };
     }
 }
