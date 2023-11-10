@@ -1,3 +1,4 @@
+
 export * from './EvTransition';
 export * from './EvOverlay';
 
@@ -7,6 +8,7 @@ export * from './EvDivider';
 export * from './EvErrors';
 export * from './EvForm';
 export * from './EvIcon';
+export * from './EvKbd';
 export * from './EvLabel';
 export * from './EvList';
 export * from './EvListItem';

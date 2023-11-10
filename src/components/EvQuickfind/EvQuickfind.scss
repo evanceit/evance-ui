@@ -8,21 +8,23 @@
     height: var(--icon-size-medium);
     letter-spacing: 0.025em;
     line-height: 1;
-    padding: 0 0.625em 0 0.1em;
+    padding: 0 0.7em 0 0.3em;
+    gap: 0.1em;
 }
 
 .ev-quickfind {
     &.is-bold {
         background-color: var(--color-primary);
         color: var(--surface-default);
+        font-weight: var(--font-weight-bold);
     }
 }
 
 .ev-quickfind {
     &.size-small {
         font-size: var(--text-size-small);
+        font-weight: var(--font-weight-bold);
         height: 22px;
-        padding: 0 0.5em 0 0.25em;
     }
     &.size-large {
         font-size: var(--text-size-large);

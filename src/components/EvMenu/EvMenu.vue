@@ -3,12 +3,11 @@
  * # EvMenu
  */
 import './EvMenu.scss';
-import {makeEvMenuProps} from "../EvMenu";
+import {EvOverlay, makeEvMenuProps} from "@/components";
 import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {useScopeId} from "../../composables/scopeId.ts";
-import {focusChild, getNextId} from "../../util";
-import {EvOverlay} from "../EvOverlay";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {useScopeId} from "@/composables/scopeId.ts";
+import {focusChild, getNextId} from "@/util";
 import {EvMenuSymbol} from "./shared.ts";
 
 const props = defineProps(makeEvMenuProps());

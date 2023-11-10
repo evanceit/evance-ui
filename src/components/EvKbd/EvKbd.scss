@@ -1,0 +1,19 @@
+.ev-kbd {
+    background: var(--background-muted);
+    border: 1px solid var(--border-muted);
+    border-radius: var(--input-radius);
+    display: inline-flex;
+    font-family: var(--monospace-font);
+    font-weight: var(--font-weight-regular);
+    padding: 0.125em 0.425em;
+}
+
+.ev-kbd {
+    &.size-small {
+        font-size: 0.85em;
+    }
+
+    &.size-large {
+        font-size: 1.15em;
+    }
+}

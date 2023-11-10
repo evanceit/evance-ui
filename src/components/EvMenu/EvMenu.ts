@@ -1,5 +1,5 @@
-import {propsFactory} from "../../util";
-import {makeEvOverlayProps} from "../EvOverlay";
+import {propsFactory} from "@/util";
+import {makeEvOverlayProps} from "@/components";
 import {Component} from "vue";
 import EvMenuTransition from "./EvMenuTransition.vue";
 
