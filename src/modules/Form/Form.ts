@@ -1,5 +1,5 @@
 import {FormField} from "@/modules/Form/FormField.ts";
-import {Ref, ref, shallowRef, watch} from "vue";
+import {Ref, ref, shallowRef} from "vue";
 import {consoleWarn} from "@/util";
 import {FormProps} from "@/composables/form.ts";
 import {ValidationError} from "@/composables/validation.ts";
@@ -9,8 +9,8 @@ import {ValidationError} from "@/composables/validation.ts";
  */
 export class Form {
 
-    public readonly errors = ref<ValidationError[]>([]);
-    public readonly fields = ref<FormField[]>([]);
+    public readonly errors: Ref<ValidationError[]> = ref([]);
+    private fields: FormField[] = [];
     public readonly isDisabled: Ref<boolean>;
     public readonly isReadonly: Ref<boolean>;
     public readonly isValid: Ref<boolean | null>;
@@ -27,7 +27,6 @@ export class Form {
         this.isReadonly = isReadonly ?? shallowRef(false);
         this.isValid = isValid ?? shallowRef(null);
         this.validateOn = validateOn ?? shallowRef('input');
-        this.watchFields();
     }
 
     /**
@@ -38,7 +37,18 @@ export class Form {
         if (this.hasField(field.id)) {
             consoleWarn(`Duplicate form field with name "${field.id}"`);
         }
-        this.fields.value.push(field);
+        this.fields.push(field);
+    }
+
+    /**
+     * ## Expose
+     */
+    public expose() {
+        return {
+            reset: this.reset.bind(this),
+            resetValidation: this.resetValidation.bind(this),
+            validate: this.validate.bind(this)
+        };
     }
 
     /**
@@ -46,7 +56,7 @@ export class Form {
      * @param id
      */
     public getField(id: string): FormField | undefined {
-        return this.fields.value.find((field) => {
+        return this.fields.find((field) => {
             return field.id === id;
         });
     }
@@ -59,7 +69,7 @@ export class Form {
      * @param id
      */
     public hasField(id: string): boolean {
-        return this.fields.value.some(field => field.id === id);
+        return this.fields.some(field => field.id === id);
     }
 
     /**
@@ -67,7 +77,7 @@ export class Form {
      * @param id
      */
     public removeField(id: string) {
-        this.fields.value  = this.fields.value.filter((field) => {
+        this.fields  = this.fields.filter((field) => {
             return field.id !== id;
         });
     }
@@ -76,14 +86,14 @@ export class Form {
      * ## Reset
      */
     public reset() {
-        this.fields.value.forEach(field => field.reset());
+        this.fields.forEach(field => field.reset());
     }
 
     /**
      * ## Reset Validation
      */
     public resetValidation() {
-        this.fields.value.forEach(field => field.resetValidation());
+        this.fields.forEach(field => field.resetValidation());
     }
 
     /**
@@ -95,7 +105,7 @@ export class Form {
         this.isValidating.value = true;
 
         const results = [];
-        for (const field of this.fields.value) {
+        for (const field of this.fields) {
             const fieldErrors = await field.validate();
             for (const fieldError of fieldErrors) {
                 valid = false;
@@ -112,36 +122,5 @@ export class Form {
             valid,
             errors: this.errors.value
         };
-    }
-
-    /**
-     * ## Watch fields
-     *
-     * @private
-     */
-    private watchFields() {
-        watch(this.fields, () => {
-            let valid = 0;
-            let invalid = 0;
-            const results = [];
-            for (const field of this.fields.value) {
-                if (field.isValid === false) {
-                    ++invalid;
-                    const fieldErrors = field.errorMessages;
-                    for (const fieldError of fieldErrors) {
-                        results.push({
-                            name: field.name,
-                            message: fieldError
-                        });
-                    }
-                } else if (field.isValid === true) {
-                    ++valid;
-                }
-            }
-            this.errors.value = results;
-            this.isValid.value = (invalid > 0) ? false : (
-                (valid === this.fields.value.length) ? true : null
-            );
-        }, { deep: true });
     }
 }

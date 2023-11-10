@@ -46,7 +46,9 @@ function onSubmit($event: Event) {
   e.preventDefault();
 }
 
-defineExpose(form);
+defineExpose({
+    ...form.expose()
+});
 
 </script>
 <template>
