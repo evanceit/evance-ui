@@ -77,3 +77,26 @@ export function createStringTemplate(
         });
     };
 }
+
+/**
+ * # Pad End
+ *
+ * @param str
+ * @param length
+ * @param char
+ */
+export function padEnd (str: string, length: number, char = '0') {
+    return str + char.repeat(Math.max(0, length - str.length))
+}
+
+
+/**
+ * # Pad Start
+ *
+ * @param str
+ * @param length
+ * @param char
+ */
+export function padStart (str: string, length: number, char = '0') {
+    return char.repeat(Math.max(0, length - str.length)) + str
+}
