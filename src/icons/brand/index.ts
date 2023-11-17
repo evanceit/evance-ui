@@ -11,4 +11,5 @@ export { default as Tiktok } from './glyph/Tiktok.svg';
 export { default as Twitch } from './glyph/Twitch.svg';
 export { default as Twitter } from './glyph/Twitter.svg';
 export { default as Vimeo } from './glyph/Vimeo.svg';
+export { default as X } from './glyph/X.svg';
 export { default as Youtube } from './glyph/Youtube.svg';
