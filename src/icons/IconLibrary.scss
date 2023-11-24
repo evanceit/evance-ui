@@ -1,0 +1,21 @@
+
+.icon-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.icon-item {
+    padding: 1rem;
+    text-align: center;
+
+    &--square {
+        display: inline-flex;
+        aspect-ratio: 1;
+        padding: 1rem;
+    }
+
+    &--label {
+
+    }
+}

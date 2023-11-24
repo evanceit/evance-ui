@@ -5,7 +5,7 @@
  *  Uses `glyph` to render an SVG-based icon.
  */
 import './EvIcon.scss';
-import {computed, useAttrs} from "vue";
+import {computed, toRaw, useAttrs} from "vue";
 import {Appearance, appearanceModifier, AppearanceProp, sizeModifier} from "@/util";
 import {IconSize} from "@/components";
 
@@ -31,6 +31,10 @@ const iconColor = computed(() => {
     return `var(--text-${props.appearance})`;
 });
 
+const iconGlyph = computed(() => {
+    return toRaw(props.glyph);
+});
+
 </script>
 <template>
     <i
@@ -48,6 +52,6 @@ const iconColor = computed(() => {
             }
         ]"
     >
-        <component :is="glyph"></component>
+        <component :is="iconGlyph"></component>
     </i>
 </template>
