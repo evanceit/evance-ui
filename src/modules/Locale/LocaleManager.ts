@@ -17,7 +17,7 @@ export class LocaleManager extends Localized {
 
     public readonly translator: Translator;
 
-    constructor(localeOptions) {
+    constructor(localeOptions: LocaleOptions) {
         const currentLocale = shallowRef(localeOptions?.locale ?? 'en');
         const defaultLocale = shallowRef('en');
         super(defaultLocale, currentLocale);
@@ -33,10 +33,18 @@ export class LocaleManager extends Localized {
 
     /**
      * # Add Language Pack
-     * @param locale
+     * @param localeCode
      * @param messages
      */
-    public addLanguagePack(locale: string, messages: LanguagePackData) {
-        this.translator.addLanguagePack(locale, messages);
+    public addLanguagePack(localeCode: string, messages: LanguagePackData) {
+        this.translator.addLanguagePack(localeCode, messages);
     }
+}
+
+/**
+ * # Locale Options
+ */
+export interface LocaleOptions {
+    locale?: string;
+    languagePack?: LanguagePackData;
 }

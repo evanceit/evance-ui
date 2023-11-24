@@ -2,13 +2,16 @@ import {createDisplay, DisplayOptions, DisplaySymbol, SSROptions} from "./compos
 import {Browser, getNextId, mergeDeep} from "./util";
 import {App, nextTick} from "vue";
 import {createLocaleManager, LocaleSymbol} from "@/composables/locale.ts";
+import {LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
+import {createDate, DateAdapterSymbol, DateOptions} from "@/composables/date/date.ts";
 
 export interface EvanceUiOptions {
     blueprint?: Blueprint,
     components?: Record<string, any>,
+    date?: DateOptions,
     directives?: Record<string, any>,
     display?: DisplayOptions,
-    // locale?: LocaleOptions & RtlOptions,
+    locale?: LocaleOptions, // & RtlOptions,  // @todo: <--- YOU ARE HERE
     ssr?: SSROptions
 }
 
@@ -28,7 +31,8 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     } = options;
 
     const display = createDisplay(options.display, options.ssr);
-    const locale = createLocaleManager();
+    const locale = createLocaleManager(options.locale ?? {}); // @todo: <--- YOU ARE HERE!
+    const date = createDate(options.date, locale);
 
     const install = (app: App) => {
 
@@ -45,6 +49,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         // Add default `provide` symbols
         app.provide(DisplaySymbol, display);
         app.provide(LocaleSymbol, locale);
+        app.provide(DateAdapterSymbol, date);
 
         if (Browser.hasWindow && options.ssr) {
             if (app.$nuxt) {

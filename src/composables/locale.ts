@@ -1,5 +1,5 @@
 import {inject, InjectionKey} from "vue";
-import {LocaleManager} from "@/modules/Locale/LocaleManager.ts";
+import {LocaleManager, LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
 import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 
 /**
@@ -11,8 +11,8 @@ export const LocaleSymbol: InjectionKey<LocaleInstance & RtlInstance> = Symbol.f
  * # Create Locale Manager
  * @todo: we need a lot more settings and options.
  */
-export function createLocaleManager() {
-    return new LocaleManager();
+export function createLocaleManager(localeOptions: LocaleOptions) {
+    return new LocaleManager(localeOptions);
 }
 
 

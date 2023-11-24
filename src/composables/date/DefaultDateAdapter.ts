@@ -4,12 +4,10 @@ import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
 
 type CustomDateFormat = Intl.DateTimeFormatOptions | ((date: Date, formatString: string, locale: string) => string);
 
-const firstSundayOf2023 = new Date(2023, 0, 1);
-
 /**
- * # Evance Date Adapter
+ * # Default Date Adapter
  */
-export class EvanceDateAdapter implements DateAdapter<Date> {
+export class DefaultDateAdapter implements DateAdapter<Date> {
 
     protected static readonly PATTERN_ISO = /([12]\d{3}-([1-9]|0[1-9]|1[0-2])-([1-9]|0[1-9]|[12]\d|3[01]))/;
     protected static readonly firstDayOfWeek: Record<string, number> = {
@@ -366,6 +364,7 @@ export class EvanceDateAdapter implements DateAdapter<Date> {
      * ## Get Weekdays
      */
     public getWeekdays(): string[] {
+        const firstSundayOf2023 = new Date(2023, 0, 1);
         const daysFromSunday = this.getFirstDayOfWeek();
         return createRange(7).map(index => {
             // Start with a known Sunday (2023-01-01)
