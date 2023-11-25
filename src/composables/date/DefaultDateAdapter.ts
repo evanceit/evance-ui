@@ -266,7 +266,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
         if (isFunction(customFormat)) {
             return customFormat(newDate, formatString, this.locale);
         }
-        const options: Intl.DateTimeFormatOptions = this.formatOptions[formatString] || (customFormat ?? { timeZone: 'UTC', timeZoneName: 'short' });
+        const options: Intl.DateTimeFormatOptions = DefaultDateAdapter.formatOptions[formatString] || (customFormat ?? { timeZone: 'UTC', timeZoneName: 'short' });
         return new Intl.DateTimeFormat(this.locale, options).format(newDate);
     }
 
@@ -299,7 +299,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @private
      */
     private getFirstDayOfWeek(): number {
-        return this.firstDayOfWeek[this.getCountryCode()];
+        return DefaultDateAdapter.firstDayOfWeek[this.getCountryCode()] ?? 1;
     }
 
     /**
@@ -417,7 +417,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @protected
      */
     protected isISO(value: string): boolean {
-        return this.PATTERN_ISO.test(value);
+        return DefaultDateAdapter.PATTERN_ISO.test(value);
     }
 
     /**
@@ -486,7 +486,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      */
     public setMonth(date: Date, month: number): Date {
         const d = new Date(date);
-        d.setMonth(count);
+        d.setMonth(month);
         return d;
     }
 
@@ -541,6 +541,6 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @param value
      */
     public toJsDate(value: Date): Date {
-        return date;
+        return value;
     }
 }

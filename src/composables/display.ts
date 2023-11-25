@@ -112,7 +112,7 @@ function getPlatform (ssr?: SSROptions): DisplayPlatform {
     }
 }
 
-export const DisplaySymbol: InjectionKey<DisplayInstance> = Symbol.for('vuetify:display')
+export const DisplaySymbol: InjectionKey<DisplayInstance> = Symbol.for('ev:display')
 
 const defaultDisplayOptions: DisplayOptions = {
     mobileBreakpoint: 'lg',

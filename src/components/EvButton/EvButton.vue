@@ -29,7 +29,7 @@ const isDisabled = computed(() => {
  * Returns `true` if only one icon is applied, the button is not full-width
  * and no text has been supplied.
  */
-const isIconOnly = computed(() =>{
+const isIconOnly = computed(() => {
     return (
             (!!props.iconStart && !props.iconEnd)
             || (!props.iconStart && !!props.iconEnd)

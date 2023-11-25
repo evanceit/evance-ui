@@ -1,0 +1,25 @@
+
+.ev-date-picker-month--days {
+    display: grid;
+    grid-template-columns: min-content min-content min-content min-content min-content min-content min-content;
+    row-gap: 4px;
+    flex: 1 1;
+    justify-content: space-around;
+}
+
+.ev-date-picker-month--day,
+.ev-date-picker-month--weekday {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.ev-date-picker-month--day {
+    &.is-adjacent {
+        opacity: 0.5;
+    }
+    &.is-adjacent-hidden {
+        opacity: 0;
+    }
+}

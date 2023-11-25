@@ -5,10 +5,12 @@ import { EvDatePicker } from "../EvDatePicker";
 const meta: Meta<typeof EvDatePicker> = {
     component: EvDatePicker,
     argTypes: {
-
+        'show-adjacent-months': {
+            control: "boolean"
+        }
     },
     args: {
-
+        'show-adjacent-months': false,
     },
     tags: ['autodocs']
 };
@@ -23,6 +25,6 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-date-picker />`
+        template: `<ev-date-picker v-bind="args" />`
     })
 };

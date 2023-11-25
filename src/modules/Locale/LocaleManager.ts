@@ -18,8 +18,8 @@ export class LocaleManager extends Localized {
     public readonly translator: Translator;
 
     constructor(localeOptions: LocaleOptions) {
-        const currentLocale = shallowRef(localeOptions?.locale ?? 'en');
-        const defaultLocale = shallowRef('en');
+        const currentLocale = shallowRef(localeOptions?.locale ?? 'en-GB');
+        const defaultLocale = shallowRef('en-GB');
         super(defaultLocale, currentLocale);
 
         this.numberFormatter = new NumberFormatter(this.defaultLocale, this.currentLocale);
