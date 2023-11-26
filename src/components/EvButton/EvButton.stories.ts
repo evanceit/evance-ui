@@ -29,24 +29,29 @@ const meta: Meta<typeof EvButton> = {
             options: ['small', 'medium', 'large'],
             description: 'Changes the size of the button, which may be either `small`, `medium`, or `large`.'
         },
+        icon: {
+            control: 'boolean',
+            description: "Places an icon before the content/text of the button when supplied as a String or as an SVG component/glyph. " +
+                "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style."
+        },
         'icon-start': {
             control: 'select',
-            description: "Places an icon before the button's text",
+            description: "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph.",
             options: ['None', 'Check', 'Plus', 'Save'],
             mapping: {
                 'None': null,
-                'Check': markRaw(Check),
-                'Plus': markRaw(Plus),
-                'Save': markRaw(Save)
+                'Check': Check,
+                'Plus': Plus,
+                'Save': Save
             }
         },
         'icon-end': {
             control: 'select',
-            description: "Places an icon after the button's text",
+            description: "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph.",
             options: ['None', 'ArrowContinue'],
             mapping: {
                 'None': null,
-                'ArrowContinue': markRaw(ArrowContinue)
+                'ArrowContinue': ArrowContinue
             }
         },
         fullWidth: {
@@ -65,6 +70,7 @@ const meta: Meta<typeof EvButton> = {
         default: 'Continue',
         disabled: false,
         href: null,
+        icon: false,
         'icon-start': 'None',
         'icon-end': 'None',
         size: 'medium',

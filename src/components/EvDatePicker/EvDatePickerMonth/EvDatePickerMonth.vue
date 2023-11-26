@@ -123,6 +123,13 @@ function isDisabled(value: unknown) {
     return false;
 }
 
+function getDayAppearance(day) {
+    if (day.isToday) {
+        return 'default';
+    }
+    return 'subtle';
+}
+
 </script>
 <template>
     <div class="ev-date-picker-month">
@@ -149,7 +156,9 @@ function isDisabled(value: unknown) {
             >
                 <ev-button
                     v-if="!day.isHidden"
-                    appearance="subtle"
+                    rounded
+                    :icon="true"
+                    :appearance="getDayAppearance(day)"
                 >{{ day.localized }}</ev-button>
             </div>
         </div>

@@ -11,7 +11,8 @@ import {toKebabCase} from "../util";
  */
 export function makeClassName(value: string, prefix: string = '', exclude: (string | RegExp)[] = []): string | null {
     if (
-        exclude.some((exclusion) => {
+        !value
+        || exclude.some((exclusion) => {
             if (exclusion instanceof RegExp) {
                 return exclusion.test(value);
             }

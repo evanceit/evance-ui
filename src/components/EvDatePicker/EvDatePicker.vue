@@ -85,25 +85,47 @@ function onClickPrevious() {
     }
 }
 
+const monthText = computed(() => {
+    return dateAdapter.format(
+        dateAdapter.setMonth(dateAdapter.date(), month.value),
+        'month'
+    );
+});
+
+const yearText = computed(() => {
+    return dateAdapter.format(
+        dateAdapter.setYear(dateAdapter.date(), year.value),
+        'year'
+    );
+});
+
 </script>
 <template>
     <div class="ev-date-picker">
 
-        Date Picker
+        <div class="ev-date-picker-controls">
+            <ev-button
+                appearance="subtle"
+            >{{ monthText }}</ev-button>
 
-        <ev-button
-            rounded
-            appearance="subtle"
-            :icon-start="ChevronLeft"
-            @click="onClickPrevious()"
-        />
+            <ev-button
+                appearance="subtle"
+            >{{ yearText }}</ev-button>
 
-        <ev-button
-            rounded
-            appearance="subtle"
-            :icon-start="ChevronRight"
-            @click="onClickNext()"
-        />
+            <ev-button
+                rounded
+                appearance="subtle"
+                :icon-start="ChevronLeft"
+                @click="onClickPrevious()"
+            />
+
+            <ev-button
+                rounded
+                appearance="subtle"
+                :icon-start="ChevronRight"
+                @click="onClickNext()"
+            />
+        </div>
 
         <ev-date-picker-month
             v-bind="monthProps"

@@ -17,6 +17,7 @@ const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
 const link = useRouterLinkOrHref(props, attrs);
+const hasIcon = !!(props.icon && props.icon !== true);
 
 const isDisabled = computed(() => {
     // we'll add groups later
@@ -24,17 +25,25 @@ const isDisabled = computed(() => {
 });
 
 /**
- * ## Is Icon Only?
+ * ## Is Icon Like?
+ *
  * Used to determine whether to apply `is-icon` modifier class.
+ *
  * Returns `true` if only one icon is applied, the button is not full-width
  * and no text has been supplied.
+ *
+ * OR, the `icon` prop is supplied as `true`.
  */
-const isIconOnly = computed(() => {
+const isIconLike = computed(() => {
+    const icons = [props.icon, props.iconStart, props.iconEnd].filter((icon) => !!icon);
     return (
-            (!!props.iconStart && !props.iconEnd)
-            || (!props.iconStart && !!props.iconEnd)
+            (
+                icons.length === 1
+                && !hasDefaultSlot.value
+                && !props.text
+            )
+            || props.icon === true
         )
-        && !hasDefaultSlot.value
         && !props.fullWidth;
 });
 
@@ -91,7 +100,7 @@ function onClick(e: MouseEvent): void {
             appearanceModifier(props.appearance),
             sizeModifier(props.size, [InputSize.default]),
             {
-                'is-icon': isIconOnly,
+                'is-icon': isIconLike,
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
                 'is-disabled': props.disabled,
@@ -102,17 +111,26 @@ function onClick(e: MouseEvent): void {
         :disabled="!isLink() ? disabled : null"
         @click="onClick"
     >
-        <span class="ev-button--prefix" v-if="iconStart">
-            <ev-icon :glyph="iconStart" />
+        <span class="ev-button--icon-start" v-if="props.iconStart">
+            <ev-icon :glyph="props.iconStart" />
         </span>
-        <span class="ev-button--text" v-if="hasDefaultSlot" data-no-activator>
-            <slot />
+        <span class="ev-button--prefix" v-if="slots.prefix">
+            <slot name="prefix" />
         </span>
-        <span class="ev-button--suffix" v-if="iconEnd">
-            <ev-icon :glyph="iconEnd" />
+        <span class="ev-button--icon" v-if="hasIcon">
+             <ev-icon :glyph="props.icon" />
+        </span>
+        <span class="ev-button--content" v-if="props.text || hasDefaultSlot" data-no-activator>
+            <slot>{{ props.text }}</slot>
+        </span>
+        <span class="ev-button--suffix" v-if="slots.suffix">
+            <slot name="suffix" />
+        </span>
+        <span class="ev-button--icon-end" v-if="props.iconEnd">
+            <ev-icon :glyph="props.iconEnd" />
         </span>
         <span class="ev-button--loading">
-            <ev-progress-circular indeterminate v-if="loading" />
+            <ev-progress-circular indeterminate v-if="props.loading" />
         </span>
     </component>
 </template>
