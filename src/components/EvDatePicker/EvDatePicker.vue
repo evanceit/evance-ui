@@ -11,6 +11,7 @@ import {useModelProxy} from "@/composables/modelProxy.ts";
 import {filterComponentProps, wrapInArray} from "@/util";
 import EvDatePickerMonth from "./EvDatePickerMonth/EvDatePickerMonth.vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
+import EvSpacer from "@/components/EvGrid/EvSpacer.vue";
 import {ChevronLeft, ChevronRight} from "@/icons";
 
 const props = defineProps(makeEvDatePickerProps());
@@ -101,6 +102,9 @@ const yearText = computed(() => {
 
 </script>
 <template>
+
+    {{ modelValue }}
+
     <div class="ev-date-picker">
 
         <div class="ev-date-picker-controls">
@@ -112,17 +116,19 @@ const yearText = computed(() => {
                 appearance="subtle"
             >{{ yearText }}</ev-button>
 
+            <ev-spacer />
+
             <ev-button
                 rounded
                 appearance="subtle"
-                :icon-start="ChevronLeft"
+                :icon="ChevronLeft"
                 @click="onClickPrevious()"
             />
 
             <ev-button
                 rounded
                 appearance="subtle"
-                :icon-start="ChevronRight"
+                :icon="ChevronRight"
                 @click="onClickNext()"
             />
         </div>

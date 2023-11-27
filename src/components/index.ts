@@ -4,9 +4,11 @@ export * from './EvOverlay';
 
 export * from './EvButton';
 export * from './EvCheckbox';
+export * from './EvDatePicker';
 export * from './EvDivider';
 export * from './EvErrors';
 export * from './EvForm';
+export * from './EvGrid';
 export * from './EvIcon';
 export * from './EvKbd';
 export * from './EvLabel';

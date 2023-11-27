@@ -7,7 +7,7 @@ import {makeEvDatePickerMonthProps} from './EvDatePickerMonth';
 import {useDate} from "@/composables/date/date";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {wrapInArray} from "@/util";
-import {computed, toRaw} from "vue";
+import {computed} from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 
 const props = defineProps(makeEvDatePickerMonthProps());
@@ -119,15 +119,52 @@ const daysInMonth = computed(() => {
  * ## isDisabled
  */
 function isDisabled(value: unknown) {
-    // @todo: this needs completing
+    const date = dateAdapter.date(value);
+    if (props.min && dateAdapter.isBefore(date, props.min)) {
+        return true;
+    }
+    if (props.max && dateAdapter.isAfter(date, props.max)) {
+        return true;
+    }
+    if (Array.isArray(props.allowedDates)) {
+        return !props.allowedDates.some((allowedDate) => {
+            return dateAdapter.isSameDay(dateAdapter.date(allowedDate), date);
+        });
+    }
+    if (typeof props.allowedDates === 'function') {
+        return !props.allowedDates(date);
+    }
     return false;
 }
 
+/**
+ * ## Get Appearance
+ * @param day
+ */
 function getDayAppearance(day) {
     if (day.isToday) {
         return 'default';
     }
     return 'subtle';
+}
+
+/**
+ * ## On Click Event
+ * @param date
+ */
+function onClick(date) {
+    if (!props.multiple) {
+        modelValue.value = [date];
+        return;
+    }
+    const index = modelValue.value.findIndex((selection) => dateAdapter.isSameDay(selection, date));
+    if (index === -1) {
+        modelValue.value = [...modelValue.value, date];
+    } else {
+        const value = [...modelValue.value];
+        value.splice(index, 1);
+        modelValue.value = value;
+    }
 }
 
 </script>
@@ -158,8 +195,11 @@ function getDayAppearance(day) {
                     v-if="!day.isHidden"
                     rounded
                     :icon="true"
+                    :disabled="day.isDisabled"
                     :appearance="getDayAppearance(day)"
-                >{{ day.localized }}</ev-button>
+                    :text="day.localized"
+                    @click="onClick(day.date)"
+                />
             </div>
         </div>
     </div>

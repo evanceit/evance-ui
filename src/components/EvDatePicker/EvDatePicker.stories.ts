@@ -5,11 +5,16 @@ import { EvDatePicker } from "../EvDatePicker";
 const meta: Meta<typeof EvDatePicker> = {
     component: EvDatePicker,
     argTypes: {
+        multiple: {
+            control: "boolean",
+            description: "Allow multiple dates to be selected."
+        },
         'show-adjacent-months': {
             control: "boolean"
         }
     },
     args: {
+        multiple: false,
         'show-adjacent-months': false,
     },
     tags: ['autodocs']

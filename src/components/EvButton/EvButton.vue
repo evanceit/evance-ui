@@ -17,7 +17,7 @@ const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
 const link = useRouterLinkOrHref(props, attrs);
-const hasIcon = !!(props.icon && props.icon !== true);
+const hasIcon = computed(() => (!!props.icon && props.icon !== true));
 
 const isDisabled = computed(() => {
     // we'll add groups later
@@ -120,7 +120,7 @@ function onClick(e: MouseEvent): void {
         <span class="ev-button--icon" v-if="hasIcon">
              <ev-icon :glyph="props.icon" />
         </span>
-        <span class="ev-button--content" v-if="props.text || hasDefaultSlot" data-no-activator>
+        <span class="ev-button--text" v-if="props.text || hasDefaultSlot" data-no-activator>
             <slot>{{ props.text }}</slot>
         </span>
         <span class="ev-button--suffix" v-if="slots.suffix">
