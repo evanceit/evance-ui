@@ -9,13 +9,17 @@ const meta: Meta<typeof EvList> = {
         disabled: {
             control: 'boolean'
         },
+        required: {
+            control: 'boolean'
+        },
         selectStrategy: {
             control: 'select',
             options: ['single-any', 'multi-any']
         }
     },
     args: {
-        disabled: false
+        disabled: false,
+        required: false
     },
     tags: ['autodocs']
 };
@@ -48,6 +52,6 @@ export const Primary: Story = {
 
             return { args, items, selected };
         },
-        template: '<ev-list v-bind="args" :items="items" v-model:selected="selected"></ev-list> {{ selected }}'
+        template: '<ev-list v-bind="args" :items="items" v-model:selected="selected" /> {{ selected }}'
     })
 };

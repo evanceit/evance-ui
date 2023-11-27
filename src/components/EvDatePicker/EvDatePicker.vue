@@ -8,14 +8,16 @@ import {useDate} from "@/composables/date/date.ts";
 import {computed, ref, shallowRef, watch, watchEffect} from "vue";
 import {makeEvDatePickerProps} from "./EvDatePicker.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {filterComponentProps, wrapInArray} from "@/util";
+import {filterComponentProps, omit, wrapInArray} from "@/util";
 import EvDatePickerMonth from "./EvDatePickerMonth/EvDatePickerMonth.vue";
+import EvDatePickerYears from "./EvDatePickerYears/EvDatePickerYears.vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import EvSpacer from "@/components/EvGrid/EvSpacer.vue";
 import {ChevronLeft, ChevronRight} from "@/icons";
 
 const props = defineProps(makeEvDatePickerProps());
 const dateAdapter = useDate();
+const isReversing = shallowRef(false);
 
 // Emit
 const emit = defineEmits([
@@ -37,16 +39,6 @@ watchEffect(() => {
     internalValue.value = modelValue.value;
 });
 
-const modelDate = computed(() => {
-    const value = dateAdapter.date(internalValue.value?.[0]);
-    return (value && dateAdapter.isValid(value)) ? value : dateAdapter.date();
-});
-
-const month = ref(Number(props.month ?? dateAdapter.getMonth(dateAdapter.startOfMonth(modelDate.value))));
-const year = ref(Number(props.year ?? dateAdapter.getYear(dateAdapter.startOfYear(dateAdapter.setMonth(modelDate.value, month.value)))));
-
-const isReversing = shallowRef(false);
-
 watch(internalValue, (newValue, oldValue) => {
     const before = dateAdapter.date(wrapInArray(newValue)[0]);
     const after = dateAdapter.date(wrapInArray(oldValue)[0]);
@@ -54,9 +46,67 @@ watch(internalValue, (newValue, oldValue) => {
     modelValue.value = newValue;
 });
 
+const modelDate = computed(() => {
+    const value = dateAdapter.date(internalValue.value?.[0]);
+    return (value && dateAdapter.isValid(value)) ? value : dateAdapter.date();
+});
 
-// Sort out the props for each subcomponent
+const viewMode = useModelProxy(props, 'viewMode');
+
+/**
+ * Month related definitions
+ */
+const month = ref(Number(props.month ?? dateAdapter.getMonth(dateAdapter.startOfMonth(modelDate.value))));
+
 const monthProps = computed(() => filterComponentProps(EvDatePickerMonth, props));
+
+const monthText = computed(() => {
+    return dateAdapter.format(
+        dateAdapter.setMonth(dateAdapter.date(), month.value),
+        'month'
+    );
+});
+
+watch(month, () => {
+    if (viewMode.value === 'months') {
+        toggleViewMonth();
+    }
+});
+
+
+/**
+ * Year related definitions
+ */
+const year = ref(Number(props.year ?? dateAdapter.getYear(dateAdapter.startOfYear(dateAdapter.setMonth(modelDate.value, month.value)))));
+
+const yearProps = computed(() => omit(filterComponentProps(EvDatePickerYears, props), ['modelValue']));
+
+const yearText = computed(() => {
+    return dateAdapter.format(
+        dateAdapter.setYear(dateAdapter.date(), year.value),
+        'year'
+    );
+});
+
+watch(year, () => {
+    if (viewMode.value === 'years') {
+        toggleViewYear();
+    }
+});
+
+
+/**
+ * Min & Max date definitions
+ */
+const minDate = computed(() => {
+    const date = dateAdapter.date(props.min);
+    return props.min && dateAdapter.isValid(date) ? date : null;
+});
+
+const maxDate = computed(() => {
+    const date = dateAdapter.date(props.max);
+    return props.max && dateAdapter.isValid(date) ? date : null;
+});
 
 /**
  * ## Next Month
@@ -86,35 +136,39 @@ function onClickPrevious() {
     }
 }
 
-const monthText = computed(() => {
-    return dateAdapter.format(
-        dateAdapter.setMonth(dateAdapter.date(), month.value),
-        'month'
-    );
-});
+/**
+ * Toggle View Mode between Months and Month
+ */
+function toggleViewMonth() {
+    viewMode.value = viewMode.value === 'months' ? 'month' : 'months';
+}
 
-const yearText = computed(() => {
-    return dateAdapter.format(
-        dateAdapter.setYear(dateAdapter.date(), year.value),
-        'year'
-    );
-});
+/**
+ * Toggle View Mode between Years and Month
+ */
+function toggleViewYear() {
+    viewMode.value = (viewMode.value === 'years') ? 'month' : 'years';
+}
 
 </script>
 <template>
 
-    {{ modelValue }}
+    {{ viewMode }}<br />
 
     <div class="ev-date-picker">
 
         <div class="ev-date-picker-controls">
             <ev-button
                 appearance="subtle"
-            >{{ monthText }}</ev-button>
+                :text="monthText"
+                @click="toggleViewMonth()"
+            />
 
             <ev-button
                 appearance="subtle"
-            >{{ yearText }}</ev-button>
+                :text="yearText"
+                @click="toggleViewYear()"
+            />
 
             <ev-spacer />
 
@@ -133,11 +187,24 @@ const yearText = computed(() => {
             />
         </div>
 
+        <ev-date-picker-years
+            v-if="viewMode === 'years'"
+            v-bind="yearProps"
+            v-model="year"
+            :min="minDate"
+            :max="maxDate"
+        />
+
         <ev-date-picker-month
+            v-else
             v-bind="monthProps"
             v-model="internalValue"
             v-model:month="month"
             v-model:year="year"
+            :min="minDate"
+            :max="maxDate"
         />
+
+
     </div>
 </template>

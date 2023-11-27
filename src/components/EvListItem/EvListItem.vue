@@ -83,15 +83,17 @@ function onKeyDown(e: KeyboardEvent): void {
 <template>
     <component
         :is="getComponentElement()"
-        class="ev-list-item"
         :class="[
+            'ev-list-item',
             {
                 'is-active': isActive,
                 'is-active--exact': isActiveExact,
                 'is-clickable': isClickable,
                 'is-disabled': props.disabled
-            }
+            },
+            props.class
         ]"
+        :style="props.style"
         :href="link.href.value"
         :tabindex="getTabIndex()"
         @click="onClick"

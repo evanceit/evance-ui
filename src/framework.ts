@@ -4,6 +4,7 @@ import {App, nextTick} from "vue";
 import {createLocaleManager, LocaleSymbol} from "@/composables/locale.ts";
 import {LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
 import {createDate, DateAdapterSymbol, DateOptions} from "@/composables/date/date.ts";
+import {SlotsDirective} from "@/directives";
 
 export interface EvanceUiOptions {
     blueprint?: Blueprint,

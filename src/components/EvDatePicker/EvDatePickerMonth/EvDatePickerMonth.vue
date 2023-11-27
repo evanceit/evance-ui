@@ -142,6 +142,9 @@ function isDisabled(value: unknown) {
  * @param day
  */
 function getDayAppearance(day) {
+    if (day.isSelected) {
+        return 'primary';
+    }
     if (day.isToday) {
         return 'default';
     }

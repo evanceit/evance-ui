@@ -1,22 +1,20 @@
 import {DirectiveBinding} from "vue/dist/vue";
 import {VNode} from "vue";
 
-export const slots = {
+export const SlotsDirective = {
     beforeMount(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
         const slots = binding.value || {};
+        console.log(slots);
 
-        const subComponentVNode = vnode.componentInstance;
+        const subComponentVNode = vnode.component;
         if (!subComponentVNode) {
             return;
         }
 
         Object.keys(slots).forEach((slotName) => {
-            subComponentVNode.$slots[slotName] = slots[slotName];
+            subComponentVNode.slots[slotName] = slots[slotName];
         });
-
-        // Clear the original slots to prevent them from being rendered in the parent component
-        //vnode.data.scopedSlots = {};
     }
 };
 
-export default slots;
+export default SlotsDirective;
