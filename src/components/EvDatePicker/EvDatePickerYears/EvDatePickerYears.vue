@@ -29,8 +29,8 @@ const internalValue = computed(() => {
     return modelValue.value[0];
 });
 
-const offsetMin = -10;
-const offsetMax = 10;
+const offsetMin = -120;
+const offsetMax = 50;
 const currentYear = dateAdapter.getYear(dateAdapter.date());
 
 const items = computed(() => {
