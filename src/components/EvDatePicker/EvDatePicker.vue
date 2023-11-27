@@ -165,14 +165,17 @@ function toggleViewYear() {
 
             <ev-spacer />
 
-            <ev-button
-                rounded
-                appearance="subtle"
-                :disabled="viewMode !== 'month'"
-                :icon="ChevronLeft"
-                @click="onClickPrevious()"
-            />
+            <div class="ev-date-picker-controls--previous">
+                <ev-button
+                    rounded
+                    appearance="subtle"
+                    :disabled="viewMode !== 'month'"
+                    :icon="ChevronLeft"
+                    @click="onClickPrevious()"
+                />
+            </div>
 
+          <div class="ev-date-picker-controls--next">
             <ev-button
                 rounded
                 appearance="subtle"
@@ -180,6 +183,7 @@ function toggleViewYear() {
                 :icon="ChevronRight"
                 @click="onClickNext()"
             />
+          </div>
         </div>
 
         <ev-date-picker-years

@@ -6,4 +6,16 @@
 .ev-date-picker-controls {
     display: flex;
     align-items: center;
+    gap: 4px;
+    padding-bottom: 4px;
+}
+
+.ev-date-picker-controls--next,
+.ev-date-picker-controls--previous {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 48px;
+    height: 48px;
 }
