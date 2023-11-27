@@ -1,0 +1,8 @@
+.ev-date-picker-months {
+  align-items: center;
+  display: grid;
+  flex: 1 1;
+  height: inherit;
+  justify-content: space-around;
+  grid-template-columns: repeat(3, 1fr);
+}

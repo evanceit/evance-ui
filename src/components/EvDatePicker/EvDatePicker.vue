@@ -14,6 +14,7 @@ import EvDatePickerYears from "./EvDatePickerYears/EvDatePickerYears.vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import EvSpacer from "@/components/EvGrid/EvSpacer.vue";
 import {ChevronLeft, ChevronRight} from "@/icons";
+import EvDatePickerMonths from "@/components/EvDatePicker/EvDatePickerMonths/EvDatePickerMonths.vue";
 
 const props = defineProps(makeEvDatePickerProps());
 const dateAdapter = useDate();
@@ -23,7 +24,8 @@ const isReversing = shallowRef(false);
 const emit = defineEmits([
     'update:modelValue',
     'update:month',
-    'update:year'
+    'update:year',
+    'update:viewMode'
 ]);
 
 const modelValue = useModelProxy(
@@ -140,7 +142,7 @@ function onClickPrevious() {
  * Toggle View Mode between Months and Month
  */
 function toggleViewMonth() {
-    viewMode.value = viewMode.value === 'months' ? 'month' : 'months';
+    viewMode.value = (viewMode.value === 'months') ? 'month' : 'months';
 }
 
 /**
@@ -152,8 +154,6 @@ function toggleViewYear() {
 
 </script>
 <template>
-
-    {{ viewMode }}<br />
 
     <div class="ev-date-picker">
 
@@ -173,6 +173,7 @@ function toggleViewYear() {
             <ev-spacer />
 
             <ev-button
+                v-if="viewMode === 'month'"
                 rounded
                 appearance="subtle"
                 :icon="ChevronLeft"
@@ -180,6 +181,7 @@ function toggleViewYear() {
             />
 
             <ev-button
+                v-if="viewMode === 'month'"
                 rounded
                 appearance="subtle"
                 :icon="ChevronRight"
@@ -195,6 +197,11 @@ function toggleViewYear() {
             :max="maxDate"
         />
 
+        <ev-date-picker-months
+            v-else-if="viewMode === 'months'"
+            v-model="month"
+        />
+
         <ev-date-picker-month
             v-else
             v-bind="monthProps"
@@ -204,7 +211,6 @@ function toggleViewYear() {
             :min="minDate"
             :max="maxDate"
         />
-
 
     </div>
 </template>
