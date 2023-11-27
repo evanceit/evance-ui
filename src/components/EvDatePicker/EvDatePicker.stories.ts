@@ -25,7 +25,7 @@ const meta: Meta<typeof EvDatePicker> = {
         min: null,
         max: null,
         multiple: false,
-        'show-adjacent-months': false,
+        'show-adjacent-months': true,
     },
     tags: ['autodocs']
 };

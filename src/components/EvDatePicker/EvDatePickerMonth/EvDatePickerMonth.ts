@@ -8,6 +8,9 @@ export const makeEvDatePickerMonthProps = propsFactory({
     modelValue: Array as PropType<unknown[]>,
     month: [Number, String],
     multiple: Boolean,
-    showAdjacentMonths: Boolean,
+    showAdjacentMonths: {
+        type: Boolean,
+        default: true
+    },
     year: [Number, String],
 }, 'EvDatePickerMonth');

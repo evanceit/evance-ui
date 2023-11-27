@@ -7,11 +7,16 @@ import {makeEvDatePickerMonthProps} from './EvDatePickerMonth';
 import {useDate} from "@/composables/date/date";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {wrapInArray} from "@/util";
-import {computed} from "vue";
+import {computed, watch} from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 
 const props = defineProps(makeEvDatePickerMonthProps());
 const dateAdapter = useDate();
+const emit = defineEmits([
+  'update:modelValue',
+  'update:month',
+  'update:year'
+]);
 
 /**
  * The `modelValue` is always provided from the parent component as an array
@@ -24,12 +29,17 @@ const modelValue = useModelProxy(
     (value) => wrapInArray(value)
 );
 
-/**
- * A shorthand to get the first value from the `modelValue` as a Date.
- */
-const modelDate = computed(() => {
-    const value = modelValue.value?.[0];
-    return (value && dateAdapter.isValid(value)) ? value : dateAdapter.date();
+const displayValue = computed(() => {
+  if (modelValue.value.length > 0) {
+    return dateAdapter.date(modelValue.value[0]);
+  }
+  if (props.min) {
+    return dateAdapter.date(props.min);
+  }
+  if (Array.isArray(props.allowedDates)) {
+    return dateAdapter.date(props.allowedDates[0]);
+  }
+  return dateAdapter.date();
 });
 
 // YEAR
@@ -37,14 +47,11 @@ const year = useModelProxy(
     props,
     'year',
     undefined,
-    (value) => {
-        let date = dateAdapter.date(modelDate.value);
-        if (value != null) {
-            date = dateAdapter.setYear(date, Number(value));
-        }
-        return dateAdapter.startOfYear(date);
+    (v) => {
+      const value = v != null ? Number(v) : dateAdapter.getYear(displayValue.value);
+      return dateAdapter.startOfYear(dateAdapter.setYear(dateAdapter.date(), value));
     },
-    (value) => dateAdapter.getYear(value)
+    (v) => dateAdapter.getYear(v)
 );
 
 // MONTH
@@ -52,27 +59,22 @@ const month = useModelProxy(
     props,
     'month',
     undefined,
-    (value) => {
-        let date = dateAdapter.date(modelDate.value);
-        if (value != null) {
-            date = dateAdapter.setMonth(date, Number(value));
-        }
-        return dateAdapter.setYear(date, dateAdapter.getYear(year.value));
+    (v) => {
+      const value = v != null ? Number(v) : dateAdapter.getMonth(displayValue.value);
+      const date = dateAdapter.setYear(dateAdapter.date(), dateAdapter.getYear(year.value));
+      return dateAdapter.setMonth(date, value);
     },
-    (value) => dateAdapter.getMonth(value)
+    (v) => dateAdapter.getMonth(v)
 );
 
 /**
  * ## Weeks in Month
- *
- * Ensures there's always 6 weeks in month (6 * 7 days)
- * when we're not hiding adjacent months (`showAdjacentMonths`)
  */
 const weeksInMonth = computed(() => {
     const weeks = dateAdapter.getWeekArray(month.value);
     const days = weeks.flat();
     const daysInMonth = 6 * 7;
-    if (days.length < daysInMonth && props.showAdjacentMonths) {
+    if (days.length < daysInMonth) {
         const lastDay = days[days.length - 1];
         let week = [];
         for (let day = 1; day <= (daysInMonth - days.length); day++) {
@@ -119,22 +121,22 @@ const daysInMonth = computed(() => {
  * ## isDisabled
  */
 function isDisabled(value: unknown) {
-    const date = dateAdapter.date(value);
-    if (props.min && dateAdapter.isBefore(date, props.min)) {
-        return true;
-    }
-    if (props.max && dateAdapter.isAfter(date, props.max)) {
-        return true;
-    }
-    if (Array.isArray(props.allowedDates)) {
-        return !props.allowedDates.some((allowedDate) => {
-            return dateAdapter.isSameDay(dateAdapter.date(allowedDate), date);
-        });
-    }
-    if (typeof props.allowedDates === 'function') {
-        return !props.allowedDates(date);
-    }
-    return false;
+  const date = dateAdapter.date(value);
+  if (props.min && dateAdapter.isBefore(date, props.min)) {
+    return true;
+  }
+  if (props.max && dateAdapter.isAfter(date, props.max)) {
+    return true;
+  }
+  if (Array.isArray(props.allowedDates)) {
+    return !props.allowedDates.some((allowedDate) => {
+      return dateAdapter.isSameDay(dateAdapter.date(allowedDate), date);
+    });
+  }
+  if (typeof props.allowedDates === 'function') {
+    return !props.allowedDates(date);
+  }
+  return false;
 }
 
 /**
@@ -169,6 +171,11 @@ function onClick(date) {
         modelValue.value = value;
     }
 }
+
+watch(displayValue, value => {
+  month.value = value;
+  year.value = value;
+});
 
 </script>
 <template>

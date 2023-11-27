@@ -5,7 +5,7 @@
  */
 import './EvDatePicker.scss';
 import {useDate} from "@/composables/date/date.ts";
-import {computed, ref, shallowRef, watch, watchEffect} from "vue";
+import {computed, ref, shallowRef, watch} from "vue";
 import {makeEvDatePickerProps} from "./EvDatePicker.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {filterComponentProps, omit, wrapInArray} from "@/util";
@@ -36,21 +36,15 @@ const modelValue = useModelProxy(
     (value) => props.multiple ? value : value[0]
 );
 
-const internalValue = ref(modelValue.value);
-watchEffect(() => {
-    internalValue.value = modelValue.value;
+const internalValue = computed(() => {
+    const value = dateAdapter.date(modelValue.value?.[0]);
+    return (value && dateAdapter.isValid(value)) ? value : dateAdapter.date();
 });
 
-watch(internalValue, (newValue, oldValue) => {
+watch(modelValue, (newValue, oldValue) => {
     const before = dateAdapter.date(wrapInArray(newValue)[0]);
     const after = dateAdapter.date(wrapInArray(oldValue)[0]);
     isReversing.value = dateAdapter.isBefore(before, after);
-    modelValue.value = newValue;
-});
-
-const modelDate = computed(() => {
-    const value = dateAdapter.date(internalValue.value?.[0]);
-    return (value && dateAdapter.isValid(value)) ? value : dateAdapter.date();
 });
 
 const viewMode = useModelProxy(props, 'viewMode');
@@ -58,7 +52,7 @@ const viewMode = useModelProxy(props, 'viewMode');
 /**
  * Month related definitions
  */
-const month = ref(Number(props.month ?? dateAdapter.getMonth(dateAdapter.startOfMonth(modelDate.value))));
+const month = ref(Number(props.month ?? dateAdapter.getMonth(dateAdapter.startOfMonth(internalValue.value))));
 
 const monthProps = computed(() => filterComponentProps(EvDatePickerMonth, props));
 
@@ -79,7 +73,7 @@ watch(month, () => {
 /**
  * Year related definitions
  */
-const year = ref(Number(props.year ?? dateAdapter.getYear(dateAdapter.startOfYear(dateAdapter.setMonth(modelDate.value, month.value)))));
+const year = ref(Number(props.year ?? dateAdapter.getYear(dateAdapter.startOfYear(dateAdapter.setMonth(internalValue.value, month.value)))));
 
 const yearProps = computed(() => omit(filterComponentProps(EvDatePickerYears, props), ['modelValue']));
 
@@ -116,12 +110,12 @@ const maxDate = computed(() => {
 function onClickNext() {
     if (month.value < 11) {
         month.value++;
-        emit('update:month', month.value);
     } else {
         year.value++;
         month.value = 0;
         emit('update:year', year.value);
     }
+    emit('update:month', month.value);
 }
 
 /**
@@ -130,12 +124,12 @@ function onClickNext() {
 function onClickPrevious() {
     if (month.value > 0) {
         month.value--;
-        emit('update:month', month.value);
     } else {
         year.value--;
         month.value = 11;
-        emit('update:year', month.value);
+        emit('update:year', year.value);
     }
+    emit('update:month', month.value);
 }
 
 /**
@@ -154,7 +148,6 @@ function toggleViewYear() {
 
 </script>
 <template>
-
     <div class="ev-date-picker">
 
         <div class="ev-date-picker-controls">
@@ -173,17 +166,17 @@ function toggleViewYear() {
             <ev-spacer />
 
             <ev-button
-                v-if="viewMode === 'month'"
                 rounded
                 appearance="subtle"
+                :disabled="viewMode !== 'month'"
                 :icon="ChevronLeft"
                 @click="onClickPrevious()"
             />
 
             <ev-button
-                v-if="viewMode === 'month'"
                 rounded
                 appearance="subtle"
+                :disabled="viewMode !== 'month'"
                 :icon="ChevronRight"
                 @click="onClickNext()"
             />
@@ -205,7 +198,7 @@ function toggleViewYear() {
         <ev-date-picker-month
             v-else
             v-bind="monthProps"
-            v-model="internalValue"
+            v-model="modelValue"
             v-model:month="month"
             v-model:year="year"
             :min="minDate"
