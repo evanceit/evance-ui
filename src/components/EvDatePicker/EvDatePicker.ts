@@ -3,7 +3,6 @@ import {makeEvDatePickerMonthProps} from "@/components/EvDatePicker/EvDatePicker
 import {makeEvDatePickerYearsProps} from "@/components/EvDatePicker/EvDatePickerYears";
 import {PropType} from "vue";
 
-
 export const makeEvDatePickerProps = propsFactory({
 
     viewMode: {

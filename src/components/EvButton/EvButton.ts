@@ -16,7 +16,7 @@ export type ButtonAppearanceProp = 'default'
  */
 export const makeEvButtonProps = propsFactory({
     appearance: {
-        type: String<ButtonAppearanceProp>,
+        type: String as PropType<ButtonAppearanceProp>,
         default: Appearance.default
     },
     disabled: {
@@ -27,7 +27,7 @@ export const makeEvButtonProps = propsFactory({
     iconStart: IconValue,
     iconEnd: IconValue,
     rounded: Boolean,
-    size: String<InputSizeProp>,
+    size: String as PropType<InputSizeProp>,
     fullWidth: Boolean,
     text: String,
     loading: Boolean,

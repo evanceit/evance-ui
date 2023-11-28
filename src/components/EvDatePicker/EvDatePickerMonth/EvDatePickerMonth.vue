@@ -158,7 +158,7 @@ function getDayAppearance(day) {
  * @param date
  */
 function onClick(date) {
-    if (!props.multiple) {
+    if (props.selectionMode === 'single') {
         modelValue.value = [date];
         return;
     }

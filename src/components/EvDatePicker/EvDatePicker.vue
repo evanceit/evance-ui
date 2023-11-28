@@ -33,7 +33,7 @@ const modelValue = useModelProxy(
     'modelValue',
     undefined,
     (value) => wrapInArray(value),
-    (value) => props.multiple ? value : value[0]
+    (value) => (props.selectionMode !== 'single') ? value : value[0]
 );
 
 const internalValue = computed(() => {
