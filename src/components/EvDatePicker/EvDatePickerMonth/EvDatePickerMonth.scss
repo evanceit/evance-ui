@@ -25,3 +25,34 @@
         opacity: 0;
     }
 }
+
+.ev-date-picker-month--day {
+    &.is-range-start,
+    &.is-range-within,
+    &.is-range-end {
+        .ev-button {
+            width: calc(100% + 4px);
+            margin: 0 -2px;
+        }
+    }
+
+    &.is-range-start {
+        .ev-button {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+
+    &.is-range-within {
+        .ev-button {
+            border-radius: 0;
+        }
+    }
+
+    &.is-range-end {
+        .ev-button {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+    }
+}

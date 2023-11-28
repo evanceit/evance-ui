@@ -1,9 +1,10 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
-import { EvDatePicker } from "../EvDatePicker";
+import { EvDateField } from "../EvDateField";
+import {ref} from "vue";
 
-const meta: Meta<typeof EvDatePicker> = {
-    component: EvDatePicker,
+const meta: Meta<typeof EvDateField> = {
+    component: EvDateField,
     argTypes: {
         min: {
             control: 'text',
@@ -32,20 +33,19 @@ const meta: Meta<typeof EvDatePicker> = {
 
 export default meta;
 
-type Story = StoryObj<typeof EvDatePicker>;
+type Story = StoryObj<typeof EvDateField>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvDatePicker },
+        components: { EvDateField },
         setup() {
             return { args };
         },
         data() {
             return {
-                modelValue: null
+                modelValue: ref(null)
             }
         },
-        template: `<p>{{modelValue}}</p>
-        <ev-date-picker v-bind="args" v-model="modelValue" />`
+        template: `"{{ modelValue }}"<ev-date-field v-bind="args" v-model="modelValue" />`
     })
 };

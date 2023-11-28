@@ -32,8 +32,7 @@ const modelValue = useModelProxy(
     props,
     'modelValue',
     undefined,
-    (value) => wrapInArray(value),
-    (value) => (props.selectionMode !== 'single') ? value : value[0]
+    (value) => wrapInArray(value)
 );
 
 const internalValue = computed(() => {
@@ -149,7 +148,6 @@ function toggleViewYear() {
 </script>
 <template>
     <div class="ev-date-picker">
-        {{ modelValue }}
         <div class="ev-date-picker-controls">
             <ev-button
                 appearance="subtle"

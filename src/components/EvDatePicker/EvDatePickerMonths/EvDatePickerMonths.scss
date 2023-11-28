@@ -6,32 +6,3 @@
   justify-content: space-around;
   grid-template-columns: repeat(3, 1fr);
 }
-
-
-.ev-date-picker-month--day {
-  &.is-range-start {
-    .ev-button {
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      width: calc(100% + 4px);
-      margin: 0 -2px;
-    }
-  }
-
-  &.is-range-within {
-    .ev-button {
-      border-radius: 0;
-      width: calc(100% + 4px);
-      margin: 0 -2px;
-    }
-  }
-
-  &.is-range-end {
-    .ev-button {
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      width: calc(100% + 4px);
-      margin: 0 -2px;
-    }
-  }
-}

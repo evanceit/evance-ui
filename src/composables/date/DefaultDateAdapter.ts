@@ -173,6 +173,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
         'dayOfMonth': { day: 'numeric' },
         'shortDate': { year: '2-digit', month: 'numeric', day: 'numeric' },
         'year': { year: 'numeric' },
+        'displayDate': { day: '2-digit', month: 'short', year: 'numeric' }
     };
 
     public locale: string;
