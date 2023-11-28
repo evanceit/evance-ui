@@ -97,6 +97,21 @@ const daysInMonth = computed(() => {
     return days.map((date, index) => {
         const isoDate = dateAdapter.toISO(date);
         const isAdjacent = !dateAdapter.isSameMonth(date, month.value);
+        const isInRange = (
+            props.selectionMode === 'range'
+            && (modelValue.value[0] && dateAdapter.isAfter(date, modelValue.value[0]))
+            && (modelValue.value[1] && dateAdapter.isBefore(date, modelValue.value[1]))
+        );
+        const isRangeStart = (
+            props.selectionMode === 'range'
+            && modelValue.value[0]
+            && dateAdapter.isSameDay(date, modelValue.value[0])
+        );
+        const isRangeEnd = (
+            props.selectionMode === 'range'
+            && modelValue.value[1]
+            && dateAdapter.isSameDay(date, modelValue.value[1])
+        );
         return {
             date,
             isoDate,
@@ -109,6 +124,9 @@ const daysInMonth = computed(() => {
             isSelected: modelValue.value.some(value => dateAdapter.isSameDay(date, value)),
             isToday: dateAdapter.isSameDay(date, today),
             isAdjacent,
+            isInRange,
+            isRangeStart,
+            isRangeEnd,
             isHidden: isAdjacent && !props.showAdjacentMonths,
             isHovered: false,
             localized: dateAdapter.format(date, 'dayOfMonth'),
@@ -144,7 +162,7 @@ function isDisabled(value: unknown) {
  * @param day
  */
 function getDayAppearance(day) {
-    if (day.isSelected) {
+    if (day.isSelected || day.isInRange) {
         return 'primary';
     }
     if (day.isToday) {
@@ -157,18 +175,28 @@ function getDayAppearance(day) {
  * ## On Click Event
  * @param date
  */
-function onClick(date) {
-    if (props.selectionMode === 'single') {
-        modelValue.value = [date];
-        return;
-    }
-    const index = modelValue.value.findIndex((selection) => dateAdapter.isSameDay(selection, date));
-    if (index === -1) {
-        modelValue.value = [...modelValue.value, date];
+function onClick(date: Date) {
+    if (props.selectionMode === 'range') {
+        let startDate = modelValue.value[0];
+        let endDate = modelValue.value[1];
+        if (startDate && !endDate && date.getTime() >= startDate.getTime()) {
+            modelValue.value = [startDate, date];
+        } else if (endDate && date.getTime() >= endDate.getTime()) {
+            modelValue.value = [startDate, date];
+        } else {
+            modelValue.value = [date];
+        }
+    } else if (props.selectionMode === 'multiple') {
+        const index = modelValue.value.findIndex((selection) => dateAdapter.isSameDay(selection, date));
+        if (index === -1) {
+            modelValue.value = [...modelValue.value, date];
+        } else {
+            const value = [...modelValue.value];
+            value.splice(index, 1);
+            modelValue.value = value;
+        }
     } else {
-        const value = [...modelValue.value];
-        value.splice(index, 1);
-        modelValue.value = value;
+        modelValue.value = [date];
     }
 }
 
@@ -179,7 +207,14 @@ watch(displayValue, value => {
 
 </script>
 <template>
-    <div class="ev-date-picker-month">
+    <div :class="[
+        'ev-date-picker-month',
+        {
+            'is-select-single': props.selectionMode === 'single',
+            'is-select-multiple': props.selectionMode === 'multiple',
+            'is-select-range': props.selectionMode === 'range'
+        }
+    ]">
         <div class="ev-date-picker-month--days">
             <div
                 v-for="weekDay in dateAdapter.getWeekdays()"
@@ -197,7 +232,10 @@ watch(displayValue, value => {
                         'is-adjacent-hidden': day.isHidden,
                         'is-selected': day.isSelected,
                         'is-week-end': day.isWeekEnd,
-                        'is-week-start': day.isWeekStart
+                        'is-week-start': day.isWeekStart,
+                        'is-range-start': day.isRangeStart,
+                        'is-range-within': day.isInRange,
+                        'is-range-end': day.isRangeEnd
                     }
                 ]"
             >

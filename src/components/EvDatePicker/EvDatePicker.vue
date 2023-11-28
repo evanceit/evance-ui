@@ -149,7 +149,7 @@ function toggleViewYear() {
 </script>
 <template>
     <div class="ev-date-picker">
-
+        {{ modelValue }}
         <div class="ev-date-picker-controls">
             <ev-button
                 appearance="subtle"
