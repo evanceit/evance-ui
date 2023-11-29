@@ -144,7 +144,10 @@ watch(modelValue, () => {
                 v-model="isMenuOpen"
                 @after-leave="onMenuAfterLeave"
             >
-                <ev-surface elevation="overlay">
+                <ev-surface
+                    elevation="overlay"
+                    class="ev-date-field--surface"
+                >
                     <ev-date-picker
                         ref="datePickerRef"
                         v-bind="datePickerProps"

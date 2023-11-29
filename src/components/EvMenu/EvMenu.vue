@@ -3,7 +3,8 @@
  * # EvMenu
  */
 import './EvMenu.scss';
-import {EvOverlay, makeEvMenuProps} from "@/components";
+import {makeEvMenuProps} from "./EvMenu.ts";
+import {EvOverlay} from "@/components/EvOverlay";
 import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useScopeId} from "@/composables/scopeId.ts";
@@ -104,7 +105,6 @@ defineExpose({
     id,
     openChildren
 });
-
 </script>
 <template>
     <ev-overlay

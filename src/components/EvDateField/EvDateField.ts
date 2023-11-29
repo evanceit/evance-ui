@@ -1,5 +1,6 @@
 import {omit, propsFactory} from "@/util";
-import {makeEvDatePickerProps, makeEvTextfieldProps} from "@/components";
+import {makeEvDatePickerProps} from "@/components/EvDatePicker";
+import {makeEvTextfieldProps} from "@/components/EvTextfield";
 import {Calendar} from "@/icons";
 
 export const makeEvDateFieldProps = propsFactory({

@@ -5,7 +5,7 @@ import {makeDimensionsProps} from "@/composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
 import {makePositionStrategyProps} from "./position.ts";
 import {makeScrollStrategyProps} from "./scroll.ts";
-import {makeEvTransitionProps} from "@/components";
+import {makeEvTransitionProps} from "@/components/EvTransition";
 import {makeComponentProps} from "@/composables/component.ts";
 
 /**
