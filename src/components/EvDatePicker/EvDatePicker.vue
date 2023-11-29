@@ -56,8 +56,9 @@ const month = ref(Number(props.month ?? dateAdapter.getMonth(dateAdapter.startOf
 const monthProps = computed(() => filterComponentProps(EvDatePickerMonth, props));
 
 const monthText = computed(() => {
+    const date = dateAdapter.startOfMonth(dateAdapter.date());
     return dateAdapter.format(
-        dateAdapter.setMonth(dateAdapter.date(), month.value),
+        dateAdapter.setMonth(date, month.value),
         'month'
     );
 });

@@ -61,7 +61,8 @@ const month = useModelProxy(
     undefined,
     (v) => {
       const value = v != null ? Number(v) : dateAdapter.getMonth(displayValue.value);
-      const date = dateAdapter.setYear(dateAdapter.date(), dateAdapter.getYear(year.value));
+      let date = dateAdapter.startOfMonth(dateAdapter.date());
+      date = dateAdapter.setYear(date, dateAdapter.getYear(year.value));
       return dateAdapter.setMonth(date, value);
     },
     (v) => dateAdapter.getMonth(v)
