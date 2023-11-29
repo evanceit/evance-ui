@@ -1,11 +1,12 @@
-import {propsFactory} from "@/util";
+import {omit, propsFactory} from "@/util";
 import {makeEvDatePickerProps, makeEvTextfieldProps} from "@/components";
 import {Calendar} from "@/icons";
 
 export const makeEvDateFieldProps = propsFactory({
-    ...makeEvTextfieldProps({
-        readonly: true,
+    ...omit(makeEvTextfieldProps({
         iconStart: Calendar
-    }),
+    }), [
+        'type'
+    ]),
     ...makeEvDatePickerProps()
 }, 'EvDateField');

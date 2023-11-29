@@ -2,7 +2,6 @@
 .ev-date-picker-month--days {
     display: grid;
     grid-template-columns: min-content min-content min-content min-content min-content min-content min-content;
-    row-gap: 4px;
     flex: 1 1;
     justify-content: space-around;
 }
@@ -32,7 +31,6 @@
     &.is-range-end {
         .ev-button {
             width: calc(100% + 4px);
-            margin: 0 -2px;
         }
     }
 

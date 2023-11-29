@@ -43,9 +43,9 @@ export const Primary: Story = {
             
             <p>{{ t('greeting', { name: 'Geoff' }) }}</p>
             
-            <ev-button @click="changeLocale('en')">en</ev-button>
+            <ev-button @click="changeLocale('en-GB')">en-GB</ev-button>
             
-            <ev-button @click="changeLocale('fr')">fr</ev-button>
+            <ev-button @click="changeLocale('fr-FR')">fr-FR</ev-button>
         `
     })
 };

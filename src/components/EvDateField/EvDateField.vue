@@ -6,7 +6,7 @@ import './EvDateField.scss';
 import EvTextfield from "@/components/EvTextfield/EvTextfield.vue";
 import EvMenu from "@/components/EvMenu/EvMenu.vue";
 import EvDatePicker from "@/components/EvDatePicker/EvDatePicker.vue";
-import {computed, ref, shallowRef, watch} from "vue";
+import {computed, Ref, ref, shallowRef, useSlots, watch} from "vue";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import {FocusEvent} from "react";
 import {makeEvDateFieldProps} from "@/components/EvDateField/EvDateField.ts";
@@ -16,6 +16,7 @@ import {useDate} from "@/composables/date/date.ts";
 
 const dateAdapter = useDate();
 const props = defineProps(makeEvDateFieldProps());
+const slots = useSlots();
 
 // Text Field
 const evMenuRef = ref<EvMenu>();
@@ -122,6 +123,7 @@ watch(modelValue, () => {
         ref="evTextfieldRef"
         class="ev-date-field"
         v-bind="evTextfieldProps"
+        v-bind:validation-value="modelValue"
         v-model="displayValue"
         v-model:focused="isFocused"
         @click:control="onFieldFocus"
@@ -129,25 +131,30 @@ watch(modelValue, () => {
         @click:clear="onClearInput"
         @input="onInput"
     >
-        <ev-menu
-            ref="evMenuRef"
-            activator="parent"
-            position="bottom-start"
-            :openOnClick="false"
-            :closeOnContentClick="false"
-            v-model="isMenuOpen"
-            @after-leave="onMenuAfterLeave"
-        >
-            <ev-surface elevation="overlay">
-                <ev-date-picker
-                    ref="datePickerRef"
-                    v-bind="datePickerProps"
-                    v-model="modelValue"
-                    @focusin="onDatePickerFocusIn"
-                    @update:modelValue="onUpdateModelValue()"
-                />
-            </ev-surface>
-        </ev-menu>
+        <template #label v-if="props.label || slots.label">
+          <slot name="label">{{ props.label }}</slot>
+        </template>
+        <template #default>
+            <ev-menu
+                ref="evMenuRef"
+                activator="parent"
+                position="bottom-start"
+                :openOnClick="false"
+                :closeOnContentClick="false"
+                v-model="isMenuOpen"
+                @after-leave="onMenuAfterLeave"
+            >
+                <ev-surface elevation="overlay">
+                    <ev-date-picker
+                        ref="datePickerRef"
+                        v-bind="datePickerProps"
+                        v-model="modelValue"
+                        @focusin="onDatePickerFocusIn"
+                        @update:modelValue="onUpdateModelValue()"
+                    />
+                </ev-surface>
+            </ev-menu>
+        </template>
     </ev-textfield>
 
 

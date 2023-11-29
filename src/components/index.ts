@@ -4,6 +4,7 @@ export * from './EvOverlay';
 
 export * from './EvButton';
 export * from './EvCheckbox';
+export * from './EvDateField';
 export * from './EvDatePicker';
 export * from './EvDivider';
 export * from './EvErrors';
