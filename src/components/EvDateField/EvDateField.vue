@@ -3,13 +3,13 @@
  * `<ev-date-field>`
  */
 import './EvDateField.scss';
-import EvTextfield from "@/components/EvTextfield/EvTextfield.vue";
-import EvMenu from "@/components/EvMenu/EvMenu.vue";
-import EvDatePicker from "@/components/EvDatePicker/EvDatePicker.vue";
-import {computed, Ref, ref, shallowRef, useSlots, watch} from "vue";
-import EvSurface from "@/components/EvSurface/EvSurface.vue";
+import {makeEvDateFieldProps} from "./EvDateField.ts";
+import {EvTextfield} from "@/components/EvTextfield";
+import {EvMenu} from "@/components/EvMenu";
+import {EvDatePicker} from "@/components/EvDatePicker";
+import {EvSurface} from "@/components/EvSurface";
+import {computed, ref, shallowRef, useSlots, watch} from "vue";
 import {FocusEvent} from "react";
-import {makeEvDateFieldProps} from "@/components/EvDateField/EvDateField.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {filterComponentProps, omit, wrapInArray} from "@/util";
 import {useDate} from "@/composables/date/date.ts";

@@ -3,7 +3,7 @@
  * # `<ev-label>`
  */
 import './EvLabel.scss';
-import {makeEvLabelProps} from "@/components";
+import {makeEvLabelProps} from "./EvLabel.ts";
 import {useSlots} from "vue";
 
 const props = defineProps(makeEvLabelProps());

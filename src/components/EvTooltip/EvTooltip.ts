@@ -1,5 +1,5 @@
 import {omit, propsFactory} from "@/util";
-import {makeEvOverlayProps} from "@/components";
+import {makeEvOverlayProps} from "@/components/EvOverlay";
 
 export const makeEvTooltipProps = propsFactory({
     id: String,

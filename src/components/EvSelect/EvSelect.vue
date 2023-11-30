@@ -13,9 +13,9 @@ import EvList from "../EvList/EvList.vue";
 import {useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {FocusEvent, MouseEvent} from "react";
-import EvVirtualScroll from "../EvVirtualScroll/EvVirtualScroll.vue";
-import EvListItem from "../EvListItem/EvListItem.vue";
-import {ListItem} from "../EvList";
+import EvVirtualScroll from "@/components/EvVirtualScroll/EvVirtualScroll.vue";
+import EvListItem from "@/components/EvListItem/EvListItem.vue";
+import {ListItem} from "@/components/EvList";
 import {useScrolling} from "./useScrolling.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 

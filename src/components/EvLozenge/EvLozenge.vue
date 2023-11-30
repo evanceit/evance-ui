@@ -5,7 +5,7 @@
  * `<ev-lozenge />`
  */
 import './EvLozenge.scss';
-import {appearanceModifier, AppearanceProp, isIntegerish} from "../../util";
+import {appearanceModifier, AppearanceProp, isIntegerish} from "@/util";
 
 /**
  * ## Lozenge Props

@@ -2,8 +2,8 @@
 import './EvQuickfind.scss';
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Quickfind} from "../../icons";
-import {useModelProxy} from "../../composables/modelProxy.ts";
-import {sizeModifier} from "../../util";
+import {useModelProxy} from "@/composables/modelProxy.ts";
+import {sizeModifier} from "@/util";
 import {computed} from "vue";
 
 type QuickfindSize = 'small' | 'medium' | 'large';

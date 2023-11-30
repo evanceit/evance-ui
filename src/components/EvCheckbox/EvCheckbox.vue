@@ -3,9 +3,11 @@
  * # `<ev-checkbox>`
  */
 import './EvCheckbox.scss';
+import {makeEvCheckboxProps, useToggleControl} from "./EvCheckbox.ts";
 import {ref, useAttrs, useSlots} from "vue";
 import {splitInputAttrs} from "@/util";
-import {makeEvCheckboxProps, useToggleControl, EvLabel, EvErrors} from "@/components";
+import {EvErrors} from "@/components/EvErrors";
+import {EvLabel} from "@/components/EvLabel";
 import {useFormField} from "@/composables/validation.ts";
 
 /**

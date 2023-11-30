@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import './EvSurface.scss';
 import {makeElevationClass, makeEvSurfaceProps} from "./EvSurface.ts";
-import {isEmpty, isString, makeClassName} from "../../util";
-import {useDimensions} from "../../composables/dimensions.ts";
+import {isEmpty, isString, makeClassName} from "@/util";
+import {useDimensions} from "@/composables/dimensions.ts";
 
 const props = defineProps(makeEvSurfaceProps());
 const dimensions = useDimensions(props);

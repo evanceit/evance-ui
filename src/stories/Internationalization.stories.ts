@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
-import {EvButton} from "@/components";
-import {useLocaleFunctions, useLocaleManager} from "@/composables/locale.ts";
+import {EvButton} from "../components/EvButton";
+import {useLocaleFunctions, useLocaleManager} from "../composables/locale.ts";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
 import './EvRadioGroup.scss';
-import {EvLabel, EvRadioGroupSymbol, makeEvRadioGroupProps} from "@/components";
+import EvLabel from "@/components/EvLabel/EvLabel.vue";
+import {EvRadioGroupSymbol, makeEvRadioGroupProps} from "./EvRadioGroup.ts";
 import {computed, provide, useSlots} from "vue";
 import {getNextId} from "@/util";
-import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useFormField} from "@/composables/validation.ts";
 import EvErrors from "@/components/EvErrors/EvErrors.vue";
 

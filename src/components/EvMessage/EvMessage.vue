@@ -15,10 +15,10 @@ import {
     Info as InfoIcon,
     Note as NoteIcon,
     Warning as WarningIcon
-} from "../../icons";
-import {computed, ref} from "vue";
-import EvButton from "../EvButton/EvButton.vue";
-import {useModelProxy} from "../../composables/modelProxy.ts";
+} from "@/icons";
+import {computed} from "vue";
+import EvButton from "@/components/EvButton/EvButton.vue";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 
 interface MessageProps {
     appearance?: AppearanceProp,

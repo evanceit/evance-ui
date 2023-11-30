@@ -10,7 +10,7 @@ import {
     isIntegerish,
     AppearanceProp,
     InputSizeProp
-} from "../../util";
+} from "@/util";
 
 interface ProgressProps {
     appearance?: AppearanceProp,

@@ -1,12 +1,12 @@
-import {getPropertyValue, isPrimitive, propsFactory, splitObject} from "../../util";
+import {getPropertyValue, isPrimitive, propsFactory, splitObject} from "@/util";
 import {
     ListItem as DefaultListItem,
     ListItemsProps as DefaultListItemProps,
     makeListItemsProps, makeNestedProps
-} from "../../composables/lists";
+} from "@/composables/lists";
 import {computed, PropType} from "vue";
-import {makeComponentProps} from "../../composables/component.ts";
-import {makeDimensionsProps} from "../../composables/dimensions.ts";
+import {makeComponentProps} from "@/composables/component.ts";
+import {makeDimensionsProps} from "@/composables/dimensions.ts";
 
 
 /**

@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextarea } from "../EvTextarea";
-import {InputAppearance} from "@/util";
+import {InputAppearance} from "../../util";
 
 const meta: Meta<typeof EvTextarea> = {
     component: EvTextarea,

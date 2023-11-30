@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvSelect } from "../EvSelect";
-import {InputAppearance} from "@/util";
+import {InputAppearance} from "../../util";
 import {Search} from "../../icons";
 
 const meta: Meta<typeof EvSelect> = {

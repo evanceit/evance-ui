@@ -1,8 +1,8 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
-import {EvForm} from "@/components/EvForm";
+import {EvForm} from "../EvForm";
 import {ref, shallowRef} from "vue";
-import EvTextfield from "@/components/EvTextfield/EvTextfield.vue";
-import EvButton from "@/components/EvButton/EvButton.vue";
+import EvTextfield from "../EvTextfield/EvTextfield.vue";
+import EvButton from "../EvButton/EvButton.vue";
 
 const meta: Meta<typeof EvForm> = {
     component: EvForm,

@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
-import {EvErrors} from "@/components";
+import {EvErrors} from "../EvErrors";
 
 const meta: Meta<typeof EvErrors> = {
     component: EvErrors,

@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
-import {EvLabel} from "@/components";
+import {EvLabel} from "../EvLabel";
 
 const meta: Meta<typeof EvLabel> = {
     component: EvLabel,

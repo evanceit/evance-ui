@@ -5,10 +5,10 @@
 import './EvDatePickerMonths.scss';
 import {makeEvDatePickerMonthsProps} from "./EvDatePickerMonths.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {computed, watchEffect} from "vue";
+import {computed} from "vue";
 import {useDate} from "@/composables/date/date.ts";
 import {createRange} from "@/util";
-import EvButton from "@/components/EvButton/EvButton.vue";
+import {EvButton} from "@/components/EvButton";
 
 const dateAdapter = useDate();
 const props = defineProps(makeEvDatePickerMonthsProps());

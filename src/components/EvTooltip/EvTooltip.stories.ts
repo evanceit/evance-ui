@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
-import {EvTooltip, EvButton} from "@/components";
+import {EvTooltip, EvButton} from "../../components";
 
 const meta: Meta<typeof EvTooltip> = {
     component: EvTooltip,

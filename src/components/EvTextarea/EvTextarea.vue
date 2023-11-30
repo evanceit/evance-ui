@@ -3,13 +3,15 @@
  * # `<ev-textarea>`
  */
 import './EvTextarea.scss';
+import {makeEvTextareaProps} from "./EvTextarea.ts";
 import {computed, nextTick, ref, useAttrs, onUpdated, onMounted, useSlots} from "vue";
 import {Appearance, appearanceModifier, InputAppearance, splitInputAttrs} from "@/util";
 import {useAutofocus} from "@/composables/focus.ts";
-import {Cancel} from "../../icons";
-import EvProgress from "../EvProgress/EvProgress.vue";
-import EvIcon from "../EvIcon/EvIcon.vue";
-import {EvErrors, EvLabel, makeEvTextareaProps} from "@/components";
+import {Cancel} from "@/icons";
+import {EvProgress} from "@/components/EvProgress";
+import {EvIcon} from "@/components/EvIcon";
+import {EvErrors} from "@/components/EvErrors";
+import {EvLabel} from "@/components/EvLabel";
 import {useFormField} from "@/composables/validation.ts";
 import {MouseEvent} from "react";
 

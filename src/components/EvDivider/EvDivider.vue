@@ -6,8 +6,8 @@
  */
 import './EvDivider.scss';
 import {computed, useSlots} from "vue";
-import {hasSlotWithContent} from "../../composables/hasSlotWithContent";
-import {Appearance, appearanceModifier, AppearanceProp, isCssVariable, isIntegerish} from "../../util";
+import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
+import {Appearance, appearanceModifier, AppearanceProp, isCssVariable, isIntegerish} from "@/util";
 
 /**
  * ## Divider Border Style

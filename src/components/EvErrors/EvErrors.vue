@@ -3,7 +3,7 @@
  * # EvErrors
  */
 import './EvErrors.scss'
-import {makeEvErrorsProps} from "@/components";
+import {makeEvErrorsProps} from "./EvErrors.ts";
 import {computed} from "vue";
 import {wrapInArray} from "@/util";
 

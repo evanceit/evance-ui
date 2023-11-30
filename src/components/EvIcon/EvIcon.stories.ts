@@ -1,8 +1,8 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvIcon } from "../EvIcon";
-import {EvanceCircle, Evance, Help, Minus, Plus} from "@/icons";
-import {Appearance} from "@/util";
+import {EvanceCircle, Evance, Help, Minus, Plus} from "../../icons";
+import {Appearance} from "../../util";
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,

@@ -3,13 +3,13 @@
  * # EvButton
  */
 import './EvButton.scss';
-import EvIcon from "../EvIcon/EvIcon.vue";
-import {computed, toRaw, useAttrs, useSlots} from "vue";
-import EvProgressCircular from "../EvProgressCircular/EvProgressCircular.vue";
-import {appearanceModifier, InputSize, sizeModifier} from "../../util";
-import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
 import {makeEvButtonProps} from "./EvButton.ts";
-import {useRouterLinkOrHref} from "../../composables/router.ts";
+import {computed, useAttrs, useSlots} from "vue";
+import {EvIcon} from "@/components/EvIcon";
+import {EvProgressCircular} from "@/components/EvProgressCircular";
+import {appearanceModifier, InputSize, sizeModifier} from "@/util";
+import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
+import {useRouterLinkOrHref} from "@/composables/router.ts";
 
 
 const props = defineProps(makeEvButtonProps());

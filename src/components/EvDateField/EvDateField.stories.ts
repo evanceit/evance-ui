@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvDateField } from "../EvDateField";
 import {ref} from "vue";
-import {omit} from "@/util";
+import {omit} from "../../util";
 
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories.ts";
@@ -35,19 +35,14 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvDateField },
         setup() {
-
-            const dateValidator = (value) => {
-                console.log(value);
-                return true;
-            };
-
-            return { args, dateValidator };
+            return { args };
         },
         data() {
             return {
                 modelValue: ref(null)
             }
         },
-        template: `"{{ modelValue }}"<ev-date-field v-bind="args" v-model="modelValue" :validators="[dateValidator]" />`
+        template: `<p>Selected date: "{{ modelValue }}"</p>
+        <ev-date-field v-bind="args" v-model="modelValue" />`
     })
 };

@@ -2,7 +2,6 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvButton } from "../EvButton";
 import {ArrowContinue, Check, Plus, Save} from "../../icons";
-import {markRaw} from "vue";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,

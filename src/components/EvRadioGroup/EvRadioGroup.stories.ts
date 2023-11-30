@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvRadioGroup } from "../EvRadioGroup";
-import {EvRadio} from "@/components";
+import {EvRadio} from "../EvRadio";
 
 const meta: Meta<typeof EvRadioGroup> = {
     component: EvRadioGroup,

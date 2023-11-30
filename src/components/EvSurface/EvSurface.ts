@@ -1,5 +1,5 @@
-import {Axis, makeClassName, propsFactory} from "../../util";
-import {makeDimensionsProps} from "../../composables/dimensions.ts";
+import {Axis, makeClassName, propsFactory} from "@/util";
+import {makeDimensionsProps} from "@/composables/dimensions.ts";
 
 /**
  * # Surface Elevation

@@ -2,11 +2,10 @@
 import './EvListItem.scss';
 import {makeEvListItemProps} from "./EvListItem.ts";
 import {computed, useAttrs, useSlots} from "vue";
-import {useRouterLinkOrHref} from "../../composables/router.ts";
-import EvIcon from "../EvIcon/EvIcon.vue";
-import {hasSlotWithContent} from "../../composables/hasSlotWithContent.ts";
-import {useList, useNestedListItem} from "../../composables/lists";
-import {useIcon} from "../EvIcon";
+import {useRouterLinkOrHref} from "@/composables/router.ts";
+import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
+import {useList, useNestedListItem} from "@/composables/lists";
+import {useIcon, EvIcon} from "@/components/EvIcon";
 
 // Emit
 const emit = defineEmits([

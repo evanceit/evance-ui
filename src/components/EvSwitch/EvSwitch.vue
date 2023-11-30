@@ -5,7 +5,10 @@
 import './EvSwitch.scss';
 import {ref, useAttrs, useSlots} from "vue";
 import {splitInputAttrs} from "@/util";
-import {EvErrors, EvLabel, makeEvSwitchProps, useToggleControl} from "@/components";
+import {EvErrors} from '@/components/EvErrors';
+import {EvLabel} from '@/components/EvLabel';
+import {useToggleControl} from '@/components/EvCheckbox';
+import {makeEvSwitchProps} from "./EvSwitch.ts";
 import {useFormField} from "@/composables/validation.ts";
 
 /**

@@ -3,8 +3,8 @@
  * # `<ev-kbd>`
  */
 import './EvKbd.scss';
+import {makeEvKbdProps} from "./EvKbd.ts";
 import {useSlots} from "vue";
-import {makeEvKbdProps} from "@/components";
 import {InputSize, sizeModifier} from "@/util";
 
 const props = defineProps(makeEvKbdProps());

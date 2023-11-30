@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextfield } from "../EvTextfield";
 import {Search} from "../../icons";
-import {InputAppearance, InputSize} from "@/util";
+import {InputAppearance, InputSize} from "../../util";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,

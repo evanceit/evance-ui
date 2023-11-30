@@ -4,7 +4,7 @@
  */
 import './EvProgressCircular.scss';
 import {useSlots, ref} from "vue";
-import {appearanceModifier, AppearanceProp, isIntegerish, toWebUnit} from "../../util";
+import {appearanceModifier, AppearanceProp, toWebUnit} from "../../util";
 
 type Size = 'default';
 

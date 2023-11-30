@@ -5,7 +5,9 @@
 import './EvRadio.scss';
 import {computed, inject, ref, useAttrs, useSlots} from "vue";
 import {isDeepEqual, splitInputAttrs} from "@/util";
-import {EvLabel, EvRadioGroupSymbol, makeEvRadioProps} from "@/components";
+import EvLabel from "@/components/EvLabel/EvLabel.vue";
+import {EvRadioGroupSymbol} from '@/components/EvRadioGroup'
+import {makeEvRadioProps} from "./EvRadio.ts";
 import {useFormField} from "@/composables/validation.ts";
 
 /**

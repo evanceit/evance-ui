@@ -1,7 +1,7 @@
-import {isDeepEqual, propsFactory} from "../../util";
-import {makeListItemsProps} from "../../composables/lists";
-import {makeEvTextfieldProps} from "../EvTextfield";
-import {ChevronDown} from "../../icons";
+import {isDeepEqual, propsFactory} from "@/util";
+import {makeListItemsProps} from "@/composables/lists";
+import {makeEvTextfieldProps} from "@/components/EvTextfield";
+import {ChevronDown} from "@/icons";
 import {PropType} from "vue";
 
 /**

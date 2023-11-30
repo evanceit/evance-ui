@@ -4,17 +4,17 @@
  * `<ev-date-picker>`
  */
 import './EvDatePicker.scss';
+import {makeEvDatePickerProps} from "./EvDatePicker.ts";
 import {useDate} from "@/composables/date/date.ts";
 import {computed, ref, shallowRef, watch} from "vue";
-import {makeEvDatePickerProps} from "./EvDatePicker.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {filterComponentProps, omit, wrapInArray} from "@/util";
-import EvDatePickerMonth from "./EvDatePickerMonth/EvDatePickerMonth.vue";
-import EvDatePickerYears from "./EvDatePickerYears/EvDatePickerYears.vue";
-import EvButton from "@/components/EvButton/EvButton.vue";
-import EvSpacer from "@/components/EvGrid/EvSpacer.vue";
+import {EvDatePickerMonth} from "./EvDatePickerMonth";
+import {EvDatePickerMonths} from "./EvDatePickerMonths";
+import {EvDatePickerYears} from "./EvDatePickerYears";
+import {EvButton} from "@/components/EvButton";
+import {EvSpacer} from "@/components/EvGrid";
 import {ChevronLeft, ChevronRight} from "@/icons";
-import EvDatePickerMonths from "@/components/EvDatePicker/EvDatePickerMonths/EvDatePickerMonths.vue";
 
 const props = defineProps(makeEvDatePickerProps());
 const dateAdapter = useDate();

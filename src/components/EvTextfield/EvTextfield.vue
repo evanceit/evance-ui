@@ -3,9 +3,10 @@
  * # `<ev-textfield>`
  */
 import './EvTextfield.scss';
+import { makeEvTextfieldProps} from "./EvTextfield.ts";
 import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
-import EvIcon from "../EvIcon/EvIcon.vue";
-import {Cancel} from "../../icons";
+import {EvIcon, useIcon} from "@/components/EvIcon";
+import {Cancel} from "@/icons";
 import {
     Appearance,
     appearanceModifier,
@@ -15,9 +16,11 @@ import {
     splitInputAttrs
 } from "@/util";
 import {useAutofocus} from "@/composables/focus.ts";
-import {EvLabel, makeEvTextfieldProps, EvErrors, EvProgress, EvProgressCircular} from "@/components";
+import {EvLabel} from "@/components/EvLabel";
+import {EvErrors} from "@/components/EvErrors";
+import {EvProgress} from "@/components/EvProgress";
+import {EvProgressCircular} from "@/components/EvProgressCircular";
 import {MouseEvent} from "react";
-import {useIcon} from "../EvIcon";
 import {useFormField} from "@/composables/validation.ts";
 
 
