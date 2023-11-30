@@ -1,5 +1,5 @@
 import {omit, propsFactory} from "@/util";
-import {makeEvTextfieldProps} from "@/components/EvTextfield";
+import {makeEvTextfieldProps} from "@/components/EvTextfield/EvTextfield.ts";
 
 export const makeEvNumberFieldProps = propsFactory({
     ...omit(makeEvTextfieldProps(), [
