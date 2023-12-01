@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvNumberField } from "../EvNumberField";
-import {omit} from "../../util";
+import {omit} from "@/util";
 
 import EvTextfieldStories from "../EvTextfield/EvTextfield.stories.ts";
 
@@ -9,11 +9,32 @@ const meta: Meta<typeof EvNumberField> = {
     component: EvNumberField,
     title: 'Forms/EvNumberField',
     argTypes: {
+        min: {
+            control: 'number',
+            description: "The minimum boundary number."
+        },
+        max: {
+            control: 'number',
+            description: "The maximum boundary number."
+        },
+        increment: {
+            control: 'number',
+            description: "The amount to increment when the +/- buttons are pressed."
+        },
+        modelValue: {
+            control: 'number',
+            description: "The `model-value` is the `v-model` value of the component."
+        },
         ...omit(EvTextfieldStories.argTypes, [
+            'modelValue',
             'type'
         ])
     },
     args: {
+        min: undefined,
+        max: undefined,
+        increment: undefined,
+
         ...omit(EvTextfieldStories.args, [
             'type'
         ])
