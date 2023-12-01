@@ -1,11 +1,15 @@
 <script setup lang="ts">
 /**
  * `<ev-number-field>`
+ *
+ * @todo: we need the following:
+ * - decimalsMin
+ * - decimalsMax
  */
 import './EvNumberField.scss';
 import {makeEvNumberFieldProps} from "./EvNumberField.ts";
 import {EvTextfield} from "@/components/EvTextfield";
-import {computed, Ref, ref, shallowRef, useSlots, watch} from "vue";
+import {computed, onMounted, onUnmounted, Ref, ref, shallowRef, useSlots, watch} from "vue";
 import {filterComponentProps, isEmpty, omit} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {EvButton} from "@/components/EvButton";
@@ -20,25 +24,26 @@ const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), ['modelValue']);
 });
 
+/**
+ * We separate the `modelValue` and the `inputValue` (the value displayed)
+ * because this allows us some efficiency improvements when holding down +/- buttons
+ * as well as permitting formatting.
+ *
+ * Whenever the `modelValue` changes we need to ensure the `inputValue` is updated.
+ */
 const modelValue = useModelProxy(props, 'modelValue');
 const inputValue: Ref<number | null | undefined> = shallowRef(modelValue.value);
-
 watch(modelValue, () => {
     inputValue.value = modelValue.value;
 });
 
 const incrementAmount = computed(() => {
-    return props.increment ?? 1;
+    return props.step ?? 1;
 });
 let incrementInterval: ReturnType<typeof setInterval> | null = null;
 let incrementRate: number = 100;
-const incrementDelay = 0.5;
-
-/**
- * @todo: we need the following:
- * - decimalsMin
- * - decimalsMax
- */
+const incrementDelay = 0.25;
+let isIncrementing = false;
 
 /**
  * # On Blur
@@ -47,20 +52,6 @@ const incrementDelay = 0.5;
  */
 function updateModelValue() {
     setValue(inputValue, inputValue.value);
-}
-
-/**
- * ## On Click Minus
- */
-function onClickMinus() {
-    setValue(modelValue, modelValue.value - incrementAmount.value);
-}
-
-/**
- * On Click Plus
- */
-function onClickPlus() {
-    setValue(modelValue, modelValue.value + incrementAmount.value);
 }
 
 /**
@@ -107,9 +98,18 @@ function setValue(model: Ref, value: number | null | undefined) {
  * @param direction
  */
 function startIncrementing(direction: number) {
+    if (isIncrementing) {
+        return;
+    }
+    isIncrementing = true;
     if (isEmpty(inputValue.value)) {
         inputValue.value = 0;
     }
+
+    // Do an initial increment
+    setValue(inputValue, inputValue.value!  + (direction * incrementAmount.value));
+
+    // Then we rely on the delay to do more increments on a timer
     let startTime = Date.now();
     let internalIncrementAmount = incrementAmount.value;
     incrementInterval = setInterval(() => {
@@ -130,17 +130,28 @@ function startIncrementing(direction: number) {
  * When the user releases the plus/minus button stop the increment interval
  * and set the resulting value onto the `modelValue` - this is more efficient
  * than setting the `modelValue` with every increment.
- *
- * @param e
  */
-function stopIncrementing(e: Event) {
-    if (!isEmpty(incrementInterval)) {
+function stopIncrementing() {
+    if (isIncrementing) {
         clearInterval(incrementInterval);
         setValue(modelValue, inputValue.value);
-        e.stopPropagation();
+        isIncrementing = false;
     }
 }
 
+function documentMouseup() {
+    stopIncrementing();
+}
+
+onMounted(() => {
+    document.addEventListener('mouseup', documentMouseup, {
+        passive: true
+    });
+});
+
+onUnmounted(() => {
+    document.removeEventListener('mouseup', documentMouseup);
+})
 
 
 </script>
@@ -153,7 +164,14 @@ function stopIncrementing(e: Event) {
         type="number"
         @input="updateModelValue()"
         @blur="updateModelValue()"
+        @keydown.up.prevent="startIncrementing(1)"
+        @keyup.up.prevent="stopIncrementing()"
+        @keydown.down.prevent="startIncrementing(-1)"
+        @keyup.down.prevent="stopIncrementing()"
     >
+        <template #label v-if="props.label || slots.label">
+            <slot name="label">{{ props.label }}</slot>
+        </template>
         <template #prefix>
             <ev-button
                 rounded
@@ -161,13 +179,9 @@ function stopIncrementing(e: Event) {
                 class="ev-number-field--minus"
                 appearance="subtle"
                 :icon="Minus"
-                @click="onClickMinus()"
                 @mousedown="startIncrementing(-1)"
-                @mouseup="stopIncrementing($event)"
+                @mouseup="stopIncrementing()"
             />
-        </template>
-        <template #label v-if="props.label || slots.label">
-            <slot name="label">{{ props.label }}</slot>
         </template>
         <template #suffix>
             <ev-button
@@ -176,9 +190,8 @@ function stopIncrementing(e: Event) {
                 class="ev-number-field--plus"
                 appearance="subtle"
                 :icon="Plus"
-                @click="onClickPlus()"
                 @mousedown="startIncrementing(1)"
-                @mouseup="stopIncrementing($event)"
+                @mouseup="stopIncrementing()"
             />
         </template>
     </ev-textfield>

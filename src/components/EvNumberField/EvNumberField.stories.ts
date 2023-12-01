@@ -17,7 +17,7 @@ const meta: Meta<typeof EvNumberField> = {
             control: 'number',
             description: "The maximum boundary number."
         },
-        increment: {
+        step: {
             control: 'number',
             description: "The amount to increment when the +/- buttons are pressed."
         },
@@ -33,7 +33,7 @@ const meta: Meta<typeof EvNumberField> = {
     args: {
         min: undefined,
         max: undefined,
-        increment: undefined,
+        step: undefined,
 
         ...omit(EvTextfieldStories.args, [
             'type'

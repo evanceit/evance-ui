@@ -4,7 +4,7 @@ import {makeEvTextfieldProps} from "@/components/EvTextfield/EvTextfield.ts";
 export const makeEvNumberFieldProps = propsFactory({
     min: Number,
     max: Number,
-    increment: {
+    step: {
         type: Number,
         default: 1
     },
