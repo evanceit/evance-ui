@@ -37,6 +37,26 @@ watch(modelValue, () => {
     inputValue.value = modelValue.value;
 });
 
+/**
+ * Minimum Boundary
+ * The computed value is now only a number or null (undefined will be converted to null).
+ */
+const minimum = computed(() => {
+    return props.min ?? null;
+});
+
+/**
+ * Maximum Boundary
+ * The computed value is now only a number or null (undefined will be converted to null).
+ */
+const maximum = computed(() => {
+    return props.max ?? null;
+});
+
+/**
+ * Incremental Values
+ * 
+ */
 const incrementAmount = computed(() => {
     return props.step ?? 1;
 });
@@ -46,45 +66,47 @@ const incrementDelay = 0.25;
 let isIncrementing = false;
 
 /**
- * # On Blur
- * We can only reliably enforce min/max boundaries entered during input
- * when the field is burred and not on input.
- */
-function updateModelValue() {
-    setValue(inputValue, inputValue.value);
-}
-
-/**
  * ## Is Max Boundary
  * @param value
  */
-function isMaxBoundary(value: number | null | undefined): boolean {
-    return (!isEmpty(props.max) && value! > props.max);
+function isMaxBoundary(value: number): boolean {
+    return (maximum.value !== null && maximum.value < value);
 }
 
 /**
  * ## Is Min Boundary
  * @param value
  */
-function isMinBoundary(value: number | null | undefined): boolean {
-    return (!isEmpty(props.min) && value! < props.min);
+function isMinBoundary(value: number): boolean {
+    return (minimum.value !== null && minimum.value > value);
+}
+
+/**
+ * # On Blur
+ *
+ * If the user has typed something we can't be sure that it is accurate
+ * based upon the min/max boundaries so we reset the `inputValue` first.
+ * Then, we can update the `modelValue` based on the input.
+ */
+function onBlur() {
+    inputValue.value = getValue(inputValue.value);
+    modelValue.value = inputValue.value;
 }
 
 /**
  * ## Set Value
  * Can be used to set the value of either the 'modelValue' or the 'inputValue'.
- * @param model
  * @param value
  */
-function setValue(model: Ref, value: number | null | undefined) {
+function getValue(value: number | null | undefined) {
     if (isEmpty(value)) {
-        model.value = value;
-    } else if (isMinBoundary(value)) {
-        model.value = props.min;
-    } else if (isMaxBoundary(value)) {
-        model.value = props.max;
+        return value;
+    } else if (isMinBoundary(value!)) {
+        return minimum.value;
+    } else if (isMaxBoundary(value!)) {
+        return maximum.value;
     } else {
-        model.value = value;
+        return value;
     }
 }
 
@@ -103,11 +125,11 @@ function startIncrementing(direction: number) {
     }
     isIncrementing = true;
     if (isEmpty(inputValue.value)) {
-        inputValue.value = 0;
+        inputValue.value = minimum.value;
+    } else {
+        inputValue.value = getValue(inputValue.value!  + (direction * incrementAmount.value));
     }
 
-    // Do an initial increment
-    setValue(inputValue, inputValue.value!  + (direction * incrementAmount.value));
 
     // Then we rely on the delay to do more increments on a timer
     let startTime = Date.now();
@@ -120,7 +142,7 @@ function startIncrementing(direction: number) {
         }
         const multiplier = Math.floor(Math.pow(2, elapsedTime - 1));
         internalIncrementAmount = (incrementAmount.value * multiplier);
-        setValue(inputValue, inputValue.value!  + (direction * internalIncrementAmount));
+        inputValue.value = getValue(inputValue.value!  + (direction * internalIncrementAmount));
     }, incrementRate);
 }
 
@@ -134,7 +156,7 @@ function startIncrementing(direction: number) {
 function stopIncrementing() {
     if (isIncrementing) {
         clearInterval(incrementInterval);
-        setValue(modelValue, inputValue.value);
+        modelValue.value = getValue(inputValue.value);
         isIncrementing = false;
     }
 }
@@ -162,8 +184,7 @@ onUnmounted(() => {
         v-bind="evTextfieldProps"
         v-model="inputValue"
         type="number"
-        @input="updateModelValue()"
-        @blur="updateModelValue()"
+        @blur="onBlur()"
         @keydown.up.prevent="startIncrementing(1)"
         @keyup.up.prevent="stopIncrementing()"
         @keydown.down.prevent="startIncrementing(-1)"
