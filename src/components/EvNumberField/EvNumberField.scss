@@ -1,24 +1,25 @@
 .ev-number-field {
-  > .ev-textfield--control {
-    > .ev-textfield--input {
-      input[type="number"]::-webkit-inner-spin-button {
-        display: none;
-      }
+    > .ev-textfield--control {
+        > .ev-textfield--input {
 
-      /* Fallback for other browsers */
-      input[type="number"] {
-        appearance: textfield;
-        -moz-appearance: textfield;
-        -webkit-appearance: textfield;
-      }
+            input[type="number"]::-webkit-inner-spin-button {
+                display: none;
+            }
+
+            /* Fallback for other browsers */
+            input[type="number"] {
+                appearance: textfield;
+                -moz-appearance: textfield;
+                -webkit-appearance: textfield;
+            }
+        }
     }
-  }
 }
 
 .ev-number-field--minus {
-  margin-left: -0.375rem;
+    margin-left: -0.375rem;
 }
 
 .ev-number-field--plus {
-  margin-right: -0.375rem;
+    margin-right: -0.375rem;
 }

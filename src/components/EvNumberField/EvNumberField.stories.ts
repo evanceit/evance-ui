@@ -21,10 +21,17 @@ const meta: Meta<typeof EvNumberField> = {
             control: 'number',
             description: "The amount to increment when the +/- buttons are pressed."
         },
+        decimalPlacesMin: {
+            control: 'number'
+        },
+        decimalPlacesMax: {
+            control: 'number'
+        },
         modelValue: {
             control: 'number',
             description: "The `model-value` is the `v-model` value of the component."
         },
+
         ...omit(EvTextfieldStories.argTypes, [
             'modelValue',
             'type'
@@ -34,6 +41,8 @@ const meta: Meta<typeof EvNumberField> = {
         min: undefined,
         max: undefined,
         step: undefined,
+        decimalPlacesMin: undefined,
+        decimalPlacesMax: undefined,
 
         ...omit(EvTextfieldStories.args, [
             'type'

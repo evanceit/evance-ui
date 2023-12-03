@@ -14,7 +14,9 @@ import {filterComponentProps, isEmpty, omit} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {EvButton} from "@/components/EvButton";
 import {Minus, Plus} from "@/icons";
+import {useLocaleManager} from "@/composables/locale.ts";
 
+const localeManager = useLocaleManager()
 const props = defineProps(makeEvNumberFieldProps());
 const slots = useSlots();
 
@@ -55,7 +57,6 @@ const maximum = computed(() => {
 
 /**
  * Incremental Values
- * 
  */
 const incrementAmount = computed(() => {
     return props.step ?? 1;
@@ -94,6 +95,44 @@ function onBlur() {
 }
 
 /**
+ * ## Get Number Formatter Options
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#parameters
+ * Do we want to be able to support the following?:
+ * - currency
+ * - currencyDisplay
+ *
+ * @todo: add some of these as props
+ */
+function getNumberFormatterOptions(overrides = {}) {
+    const defaultOptions = {
+        localeMatcher: 'best fit',
+        style: 'decimal',
+        useGrouping: true,
+        minimumFractionDigits: props.decimalPlacesMin ?? 0,
+        maximumFractionDigits: props.decimalPlacesMax ?? 6
+    };
+    return {...defaultOptions, ...overrides};
+}
+
+/**
+ * ## Get Decimal Places
+ * Returns the number of decimal places of the `value` supplied.
+ * @param value
+ */
+function getDecimalPlaces(value: number): number {
+    const options = getNumberFormatterOptions({
+        useGrouping: false,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 20
+    });
+    const fraction = localeManager.numberFormatter
+        .formatter(options)
+        .formatToParts(value)
+        .find(part => part.type === 'fraction');
+    return fraction ? fraction.value.length : 0;
+}
+
+/**
  * ## Set Value
  * Can be used to set the value of either the 'modelValue' or the 'inputValue'.
  * @param value
@@ -101,13 +140,23 @@ function onBlur() {
 function getValue(value: number | null | undefined) {
     if (isEmpty(value)) {
         return value;
-    } else if (isMinBoundary(value!)) {
-        return minimum.value;
-    } else if (isMaxBoundary(value!)) {
-        return maximum.value;
-    } else {
-        return value;
     }
+    if (isMinBoundary(value!)) {
+        value = minimum.value;
+    } else if (isMaxBoundary(value!)) {
+        value = maximum.value;
+    }
+
+    // We always want to constrain the value to the minimum
+    // and maximum decimal places
+    const decimalPlaces = getDecimalPlaces(value!);
+    if (!isEmpty(props.decimalPlacesMin) && decimalPlaces < props.decimalPlacesMin!) {
+        value = parseFloat(value!.toFixed(props.decimalPlacesMin));
+    }
+    if (!isEmpty(props.decimalPlacesMax) && decimalPlaces > props.decimalPlacesMax!) {
+        value = parseFloat(value!.toFixed(props.decimalPlacesMax));
+    }
+    return value;
 }
 
 /**
@@ -125,11 +174,10 @@ function startIncrementing(direction: number) {
     }
     isIncrementing = true;
     if (isEmpty(inputValue.value)) {
-        inputValue.value = minimum.value;
+        inputValue.value = minimum.value ?? 0;
     } else {
         inputValue.value = getValue(inputValue.value!  + (direction * incrementAmount.value));
     }
-
 
     // Then we rely on the delay to do more increments on a timer
     let startTime = Date.now();
@@ -155,7 +203,7 @@ function startIncrementing(direction: number) {
  */
 function stopIncrementing() {
     if (isIncrementing) {
-        clearInterval(incrementInterval);
+        clearInterval(incrementInterval!);
         modelValue.value = getValue(inputValue.value);
         isIncrementing = false;
     }
@@ -174,7 +222,6 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('mouseup', documentMouseup);
 })
-
 
 </script>
 <template>

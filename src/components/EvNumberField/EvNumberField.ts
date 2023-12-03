@@ -2,6 +2,8 @@ import {omit, propsFactory} from "@/util";
 import {makeEvTextfieldProps} from "@/components/EvTextfield/EvTextfield.ts";
 
 export const makeEvNumberFieldProps = propsFactory({
+    decimalPlacesMin: Number,
+    decimalPlacesMax: Number,
     min: {
         type: Number,
         default: null
