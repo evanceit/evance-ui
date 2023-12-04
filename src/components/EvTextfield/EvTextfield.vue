@@ -40,6 +40,7 @@ const slots = useSlots();
 const emit = defineEmits([
     'click:clear',
     'click:control',
+    'click:outside',
     'mousedown:control',
     'update:focused',
     'update:modelValue'
@@ -142,6 +143,10 @@ defineExpose({
     ...formField.expose()
 });
 
+function onClickOutside(e: MouseEvent) {
+    emit('click:outside');
+}
+
 </script>
 <template>
     <div
@@ -157,6 +162,7 @@ defineExpose({
         :style="props.style"
         role="textbox"
         v-bind="containerAttrs"
+        v-click-outside="onClickOutside"
     >
         <div class="ev-textfield--label" v-if="props.label || slots.label">
             <ev-label :for="formField.id">

@@ -182,7 +182,15 @@ function onFocus(e: Event) {
  * @param e
  */
 function onInputKeydown(e: KeyboardEvent) {
-    const passThrough = ['Backspace', 'Delete', 'Home', 'End', 'ArrowLeft', 'ArrowRight'];
+    const passThrough = [
+        'Backspace',
+        'Delete',
+        'Home',
+        'End',
+        'ArrowLeft',
+        'ArrowRight',
+        'Tab'
+    ];
     if (passThrough.includes(e.key)) {
         return;
     }

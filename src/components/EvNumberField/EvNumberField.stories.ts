@@ -42,6 +42,9 @@ const meta: Meta<typeof EvNumberField> = {
         showButtons: {
             control: 'boolean'
         },
+        useGrouping: {
+            control: 'boolean'
+        },
 
         ...omit(EvTextfieldStories.argTypes, [
             'modelValue',
@@ -57,6 +60,7 @@ const meta: Meta<typeof EvNumberField> = {
         mode: 'decimal',
         currency: 'GBP',
         showButtons: false,
+        useGrouping: undefined,
 
         ...omit(EvTextfieldStories.args, [
             'type'

@@ -2,15 +2,8 @@
     > .ev-textfield--control {
         > .ev-textfield--input {
 
-            input[type="number"]::-webkit-inner-spin-button {
-                display: none;
-            }
-
-            /* Fallback for other browsers */
-            input[type="number"] {
-                appearance: textfield;
-                -moz-appearance: textfield;
-                -webkit-appearance: textfield;
+            input {
+                text-align: right;
             }
         }
     }
