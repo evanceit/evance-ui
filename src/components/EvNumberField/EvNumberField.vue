@@ -5,12 +5,13 @@
 import './EvNumberField.scss';
 import {makeEvNumberFieldProps, NumberParser} from "./EvNumberField.ts";
 import {EvTextfield} from "@/components/EvTextfield";
-import {computed, Ref, ref, shallowRef, useSlots, watch} from "vue";
+import {computed, nextTick, Ref, ref, shallowRef, useSlots, watch} from "vue";
 import {filterComponentProps, isEmpty, omit} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {EvButton} from "@/components/EvButton";
 import {Minus, Plus} from "@/icons";
 import {useLocaleManager} from "@/composables/locale.ts";
+import {KeyboardEvent} from "react";
 
 const localeManager = useLocaleManager()
 const props = defineProps(makeEvNumberFieldProps());
@@ -33,10 +34,26 @@ let numberParser = new NumberParser(localeManager, props);
  */
 const modelValue = useModelProxy(props, 'modelValue');
 
-const inputValue: Ref<number | null | undefined> = shallowRef();
+const inputValue: Ref<string | null | undefined> = shallowRef();
 inputValue.value = numberParser.formatValue(modelValue.value);
 watch(modelValue, () => {
     inputValue.value = numberParser.formatValue(modelValue.value);
+});
+
+watch([
+    localeManager.currentLocale,
+    () => props.locale,
+    () => props.localeMatcher,
+    () => props.mode,
+    () => props.currency,
+    () => props.currencyDisplay,
+    () => props.useGrouping,
+    () => props.decimalPlacesMin,
+    () => props.decimalPlacesMax
+], (value, oldValue) => {
+    if (value !== oldValue) {
+        inputValue.value = numberParser.formatValue(modelValue.value);
+    }
 });
 
 /**
@@ -55,6 +72,10 @@ const maximum = computed(() => {
     return props.max ?? null;
 });
 
+const currencySymbol = computed(() => {
+    return numberParser.prefixChar;
+});
+
 /**
  * Incremental Values
  */
@@ -65,35 +86,6 @@ let incrementInterval: ReturnType<typeof setInterval> | null = null;
 let incrementRate: number = 100;
 const incrementDelay = 0.25;
 let isIncrementing = false;
-
-/**
- * ## Is Max Boundary
- * @param value
- */
-function isMaxBoundary(value: number): boolean {
-    return (maximum.value !== null && maximum.value < value);
-}
-
-/**
- * ## Is Min Boundary
- * @param value
- */
-function isMinBoundary(value: number): boolean {
-    return (minimum.value !== null && minimum.value > value);
-}
-
-/**
- * # On Blur
- *
- * If the user has typed something we can't be sure that it is accurate
- * based upon the min/max boundaries so we reset the `inputValue` first.
- * Then, we can update the `modelValue` based on the input.
- */
-function onBlur() {
-    const currentValue = getValue(numberParser.parseValue(inputValue.value));
-    inputValue.value = numberParser.formatValue(currentValue);
-    modelValue.value = currentValue;
-}
 
 /**
  * ## Get Decimal Places
@@ -141,6 +133,120 @@ function getValue(value: number | null | undefined) {
 }
 
 /**
+ * ## Is Max Boundary
+ * @param value
+ */
+function isMaxBoundary(value: number): boolean {
+    return (maximum.value !== null && maximum.value < value);
+}
+
+/**
+ * ## Is Min Boundary
+ * @param value
+ */
+function isMinBoundary(value: number): boolean {
+    return (minimum.value !== null && minimum.value > value);
+}
+
+/**
+ * # On Blur
+ *
+ * If the user has typed something we can't be sure that it is accurate
+ * based upon the min/max boundaries so we reset the `inputValue` first.
+ * Then, we can update the `modelValue` based on the input.
+ */
+function onBlur(e: Event) {
+    if (inputValue.value === '-') {
+        inputValue.value = '';
+    }
+    const parsedValue = numberParser.parseValue(inputValue.value);
+    const currentValue = getValue(parsedValue);
+    inputValue.value = numberParser.formatValue(currentValue);
+    modelValue.value = currentValue;
+}
+
+/**
+ * ## On Focus
+ *
+ * @param e
+ */
+function onFocus(e: Event) {
+    if (props.readonly) {
+        return;
+    }
+    inputValue.value = isEmpty(modelValue.value) ? '' : modelValue.value.toString();
+}
+
+/**
+ * ## On Input Keydown
+ * @param e
+ */
+function onInputKeydown(e: KeyboardEvent) {
+    const passThrough = ['Backspace', 'Delete', 'Home', 'End', 'ArrowLeft', 'ArrowRight'];
+    if (passThrough.includes(e.key)) {
+        return;
+    }
+
+    // Listen to ArrowUp
+    if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        startIncrementing(1);
+        return;
+    }
+    // Listen to ArrowDown
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        startIncrementing(-1);
+        return;
+    }
+
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const parsedValue = numberParser.parseValue(inputValue.value);
+        const currentValue = getValue(parsedValue);
+        modelValue.value = currentValue;
+        nextTick(() => {
+            inputValue.value = isEmpty(currentValue) ? '' : currentValue!.toString();
+        });
+        return;
+    }
+
+    const isPaste = (e.key === 'v' && e.ctrlKey);
+
+    // Block anything not in the whitelist
+    const whitelist = new RegExp('[0-9 +\-\/\(\)*]');
+    if (!whitelist.test(e.key) && !isPaste) {
+        e.preventDefault();
+    }
+}
+
+
+/**
+ * ## On Input Keyup
+ * @param e
+ */
+function onInputKeyup(e: KeyboardEvent) {
+    if (e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+        e.preventDefault();
+    }
+    stopIncrementing();
+}
+
+/**
+ * ## On Paste
+ */
+function onPaste(e: ClipboardEvent) {
+    e.preventDefault();
+    let data = e.clipboardData?.getData('Text');
+    if (data) {
+        const parsedValue = numberParser.parseValue(data);
+        const currentValue = getValue(parsedValue);
+        inputValue.value = isEmpty(currentValue) ? '' : currentValue!.toString();
+        modelValue.value = currentValue;
+    }
+}
+
+/**
  * ## Start Incrementing
  *
  * If the user holds the plus/minus button down for longer than the `incrementDelay`
@@ -150,7 +256,7 @@ function getValue(value: number | null | undefined) {
  * @param direction
  */
 function startIncrementing(direction: number) {
-    if (isIncrementing) {
+    if (isIncrementing || props.readonly) {
         return;
     }
     isIncrementing = true;
@@ -194,6 +300,7 @@ function stopIncrementing() {
     }
 }
 
+
 </script>
 <template>
     <ev-textfield
@@ -202,36 +309,42 @@ function stopIncrementing() {
         v-bind="evTextfieldProps"
         v-model="inputValue"
         type="text"
-        @blur="onBlur()"
-        @keydown.up.prevent="startIncrementing(1)"
-        @keyup.up.prevent="stopIncrementing()"
-        @keydown.down.prevent="startIncrementing(-1)"
-        @keyup.down.prevent="stopIncrementing()"
+        @paste="onPaste"
+        @blur="onBlur"
+        @focus="onFocus"
+        @keydown="onInputKeydown"
+        @keyup="onInputKeyup"
     >
         <template #label v-if="props.label || slots.label">
             <slot name="label">{{ props.label }}</slot>
         </template>
         <template #prefix>
             <ev-button
+                v-if="props.showButtons"
                 rounded
                 size="small"
                 class="ev-number-field--minus"
                 appearance="subtle"
                 :icon="Minus"
+                :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(-1)"
                 @keyup="stopIncrementing()"
                 @mousedown="startIncrementing(-1)"
                 @mouseup="stopIncrementing()"
                 @mouseleave="stopIncrementing()"
             />
+            <slot name="prefix">{{ props.prefix }}</slot>
         </template>
         <template #suffix>
+            <slot name="suffix">{{ props.suffix }}</slot>
             <ev-button
+                v-if="props.showButtons"
                 rounded
                 size="small"
                 class="ev-number-field--plus"
                 appearance="subtle"
                 :icon="Plus"
+                :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(1)"
                 @keyup="stopIncrementing()"
                 @mousedown="startIncrementing(1)"

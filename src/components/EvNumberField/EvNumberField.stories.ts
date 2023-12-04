@@ -31,6 +31,17 @@ const meta: Meta<typeof EvNumberField> = {
             control: 'number',
             description: "The `model-value` is the `v-model` value of the component."
         },
+        mode: {
+            control: 'select',
+            options: ['decimal', 'currency']
+        },
+        currency: {
+            control: 'select',
+            options: ['GBP', 'USD']
+        },
+        showButtons: {
+            control: 'boolean'
+        },
 
         ...omit(EvTextfieldStories.argTypes, [
             'modelValue',
@@ -43,6 +54,9 @@ const meta: Meta<typeof EvNumberField> = {
         step: undefined,
         decimalPlacesMin: undefined,
         decimalPlacesMax: undefined,
+        mode: 'decimal',
+        currency: 'GBP',
+        showButtons: false,
 
         ...omit(EvTextfieldStories.args, [
             'type'

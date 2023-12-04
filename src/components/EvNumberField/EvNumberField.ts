@@ -1,13 +1,20 @@
 import {isEmpty, omit, propsFactory} from "@/util";
 import {makeEvTextfieldProps} from "@/components/EvTextfield/EvTextfield.ts";
 import {LocaleManager} from "@/modules/Locale/LocaleManager.ts";
-import {PropType} from "vue";
+import {PropType, watch} from "vue";
 
 export type NumberFieldModeProp = 'decimal' | 'currency';
 
 export const makeEvNumberFieldProps = propsFactory({
     decimalPlacesMin: Number,
     decimalPlacesMax: Number,
+    currency: String,
+    currencyDisplay: {
+        type: String,
+        default: 'narrowSymbol'
+    },
+    locale: String,
+    localeMatcher: String,
     min: {
         type: Number,
         default: undefined
@@ -20,10 +27,12 @@ export const makeEvNumberFieldProps = propsFactory({
         type: String as PropType<NumberFieldModeProp>,
         default: 'decimal'
     },
+    showButtons: Boolean,
     step: {
         type: Number,
         default: 1
     },
+    useGrouping: Boolean,
 
     ...omit(makeEvTextfieldProps(), [
         'type'
@@ -36,41 +45,61 @@ export interface NumberParserProps {
     mode: string;
 
     // Optional props
-    decimalPlacesMin?: number;
-    decimalPlacesMax?: number;
-    min?: number;
-    max?: number;
     currency?: string;
     currencyDisplay?: string;
+    decimalPlacesMin?: number;
+    decimalPlacesMax?: number;
     locale?: string;
+    localeMatcher?: string;
+    min?: number;
+    max?: number;
     useGrouping?: boolean;
 }
 
+
+/**
+ * # Number Parser
+ */
 export class NumberParser {
+
+    private _currencyPattern!: RegExp;
+    private _decimalPattern!: RegExp;
+    private _groupPattern!: RegExp;
+    private _minusSignPattern!: RegExp;
+    private _numberFormat!: Intl.NumberFormat;
+    private _numerals!: string[];
+    private _numeralsIndex!: (d: string) => number | undefined;
+    private _numeralPattern!: RegExp;
+    private _prefixPattern!: RegExp;
+    private _suffixPattern!: RegExp;
 
     constructor(
         public localeManager: LocaleManager,
         public props: NumberParserProps
-    ) {}
+    ) {
+        this.cachePatterns();
+        this.watchProps();
+    }
+
+    private cachePatterns() {
+        this._numberFormat = new Intl.NumberFormat(this.locale, this.options);
+        this._numerals = this.createNumerals();
+        this._numeralsIndex = this.createNumeralsIndex();
+        this._numeralPattern = this.createNumeralPattern();
+        this._groupPattern = this.createGroupPattern();
+        this._minusSignPattern = this.createMinusSignPattern();
+        this._currencyPattern = this.createCurrencyPattern();
+        this._decimalPattern = this.createDecimalPattern();
+        this._suffixPattern = this.createSuffixPattern();
+        this._prefixPattern = this.createPrefixPattern();
+    }
 
     get currencyPattern() {
-        if (!this.props.currency) {
-            return new RegExp(`[]`, 'g');
-        }
-        const options = {
-            style: 'currency',
-            currency: this.props.currency,
-            currencyDisplay: this.props.currencyDisplay,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        };
-        const formatter = new Intl.NumberFormat(this.locale, options);
-        return new RegExp(`[${formatter.format(1).replace(/\s/g, '').replace(this.numeralPattern, '').replace(this.groupPattern, '')}]`, 'g');
+        return this._currencyPattern;
     }
 
     get decimalPattern() {
-        const formatter = new Intl.NumberFormat(this.locale, { ...this.options, useGrouping: false });
-        return new RegExp(`[${formatter.format(1.1).replace(this.currencyPattern, '').trim().replace(this.numeralPattern, '')}]`, 'g');
+        return this._decimalPattern;
     }
 
     get groupChar(): string {
@@ -79,7 +108,7 @@ export class NumberParser {
     }
 
     get groupPattern() {
-        return new RegExp(`[${this.groupChar}]`, 'g');
+        return this._groupPattern;
     }
 
     get locale(): string {
@@ -87,27 +116,29 @@ export class NumberParser {
     }
 
     get minusSignPattern() {
-        const formatter = new Intl.NumberFormat(this.locale, { useGrouping: false });
-        return new RegExp(`[${formatter.format(-1).trim().replace(this.numeralPattern, '')}]`, 'g');
+        return this._minusSignPattern;
     }
 
-    get numeralPattern() {
-        return new RegExp(`[${this.numerals.join('')}]`, 'g');
+    get numberFormat() {
+        return this._numberFormat;
     }
 
-    get numerals(): string[] {
-        return [...new Intl.NumberFormat(this.locale, { useGrouping: false }).format(9876543210)].reverse();
+    get numerals() {
+        return this._numerals;
     }
 
     get numeralsIndex() {
-        const index = new Map(this.numerals.map((d, i) => [d, i]));
-        return (d: string) => index.get(d);
+        return this._numeralsIndex;
+    }
+
+    get numeralPattern() {
+        return this._numeralPattern;
     }
 
     get options(): Intl.NumberFormatOptions {
         return {
             localeMatcher: 'best fit',
-            style: 'decimal',
+            style: this.props.mode,
             currency: this.props.currency,
             currencyDisplay: this.props.currencyDisplay,
             useGrouping: this.props.useGrouping,
@@ -127,7 +158,7 @@ export class NumberParser {
     }
 
     get prefixPattern() {
-        return new RegExp(`${this.escapeRegExp(this.prefixChar || '')}`, 'g');
+        return this._prefixPattern;
     }
 
     get suffixChar() {
@@ -143,14 +174,111 @@ export class NumberParser {
     }
 
     get suffixPattern() {
+        return this._suffixPattern;
+    }
+
+    /**
+     * ## Create Currency Pattern
+     * @private
+     */
+    private createCurrencyPattern() {
+        if (!this.props.currency) {
+            return new RegExp(`[]`, 'g');
+        }
+        const options = {
+            style: 'currency',
+            currency: this.props.currency,
+            currencyDisplay: this.props.currencyDisplay,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        };
+        const formatter = new Intl.NumberFormat(this.locale, options);
+        return new RegExp(`[${formatter.format(1).replace(/\s/g, '').replace(this.numeralPattern, '').replace(this.groupPattern, '')}]`, 'g');
+    }
+
+    /**
+     * ## Create Decimal Pattern
+     * @private
+     */
+    private createDecimalPattern() {
+        const formatter = new Intl.NumberFormat(this.locale, { ...this.options, useGrouping: false });
+        return new RegExp(`[${formatter.format(1.1).replace(this.currencyPattern, '').trim().replace(this.numeralPattern, '')}]`, 'g');
+    }
+
+    /**
+     * ## Create Group Pattern
+     * @private
+     */
+    private createGroupPattern() {
+        return new RegExp(`[${this.groupChar}]`, 'g');
+    }
+
+    /**
+     * ## Create Minus Sign Pattern
+     * @private
+     */
+    private createMinusSignPattern(): RegExp {
+        const formatter = new Intl.NumberFormat(this.locale, { useGrouping: false });
+        return new RegExp(`[${formatter.format(-1).trim().replace(this.numeralPattern, '')}]`, 'g');
+    }
+
+    /**
+     * ## Create Numerals
+     * @private
+     */
+    private createNumerals(): string[] {
+        return [...new Intl.NumberFormat(this.locale, { useGrouping: false }).format(9876543210)].reverse();
+    }
+
+    /**
+     * ## Create Numerals Index
+     * @private
+     */
+    private createNumeralsIndex() {
+        const index = new Map(this.numerals.map((d, i) => [d, i]));
+        return (d: string) => index.get(d);
+    }
+
+    /**
+     * ## Create Numeral Pattern
+     * @private
+     */
+    private createNumeralPattern(): RegExp {
+        return new RegExp(`[${this.numerals.join('')}]`, 'g');
+    }
+
+    /**
+     * ## Create Prefix Pattern
+     * @private
+     */
+    private createPrefixPattern() {
+        return new RegExp(`${this.escapeRegExp(this.prefixChar || '')}`, 'g');
+    }
+
+    /**
+     * ## Create Suffix Pattern
+     * @private
+     */
+    private createSuffixPattern() {
         return new RegExp(`${this.escapeRegExp(this.suffixChar || '')}`, 'g');
     }
 
+    /**
+     * ## Escape RegExp
+     * @param text
+     */
     public escapeRegExp(text: string) {
         return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
     }
 
-    public formatValue(value) {
+    /**
+     * ## Format Value
+     *
+     * Converts a number into formatted string.
+     *
+     * @param value
+     */
+    public formatValue(value: unknown): string {
         if (isEmpty(value)) {
             return '';
         }
@@ -159,15 +287,28 @@ export class NumberParser {
             return value;
         }
         let formatter = new Intl.NumberFormat(this.locale, this.options);
-        return formatter.format(value);
+        let formattedValue = formatter.format(value as number);
+        // Remove currency symbol - we'll use this in the prefix instead
+        return formattedValue;
     }
 
-    public parseValue(text) {
+    /**
+     * ## Parse Value
+     *
+     * Convert a text value into a number.
+     *
+     * Returns a string when an incomplete value is supplied,
+     * or a number when a valid number is parsed successfully
+     * from the text supplied, or a `null` value when the number
+     * is not valid (can't be parsed).
+     *
+     * @param text
+     */
+    public parseValue(text: string): number | string | null {
         let filteredText = text
             .replace(this.suffixPattern, '')
             .replace(this.prefixPattern, '')
             .trim()
-            .replace(/\s/g, '')
             .replace(this.currencyPattern, '')
             .replace(this.groupPattern, '')
             .replace(this.minusSignPattern, '-')
@@ -180,7 +321,41 @@ export class NumberParser {
         if (filteredText === '-') {
             return filteredText;
         }
-        let parsedValue = +filteredText;
+
+        let parsedValue;
+        const pattern = /^[-+*/.\d\s()]+$/;
+        if (pattern.test(filteredText)) {
+            try {
+                parsedValue = eval(`(${filteredText})`);
+            } catch (error) {
+                parsedValue = +filteredText;
+            }
+        } else {
+            parsedValue = +filteredText;
+        }
+
         return isNaN(parsedValue) ? null : parsedValue;
+    }
+
+    /**
+     * ## Watch Props
+     * @private
+     */
+    private watchProps() {
+        watch([
+            this.localeManager.currentLocale,
+            () => this.props.locale,
+            () => this.props.localeMatcher,
+            () => this.props.mode,
+            () => this.props.currency,
+            () => this.props.currencyDisplay,
+            () => this.props.useGrouping,
+            () => this.props.decimalPlacesMin,
+            () => this.props.decimalPlacesMax
+        ], (value, oldValue) => {
+            if (value !== oldValue) {
+                this.cachePatterns();
+            }
+        });
     }
 }
