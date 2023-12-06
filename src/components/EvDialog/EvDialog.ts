@@ -1,0 +1,18 @@
+import {propsFactory} from "@/util";
+import {makeEvOverlayProps} from "@/components/EvOverlay";
+import EvDialogTransition from "@/components/EvDialog/EvDialogTransition.vue";
+import {Component} from "vue";
+
+
+export const makeEvDialogProps = propsFactory({
+
+    ...makeEvOverlayProps({
+        origin: 'center center' as const,
+        scrollStrategy: 'block' as const,
+        transition: {
+            component: EvDialogTransition as Component
+        },
+        zIndex: 2400,
+    })
+
+}, 'EvDialog');

@@ -103,3 +103,39 @@
         opacity: 1;
     }
 }
+
+
+/**
+    EvDialog Transition
+
+ */
+.ev-dialog-transition {
+    &-enter-active {
+        transition-duration: 225ms !important;
+        transition-timing-function: var(--easing-decelerate) !important;
+    }
+
+    &-leave-active {
+        transition-duration: 125ms !important;
+        transition-timing-function: var(--easing-accelerate) !important;
+    }
+
+    &-enter-active,
+    &-leave-active {
+        transition-property: transform, opacity !important;
+        pointer-events: none;
+    }
+}
+
+.ev-dialog-transition {
+    &-enter-from,
+    &-leave-to {
+        transform: scale(0.9) translateY(2rem);
+        opacity: 0;
+    }
+
+    &-enter-to,
+    &-leave-from {
+        opacity: 1;
+    }
+}
