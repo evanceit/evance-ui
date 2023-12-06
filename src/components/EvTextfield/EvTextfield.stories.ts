@@ -10,6 +10,11 @@ const meta: Meta<typeof EvTextfield> = {
     argTypes: {
 
         // Form Field Attributes
+        align: {
+            control: "select",
+            options: ['left', 'center', 'right'],
+            description: "The text alignment of the input field",
+        },
         disabled: {
             control: 'boolean',
             description: 'Removes the ability to click or target the input.'
@@ -28,6 +33,10 @@ const meta: Meta<typeof EvTextfield> = {
         modelValue: {
             control: 'text',
             description: "The `model-value` is the `v-model` value of the component."
+        },
+        monospace: {
+            control: 'boolean',
+            description: 'Use a monospaced font family for the input field.'
         },
         name: {
             control: 'text',
@@ -119,11 +128,13 @@ const meta: Meta<typeof EvTextfield> = {
     },
     args: {
         // Form Field Args
+        align: undefined,
         disabled: false,
         focused: false,
         error: false,
         id: undefined,
         modelValue: '',
+        monospace: undefined,
         name: undefined,
         readonly: false,
         'validate-on': 'input',

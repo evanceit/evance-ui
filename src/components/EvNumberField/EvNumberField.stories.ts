@@ -19,13 +19,17 @@ const meta: Meta<typeof EvNumberField> = {
         },
         step: {
             control: 'number',
-            description: "The amount to increment when the +/- buttons are pressed."
+            description: "The amount to increment when the +/- buttons are pressed, " +
+                "or when the up/down arrows are pressed within the input." +
+                "If the input is empty the `min` value will be used initially, or `0` if no `min` is supplied."
         },
-        decimalPlacesMin: {
-            control: 'number'
+        minFractionDigits: {
+            control: 'number',
+            description: "The minimum number of decimal places shown within the input field."
         },
-        decimalPlacesMax: {
-            control: 'number'
+        maxFractionDigits: {
+            control: 'number',
+            description: "The maximum number of decimal places. If the user enters a value with greater precision the value is changed."
         },
         modelValue: {
             control: 'number',
@@ -33,17 +37,22 @@ const meta: Meta<typeof EvNumberField> = {
         },
         mode: {
             control: 'select',
-            options: ['decimal', 'currency']
+            options: ['decimal', 'currency'],
+            description: "The mode may either be set to `decimal` or `currency`. When using currency the `currency` prop is required " +
+                "and the `minFractionDigits` and `maxFractionDigits` are automatically set those of the currency unless otherwise stated."
         },
         currency: {
             control: 'select',
-            options: ['GBP', 'USD']
+            options: ['GBP', 'USD'],
+            description: "The ISO 4217 currency code when the `mode` is set to `currency`. Such as 'GBP' or 'USD'."
         },
         showButtons: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether to show the +/- spinner buttons."
         },
         useGrouping: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether to use thousand grouping separators when formatting the number."
         },
 
         ...omit(EvTextfieldStories.argTypes, [
@@ -55,8 +64,8 @@ const meta: Meta<typeof EvNumberField> = {
         min: undefined,
         max: undefined,
         step: undefined,
-        decimalPlacesMin: undefined,
-        decimalPlacesMax: undefined,
+        minFractionDigits: undefined,
+        maxFractionDigits: undefined,
         mode: 'decimal',
         currency: 'GBP',
         showButtons: false,
@@ -65,8 +74,7 @@ const meta: Meta<typeof EvNumberField> = {
         ...omit(EvTextfieldStories.args, [
             'type'
         ])
-    },
-    tags: ['autodocs']
+    }
 };
 
 export default meta;

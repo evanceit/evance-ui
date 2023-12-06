@@ -1,0 +1,23 @@
+import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+
+import * as EvNumberFieldStories from './EvNumberField.stories';
+
+<Meta of={EvNumberFieldStories} />
+
+# EvNumberField
+
+The `<ev-number-field>` or `<EvNumberField>` binds the `modelValue` as a number, but renders as a string within
+the input field.
+
+The field permits basic arithmetic operations. For example, you may enter the `100/2` and press Enter to calculate
+the value as `50`.
+
+When using the number field in `mode="currency"` with an accompanying `currency` (e.g. 'GBP') the field will remove
+currency formatting on focus.
+
+<Canvas>
+    <Story of={EvNumberFieldStories.Primary} />
+</Canvas>
+
+
+<ArgsTable story='Primary' />

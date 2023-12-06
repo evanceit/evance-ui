@@ -209,3 +209,30 @@
 .ev-textfield--errors {
     margin-top: 0.5rem;
 }
+
+.ev-textfield--control {
+    &.is-align-left {
+        .ev-textfield--input-native {
+            text-align: left;
+        }
+    }
+    &.is-align-center {
+        .ev-textfield--input-native {
+            text-align: center;
+        }
+    }
+    &.is-align-right {
+        .ev-textfield--input-native {
+            text-align: right;
+        }
+    }
+}
+
+
+.ev-textfield--control {
+    &.is-monospace {
+        .ev-textfield--input-native {
+            font-family: var(--monospace-font);
+        }
+    }
+}

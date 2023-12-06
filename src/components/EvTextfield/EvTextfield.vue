@@ -11,9 +11,9 @@ import {
     Appearance,
     appearanceModifier,
     InputAppearance,
-    InputSize,
+    InputSize, makeClassName,
     sizeModifier,
-    splitInputAttrs
+    splitInputAttrs, TextAlign
 } from "@/util";
 import {useAutofocus} from "@/composables/focus.ts";
 import {EvLabel} from "@/components/EvLabel";
@@ -174,10 +174,12 @@ function onClickOutside(e: MouseEvent) {
             :class="[
                 'ev-textfield--control',
                 {
-                    'is-rounded': props.rounded
+                    'is-rounded': props.rounded,
+                    'is-monospace': !!props.monospace
                 },
                 appearanceModifier(props.appearance, [InputAppearance.default]),
                 sizeModifier(props.size, [InputSize.default]),
+                makeClassName(props.align, 'is-align', [TextAlign.default])
             ]"
             @click="onControlClick"
             @mousedown="onControlMousedown"
@@ -195,6 +197,7 @@ function onClickOutside(e: MouseEvent) {
                 <slot />
                 <input
                     ref="inputRef"
+                    class="ev-textfield--input-native"
                     :type="props.type"
                     :id="formField.id"
                     :name="formField.name"

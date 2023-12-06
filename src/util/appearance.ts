@@ -1,4 +1,5 @@
 import {propsFactory} from "./props.ts";
+import {PropType} from "vue";
 
 /**
  * # Appearance
@@ -18,7 +19,7 @@ export type AppearanceKey = keyof typeof Appearance;
 export type AppearanceProp = typeof Appearance[AppearanceKey];
 export const makeAppearanceProps = propsFactory({
     appearance: {
-        type: String,
+        type: String as PropType<AppearanceProp>,
         default: Appearance.default
     }
 }, 'Appearance');
@@ -37,10 +38,11 @@ export type InputAppearanceKey = keyof typeof InputAppearance;
 export type InputAppearanceProp = typeof InputAppearance[InputAppearanceKey];
 export const makeInputAppearanceProps = propsFactory({
     appearance: {
-        type: String,
+        type: String as PropType<InputAppearanceProp>,
         default: InputAppearance.default
     }
 }, 'InputAppearance');
+
 
 /**
  * # Input Sizes
@@ -59,3 +61,22 @@ export const makeInputSizeProps = propsFactory({
         default: InputSize.default
     }
 }, 'InputSize');
+
+
+/**
+ * # Text Align
+ */
+export enum TextAlign {
+    default = 'left',
+    left = 'left',
+    center = 'center',
+    right = 'right'
+}
+export type TextAlignKey = keyof typeof TextAlign;
+export type TextAlignProp = typeof TextAlign[TextAlignKey];
+export const makeTextAlignProps = propsFactory({
+    align: {
+        type: String as PropType<TextAlignProp>,
+        default: TextAlign.default
+    }
+}, 'TextAlign');

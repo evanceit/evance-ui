@@ -6,8 +6,8 @@ import {PropType, watch} from "vue";
 export type NumberFieldModeProp = 'decimal' | 'currency';
 
 export const makeEvNumberFieldProps = propsFactory({
-    decimalPlacesMin: Number,
-    decimalPlacesMax: Number,
+    minFractionDigits: Number,
+    maxFractionDigits: Number,
     currency: String,
     currencyDisplay: {
         type: String,
@@ -47,8 +47,8 @@ export interface NumberParserProps {
     // Optional props
     currency?: string;
     currencyDisplay?: string;
-    decimalPlacesMin?: number;
-    decimalPlacesMax?: number;
+    minFractionDigits?: number;
+    maxFractionDigits?: number;
     locale?: string;
     localeMatcher?: string;
     min?: number;
@@ -142,8 +142,8 @@ export class NumberParser {
             currency: this.props.currency,
             currencyDisplay: this.props.currencyDisplay,
             useGrouping: this.props.useGrouping,
-            minimumFractionDigits: this.props.decimalPlacesMin,
-            maximumFractionDigits: this.props.decimalPlacesMax
+            minimumFractionDigits: this.props.minFractionDigits,
+            maximumFractionDigits: this.props.maxFractionDigits
         };
     }
 
@@ -350,8 +350,8 @@ export class NumberParser {
             () => this.props.currency,
             () => this.props.currencyDisplay,
             () => this.props.useGrouping,
-            () => this.props.decimalPlacesMin,
-            () => this.props.decimalPlacesMax
+            () => this.props.minFractionDigits,
+            () => this.props.maxFractionDigits
         ], (value, oldValue) => {
             if (value !== oldValue) {
                 this.cachePatterns();

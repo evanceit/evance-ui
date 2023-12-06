@@ -48,7 +48,7 @@ watch([
     () => props.currency,
     () => props.currencyDisplay,
     () => props.useGrouping,
-    () => props.decimalPlacesMin,
+    () => props.minimumFractionDigits,
     () => props.decimalPlacesMax
 ], (value, oldValue) => {
     if (value !== oldValue) {
@@ -123,8 +123,8 @@ function getValue(value: number | null | undefined) {
     // We always want to constrain the value to the minimum
     // and maximum decimal places
     const decimalPlaces = getDecimalPlaces(value!);
-    if (!isEmpty(props.decimalPlacesMin) && decimalPlaces < props.decimalPlacesMin!) {
-        value = parseFloat(value!.toFixed(props.decimalPlacesMin));
+    if (!isEmpty(props.minimumFractionDigits) && decimalPlaces < props.minimumFractionDigits!) {
+        value = parseFloat(value!.toFixed(props.minimumFractionDigits));
     }
     if (!isEmpty(props.decimalPlacesMax) && decimalPlaces > props.decimalPlacesMax!) {
         value = parseFloat(value!.toFixed(props.decimalPlacesMax));
