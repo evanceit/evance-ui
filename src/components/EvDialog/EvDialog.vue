@@ -8,7 +8,7 @@ import {computed, mergeProps, nextTick, ref, useSlots, watch} from "vue";
 import EvOverlay from "@/components/EvOverlay/EvOverlay.vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
-import {Browser, filterComponentProps, getFocusableChildren, is} from "@/util";
+import {Browser, filterComponentProps, getFocusableChildren} from "@/util";
 import {Cancel} from "@/icons";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 
@@ -97,16 +97,13 @@ watch(isActive, async value => {
     }
 });
 
-/**
- * @todo: we can remove this when we're done.
- */
-function onClick() {
-    isActive.value = !isActive.value;
+function close() {
+    isActive.value = false;
 }
 
 </script>
 <template>
-    <ev-button @click="onClick">Hello</ev-button>
+    <ev-button id="activatorRef">Hello</ev-button>
     <ev-overlay
         ref="overlayRef"
         aria-modal="true"
@@ -116,6 +113,7 @@ function onClick() {
         ]"
         :style="props.style"
         v-bind="overlayProps"
+        activator="#activatorRef"
         :activatorProps="activatorProps"
         v-model="isActive"
     >
@@ -123,7 +121,12 @@ function onClick() {
             <div style="padding: 2rem">
                 This is where the content goes.
 
-                <ev-button rounded appearance="subtle" :icon="Cancel" />
+                <ev-button
+                    rounded
+                    appearance="subtle"
+                    :icon="Cancel"
+                    @click="close()"
+                />
 
             </div>
         </ev-surface>

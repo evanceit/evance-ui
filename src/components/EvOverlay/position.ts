@@ -1,5 +1,5 @@
 import {onScopeDispose, PropType, ref, Ref, watch} from "vue";
-import {connectedPositionStrategy, fixedPositionStrategy} from "./position-strategy";
+import {connectedPositionStrategy, staticPositionStrategy} from "./position-strategy";
 import {AnchorSelector, Browser, isFunction, propsFactory} from "@/util";
 import {useToggleScope} from "@/composables/toggleScope.ts";
 
@@ -18,7 +18,7 @@ type PositionStrategyFn = (
 ) => undefined | { updatePosition: (e: Event) => void };
 
 const positionStrategies = {
-    fixed: fixedPositionStrategy, // specific viewport position, usually centered
+    static: staticPositionStrategy, // specific viewport position, usually centered
     connected: connectedPositionStrategy // connected to a certain element
 };
 

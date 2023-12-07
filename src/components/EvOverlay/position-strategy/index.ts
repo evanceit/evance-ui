@@ -1,2 +1,2 @@
 export * from './connected-position';
-export * from './fixed-position';
+export * from './static-position';

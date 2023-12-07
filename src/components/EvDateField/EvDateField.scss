@@ -1,5 +1,7 @@
 
-.ev-date-field--surface {
-  margin: 0;
-  width: fit-content;
+.ev-surface {
+    &.ev-date-field--surface {
+        margin: 0;
+        width: fit-content;
+    }
 }

@@ -1,17 +1,16 @@
 import {PositionStrategyData, PositionStrategyProps} from "../position.ts";
 import {Ref} from "vue";
-import {StyleProp} from "../../../util";
+import {StyleProp} from "@/util";
 
 /**
- * # Fixed Position Strategy
+ * # Static Position Strategy
  *
  * Specific viewport position, usually centered.
  */
-export function fixedPositionStrategy(
+export function staticPositionStrategy(
     data: PositionStrategyData,
     props: PositionStrategyProps,
     contentStyles: Ref<StyleProp>
 ) {
     // todo
-
 }

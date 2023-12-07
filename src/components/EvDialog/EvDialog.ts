@@ -16,6 +16,7 @@ export const makeEvDialogProps = propsFactory({
     ...makeEvOverlayProps({
         origin: 'center center' as const,
         scrollStrategy: 'block' as const,
+        positionStrategy: 'static' as const,
         transition: {
             component: EvDialogTransition as Component
         },
