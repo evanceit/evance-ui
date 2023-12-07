@@ -162,7 +162,7 @@ function onBlur(e: Event) {
     const parsedValue = numberParser.parseValue(inputValue.value);
     const currentValue = getValue(parsedValue);
     inputValue.value = numberParser.formatValue(currentValue);
-    modelValue.value = currentValue;
+    modelValue.value = numberParser.parseValue(inputValue.value);
 }
 
 /**

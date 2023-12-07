@@ -6,6 +6,13 @@ import {Component} from "vue";
 
 export const makeEvDialogProps = propsFactory({
 
+    fullscreen: Boolean,
+    retainFocus: {
+        type: Boolean,
+        default: true,
+    },
+    scrollable: Boolean,
+
     ...makeEvOverlayProps({
         origin: 'center center' as const,
         scrollStrategy: 'block' as const,

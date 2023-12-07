@@ -115,10 +115,11 @@ export function focusChild(el?: Element, position?: FocusPosition): HTMLElement 
  * unless they're disabled or have a negative `tabindex` of -1.
  *
  * @param el
+ * @param filterByTabIndex
  */
-export function getFocusableChildren(el: Element): HTMLElement[] {
+export function getFocusableChildren(el: Element, filterByTabIndex = true): HTMLElement[] {
     const selectors = focusableElements
-        .map(selector => `${selector}:not([disabled]):not([tabindex="-1"])`)
+        .map(selector => `${selector}${filterByTabIndex ? ':not([tabindex="-1"])' : ''}:not([disabled])`)
         .join(', ')
     return [...el.querySelectorAll(selectors)] as HTMLElement[];
 }
