@@ -161,3 +161,17 @@ export function adjustedBoundingRect(el: HTMLElement): Rect {
         return Rect.fromRect(rect);
     }
 }
+
+
+/**
+ * # getTargetRect
+ *
+ * @param target
+ */
+export function getTargetRect(target: HTMLElement | [x: number, y: number]) {
+    if (Array.isArray(target)) {
+        return new Rect(target[0], target[1], 0, 0);
+    } else {
+        return target.getBoundingClientRect();
+    }
+}

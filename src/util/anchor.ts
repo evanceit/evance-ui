@@ -1,3 +1,5 @@
+import {Axis} from "@/util/dimensions.ts";
+
 /**
  * # Anchors
  *

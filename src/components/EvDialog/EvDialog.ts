@@ -3,7 +3,9 @@ import {makeEvOverlayProps} from "@/components/EvOverlay";
 import EvDialogTransition from "@/components/EvDialog/EvDialogTransition.vue";
 import {Component} from "vue";
 
-
+/**
+ * # makeEvDialogProps
+ */
 export const makeEvDialogProps = propsFactory({
 
     fullscreen: Boolean,

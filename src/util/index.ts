@@ -1,5 +1,5 @@
-export * from './anchor.ts';
-export * from './animate.ts';
+export * from './anchor';
+export * from './animate';
 export * from './appearance';
 export * from './bindProps';
 export * from './browser';

@@ -107,8 +107,13 @@ function close() {
     <ev-overlay
         ref="overlayRef"
         aria-modal="true"
+        role="dialog"
         :class="[
             'ev-dialog',
+            {
+                'is-fullscreen': props.fullscreen,
+                'is-scrollable': props.scrollable
+            },
             props.class
         ]"
         :style="props.style"
