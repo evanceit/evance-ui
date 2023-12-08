@@ -3,19 +3,22 @@
  * `<ev-dialog>`
  */
 import './EvDialog.scss';
-import {makeEvDialogProps} from "./EvDialog.ts";
+import {DialogSize, DialogSizeToWidth, makeEvDialogProps} from "./EvDialog.ts";
 import {computed, mergeProps, nextTick, ref, useSlots, watch} from "vue";
 import EvOverlay from "@/components/EvOverlay/EvOverlay.vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import {Browser, filterComponentProps, getFocusableChildren} from "@/util";
-import {Cancel} from "@/icons";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
+import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
+import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
 
 const props = defineProps(makeEvDialogProps());
 const slots = useSlots();
 const overlayRef = ref();
 const isActive = useModelProxy(props, 'modelValue');
+const isFullscreen = useModelProxy(props, 'fullscreen');
 
 const overlayProps = filterComponentProps(EvOverlay, props);
 
@@ -24,6 +27,21 @@ const activatorProps = computed(() => {
         'aria-haspopup': 'dialog',
         'aria-expanded': String(isActive.value)
     }, props.activatorProps);
+});
+
+/**
+ * ## Width
+ *
+ * We want to standardise dialog sizes. So we can intercept the `width` prop.
+ *
+ * - 'small'
+ * - 'medium'
+ * - 'large'
+ * - 'x-large'
+ */
+const width = computed(() => {
+    let size = props.width ?? DialogSizeToWidth[DialogSize.medium];
+    return DialogSizeToWidth[size] ?? size;
 });
 
 
@@ -67,6 +85,11 @@ function onFocusin(e: FocusEvent) {
     }
 }
 
+/**
+ * If the browser window is available (not SSR)
+ * then we need to add the focusin event listen when the dialog is open
+ * and then remove the event listener when it is closed.
+ */
 if (Browser.hasWindow) {
     watch(
         () => isActive.value && props.retainFocus,
@@ -97,6 +120,9 @@ watch(isActive, async value => {
     }
 });
 
+/**
+ * ## Close
+ */
 function close() {
     isActive.value = false;
 }
@@ -110,7 +136,7 @@ function close() {
         :class="[
             'ev-dialog',
             {
-                'is-fullscreen': props.fullscreen,
+                'is-fullscreen': isFullscreen,
                 'is-scrollable': props.scrollable
             },
             props.class
@@ -118,24 +144,28 @@ function close() {
         :style="props.style"
         v-bind="overlayProps"
         :activatorProps="activatorProps"
+        :width="width"
         v-model="isActive"
     >
         <template v-if="slots.activator" #activator="{isActive, props}">
             <slot name="activator" :isActive="isActive" :props="props" />
         </template>
 
-        <ev-surface elevation="overlay" rounded="small">
-            <div style="padding: 2rem">
-                This is where the content goes.
-
-                <ev-button
-                    rounded
-                    appearance="subtle"
-                    :icon="Cancel"
-                    @click="close()"
-                />
-
-            </div>
+        <ev-surface
+            class="ev-dialog--surface"
+            elevation="overlay"
+            rounded="small"
+        >
+            <ev-dialog-header
+                v-model="isActive">
+                <slot name="header" />
+            </ev-dialog-header>
+            <ev-dialog-body>
+                <slot name="body" />
+            </ev-dialog-body>
+            <ev-dialog-footer v-if="slots.footer">
+                <slot name="footer" />
+            </ev-dialog-footer>
         </ev-surface>
     </ev-overlay>
 </template>

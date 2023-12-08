@@ -22,7 +22,24 @@ export const makeEvDialogProps = propsFactory({
         transition: {
             component: EvDialogTransition as Component
         },
-        zIndex: 2400,
+        zIndex: 2400
     })
 
 }, 'EvDialog');
+
+
+export enum DialogSize {
+    default = 'medium',
+    small = 'small',
+    medium = 'medium',
+    large = 'large',
+    xLarge = 'x-large'
+}
+export type DialogSizeKey = keyof typeof DialogSize;
+export type DialogSizeProp = typeof DialogSize[DialogSizeKey];
+export const DialogSizeToWidth: Record<string, number> = {
+    [DialogSize.small]: 400,
+    [DialogSize.medium]: 600,
+    [DialogSize.large]: 800,
+    [DialogSize.xLarge]: 968
+};
