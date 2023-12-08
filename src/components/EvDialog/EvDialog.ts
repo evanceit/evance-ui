@@ -14,6 +14,10 @@ export const makeEvDialogProps = propsFactory({
         default: true,
     },
     scrollable: Boolean,
+    showHeader: {
+        type: Boolean,
+        default: true,
+    },
 
     ...makeEvOverlayProps({
         origin: 'center center' as const,

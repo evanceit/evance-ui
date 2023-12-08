@@ -8,12 +8,22 @@ const meta: Meta<typeof EvDialog> = {
     components: {EvButton},
     component: EvDialog,
     argTypes: {
+        showHeader: {
+            control: 'boolean',
+            description: "The default `EvDialogHeader` includes a Close icon. " +
+                "However, you can add further tools/icons to the header using the `header` slot." +
+                "In most scenarios we want to show a close icon, so this defaults to `true`."
+        },
         width: {
             control: 'select',
             options: ['small', 'medium', 'large', 'x-large', 500, '300px', '75%'],
             description: "Evance UI attempts to standardise dialog widths using named sizes:" +
                 "`small`, `medium` (default), `large`, and `x-large`. This is the recommended usage." +
                 "However, the `width` may also be set to a number in pixels, or as a percentage."
+        },
+        footer: {
+            description: 'The default `EvDialogFooter` is intended for adding action buttons to a dialog.' +
+                'By default it will align buttons to the right and standardises the spacing between buttons.'
         }
     },
     args: {

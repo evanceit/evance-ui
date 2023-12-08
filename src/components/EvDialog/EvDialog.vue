@@ -157,6 +157,7 @@ function close() {
             rounded="small"
         >
             <ev-dialog-header
+                v-if="props.showHeader"
                 v-model="isActive">
                 <slot name="header" />
             </ev-dialog-header>
