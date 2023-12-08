@@ -103,7 +103,6 @@ function close() {
 
 </script>
 <template>
-    <ev-button id="activatorRef">Hello</ev-button>
     <ev-overlay
         ref="overlayRef"
         aria-modal="true"
@@ -118,10 +117,13 @@ function close() {
         ]"
         :style="props.style"
         v-bind="overlayProps"
-        activator="#activatorRef"
         :activatorProps="activatorProps"
         v-model="isActive"
     >
+        <template v-if="slots.activator" #activator="{isActive, props}">
+            <slot name="activator" :isActive="isActive" :props="props" />
+        </template>
+
         <ev-surface elevation="overlay" rounded="small">
             <div style="padding: 2rem">
                 This is where the content goes.
