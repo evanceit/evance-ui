@@ -6,7 +6,7 @@ const slots = useSlots();
 
 </script>
 <template>
-    <div class="ev-dialog--body is-scrollable" style="padding: 2rem;">
+    <div class="ev-dialog--body is-scrollable">
         <slot />
     </div>
 </template>

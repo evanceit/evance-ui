@@ -1,0 +1,33 @@
+import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+
+import * as EvDialogStories from './EvDialog.stories';
+
+<Meta of={EvDialogStories} />
+
+# EvDialog
+The `ev-dialog` component opens a new task, may contain critical information, or require a decision within a window overlay.
+
+
+## Basic usage
+The `ev-dialog` component is designed to fulfill most use cases by default.
+
+<Canvas>
+    <Story of={EvDialogStories.Primary} />
+</Canvas>
+
+
+<ArgsTable story='Primary' />
+
+## Scrolling
+The default slot provided by `EvDialogBody` comes scrollable by default.
+
+<Canvas>
+    <Story of={EvDialogStories.ScrollingBody} />
+</Canvas>
+
+
+## Custom Dialogs
+You can create your own custom dialogs, bypassing the default provisions, by using the `container` slot.
+<Canvas>
+    <Story of={EvDialogStories.CustomContainer} />
+</Canvas>

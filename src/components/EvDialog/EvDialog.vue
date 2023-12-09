@@ -6,7 +6,6 @@ import './EvDialog.scss';
 import {DialogSize, DialogSizeToWidth, makeEvDialogProps} from "./EvDialog.ts";
 import {computed, mergeProps, nextTick, ref, useSlots, watch} from "vue";
 import EvOverlay from "@/components/EvOverlay/EvOverlay.vue";
-import EvButton from "@/components/EvButton/EvButton.vue";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import {Browser, filterComponentProps, getFocusableChildren} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
@@ -19,8 +18,9 @@ const slots = useSlots();
 const overlayRef = ref();
 const isActive = useModelProxy(props, 'modelValue');
 const isFullscreen = useModelProxy(props, 'fullscreen');
-
-const overlayProps = filterComponentProps(EvOverlay, props);
+const overlayProps = computed(() => {
+    return filterComponentProps(EvOverlay, props);
+});
 
 const activatorProps = computed(() => {
     mergeProps({
@@ -151,7 +151,9 @@ function close() {
             <slot name="activator" :isActive="isActive" :props="props" />
         </template>
 
+        <slot v-if="slots.container" name="container" />
         <ev-surface
+            v-else
             class="ev-dialog--surface"
             elevation="overlay"
             rounded="small"
@@ -162,11 +164,12 @@ function close() {
                 <slot name="header" />
             </ev-dialog-header>
             <ev-dialog-body>
-                <slot name="body" />
+                <slot />
             </ev-dialog-body>
             <ev-dialog-footer v-if="slots.footer">
                 <slot name="footer" />
             </ev-dialog-footer>
         </ev-surface>
+
     </ev-overlay>
 </template>

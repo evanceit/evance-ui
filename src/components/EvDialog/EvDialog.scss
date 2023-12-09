@@ -30,10 +30,15 @@
     display: flex;
     justify-content: end;
     align-items: center;
+
+    + .ev-dialog--body {
+        padding-top: 0;
+    }
 }
 
 .ev-dialog--body {
     flex: 1;
+    padding: var(--spacer-200, 2rem);
 }
 
 .ev-dialog--footer {
