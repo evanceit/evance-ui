@@ -12,12 +12,14 @@ import { setup } from '@storybook/vue3';
  */
 import '../src/css/core.scss';
 import * as directives from "../src/directives";
+import * as services from "../src/services";
 import {createEvanceUi} from "../src/framework";
 
 setup((app) => {
 
   const evanceUi = createEvanceUi({
-    directives
+    directives,
+    services
   });
 
   app.use(evanceUi);

@@ -6,6 +6,7 @@ import {EvSurface} from "../EvSurface";
 
 const meta: Meta<typeof EvOverlay> = {
     component: EvOverlay,
+    title: "Overlays/EvOverlay",
     argTypes: {
         modelValue: {
             control: 'boolean',

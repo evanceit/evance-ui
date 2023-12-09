@@ -12,7 +12,8 @@ export interface EvanceUiOptions {
     directives?: Record<string, any>,
     display?: DisplayOptions,
     locale?: LocaleOptions, // & RtlOptions,  // @todo: <--- YOU ARE HERE
-    ssr?: SSROptions
+    ssr?: SSROptions,
+    services?: Record<string, any>
 }
 
 export interface Blueprint extends Omit<EvanceUiOptions, 'blueprint'> {}
@@ -28,6 +29,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     const {
         components = {},
         directives = {},
+        services = {}
     } = options;
 
     const display = createDisplay(options.display, options.ssr);
@@ -44,6 +46,11 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         // Install Components
         for (const key in components) {
             app.component(key, components[key]);
+        }
+
+        // Install Services
+        for (const key in services) {
+            app.use(services[key]);
         }
 
         // Add default `provide` symbols

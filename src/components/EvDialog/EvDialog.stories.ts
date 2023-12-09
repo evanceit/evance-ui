@@ -11,6 +11,7 @@ import {omit} from "@/util";
 const meta: Meta<typeof EvDialog> = {
     components: {EvSurface, EvButton, Collapse, Expand},
     component: EvDialog,
+    title: "Overlays/EvDialog",
     argTypes: {
         fullscreen: {
             control: 'boolean',
