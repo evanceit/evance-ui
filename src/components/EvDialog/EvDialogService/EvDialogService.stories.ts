@@ -5,13 +5,7 @@ import {EvButton} from "@/components";
 import {useDialog} from "@/composables/dialog.ts";
 
 const meta: Meta = {
-    title: 'EvDialogService',
-    argTypes: {
-
-    },
-    args: {
-    },
-    tags: ['autodocs']
+    title: 'Overlays/EvDialogService'
 };
 
 export default meta;
@@ -35,6 +29,6 @@ export const Primary: Story = {
 
             return { args, open };
         },
-        template: `<ev-button @click="open">Click me</ev-button>`
+        template: `<ev-button @click="open">Open dialog</ev-button>`
     }),
 };

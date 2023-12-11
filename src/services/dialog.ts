@@ -5,7 +5,7 @@ import {EvDialogService} from "@/components/EvDialog/EvDialogService.ts";
 /**
  * # EvDialogService
  */
-export const EvDialogServiceInstaller = {
+export const EvDialogServicePlugin = {
     install: (app: App) => {
         const service = new EvDialogService(app);
 
@@ -17,7 +17,7 @@ export const EvDialogServiceInstaller = {
     }
 };
 
-export default EvDialogServiceInstaller;
+export default EvDialogServicePlugin;
 
 
 

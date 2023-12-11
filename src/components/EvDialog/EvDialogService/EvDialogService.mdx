@@ -1,0 +1,170 @@
+import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+
+import * as EvDialogServiceStories from './EvDialogService.stories';
+
+<Meta of={EvDialogServiceStories} />
+
+# EvDialogService
+
+Dialogs can be created programmatically with any component supplied to the `EvDialog` slots using the `EvDialogService`.
+
+
+## Installation
+
+The `EvDialogService` needs to be installed as an application plugin.
+
+```ts
+import {createApp} from 'vue';
+import {EvDialogServicePlugin} from "@evance/amethyst/services";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+// Load the service directly
+app.use(EvDialogServicePlugin);
+```
+
+For larger applications you may wish to load all of the Evance UI services.
+
+```ts
+import {createApp} from 'vue';
+import * as services from "@evance/amethyst/services";
+import {createEvanceUi} from "@evance/amethyst/framework";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+const evanceUi = createEvanceUi({
+    services
+});
+
+// Load the service directly
+app.use(evanceUi);
+```
+
+
+## Accessing the service
+
+The service is available with the `useDialog()` function for Composition API and the `$dialog` property of the
+application for the Options API.
+
+```ts
+// Composition API
+import { useDialog } from '@evance/amethyst/composables/dialog';
+
+const dialog = useDialog();
+
+// Options API
+const dialog = this.$dialog;
+```
+
+## Opening an EvDialog programmatically
+
+The `open` function of the `EvDialogService` is used to open an `EvDialog` and accepts an options object which may contain:
+the `props` to assign the `EvDialog`; the `slots` to render within the dialog; and the `data` you would like to pass to the
+components you supplied within the slots.
+
+```ts
+import ExampleComponent from './ExampleComponent';
+import { useDialog } from '@evance/amethyst/composables/dialog';
+
+const dialog = useDialog();
+
+function show() {
+    dialog.open({
+        props: {
+            width: 'large'
+        },
+        slots: {
+            default: ExampleComponent
+        },
+        data: {
+            title: 'Example #1'
+        }
+    });
+}
+
+```
+
+The component can also be loaded asynchronously - useful in conditional cases or to improve load times.
+
+```ts
+import { useDialog } from '@evance/amethyst/composables/dialog';
+
+const dialog = useDialog();
+
+const dynamicComponent = defineAsyncComponent(() => import('./ExampleComponent.vue'));
+
+function show() {
+    dialog.open({
+        slots: {
+            default: dynamicComponent
+        }
+    });
+}
+```
+
+## Closing a dialog instance
+
+The `close` function is available via the `EvDialogInstance` which is injected into your component using the
+`injectDialog()` function.
+
+```ts
+import { injectDialog } from '@evance/amethyst/composables/dialog';
+
+const dialogInstance = injectDialog();
+
+function close() {
+    dialogInstance.close();
+}
+```
+
+## Passing data between components
+
+Use the `data` property of the `open()` options object to pass data to your rendered component and
+the returned Promise to receive data from the dialog when it closes.
+
+```ts
+
+// Parent component
+const dialog = useDialog();
+
+dialog.open({
+    slots: {
+        default: ExampleComponent
+    },
+    data: {
+        id: 1,
+        title: "My Example Title"
+    }
+}).then(response => {
+    console.log(response); // { success: true }
+});
+
+```
+
+Use the `close` function to pass data back as a response in the Promise created by the `open` function.
+
+```ts
+// ExampleComponent
+import { injectDialog } from '@evance/amethyst/composables/dialog';
+
+const dialogInstance = injectDialog();
+
+const data = dialogInstance.data; // { id: 1, title: "My Example Title" }
+
+function close() {
+    dialogInstance.close({
+        success: true
+    });
+}
+```
+
+## Example
+The Example below is a recursive dialog, which can open and receive data from each successive component.
+
+<Canvas>
+    <Story of={EvDialogServiceStories.Primary} />
+</Canvas>
