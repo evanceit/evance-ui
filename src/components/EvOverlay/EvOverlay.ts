@@ -1,5 +1,5 @@
 import {propsFactory} from "@/util";
-import {PropType} from "vue";
+import {PropType, Ref} from "vue";
 import {TeleportTarget} from "@/composables/teleport.ts";
 import {makeDimensionsProps} from "@/composables/dimensions.ts";
 import {makeActivatorProps} from "./activator.ts";
@@ -22,7 +22,7 @@ export const makeEvOverlayProps = propsFactory({
     contentClass: null,
     contentProps: null,
     disabled: Boolean,
-    modelValue: Boolean,
+    modelValue: [Boolean, Object] as PropType<ModelValueProp>,
     persistent: Boolean,
     veil: {
         type: Boolean,
@@ -41,3 +41,5 @@ export const makeEvOverlayProps = propsFactory({
     ...makeComponentProps()
 
 }, 'EvOverlay');
+
+type ModelValueProp = boolean | Ref<boolean>;

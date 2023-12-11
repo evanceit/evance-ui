@@ -1,1 +1,1 @@
-export * from './EvDialogService';
+export * from './dialog.ts';
