@@ -49,8 +49,3 @@ export const DialogSizeToWidth: Record<string, number> = {
     [DialogSize.large]: 800,
     [DialogSize.xLarge]: 968
 };
-
-/**
- * # EvDialogProps
- */
-export type EvDialogProps = ReturnType<typeof makeEvDialogProps>;

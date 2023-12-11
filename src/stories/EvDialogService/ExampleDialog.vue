@@ -13,7 +13,8 @@ const data = {
 function open() {
     dialog.open({
         props: {
-            width: 'small'
+            width: 'small',
+            veil: false
         },
         slots: {
             default: ExampleDialog
