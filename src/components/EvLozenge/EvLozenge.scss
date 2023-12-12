@@ -1,3 +1,5 @@
+@use "../../css/mixins";
+
 .ev-lozenge {
     border-radius: 3px;
     display: inline-flex;
@@ -23,67 +25,31 @@
 
     /* Default */
     &.appearance-default {
-        color: var(--text-muted);
-        background: var(--background-muted);
-
-        &.is-bold {
-            background-color: var(--background-muted-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-default;
     }
 
     /* Critical */
     &.appearance-critical {
-        background-color: var(--background-critical);
-        color: var(--text-critical);
-
-        &.is-bold {
-            background-color: var(--background-critical-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-critical;
     }
 
     /* Information */
     &.appearance-information {
-        background-color: var(--background-information);
-        color: var(--text-information);
-
-        &.is-bold {
-            background-color: var(--background-information-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-information;
     }
 
     /* Notice */
     &.appearance-notice {
-        background-color: var(--background-notice);
-        color: var(--text-notice);
-
-        &.is-bold {
-            background-color: var(--background-notice-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-notice;
     }
 
     /* Success */
     &.appearance-success {
-        background-color: var(--background-success);
-        color: var(--text-success);
-
-        &.is-bold {
-            background-color: var(--background-success-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-success;
     }
 
     /* Warning */
     &.appearance-warning {
-        background-color: var(--background-warning);
-        color: var(--text-warning);
-
-        &.is-bold {
-            background-color: var(--background-warning-bold);
-            color: var(--surface-default);
-        }
+        @include mixins.appearance-warning;
     }
 }
