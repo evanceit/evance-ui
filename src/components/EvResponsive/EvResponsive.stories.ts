@@ -1,0 +1,54 @@
+import type {Meta, StoryObj} from "@storybook/vue3";
+
+import { EvResponsive } from "../EvResponsive";
+
+const meta: Meta<typeof EvResponsive> = {
+    component: EvResponsive,
+    argTypes: {
+        'aspect-ratio': {
+            control: 'select',
+            options: ['0.5', '1', '4:3', '16/9'],
+            description: "Supports a number or a string. " +
+                "Strings may be expressed as a division such as `16/9` or as a ratio `16:9`. " +
+                "Numbers may be expressed as a decimal of `width/height`."
+        },
+        inline: {
+            control: 'boolean'
+        },
+        content: {
+            control: 'text',
+            description: "The content slot represents wrapped content within a non-flex inner `<div>`. " +
+                "If you would like your inner content to be subject to the flex box of the responsive block you" +
+                "should use the default slot."
+        },
+        'content-class': {
+            control: 'text',
+            description: "Adds a class to the content wrapper when using the `content` slot."
+        },
+        default: {
+            control: 'text',
+            description: 'The default slot represents unwrapped content subject to the flex of the outer `<div>`.'
+        }
+    },
+    args: {
+        'aspect-ratio': undefined,
+        inline: false,
+        default: 'Hello World!',
+        content: undefined
+    },
+    tags: ['autodocs']
+};
+
+export default meta;
+
+type Story = StoryObj<typeof EvResponsive>;
+
+export const Primary: Story = {
+    render: (args: any) =>  ({
+        components: { EvResponsive },
+        setup() {
+            return { args };
+        },
+        template: `<ev-responsive v-bind="args">{{ args.default }}</ev-responsive>`
+    })
+};

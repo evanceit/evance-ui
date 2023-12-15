@@ -3,7 +3,7 @@ import {
     ComponentPublicInstance,
     computed,
     ComputedGetter,
-    reactive, toRefs,
+    reactive, Ref, toRefs,
     ToRefs,
     watchEffect
 } from "vue";

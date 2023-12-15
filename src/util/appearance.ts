@@ -1,5 +1,6 @@
 import {propsFactory} from "./props.ts";
-import {PropType} from "vue";
+import {computed, MaybeRef, PropType, unref} from "vue";
+import {appearanceModifier} from "@/util/modifiers.ts";
 
 /**
  * # Appearance
@@ -23,6 +24,20 @@ export const makeAppearanceProps = propsFactory({
         default: Appearance.default
     }
 }, 'Appearance');
+
+export function useAppearance(
+    props: MaybeRef,
+    exclude: (string | RegExp)[] = []
+) {
+
+    // Appearance modifier classes
+    const appearanceClasses = computed(() => {
+        const { appearance } = unref(props);
+        return appearanceModifier(appearance, exclude);
+    });
+
+    return { appearanceClasses };
+}
 
 
 /**
