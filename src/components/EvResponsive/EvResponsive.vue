@@ -11,7 +11,7 @@ const props = defineProps(makeEvResponsiveProps());
 const slots = useSlots();
 
 const { aspectStyles } = useAspectStyles(props);
-const { dimensionStyles } = useDimensions(props);
+const dimensionStyles = useDimensions(props);
 
 </script>
 <template>
@@ -24,20 +24,20 @@ const { dimensionStyles } = useDimensions(props);
             props.class
         ]"
         :style="[
-            aspectStyles,
             dimensionStyles,
             props.style
         ]"
     >
-        <slot name="default">
-            <div
-                :class="[
-                    'ev-responsive--content',
-                    props.contentClass
-                ]"
-            >
-                <slot name="content" />
-            </div>
-        </slot>
+        <div class="ev-responsive--sizer" :style="aspectStyles"></div>
+        <slot name="additional" />
+        <div
+            v-if="slots.default"
+            :class="[
+                'ev-responsive--content',
+                props.contentClass
+            ]"
+        >
+            <slot name="default" />
+        </div>
     </div>
 </template>

@@ -15,19 +15,19 @@ const meta: Meta<typeof EvResponsive> = {
         inline: {
             control: 'boolean'
         },
-        content: {
+        default: {
             control: 'text',
-            description: "The content slot represents wrapped content within a non-flex inner `<div>`. " +
+            description: "The default slot represents wrapped content within a non-flex inner `<div>`. " +
                 "If you would like your inner content to be subject to the flex box of the responsive block you" +
-                "should use the default slot."
+                "should use the additional slot."
         },
         'content-class': {
             control: 'text',
             description: "Adds a class to the content wrapper when using the `content` slot."
         },
-        default: {
+        additional: {
             control: 'text',
-            description: 'The default slot represents unwrapped content subject to the flex of the outer `<div>`.'
+            description: 'The additional slot represents unwrapped content subject to the flex of the outer `<div>`.'
         }
     },
     args: {

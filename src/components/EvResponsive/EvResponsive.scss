@@ -6,7 +6,6 @@
     max-width: 100%;
     overflow: hidden;
     position: relative;
-    transition: aspect-ratio 0.25s var(--easing-standard);
 
     &.is-inline {
         display: inline-flex;
@@ -17,4 +16,14 @@
 .ev-responsive--content {
     flex: 1 0 0;
     max-width: 100%;
+}
+
+.ev-responsive--sizer ~ .ev-responsive--content {
+    margin-inline-start: -100%;
+}
+
+.ev-responsive--sizer {
+    flex: 1 0 0;
+    transition: aspect-ratio 0.25s var(--easing-standard);
+    pointer-events: none;
 }

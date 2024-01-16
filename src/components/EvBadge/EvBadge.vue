@@ -3,10 +3,11 @@
  * `<ev-badge>`
  */
 import './EvBadge.scss';
-import {makeEvBadgeProps} from "@/components/EvBadge/EvBadge.ts";
+import {makeEvBadgeProps} from "./EvBadge.ts";
 import {computed, useSlots} from "vue";
 import {appearanceModifier} from "@/util";
-import {EvIcon, EvTransition} from "@/components";
+import {EvTransition} from "@/components/EvTransition";
+import {EvIcon} from "@/components/EvIcon";
 import {usePosition} from "@/composables/position.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 
