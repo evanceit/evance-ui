@@ -5,7 +5,7 @@
 import './EvImg.scss';
 import {makeEvImgProps, EvImgSrcObject} from "./EvImg.ts";
 import {EvResponsive} from "@/components/EvResponsive";
-import {EvTransition} from "@/components/EvTransition";
+import {EvTransition, useEvTransition} from "@/components/EvTransition";
 import {computed, nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, shallowRef, useSlots, watch} from "vue";
 import {Browser, filterComponentProps, toWebUnit} from "@/util";
 
@@ -22,6 +22,7 @@ const image = ref<HTMLImageElement>();
 const state = shallowRef<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle');
 const naturalWidth = shallowRef<number>();
 const naturalHeight = shallowRef<number>();
+const transition = useEvTransition(props);
 
 const normalisedSrc = computed<EvImgSrcObject>(() => {
     return props.src && typeof props.src === 'object'
@@ -29,12 +30,12 @@ const normalisedSrc = computed<EvImgSrcObject>(() => {
             src: props.src.src,
             srcset: props.srcset || props.src.srcset,
             lazySrc: props.lazySrc || props.src.lazySrc,
-            aspect: Number(props.aspectRatio || props.src.aspect || 0)
+            aspect: props.aspectRatio || props.src.aspect || 0
         } : {
             src: props.src,
             srcset: props.srcset,
             lazySrc: props.lazySrc,
-            aspect: Number(props.aspectRatio || 0)
+            aspect: props.aspectRatio || 0
         };
 });
 
@@ -246,37 +247,35 @@ const imgProps = computed(() => ({
     >
         <template #additional>
 
-            <ev-transition v-if="normalisedSrc.src && state !== 'idle'" :transition="props.transition" appear>
-                <template v-if="slots.sources">
-                    <picture
-                        class="ev-img--picture"
-                        v-show="isLoaded"
-                    >
-                        <slot name="sources" />
-                        <img
-                            ref="image"
-                            :class="['ev-img--img', objectFitClasses]"
-                            :style="{ objectPosition: props.position }"
-                            v-bind="imgProps"
-                            @load="onLoad"
-                            @error="onError"
-                        />
-                    </picture>
-                </template>
-                <template v-else>
+            <ev-transition v-if="normalisedSrc.src && state !== 'idle'" :transition="transition" appear>
+                <picture
+                    v-if="slots.sources"
+                    class="ev-img--picture"
+                    v-show="isLoaded"
+                >
+                    <slot name="sources" />
                     <img
                         ref="image"
                         :class="['ev-img--img', objectFitClasses]"
                         :style="{ objectPosition: props.position }"
                         v-bind="imgProps"
-                        v-show="isLoaded"
                         @load="onLoad"
                         @error="onError"
                     />
-                </template>
+                </picture>
+                <img
+                    v-else
+                    ref="image"
+                    :class="['ev-img--img', objectFitClasses]"
+                    :style="{ objectPosition: props.position }"
+                    v-bind="imgProps"
+                    v-show="isLoaded"
+                    @load="onLoad"
+                    @error="onError"
+                />
             </ev-transition>
 
-            <ev-transition :transition="props.transition">
+            <ev-transition :transition="transition">
                 <img
                     v-if="normalisedSrc.lazySrc && state !== 'loaded'"
                     :class="['ev-img--img', 'ev-img--preload', objectFitClasses]"
@@ -297,7 +296,7 @@ const imgProps = computed(() => ({
                 }"
             ></div>
 
-            <ev-transition v-if="slots.placeholder" :transition="props.transition" appear>
+            <ev-transition v-if="slots.placeholder" :transition="transition" appear>
                 <div
                     v-if="state === 'loading' || (state === 'error' && !slots.error)"
                     class="ev-img--placeholder"
@@ -306,7 +305,7 @@ const imgProps = computed(() => ({
                 </div>
             </ev-transition>
 
-            <ev-transition v-if="slots.error" :transition="props.transition" appear>
+            <ev-transition v-if="slots.error" :transition="transition" appear>
                 <div class="ev-img--error">
                     <slot name="error" />
                 </div>

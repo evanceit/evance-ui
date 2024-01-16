@@ -10,6 +10,14 @@ const meta: Meta<typeof EvImg> = {
         cover: {
             control: 'boolean'
         },
+        src: {
+            control: 'select',
+            options: [
+                'https://picsum.photos/id/11/1600/900',
+                'https://picsum.photos/id/12/1600/900',
+                'https://bad.src/not/valid'
+            ]
+        }
     },
     args: {
         cover: false,
@@ -29,10 +37,6 @@ export const Primary: Story = {
         },
         template: `
             <ev-img
-                height="300"
-                max-width="500"
-                src="https://bad.src/not/valid" 
-                lazy-src="https://picsum.photos/id/11/100/60" 
                 v-bind="args"
             >
                 <template #placeholder>
