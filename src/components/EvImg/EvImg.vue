@@ -155,7 +155,12 @@ function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
 }
 
 watch(() => props.src, () => {
-    init(state.value !== 'idle');
+    if (state.value !== 'idle') {
+        state.value = 'idle';
+        nextTick(() => {
+            init(true);
+        });
+    }
 });
 
 watch(aspectRatio, (val, oldVal) => {
