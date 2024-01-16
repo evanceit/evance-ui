@@ -5,7 +5,7 @@
 import './EvAvatar.scss';
 import {makeEvAvatarProps} from "./EvAvatar.ts";
 import {useAppearance} from "@/util";
-import {EvIcon} from "@/components";
+import {EvIcon, EvImg} from "@/components";
 
 const props = defineProps(makeEvAvatarProps());
 const { appearanceClasses } = useAppearance(props);
@@ -20,7 +20,8 @@ const { appearanceClasses } = useAppearance(props);
         ]"
         :style="props.style"
     >
-        <ev-icon :glyph="props.icon" />
-        <slot>{{ props.text }}</slot>
+        <ev-img v-if="props.image" key="image" alt="" cover />
+        <ev-icon v-else-if="props.icon" :glyph="props.icon" />
+        <slot v-else name="default">{{ props.text }}</slot>
     </div>
 </template>
