@@ -94,7 +94,7 @@
 .ev-button {
 
     /* Default */
-    &.appearance-default {
+    &.is-appearance-default {
         background-color: var(--button-default-background);
         color: var(--text-default);
         &:hover {
@@ -106,7 +106,7 @@
     }
 
     /* Danger */
-    &.appearance-danger {
+    &.is-appearance-danger {
         background-color: var(--button-danger-background);
         color: var(--surface-default);
         &:hover {
@@ -118,7 +118,7 @@
     }
 
     /* Primary */
-    &.appearance-primary {
+    &.is-appearance-primary {
         background-color: var(--button-primary-background);
         color: var(--surface-default);
         &:hover {
@@ -130,7 +130,7 @@
     }
 
     /* Subtle */
-    &.appearance-subtle {
+    &.is-appearance-subtle {
         background-color: var(--button-subtle-background);
         color: var(--text-default);
         &:hover {
@@ -154,7 +154,7 @@
 .ev-button {
 
     /* Small */
-    &.size-small {
+    &.is-size-small {
         height: var(--input-height-small);
         padding-inline: var(--spacer-50);
 
@@ -164,7 +164,7 @@
     }
 
     /* Large */
-    &.size-large {
+    &.is-size-large {
         height: var(--input-height-large);
         font-size: var(--text-large);
         padding-inline: var(--spacer-150);
@@ -181,7 +181,7 @@
         padding-inline: var(--spacer-100);
 
         /* Accommodate small size modifier */
-        &.size-small {
+        &.is-size-small {
             padding-inline: var(--spacer-75);
         }
     }

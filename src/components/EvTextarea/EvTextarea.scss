@@ -104,12 +104,12 @@
     ## Appearance
 
     EvTexarea can have the following appearance modifiers:
-    - appearance-subtle
-    - appearance-none
+    - is-appearance-subtle
+    - is-appearance-none
  */
 .ev-textarea--control {
 
-    &.appearance-button {
+    &.is-appearance-button {
         border-color: transparent;
         background-color: var(--button-default-background);
 
@@ -122,7 +122,7 @@
         }
     }
 
-    &.appearance-subtle {
+    &.is-appearance-subtle {
         border-color: transparent;
 
         &:hover {
@@ -134,7 +134,7 @@
         }
     }
 
-    &.appearance-none {
+    &.is-appearance-none {
         border-color: transparent !important;
         box-shadow: none !important;
     }

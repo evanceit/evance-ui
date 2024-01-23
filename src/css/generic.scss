@@ -91,3 +91,32 @@ body ::-webkit-scrollbar:hover{
         overflow: visible !important;
     }
 }
+
+
+/**
+    Rounded
+ */
+.is-rounded-0 {
+    border-radius: 0 !important;
+}
+.is-rounded-x-small {
+    border-radius: var(--rounded-x-small) !important;
+}
+.is-rounded-small {
+    border-radius: var(--rounded-small) !important;
+}
+.is-rounded-medium {
+    border-radius: var(--rounded-medium) !important;
+}
+.is-rounded-large {
+    border-radius: var(--rounded-large) !important;
+}
+.is-rounded-x-large {
+    border-radius: var(--rounded-x-large) !important;
+}
+.is-rounded-circle {
+    border-radius: var(--rounded-circle) !important;
+}
+.is-rounded-pill {
+    border-radius: var(--rounded-pill) !important;
+}

@@ -106,7 +106,7 @@ function getThickness() {
         :class="[
             {
                 'is-indeterminate': props.indeterminate,
-                'size-default': props.size === 'default'
+                'is-size-default': props.size === 'default'
             },
             appearanceModifier(props.appearance, ['default'])
         ]"

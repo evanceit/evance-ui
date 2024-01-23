@@ -15,19 +15,19 @@
 /** Appearance */
 .ev-message {
 
-    &.appearance-critical {
+    &.is-appearance-critical {
         background-color: var(--background-critical);
     }
-    &.appearance-information {
+    &.is-appearance-information {
         background-color: var(--background-information);
     }
-    &.appearance-notice {
+    &.is-appearance-notice {
         background-color: var(--background-notice);
     }
-    &.appearance-success {
+    &.is-appearance-success {
         background-color: var(--background-success);
     }
-    &.appearance-warning {
+    &.is-appearance-warning {
         background-color: var(--background-warning);
     }
 }

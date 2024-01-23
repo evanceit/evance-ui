@@ -122,9 +122,13 @@ $text: (
     --input-font-size: 1rem;
 
     /** Rounded */
+    --rounded-x-small: 2px;
     --rounded-small: 4px;
     --rounded-medium: 8px;
     --rounded-large: 16px;
+    --rounded-x-large: 32px;
+    --rounded-circle: 50%;
+    --rounded-pill: 9999px;
 
 
     /* Spacers */

@@ -21,12 +21,12 @@
 }
 
 .ev-quickfind {
-    &.size-small {
+    &.is-size-small {
         font-size: var(--text-size-small);
         font-weight: var(--font-weight-bold);
         height: 22px;
     }
-    &.size-large {
+    &.is-size-large {
         font-size: var(--text-size-large);
         height: var(--icon-size-large);
     }

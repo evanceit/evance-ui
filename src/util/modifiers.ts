@@ -31,7 +31,7 @@ export function makeClassName(value: string, prefix: string = '', exclude: (stri
  * @param exclude
  */
 export function sizeModifier(value: string, exclude: (string | RegExp)[] = []): string | null {
-    return makeClassName(value, 'size', exclude);
+    return makeClassName(value, 'is-size', exclude);
 }
 
 /**
@@ -40,5 +40,5 @@ export function sizeModifier(value: string, exclude: (string | RegExp)[] = []): 
  * @param exclude
  */
 export function appearanceModifier(value: string, exclude: (string | RegExp)[] = []): string | null {
-    return makeClassName(value, 'appearance', exclude);
+    return makeClassName(value, 'is-appearance', exclude);
 }

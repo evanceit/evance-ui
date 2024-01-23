@@ -9,11 +9,11 @@
 }
 
 .ev-kbd {
-    &.size-small {
+    &.is-size-small {
         font-size: 0.85em;
     }
 
-    &.size-large {
+    &.is-size-large {
         font-size: 1.15em;
     }
 }

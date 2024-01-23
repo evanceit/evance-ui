@@ -31,32 +31,32 @@
 .ev-badge--content {
 
     /* Default */
-    &.appearance-default {
+    &.is-appearance-default {
         @include mixins.appearance-default;
     }
 
     /* Critical */
-    &.appearance-critical {
+    &.is-appearance-critical {
         @include mixins.appearance-critical;
     }
 
     /* Information */
-    &.appearance-information {
+    &.is-appearance-information {
         @include mixins.appearance-information;
     }
 
     /* Notice */
-    &.appearance-notice {
+    &.is-appearance-notice {
         @include mixins.appearance-notice;
     }
 
     /* Success */
-    &.appearance-success {
+    &.is-appearance-success {
         @include mixins.appearance-success;
     }
 
     /* Warning */
-    &.appearance-warning {
+    &.is-appearance-warning {
         @include mixins.appearance-warning;
     }
 }

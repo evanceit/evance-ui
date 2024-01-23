@@ -21,35 +21,35 @@
 /* Appearance */
 .ev-progress-circular {
     /* critical */
-    &.appearance-critical {
+    &.is-appearance-critical {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-critical-bold);
         }
     }
     /* information */
-    &.appearance-information {
+    &.is-appearance-information {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-information-bold);
         }
     }
     /* notice */
-    &.appearance-notice {
+    &.is-appearance-notice {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-notice-bold);
         }
     }
     /* success */
-    &.appearance-success {
+    &.is-appearance-success {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-success-bold);
         }
     }
     /* warning */
-    &.appearance-warning {
+    &.is-appearance-warning {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
             color: var(--background-warning-bold);
@@ -59,7 +59,7 @@
 
 /* Sizes */
 .ev-progress-circular {
-    &.size-default {
+    &.is-size-default {
         width: 20px;
         height: 20px;
     }

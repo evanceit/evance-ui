@@ -215,6 +215,9 @@ export function clamp (value: number, min = 0, max = 1) {
     return Math.max(min, Math.min(max, value))
 }
 
+// Only allow a single return type
+type NotAUnion<T> = [T] extends [infer U] ? _NotAUnion<U, U> : never;
+type _NotAUnion<T, U> = U extends any ? [T] extends [U] ? unknown : never : never;
 
 /**
  * # Destruct Computed

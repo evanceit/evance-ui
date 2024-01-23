@@ -25,11 +25,11 @@
 
 /** Size modifiers */
 .ev-textfield--control {
-    &.size-small {
+    &.is-size-small {
         height: var(--input-height-small);
         padding-inline: var(--spacer-50);
     }
-    &.size-large {
+    &.is-size-large {
         height: var(--input-height-large);
     }
 }
@@ -125,12 +125,12 @@
     ## Appearance
 
     EvTextfield can have the following appearance modifiers:
-    - appearance-subtle
-    - appearance-none
+    - is-appearance-subtle
+    - is-appearance-none
  */
 .ev-textfield--control {
 
-    &.appearance-button {
+    &.is-appearance-button {
         border-color: transparent;
         background-color: var(--button-default-background);
 
@@ -143,7 +143,7 @@
         }
     }
 
-    &.appearance-subtle {
+    &.is-appearance-subtle {
         border-color: transparent;
 
         &:hover {
@@ -155,7 +155,7 @@
         }
     }
 
-    &.appearance-none {
+    &.is-appearance-none {
         border-color: transparent !important;
         box-shadow: none !important;
     }

@@ -38,23 +38,23 @@
  */
 .ev-progress {
     /* critical */
-    &.appearance-critical {
+    &.is-appearance-critical {
         color: var(--background-critical-bold);
     }
     /* information */
-    &.appearance-information {
+    &.is-appearance-information {
         color: var(--background-information-bold);
     }
     /* notice */
-    &.appearance-notice {
+    &.is-appearance-notice {
         color: var(--background-notice-bold);
     }
     /* success */
-    &.appearance-success {
+    &.is-appearance-success {
         color: var(--background-success-bold);
     }
     /* warning */
-    &.appearance-warning {
+    &.is-appearance-warning {
         color: var(--background-warning-bold);
     }
 }
@@ -106,13 +106,13 @@
     ## Size
  */
 .ev-progress {
-    &.size-small {
+    &.is-size-small {
         height: 4px;
     }
-    &.size-medium {
+    &.is-size-medium {
         height: 8px;
     }
-    &.size-large {
+    &.is-size-large {
         height: 16px;
     }
 }

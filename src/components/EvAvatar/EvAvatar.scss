@@ -1,7 +1,82 @@
+@use "../../css/mixins";
+
 .ev-avatar {
     flex: none;
     align-items: center;
     display: inline-flex;
     justify-content: center;
     line-height: normal;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    transition: 0.2s var(--easing-standard);
+    transition-property: width, height;
+    vertical-align: middle;
+    height: var(--ev-avatar-size, 42px);
+    width: var(--ev-avatar-size, 42px);
+    border-radius: 50%;
+    font-weight: 600;
+
+    .ev-img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/** Size */
+.ev-avatar {
+
+    &.is-size-x-small {
+        --ev-avatar-size: 30px;
+    }
+
+    &.is-size-small {
+        --ev-avatar-size: 36px;
+    }
+
+    &.is-size-medium {
+        --ev-avatar-size: 42px;
+    }
+
+    &.is-size-large {
+        --ev-avatar-size: 48px;
+    }
+
+    &.is-size-x-large {
+        --ev-avatar-size: 54px;
+    }
+}
+
+
+/** Appearance */
+.ev-avatar {
+    /* Default */
+    &.is-appearance-default {
+        @include mixins.appearance-default;
+    }
+
+    /* Critical */
+    &.is-appearance-critical {
+        @include mixins.appearance-critical;
+    }
+
+    /* Information */
+    &.is-appearance-information {
+        @include mixins.appearance-information;
+    }
+
+    /* Notice */
+    &.is-appearance-notice {
+        @include mixins.appearance-notice;
+    }
+
+    /* Success */
+    &.is-appearance-success {
+        @include mixins.appearance-success;
+    }
+
+    /* Warning */
+    &.is-appearance-warning {
+        @include mixins.appearance-warning;
+    }
 }
