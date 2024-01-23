@@ -172,7 +172,6 @@ watch(aspectRatio, (val, oldVal) => {
 onBeforeMount(() => init());
 
 
-// TODO: getSrc when window width changes
 if (Browser.hasWindow) {
     const windowWidth = ref(window.innerWidth);
     const onWindowResize = () => {
@@ -213,7 +212,7 @@ const isLoaded = computed(() => {
     return state.value === 'loaded';
 });
 
-const responsiveProps = filterComponentProps(EvResponsive, props);
+const responsiveProps = computed(() => filterComponentProps(EvResponsive, props));
 
 const imgProps = computed(() => ({
     src: normalisedSrc.value.src,
