@@ -9,10 +9,12 @@ const meta: Meta<typeof EvAvatar> = {
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'notice', 'success', 'warning']
+            options: ['default', 'critical', 'information', 'notice', 'success', 'warning'],
+            description: "Appearance may be: `default`, `critical`, `information`, `notice`, `success`, or `warning`."
         },
         bold: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether to apply a solid background, giving the component a bolder appearance."
         },
         icon: {
             control: 'select',
@@ -22,7 +24,8 @@ const meta: Meta<typeof EvAvatar> = {
                 'Evance': Evance,
                 'Check': Check,
                 'Company': Company
-            }
+            },
+            description: 'Render an imag using the `glyph` attribute for `<ev-icon>`.'
         },
         image: {
             control: 'select',
@@ -31,18 +34,28 @@ const meta: Meta<typeof EvAvatar> = {
                 'https://picsum.photos/id/11/600/600',
                 'https://picsum.photos/id/12/600/600',
                 'https://picsum.photos/id/13/600/600'
-            ]
+            ],
+            description: 'Render an image using the `src` attribute for `<ev-img>`.'
         },
         rounded: {
             control: 'select',
-            options: [0, 'x-small', 'small', 'medium', 'large', 'x-large', 'circle', 'pill']
+            options: [0, 'x-small', 'small', 'medium', 'large', 'x-large', 'circle', 'pill'],
+            description: 'Designates the border-radius applied to the component.'
         },
         size: {
             control: 'select',
-            options: ['x-small', 'small', 'medium', 'large', 'x-large']
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
+            description: 'Sets the height and width of the component. ' +
+                'Default unit is px. ' +
+                'Can also use the following predefined sizes: `x-small`, `small`, `medium` (default), `large`, and `x-large`.'
+        },
+        text: {
+            control: 'text',
+            description: 'Specify content text for the component.'
         },
         default: {
-            control: 'text'
+            control: 'text',
+            description: 'The default slot may be used instead of text, or custom content.'
         }
     },
     args: {
@@ -50,7 +63,8 @@ const meta: Meta<typeof EvAvatar> = {
         bold: false,
         icon: 'None',
         size: undefined,
-        image: undefined
+        image: undefined,
+        text: undefined
     },
     tags: ['autodocs']
 };
@@ -65,6 +79,6 @@ export const Primary: Story = {
         setup() {
             return { EvIcon, Evance, args };
         },
-        template: `<ev-avatar v-bind="args">{{ args.default }}</ev-avatar>`
+        template: `<ev-avatar v-bind="args" />`
     })
 };
