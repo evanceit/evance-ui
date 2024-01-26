@@ -7,7 +7,7 @@ import {makeEvOverlayProps} from "./EvOverlay.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
 import {useTeleport} from "@/composables/teleport.ts";
-import {useEvTransition, EvTransition} from "@/components";
+import {useEvTransition, EvTransition} from "@/components/EvTransition";
 import {useDimensions} from "@/composables/dimensions.ts";
 import {clickBlockedAnimation, getScrollParent, toWebUnit} from "@/util";
 import {useStack} from "@/composables/stack.ts";

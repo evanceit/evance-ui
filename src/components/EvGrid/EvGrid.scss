@@ -1,4 +1,25 @@
+@use "../../css/settings";
 
+/** Container */
+.ev-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@each $breakpoint in map_keys(settings.$grid-breakpoints) {
+    @if $breakpoint != 'xs' {
+        /* 1 */
+        @media only screen and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
+            .ev-container {
+                max-width: map-get(settings.$grid-breakpoints, $breakpoint) * 0.9375;
+            }
+        }
+    }
+}
+
+
+/** Spacer */
 .ev-spacer {
     flex: 1;
 }

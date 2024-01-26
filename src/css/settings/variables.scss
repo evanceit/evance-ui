@@ -1,0 +1,94 @@
+/*
+  # Variables
+
+  Includes the following sections:
+  - Breakpoints
+  - Spacers
+  - Text
+ */
+
+/*
+    ## Breakpoints
+
+    Breakpoints should always be defined in `px` units.
+
+    By default we have five breakpoints for:
+    - `xs` - Extra Small: phones in portrait
+    - `sm` - Small: Phones in landscape
+    - `md` - Medium: Tablets in portrait or small notebooks
+    - `lg` - Large: Desktops & tablets in landscape. More than accommodates scroll bars.
+    - `xl` - Extra Large - Large Desktops, including 1080p, 4k and ultra-wide screens
+
+    Scaling, such as font-size scaling, is done between `sm-min` and `xl-min`.
+ */
+$breakpoint-xs-min: 0px;
+$breakpoint-xs-max: 599px;
+$breakpoint-sm-min: 600px;
+$breakpoint-sm-max: 959px;
+$breakpoint-md-min: 960px;
+$breakpoint-md-max: 1199px;
+$breakpoint-lg-min: 1200px;
+$breakpoint-lg-max: 1599px;
+$breakpoint-xl-min: 1600px;
+
+$grid-breakpoints: (
+    xs: $breakpoint-xs-min,
+    sm: $breakpoint-sm-min,
+    md: $breakpoint-md-min,
+    lg: $breakpoint-lg-min,
+    xl: $breakpoint-xl-min
+) !default;
+
+$scale-from: $breakpoint-sm-min;
+$scale-to: $breakpoint-xl-min;
+
+
+/*
+    ## Spacers
+
+    Spacers in Evance are based on a percentage of `1rem` (based on `16px`).
+ */
+$spacer-25: 0.25rem;
+$spacer-50: 0.5rem;
+$spacer-75: 0.75rem;
+$spacer-100: 1rem;
+$spacer-150: 1.5rem;
+$spacer-200: 2rem;
+$spacer-300: 3rem;
+$spacer-400: 4rem;
+$spacer-600: 6rem;
+$spacer-800: 8rem;
+
+$spacers: (
+    0: 0,
+    25: $spacer-25,
+    50: $spacer-50,
+    75: $spacer-75,
+    100: $spacer-100,
+    150: $spacer-150,
+    200: $spacer-200,
+    300: $spacer-300,
+    400: $spacer-400,
+    600: $spacer-600,
+    800: $spacer-800
+) !default;
+
+
+/**
+    ## Text
+ */
+$headings: (
+        1: (min: 1.375rem, max: 2.375rem),
+        2: (min: 1.25rem, max: 2rem),
+        3: (min: 1.125rem, max: 1.5rem),
+        4: (min: 1rem, max: 1.25rem),
+        5: (min: 0.925rem, max: 1rem),
+        6: (min: 0.875rem, max: 0.875rem)
+);
+$text: (
+        subtitle: (min: 1rem, max: 1.125rem),
+        large: (min: 1rem, max: 1rem),
+        medium: (min: 0.875rem, max: 0.875rem),
+        small: (min: 0.75rem, max: 0.75rem),
+        eyebrow: (min: 0.625rem, max: 0.625rem)
+);
