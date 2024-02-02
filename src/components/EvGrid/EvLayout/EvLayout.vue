@@ -11,6 +11,9 @@ const slots = useSlots();
     <div
         :class="[
             'ev-layout',
+            {
+                'is-column': props.column
+            },
             props.class
         ]"
         :style="[

@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import './EvBlock.scss';
-import {makeEvBlockProps} from "./EvBlock.ts";
+import {makeEvBlockProps, useBreakpointClasses} from "./EvBlock.ts";
 import {useSlots} from "vue";
 
 const props = defineProps(makeEvBlockProps());
 const slots = useSlots();
+
+/**
+ * # Size Classes
+ */
+const sizeClasses = useBreakpointClasses(props, 'size');
+
 
 </script>
 <template>
@@ -15,6 +21,7 @@ const slots = useSlots();
             {
                 'is-scrollable': props.scrollable
             },
+            ...sizeClasses,
             props.class
         ]"
         :style="[
