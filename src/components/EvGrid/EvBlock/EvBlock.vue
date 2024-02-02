@@ -8,9 +8,13 @@ const slots = useSlots();
 
 </script>
 <template>
-    <div
+    <component
+        :is="props.tag"
         :class="[
             'ev-block',
+            {
+                'is-scrollable': props.scrollable
+            },
             props.class
         ]"
         :style="[
@@ -18,5 +22,5 @@ const slots = useSlots();
         ]"
     >
         <slot />
-    </div>
+    </component>
 </template>
