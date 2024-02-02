@@ -1,0 +1,45 @@
+@use "../../../css/settings";
+
+/**
+    # .ev-block
+
+ */
+.ev-block {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+@each $breakpoint in map_keys(settings.$grid-breakpoints) {
+    @media all and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
+        .ev-block {
+            @for $num from 1 through 12 {
+
+                &.#{$breakpoint}-auto {
+                    flex: 0 0 auto;
+                    width: auto;
+                    max-width: none;
+                }
+
+                &.#{$breakpoint}-grow {
+                    flex-basis: 0;
+                    flex-grow: 1;
+                    max-width: 100%;
+                }
+
+                &.#{$breakpoint}-#{$num} {
+                    flex: 0 0 (($num/12) * 100%);
+                    max-width: (($num/12) * 100%);
+                }
+
+                &.order-#{$breakpoint}-#{$num} {
+                    order: $num;
+                }
+
+                &.offset-#{$breakpoint}-#{$num} {
+                    margin-left: (($num/12) * 100%);
+                }
+            }
+        }
+    }
+}

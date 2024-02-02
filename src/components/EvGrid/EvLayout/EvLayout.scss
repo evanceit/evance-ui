@@ -1,0 +1,22 @@
+/**
+    # .ev-layout
+
+    Used for separating sections
+ */
+.ev-layout {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 0;
+
+    &.is-column {
+        flex-direction: column;
+    }
+
+    &.is-row {
+        flex-direction: row;
+    }
+
+    &.is-nowrap {
+        flex-wrap: nowrap;
+    }
+}
