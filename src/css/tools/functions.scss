@@ -1,0 +1,142 @@
+@use 'sass:list' as list;
+@use 'sass:map' as map;
+@use 'sass:math' as math;
+@use 'sass:meta' as meta;
+
+/**
+    # Breakpoint Min
+ */
+@function breakpoint-min($name, $breakpoints) {
+    $min: map.get($breakpoints, $name);
+    @return if ($min != 0, $min, null);
+}
+
+
+/*
+    # Breakpoint Infix
+ */
+@function breakpoint-infix($name, $breakpoints) {
+    @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+
+/**
+    # Map Deep Get
+ */
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map.get($map, $key);
+    }
+    @return $map;
+}
+
+
+/**
+    # Map Deep Merge
+
+    Adapted from https://gist.github.com/pentzzsolt/4949bbd7691d43d00616dc4f1451cae9#file-non-destructive-map-merge-4-scss
+ */
+@function map-deep-merge($parent-map, $child-map) {
+    $result: $parent-map;
+    @each $key, $child in $child-map {
+        $parent-has-key: map.has-key($result, $key);
+        $parent-value: map.get($result, $key);
+        $parent-type: meta.type-of($parent-value);
+        $child-type: meta.type-of($child);
+        $parent-is-map: $parent-type == map;
+        $child-is-map: $child-type == map;
+
+        @if (not $parent-has-key) or ($parent-type != $child-type) or (not ($parent-is-map and $child-is-map)) {
+            $result: map.merge($result, ( $key: $child ));
+        }
+        @else {
+            $result: map.merge($result, ( $key: map-deep-merge($parent-value, $child) ));
+        }
+    }
+    @return $result;
+}
+
+
+/**
+    # Map Deep Set
+ */
+@function map-deep-set($map, $keys, $value) {
+    $maps: ($map, );
+    $result: null;
+
+    // If the last key is a map already
+    // Warn the user we will be overriding it with $value
+    @if meta.type-of(list.nth($keys, -1)) == "map" {
+        @warn "The last key you specified is a map; it will be overrided with `#{$value}`."
+    }
+
+    // If $keys is a single key
+    // Just merge and return
+    @if list.length($keys) == 1 {
+        @return map.merge($map, ( $keys: $value ));
+    }
+
+    // Loop from the first to the second to last key from $keys
+    // Store the associated map to this key in the $maps list
+    // If the key doesn't exist, throw an error
+    @for $i from 1 through list.length($keys) - 1 {
+        $current-key: list.nth($keys, $i);
+        $current-map: list.nth($maps, -1);
+        $current-get: map.get($current-map, $current-key);
+
+        @if $current-get == null {
+            @error "Key `#{$current-key}` doesn't exist at current level in map.";
+        }
+
+        $maps: list.append($maps, $current-get);
+    }
+
+    // Loop from the last map to the first one
+    // Merge it with the previous one
+    @for $i from list.length($maps) through 1 {
+        $current-map: list.nth($maps, $i);
+        $current-key: list.nth($keys, $i);
+        $current-val: if($i == list.length($maps), $value, $result);
+        $result: map.merge($current-map, ($current-key: $current-val));
+    }
+
+    @return $result
+}
+
+
+/**
+    # Round Even
+ */
+@function roundEven($val) {
+    @return 2 * math.round($val * .5);
+}
+
+
+/**
+    # Scalable
+
+    Calculate a clamp() function to offer scaling between
+    the smallest size ($min) from the smallest screen size ($minAt)
+    and the largest size ($max) at the largest screen size ($maxAt).
+
+    The calculation should look like this:
+
+    clamp(min, calc(min + (max - min) * ((100vw - minAt) / divider)), max);
+ */
+@function scalable($min, $max, $minAt, $maxAt) {
+    @if ($min == $max) {
+        @return $max;
+    }
+    $divider: math.div(($maxAt - $minAt), $maxAt) * 100;
+    @return clamp(#{$min}, calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$minAt}) / #{strip-unit($divider)})), #{$max});
+}
+
+
+/*
+    # Strip Unit
+
+    Remove units from a string like '10px', converting to a number (10).
+ */
+@function strip-unit($value) {
+    @return math.div($value,  ($value * 0 + 1));
+}

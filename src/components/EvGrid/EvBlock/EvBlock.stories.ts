@@ -29,9 +29,15 @@ export const WithinADefaultLayout: Story = {
             <ev-layout style="height: 200px;">
                 <ev-block 
                     :size="{ xs: 12, md: 6 }"
-                >Contents</ev-block>
-                <ev-block>Contents</ev-block>
-                <ev-block>Contents</ev-block>
+                >
+                    Contents 1
+                </ev-block>
+                <ev-block>
+                    Contents 2
+                </ev-block>
+                <ev-block>
+                    Contents 3
+                </ev-block>
             </ev-layout>
         `
     })

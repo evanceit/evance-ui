@@ -1,0 +1,20 @@
+@use "../settings";
+
+/**
+    # Display Utilities
+
+    Currently, we're only using .hidden because visibility based
+    on display is variable.
+
+ */
+@if (settings.$utilities != false and length(settings.$utilities) > 0) {
+    @each $size, $media_query in settings.$display-breakpoints {
+        .hidden {
+            &-#{$size} {
+                @media #{$media_query} {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}

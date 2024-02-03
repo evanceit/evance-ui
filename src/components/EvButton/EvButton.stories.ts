@@ -33,7 +33,7 @@ const meta: Meta<typeof EvButton> = {
             description: "Places an icon before the content/text of the button when supplied as a String or as an SVG component/glyph. " +
                 "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style."
         },
-        'icon-start': {
+        iconStart: {
             control: 'select',
             description: "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph.",
             options: ['None', 'Check', 'Plus', 'Save'],
@@ -44,7 +44,7 @@ const meta: Meta<typeof EvButton> = {
                 'Save': Save
             }
         },
-        'icon-end': {
+        iconEnd: {
             control: 'select',
             description: "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph.",
             options: ['None', 'ArrowContinue'],
@@ -68,10 +68,10 @@ const meta: Meta<typeof EvButton> = {
         appearance: 'default',
         default: 'Continue',
         disabled: false,
-        href: null,
+        href: undefined,
         icon: false,
-        'icon-start': 'None',
-        'icon-end': 'None',
+        iconStart: 'None',
+        iconEnd: 'None',
         size: 'medium',
         fullWidth: false,
         loading: false,

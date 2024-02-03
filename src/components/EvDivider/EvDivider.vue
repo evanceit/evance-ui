@@ -22,7 +22,7 @@ type BorderStyle = 'solid'
 interface DividerProps {
     appearance?: AppearanceProp,
     borderStyle?: BorderStyle,
-    thickness: number,
+    thickness?: number,
     opacity?: number | string,
     vertical?: boolean
 }

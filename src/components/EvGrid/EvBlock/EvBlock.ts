@@ -5,26 +5,37 @@ import {DisplayBreakpoint} from "@/composables/display.ts";
 import {computed, PropType} from "vue";
 
 
+/** Block Number Props */
 export type BlockNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
-export type BlockSize = 'auto' | 'grow' | BlockNumber;
-export type BlockSizes = {
-    [key in DisplayBreakpoint]: BlockSize
+export type BlockNumberPropValue = BlockNumber | `${BlockNumber}`;
+export type BlockNumberPropObject = {
+    [key in DisplayBreakpoint]: BlockNumberPropValue
 };
-export type BlockSizeProp = BlockSize | BlockSizes;
+export type BlockNumberProp = BlockNumberPropValue | BlockNumberPropObject | undefined;
 
+/** Block Size Props **/
+export type BlockSizePropValue = 'auto' | 'grow' | BlockNumberPropValue;
+export type BlockSizePropObject = {
+    [key in DisplayBreakpoint]: BlockSizePropValue
+};
+export type BlockSizeProp = BlockSizePropValue | BlockSizePropObject;
+
+/** Responsive Props */
 export type ResponsivePropValue = string | number | boolean;
 export type ResponsivePropObject = {
     [key in DisplayBreakpoint]: ResponsivePropValue
 };
 export type ResponsiveProp = ResponsivePropValue | ResponsivePropObject | undefined;
 
+
 /**
  * # makeEvBlockProps
  */
 export const makeEvBlockProps = propsFactory({
-
+    offset: [String, Number, Object] as PropType<BlockNumberProp>,
+    order: [String, Number, Object] as PropType<BlockNumberProp>,
     scrollable: Boolean,
-    size: [String, Number] as PropType<BlockSizeProp>,
+    size: [String, Number, Object] as PropType<BlockSizeProp>,
 
     ...makeComponentProps(),
     ...makeTagProps()

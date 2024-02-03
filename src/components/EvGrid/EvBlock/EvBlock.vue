@@ -10,7 +10,8 @@ const slots = useSlots();
  * # Size Classes
  */
 const sizeClasses = useBreakpointClasses(props, 'size');
-
+const orderClasses = useBreakpointClasses(props, 'order', 'order');
+const offsetClasses = useBreakpointClasses(props, 'offset', 'offset');
 
 </script>
 <template>
@@ -22,6 +23,8 @@ const sizeClasses = useBreakpointClasses(props, 'size');
                 'is-scrollable': props.scrollable
             },
             ...sizeClasses,
+            ...orderClasses,
+            ...offsetClasses,
             props.class
         ]"
         :style="[

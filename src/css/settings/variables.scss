@@ -1,3 +1,5 @@
+@use 'sass:map' as map;
+@use '../tools/functions' as *;
 /*
   # Variables
 
@@ -17,30 +19,59 @@
     - `sm` - Small: Phones in landscape
     - `md` - Medium: Tablets in portrait or small notebooks
     - `lg` - Large: Desktops & tablets in landscape. More than accommodates scroll bars.
-    - `xl` - Extra Large - Large Desktops, including 1080p, 4k and ultra-wide screens
+    - `xl` - Extra Large - Large Desktops, including 1080p
+    - `xxl` - Extra Large - 4k and ultra-wide screens
 
     Scaling, such as font-size scaling, is done between `sm-min` and `xl-min`.
  */
-$breakpoint-xs-min: 0px;
-$breakpoint-xs-max: 599px;
-$breakpoint-sm-min: 600px;
-$breakpoint-sm-max: 959px;
-$breakpoint-md-min: 960px;
-$breakpoint-md-max: 1199px;
-$breakpoint-lg-min: 1200px;
-$breakpoint-lg-max: 1599px;
-$breakpoint-xl-min: 1600px;
+$breakpoint-xs: 0px;
+$breakpoint-sm: 600px;
+$breakpoint-md: 960px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1600px;
+$breakpoint-xxl: 2400px;
 
 $grid-breakpoints: (
-    xs: $breakpoint-xs-min,
-    sm: $breakpoint-sm-min,
-    md: $breakpoint-md-min,
-    lg: $breakpoint-lg-min,
-    xl: $breakpoint-xl-min
+    xs: $breakpoint-xs,
+    sm: $breakpoint-sm,
+    md: $breakpoint-md,
+    lg: $breakpoint-lg,
+    xl: $breakpoint-xl,
+    xxl: $breakpoint-xxl
 ) !default;
 
-$scale-from: $breakpoint-sm-min;
-$scale-to: $breakpoint-xl-min;
+
+/**
+    ## Display Breakpoints
+
+    Avoid using '*-and-down' where possible
+ */
+$display-breakpoints: () !default;
+$display-breakpoints: map-deep-merge(
+    (
+        'print-only': 'only print',
+        'screen-only': 'only screen',
+        'xs-only': '(max-width: #{map.get($grid-breakpoints, 'sm') - 0.02})',
+        'sm-only': '(min-width: #{map.get($grid-breakpoints, 'sm')}) and (max-width: #{map.get($grid-breakpoints, 'md') - 0.02})',
+        'md-only': '(min-width: #{map.get($grid-breakpoints, 'md')}) and (max-width: #{map.get($grid-breakpoints, 'lg') - 0.02})',
+        'lg-only': '(min-width: #{map.get($grid-breakpoints, 'lg')}) and (max-width: #{map.get($grid-breakpoints, 'xl') - 0.02})',
+        'xl-only': '(min-width: #{map.get($grid-breakpoints, 'xl')}) and (max-width: #{map.get($grid-breakpoints, 'xxl') - 0.02})',
+        'xxl-only': '(min-width: #{map.get($grid-breakpoints, 'xxl')})',
+        'sm-and-up': '(min-width: #{map.get($grid-breakpoints, 'sm')})',
+        'md-and-up': '(min-width: #{map.get($grid-breakpoints, 'md')})',
+        'lg-and-up': '(min-width: #{map.get($grid-breakpoints, 'lg')})',
+        'xl-and-up': '(min-width: #{map.get($grid-breakpoints, 'xl')})',
+        'sm-and-down': '(max-width: #{map.get($grid-breakpoints, 'md') - 0.02})',
+        'md-and-down': '(max-width: #{map.get($grid-breakpoints, 'lg') - 0.02})',
+        'lg-and-down': '(max-width: #{map.get($grid-breakpoints, 'xl') - 0.02})',
+        'xl-and-down': '(max-width: #{map.get($grid-breakpoints, 'xxl') - 0.02})',
+    ),
+    $display-breakpoints
+);
+
+$scale-from: $breakpoint-sm;
+$scale-to: $breakpoint-xl;
+
 
 
 /*
@@ -73,22 +104,55 @@ $spacers: (
     800: $spacer-800
 ) !default;
 
+$negative-spacers: () !default;
+@each $key, $value in $spacers {
+    $negative-spacers: map.merge($negative-spacers, (n#{$key}: -#{$value}));
+}
+
 
 /**
     ## Text
  */
 $headings: (
-        1: (min: 1.375rem, max: 2.375rem),
-        2: (min: 1.25rem, max: 2rem),
-        3: (min: 1.125rem, max: 1.5rem),
-        4: (min: 1rem, max: 1.25rem),
-        5: (min: 0.925rem, max: 1rem),
-        6: (min: 0.875rem, max: 0.875rem)
+    1: (min: 1.375rem, max: 2.375rem),
+    2: (min: 1.25rem, max: 2rem),
+    3: (min: 1.125rem, max: 1.5rem),
+    4: (min: 1rem, max: 1.25rem),
+    5: (min: 0.925rem, max: 1rem),
+    6: (min: 0.875rem, max: 0.875rem)
 );
 $text: (
-        subtitle: (min: 1rem, max: 1.125rem),
-        large: (min: 1rem, max: 1rem),
-        medium: (min: 0.875rem, max: 0.875rem),
-        small: (min: 0.75rem, max: 0.75rem),
-        eyebrow: (min: 0.625rem, max: 0.625rem)
+    subtitle: (min: 1rem, max: 1.125rem),
+    large: (min: 1rem, max: 1rem),
+    medium: (min: 0.875rem, max: 0.875rem),
+    small: (min: 0.75rem, max: 0.75rem),
+    eyebrow: (min: 0.625rem, max: 0.625rem)
+);
+$font-weights: () !default;
+$font-weights: map-deep-merge(
+    (
+        'thin': 100,
+        'light': 300,
+        'regular': 400,
+        'medium': 500,
+        'bold': 700,
+        'black': 900
+    ),
+    $font-weights
+);
+
+
+$rounded: () !default;
+$rounded: map-deep-merge(
+    (
+        0: 0,
+        'x-small': var(--rounded-x-small),
+        'small': var(--rounded-small),
+        null: var(--rounded-medium),
+        'large': var(--rounded-large),
+        'x-large': var(--rounded-x-large),
+        'pill': var(--rounded-pill),
+        'circle': var(--rounded-circle)
+    ),
+    $rounded
 );

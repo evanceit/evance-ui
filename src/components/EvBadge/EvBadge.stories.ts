@@ -5,7 +5,6 @@ import {Cancel, Check, Evance} from "@/icons";
 import {EvIcon} from "@/components";
 
 const meta: Meta<typeof EvBadge> = {
-    components: {EvIcon},
     component: EvBadge,
     argTypes: {
         appearance: {
