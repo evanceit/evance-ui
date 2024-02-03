@@ -93,8 +93,8 @@ class Activator {
     public readonly availableEvents: ActivatorEvents;
     public readonly component: ComponentInternalInstance;
     public readonly contentEvents: ComputedRef<Partial<ContentEvents>>;
-    public readonly delayClose: Promise<boolean>;
-    public readonly delayOpen: Promise<boolean>;
+    public readonly delayClose: () => Promise<boolean>;
+    public readonly delayOpen: () => Promise<boolean>;
     public readonly openOnClick: ComputedRef<boolean>;
     public readonly openOnFocus: ComputedRef<boolean>;
     public readonly veilEvents: ComputedRef<Partial<VeilEvents>>;
@@ -103,8 +103,8 @@ class Activator {
     public isFocused = false;
     public firstEnter = true;
 
-    private watcher: ActivatorWatcher;
-    private scope: EffectScope;
+    private watcher?: ActivatorWatcher;
+    private scope?: EffectScope;
 
     constructor(
         public props: ActivatorProps,
@@ -236,7 +236,7 @@ class Activator {
      * @param selector
      * @private
      */
-    public getActivatorEl(selector: ActivatorSelector = this.props.activator) {
+    public getActivatorEl(selector: ActivatorSelector | undefined = this.props.activator) {
         let activator;
         if (selector) {
             if (selector === 'parent') {

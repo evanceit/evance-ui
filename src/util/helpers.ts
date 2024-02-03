@@ -3,11 +3,11 @@ import {
     ComponentPublicInstance,
     computed,
     ComputedGetter,
-    reactive, Ref, toRefs,
+    reactive, toRefs,
     ToRefs,
     watchEffect
 } from "vue";
-import {getCurrentComponent, isArray, isFunction, isObjectNotArray, isString} from "../util";
+import {getCurrentComponent, isArray, isFunction, isObjectNotArray} from "../util";
 
 
 /**
@@ -65,16 +65,16 @@ export function getPropertyValue(
         return (subject === undefined) ? fallback : subject;
     }
     if (subject !== Object(subject)) {
-        if (!isFunction(property)) {
+        if (typeof property !== 'function') {
             return fallback;
         }
         const value = property(subject, fallback);
         return (typeof value === 'undefined') ? fallback : value;
     }
-    if (isString(property)) {
+    if (typeof property === 'string') {
         return getPropertyValueByPath(subject, property, fallback);
     }
-    if (isArray(property)) {
+    if (Array.isArray(property)) {
         return getNestedPropertyValue(subject, property, fallback);
     }
     if (!isFunction(property)) {

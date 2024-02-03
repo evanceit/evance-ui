@@ -34,13 +34,13 @@ export function useFocus(props: FocusProps) {
 
     function focus(e?: Event): void {
         isFocused.value = true;
-        const el: HTMLElement | null = e?.target;
+        const el: HTMLElement | null = e?.target as HTMLElement;
         if (Browser.supportsFocusVisible && el?.matches(':focus-visible')) {
             isFocusedVisible.value = true;
         }
     }
 
-    function blur(e?: Event): void {
+    function blur(): void {
         isFocused.value = false;
         isFocusedVisible.value = false;
     }
@@ -53,7 +53,7 @@ export function useFocus(props: FocusProps) {
  * ## Auto Focus
  */
 export interface AutofocusProps {
-    autofocus: boolean
+    autofocus: boolean;
 }
 
 /**

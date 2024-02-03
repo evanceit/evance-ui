@@ -79,10 +79,11 @@ export const makeFormFieldProps = propsFactory({
 /**
  * # Use Form Field
  * @param props
+ * @param group
  */
 export function useFormField(
     props: FormFieldProps,
-    group?: FormFieldProps = undefined
+    group: FormField | undefined = undefined
 ) {
     const form = useForm();
     return new FormField(

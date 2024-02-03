@@ -41,24 +41,24 @@ export function propsFactory<
     ): AppendDefault<PropsOptions, Defaults> => {
         return Object.keys(props).reduce<any>((obj, prop) => {
             const isObjectDefinition = typeof props[prop] === 'object' && props[prop] != null && !Array.isArray(props[prop])
-            const definition = isObjectDefinition ? props[prop] : { type: props[prop] }
+            const definition = isObjectDefinition ? props[prop] : { type: props[prop] };
 
             if (defaults && prop in defaults) {
                 obj[prop] = {
                     ...definition,
                     default: defaults[prop],
-                }
+                };
             } else {
-                obj[prop] = definition
+                obj[prop] = definition;
             }
 
             if (source && !obj[prop].source) {
-                obj[prop].source = source
+                obj[prop].source = source;
             }
 
-            return obj
-        }, {})
-    }
+            return obj;
+        }, {});
+    };
 }
 
 type AppendDefault<T extends ComponentObjectPropsOptions, D extends PartialKeys<T>> = {

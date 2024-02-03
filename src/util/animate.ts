@@ -29,7 +29,7 @@ export function animate(
     // Polyfill if `finished` is unavailable
     if (!('finished' in Animation.prototype) || isEmpty(animation.finished)) {
         (animation as any).finished = new Promise((resolve) => {
-            animation.onfinish = (event) => {
+            animation.onfinish = () => {
                 resolve(animation);
             }
         });
@@ -37,7 +37,7 @@ export function animate(
     // Polyfill if `cancel` is unavailable
     if (!('cancel' in Animation.prototype) || isEmpty(animation.cancel)) {
         (animation as any).cancel = new Promise((resolve, reject) => {
-            animation.oncancel = (event) => {
+            animation.oncancel = () => {
                 reject(animation);
             }
         });
@@ -63,7 +63,7 @@ export function clickBlockedAnimation(el: HTMLElement | null | undefined) {
     if (isEmpty(el)) {
         return null;
     }
-    return animate(el, [
+    return animate(el!, [
         { transformOrigin: 'center' },
         { transform: 'scale(1.05) translateY(-3px)' },
         { transformOrigin: 'center' },

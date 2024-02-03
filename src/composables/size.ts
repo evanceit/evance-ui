@@ -32,7 +32,7 @@ export const makeSizeProps = propsFactory({
 export function useSize(props: SizeProps) {
     return destructComputed(() => {
         let sizeClasses;
-        let sizeStyles;
+        let sizeStyles = {};
 
         if (predefinedSizes.includes(props.size as Size)) {
             sizeClasses = `is-size-${props.size}`;

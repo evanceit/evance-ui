@@ -45,7 +45,7 @@ export class Anchor {
      * Returns either x or y axis.
      */
     public get axis(): Axis {
-        return horizontalSides.includes(this.side) ? 'x' : 'y';
+        return ['left', 'right'].includes(this.side) ? 'x' : 'y';
     }
 
     public get physicalAlignment(): string {
@@ -76,7 +76,7 @@ export class Anchor {
             end: 'start',
             start: 'end'
         }[this.alignment];
-        return new Anchor(this.side, alignment);
+        return new Anchor(this.side, alignment as AnchorAlignment);
     }
 
     /**
@@ -98,7 +98,7 @@ export class Anchor {
             left: 'right',
             right: 'left',
         }[this.side];
-        return new Anchor(side, this.alignment);
+        return new Anchor(side as AnchorSide, this.alignment);
     }
 
     /**

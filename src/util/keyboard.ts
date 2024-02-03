@@ -3,7 +3,7 @@
  */
 export class KeyLogger {
 
-    public lastTime: number;
+    public lastTime: number = 0;
 
     public timeToKeep: number = 1000;
 

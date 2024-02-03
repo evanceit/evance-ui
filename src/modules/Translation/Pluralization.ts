@@ -12,7 +12,7 @@ export const pluralizationRuleKeys = ['zero', 'one', 'two', 'few', 'many', 'othe
 export type PluralizationRuleKey = typeof pluralizationRuleKeys[number];
 
 export type PluralizationRules = {
-    [key: PluralizationRuleKey]: string;
+    [K in PluralizationRuleKey]: string;
 };
 
 
@@ -35,10 +35,11 @@ export function isPluralizationKey(key: any): key is PluralizationRuleKey {
  *
  * @param value
  */
-export function isPluralizationRules(value: any): translatable is PluralizationRules {
-    if (!isObject(value) || value === null) {
-        return false;
+export function isPluralizationRules(value: any): value is PluralizationRules {
+    if (isObject(value)) {
+        return Object.entries(value).every(([key, val]) => {
+            return isPluralizationKey(key) && isString(val);
+        });
     }
-    const keys = Object.keys(value);
-    return keys.every(key => isPluralizationKey(key) && isString(value[key]));
+    return false;
 }

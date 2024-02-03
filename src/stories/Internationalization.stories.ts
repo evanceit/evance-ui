@@ -29,7 +29,7 @@ export const Primary: Story = {
 
             const { t } = useLocaleFunctions();
 
-            const changeLocale = (locale) => {
+            const changeLocale = (locale: string) => {
                 localeManager.setCurrentLocale(locale);
             };
 

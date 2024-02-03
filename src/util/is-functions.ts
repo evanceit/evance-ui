@@ -22,7 +22,7 @@ export function isArray(value: unknown): boolean {
  * # Is Boolean?
  * @param value
  */
-export function isBoolean(value: unknown): boolean {
+export function isBoolean(value: unknown): value is boolean {
     return typeof value === 'boolean';
 }
 
@@ -35,7 +35,7 @@ export function isCssVariable(value: unknown): boolean
     if (!isString(value)) {
         return false;
     }
-    return /^--[\w-]+$/.test(value);
+    return /^--[\w-]+$/.test(value as string);
 }
 
 
@@ -43,7 +43,7 @@ export function isCssVariable(value: unknown): boolean
  * # Is Date?
  * @param value
  */
-export function isDate(value: unknown): boolean {
+export function isDate(value: unknown): value is Date {
     return (value instanceof Date);
 }
 
@@ -71,10 +71,9 @@ export function isDateEqual(a: Date, b: Date): boolean {
  *
  * @param a
  * @param b
- * @param options
  */
-export function isDeepEqual(a: any, b: any, options?: object = {}): boolean {
-    if (options.strict ? is(a, b) : a === b) {
+export function isDeepEqual(a: any, b: any): boolean {
+    if (a === b) {
         return true;
     }
     // Check types
@@ -102,9 +101,9 @@ export function isDeepEqual(a: any, b: any, options?: object = {}): boolean {
     return keysInA.every((key) => isDeepEqual(a[key], b[key]));
 }
 
-export function isElement(el: unknown): boolean {
+export function isElement(el: unknown): el is Element {
     return (
-        el
+        !!el
         && el instanceof Element
         && el.nodeType === Node.ELEMENT_NODE
     );
@@ -138,7 +137,7 @@ export function isEqualNaN(value: unknown): boolean {
  * # Is Function?
  * @param value
  */
-export function isFunction(value: unknown): boolean {
+export function isFunction(value: unknown): value is Function {
     return (typeof value === 'function');
 }
 
@@ -146,7 +145,7 @@ export function isFunction(value: unknown): boolean {
  * # Is Number
  * @param value
  */
-export function isNumber(value: unknown): boolean {
+export function isNumber(value: unknown): value is number {
     return (typeof value === 'number');
 }
 
@@ -154,7 +153,7 @@ export function isNumber(value: unknown): boolean {
  * # Is Object?
  * @param value
  */
-export function isObject(value: unknown): boolean {
+export function isObject(value: unknown): value is object {
     return (typeof value === 'object');
 }
 
@@ -162,7 +161,7 @@ export function isObject(value: unknown): boolean {
  * # Is Object Not Array
  * @param value
  */
-export function isObjectNotArray(value: any): object is object {
+export function isObjectNotArray(value: any): boolean {
     return value !== null && isObject(value) && !isArray(value);
 }
 
@@ -192,7 +191,7 @@ export function isShadowRoot(value: unknown): boolean {
  * # Is String?
  * @param value
  */
-export function isString(value: unknown): boolean {
+export function isString(value: unknown): value is string {
     if (typeof value === 'string') {
         return true;
     }

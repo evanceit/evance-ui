@@ -4,6 +4,7 @@ import {isBoolean, isEmpty, isObject, isString, propsFactory} from "@/util";
 export type EvTransitionProp = string | boolean | TransitionProps & { component?: Component };
 
 export interface EvTransitionProps {
+    appear?: boolean;
     transition?: EvTransitionProp;
     disabled?: boolean;
 }

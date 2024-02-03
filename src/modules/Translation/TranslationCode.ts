@@ -25,7 +25,7 @@ export class TranslationCode {
      * But will also accept 'en_GB'.
      * @param code
      */
-    public static fromString(code: string): this {
+    public static fromString(code: string) {
         const matches = code.match(/^([a-zA-Z]{2,3})(?:[_-]([a-zA-Z]{2,3}))?$/);
         if (!matches) {
             throw new Error(`The string '${code}' is not a valid Locale string`);

@@ -10,10 +10,10 @@ import {Axis} from "./dimensions.ts";
  * @param isIncludeHidden
  * @param axis
  */
-export function getScrollParent(el?: Element | null, isIncludeHidden = false, axis?: Axis | null = 'y'): HTMLElement {
+export function getScrollParent(el: Element | null, isIncludeHidden = false, axis: Axis | null = 'y'): HTMLElement {
     while (el) {
         if (isIncludeHidden ? isScrollable(el, axis) : hasScrollbar(el, axis)) {
-            return el;
+            return el as HTMLElement;
         }
         el = el.parentElement!;
     }
@@ -33,7 +33,7 @@ export function getScrollParent(el?: Element | null, isIncludeHidden = false, ax
  * @param stopAt
  * @param axis
  */
-export function getScrollParents(el?: Element | null, stopAt?: Element | null, axis?: Axis | null = 'y'): HTMLElement[] {
+export function getScrollParents(el: Element | undefined, stopAt?: Element | null, axis: Axis | null = 'y'): HTMLElement[] {
     const elements: HTMLElement[] = [];
     if (isElement(el) && isElement(stopAt) && !stopAt!.contains(el)) {
         return elements;
@@ -64,11 +64,11 @@ export function getScrollParents(el?: Element | null, stopAt?: Element | null, a
  * @param el
  * @param axis
  */
-export function hasScrollbar(el?: Element | null, axis?: Axis | null = 'y'): boolean {
+export function hasScrollbar(el?: Element | null, axis: Axis | null = 'y'): boolean {
     if (!isElement(el)) {
         return false;
     }
-    const style = window.getComputedStyle(el);
+    const style = window.getComputedStyle(el!);
     const hasScrollbarX =  style.overflowX === 'scroll' || (style.overflowX === 'auto' && el!.scrollWidth > el!.clientWidth);
     const hasScrollbarY =  style.overflowY === 'scroll' || (style.overflowY === 'auto' && el!.scrollHeight > el!.clientHeight);
     return (
@@ -89,11 +89,11 @@ export function hasScrollbar(el?: Element | null, axis?: Axis | null = 'y'): boo
  * @param el
  * @param axis
  */
-export function isScrollable(el?: Element | null, axis?: Axis | null = 'y'): boolean {
+export function isScrollable(el: Element | null, axis: Axis | null = 'y'): boolean {
     if (!isElement(el)) {
         return false;
     }
-    const style = window.getComputedStyle(el);
+    const style = window.getComputedStyle(el!);
     return (
         ((!axis || axis === 'x') && ['scroll', 'auto'].includes(style.overflowX))
         || ((!axis || axis === 'y') && ['scroll', 'auto'].includes(style.overflowY))

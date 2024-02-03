@@ -13,10 +13,12 @@ import {Localized} from "@/modules/Locale/Localized.ts";
  * from a pluralization rule set.
  *
  */
-export interface TranslationOptions {
-    [key: string | number]: string | number;
-    ordinal: boolean;
-}
+export type TranslationVariables = {
+    [key: string | number]: string | number | boolean;
+};
+export type TranslationOptions = TranslationVariables & {
+    ordinal?: boolean;
+};
 
 
 /**
@@ -53,7 +55,7 @@ export class Translator extends Localized {
      * @param locale
      * @param reference
      */
-    private getClosestTranslatable(locale: string, reference: string): Translatable | null {
+    private getClosestTranslatable(locale: string, reference: string): Translatable | undefined {
 
         const translatableKey = `${locale}:${reference}`;
 
@@ -69,7 +71,7 @@ export class Translator extends Localized {
                 return translatable;
             }
         }
-        return null;
+        return undefined;
     }
 
     /**
@@ -121,8 +123,8 @@ export class Translator extends Localized {
      */
     public translate(
         reference: string,
-        options?: TranslationOptions = {},
-        locale?: string = null
+        options: TranslationOptions = {},
+        locale: string | undefined = undefined
     ): string | null {
         if (!locale) {
             locale = this.currentLocale.value ?? this.defaultLocale.value;

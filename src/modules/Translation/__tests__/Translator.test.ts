@@ -70,6 +70,6 @@ test('Translator.translate()', () => {
 
     // Test non-existent lookup
     const nonExistent = translator.translate('__nonExistent');
-    expect(nonExistent).toBe(null);
+    expect(nonExistent).toBe('__nonExistent');
 
 });

@@ -1,5 +1,4 @@
 import {capitalize, onScopeDispose, PropType} from "vue";
-import {isArray} from "./is-functions.ts";
 import {getScrollParents} from "./scroll.ts";
 
 /**
@@ -11,8 +10,8 @@ export interface ClickEventListeners {
     onClickOnce?: EventProp | undefined;
 }
 
-export type EventProp<T extends any[] = any[], F = (...args: T) => any> = F | F[];
 
+export type EventProp<T extends any[] = any[], F = (...args: T) => any> = F | F[];
 export const EventProp = <T extends any[] = any[]>() => [Function, Array] as PropType<EventProp<T>>;
 
 
@@ -22,7 +21,7 @@ export const EventProp = <T extends any[] = any[]>() => [Function, Array] as Pro
  * @param args
  */
 export function callEvent<T extends any[]>(eventHandler: EventProp<T> | undefined, ...args: T) {
-    if (isArray(eventHandler)) {
+    if (Array.isArray(eventHandler)) {
         for (const handlerElement of eventHandler) {
             handlerElement(...args);
         }
@@ -70,7 +69,7 @@ export function focusChild(el?: Element, position?: FocusPosition): HTMLElement 
         return null;
     }
 
-    let focusedElement: HTMLElement;
+    let focusedElement: HTMLElement | undefined;
     const focusableElements = getFocusableChildren(el);
     const index = focusableElements.indexOf(document.activeElement as HTMLElement);
 
@@ -81,7 +80,7 @@ export function focusChild(el?: Element, position?: FocusPosition): HTMLElement 
     } else if (position === 'first') {
         focusedElement = focusableElements[0];
     } else if (position === 'last') {
-        focusedElement = focusableElements.at(-1);
+        focusedElement = focusableElements.at(-1)!;
     } else {
         let lastElement;
         let lastIndex = index;
@@ -93,7 +92,7 @@ export function focusChild(el?: Element, position?: FocusPosition): HTMLElement 
             (!lastElement || lastElement.offsetParent == null)
             && (lastIndex < focusableElements.length)
             && (lastIndex >= 0)
-            );
+        );
         if (lastElement) {
             focusedElement = lastElement;
         } else {

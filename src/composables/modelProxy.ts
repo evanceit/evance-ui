@@ -1,6 +1,6 @@
 import {ComponentInternalInstance, computed, ref, toRaw, watch} from "vue";
 import type { Ref } from 'vue';
-import {getCurrentComponent, toKebabCase} from "@/util";
+import {EventProp, getCurrentComponent, toKebabCase} from "@/util";
 import {useToggleScope} from "./toggleScope.ts";
 
 type InnerVal<T> = T extends any[] ? Readonly<T> : T;
@@ -21,7 +21,7 @@ function hasProp(vueInstance: ComponentInternalInstance, propName: string): bool
  * # Model Proxy
  */
 export function useModelProxy<
-    PropsObject extends object & { [key in ModelName as `onUpdate:${ModelName}`]: ((value: any) => void) | undefined },
+    PropsObject extends object & Partial<{ [key in ModelName as `onUpdate:${ModelName}`]: EventProp | undefined }>,
     ModelName extends Extract<keyof PropsObject, string>,
     Inner = PropsObject[ModelName]
 > (

@@ -59,21 +59,21 @@ export type TemplateFunction = (variables?: TemplateVariables) => string;
  */
 export function createStringTemplate(
     template: string,
-    defaultVariables?: TemplateVariables = {}
+    defaultVariables: TemplateVariables = {}
 ): TemplateFunction {
     /** Variable lookup pattern */
     const variablePattern = /{([\s\S]+?)}/g;
 
-    return (variables?: TemplateVariables = {}) => {
+    return (variables: TemplateVariables = {}) => {
         const dictionary = { ...defaultVariables, ...variables};
 
-        return template.replaceAll(variablePattern, (match, raw) => {
+        return template.replaceAll(variablePattern, (match, raw): string => {
             const variable = raw.trim();
             if (dictionary[variable] === undefined) {
                 console.warn(`Unrecognized template variable '${variable}'.`);
                 return `"${variable}"`;
             }
-            return dictionary[variable];
+            return dictionary[variable] as string;
         });
     };
 }

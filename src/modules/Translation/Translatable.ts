@@ -13,11 +13,11 @@ export class Translatable {
         public data: string | PluralizationRules
     ) {}
 
-    get defaultText(): string | null {
-        if (this.isString) {
+    get defaultText(): string {
+        if (typeof this.data === 'string') {
             return this.data;
         }
-        return this.getText('other');
+        return this.getText('other') ?? '';
     }
 
     get isString(): boolean {
@@ -29,7 +29,7 @@ export class Translatable {
     }
 
     public getText(rule: PluralizationRuleKey): string | null {
-        if (this.isString) {
+        if (typeof this.data === 'string') {
             return this.data;
         }
         const value = this.data[rule] ?? null;
@@ -40,7 +40,7 @@ export class Translatable {
      * ## Translate
      * @param options
      */
-    public translate(options?: TranslationOptions = {}): string | null {
+    public translate(options: TranslationOptions = {}): string | null {
         if (this.isString) {
             return createStringTemplate(this.defaultText, options)();
         }
@@ -55,7 +55,7 @@ export class Translatable {
             const rules = new Intl.PluralRules(this.translationCode, {
                 type: (options.ordinal || false) ? 'ordinal' : 'cardinal'
             });
-            const rule = rules.select(options[keyToPluralize]);
+            const rule = rules.select(options[keyToPluralize] as number);
             const text = this.getText(rule);
             if (text === null) {
                 console.error(`Pluralization rule '${rule}' or 'other' unavailable for '${this.reference}'.`);

@@ -29,7 +29,7 @@ export class FormField {
     constructor(
         public readonly form: Form | null,
         private props: FormFieldProps,
-        private group?: FormField = undefined
+        private group: FormField | undefined = undefined
     ) {
         this.model = this.group ? this.group.model : useModelProxy(this.props, 'modelValue');
         this.focused =  useModelProxy(this.props, 'focused');
@@ -104,31 +104,31 @@ export class FormField {
         );
     }
 
-    get isDisabled() {
+    get isDisabled(): boolean {
         return !!(this.props.disabled ?? this.group?.isDisabled ?? this.form?.isDisabled.value);
     }
 
-    get isFocused() {
+    get isFocused(): boolean {
         return this.focused.value;
     }
 
-    get isFocusedVisible() {
+    get isFocusedVisible(): boolean {
         return this.focusedVisible.value;
     }
 
-    get isReadonly() {
+    get isReadonly(): boolean {
         return !!(this.props.readonly ?? this.group?.isReadonly ?? this.form?.isReadonly.value);
     }
 
-    get isPristine() {
+    get isPristine(): boolean {
         return this.pristine.value;
     }
 
-    get isShowErrorMessages() {
-        return this.errorMessages.length && !this.isPristine;
+    get isShowErrorMessages(): boolean {
+        return !!this.errorMessages.length && !this.isPristine;
     }
 
-    get isValid() {
+    get isValid(): boolean | null {
         if (this.group && this.group.isValid === false) {
             return false;
         }
@@ -149,7 +149,7 @@ export class FormField {
         return this.validating.value;
     }
 
-    get name() {
+    get name(): string {
         return this.group?.name ?? this.props.name ?? this.id;
     }
 
@@ -201,7 +201,7 @@ export class FormField {
      * ## Blur
      * @param e
      */
-    public blur(e?: Event): void {
+    public blur(): void {
         this.focused.value = false;
         this.focusedVisible.value = false;
     }
@@ -224,7 +224,7 @@ export class FormField {
      */
     public focus(e?: Event): void {
         this.focused.value = true;
-        const el: HTMLElement | null = e?.target;
+        const el = e?.target as HTMLElement;
         if (Browser.supportsFocusVisible && el?.matches(':focus-visible')) {
             this.focusedVisible.value = true;
         }

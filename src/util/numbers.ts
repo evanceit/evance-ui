@@ -8,5 +8,5 @@ export const IntegerishPattern: RegExp = /^\d+$/;
  * @param value
  */
 export function isIntegerish(value: string | number): boolean {
-    return IntegerishPattern.test(value);
+    return IntegerishPattern.test(value.toString());
 }
