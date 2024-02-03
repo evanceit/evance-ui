@@ -24,9 +24,10 @@ export class Localized {
      * @param locale
      */
     public getTranslationCodes(locale: string): string[] {
-        const translationCodes = LocaleCode.fromString(locale).toTranslationCodes();
+        const localeCode = LocaleCode.fromString(locale) as LocaleCode;
+        const translationCodes = localeCode.toTranslationCodes();
         // Add our default if it is not in the list
-        if (!translationCodes.find((code) => (code === this.defaultLocale.value))) {
+        if (!translationCodes.find((code: string) => (code === this.defaultLocale.value))) {
             translationCodes.push(this.defaultLocale.value);
         }
         return translationCodes;

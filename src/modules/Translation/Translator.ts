@@ -14,7 +14,7 @@ import {Localized} from "@/modules/Locale/Localized.ts";
  *
  */
 export type TranslationVariables = {
-    [key: string | number]: string | number | boolean;
+    [key: string]: string | number | boolean;
 };
 export type TranslationOptions = TranslationVariables & {
     ordinal?: boolean;

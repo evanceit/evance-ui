@@ -1,6 +1,6 @@
 import {isPluralizationRules, PluralizationRuleKey, PluralizationRules} from "@/modules/Translation/Pluralization.ts";
 import {TranslationOptions} from "@/modules/Translation/Translator.ts";
-import {createStringTemplate, isNumber} from "@/util";
+import {createStringTemplate, isNumber, TemplateVariables} from "@/util";
 
 /**
  * # Translatable
@@ -42,7 +42,7 @@ export class Translatable {
      */
     public translate(options: TranslationOptions = {}): string | null {
         if (this.isString) {
-            return createStringTemplate(this.defaultText, options)();
+            return createStringTemplate(this.defaultText, options as TemplateVariables)();
         }
         // If the translatable is a set of pluralization rules then we expect at least one number value
         if (this.isPluralization) {
@@ -61,7 +61,7 @@ export class Translatable {
                 console.error(`Pluralization rule '${rule}' or 'other' unavailable for '${this.reference}'.`);
                 return null;
             }
-            return createStringTemplate(text, options)();
+            return createStringTemplate(text, options as TemplateVariables)();
         }
         console.error(`Invalid translatable for '${this.reference}'.`);
         return null;

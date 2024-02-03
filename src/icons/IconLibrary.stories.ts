@@ -1,5 +1,3 @@
-
-
 import {Meta, StoryObj} from "@storybook/vue3";
 import * as GenericIcons from "@/icons";
 import * as BrandIcons from "@/icons/brand";
@@ -8,7 +6,7 @@ import {computed, shallowRef} from "vue";
 import './IconLibrary.scss';
 import { EvTextfield, EvIcon} from "@/components";
 
-const getIcons = (iconList) => {
+const getIcons = (iconList: {}) => {
     return Object.entries(iconList).map(([name, glyph]) => ({ name, glyph }));
 };
 
@@ -22,18 +20,18 @@ type Story = StoryObj<typeof EvIcon>;
 
 export const GenericIconLibrary: Story = {
     name: 'Generic Icons',
-    render: (args) => ({
+    render: () => ({
         components: { EvIcon, EvTextfield },
         setup() {
-
+            const icons = getIcons(GenericIcons);
             let iconName = shallowRef('');
             const iconList = computed(() => {
-                return args.icons.filter((icon) => {
+                return icons.filter((icon) => {
                     return icon.name.toLowerCase().includes(iconName.value.toLowerCase());
                 });
             });
 
-            return { args, iconList, iconName };
+            return { iconList, iconName };
         },
         template: `
             <div class="gallery-header">
@@ -50,26 +48,23 @@ export const GenericIconLibrary: Story = {
                 </div>
             </div>
         `
-    }),
-    args: {
-        icons: getIcons(GenericIcons)
-    }
+    })
 };
 
 export const EditorIconLibrary: Story = {
     name: 'Editor Icons',
-    render: (args) => ({
+    render: () => ({
         components: { EvIcon, EvTextfield },
         setup() {
-
+            const icons = getIcons(EditorIcons);
             let iconName = shallowRef('');
             const iconList = computed(() => {
-                return args.icons.filter((icon) => {
+                return icons.filter((icon) => {
                     return icon.name.toLowerCase().includes(iconName.value.toLowerCase());
                 });
             });
 
-            return { args, iconList, iconName };
+            return { iconList, iconName };
         },
         template: `
             <div class="gallery-header">
@@ -86,26 +81,23 @@ export const EditorIconLibrary: Story = {
                 </div>
             </div>
         `
-    }),
-    args: {
-        icons: getIcons(EditorIcons)
-    }
+    })
 };
 
 export const BrandIconLibrary: Story = {
     name: 'Brand Icons',
-    render: (args) => ({
+    render: () => ({
         components: { EvIcon, EvTextfield },
         setup() {
-
+            const icons = getIcons(BrandIcons);
             let iconName = shallowRef('');
             const iconList = computed(() => {
-                return args.icons.filter((icon) => {
+                return icons.filter((icon) => {
                     return icon.name.toLowerCase().includes(iconName.value.toLowerCase());
                 });
             });
 
-            return { args, iconList, iconName };
+            return { iconList, iconName };
         },
         template: `
             <div class="gallery-header">
@@ -122,8 +114,5 @@ export const BrandIconLibrary: Story = {
                 </div>
             </div>
         `
-    }),
-    args: {
-        icons: getIcons(BrandIcons)
-    }
+    })
 };

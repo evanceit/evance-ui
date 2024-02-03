@@ -68,8 +68,7 @@ export enum InputSize {
     medium = 'medium',
     large = 'large'
 }
-export type InputSizeKey = keyof typeof InputSize;
-export type InputSizeProp = typeof InputSize[InputSizeKey];
+export type InputSizeProp = keyof typeof InputSize;
 export const makeInputSizeProps = propsFactory({
     size: {
         type: String,

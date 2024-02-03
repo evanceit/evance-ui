@@ -59,7 +59,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         app.provide(DateAdapterSymbol, date);
 
         if (Browser.hasWindow && options.ssr) {
-            if (app.$nuxt) {
+            if ('$nuxt' in app) {
                 app.$nuxt.hook('app:suspense:resolve', () => {
                     display.update();
                 });

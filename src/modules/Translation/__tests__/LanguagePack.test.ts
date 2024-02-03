@@ -30,7 +30,7 @@ test('LanguagePack.getTranslatable()', () => {
         "other": "{ value }th"
     });
 
-    const nonExistent = pack.getTranslatable('__nonExistent', dictionary);
+    const nonExistent = pack.getTranslatable('__nonExistent');
     expect(nonExistent).toBe(null);
 
 });
