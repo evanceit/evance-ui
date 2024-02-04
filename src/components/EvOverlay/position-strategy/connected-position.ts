@@ -7,7 +7,16 @@ import {
     isNumber,
     Rect,
     getScrollParents,
-    destructComputed, Anchor, Dimensions, toWebUnit, pixelRound, pixelCeil, clamp
+    destructComputed,
+    Anchor,
+    Dimensions,
+    toWebUnit,
+    pixelRound,
+    pixelCeil,
+    clamp,
+    AnchorSide,
+    AnchorAlignment,
+    RectProps
 } from "@/util";
 
 /**
@@ -35,19 +44,19 @@ export function connectedPositionStrategy(
 
 
 class ConnectedPosition {
-    public contentScrollParents: HTMLElement[];
-    public contentRect: Rect;
+    public contentScrollParents?: HTMLElement[];
+    public contentRect?: Rect;
     public maxHeight: ComputedRef<number>;
     public maxWidth: ComputedRef<number>;
     public minHeight: ComputedRef<number>;
     public minWidth: ComputedRef<number>;
     public observe: boolean = false;
-    public observer: ResizeObserver;
-    public offset: ComputedRef<[number, number]>;
-    public preferredPosition: Ref<Anchor>;
-    public preferredOrigin: Ref<Anchor>;
-    public targetRect: Rect;
-    public viewportRect: Rect;
+    public observer?: ResizeObserver;
+    public offset: ComputedRef<number[]>;
+    public preferredPosition?: Ref<Anchor>;
+    public preferredOrigin?: Ref<Anchor>;
+    public targetRect?: Rect;
+    public viewportRect?: Rect;
     public viewportMargin = 12;
     private zoneCalculator: ZoneCalculator;
 
@@ -90,16 +99,16 @@ class ConnectedPosition {
                 [oldActivatorEl, oldContentEl]
             ) => {
                 if (oldActivatorEl) {
-                    this.observer.unobserve(oldActivatorEl);
+                    this.observer?.unobserve(oldActivatorEl);
                 }
                 if (newActivatorEl) {
-                    this.observer.observe(newActivatorEl);
+                    this.observer?.observe(newActivatorEl);
                 }
                 if (oldContentEl) {
-                    this.observer.unobserve(oldContentEl);
+                    this.observer?.unobserve(oldContentEl);
                 }
                 if (newContentEl) {
-                    this.observer.observe(newContentEl);
+                    this.observer?.observe(newContentEl);
                 }
             },
             {
@@ -108,7 +117,7 @@ class ConnectedPosition {
         );
 
         onScopeDispose(() => {
-            this.observer.disconnect();
+            this.observer?.disconnect();
         });
     }
 
@@ -154,7 +163,7 @@ class ConnectedPosition {
      */
     private computedNumericProp(key: string) {
         return computed(() => {
-            const value = parseFloat(this.props[key]!);
+            const value = parseFloat(this.props[key as keyof PositionStrategyProps]! as string);
             return isNaN(value) ? Infinity : value;
         });
     }
@@ -178,7 +187,7 @@ class ConnectedPosition {
                 if (offset.length < 2) {
                     offset.push(0);
                 }
-                return offset;
+                return offset as [number, number];
             }
             return isNumber(this.props.offset) ? [this.props.offset, 0] : [0, 0];
         });
@@ -190,15 +199,15 @@ class ConnectedPosition {
      * Returns a Rect adjusted for the original elements position, whilst accommodating RTL direction.
      */
     private getContentRect(): Rect {
-        const el = this.data.contentEl.value;
+        const el = this.data.contentEl.value!;
         const isRtl = this.data.isRtl.value;
         const rect = Rect.fromElement(el, true);
         if (isRtl) {
-            rect.x += parseFloat(el.style.right || 0);
+            rect.x += parseFloat((el.style.right || 0) as string);
         } else {
-            rect.x -= parseFloat(el.style.left || 0);
+            rect.x -= parseFloat((el.style.left || 0) as string);
         }
-        rect.y -= parseFloat(el.style.top || 0);
+        rect.y -= parseFloat((el.style.top || 0) as string);
         return rect;
     }
 
@@ -212,8 +221,8 @@ class ConnectedPosition {
         if (!scrollParents.length) {
             scrollParents.push(document.documentElement);
             if (!(contentEl.style.top && contentEl.style.left)) {
-                this.contentRect.x -= parseFloat(document.documentElement.style.getPropertyValue('--ev-body-scroll-x') || 0);
-                this.contentRect.y -= parseFloat(document.documentElement.style.getPropertyValue('--ev-body-scroll-y') || 0);
+                this.contentRect!.x -= parseFloat(document.documentElement.style.getPropertyValue('--ev-body-scroll-x') || '0');
+                this.contentRect!.y -= parseFloat(document.documentElement.style.getPropertyValue('--ev-body-scroll-y') || '0');
             }
         }
         return scrollParents;
@@ -228,7 +237,7 @@ class ConnectedPosition {
      * @private
      */
     private getViewportRect(): Rect {
-        const viewportRect = this.contentScrollParents.reduce<Rect>((currentRect: Rect | undefined, el: HTMLElement) => {
+        const viewportRect = this.contentScrollParents!.reduce<Rect>((currentRect: Rect | undefined, el: HTMLElement) => {
             const elRect = Rect.fromElement(el);
             const isDocEl = (el === document.documentElement);
             const scrollRect = new Rect(
@@ -293,8 +302,8 @@ class ConnectedPosition {
         );
 
         let placement = {
-            position: this.preferredPosition.value,
-            origin: this.preferredOrigin.value
+            position: this.preferredPosition!.value,
+            origin: this.preferredOrigin!.value
         };
 
         // If side is auto, find the largest side that
@@ -409,8 +418,11 @@ class ConnectedPosition {
             const zone = zones.find((zone) => {
                 return (zone.position.toString() === newPosition.toString());
             });
+            if (!zone) {
+                continue;
+            }
             const dimension = (newPosition.axis === 'x') ? 'width' : 'height';
-            if (zone?.available[dimension] >= 0) {
+            if (zone.available[dimension] >= 0) {
                 return zone;
             }
         }
@@ -428,7 +440,7 @@ class ConnectedPosition {
     private getCenterZone(zones: Zone[]): Zone {
         return zones.find((zone) => {
             return (zone.position.side === 'center' && zone.position.alignment === 'center');
-        });
+        })!;
     }
 
     /**
@@ -441,8 +453,8 @@ class ConnectedPosition {
     private watch() {
         watch(
             () => [
-                this.preferredPosition.value,
-                this.preferredOrigin.value,
+                this.preferredPosition?.value,
+                this.preferredOrigin?.value,
                 this.props.offset,
                 this.props.minWidth,
                 this.props.minHeight,
@@ -502,14 +514,14 @@ class ZoneCalculator {
     public getAvailable(
         target: Rect,
         viewport: Rect,
-        offset: [number, number],
+        offset: number[],
         content: Rect
     ): Zone[] {
 
         const [offsetSide, offsetAlign] = offset;
 
         // Sides
-        const sides = {
+        const sides: ZoneSides = {
             top: { y: viewport.top, height: (target.top - viewport.top - offsetSide), align: 'x' },
             bottom: { y: (target.bottom + offsetSide), height: (viewport.bottom - target.bottom - offsetSide), align: 'x' },
             left: { x: viewport.left, width: (target.left - viewport.left - offsetSide), align: 'y' },
@@ -518,7 +530,7 @@ class ZoneCalculator {
         };
 
         // Align
-        const alignments = {
+        const alignments: ZoneAlignments = {
             x: {
                 center: { x: viewport.left, width: viewport.width },
                 start: { x: (target.left + offsetAlign), width: (viewport.width - target.left - offsetAlign) },
@@ -534,8 +546,14 @@ class ZoneCalculator {
         const zones: Zone[] = [];
         for (const [side, sideAttrs] of Object.entries(sides)) {
             for (const [align, alignAttrs] of Object.entries(alignments[sideAttrs.align])) {
-                const anchor = new Anchor(side, align);
-                const rect = Rect.fromRect(Object.assign({}, sideAttrs, alignAttrs) as Rect);
+                const anchor = new Anchor(side as AnchorSide, align as AnchorAlignment);
+                const rectProps: RectProps  = Object.assign({
+                    width: 0,
+                    height: 0,
+                    x: 0,
+                    y: 0
+                }, sideAttrs, alignAttrs);
+                const rect = Rect.fromRect(rectProps);
                 zones.push(new Zone(anchor, rect, content));
             }
         }
@@ -545,5 +563,26 @@ class ZoneCalculator {
             return (zoneB.availableArea - zoneA.availableArea);
         });
         return zones;
+    }
+}
+
+interface ZoneSides {
+    [key: string]: {
+        x?: number,
+        y?: number,
+        width?: number,
+        height?: number,
+        align: string
+    }
+}
+
+interface ZoneAlignments {
+    [key: string]: {
+        [key: string]: {
+            x?: number,
+            y?: number,
+            width?: number,
+            height?: number
+        }
     }
 }

@@ -16,8 +16,7 @@ export enum Appearance {
     success = 'success',
     warning = 'warning'
 }
-export type AppearanceKey = keyof typeof Appearance;
-export type AppearanceProp = typeof Appearance[AppearanceKey];
+export type AppearanceProp = keyof typeof Appearance;
 export const makeAppearanceProps = propsFactory({
     appearance: {
         type: String as PropType<AppearanceProp>,

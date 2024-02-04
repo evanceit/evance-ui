@@ -37,7 +37,7 @@ export function useLocaleFunctions() {
             reference: string,
             options?: TranslationOptions,
             locale?: string
-        ): string | null => {
+        ): string | undefined => {
             return manager.translator.translate(reference, options, locale);
         },
         n: (

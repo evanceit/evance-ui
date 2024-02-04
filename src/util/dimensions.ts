@@ -39,6 +39,8 @@ export interface Position {
  */
 export type Margins = Position;
 
+export interface RectProps extends Coordinates, Dimensions {}
+
 /**
  * # Rect
  *
@@ -97,7 +99,7 @@ export class Rect implements Coordinates, Dimensions, Position {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static
      * @param rect
      */
-    public static fromRect(rect: DOMRect | Rect): Rect {
+    public static fromRect(rect: DOMRect | Rect | RectProps): Rect {
         return new Rect(rect.x, rect.y, rect.width, rect.height);
     }
 

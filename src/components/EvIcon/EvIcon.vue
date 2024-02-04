@@ -8,13 +8,14 @@ import './EvIcon.scss';
 import {IconSize} from "./EvIcon.ts";
 import {computed, toRaw, useAttrs} from "vue";
 import {Appearance, appearanceModifier, AppearanceProp, sizeModifier} from "@/util";
+import {IconValue} from "@/composables/icons.ts";
 
 /**
  * ## Icon Props
  */
 interface IconProps {
     appearance?: AppearanceProp,
-    glyph: Object,
+    glyph?: IconValue | boolean,
     size?: IconSize
 }
 const props = withDefaults(defineProps<IconProps>(), {
@@ -46,12 +47,12 @@ const iconGlyph = computed(() => {
             appearanceModifier(props.appearance, [Appearance.default]),
             sizeModifier(props.size, ['medium'])
         ]"
-        :style="[
-            {
-                '--icon-color': iconColor
-            }
-        ]"
     >
         <component :is="iconGlyph"></component>
     </i>
 </template>
+<style>
+.ev-icon {
+    --icon-color: v-bind(iconColor);
+}
+</style>

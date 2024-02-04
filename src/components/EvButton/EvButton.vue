@@ -9,14 +9,14 @@ import {EvIcon} from "@/components/EvIcon";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
 import {appearanceModifier, InputSize, sizeModifier} from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
-import {useRouterLinkOrHref} from "@/composables/router.ts";
+import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 
 
 const props = defineProps(makeEvButtonProps());
 const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
-const link = useRouterLinkOrHref(props, attrs);
+const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 const hasIcon = computed(() => (!!props.icon && props.icon !== true));
 
 const isDisabled = computed(() => {

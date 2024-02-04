@@ -7,7 +7,7 @@ import {
     SetupContext,
     toRef
 } from "vue";
-import {Browser, ClickEventListeners, hasEventListener, isString, propsFactory} from "../util";
+import {Browser, ClickEventListeners, hasEventListener, isString, propsFactory} from "@/util";
 
 
 /**
@@ -88,7 +88,7 @@ export const makeRouterLinkOrHrefProps = propsFactory({
  * @param attrs
  */
 export function useRouterLinkOrHref(
-    props: RouterLinkOrHrefProps & ClickEventListeners,
+    props: RouterLinkOrHrefProps,
     attrs: SetupContext['attrs']
 ): UseRouterLinkOrHref {
     const routerLink = resolveDynamicComponent('RouterLink') as typeof RouterLink | string;

@@ -68,7 +68,7 @@ export class NumberParser {
     private _minusSignPattern!: RegExp;
     private _numberFormat!: Intl.NumberFormat;
     private _numerals!: string[];
-    private _numeralsIndex!: (d: string) => number | undefined;
+    private _numeralsIndex!: (d: string) => string;
     private _numeralPattern!: RegExp;
     private _prefixPattern!: RegExp;
     private _suffixPattern!: RegExp;
@@ -236,7 +236,7 @@ export class NumberParser {
      */
     private createNumeralsIndex() {
         const index = new Map(this.numerals.map((d, i) => [d, i]));
-        return (d: string) => index.get(d);
+        return (d: string) => index.get(d)?.toString() ?? '';
     }
 
     /**
@@ -304,7 +304,10 @@ export class NumberParser {
      *
      * @param text
      */
-    public parseValue(text: string): number | string | null {
+    public parseValue(text: string | null | undefined): number | string | null {
+        if (text === null || text === undefined) {
+            text = '';
+        }
         let filteredText = text
             .replace(this.suffixPattern, '')
             .replace(this.prefixPattern, '')

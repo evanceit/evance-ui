@@ -125,7 +125,7 @@ export class Translator extends Localized {
         reference: string,
         options: TranslationOptions = {},
         locale: string | undefined = undefined
-    ): string | null {
+    ): string | undefined {
         if (!locale) {
             locale = this.currentLocale.value ?? this.defaultLocale.value;
         }

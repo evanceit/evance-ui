@@ -9,7 +9,7 @@ import {toKebabCase} from "../util";
  * @param prefix
  * @param exclude
  */
-export function makeClassName(value: string, prefix: string = '', exclude: (string | RegExp)[] = []): string | null {
+export function makeClassName(value?: string, prefix: string = '', exclude: (string | RegExp)[] = []): string | null {
     if (
         !value
         || exclude.some((exclusion) => {
@@ -30,7 +30,7 @@ export function makeClassName(value: string, prefix: string = '', exclude: (stri
  * @param value
  * @param exclude
  */
-export function sizeModifier(value: string, exclude: (string | RegExp)[] = []): string | null {
+export function sizeModifier(value?: string, exclude: (string | RegExp)[] = []): string | null {
     return makeClassName(value, 'is-size', exclude);
 }
 

@@ -4,14 +4,10 @@ import {Axis} from "@/util/dimensions.ts";
  * # Anchors
  *
  */
-const verticalSides = ['top', 'bottom'] as const;
-const edgeAlignments = ['start', 'end', 'center'] as const;
-const horizontalSides = ['left', 'right'] as const;
-
-type VerticalSide = typeof verticalSides[number];
-type EdgeAlignment = typeof edgeAlignments[number];
-type HorizontalSide = typeof horizontalSides[number];
-type SelectorSeparator = ' ' | '-';
+type VerticalSide = "top" | "bottom";
+type EdgeAlignment = "start" | "end" | "center";
+type HorizontalSide = "left" | "right";
+type SelectorSeparator = " " | "-";
 
 export type AnchorSelector =
     VerticalSide

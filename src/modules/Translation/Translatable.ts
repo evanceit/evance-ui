@@ -40,7 +40,7 @@ export class Translatable {
      * ## Translate
      * @param options
      */
-    public translate(options: TranslationOptions = {}): string | null {
+    public translate(options: TranslationOptions = {}): string | undefined {
         if (this.isString) {
             return createStringTemplate(this.defaultText, options as TemplateVariables)();
         }
@@ -50,7 +50,7 @@ export class Translatable {
             const keyToPluralize = Object.keys(options).find(key => isNumber(options[key]));
             if (keyToPluralize === undefined) {
                 console.error(`Could not find a number to pluralize in translation options for '${this.reference}'.`);
-                return null;
+                return undefined;
             }
             const rules = new Intl.PluralRules(this.translationCode, {
                 type: (options.ordinal || false) ? 'ordinal' : 'cardinal'
@@ -59,11 +59,11 @@ export class Translatable {
             const text = this.getText(rule);
             if (text === null) {
                 console.error(`Pluralization rule '${rule}' or 'other' unavailable for '${this.reference}'.`);
-                return null;
+                return undefined;
             }
             return createStringTemplate(text, options as TemplateVariables)();
         }
         console.error(`Invalid translatable for '${this.reference}'.`);
-        return null;
+        return undefined;
     }
 }

@@ -87,7 +87,7 @@ export function usePositionStrategies(
                 if (isFunction(props.positionStrategy)) {
                     positionStrategyFn = props.positionStrategy;
                 } else {
-                    positionStrategyFn = positionStrategies[props.positionStrategy];
+                    positionStrategyFn = positionStrategies[props.positionStrategy] as PositionStrategyFn;
                 }
                 updatePosition.value = positionStrategyFn(data, props, contentStyles)?.updatePosition;
             }

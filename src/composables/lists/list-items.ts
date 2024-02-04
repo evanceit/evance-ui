@@ -6,9 +6,9 @@ import {
     isObject,
     propsFactory,
     splitObject
-} from "../../util";
-import {computed, PropType} from "vue";
-import {ListItemProps} from "../../components";
+} from "@/util";
+import {computed, PropType, Ref} from "vue";
+import {ListItemProps} from "@/components/EvList";
 
 
 /**

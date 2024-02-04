@@ -1,5 +1,5 @@
 import {
-    ComponentInternalInstance, ComponentOptionsWithObjectProps,
+    ComponentInternalInstance, ComponentOptions,
     ComponentPublicInstance,
     computed,
     ComputedGetter,
@@ -279,7 +279,7 @@ export function getPropertyDescriptor(obj: any, key: PropertyKey) {
  * @param component
  * @param props
  */
-export function filterComponentProps(component: ComponentOptionsWithObjectProps, props: Record<string, any>)  {
+export function filterComponentProps(component: ComponentOptions<any>, props: Record<string, any>)  {
     return splitObject(props, Object.keys(component.props), ['class', 'style'])[0];
 }
 

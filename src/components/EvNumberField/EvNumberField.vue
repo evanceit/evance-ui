@@ -18,7 +18,7 @@ const props = defineProps(makeEvNumberFieldProps());
 const slots = useSlots();
 
 // EvTextfield
-const evTextfieldRef = ref<EvTextfield>();
+const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), ['modelValue']);
 });
@@ -48,8 +48,8 @@ watch([
     () => props.currency,
     () => props.currencyDisplay,
     () => props.useGrouping,
-    () => props.minimumFractionDigits,
-    () => props.decimalPlacesMax
+    () => props.minFractionDigits,
+    () => props.maxFractionDigits
 ], (value, oldValue) => {
     if (value !== oldValue) {
         inputValue.value = numberParser.formatValue(modelValue.value);
@@ -110,9 +110,12 @@ function getDecimalPlaces(value: number): number {
  * Can be used to set the value of either the 'modelValue' or the 'inputValue'.
  * @param value
  */
-function getValue(value: number | null | undefined) {
+function getValue(value: string | number | null | undefined) {
     if (isEmpty(value)) {
         return value;
+    }
+    if (typeof value === 'string') {
+        value = parseFloat(value);
     }
     if (isMinBoundary(value!)) {
         value = minimum.value;
@@ -123,11 +126,11 @@ function getValue(value: number | null | undefined) {
     // We always want to constrain the value to the minimum
     // and maximum decimal places
     const decimalPlaces = getDecimalPlaces(value!);
-    if (!isEmpty(props.minimumFractionDigits) && decimalPlaces < props.minimumFractionDigits!) {
-        value = parseFloat(value!.toFixed(props.minimumFractionDigits));
+    if (!isEmpty(props.minFractionDigits) && decimalPlaces < props.minFractionDigits!) {
+        value = parseFloat(value!.toFixed(props.minFractionDigits));
     }
-    if (!isEmpty(props.decimalPlacesMax) && decimalPlaces > props.decimalPlacesMax!) {
-        value = parseFloat(value!.toFixed(props.decimalPlacesMax));
+    if (!isEmpty(props.maxFractionDigits) && decimalPlaces > props.maxFractionDigits!) {
+        value = parseFloat(value!.toFixed(props.maxFractionDigits));
     }
     return value;
 }
@@ -159,7 +162,7 @@ function onBlur(e: Event) {
     if (inputValue.value === '-') {
         inputValue.value = '';
     }
-    const parsedValue = numberParser.parseValue(inputValue.value);
+    const parsedValue = numberParser.parseValue(inputValue.value as string);
     const currentValue = getValue(parsedValue);
     inputValue.value = numberParser.formatValue(currentValue);
     modelValue.value = numberParser.parseValue(inputValue.value);

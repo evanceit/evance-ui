@@ -31,7 +31,7 @@ const evTextfieldProps = computed(() => {
 const isFocused = shallowRef(false);
 
 // Menu
-const evMenuRef = ref<EvMenu>();
+const evMenuRef = ref<typeof EvMenu>();
 const menuOpenProxy = useModelProxy(props, 'menuOpen');
 const isMenuOpen = computed({
     get: () => menuOpenProxy.value,
@@ -50,8 +50,8 @@ const isMenuDisabled = computed(() => {
 });
 
 // List
-const evListRef = ref<EvList>();
-const evVirtualScrollRef = ref<EvVirtualScroll>();
+const evListRef = ref<typeof EvList>();
+const evVirtualScrollRef = ref<typeof EvVirtualScroll>();
 const displayItems = computed(() => {
     if (props.hideSelected) {
         return items.value.filter(item => !selections.value.some(s => s === item));
@@ -281,8 +281,9 @@ const { t } = useLocaleFunctions();
                     >
                         <template #default="{ item, index }">
                             <ev-list-item
-                                v-bind="item"
-                                @click="select(item)"
+                                v-bind="item as ListItem"
+                                :key="index"
+                                @click="select(item as ListItem)"
                             />
                         </template>
                     </ev-virtual-scroll>
