@@ -1,6 +1,6 @@
 import {computed, ComputedRef, PropType, Ref} from "vue";
 import {isFunction, isObject, propsFactory} from "@/util";
-import {multiAny} from "./select-strategy";
+import {cascadeLeaf, multiAny, multiLeaf, singleLeaf} from "./select-strategy";
 import {singleAny} from "./select-strategy/single-any.ts";
 
 /**
@@ -38,7 +38,11 @@ export type SelectStrategyFn = (data: SelectStrategyData) => Map<unknown, Select
  * # Select Strategy Reference
  * Recognised selection strategy strings.
  */
-export type SelectStrategyRef = 'multi-any' | 'single-any';
+export type SelectStrategyRef = 'cascade-leaf'
+    | 'multi-any'
+    | 'multi-leaf'
+    | 'single-any'
+    | 'single-leaf';
 
 /**
  * # Select Strategy Props
@@ -90,9 +94,13 @@ export function useSelectStrategy(props: SelectStrategyProps): ComputedRef<Selec
             return props.selectStrategy as SelectStrategy;
         }
         switch (props.selectStrategy) {
+            case 'single-leaf': return singleLeaf(props.required);
             case 'single-any': return singleAny(props.required);
+            case 'multi-leaf': return multiLeaf(props.required);
+            case 'multi-any': return multiAny(props.required);
+            case 'cascade-leaf':
+            default: return cascadeLeaf(props.required);
         }
-        return multiAny(props.required);
     });
 }
 
