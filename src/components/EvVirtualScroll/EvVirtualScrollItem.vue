@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {useAttrs, useSlots, watch} from "vue";
+import {useAttrs, watch} from "vue";
 import {useResizeObserver} from "../../composables/resizeObserver.ts";
 import {makeEvVirtualScrollItemProps} from "./EvVirtualScroll.ts";
 

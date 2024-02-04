@@ -20,7 +20,6 @@ import {EvLabel} from "@/components/EvLabel";
 import {EvErrors} from "@/components/EvErrors";
 import {EvProgress} from "@/components/EvProgress";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
-import {MouseEvent} from "react";
 import {useFormField} from "@/composables/validation.ts";
 
 
@@ -228,7 +227,7 @@ function onClickOutside(e: MouseEvent) {
                 <ev-icon :glyph="iconEnd" />
             </div>
             <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
-                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" size="2" />
+                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" :size="2" />
             </div>
         </div>
 

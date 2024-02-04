@@ -2,7 +2,6 @@ import {makeInputAppearanceProps, makeInputSizeProps, makeTextAlignProps, propsF
 import {IconValue} from "@/composables/icons.ts";
 import {makeFormFieldProps} from "@/composables/validation.ts";
 import {makeComponentProps} from "@/composables/component.ts";
-import {PropType} from "vue";
 
 
 /**

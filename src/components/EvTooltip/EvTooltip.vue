@@ -18,7 +18,7 @@ const id = computed(() => {
     return props.id || `ev-tooltip-${uid}`;
 });
 
-const overlayRef = ref<EvOverlay>();
+const overlayRef = ref<typeof EvOverlay>();
 const overlayProps = filterComponentProps(EvOverlay, props);
 
 const position = computed(() => {
@@ -32,7 +32,7 @@ const origin = computed(() => {
         props.origin === 'auto' ||
         props.origin === 'overlap' ||
         props.origin.split(' ').length > 1 ||
-        props.location.split(' ').length > 1
+        props.position.split(' ').length > 1
     )
         ? props.origin
         : props.origin + ' center' as PositionStrategyProps['origin'];

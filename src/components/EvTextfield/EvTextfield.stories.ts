@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextfield } from "../EvTextfield";
 import {Search} from "../../icons";
-import {InputAppearance, InputSize} from "../../util";
+import {InputAppearance, InputSize} from "@/util";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
@@ -45,8 +45,8 @@ const meta: Meta<typeof EvTextfield> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -71,7 +71,7 @@ const meta: Meta<typeof EvTextfield> = {
         clearable: {
             control: 'boolean'
         },
-        'icon-start': {
+        iconStart: {
             control: 'select',
             options: ['none', 'Search'],
             mapping: {
@@ -80,7 +80,7 @@ const meta: Meta<typeof EvTextfield> = {
             },
             description: "Appears before input prefix. "
         },
-        'icon-end': {
+        iconEnd: {
             control: 'select',
             options: ['none', 'Search'],
             mapping: {
@@ -137,7 +137,7 @@ const meta: Meta<typeof EvTextfield> = {
         monospace: undefined,
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 
@@ -145,8 +145,8 @@ const meta: Meta<typeof EvTextfield> = {
         autofocus: false,
         autoselect: false,
         clearable: false,
-        'icon-start': 'none',
-        'icon-end': 'none',
+        iconStart: 'none',
+        iconEnd: 'none',
         label: undefined,
         loading: false,
         placeholder: '',
@@ -168,14 +168,14 @@ export const Primary: Story = {
         components: { EvTextfield },
         setup() {
 
-            const requiredValidator = (value) => {
+            const requiredValidator = (value?: string) => {
                 if (!value) {
                     return 'Required';
                 }
                 return true;
             };
 
-            const helloValidator = (value) => {
+            const helloValidator = (value?: string) => {
                 if (value === 'Hi') {
                     return 'Hi is not the same as Hello, enter "Hello"';
                 }
