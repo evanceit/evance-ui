@@ -1,5 +1,5 @@
-import {computed, ComputedRef, PropType} from "vue";
-import {isObject, propsFactory} from "../../util";
+import {computed, ComputedRef, PropType, Ref} from "vue";
+import {isFunction, isObject, propsFactory} from "@/util";
 import {multiAny} from "./select-strategy";
 import {singleAny} from "./select-strategy/single-any.ts";
 
@@ -8,8 +8,8 @@ import {singleAny} from "./select-strategy/single-any.ts";
  */
 export type SelectStrategy = {
     select: SelectStrategyFn,
-    transformIn: SelectTransformInFn,
-    transformOut: SelectTransformOutFn
+    in: SelectTransformInFn,
+    out: SelectTransformOutFn
 };
 
 /**
@@ -38,7 +38,7 @@ export type SelectStrategyFn = (data: SelectStrategyData) => Map<unknown, Select
  * # Select Strategy Reference
  * Recognised selection strategy strings.
  */
-export type SelectStrategyRef = 'multi-any';
+export type SelectStrategyRef = 'multi-any' | 'single-any';
 
 /**
  * # Select Strategy Props
@@ -46,7 +46,7 @@ export type SelectStrategyRef = 'multi-any';
  */
 export interface SelectStrategyProps {
     selectStrategy: SelectStrategyRef | SelectStrategyFn | undefined;
-    selected: readonly unknownp[] | undefined;
+    selected: readonly unknown[] | undefined;
     required: boolean,
     'onUpdate:selected': ((values: unknown[]) => void) | undefined
 }
@@ -67,7 +67,7 @@ export type SelectTransformOutFn = (
     values: Map<unknown, Selected>,
     children: Map<unknown, unknown[]>,
     parents: Map<unknown, unknown>
-) => Map<unknown, Selected>;
+) => unknown[];
 
 
 /**
@@ -82,19 +82,16 @@ export const makeSelectedProps = propsFactory({
 
 /**
  * # Use Select Strategy
- * @todo: Need SelectStrategyProps
  * @param props
  */
 export function useSelectStrategy(props: SelectStrategyProps): ComputedRef<SelectStrategy> {
     return computed(() => {
-        if (isObject(props.selectStrategy)) {
-            return props.selectStrategy;
+        if (isObject(props.selectStrategy) && !isFunction(props.selectStrategy)) {
+            return props.selectStrategy as SelectStrategy;
         }
-
         switch (props.selectStrategy) {
             case 'single-any': return singleAny(props.required);
         }
-
         return multiAny(props.required);
     });
 }
@@ -103,7 +100,7 @@ export function useSelectStrategy(props: SelectStrategyProps): ComputedRef<Selec
  * # Use Selected Values
  * @param selected
  */
-export function useSelectedValues(selected) {
+export function useSelectedValues(selected: Ref<Map<unknown, Selected>>) {
     return computed(() => {
         const values = [];
         for (const [key, value] of selected.value.entries()) {

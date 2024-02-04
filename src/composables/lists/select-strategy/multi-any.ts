@@ -1,10 +1,11 @@
 import {
+    Selected,
     SelectStrategy,
     SelectStrategyData,
     SelectStrategyFn,
     SelectTransformInFn,
     SelectTransformOutFn
-} from "../select-strategies.ts";
+} from "@/composables/lists";
 import {toRaw} from "vue";
 
 /**
@@ -19,7 +20,7 @@ export const multiAny = (isRequired?: boolean): SelectStrategy => {
     const selectFn: SelectStrategyFn = (data: SelectStrategyData) => {
         const id = toRaw(data.id);
         if (isRequired && !data.value) {
-            const reducer = (arr, [key, value]) => {
+            const reducer = (arr: any, [key, value]: [unknown, Selected]) => {
                 return (value === 'on') ? [...arr, key] : arr;
             };
             const on = Array.from(data.selected.entries()).reduce(reducer, []);
@@ -31,7 +32,7 @@ export const multiAny = (isRequired?: boolean): SelectStrategy => {
         return data.selected;
     };
 
-    const transformIn: SelectTransformInFn = (values, children, parents) => {
+    const transformIn: SelectTransformInFn = (values: any, children, parents) => {
         let map = new Map();
         for (const id of (values || [])) {
             map = selectFn({
@@ -57,7 +58,7 @@ export const multiAny = (isRequired?: boolean): SelectStrategy => {
 
     return {
         select: selectFn,
-        transformIn: transformIn,
-        transformOut: transformOut
+        in: transformIn,
+        out: transformOut
     };
 };

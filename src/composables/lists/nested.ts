@@ -1,4 +1,4 @@
-import {SequencedPosition} from "./list-sequenced.ts";
+import {SequencedPosition} from "./sequenced.ts";
 import {
     makeSelectedProps,
     Selected,
@@ -18,8 +18,9 @@ import {
     shallowRef,
     toRaw
 } from "vue";
-import {getCurrentComponent, getNextId, propsFactory} from "../../util";
+import {getCurrentComponent, getNextId, propsFactory} from "@/util";
 import {useModelProxy} from "../modelProxy.ts";
+import {makeOpenStrategyProps, OpenStrategyProps, useOpenStrategy} from "@/composables/lists/open-strategies.ts";
 
 /**
  * # Nested Position
@@ -30,8 +31,7 @@ import {useModelProxy} from "../modelProxy.ts";
  */
 export type NestedPosition = SequencedPosition & 'inside';
 
-
-export interface NestedProps extends SelectStrategyProps {
+export interface NestedProps extends SelectStrategyProps, OpenStrategyProps {
 
 }
 
@@ -60,16 +60,16 @@ export const EvNestedSymbol: InjectionKey<NestedProvide> = Symbol.for('ev:nested
 export const emptyNestedList: NestedProvide = {
     id: shallowRef(),
     root: {
+        children: ref(new Map()),
+        parents: ref(new Map()),
+        opened: ref(new Set()),
+        select: () => null,
+        selected: ref(new Map()),
+        selectedValues: ref([]),
         register: () => null,
         unregister: () => null,
-        parents: ref(new Map()),
-        children: ref(new Map()),
         open: () => null,
-        openOnSelect: () => null,
-        select: () => null,
-        opened: ref(new Set()),
-        selected: ref(new Map()),
-        selectedValues: ref([])
+        openOnSelect: () => null
     }
 }
 
@@ -77,7 +77,8 @@ export const emptyNestedList: NestedProvide = {
  * # Make Nested Props
  */
 export const makeNestedProps = propsFactory({
-    ...makeSelectedProps()
+    ...makeSelectedProps(),
+    ...makeOpenStrategyProps()
 }, 'nested');
 
 
@@ -91,17 +92,30 @@ export const useNestedList = (props: NestedProps) => {
     const children = ref(new Map<unknown, unknown[]>());
     const parents = ref(new Map<unknown, unknown>());
     const selectStrategy = useSelectStrategy(props);
-    const selected = useModelProxy(
+    const selected: Ref<Map<unknown, Selected>> = useModelProxy(
         props,
         'selected',
         props.selected,
         (values) => {
-            return selectStrategy.value.transformIn(values, children.value, parents.value);
+            return selectStrategy.value.in(values, children.value, parents.value);
         },
         (values) => {
-            return selectStrategy.value.transformOut(values, children.value, parents.value);
+            return selectStrategy.value.out(values, children.value, parents.value);
         }
     );
+    const openStrategy = useOpenStrategy(props);
+    const opened = useModelProxy(
+        props,
+        'opened',
+        props.opened,
+        (values) => {
+            return new Set(values);
+        },
+        (values) => {
+            return [...values.values()];
+        }
+    );
+
 
     onBeforeMount(() => {
         isUnmounted = true;
@@ -141,7 +155,7 @@ export const useNestedList = (props: NestedProps) => {
                 });
                 newSelected && (selected.value = newSelected);
 
-                // @todo: open functions
+                nested.root.openOnSelect(id, value, event);
             },
             register: (id, parentId, isGroup) => {
                 parentId && id !== parentId && parents.value.set(id, parentId);
@@ -163,6 +177,36 @@ export const useNestedList = (props: NestedProps) => {
                     children.value.set(parent, list.filter(child => child !== id));
                 }
                 parents.value.delete(id);
+            },
+            opened: opened,
+            open: (id, value, event) => {
+                component.emit('click:open', {
+                    id,
+                    value,
+                    path: getPath(id),
+                    event
+                });
+                const newOpened = openStrategy.value.open({
+                    id,
+                    value,
+                    opened: new Set(opened.value),
+                    children: children.value,
+                    parents: parents.value,
+                    event
+                });
+                newOpened && (opened.value = newOpened);
+            },
+            openOnSelect: (id, value, event) => {
+                const newOpened = openStrategy.value.select({
+                    id,
+                    value,
+                    selected: new Map(selected.value),
+                    opened: new Set(opened.value),
+                    children: children.value,
+                    parents: parents.value,
+                    event
+                })
+                newOpened && (opened.value = newOpened);
             }
         }
     };

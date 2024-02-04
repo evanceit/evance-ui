@@ -18,6 +18,11 @@ export interface EvanceUiOptions {
 
 export interface Blueprint extends Omit<EvanceUiOptions, 'blueprint'> {}
 
+// Added to prevent strict errors
+interface NuxtApp {
+    hook: (hook: string, callback: () => void) => void;
+}
+
 /**
  * # Create Evance UI
  * @param evanceUi
@@ -60,7 +65,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
 
         if (Browser.hasWindow && options.ssr) {
             if ('$nuxt' in app) {
-                app.$nuxt.hook('app:suspense:resolve', () => {
+                (app.$nuxt as NuxtApp).hook('app:suspense:resolve', () => {
                     display.update();
                 });
             } else {

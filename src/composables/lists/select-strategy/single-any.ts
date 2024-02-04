@@ -4,7 +4,7 @@ import {
     SelectStrategyFn,
     SelectTransformInFn,
     SelectTransformOutFn
-} from "../select-strategies.ts";
+} from "@/composables/lists";
 import {multiAny} from "./multi-any.ts";
 import {toRaw} from "vue";
 
@@ -30,19 +30,19 @@ export const singleAny = (isRequired?: boolean): SelectStrategy => {
 
     const transformIn: SelectTransformInFn = (values, children, parents) => {
         let map = new Map();
-        if (values?.length) {
-            map = parentStrategy.transformIn(values.slice(0, 1), children, parents);
+        if (Array.isArray(values) && values.length) {
+            map = parentStrategy.in(values.slice(0, 1), children, parents);
         }
         return map;
     };
 
     const transformOut: SelectTransformOutFn = (values, children, parents) => {
-        return parentStrategy.transformOut(values, children, parents);
+        return parentStrategy.out(values, children, parents);
     };
 
     return {
         select: selectFn,
-        transformIn: transformIn,
-        transformOut: transformOut
+        in: transformIn,
+        out: transformOut
     };
 };
