@@ -1,7 +1,12 @@
 {
   "name": "amethyst",
+  "description": "Evance UI Component Library based on Vuetify",
   "version": "1.0.0",
-  "description": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanceit/amethyst.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -9,10 +14,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/evanceit/amethyst.git"
   },
   "keywords": [],
   "author": "",

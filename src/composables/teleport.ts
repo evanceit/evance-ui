@@ -21,7 +21,7 @@ export function useTeleport(target: Ref<TeleportTarget>, container: string = '.e
 
         let targetElement: HTMLElement | null;
         if (targetValue instanceof Element) {
-            targetElement = targetValue;
+            targetElement = targetValue as HTMLElement;
         } else if (isString(targetValue)) {
             targetElement = document.querySelector(targetValue);
         } else {
@@ -31,7 +31,7 @@ export function useTeleport(target: Ref<TeleportTarget>, container: string = '.e
             console.warn(`useTeleport() unable to resolve target "${targetValue}"`);
         }
 
-        let containerElement = targetElement.querySelector(`:scope > ${container}`);
+        let containerElement = targetElement?.querySelector(`:scope > ${container}`);
         if (!containerElement) {
             containerElement = document.createElement('div');
             containerElement.className = container.substring(1);

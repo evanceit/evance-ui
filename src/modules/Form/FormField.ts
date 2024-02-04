@@ -256,7 +256,7 @@ export class FormField {
      * ## Validate
      */
     public async validate(silent = false) {
-        const results = [];
+        const results: string[] = [];
         this.validating.value = true;
         for (const validator of this.props.validators) {
             const validatorFn = isFunction(validator) ? validator : () => validator;

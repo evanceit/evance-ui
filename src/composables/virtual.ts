@@ -35,7 +35,7 @@ export function useVirtual <T> (
     const first = shallowRef(0);
     const baseItemHeight = shallowRef(props.itemHeight);
     const itemHeight = computed({
-        get: () => parseInt(baseItemHeight.value ?? 0, 10),
+        get: () => parseInt((baseItemHeight.value ?? 0) as string, 10),
         set (val) {
             baseItemHeight.value = val
         }

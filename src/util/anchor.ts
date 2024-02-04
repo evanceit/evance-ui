@@ -23,8 +23,10 @@ export type AnchorSelector =
     | 'center'
     | `center${SelectorSeparator}center`;
 
-type AnchorSide = VerticalSide | HorizontalSide | 'auto' | 'center';
-type AnchorAlignment = EdgeAlignment | 'auto';
+export type AnchorSide = VerticalSide | HorizontalSide | 'auto' | 'center';
+export type AnchorAlignment = EdgeAlignment | 'auto';
+export type PhysicalAlignment = 'left' | 'right' | 'center';
+export type PhysicalSide = HorizontalSide | VerticalSide;
 
 /**
  * # Anchor
@@ -48,7 +50,10 @@ export class Anchor {
         return ['left', 'right'].includes(this.side) ? 'x' : 'y';
     }
 
-    public get physicalAlignment(): string {
+    /**
+     * ## Physical Alignment
+     */
+    public get physicalAlignment(): PhysicalAlignment {
         if (this.alignment === 'auto') {
             throw new Error('Cannot convert `auto` to a physical alignment');
         }
@@ -56,7 +61,7 @@ export class Anchor {
             center: 'center',
             start: 'left',
             end: 'right'
-        }[this.alignment];
+        }[this.alignment] as PhysicalAlignment;
     }
 
     /**

@@ -18,6 +18,9 @@ const oppositeMap = {
     right: 'left',
 } as const;
 
+export type Position = 'top' | 'bottom' | 'left' | 'right';
+export type Alignment = 'left' | 'right' | 'center';
+
 export function usePosition(
     props: PositionProps,
     opposite = false,
@@ -38,7 +41,7 @@ export function usePosition(
 
         const styles = {} as CSSProperties;
 
-        if (anchor.side !== 'center') {
+        if (anchor.side !== 'center' && anchor.side !== 'auto') {
             if (opposite) {
                 styles[oppositeMap[anchor.side]] = `calc(100% - ${getOffset(anchor.side)}px)`;
             } else {
@@ -46,7 +49,7 @@ export function usePosition(
             }
         }
 
-        if (anchor.alignment !== 'center') {
+        if (anchor.physicalAlignment !== 'center') {
             if (opposite) {
                 styles[oppositeMap[anchor.physicalAlignment]] = `calc(100% - ${getOffset(anchor.physicalAlignment)}px)`;
             } else {
@@ -61,15 +64,17 @@ export function usePosition(
                     bottom: 'left',
                     left: 'top',
                     right: 'top',
-                } as const)[anchor.side]] = '50%';
+                } as const)[anchor.side as Position]] = '50%';
             }
-            styles.transform = {
-                top: 'translateX(-50%)',
-                bottom: 'translateX(-50%)',
-                left: 'translateY(-50%)',
-                right: 'translateY(-50%)',
-                center: 'translate(-50%, -50%)',
-            }[anchor.side];
+            if (anchor.side !== 'auto') {
+                styles.transform = {
+                    top: 'translateX(-50%)',
+                    bottom: 'translateX(-50%)',
+                    left: 'translateY(-50%)',
+                    right: 'translateY(-50%)',
+                    center: 'translate(-50%, -50%)',
+                }[anchor.side];
+            }
         }
 
         return styles;

@@ -1,5 +1,5 @@
 import {DirectiveBinding} from "vue";
-import {isFunction, isObject, isShadowRoot} from "../util";
+import {isFunction, isObject, isShadowRoot} from "@/util";
 
 /**
  * ## Click Outside Args
@@ -11,16 +11,20 @@ import {isFunction, isObject, isShadowRoot} from "../util";
  * - `include`  an optional array of elements to include when evaluating the click outside event.
  */
 interface ClickOutsideArgs {
-    handler: (e: MouseEvent) => void,
-    condition?: (e: Event) => boolean,
-    include?: () => HTMLElement[]
+    handler: (e: MouseEvent) => void;
+    condition?: (e: Event) => boolean;
+    include?: () => HTMLElement[];
 }
 
 /**
  * ## Click Outside Binding
  */
 interface ClickOutsideBinding extends DirectiveBinding {
-    value: ((e: MouseEvent) => void) | ClickOutsideArgs
+    value: ((e: MouseEvent) => void) | ClickOutsideArgs;
+}
+
+interface ClickOutsideHTMLElement extends HTMLElement {
+    __clickOutside?: any;
 }
 
 /**
@@ -42,7 +46,7 @@ function getRoot(el: HTMLElement): null | Document | ShadowRoot {
  * @param binding
  */
 function isActive(e: MouseEvent, binding: ClickOutsideBinding): boolean {
-    const isActiveCallback = (isObject(binding.value) && binding.value.condition) || (() => true);
+    const isActiveCallback = (isObject(binding.value) && (binding.value as ClickOutsideArgs).condition) || (() => true);
     return isActiveCallback(e);
 }
 
@@ -67,7 +71,7 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
     if (isShadowRoot(root) && root.host === e.target) {
         return false;
     }
-    const elements = ((isObject(binding.value) && binding.value.include) || (() => []))();
+    const elements = ((isObject(binding.value) && (binding.value as ClickOutsideArgs).include) || (() => []))();
     elements.push(el);
     return !elements.some(el => {
         return el?.contains(e.target as Node);
@@ -81,7 +85,7 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
  * @param el
  * @param binding
  */
-function onClickHandler(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBinding) {
+function onClickHandler(e: MouseEvent, el: ClickOutsideHTMLElement, binding: ClickOutsideBinding) {
     const handler = isFunction(binding.value) ? binding.value : binding.value.handler;
     if (!el.__clickOutside!.wasMousedownOutside || !isEventOutside(e, el, binding)) {
         return;
@@ -122,7 +126,7 @@ export const clickOutside = {
      * @param el
      * @param binding
      */
-    mounted(el: HTMLElement, binding: ClickOutsideBinding) {
+    mounted(el: ClickOutsideHTMLElement, binding: ClickOutsideBinding) {
         const onClick = (e: Event) => {
             onClickHandler(e as MouseEvent, el, binding);
         };
@@ -146,7 +150,7 @@ export const clickOutside = {
      * @param el
      * @param binding
      */
-    unmounted(el: HTMLElement, binding: ClickOutsideBinding) {
+    unmounted(el: ClickOutsideHTMLElement, binding: ClickOutsideBinding) {
         if (!el.__clickOutside) {
             return;
         }

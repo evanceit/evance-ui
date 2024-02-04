@@ -8,6 +8,9 @@ type ObserverHandler = (
     observer: IntersectionObserver,
 ) => void;
 
+interface ObserveHTMLElement extends HTMLElement {
+    _observe?: { init: boolean, observer: IntersectionObserver }[];
+}
 
 export interface ObserverDirectiveBinding extends Omit<DirectiveBinding, 'modifiers' | 'value'> {
     value?: ObserverHandler | { handler: ObserverHandler, options?: IntersectionObserverInit },
@@ -20,7 +23,7 @@ export interface ObserverDirectiveBinding extends Omit<DirectiveBinding, 'modifi
 /**
  * # Mounted
  */
-function mounted(el: HTMLElement, binding: ObserverDirectiveBinding) {
+function mounted(el: ObserveHTMLElement, binding: ObserverDirectiveBinding) {
     if (!Browser.supportsIntersection) {
         return;
     }
@@ -64,7 +67,7 @@ function mounted(el: HTMLElement, binding: ObserverDirectiveBinding) {
 /**
  * # Unmounted
  */
-function unmounted(el: HTMLElement, binding: ObserverDirectiveBinding) {
+function unmounted(el: ObserveHTMLElement, binding: ObserverDirectiveBinding) {
     const observe = el._observe?.[binding.instance!.$.uid];
     if (!observe) {
         return;

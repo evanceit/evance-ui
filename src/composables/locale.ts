@@ -5,7 +5,7 @@ import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 /**
  * # Locale Symbol
  */
-export const LocaleSymbol: InjectionKey<LocaleInstance & RtlInstance> = Symbol.for('ev:locale');
+export const LocaleSymbol: InjectionKey<LocaleManager> = Symbol.for('ev:locale');
 
 /**
  * # Create Locale Manager
@@ -20,7 +20,7 @@ export function createLocaleManager(localeOptions: LocaleOptions) {
  * # Use Locale Manager
  */
 export function useLocaleManager(): LocaleManager {
-    const localeManager:LocaleManager = inject(LocaleSymbol);
+    const localeManager:LocaleManager | undefined = inject(LocaleSymbol);
     if (!localeManager) {
         throw new Error('Evance UI could not find injected locale instance');
     }
@@ -35,15 +35,15 @@ export function useLocaleFunctions() {
     return {
         t: (
             reference: string,
-            options?: TranslationOptions = {},
-            locale?: string = null
+            options?: TranslationOptions,
+            locale?: string
         ): string | null => {
             return manager.translator.translate(reference, options, locale);
         },
         n: (
             value: number,
             options?: Intl.NumberFormatOptions,
-            locale?: string = null
+            locale?: string
         ) => {
             return manager.numberFormatter.format(value, options, locale)
         }

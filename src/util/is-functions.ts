@@ -180,7 +180,7 @@ export function isPrimitive (value: unknown): value is string | number | boolean
  * # Is ShadowRoot
  * @param value
  */
-export function isShadowRoot(value: unknown): boolean {
+export function isShadowRoot(value: unknown): value is ShadowRoot {
     return (
         typeof ShadowRoot !== 'undefined'
         && value instanceof ShadowRoot
