@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import './EvBlock.scss';
 import {makeEvBlockProps, useBreakpointClasses} from "./EvBlock.ts";
-import {useSlots} from "vue";
 
 const props = defineProps(makeEvBlockProps());
-const slots = useSlots();
 
 /**
  * # Size Classes

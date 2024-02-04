@@ -19,7 +19,7 @@ const uid = getNextId();
 const id = computed(() => {
     return props.id || `ev-menu-${uid}`;
 });
-const overlay = ref<EvOverlay>();
+const overlay = ref<typeof EvOverlay>();
 const parent = inject(EvMenuSymbol, null);
 const openChildren = shallowRef(0);
 

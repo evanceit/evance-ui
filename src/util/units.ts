@@ -5,15 +5,15 @@ import {isEmpty} from "./is-functions.ts";
  * @param value
  * @param unit
  */
-export function toWebUnit(value: string | number | null | undefined, unit: string = 'px'): string | null {
+export function toWebUnit(value: string | number | null | undefined, unit: string = 'px'): string | undefined {
     if (isEmpty(value)) {
-        return null;
+        return undefined;
     }
     if (isNaN(+value!)) {
         return String(value);
     }
     if (!isFinite(+value!)) {
-        return null;
+        return undefined;
     }
     return `${value}${unit}`;
 }

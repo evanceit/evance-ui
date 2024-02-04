@@ -4,11 +4,9 @@
  */
 import './EvKbd.scss';
 import {makeEvKbdProps} from "./EvKbd.ts";
-import {useSlots} from "vue";
 import {InputSize, sizeModifier} from "@/util";
 
 const props = defineProps(makeEvKbdProps());
-const slots = useSlots();
 
 </script>
 <template>

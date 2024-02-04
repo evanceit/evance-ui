@@ -4,10 +4,8 @@
  */
 import './EvLabel.scss';
 import {makeEvLabelProps} from "./EvLabel.ts";
-import {useSlots} from "vue";
 
 const props = defineProps(makeEvLabelProps());
-const slots = useSlots();
 
 </script>
 <template>

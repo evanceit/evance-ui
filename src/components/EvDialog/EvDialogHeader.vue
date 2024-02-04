@@ -8,14 +8,12 @@ export const makeEvDialogHeaderProps = propsFactory({
 </script>
 <script setup lang="ts">
 
-import {useSlots} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {Cancel} from "@/icons";
 import EvButton from "../EvButton/EvButton.vue";
 
 const props = defineProps(makeEvDialogHeaderProps());
 const isActive = useModelProxy(props, 'modelValue');
-const slots = useSlots();
 
 /**
  * ## Close

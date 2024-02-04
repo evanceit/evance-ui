@@ -277,7 +277,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @private
      */
     private getCountryCode(): string {
-        return LocaleCode.fromString(this.locale).countryCode;
+        return LocaleCode.fromString(this.locale).countryCode!;
     }
 
     /**

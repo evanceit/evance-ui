@@ -18,6 +18,7 @@ import EvListItem from "@/components/EvListItem/EvListItem.vue";
 import {ListItem} from "@/components/EvList";
 import {useScrolling} from "./useScrolling.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
+import {useForm} from "@/composables/form.ts";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -45,7 +46,7 @@ const isMenuOpen = computed({
 const isMenuDisabled = computed(() => {
     return (
         (props.hideNoItems && !items.value.length)
-        || props.readonly
+        || !!props.readonly
     );
 });
 
@@ -54,7 +55,7 @@ const evListRef = ref<typeof EvList>();
 const evVirtualScrollRef = ref<typeof EvVirtualScroll>();
 const displayItems = computed(() => {
     if (props.hideSelected) {
-        return items.value.filter(item => !selections.value.some(s => s === item));
+        return items.value.filter(item => !selections.value.some((s: any) => s === item));
     }
     return items.value;
 });
@@ -70,18 +71,18 @@ const model = useModelProxy(
     }
 );
 const selections = computed(() => {
-    return model.value.map((value) => {
+    return model.value.map((value: any) => {
         return items.value.find((item) => {
             return (props.valueComparator(item.value, value.value));
         }) || value;
     });
 });
 const selected = computed(() => {
-    return selections.value.map(selection => selection.props.value);
+    return selections.value.map((selection: any) => selection.props.value);
 });
 const keyLogger = new KeyLogger();
 
-let form; // @todo: <--- YOU ARE HERE (forms and validation)
+let form = useForm();
 
 /**
  * ## On Menu After Leave
@@ -192,7 +193,7 @@ function onFieldMousedown () {
  */
 function select(item: ListItem) {
     if (props.multiple) {
-        const index = selected.value.findIndex(selection => {
+        const index = selected.value.findIndex((selection: any) => {
             return props.valueComparator(selection, item.value);
         });
         if (index === -1) {
@@ -209,10 +210,10 @@ function select(item: ListItem) {
 }
 
 const modelValue = computed(() => {
-    return model.value.map(value => value.props.value).join(', ');
+    return model.value.map((value: any) => value.props.value).join(', ');
 });
 
-function onModelValueUpdate(value) {
+function onModelValueUpdate(value: any) {
     if (value === null) {
         model.value = [];
     }

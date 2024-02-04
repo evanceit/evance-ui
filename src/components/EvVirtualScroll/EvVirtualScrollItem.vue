@@ -10,7 +10,6 @@ defineOptions({
 
 const props = defineProps(makeEvVirtualScrollItemProps());
 
-const slots = useSlots();
 const emit = defineEmits([
     'update:height'
 ]);

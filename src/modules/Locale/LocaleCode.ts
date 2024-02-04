@@ -5,6 +5,17 @@ import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
  */
 export class LocaleCode extends TranslationCode {
     /**
+     * @param languageCode
+     * @param countryCode
+     */
+    constructor(
+        public languageCode: string,
+        public countryCode: string
+    ) {
+        super(languageCode, countryCode)
+    }
+
+    /**
      * ## To Translation Codes
      */
     public toTranslationCodes(): string[] {

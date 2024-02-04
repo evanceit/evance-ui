@@ -29,7 +29,7 @@ interface DividerProps {
 const props = withDefaults(defineProps<DividerProps>(), {
     appearance: 'default',
     borderStyle: 'solid',
-    opacity: null,
+    opacity: undefined,
     thickness: 1,
     vertical: false
 });
@@ -46,7 +46,7 @@ const borderOpacity = computed(() => {
         return null;
     }
     if (isIntegerish(props.opacity)) {
-        return (props.opacity / 100);
+        return (+props.opacity / 100);
     }
     if (isCssVariable(props.opacity)) {
         return `var(${props.opacity})`;
@@ -73,23 +73,20 @@ const classNames = computed(() => {
    ];
 });
 
-const styling = computed(() => {
-    return [
-        {
-            '--border-color': borderColor.value,
-            '--border-opacity': borderOpacity.value,
-            '--border-style': borderStyle.value,
-            '--border-width': borderWidth.value
-        }
-    ];
-});
-
 </script>
 <template>
-    <div v-if="hasDefaultSlot" class="ev-divider" role="separator" :class="classNames" :style="styling">
+    <div v-if="hasDefaultSlot" class="ev-divider" role="separator" :class="classNames">
         <hr class="ev-divider--line" />
         <div class="ev-divider--content"><slot /></div>
         <hr class="ev-divider--line" />
     </div>
-    <hr v-else class="ev-divider" role="separator" :class="classNames" :style="styling" />
+    <hr v-else class="ev-divider" role="separator" :class="classNames" />
 </template>
+<style>
+.ev-divider {
+    --border-color: v-bind(borderColor);
+    --border-opacity: v-bind(borderOpacity);
+    --border-style: v-bind(borderStyle);
+    --border-width: v-bind(borderWidth);
+}
+</style>

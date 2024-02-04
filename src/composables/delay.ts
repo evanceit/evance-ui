@@ -37,7 +37,7 @@ export function useDelayOpenClose(
             }
 
             return new Promise((resolve) => {
-                const duration = parseInt(props[prop] ?? 0, 10);
+                const duration = parseInt((props[prop] ?? 0).toString(), 10);
                 delays[prop] = window.setTimeout(() => {
                     callback?.(isOpening);
                     resolve(isOpening);

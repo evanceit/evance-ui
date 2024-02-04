@@ -4,7 +4,7 @@
  */
 import './EvDialog.scss';
 import {DialogSize, DialogSizeToWidth, makeEvDialogProps} from "./EvDialog.ts";
-import {computed, mergeProps, nextTick, provide, ref, useSlots, watch} from "vue";
+import {computed, mergeProps, nextTick, ref, useSlots, watch} from "vue";
 import EvOverlay from "@/components/EvOverlay/EvOverlay.vue";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import {Browser, filterComponentProps, getFocusableChildren} from "@/util";
@@ -12,8 +12,7 @@ import {useModelProxy} from "@/composables/modelProxy.ts";
 import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
 import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
 import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
-import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogInstanceSymbol, provideDialog} from "@/composables/dialog.ts";
+import {provideDialog} from "@/composables/dialog.ts";
 
 const props = defineProps(makeEvDialogProps());
 const slots = useSlots();

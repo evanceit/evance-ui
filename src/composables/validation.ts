@@ -54,16 +54,10 @@ export interface FormFieldProps {
  */
 export const makeFormFieldProps = propsFactory({
     id: String,
-    disabled: {
-        type: Boolean as PropType<boolean | null>,
-        default: null,
-    },
+    disabled: Boolean,
     error: Boolean,
     name: String,
-    readonly: {
-        type: Boolean as PropType<boolean | null>,
-        default: null,
-    },
+    readonly: Boolean,
     validators: {
         type: Array as PropType<readonly Validator[]>,
         default: () => ([]),

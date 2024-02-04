@@ -11,7 +11,6 @@ export const makeEvSelectProps = propsFactory({
 
     hideNoItems: Boolean,
     hideSelected: Boolean,
-    label: String,
     menuOpen: Boolean,
     multiple: Boolean,
     noItemsText: {

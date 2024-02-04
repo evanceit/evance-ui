@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import './EvContainer.scss';
 import {makeEvContainerProps} from "./EvContainer.ts";
-import {useSlots} from "vue";
 
 const props = defineProps(makeEvContainerProps());
-const slots = useSlots();
 
 </script>
 <template>

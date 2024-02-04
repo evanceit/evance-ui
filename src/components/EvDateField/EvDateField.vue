@@ -19,15 +19,15 @@ const props = defineProps(makeEvDateFieldProps());
 const slots = useSlots();
 
 // Text Field
-const evMenuRef = ref<EvMenu>();
-const evTextfieldRef = ref<EvTextfield>();
+const evMenuRef = ref<typeof EvMenu>();
+const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), ['modelValue']);
 });
 const isFocused = shallowRef(false);
 
 // Date Picker
-const datePickerRef = ref<EvDatePicker>();
+const datePickerRef = ref<typeof EvDatePicker>();
 const datePickerProps = computed(() => {
     return omit(filterComponentProps(EvDatePicker, props), ['modelValue']);
 });

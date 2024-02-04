@@ -6,16 +6,12 @@
  *
  * @see https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
  */
-import {computed, PropType, useSlots} from "vue";
-import {animate, easingAccelerate, easingDecelerate, easingStandard, Rect} from "../../util";
+import {computed, PropType} from "vue";
+import {animate, easingAccelerate, easingStandard, Rect} from "@/util";
 
 const props = defineProps({
     target: Object as PropType<HTMLElement>
 });
-
-// Transition will only have one default slot.
-const slots = useSlots();
-
 
 /**
  * ## Get Children

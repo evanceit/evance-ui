@@ -3,8 +3,8 @@
  * # EvProgressCircular
  */
 import './EvProgressCircular.scss';
-import {useSlots, ref} from "vue";
-import {appearanceModifier, AppearanceProp, toWebUnit} from "../../util";
+import {appearanceModifier, AppearanceProp, toWebUnit} from "@/util";
+import {ref} from "vue";
 
 type Size = 'default';
 
@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<ProgressProps>(), {
     thickness: 2
 });
 
-const slots = useSlots();
 const container = ref<HTMLElement | null>(null);
 const defaultSize = 48;
 const defaultRadius = (defaultSize / 2);

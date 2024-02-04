@@ -13,7 +13,7 @@
  */
 import './EvList.scss';
 import {makeEvListProps, useListItems} from "./EvList.ts";
-import {computed, ref, shallowRef, useSlots} from "vue";
+import {computed, ref, shallowRef} from "vue";
 import {focusChild, FocusPosition} from "@/util";
 import {createList, useNestedList} from "@/composables/lists";
 import {useDimensions} from "@/composables/dimensions.ts";
@@ -25,7 +25,6 @@ defineEmits([
 ]);
 
 const props = defineProps(makeEvListProps());
-const slots = useSlots();
 const items = useListItems(props);
 const { select } = useNestedList(props);
 const containerRef = ref<HTMLElement | null>(null);

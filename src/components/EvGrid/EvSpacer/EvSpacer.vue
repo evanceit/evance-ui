@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import './EvSpacer.scss';
 import {makeEvSpacerProps} from "./EvSpacer.ts";
-import {useSlots} from "vue";
 
 const props = defineProps(makeEvSpacerProps());
-const slots = useSlots();
 
 </script>
 <template>

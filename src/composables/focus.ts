@@ -62,7 +62,7 @@ export interface AutofocusProps {
  */
 export function useAutofocus(props: AutofocusProps) {
     return {
-        mounted: (el) => {
+        mounted: (el: HTMLElement) => {
             if (!props.autofocus) {
                 return;
             }

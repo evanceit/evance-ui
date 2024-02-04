@@ -155,7 +155,7 @@ export function transformItems(
  *
  * @param props
  */
-export function useItems(props: ListItemProps) {
+export function useItems(props: any) {
     const items = computed(() => {
         return transformItems(props, props.items);
     });
