@@ -31,8 +31,8 @@ const meta: Meta<typeof EvRadio> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -65,7 +65,7 @@ const meta: Meta<typeof EvRadio> = {
         modelValue: false,
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 

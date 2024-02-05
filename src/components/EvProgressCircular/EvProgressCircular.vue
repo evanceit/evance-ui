@@ -36,7 +36,7 @@ const defaultRotation = -90;
  */
 function getSizeWithUnits() {
     if (props.size === 'default') {
-        return null;
+        return undefined;
     }
     return toWebUnit(props.size);
 }
@@ -109,20 +109,16 @@ function getThickness() {
             },
             appearanceModifier(props.appearance, ['default'])
         ]"
-        :style="[
-            {
-                'width': getSizeWithUnits(),
-                'height': getSizeWithUnits()
-            }
-        ]"
+        :style="{
+            'width': getSizeWithUnits(),
+            'height': getSizeWithUnits()
+        }"
     >
         <svg xmlns="http://www.w3.org/2000/svg"
              viewBox="0 0 48 48"
-             :style="[
-                 {
-                    'transform': getRotation()
-                 }
-             ]"
+             :style="{
+                'transform': getRotation()
+             }"
         >
             <circle
                 class="ev-progress-circular--track"

@@ -12,15 +12,15 @@ const dimensions = useDimensions(props);
  *
  * @param rounded
  */
-function makeRoundedClass(rounded) {
+function makeRoundedClass(rounded?: string | number | boolean) {
     if (!rounded || isEmpty(rounded)) {
-        return null;
+        return undefined;
     }
     if (rounded === true) {
         return 'is-rounded';
     }
     if (!isString(rounded)) {
-        return null;
+        return undefined;
     }
     return makeClassName(rounded, 'is-rounded');
 }
@@ -29,9 +29,9 @@ function makeRoundedClass(rounded) {
  * # Make Scrollable Class
  * @param scrollable
  */
-function makeScrollableClass(scrollable) {
+function makeScrollableClass(scrollable?: string | boolean) {
     if (isEmpty(scrollable)) {
-        return null;
+        return undefined;
     }
     if (scrollable === false) {
         return 'is-overflow-hidden';
@@ -40,12 +40,12 @@ function makeScrollableClass(scrollable) {
         return 'is-scrollable';
     }
     if (!isString(scrollable)) {
-        return null;
+        return undefined;
     }
     switch (scrollable) {
         case 'x': return 'is-scrollable-x';
         case 'y': return 'is-scrollable-y';
-        default: return null;
+        default: return undefined;
     }
 }
 

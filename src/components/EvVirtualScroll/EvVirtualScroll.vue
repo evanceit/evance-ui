@@ -2,10 +2,10 @@
 
 import {makeEvVirtualScrollProps} from "./EvVirtualScroll.ts";
 import {getCurrentComponent, getScrollParent, toWebUnit} from "@/util";
-import {useDimensions} from "../../composables/dimensions.ts";
+import {useDimensions} from "@/composables/dimensions.ts";
 import {onMounted, onScopeDispose, toRef} from "vue";
-import {useVirtual} from "../../composables/virtual.ts";
-import {useToggleScope} from "../../composables/toggleScope.ts";
+import {useVirtual} from "@/composables/virtual.ts";
+import {useToggleScope} from "@/composables/toggleScope.ts";
 import EvVirtualScrollItem from "./EvVirtualScrollItem.vue";
 
 const props = defineProps(makeEvVirtualScrollProps());

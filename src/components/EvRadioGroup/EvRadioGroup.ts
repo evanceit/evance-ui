@@ -1,11 +1,10 @@
 import {propsFactory} from "@/util";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makeFormFieldProps} from "@/composables/validation.ts";
-import {InjectionKey, Ref} from "vue";
+import {InjectionKey} from "vue";
+import {FormField} from "@/modules/Form/FormField.ts";
 
-export interface EvRadioGroupContext {
-    modelValue: Ref<any>
-}
+export interface EvRadioGroupContext extends FormField { }
 
 export const EvRadioGroupSymbol: InjectionKey<EvRadioGroupContext> = Symbol.for('ev:radio-group');
 

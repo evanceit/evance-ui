@@ -38,8 +38,8 @@ const meta: Meta<typeof EvSelect> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -57,7 +57,7 @@ const meta: Meta<typeof EvSelect> = {
         clearable: {
             control: 'boolean'
         },
-        'icon-start': {
+        iconStart: {
             control: 'select',
             options: ['none', 'Search'],
             mapping: {
@@ -69,11 +69,11 @@ const meta: Meta<typeof EvSelect> = {
         multiple: {
             control: 'boolean'
         },
-        'no-items-text': {
+        noItemsText: {
             control: 'text',
             description: "Change the text that appears when no items are available, or use the `no-items` slot. Defaults to the `select.noItemsText` locale translation path."
         },
-        'open-on-clear': {
+        openOnClear: {
             control: 'boolean'
         },
         prefix: {
@@ -82,7 +82,7 @@ const meta: Meta<typeof EvSelect> = {
                 + "May be used as a prop for a simple text-based prefix, or as a slot for a more complex prefix. "
                 + "In this demo we use a prop."
         },
-        'return-object': {
+        returnObject: {
             control: 'boolean',
             description: "When `true` the `v-model` bound to the EvSelect will receive the full item instead of the item's value."
         },
@@ -104,18 +104,18 @@ const meta: Meta<typeof EvSelect> = {
         modelValue: undefined,
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 
         appearance: InputAppearance.default,
         clearable: false,
-        'icon-start': 'none',
+        iconStart: 'none',
         label: undefined,
         multiple: false,
-        'open-on-clear': false,
+        openOnClear: false,
         placeholder: undefined,
-        'return-object': false,
+        returnObject: false,
         rounded: false,
     },
     tags: ['autodocs']
@@ -129,11 +129,6 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvSelect },
         data() {
-
-            let selected = {
-                title: 'Item '
-            }
-
             return {
                 selected: null
             }
@@ -149,7 +144,7 @@ export const Primary: Story = {
                 });
             }
 
-            const requiredValidator = (value) => {
+            const requiredValidator = (value: any) => {
                 if (!value) {
                     return 'Required';
                 }

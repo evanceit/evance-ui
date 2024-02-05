@@ -13,7 +13,6 @@ import {EvIcon} from "@/components/EvIcon";
 import {EvErrors} from "@/components/EvErrors";
 import {EvLabel} from "@/components/EvLabel";
 import {useFormField} from "@/composables/validation.ts";
-import {MouseEvent} from "react";
 
 
 /**
@@ -250,8 +249,8 @@ defineExpose({
                     />
                 </div>
             </transition>
-            <div class="ev-textarea--loader" v-if="loading && !icon">
-                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" size="2" />
+            <div class="ev-textarea--loader" v-if="loading">
+                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" :size="2" />
             </div>
         </div>
 

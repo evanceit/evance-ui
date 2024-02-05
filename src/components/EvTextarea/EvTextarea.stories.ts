@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTextarea } from "../EvTextarea";
-import {InputAppearance} from "../../util";
+import {InputAppearance} from "@/util";
 
 const meta: Meta<typeof EvTextarea> = {
     component: EvTextarea,
@@ -36,8 +36,8 @@ const meta: Meta<typeof EvTextarea> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -80,7 +80,7 @@ const meta: Meta<typeof EvTextarea> = {
         modelValue: "A\nB\nC\nD\nE\nF\nG\nH",
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 
@@ -104,7 +104,7 @@ export const Primary: Story = {
         components: { EvTextarea },
         setup() {
 
-            const requiredValidator = (value) => {
+            const requiredValidator = (value: any) => {
                 if (!value) {
                     return 'Required';
                 }

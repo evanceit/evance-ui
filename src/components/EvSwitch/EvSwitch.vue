@@ -24,7 +24,7 @@ const props = defineProps(makeEvSwitchProps());
 const slots = useSlots();
 
 // Emit
-const emit = defineEmits([
+defineEmits([
     'update:focused',
     'update:modelValue'
 ]);

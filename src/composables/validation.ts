@@ -37,16 +37,16 @@ export type ValidateOnEvent = 'blur' | 'input' | 'submit';
  * # Form Field Props
  */
 export interface FormFieldProps {
-    id: string | undefined;
-    disabled: boolean | null;
-    error: boolean;
-    focused: boolean;
-    name: string | undefined;
-    readonly: boolean | null;
+    id?: string;
+    disabled?: boolean;
+    error?: boolean;
+    focused?: boolean;
+    name?: string;
+    readonly?: boolean;
     validators: Validator[];
-    modelValue: any;
+    modelValue?: any;
     validateOn?: ValidateOnEvent | `${ValidateOnEvent} lazy` | `lazy ${ValidateOnEvent}` | 'lazy';
-    validationValue: any;
+    validationValue?: any;
 }
 
 /**
@@ -59,8 +59,8 @@ export const makeFormFieldProps = propsFactory({
     name: String,
     readonly: Boolean,
     validators: {
-        type: Array as PropType<readonly Validator[]>,
-        default: () => ([]),
+        type: Array as PropType<FormFieldProps['validators']>,
+        default: [],
     },
     modelValue: null,
     validateOn: String as PropType<FormFieldProps['validateOn']>,

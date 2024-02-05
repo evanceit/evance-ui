@@ -5,7 +5,7 @@ import { EvResponsive } from "../EvResponsive";
 const meta: Meta<typeof EvResponsive> = {
     component: EvResponsive,
     argTypes: {
-        'aspect-ratio': {
+        aspectRatio: {
             control: 'select',
             options: ['0.5', '1', '4:3', '16/9'],
             description: "Supports a number or a string. " +
@@ -21,7 +21,7 @@ const meta: Meta<typeof EvResponsive> = {
                 "If you would like your inner content to be subject to the flex box of the responsive block you" +
                 "should use the additional slot."
         },
-        'content-class': {
+        contentClass: {
             control: 'text',
             description: "Adds a class to the content wrapper when using the `content` slot."
         },
@@ -31,10 +31,9 @@ const meta: Meta<typeof EvResponsive> = {
         }
     },
     args: {
-        'aspect-ratio': undefined,
+        aspectRatio: undefined,
         inline: false,
-        default: 'Hello World!',
-        content: undefined
+        default: 'Hello World!'
     },
     tags: ['autodocs']
 };

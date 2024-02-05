@@ -1,5 +1,5 @@
 import {clamp, createRange, propsFactory} from "../util";
-import {computed, ref, Ref, shallowRef, watch, watchEffect} from "vue";
+import {computed, ComputedRef, ref, Ref, shallowRef, watch, watchEffect} from "vue";
 import {useResizeObserver} from "./resizeObserver.ts";
 import {useDisplay} from "./display.ts";
 
@@ -8,6 +8,11 @@ const DOWN = 1;
 
 type VirtualProps = {
     itemHeight?: number | string
+}
+
+export interface VirtualItem {
+    raw: any;
+    index: number;
 }
 
 /**
@@ -113,7 +118,7 @@ export function useVirtual <T> (
         return Math.min(items.value.length, first.value + visibleItems.value);
     });
 
-    const computedItems = computed(() => {
+    const computedItems: ComputedRef<VirtualItem[]> = computed(() => {
         return items.value.slice(first.value, last.value).map((item, index) => ({
             raw: item,
             index: index + first.value

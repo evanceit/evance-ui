@@ -1,5 +1,6 @@
-import {Axis, makeClassName, propsFactory} from "@/util";
+import {makeClassName, propsFactory} from "@/util";
 import {makeDimensionsProps} from "@/composables/dimensions.ts";
+import {PropType} from "vue";
 
 /**
  * # Surface Elevation
@@ -26,7 +27,7 @@ export function makeElevationClass(elevation: string) {
  */
 export const makeEvSurfaceProps = propsFactory({
     elevation: {
-        type: String<SurfaceElevation>,
+        type: String as PropType<SurfaceElevation>,
         default: 'default'
     },
     // Rounded
@@ -36,7 +37,7 @@ export const makeEvSurfaceProps = propsFactory({
     },
     // Scrollable
     scrollable: {
-        type: [String<Axis>, Boolean],
+        type: [String, Boolean],
         default: undefined
     },
     ...makeDimensionsProps()

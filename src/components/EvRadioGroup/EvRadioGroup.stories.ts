@@ -37,8 +37,8 @@ const meta: Meta<typeof EvRadioGroup> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -63,7 +63,7 @@ const meta: Meta<typeof EvRadioGroup> = {
         modelValue: false,
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 
@@ -80,7 +80,7 @@ export const Primary: Story = {
     render: (args: any) =>  ({
         components: { EvRadioGroup, EvRadio },
         setup() {
-            const requiredValidator = (value) => {
+            const requiredValidator = (value: any) => {
                 if (value === 'Y') {
                     return true;
                 }

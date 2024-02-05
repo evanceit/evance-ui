@@ -1,5 +1,5 @@
 // Utilities
-import {shallowRef, toRaw, watch} from 'vue'
+import {shallowRef, watch} from 'vue'
 
 // Types
 import type { Ref } from 'vue'
@@ -13,7 +13,7 @@ import {EvTextfield} from "../EvTextfield";
  * @param listRef
  * @param textFieldRef
  */
-export function useScrolling (listRef: Ref<EvList | undefined>, textFieldRef: Ref<EvTextfield | undefined>) {
+export function useScrolling (listRef: Ref<typeof EvList | undefined>, textFieldRef: Ref<typeof EvTextfield | undefined>) {
     const isScrolling = shallowRef(false);
     let scrollTimeout: number;
 

@@ -17,7 +17,7 @@ const props = defineProps(makeEvRadioGroupProps());
 const slots = useSlots();
 
 // Emit
-const emit = defineEmits([
+defineEmits([
     'update:modelValue'
 ]);
 

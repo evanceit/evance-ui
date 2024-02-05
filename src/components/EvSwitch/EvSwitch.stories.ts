@@ -31,8 +31,8 @@ const meta: Meta<typeof EvSwitch> = {
         readonly: {
             control: 'boolean'
         },
-        'validate-on': {
-            type: 'select',
+        validateOn: {
+            control: 'select',
             description: 'Change what type of event triggers validation to run.',
             options: ['lazy', 'blur', 'input', 'submit', 'blur lazy', 'input lazy', 'submit lazy']
         },
@@ -49,19 +49,19 @@ const meta: Meta<typeof EvSwitch> = {
         focused: {
             control: 'boolean'
         },
-        'true-value': {
-            type: 'string',
+        trueValue: {
+            control: 'text',
             description: 'Sets the value when checked'
         },
-        'false-value': {
-            type: 'string',
+        falseValue: {
+            control: 'text',
             description: 'Sets the value when unchecked'
         },
         value: {
-            control: 'string',
+            control: 'text',
             description: "The value of the input is assigned to `modelValue` when checked."
         },
-        'value-comparator': {
+        valueComparator: {
             description: 'A function used to compare the value to determine if the EvCheckbox is checked. ' +
                 'The function should accept two arguments and return a boolean.'
         }
@@ -74,16 +74,16 @@ const meta: Meta<typeof EvSwitch> = {
         modelValue: false,
         name: undefined,
         readonly: false,
-        'validate-on': 'input',
+        validateOn: 'input',
         validators: undefined,
         // End
 
         label: 'Example switch',
         focused: false,
-        'true-value': undefined,
-        'false-value': undefined,
+        trueValue: undefined,
+        falseValue: undefined,
         value: undefined,
-        'value-comparator': undefined,
+        valueComparator: undefined,
     },
     tags: ['autodocs']
 };
@@ -97,7 +97,7 @@ export const Primary: Story = {
         components: { EvSwitch },
         setup() {
 
-            const requiredValidator = (value) => {
+            const requiredValidator = (value: any) => {
                 return (value) ? true : 'Required';
             };
 

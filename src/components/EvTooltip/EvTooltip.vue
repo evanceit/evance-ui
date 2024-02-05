@@ -5,13 +5,11 @@ import {useModelProxy} from "@/composables/modelProxy.ts";
 import {filterComponentProps, getNextId} from "@/util";
 import {EvOverlay, PositionStrategyProps} from "@/components/EvOverlay";
 import {computed, mergeProps, ref} from "vue";
-import {useScopeId} from "@/composables/scopeId.ts";
 
 
 const props = defineProps(makeEvTooltipProps());
 
 const isActive = useModelProxy(props, 'modelValue');
-const { scopeId } = useScopeId();
 const uid = getNextId();
 
 const id = computed(() => {

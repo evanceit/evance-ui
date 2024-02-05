@@ -9,7 +9,7 @@ import {toKebabCase} from "../util";
  * @param prefix
  * @param exclude
  */
-export function makeClassName(value?: string, prefix: string = '', exclude: (string | RegExp)[] = []): string | null {
+export function makeClassName(value?: string, prefix: string = '', exclude: (string | RegExp)[] = []): string | undefined {
     if (
         !value
         || exclude.some((exclusion) => {
@@ -19,7 +19,7 @@ export function makeClassName(value?: string, prefix: string = '', exclude: (str
             return value === exclusion;
         })
     ) {
-        return null;
+        return undefined;
     }
     const kebabValue = toKebabCase(value);
     return `${prefix}-${kebabValue}`;
@@ -30,7 +30,7 @@ export function makeClassName(value?: string, prefix: string = '', exclude: (str
  * @param value
  * @param exclude
  */
-export function sizeModifier(value?: string, exclude: (string | RegExp)[] = []): string | null {
+export function sizeModifier(value?: string, exclude: (string | RegExp)[] = []): string | undefined {
     return makeClassName(value, 'is-size', exclude);
 }
 
@@ -39,6 +39,6 @@ export function sizeModifier(value?: string, exclude: (string | RegExp)[] = []):
  * @param value
  * @param exclude
  */
-export function appearanceModifier(value: string, exclude: (string | RegExp)[] = []): string | null {
+export function appearanceModifier(value: string, exclude: (string | RegExp)[] = []): string | undefined {
     return makeClassName(value, 'is-appearance', exclude);
 }

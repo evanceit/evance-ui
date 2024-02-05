@@ -23,13 +23,8 @@ const props = defineProps(makeEvRadioProps());
 const slots = useSlots();
 const group = inject(EvRadioGroupSymbol, undefined);
 
-const formFieldProps = {
-    ...props,
-    modelValue: group ? group.modelValue : props.modelValue
-};
-
 // Emit
-const emit = defineEmits([
+defineEmits([
     'update:focused',
     'update:modelValue'
 ]);
