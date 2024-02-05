@@ -1,3 +1,4 @@
+@use 'sass:math' as math;
 @use "../../../css/settings";
 
 /**
@@ -28,8 +29,8 @@
                 }
 
                 &.#{$breakpoint}-#{$num} {
-                    flex: 0 0 (($num/12) * 100%);
-                    max-width: (($num/12) * 100%);
+                    flex: 0 0 (math.div($num, 12) * 100%);
+                    max-width: (math.div($num, 12) * 100%);
                 }
 
                 &.order-#{$breakpoint}-#{$num} {
@@ -37,7 +38,7 @@
                 }
 
                 &.offset-#{$breakpoint}-#{$num} {
-                    margin-left: (($num/12) * 100%);
+                    margin-left: (math.div($num, 12) * 100%);
                 }
             }
         }

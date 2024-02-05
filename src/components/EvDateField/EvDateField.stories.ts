@@ -11,18 +11,18 @@ const meta: Meta<typeof EvDateField> = {
     component: EvDateField,
     title: 'Forms/EvDateField',
     argTypes: {
-        ...omit(EvTextfieldStories.argTypes, [
+        ...omit(EvTextfieldStories.argTypes as any, [
             'icon-start',
             'type'
         ]),
         ...EvDatePickerStories.argTypes
     },
     args: {
-        ...omit(EvTextfieldStories.args, [
+        ...omit(EvTextfieldStories.args as any, [
             'icon-start',
             'type'
         ]),
-        ...EvDatePickerStories.args
+        ...EvDatePickerStories.args as any
     },
     tags: ['autodocs']
 };

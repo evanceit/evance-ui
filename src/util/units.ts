@@ -5,7 +5,7 @@ import {isEmpty} from "./is-functions.ts";
  * @param value
  * @param unit
  */
-export function toWebUnit(value: string | number | null | undefined, unit: string = 'px'): string | undefined {
+export function toWebUnit(value?: string | number, unit: string = 'px'): string | undefined {
     if (isEmpty(value)) {
         return undefined;
     }

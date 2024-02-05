@@ -7,14 +7,12 @@ import {makeEvMenuProps} from "./EvMenu.ts";
 import {EvOverlay} from "@/components/EvOverlay";
 import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {useScopeId} from "@/composables/scopeId.ts";
 import {focusChild, getNextId} from "@/util";
 import {EvMenuSymbol} from "./shared.ts";
 
 const props = defineProps(makeEvMenuProps());
 const slots = useSlots();
 const isActive = useModelProxy(props, 'modelValue');
-const { scopeId } = useScopeId();
 const uid = getNextId();
 const id = computed(() => {
     return props.id || `ev-menu-${uid}`;
@@ -74,7 +72,7 @@ function onActivatorKeydown(e: KeyboardEvent) {
             focusChild(el, 'next');
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            focusChild(el, 'prev');
+            focusChild(el, 'previous');
         }
     } else if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
         isActive.value = true;
@@ -123,7 +121,7 @@ defineExpose({
         @keydown="onKeydown"
     >
         <template #activator="{ isActive, props }" v-if="slots.activator">
-            <slot name="activator" :props="props" />
+            <slot name="activator" :isActive="isActive" :props="props" />
         </template>
         <template #default>
             <slot name="default" />

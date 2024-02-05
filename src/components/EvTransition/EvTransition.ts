@@ -56,7 +56,7 @@ export function useEvTransition(props: EvTransitionProps, defaultTransition: str
  * @param slots
  * @constructor
  */
-export const EvTransition: FunctionalComponent<EvTransitionProps> = (props, { slots }) => {
+export const EvTransition: FunctionalComponent = (props: EvTransitionProps, { slots }) => {
     const { transition, disabled, ...remainingProps } = props;
     const { component: transitionComponent = Transition, ...customProps } = isObject(transition) ? transition : {};
     const transitionProps = isString(transition) ? { name: disabled ? '' : transition } : customProps as any;

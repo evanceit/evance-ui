@@ -32,7 +32,7 @@ const isMaxWidthNumeric = () => {
  * ## Is the `maxWidth` prop a percentage?
  */
 const isMaxWidthPercent = () => {
-    return /%$/.test(props.maxWidth);
+    return /%$/.test(props.maxWidth.toString());
 };
 
 /**

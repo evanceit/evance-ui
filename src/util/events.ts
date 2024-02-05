@@ -64,9 +64,9 @@ export type FocusPosition = 'next' | 'previous' | 'first' | 'last';
  * @param el
  * @param position
  */
-export function focusChild(el?: Element, position?: FocusPosition): HTMLElement | null {
+export function focusChild(el?: Element, position?: FocusPosition): HTMLElement | undefined {
     if (!el) {
-        return null;
+        return undefined;
     }
 
     let focusedElement: HTMLElement | undefined;
@@ -103,7 +103,7 @@ export function focusChild(el?: Element, position?: FocusPosition): HTMLElement 
         focusedElement.focus();
         return focusedElement;
     }
-    return null;
+    return undefined;
 }
 
 

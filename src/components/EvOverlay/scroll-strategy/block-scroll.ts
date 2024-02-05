@@ -1,5 +1,5 @@
 import {ScrollStrategyData, ScrollStrategyProps} from "../scroll.ts";
-import {getScrollParents, hasScrollbar, isElement, toWebUnit} from "../../../util";
+import {getScrollParents, hasScrollbar, toWebUnit} from "@/util";
 import {onScopeDispose} from "vue";
 
 /**
@@ -20,10 +20,10 @@ export function blockScrollStrategy (data: ScrollStrategyData, props: ScrollStra
     }
 
     scrollElements.forEach((el, i) => {
-        el.style.setProperty('--ev-body-scroll-x', toWebUnit(-el.scrollLeft));
-        el.style.setProperty('--ev-body-scroll-y', toWebUnit(-el.scrollTop));
+        el.style.setProperty('--ev-body-scroll-x', toWebUnit(-el.scrollLeft) ?? null);
+        el.style.setProperty('--ev-body-scroll-y', toWebUnit(-el.scrollTop) ?? null);
         if (el !== document.documentElement) {
-            el.style.setProperty('--ev-scrollbar-offset', toWebUnit(scrollbarWidth));
+            el.style.setProperty('--ev-scrollbar-offset', toWebUnit(scrollbarWidth) ?? null);
         }
         el.classList.add('ev-overlay-scroll-blocked');
     });

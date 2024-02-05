@@ -7,7 +7,7 @@ export type IconSize = 'small'
     | 'medium'
     | 'large';
 
-export function useIcon(props, name: string) {
+export function useIcon(props: any, name: string) {
     return computed(() => {
         return toRaw(props[name]);
     });

@@ -10,7 +10,7 @@ import {Axis} from "./dimensions.ts";
  * @param isIncludeHidden
  * @param axis
  */
-export function getScrollParent(el: Element | null, isIncludeHidden = false, axis: Axis | null = 'y'): HTMLElement {
+export function getScrollParent(el?: Element, isIncludeHidden = false, axis: Axis | null = 'y'): HTMLElement {
     while (el) {
         if (isIncludeHidden ? isScrollable(el, axis) : hasScrollbar(el, axis)) {
             return el as HTMLElement;

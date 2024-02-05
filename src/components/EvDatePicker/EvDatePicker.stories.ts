@@ -13,19 +13,19 @@ const meta: Meta<typeof EvDatePicker> = {
             control: 'text',
             description: 'The maximum permitted date. This may be provided as a string in `YYYY`, `YYYY-MM`, or `YYYYY-MM-DD` format. Or, as a JavaScript Date object.'
         },
-        'selection-mode': {
+        selectionMode: {
             control: "select",
             options: ['single', 'multiple', 'range']
         },
-        'show-adjacent-months': {
+        showAdjacentMonths: {
             control: "boolean"
         }
     },
     args: {
         min: null,
         max: null,
-        'selection-mode': 'single',
-        'show-adjacent-months': true,
+        selectionMode: 'single',
+        showAdjacentMonths: true,
     },
     tags: ['autodocs']
 };

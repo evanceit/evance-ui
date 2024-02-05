@@ -34,7 +34,7 @@ function getPercentageTranslation() {
  * ## Get Size Class
  */
 function getSizeHeight() {
-    return (!isSizeNumeric()) ? null : props.size + 'px';
+    return (!isSizeNumeric()) ? undefined : props.size + 'px';
 }
 
 function isSizeNumeric(): boolean {

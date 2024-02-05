@@ -11,5 +11,5 @@ export const makeEvDatePickerProps = propsFactory({
     },
 
     ...makeEvDatePickerMonthProps(),
-    ...omit(makeEvDatePickerYearsProps, ['modelValue'])
+    ...omit(makeEvDatePickerYearsProps as any, ['modelValue'])
 }, 'EvDatePicker');

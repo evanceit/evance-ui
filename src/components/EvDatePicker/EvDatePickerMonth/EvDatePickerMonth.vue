@@ -3,7 +3,7 @@
  * # `<ev-date-picker-month>`
  */
 import './EvDatePickerMonth.scss';
-import {makeEvDatePickerMonthProps} from './EvDatePickerMonth.ts';
+import {Day, makeEvDatePickerMonthProps} from './EvDatePickerMonth.ts';
 import {useDate} from "@/composables/date/date.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {wrapInArray} from "@/util";
@@ -12,7 +12,7 @@ import {EvButton} from "@/components/EvButton";
 
 const props = defineProps(makeEvDatePickerMonthProps());
 const dateAdapter = useDate();
-const emit = defineEmits([
+defineEmits([
   'update:modelValue',
   'update:month',
   'update:year'
@@ -122,7 +122,7 @@ const daysInMonth = computed(() => {
             isDisabled: isDisabled(date),
             isWeekStart: index % 7 === 0,
             isWeekEnd: index % 7 === 6,
-            isSelected: modelValue.value.some(value => dateAdapter.isSameDay(date, value)),
+            isSelected: modelValue.value.some((value: any) => dateAdapter.isSameDay(date, value)),
             isToday: dateAdapter.isSameDay(date, today),
             isAdjacent,
             isInRange,
@@ -131,9 +131,11 @@ const daysInMonth = computed(() => {
             isHidden: isAdjacent && !props.showAdjacentMonths,
             isHovered: false,
             localized: dateAdapter.format(date, 'dayOfMonth'),
-        };
+        } as Day;
     });
 });
+
+
 
 
 /**
@@ -162,7 +164,7 @@ function isDisabled(value: unknown) {
  * ## Get Appearance
  * @param day
  */
-function getDayAppearance(day) {
+function getDayAppearance(day: Day) {
     if (day.isSelected || day.isInRange) {
         return 'primary';
     }
@@ -188,7 +190,7 @@ function onClick(date: Date) {
             modelValue.value = [date];
         }
     } else if (props.selectionMode === 'multiple') {
-        const index = modelValue.value.findIndex((selection) => dateAdapter.isSameDay(selection, date));
+        const index = modelValue.value.findIndex((selection: any) => dateAdapter.isSameDay(selection, date));
         if (index === -1) {
             modelValue.value = [...modelValue.value, date];
         } else {

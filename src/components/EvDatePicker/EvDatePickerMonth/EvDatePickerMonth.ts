@@ -21,3 +21,27 @@ export const makeEvDatePickerMonthProps = propsFactory({
     },
     year: [Number, String],
 }, 'EvDatePickerMonth');
+
+/**
+ * # Day
+ * Represents data used for rendering days in the month.
+ */
+export interface Day {
+    date: Date,
+    isoDate: string,
+    formatted: string,
+    year: number,
+    month: number,
+    isDisabled: boolean,
+    isWeekStart: boolean,
+    isWeekEnd: boolean,
+    isSelected: boolean,
+    isToday: boolean,
+    isAdjacent: boolean,
+    isInRange: boolean,
+    isRangeStart: boolean,
+    isRangeEnd: boolean,
+    isHidden: boolean,
+    isHovered: boolean,
+    localized: string
+}

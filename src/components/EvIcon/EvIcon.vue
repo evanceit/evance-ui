@@ -33,7 +33,7 @@ const iconColor = computed(() => {
 });
 
 const iconGlyph = computed(() => {
-    return toRaw(props.glyph);
+    return toRaw(props.glyph) as string;
 });
 
 </script>

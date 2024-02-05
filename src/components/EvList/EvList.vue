@@ -15,7 +15,7 @@ import './EvList.scss';
 import {makeEvListProps, useListItems} from "./EvList.ts";
 import {computed, ref, shallowRef} from "vue";
 import {focusChild, FocusPosition} from "@/util";
-import {createList, useNestedList} from "@/composables/lists";
+import {createList, NestedProps, useNestedList} from "@/composables/lists";
 import {useDimensions} from "@/composables/dimensions.ts";
 import EvListChildren from "./EvListChildren.vue";
 
@@ -26,14 +26,14 @@ defineEmits([
 
 const props = defineProps(makeEvListProps());
 const items = useListItems(props);
-const { select } = useNestedList(props);
-const containerRef = ref<HTMLElement | null>(null);
+const { select } = useNestedList(props as NestedProps);
+const containerRef = ref<HTMLElement | undefined>(undefined);
 const isFocused = shallowRef(false);
-const lastFocus = shallowRef<HTMLElement | null>(null);
+const lastFocus = shallowRef<HTMLElement | undefined>(undefined);
 const tabindex = computed(() => {
     return (props.disabled || isFocused.value) ? -1 : 0;
 });
-const { dimensions } = useDimensions(props);
+const dimensions = useDimensions(props);
 
 /**
  * Establish provide() and inject() functionality for list items.
@@ -81,15 +81,15 @@ function onFocusOut(e: FocusEvent): void {
  * @param e
  */
 function onKeyDown(e: KeyboardEvent): void {
-    const keys = {
-        'ArrowDown': 'next',
-        'ArrowUp': 'previous',
-        'Home': 'first',
-        'End': 'last'
+    const keys: { [key: string]: string } = {
+        ArrowDown: 'next',
+        ArrowUp: 'previous',
+        Home: 'first',
+        End: 'last'
     };
     const position = keys[e.key];
     if (position && containerRef.value) {
-        focus(position);
+        focus(position as FocusPosition);
         e.preventDefault();
     }
 }

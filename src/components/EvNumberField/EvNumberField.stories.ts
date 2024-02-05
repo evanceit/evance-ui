@@ -55,7 +55,7 @@ const meta: Meta<typeof EvNumberField> = {
             description: "Whether to use thousand grouping separators when formatting the number."
         },
 
-        ...omit(EvTextfieldStories.argTypes, [
+        ...omit(EvTextfieldStories.argTypes as any, [
             'modelValue',
             'type'
         ])
@@ -71,7 +71,7 @@ const meta: Meta<typeof EvNumberField> = {
         showButtons: false,
         useGrouping: undefined,
 
-        ...omit(EvTextfieldStories.args, [
+        ...omit(EvTextfieldStories.args as any, [
             'type'
         ])
     }

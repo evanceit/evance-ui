@@ -38,8 +38,8 @@ const isActive = computed(() => {
 });
 const isActiveExact = computed(() => {
     return (
-        props.exactActive !== false
-        && (props.exactActive || link.isExactActive?.value)
+        props.exact !== false
+        && (props.exact || link.isExactActive?.value)
     );
 });
 const iconStart = useIcon(props, 'iconStart');

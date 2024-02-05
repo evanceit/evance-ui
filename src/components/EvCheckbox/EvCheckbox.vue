@@ -23,7 +23,7 @@ const props = defineProps(makeEvCheckboxProps());
 const slots = useSlots();
 
 // Emit
-const emit = defineEmits([
+defineEmits([
     'update:focused',
     'update:modelValue'
 ]);

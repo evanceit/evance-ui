@@ -6,7 +6,18 @@ import './EvImg.scss';
 import {makeEvImgProps, EvImgSrcObject} from "./EvImg.ts";
 import {EvResponsive} from "@/components/EvResponsive";
 import {EvTransition, useEvTransition} from "@/components/EvTransition";
-import {computed, nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, shallowRef, useSlots, watch} from "vue";
+import {
+    computed,
+    ComputedRef,
+    nextTick,
+    onBeforeMount,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    shallowRef,
+    useSlots,
+    watch
+} from "vue";
 import {Browser, filterComponentProps, toWebUnit} from "@/util";
 
 const props = defineProps(makeEvImgProps());
@@ -24,7 +35,7 @@ const naturalWidth = shallowRef<number>();
 const naturalHeight = shallowRef<number>();
 const transition = useEvTransition(props);
 
-const normalisedSrc = computed<EvImgSrcObject>(() => {
+const normalisedSrc: ComputedRef<EvImgSrcObject> = computed(() => {
     return props.src && typeof props.src === 'object'
         ? {
             src: props.src.src,

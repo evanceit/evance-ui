@@ -9,7 +9,6 @@ import EvOverlayStories from "../EvOverlay/EvOverlay.stories.ts";
 import {omit} from "@/util";
 
 const meta: Meta<typeof EvDialog> = {
-    components: {EvSurface, EvButton, Collapse, Expand},
     component: EvDialog,
     title: "Overlays/EvDialog",
     argTypes: {
@@ -49,7 +48,7 @@ const meta: Meta<typeof EvDialog> = {
 
         // EvOverlayProps
 
-        ...omit(EvOverlayStories.argTypes, [
+        ...omit(EvOverlayStories.argTypes as any, [
             'offset',
             'origin',
             'scroll-strategy',
@@ -63,7 +62,7 @@ const meta: Meta<typeof EvDialog> = {
         fullscreen: undefined,
         width: undefined,
 
-        ...omit(EvOverlayStories.args, [
+        ...omit(EvOverlayStories.args as any, [
             'offset',
             'origin',
             'scroll-strategy',
@@ -80,7 +79,7 @@ type Story = StoryObj<typeof EvDialog>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvDialog, EvButton, Expand, Collapse },
+        components: { EvDialog, EvButton },
         setup() {
 
             const modelValue = shallowRef(false);
@@ -214,7 +213,7 @@ export const ScrollingBody: Story = {
 
 export const CustomContainer: Story = {
     render: () =>  ({
-        components: { EvDialog, EvButton, DialogHeaderExample, EvSurface, ArrowContinue },
+        components: { EvDialog, EvButton, EvSurface },
         setup() {
 
             const modelValue = shallowRef(false);
@@ -223,7 +222,7 @@ export const CustomContainer: Story = {
                 modelValue.value = false;
             }
 
-            return { close, modelValue, DialogHeaderExample, EvSurface, ArrowContinue };
+            return { close, modelValue, DialogHeaderExample, EvButton, EvSurface, ArrowContinue };
         },
         template: `
             <ev-dialog v-model="modelValue">
@@ -232,7 +231,7 @@ export const CustomContainer: Story = {
                 </template>
                 <template #container>
                     <ev-surface elevation="overlay" rounded="small">
-                        <img :src="DialogHeaderExample" style="margin-top: -99px">
+                        <img :src="DialogHeaderExample" style="margin-top: -99px" alt="">
                         <div style="padding: 0 2rem 2rem; text-align: center">
                             <h3>New inventory system</h3>
                             <p>

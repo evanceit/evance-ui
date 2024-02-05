@@ -72,9 +72,12 @@ const maximum = computed(() => {
     return props.max ?? null;
 });
 
+/*
 const currencySymbol = computed(() => {
     return numberParser.prefixChar;
 });
+
+ */
 
 /**
  * Incremental Values
@@ -110,9 +113,9 @@ function getDecimalPlaces(value: number): number {
  * Can be used to set the value of either the 'modelValue' or the 'inputValue'.
  * @param value
  */
-function getValue(value: string | number | null | undefined) {
+function getValue(value?: string | number | null) {
     if (isEmpty(value)) {
-        return value;
+        return value ??  null;
     }
     if (typeof value === 'string') {
         value = parseFloat(value);
@@ -275,7 +278,7 @@ function startIncrementing(direction: number) {
     if (isEmpty(modelValue.value)) {
         currentValue = minimum.value ?? 0;
     } else {
-        currentValue = getValue(modelValue.value!  + (direction * incrementAmount.value))!;
+        currentValue = getValue(modelValue.value!  + (direction * incrementAmount.value))! as number;
     }
     inputValue.value = numberParser.formatValue(currentValue);
 
@@ -290,7 +293,7 @@ function startIncrementing(direction: number) {
         }
         const multiplier = Math.floor(Math.pow(2, elapsedTime - 1));
         internalIncrementAmount = (incrementAmount.value * multiplier);
-        currentValue = getValue(currentValue  + (direction * internalIncrementAmount))!;
+        currentValue = getValue(currentValue  + (direction * internalIncrementAmount))! as number;
         inputValue.value = numberParser.formatValue(currentValue);
     }, incrementRate);
 }

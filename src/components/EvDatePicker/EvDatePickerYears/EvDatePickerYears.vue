@@ -13,7 +13,7 @@ import {wrapInArray} from "@/util";
 
 const dateAdapter = useDate();
 const props = defineProps(makeEvDatePickerYearsProps());
-const emit = defineEmits([
+defineEmits([
     'update:modelValue'
 ]);
 
@@ -24,10 +24,6 @@ const modelValue = useModelProxy(
     (value) => wrapInArray(value),
     (value) => value[0] ?? null
 );
-
-const internalValue = computed(() => {
-    return modelValue.value[0];
-});
 
 const offsetMin = -120;
 const offsetMax = 50;

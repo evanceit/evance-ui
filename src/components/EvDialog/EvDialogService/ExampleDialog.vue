@@ -30,16 +30,18 @@ function open() {
 }
 
 function save() {
-    dialogRef.data.greeting = `Goodbye from dialog #${dialogRef.id}`;
-    dialogRef?.close({
-        saved: true
-    });
+    if (dialogRef) {
+        dialogRef.data.greeting = `Goodbye from dialog #${dialogRef.id}`;
+        dialogRef.close({
+            saved: true
+        });
+    }
 }
 
 </script>
 <template>
     <h3>
-        Example Dialog #{{ dialogRef.id }}
+        Example Dialog #{{ dialogRef?.id }}
     </h3>
     <p>
         This is an example dialog component with an initial title waiting to be updated by a child dialog:
@@ -49,6 +51,6 @@ function save() {
     </p>
     <ev-dialog-footer>
         <ev-button @click="open">Open another</ev-button>
-        <ev-button v-if="dialogRef.data" @click="save">Say Goodbye</ev-button>
+        <ev-button v-if="dialogRef?.data" @click="save">Say Goodbye</ev-button>
     </ev-dialog-footer>
 </template>

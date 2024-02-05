@@ -5,7 +5,7 @@
  * `<ev-message />`
  */
 import './EvMessage.scss';
-import {Appearance, appearanceModifier, AppearanceProp} from "../../util";
+import {Appearance, appearanceModifier, AppearanceProp} from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {
     Cancel,
@@ -19,18 +19,19 @@ import {
 import {computed} from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import {IconValue} from "@/composables/icons.ts";
 
 interface MessageProps {
     appearance?: AppearanceProp,
     closable?: boolean,
-    icon?: object,
+    icon?: IconValue,
     modelValue?: boolean,
-    title: string
+    title?: string
 }
 const props = withDefaults(defineProps<MessageProps>(), {
     appearance: 'default',
     closable: false,
-    icon: null,
+    icon: undefined,
     modelValue: true
 });
 

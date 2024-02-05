@@ -11,7 +11,7 @@ const meta: Meta<typeof EvImg> = {
             control: 'text',
             description: 'Alternate text for screen readers. Leave empty for decorative images.'
         },
-        'aspect-ratio': {
+        aspectRatio: {
             control: 'select',
             options: ['4:3', '16:9', '21/9', 0.5],
             description: 'May be supplied as a string representing a ratio or division, or as a decimal. ' +
@@ -43,24 +43,24 @@ const meta: Meta<typeof EvImg> = {
             control: 'boolean',
             description: 'Display as an inline element instead of a block, also disables flex-grow. Should be used in conjunction with a `width`/`height` prop.'
         },
-        'lazy-src': {
+        lazySrc: {
             control: 'text',
             description: 'Something to show while waiting for the main image to load, typically a small base64-encoded thumbnail. ' +
                 'Has a slight blur filter applied. NOTE: This prop has no effect unless either height or aspect-ratio are provided.'
         },
-        'max-height': {
+        maxHeight: {
             control: 'text',
             description: 'Sets the maximum height for the component.'
         },
-        'max-width': {
+        maxWidth: {
             control: 'text',
             description: 'Sets the maximum width for the component.'
         },
-        'min-height': {
+        minHeight: {
             control: 'text',
             description: 'Sets the minimum height for the component.'
         },
-        'min-width': {
+        minWidth: {
             control: 'text',
             description: 'Sets the minimum width for the component.'
         },
@@ -109,13 +109,6 @@ const meta: Meta<typeof EvImg> = {
             control: 'text',
             description: 'Sets the width for the component. May be supplied as a string or a number.'
         },
-        // Events
-        load: {
-            description: 'Emitted when the image is loaded.'
-        },
-        loadstart: {
-            description: 'Emitted when the image starts to load.'
-        },
         // Slots
         error: {
             description: 'An event and a slot. ' +
@@ -127,18 +120,18 @@ const meta: Meta<typeof EvImg> = {
     },
     args: {
         alt: undefined,
-        'aspect-ratio': undefined,
+        aspectRatio: undefined,
         cover: false,
         crossorigin: undefined,
         draggable: undefined,
         eager: undefined,
         height: undefined,
         inline: false,
-        'lazy-src': undefined,
-        'max-height': undefined,
-        'max-width': undefined,
-        'min-height': undefined,
-        'min-width': undefined,
+        lazySrc: undefined,
+        maxHeight: undefined,
+        maxWidth: undefined,
+        minHeight: undefined,
+        minWidth: undefined,
         options: undefined,
         referrerpolicy: undefined,
         src: 'https://picsum.photos/id/11/1600/900',

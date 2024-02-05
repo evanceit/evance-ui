@@ -23,7 +23,7 @@ const meta: Meta<typeof EvListItem> = {
             description: "Converts the list item into an `a` tag with a normal `href` attribute. " +
                 "If you want to stay within your vue app, use the `to` attribute instead."
         },
-        'icon-start': {
+        iconStart: {
             control: 'select',
             options: ['none', 'ChevronRight', 'Dot'],
             mapping: {
@@ -32,7 +32,7 @@ const meta: Meta<typeof EvListItem> = {
                 'Dot': Dot
             }
         },
-        'icon-end': {
+        iconEnd: {
             control: 'select',
             options: ['none', 'ChevronRight', 'Dot'],
             mapping: {
@@ -58,8 +58,8 @@ const meta: Meta<typeof EvListItem> = {
         active: false,
         disabled: false,
         href: '',
-        'icon-start': null,
-        'icon-end': null,
+        iconStart: undefined,
+        iconEnd: undefined,
         to: '',
         title: 'Example list item'
     },
@@ -72,7 +72,7 @@ type Story = StoryObj<typeof EvListItem>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvListItem, Dot, ChevronRight },
+        components: { EvListItem },
         setup() {
             return { args, Dot, ChevronRight };
         },

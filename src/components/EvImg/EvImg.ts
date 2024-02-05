@@ -55,7 +55,7 @@ export interface EvImgSrcObject {
     src?: string;
     srcset?: string;
     lazySrc?: string;
-    aspect: number;
+    aspect?: string | number;
 }
 
 export type EvImgSlots = {

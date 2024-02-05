@@ -14,7 +14,7 @@ import {useStack} from "@/composables/stack.ts";
 import {useRouter} from "vue-router";
 import {useToggleScope} from "@/composables/toggleScope.ts";
 import {useBackButton} from "@/composables/router.ts";
-import {useActivator} from "./activator.ts";
+import {ActivatorProps, useActivator} from "./activator.ts";
 import {useScopeId} from "@/composables/scopeId.ts";
 import {usePositionStrategies} from "./position.ts";
 import {useScrollStrategies} from "./scroll.ts";
@@ -38,8 +38,8 @@ const attrs = useAttrs();
 const slots = useSlots();
 const router = useRouter();
 const model = useModelProxy(props, 'modelValue');
-const containerEl = ref<HTMLElement | null>(null);
-const contentEl = ref<HTMLElement | null>(null);
+const containerEl = ref<HTMLElement | undefined>(undefined);
+const contentEl = ref<HTMLElement | undefined>(undefined);
 const contentTransition = useEvTransition(props);
 const dimensions = useDimensions(props);
 const { scopeId } = useScopeId();
@@ -52,7 +52,7 @@ const isActiveContent = computed({
     }
 });
 const { isTopGlobal, isTopLocal, stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
-const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props, isActiveContent, isTopLocal);
+const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props as ActivatorProps, isActiveContent, isTopLocal);
 const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
 }));
@@ -139,9 +139,8 @@ function dismiss(focusActivator: boolean = false) {
 
 /**
  * Event Listeners
- * @param e
  */
-function onAfterLeave(e) {
+function onAfterLeave() {
     isActiveTeleport.value = false;
     emit('afterLeave');
 }

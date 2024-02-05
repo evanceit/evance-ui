@@ -6,7 +6,6 @@ import { EvList } from "../EvList";
 import { EvSurface } from "../EvSurface";
 
 const meta: Meta<typeof EvMenu> = {
-    components: {EvSurface, EvList},
     component: EvMenu,
     argTypes: {
 

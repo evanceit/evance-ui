@@ -1,7 +1,7 @@
-import {App, ComponentPublicInstance, h, mergeProps, render, shallowRef, VNode} from "vue";
+import {App, ComponentPublicInstance, h, mergeProps, render, shallowRef, VNode, VNodeProps} from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
 import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogServiceOptions} from "@/components/EvDialog/EvDialogService.ts";
+import {EvDialogServiceOptions, EvDialogServiceSlots} from "@/components/EvDialog/EvDialogService.ts";
 
 /**
  * # EvDialogInstance
@@ -57,7 +57,7 @@ export class EvDialogRenderer {
     private createProps() {
         const props = this.options.props ?? {};
         return mergeProps(
-            props,
+            props as VNodeProps,
             {
                 modelValue: this.modelValue,
                 onAfterLeave: () => this.onAfterLeave(),
@@ -76,11 +76,11 @@ export class EvDialogRenderer {
      */
     private createSlots() {
         const internalSlots = this.options.slots ?? {};
-        const renderedSlots: { [key: string]: (props, slots) => VNode } = {};
+        const renderedSlots: { [key: string]: (props: any, slots: any) => VNode } = {};
         for (const key in internalSlots) {
-            const component = internalSlots[key];
+            const component = internalSlots[key as keyof EvDialogServiceSlots];
             renderedSlots[key] = (props, slots) => {
-                return h(component, props, slots);
+                return h(component!, props, slots);
             };
         }
         return renderedSlots;

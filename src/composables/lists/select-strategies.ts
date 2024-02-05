@@ -49,10 +49,10 @@ export type SelectStrategyRef = 'cascade-leaf'
  * Defines the `props` required by components to be able to use `SelectStrategy`.
  */
 export interface SelectStrategyProps {
-    selectStrategy: SelectStrategyRef | SelectStrategyFn | undefined;
-    selected: readonly unknown[] | undefined;
-    required: boolean,
-    'onUpdate:selected': ((values: unknown[]) => void) | undefined
+    selectStrategy?: SelectStrategyRef | SelectStrategyFn;
+    selected?: readonly unknown[];
+    required?: boolean,
+    'onUpdate:selected'?: ((values: unknown[]) => void) | undefined
 }
 
 /**

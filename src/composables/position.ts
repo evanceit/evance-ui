@@ -3,7 +3,7 @@ import {computed, CSSProperties, PropType, shallowRef} from "vue";
 
 
 export interface PositionProps {
-    position: AnchorSelector | undefined
+    position?: AnchorSelector
 }
 
 export const makePositionProps = propsFactory({

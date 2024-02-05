@@ -52,9 +52,9 @@ export type OpenStrategyProp = OpenStrategyRef | OpenStrategy;
  * Defines the `props` required by components to be able to use `OpenStrategy`.
  */
 export interface OpenStrategyProps {
-    openStrategy: OpenStrategyProp | undefined,
-    opened: readonly unknown[] | undefined,
-    'onUpdate:opened': EventProp<[unknown[]]> | undefined
+    openStrategy?: OpenStrategyProp,
+    opened?: readonly unknown[],
+    'onUpdate:opened'?: EventProp<[unknown[]]>
 }
 
 /**

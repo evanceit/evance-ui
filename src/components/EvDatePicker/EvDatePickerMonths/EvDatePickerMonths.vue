@@ -13,7 +13,7 @@ import {EvButton} from "@/components/EvButton";
 const dateAdapter = useDate();
 const props = defineProps(makeEvDatePickerMonthsProps());
 const modelValue = useModelProxy(props, 'modelValue');
-const emit = defineEmits([
+defineEmits([
   'update:modelValue'
 ]);
 
@@ -37,7 +37,7 @@ function onClick(i: number) {
   modelValue.value = i;
 }
 
-function getAppearance(value) {
+function getAppearance(value?: number) {
   return (value === internalValue.value) ? 'primary' : 'subtle';
 }
 

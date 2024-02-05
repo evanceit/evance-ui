@@ -130,6 +130,10 @@ function close() {
 
 provideDialog(props.__instance);
 
+defineExpose({
+    close
+});
+
 </script>
 <template>
     <ev-overlay

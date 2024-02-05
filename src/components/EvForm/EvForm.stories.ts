@@ -26,12 +26,12 @@ export const Primary: Story = {
     render: (args) =>  ({
         components: { EvForm, EvTextfield, EvButton },
         setup() {
-            let timeout = null;
+            let timeout:any;
 
             const loading = shallowRef(false);
             let username = shallowRef('');
 
-            const requiredValidator = async (value) => {
+            const requiredValidator = async (value: any) => {
                 return new Promise(resolve => {
                    clearTimeout(timeout);
                    timeout = setTimeout(() => {
@@ -44,7 +44,7 @@ export const Primary: Story = {
             return { args, formRef, requiredValidator, loading, username };
         },
         methods: {
-            async submit(event) {
+            async submit(event: any) {
                 this.loading = true;
                 const results = await event;
                 this.loading = false;

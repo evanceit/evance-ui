@@ -1,4 +1,4 @@
-import {DelayOpenCloseProps, makeDelayOpenCloseProps, useDelayOpenClose} from "../../composables/delay.ts";
+import {DelayOpenCloseProps, makeDelayOpenCloseProps, useDelayOpenClose} from "@/composables/delay.ts";
 import {
     ComponentInternalInstance,
     ComponentPublicInstance,
@@ -12,8 +12,7 @@ import {
     watch,
     watchEffect
 } from "vue";
-import {bindProps, Browser, getCurrentComponent, propsFactory, refElement, unbindProps} from "../../util";
-import {FocusEvent} from "react";
+import {bindProps, Browser, getCurrentComponent, propsFactory, refElement, unbindProps} from "@/util";
 import {EvMenuSymbol} from "../EvMenu/shared.ts";
 
 
@@ -69,6 +68,16 @@ interface ContentEvents {
 interface VeilEvents {
     onMouseenter?: () => void;
     onMouseleave?: () => void;
+}
+
+/**
+ * # UI Mouse Event
+ * `sourceCapabilities` is in labs according to MDN. So it is subject to change.
+ * It is also not included in TypeScript's MouseEvent, so this is a little bit
+ * of a hack to avoid issues with the build.
+ */
+interface UIMouseEvent extends MouseEvent {
+    sourceCapabilities?: { firesTouchEvents: boolean }
 }
 
 /**
@@ -343,7 +352,7 @@ class Activator {
      * ## On Mouse Enter (Hover)
      * @param e
      */
-    public onMouseenter(e: MouseEvent) {
+    public onMouseenter(e: UIMouseEvent) {
         if (e.sourceCapabilities?.firesTouchEvents) {
             return;
         }
@@ -365,9 +374,9 @@ class Activator {
      * ## Set Activator Element
      * @param activator
      */
-    public setActivatorEl(activator) {
+    public setActivatorEl(activator?: HTMLElement) {
         // The activator should only be a valid element (Ignore comments and text nodes)
-        this.activatorEl.value = (activator?.nodeType === Node.ELEMENT_NODE) ? activator : null;
+        this.activatorEl.value = (activator?.nodeType === Node.ELEMENT_NODE) ? activator : undefined;
         return this.activatorEl.value;
     }
 
@@ -388,7 +397,10 @@ class Activator {
         }, { flush: 'post', immediate: true });
 
         onScopeDispose(() => {
-            this.scope?.stop()
+            this.scope?.stop();
+            if (this.watcher) {
+                this.watcher = undefined;
+            }
         });
     }
 

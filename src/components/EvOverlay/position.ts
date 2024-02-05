@@ -43,7 +43,7 @@ export const makePositionStrategyProps = propsFactory({
         validator: (value: any) => typeof value === 'function' || value in positionStrategies
     },
     position: {
-        type: String as PropType<PositionStrategyProps['position']>,
+        type: String as PropType<AnchorSelector>,
         default: 'auto'
     },
     origin: {

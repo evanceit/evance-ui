@@ -16,27 +16,27 @@ const meta: Meta<typeof EvOverlay> = {
             control: 'number',
             description: "The distance to offset the content from the activator in pixels."
         },
-        "open-delay": {
+        openDelay: {
             control: 'number',
             description: "The duration to delay before opening the overlay in ms for hover and focus events."
         },
-        "close-delay": {
+        closeDelay: {
             control: 'number',
             description: "The duration to delay before closing the overlay in ms for hover and focus events."
         },
-        "close-on-content-click": {
+        closeOnContentClick: {
             control: 'boolean',
             description: "Closes component when you click on its content. This is primarily used when the content represents a state or navigational change (e.g. a Menu)."
         },
-        "open-on-click": {
+        openOnClick: {
             control: 'boolean',
             description: "Open the overlay when the `activator` is clicked."
         },
-        "open-on-hover": {
+        openOnHover: {
             control: 'boolean',
             description: "Open the overlay when the mouse hovers over the activator."
         },
-        "open-on-focus": {
+        openOnFocus: {
             control: 'boolean',
             description: "Open the overlay when the activator is focused (usually with a keyboard event)."
         },
@@ -69,13 +69,13 @@ const meta: Meta<typeof EvOverlay> = {
                 "A value of `auto` with calculate the side with the most available space. " +
                 "The only exception is `center` which is centered to the viewport of the overlay. "
         },
-        "position-strategy": {
+        positionStrategy: {
             control: "select",
             options: [
                 'connected', 'fixed'
             ]
         },
-        "scroll-strategy": {
+        scrollStrategy: {
             control: "select",
             options: ['none', 'close', 'block', 'reposition'],
             mapping: {
@@ -107,12 +107,12 @@ const meta: Meta<typeof EvOverlay> = {
     args: {
         modelValue: false,
         offset: 0,
-        "open-delay": 0,
-        "close-delay": 0,
-        "open-on-click": true,
-        "open-on-hover": false,
-        "open-on-focus": false,
-        "close-on-content-click": false,
+        openDelay: 0,
+        closeDelay: 0,
+        openOnClick: true,
+        openOnHover: false,
+        openOnFocus: false,
+        closeOnContentClick: false,
         persistent: false,
         position: 'auto',
         transition: 'true',

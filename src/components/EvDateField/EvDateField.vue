@@ -39,7 +39,7 @@ const modelValue = useModelProxy(
     'modelValue',
     undefined,
     (value) => wrapInArray(value),
-    (value) => {
+    (value: any) => {
         return value[0] ?? null;
     }
 );
@@ -87,7 +87,7 @@ function onClearInput() {
     setModelValue(null);
 }
 
-function setModelValue(value) {
+function setModelValue(value: any) {
     modelValue.value = wrapInArray(value);
 }
 

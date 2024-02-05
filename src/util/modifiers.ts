@@ -1,4 +1,4 @@
-import {toKebabCase} from "../util";
+import {isString, toKebabCase} from "../util";
 
 
 /**
@@ -30,7 +30,10 @@ export function makeClassName(value?: string, prefix: string = '', exclude: (str
  * @param value
  * @param exclude
  */
-export function sizeModifier(value?: string, exclude: (string | RegExp)[] = []): string | undefined {
+export function sizeModifier(value?: string | number, exclude: (string | RegExp)[] = []): string | undefined {
+    if (!isString(value)) {
+        return undefined;
+    }
     return makeClassName(value, 'is-size', exclude);
 }
 
