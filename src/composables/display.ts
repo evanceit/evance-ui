@@ -1,5 +1,5 @@
-import {inject, InjectionKey, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
-import {Browser, isObject, mergeDeep} from "../util";
+import {inject, InjectionKey, isRef, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
+import {Browser, isObject, mergeDeep, toWebUnit} from "@/util";
 
 /**
  * # Breakpoints
@@ -114,7 +114,7 @@ function getPlatform (ssr?: SSROptions): DisplayPlatform {
 
 export const DisplaySymbol: InjectionKey<DisplayInstance> = Symbol.for('ev:display')
 
-const defaultDisplayOptions: DisplayOptions = {
+export const defaultDisplayOptions: DisplayOptions = {
     mobileBreakpoint: 'lg',
     thresholds: {
         xs: 0,
@@ -122,7 +122,7 @@ const defaultDisplayOptions: DisplayOptions = {
         md: 960,
         lg: 1200,
         xl: 1600,
-        xxl: 2560
+        xxl: 2400
     }
 }
 
@@ -216,4 +216,63 @@ export function useDisplay () {
     return display;
 }
 
+/**
+ * # Display Point Options
+ * These are done in order of calculation priority.
+ */
+export const displayRules = [
+    'xs', 'sm', 'md', 'lg', 'xl', 'xxl',
+    'xlAndUp', 'lgAndUp', 'mdAndUp', 'smAndUp',
+    'smAndDown', 'mdAndDown', 'lgAndDown', 'xlAndDown'
+] as const;
+export const displayRulesKebab = [
+    'xl-and-up', 'lg-and-up', 'md-and-up', 'sm-and-up',
+    'sm-and-down', 'md-and-down', 'lg-and-down', 'xl-and-down'
+] as const;
 
+export type DisplayRuleKey = typeof displayRules[number];
+export type DisplayRuleKebab = typeof displayRulesKebab[number];
+export type DisplayRuleValue = number | string;
+export type DisplayRuleObject = {
+    [key in DisplayRuleKey]?: DisplayRuleValue
+};
+export type DisplayRuleProp = DisplayRuleValue | DisplayRuleObject;
+export type DisplayRuleListProp = DisplayRuleKey
+    | DisplayRuleKey[]
+    | DisplayRuleKebab
+    | DisplayRuleKebab[];
+
+/**
+ * # calculateDisplayRuleValue
+ *
+ * @param rules
+ */
+export function calculateDisplayRuleValue(rules?: DisplayRuleObject | DisplayRuleValue) {
+    const display = useDisplay();
+    if (!isObject(rules)) {
+        return toWebUnit(rules);
+    }
+    for (const breakpoint of displayRules) {
+        if (!rules[breakpoint]) {
+            continue;
+        }
+        const displayRef = display[breakpoint as keyof DisplayInstance];
+        if (isRef(displayRef) && displayRef.value) {
+            return toWebUnit(rules[breakpoint]);
+        }
+    }
+    return undefined;
+}
+
+/**
+ * # isDisplayRule
+ *
+ * @param value
+ * @param acceptKebabs
+ */
+export function isDisplayRule(value: unknown, acceptKebabs: boolean = true): value is DisplayRuleKey | DisplayRuleKebab {
+    return (
+        displayRules.includes(value as DisplayRuleKey)
+        || (acceptKebabs && displayRulesKebab.includes(value as DisplayRuleKebab))
+    );
+}

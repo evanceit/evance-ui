@@ -33,3 +33,19 @@ export function pixelRound(value: number): number {
 export function pixelCeil(value: number): number {
     return Math.round(value * devicePixelRatio) / devicePixelRatio;
 }
+
+/**
+ * # extractWebUnit
+ * @param value
+ */
+export function extractWebUnit(value: string) {
+    const regex = /^(-?\d+(?:\.\d+)?)\s*([a-zA-Z%]*)$/;
+    const match = value.match(regex);
+    if (!match) {
+        return undefined;
+    }
+    return {
+        value: parseFloat(match[1]),
+        unit: match[2] ?? 'px'
+    };
+}

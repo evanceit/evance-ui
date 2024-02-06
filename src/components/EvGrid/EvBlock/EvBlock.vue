@@ -1,15 +1,46 @@
 <script setup lang="ts">
 import './EvBlock.scss';
-import {makeEvBlockProps, useBreakpointClasses} from "./EvBlock.ts";
+import {makeEvBlockProps, useBreakpointClasses, useDisplayRuleClasses} from "./EvBlock.ts";
+import {computed} from "vue";
+import {calculateDisplayRuleValue} from "@/composables/display.ts";
+import {isBoolean, isEmpty} from "@/util";
 
 const props = defineProps(makeEvBlockProps());
 
 /**
  * # Size Classes
  */
-const sizeClasses = useBreakpointClasses(props, 'size');
+const sizeClasses = useBreakpointClasses(props, 'size', undefined, true);
 const orderClasses = useBreakpointClasses(props, 'order', 'order');
 const offsetClasses = useBreakpointClasses(props, 'offset', 'offset');
+const alignSelfClasses = useBreakpointClasses(props, 'alignSelf', 'align-self');
+
+/**
+ * Allow explicit widths or using a display point ruleset.
+ */
+const flexWidthStyles = computed(() => {
+    let value = calculateDisplayRuleValue(props.width);
+    if (isEmpty(value)) {
+        return undefined;
+    }
+    return (value === 'grow')
+        ? { flex: '1 0 auto', maxWidth: '100%' }
+        : { flex: `0 0 ${value}`, maxWidth: value };
+});
+
+// Hidden
+const hiddenClasses = useDisplayRuleClasses(props, 'hidden', 'hidden');
+const hiddenAttribute = computed(() => {
+    return (isBoolean(props.hidden) && props.hidden);
+});
+
+const heightStyles = computed(() => {
+    let value = calculateDisplayRuleValue(props.height);
+    if (isEmpty(value)) {
+        return undefined;
+    }
+    return { height: value };
+});
 
 </script>
 <template>
@@ -23,11 +54,16 @@ const offsetClasses = useBreakpointClasses(props, 'offset', 'offset');
             ...sizeClasses,
             ...orderClasses,
             ...offsetClasses,
+            ...alignSelfClasses,
+            ...hiddenClasses,
             props.class
         ]"
         :style="[
-            props.style
+            props.style,
+            flexWidthStyles,
+            heightStyles
         ]"
+        :hidden="hiddenAttribute"
     >
         <slot />
     </component>
