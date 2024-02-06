@@ -74,7 +74,7 @@
                 // This allows you to conditional skip
                 // defining a property as important.
                 $unimportant: map.get($utility, unimportant);
-                #{$property}: #{if(list.index($unimportant, $property), null, !important)};
+                #{$property}: #{meta.inspect($val) if(list.index($unimportant, $property), null, !important)};
             }
         }
     }
