@@ -16,9 +16,9 @@ const offsetClasses = useBreakpointClasses(props, 'offset', 'offset');
 const alignSelfClasses = useBreakpointClasses(props, 'alignSelf', 'align-self');
 
 /**
- * Allow explicit widths or using a display point ruleset.
+ * Width
  */
-const flexWidthStyles = computed(() => {
+const widthStyles = computed(() => {
     let value = calculateDisplayRuleValue(props.width);
     if (isEmpty(value)) {
         return undefined;
@@ -28,12 +28,17 @@ const flexWidthStyles = computed(() => {
         : { flex: `0 0 ${value}`, maxWidth: value };
 });
 
-// Hidden
+/**
+ * Hidden
+ */
 const hiddenClasses = useDisplayRuleClasses(props, 'hidden', 'hidden');
 const hiddenAttribute = computed(() => {
     return (isBoolean(props.hidden) && props.hidden);
 });
 
+/**
+ * Height
+ */
 const heightStyles = computed(() => {
     let value = calculateDisplayRuleValue(props.height);
     if (isEmpty(value)) {
@@ -60,7 +65,7 @@ const heightStyles = computed(() => {
         ]"
         :style="[
             props.style,
-            flexWidthStyles,
+            widthStyles,
             heightStyles
         ]"
         :hidden="hiddenAttribute"

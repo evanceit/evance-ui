@@ -11,13 +11,13 @@ const meta: Meta<typeof EvBlock> = {
             control: 'select',
             options: [
                 'auto',
-                'flex-start',
-                'flex-end',
+                'start',
+                'end',
                 'center',
                 'baseline',
                 'stretch'
             ],
-            description: "Accepts `auto`, `flex-start`, `flex-end`, `center`, `baseline` or `stretch`. " +
+            description: "Accepts `auto`, `start`, `end`, `center`, `baseline` or `stretch`. " +
                 "Accepts a breakpoint object to apply responsive grid utility classes to the block. " +
                 "For example, `{ xs: 'center' }`. "
         },
@@ -80,7 +80,7 @@ export const WithinADefaultLayout: Story = {
             return { args };
         },
         template: `
-            <ev-layout style="height: 200px;">
+            <ev-layout align="center" style="height: 200px;">
                 <ev-block 
                     :size="{ xs: 'auto', md: 6 }"
                 >

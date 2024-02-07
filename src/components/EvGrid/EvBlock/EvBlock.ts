@@ -35,7 +35,7 @@ export type ResponsiveProp = ResponsivePropValue | ResponsivePropObject | undefi
 
 
 /** Align Self Props */
-export type AlignSelfPropValue = 'auto' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
+export type AlignSelfPropValue = 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 export type AlignSelfPropObject = {
     [key in DisplayBreakpoint]: AlignSelfPropValue
 };
