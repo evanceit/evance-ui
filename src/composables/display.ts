@@ -276,3 +276,7 @@ export function isDisplayRule(value: unknown, acceptKebabs: boolean = true): val
         || (acceptKebabs && displayRulesKebab.includes(value as DisplayRuleKebab))
     );
 }
+
+export function isDisplayBreakpoint(value: unknown): value is DisplayBreakpoint {
+    return ['xs', ...breakpoints].includes(value as DisplayBreakpoint);
+}

@@ -4,7 +4,7 @@ import {makeTagProps} from "@/composables/tag.ts";
 import {
     DisplayBreakpoint,
     DisplayRuleListProp,
-    DisplayRuleProp, isDisplayRule
+    DisplayRuleProp, isDisplayBreakpoint, isDisplayRule
 } from "@/composables/display.ts";
 import {computed, PropType} from "vue";
 
@@ -140,7 +140,11 @@ export function useDisplayRuleClasses<
                     consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
                     continue;
                 }
-                classes.push(`${prefix}-${ruleKebab}`);
+                if (isDisplayBreakpoint(rule)) {
+                    classes.push(`${prefix}-${ruleKebab}-only`);
+                } else {
+                    classes.push(`${prefix}-${ruleKebab}`);
+                }
             }
         }
         return classes;
