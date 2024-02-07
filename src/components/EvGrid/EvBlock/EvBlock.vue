@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import './EvBlock.scss';
-import {makeEvBlockProps, useBreakpointClasses, useDisplayRuleClasses} from "./EvBlock.ts";
+import {makeEvBlockProps} from "./EvBlock.ts";
 import {computed} from "vue";
-import {calculateDisplayRuleValue} from "@/composables/display.ts";
+import {calculateDisplayRuleValue, useBreakpointClasses, useDisplayRuleClasses} from "@/composables/display.ts";
 import {isBoolean, isEmpty} from "@/util";
 
 const props = defineProps(makeEvBlockProps());

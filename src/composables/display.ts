@@ -1,5 +1,16 @@
-import {inject, InjectionKey, isRef, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
-import {Browser, isObject, mergeDeep, toWebUnit} from "@/util";
+import {computed, inject, InjectionKey, isRef, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
+import {
+    Browser,
+    consoleWarn,
+    isObject,
+    isString,
+    mergeDeep,
+    toCamelCase,
+    toKebabCase,
+    toWebUnit,
+    trimEnd
+} from "@/util";
+import {ResponsiveProp, ResponsivePropObject} from "@/components";
 
 /**
  * # Breakpoints
@@ -53,10 +64,12 @@ export interface DisplayInstance {
     lg: Ref<boolean>;
     xl: Ref<boolean>;
     xxl: Ref<boolean>;
+    xsAndUp: Ref<boolean>;
     smAndUp: Ref<boolean>;
     mdAndUp: Ref<boolean>;
     lgAndUp: Ref<boolean>;
     xlAndUp: Ref<boolean>;
+    xxlAndUp: Ref<boolean>;
     smAndDown: Ref<boolean>;
     mdAndDown: Ref<boolean>;
     lgAndDown: Ref<boolean>;
@@ -176,10 +189,12 @@ export function createDisplay(
         state.lg = lg;
         state.xl = xl;
         state.xxl = xxl;
+        state.xsAndUp = true;
         state.smAndUp = !xs;
         state.mdAndUp = !(xs || sm);
         state.lgAndUp = !(xs || sm || md);
         state.xlAndUp = !(xs || sm || md || lg);
+        state.xxlAndUp = !(xs || sm || md || lg || xl);
         state.smAndDown = !(md || lg || xl || xxl);
         state.mdAndDown = !(lg || xl || xxl);
         state.lgAndDown = !(xl || xxl);
@@ -218,15 +233,18 @@ export function useDisplay () {
 
 /**
  * # Display Point Options
- * These are done in order of calculation priority.
+ *
+ * These are listed in order of calculation priority.
  */
 export const displayRules = [
-    'xs', 'sm', 'md', 'lg', 'xl', 'xxl',
-    'xlAndUp', 'lgAndUp', 'mdAndUp', 'smAndUp',
+    'xxl', 'xl', 'lg', 'md', 'sm', 'xs',
+    'xxlOnly', 'xlOnly', 'lgOnly', 'mdOnly', 'smOnly', 'xsOnly',
+    'xxlAndUp', 'xlAndUp', 'lgAndUp', 'mdAndUp', 'smAndUp', 'xsAndUp',
     'smAndDown', 'mdAndDown', 'lgAndDown', 'xlAndDown'
 ] as const;
 export const displayRulesKebab = [
-    'xl-and-up', 'lg-and-up', 'md-and-up', 'sm-and-up',
+    'xxl-only', 'xl-only', 'lg-only', 'md-only', 'sm-only', 'xs-only',
+    'xxl-and-up', 'xl-and-up', 'lg-and-up', 'md-and-up', 'sm-and-up', 'xs-and-up',
     'sm-and-down', 'md-and-down', 'lg-and-down', 'xl-and-down'
 ] as const;
 
@@ -242,6 +260,7 @@ export type DisplayRuleListProp = DisplayRuleKey
     | DisplayRuleKebab
     | DisplayRuleKebab[];
 
+
 /**
  * # calculateDisplayRuleValue
  *
@@ -252,17 +271,55 @@ export function calculateDisplayRuleValue(rules?: DisplayRuleObject | DisplayRul
     if (!isObject(rules)) {
         return toWebUnit(rules);
     }
-    for (const breakpoint of displayRules) {
-        if (!rules[breakpoint]) {
-            continue;
-        }
-        const displayRef = display[breakpoint as keyof DisplayInstance];
-        if (isRef(displayRef) && displayRef.value) {
-            return toWebUnit(rules[breakpoint]);
+    for (const ruleKey of displayRules) {
+        let displayKey = toDisplayStateKey(ruleKey);
+        const displayState = display[displayKey as keyof DisplayInstance];
+        if (isRef(displayState) && displayState.value && !!rules[ruleKey]) {
+            return toWebUnit(rules[ruleKey]);
         }
     }
     return undefined;
 }
+
+
+/**
+ * # To Display Key
+ *
+ * @param displayRule
+ */
+export function toDisplayStateKey(displayRule: string): string {
+    if (toDisplayStateKey.cache.has(displayRule)) {
+        return toDisplayStateKey.cache.get(displayRule)!;
+    }
+    let value = toCamelCase(displayRule);
+    if (isDisplayBreakpoint(value)) {
+        value = `${value}AndUp`;
+    }
+    value = trimEnd(value, 'Only');
+    toKebabCase.cache.set(displayRule, value);
+    return value;
+}
+toDisplayStateKey.cache = new Map<string, string>();
+
+
+/**
+ * # To Display Rule Kebab
+ *
+ * @param displayRule
+ */
+export function toDisplayRuleKebab(displayRule: string): string {
+    if (toDisplayRuleKebab.cache.has(displayRule)) {
+        return toDisplayRuleKebab.cache.get(displayRule)!;
+    }
+    let value = toKebabCase(displayRule);
+    if (isDisplayBreakpoint(value)) {
+        value = `${value}-and-up`;
+    }
+    toDisplayRuleKebab.cache.set(displayRule, value);
+    return value;
+}
+toDisplayRuleKebab.cache = new Map<string, string>();
+
 
 /**
  * # isDisplayRule
@@ -277,6 +334,99 @@ export function isDisplayRule(value: unknown, acceptKebabs: boolean = true): val
     );
 }
 
+
+/**
+ * # isDisplayBreakpoint
+ *
+ * @param value
+ */
 export function isDisplayBreakpoint(value: unknown): value is DisplayBreakpoint {
     return ['xs', ...breakpoints].includes(value as DisplayBreakpoint);
+}
+
+
+
+/**
+ * # createBreakpointClasses
+ *
+ * @param props
+ * @param propName
+ * @param prefix
+ * @param useXs
+ */
+export function useBreakpointClasses<
+    PropsObject extends object,
+    PropName extends Extract<keyof PropsObject, string>,
+    Prefix extends string | undefined,
+    UseXs extends boolean
+> (
+    props: PropsObject,
+    propName: PropName,
+    prefix: Prefix = undefined as Prefix,
+    useXs: UseXs = false as UseXs
+) {
+    return computed(() => {
+        const prop = props[propName] as ResponsiveProp;
+        if (!prop) {
+            return [];
+        }
+        const classes = [];
+        const values = (typeof prop !== 'object')
+            ? { xs: prop } as ResponsivePropObject
+            : prop;
+        for (const [breakpoint, value] of Object.entries(values)) {
+            const className = [];
+            if (prefix) {
+                className.push(prefix);
+            }
+            if (useXs || breakpoint !== 'xs') {
+                className.push(breakpoint);
+            }
+            className.push(value);
+            classes.push(className.join('-'));
+        }
+        return classes;
+    });
+}
+
+
+/**
+ * # useDisplayRuleClasses
+ *
+ * @param props
+ * @param propName
+ * @param prefix
+ */
+export function useDisplayRuleClasses<
+    PropsObject extends object,
+    PropName extends Extract<keyof PropsObject, string>,
+    Prefix extends string | undefined
+> (
+    props: PropsObject,
+    propName: PropName,
+    prefix: Prefix = undefined as Prefix
+) {
+    return computed(() => {
+        const prop = props[propName];
+        if (!prop) {
+            return [];
+        }
+        const classes = [];
+        const rules = !Array.isArray(prop) ? [prop] : prop;
+        if (Array.isArray(rules)) {
+            for (const rule of rules) {
+                if (!isString(rule)) {
+                    // Gracefully ignore anything that is not a string.
+                    continue;
+                }
+                if (!isDisplayRule(rule)) {
+                    consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
+                    continue;
+                }
+                const suffix = toDisplayRuleKebab(rule);
+                classes.push(`${prefix}-${suffix}`);
+            }
+        }
+        return classes;
+    });
 }

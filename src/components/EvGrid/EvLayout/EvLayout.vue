@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import './EvLayout.scss';
 import {makeEvLayoutProps} from "./EvLayout.ts";
-import {useBreakpointClasses} from "@/components";
+import {useBreakpointClasses} from "@/composables/display.ts";
 
 const props = defineProps(makeEvLayoutProps());
 

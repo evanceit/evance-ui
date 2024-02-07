@@ -20,6 +20,24 @@ toKebabCase.cache = new Map<string, string>();
 
 
 /**
+ * # To Camel Case
+ *
+ * Converts a string from `kebab-case` to `camelCase`.
+ *
+ * @param value
+ */
+export function toCamelCase(value: string = ''): string {
+    if (toCamelCase.cache.has(value)) {
+        return toCamelCase.cache.get(value)!;
+    }
+    const camelValue = value.replace(/-([a-z])/g, (_, match) => match.toUpperCase());
+    toCamelCase.cache.set(value, camelValue);
+    return camelValue;
+}
+toCamelCase.cache = new Map<string, string>();
+
+
+/**
  * ## Template Variables
  *
  * May be supplied to `createStringTemplate()` either as default variable replacements
@@ -99,4 +117,18 @@ export function padEnd (str: string, length: number, char = '0') {
  */
 export function padStart (str: string, length: number, char = '0') {
     return char.repeat(Math.max(0, length - str.length)) + str
+}
+
+
+/**
+ * # Trim End
+ *
+ * @param targetString
+ * @param trimChars
+ */
+export function trimEnd(targetString: string, trimChars: string): string {
+    if (!targetString.endsWith(trimChars)) {
+        return targetString;
+    }
+    return targetString.substring(0, targetString.length - trimChars.length);
 }

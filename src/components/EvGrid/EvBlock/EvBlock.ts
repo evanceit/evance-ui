@@ -1,12 +1,12 @@
-import {consoleWarn, isString, propsFactory, toKebabCase} from "@/util";
+import {propsFactory} from "@/util";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makeTagProps} from "@/composables/tag.ts";
 import {
     DisplayBreakpoint,
     DisplayRuleListProp,
-    DisplayRuleProp, isDisplayBreakpoint, isDisplayRule
+    DisplayRuleProp
 } from "@/composables/display.ts";
-import {computed, PropType} from "vue";
+import {PropType} from "vue";
 
 
 /** Block Number Props */
@@ -61,92 +61,3 @@ export const makeEvBlockProps = propsFactory({
     ...makeComponentProps(),
     ...makeTagProps()
 }, 'EvBlock');
-
-
-/**
- * # createBreakpointClasses
- *
- * @param props
- * @param propName
- * @param prefix
- * @param useXs
- */
-export function useBreakpointClasses<
-    PropsObject extends object,
-    PropName extends Extract<keyof PropsObject, string>,
-    Prefix extends string | undefined,
-    UseXs extends boolean
-> (
-    props: PropsObject,
-    propName: PropName,
-    prefix: Prefix = undefined as Prefix,
-    useXs: UseXs = false as UseXs
-) {
-    return computed(() => {
-        const prop = props[propName] as ResponsiveProp;
-        if (!prop) {
-            return [];
-        }
-        const classes = [];
-        const values = (typeof prop !== 'object')
-            ? { xs: prop } as ResponsivePropObject
-            : prop;
-        for (const [breakpoint, value] of Object.entries(values)) {
-            const className = [];
-            if (prefix) {
-                className.push(prefix);
-            }
-            if (useXs || breakpoint !== 'xs') {
-                className.push(breakpoint);
-            }
-            className.push(value);
-            classes.push(className.join('-'));
-        }
-        return classes;
-    });
-}
-
-/**
- * # useDisplayRuleClasses
- *
- * @param props
- * @param propName
- * @param prefix
- */
-export function useDisplayRuleClasses<
-    PropsObject extends object,
-    PropName extends Extract<keyof PropsObject, string>,
-    Prefix extends string | undefined
-> (
-    props: PropsObject,
-    propName: PropName,
-    prefix: Prefix = undefined as Prefix
-) {
-    return computed(() => {
-        const prop = props[propName];
-        if (!prop) {
-            return [];
-        }
-        const classes = [];
-        const rules = !Array.isArray(prop) ? [prop] : prop;
-        if (Array.isArray(rules)) {
-            for (const rule of rules) {
-                if (!isString(rule)) {
-                    // Gracefully ignore anything that is not a string.
-                    continue;
-                }
-                const ruleKebab = toKebabCase(rule);
-                if (!isDisplayRule(rule)) {
-                    consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
-                    continue;
-                }
-                if (isDisplayBreakpoint(rule)) {
-                    classes.push(`${prefix}-${ruleKebab}-only`);
-                } else {
-                    classes.push(`${prefix}-${ruleKebab}`);
-                }
-            }
-        }
-        return classes;
-    });
-}
