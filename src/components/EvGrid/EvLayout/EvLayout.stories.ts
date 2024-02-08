@@ -4,21 +4,34 @@ import { EvBlock } from "../EvBlock";
 import {EvLayout} from "../EvLayout";
 import {EvSurface} from "../../EvSurface";
 
-const meta: Meta<typeof EvBlock> = {
-    component: EvBlock,
+const meta: Meta<typeof EvLayout> = {
+    component: EvLayout,
     title: 'Components/EvGrid/EvLayout',
     argTypes: {
         align: {
             control: 'select',
             options: [
                 '', 'start', 'end', 'center', 'baseline', 'stretch'
-            ]
+            ],
+            mapping: {
+                '': undefined,
+                'start': 'start',
+                'end': 'end',
+                'center': 'center',
+                'baseline': 'baseline',
+                'stretch': 'stretch'
+            }
         },
         alignContent: {
             control: 'select',
             options: [
                 '', 'start', 'end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly'
             ]
+        },
+        column: {
+            control: 'boolean',
+            description: "The direction of a layout is 'row' by default. Making each `ev-block` within the layout " +
+                "a column. However, setting the layout to a column means each `ev-block` could be considered a row."
         },
         gutter: {
             control: 'select',
@@ -53,7 +66,9 @@ const meta: Meta<typeof EvBlock> = {
     args: {
         align: undefined,
         alignContent: undefined,
-        gutter: undefined
+        column: false,
+        gutter: undefined,
+        justify: undefined,
     },
     tags: ['autodocs']
 };
@@ -70,18 +85,18 @@ export const Primary: Story = {
         },
         template: `
             <ev-layout v-bind="args" style="height: 300px;">
-                <ev-block size="3">
-                    <ev-surface elevation="panel" style="height: 100%">
+                <ev-block size="auto">
+                    <ev-surface class="pa-100" elevation="overlay" style="height: 100%;">
                         Column #1
                     </ev-surface>
                 </ev-block>
-                <ev-block size="3">
-                    <ev-surface elevation="panel" style="height: 100%">
+                <ev-block size="auto">
+                    <ev-surface class="pa-100" elevation="overlay" style="height: 100%">
                         Column #2
                     </ev-surface>
                 </ev-block>
-                <ev-block size="3">
-                    <ev-surface elevation="panel" style="height: 100%">
+                <ev-block size="auto">
+                    <ev-surface class="pa-100" elevation="overlay" style="height: 100%">
                         Column #3
                     </ev-surface>
                 </ev-block>

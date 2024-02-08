@@ -1,5 +1,7 @@
 @use 'sass:math' as math;
+@use 'sass:map' as map;
 @use "../../../css/settings";
+@use "../../../css/tools";
 
 /**
     # .ev-layout
@@ -28,11 +30,15 @@
 /**
     # Gutters
  */
-@each $breakpoint in map_keys(settings.$grid-breakpoints) {
-    @media all and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
+@each $breakpoint in map.keys(settings.$grid-breakpoints) {
+
+    // Generate media query if needed
+    @include tools.media-breakpoint-up($breakpoint) {
+        $infix: tools.breakpoint-infix($breakpoint, settings.$grid-breakpoints);
+
         .ev-layout {
             @each $size in map_keys(settings.$spacers) {
-                &.gutter-#{$breakpoint}-#{$size} {
+                &.gutter#{$infix}-#{$size} {
                     > .ev-block {
                         padding: (math.div(map-get(settings.$spacers, $size), 2));
                     }
