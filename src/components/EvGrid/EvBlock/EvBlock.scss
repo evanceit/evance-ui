@@ -14,19 +14,18 @@
 @each $breakpoint in map_keys(settings.$grid-breakpoints) {
     @media all and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
         .ev-block {
+
+            &.#{$breakpoint}-auto {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: none;
+            }
+
+            &.#{$breakpoint}-grow {
+                flex: 1 0 auto;
+            }
+
             @for $num from 1 through 12 {
-
-                &.#{$breakpoint}-auto {
-                    flex: 0 0 auto;
-                    width: auto;
-                    max-width: none;
-                }
-
-                &.#{$breakpoint}-grow {
-                    flex-basis: 0;
-                    flex-grow: 1;
-                    max-width: 100%;
-                }
 
                 &.#{$breakpoint}-#{$num} {
                     flex: 0 0 (math.div($num, 12) * 100%);

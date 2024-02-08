@@ -1,3 +1,6 @@
+@use 'sass:math' as math;
+@use "../../../css/settings";
+
 /**
     # .ev-layout
 
@@ -18,5 +21,29 @@
 
     &.is-nowrap {
         flex-wrap: nowrap;
+    }
+}
+
+
+/**
+    # Gutters
+ */
+@each $breakpoint in map_keys(settings.$grid-breakpoints) {
+    @media all and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
+        .ev-layout {
+            @each $size in map_keys(settings.$spacers) {
+                &.gutter-#{$breakpoint}-#{$size} {
+                    > .ev-block {
+                        padding: (math.div(map-get(settings.$spacers, $size), 2));
+                    }
+                    &:only-child {
+                        margin: 0 - (math.div(map-get(settings.$spacers, $size), 2));
+                    }
+                    &:not(:only-child) {
+                        margin: auto (0 - (math.div(map-get(settings.$spacers, $size), 2)));
+                    }
+                }
+            }
+        }
     }
 }

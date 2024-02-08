@@ -26,6 +26,13 @@ export type JustifyContentObject = {
 };
 export type JustifyContentProp = JustifyContentValue | JustifyContentObject | undefined;
 
+/** Spacers **/
+export type SpacerValue = number | string | undefined;
+export type SpacerObject = {
+    [key in DisplayBreakpoint]: SpacerValue
+};
+export type SpacerProp = SpacerValue | SpacerObject | undefined;
+
 /**
  * # makeEvLayoutProps
  */
@@ -34,6 +41,7 @@ export const makeEvLayoutProps = propsFactory({
     alignContent: [String, Object] as PropType<AlignContentProp>,
     column: Boolean,
     justify: [String, Object] as PropType<JustifyContentProp>,
+    gutter: [String, Number, Object] as PropType<SpacerProp>,
 
     ...makeComponentProps(),
     ...makeTagProps()

@@ -8,6 +8,7 @@ const props = defineProps(makeEvLayoutProps());
 const alignItemsClasses = useBreakpointClasses(props, 'align', 'align');
 const alignContentClasses = useBreakpointClasses(props, 'alignContent', 'align-content');
 const justifyContentClasses = useBreakpointClasses(props, 'justify', 'justify');
+const gutterClasses = useBreakpointClasses(props, 'gutter', 'gutter', true);
 
 </script>
 <template>
@@ -21,6 +22,7 @@ const justifyContentClasses = useBreakpointClasses(props, 'justify', 'justify');
             ...alignItemsClasses,
             ...alignContentClasses,
             ...justifyContentClasses,
+            ...gutterClasses,
             props.class
         ]"
         :style="[
