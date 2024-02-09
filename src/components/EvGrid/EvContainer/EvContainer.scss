@@ -15,6 +15,11 @@
     &.is-fluid {
         max-width: 100%;
     }
+
+    &.fill-height {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 @each $breakpoint in map_keys(settings.$grid-breakpoints) {

@@ -3,8 +3,7 @@ import {makeComponentProps} from "@/composables/component.ts";
 import {makeTagProps} from "@/composables/tag.ts";
 import {
     DisplayBreakpoint,
-    DisplayRuleListProp,
-    DisplayRuleProp
+    DisplayRuleProp, HiddenRuleProp
 } from "@/composables/display.ts";
 import {PropType} from "vue";
 
@@ -42,9 +41,6 @@ export type AlignSelfPropObject = {
 export type AlignSelfProp = AlignSelfPropValue | AlignSelfPropObject | undefined;
 
 
-/** Hidden props */
-export type HiddenRuleProp = DisplayRuleListProp | boolean;
-
 /**
  * # makeEvBlockProps
  */
@@ -54,9 +50,9 @@ export const makeEvBlockProps = propsFactory({
     order: [String, Number, Object] as PropType<BlockNumberProp>,
     scrollable: Boolean,
     size: [String, Number, Object] as PropType<BlockSizeProp>,
-    width: [String, Number, Object] as PropType<DisplayRuleProp>,
     hidden: [Boolean, String, Array] as PropType<HiddenRuleProp>,
     height: [String, Number, Object] as PropType<DisplayRuleProp>,
+    width: [String, Number, Object] as PropType<DisplayRuleProp>,
 
     ...makeComponentProps(),
     ...makeTagProps()

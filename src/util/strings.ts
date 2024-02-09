@@ -1,4 +1,20 @@
 /**
+ * # spaceSeparatedValues
+ *
+ * Accepts a string and converts it into an array of values.
+ *
+ * @param values
+ */
+export function spaceSeparatedValues(values: string = ''): string[] {
+    if (spaceSeparatedValues.cache.has(values)) {
+        return spaceSeparatedValues.cache.get(values)!;
+    }
+    return values.split(' ').map(value => value.trim());
+}
+spaceSeparatedValues.cache = new Map<string, string[]>();
+
+
+/**
  * # To Kebab Case
  *
  * Converts a string to `kebab-case` by replacing each space or letter capitalization with a dash (-).

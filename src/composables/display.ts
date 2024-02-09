@@ -1,10 +1,10 @@
 import {computed, inject, InjectionKey, isRef, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
 import {
     Browser,
-    consoleWarn,
+    consoleWarn, isBoolean,
     isObject,
     isString,
-    mergeDeep,
+    mergeDeep, spaceSeparatedValues,
     toCamelCase,
     toKebabCase,
     toWebUnit,
@@ -64,16 +64,16 @@ export interface DisplayInstance {
     lg: Ref<boolean>;
     xl: Ref<boolean>;
     xxl: Ref<boolean>;
-    xsAndUp: Ref<boolean>;
-    smAndUp: Ref<boolean>;
-    mdAndUp: Ref<boolean>;
-    lgAndUp: Ref<boolean>;
-    xlAndUp: Ref<boolean>;
-    xxlAndUp: Ref<boolean>;
-    smAndDown: Ref<boolean>;
-    mdAndDown: Ref<boolean>;
-    lgAndDown: Ref<boolean>;
-    xlAndDown: Ref<boolean>;
+    xsUp: Ref<boolean>;
+    smUp: Ref<boolean>;
+    mdUp: Ref<boolean>;
+    lgUp: Ref<boolean>;
+    xlUp: Ref<boolean>;
+    xxlUp: Ref<boolean>;
+    smDown: Ref<boolean>;
+    mdDown: Ref<boolean>;
+    lgDown: Ref<boolean>;
+    xlDown: Ref<boolean>;
     name: Ref<DisplayBreakpoint>;
     height: Ref<number>;
     width: Ref<number>;
@@ -189,16 +189,16 @@ export function createDisplay(
         state.lg = lg;
         state.xl = xl;
         state.xxl = xxl;
-        state.xsAndUp = true;
-        state.smAndUp = !xs;
-        state.mdAndUp = !(xs || sm);
-        state.lgAndUp = !(xs || sm || md);
-        state.xlAndUp = !(xs || sm || md || lg);
-        state.xxlAndUp = !(xs || sm || md || lg || xl);
-        state.smAndDown = !(md || lg || xl || xxl);
-        state.mdAndDown = !(lg || xl || xxl);
-        state.lgAndDown = !(xl || xxl);
-        state.xlAndDown = !xxl;
+        state.xsUp = true;
+        state.smUp = !xs;
+        state.mdUp = !(xs || sm);
+        state.lgUp = !(xs || sm || md);
+        state.xlUp = !(xs || sm || md || lg);
+        state.xxlUp = !(xs || sm || md || lg || xl);
+        state.smDown = !(md || lg || xl || xxl);
+        state.mdDown = !(lg || xl || xxl);
+        state.lgDown = !(xl || xxl);
+        state.xlDown = !xxl;
         state.name = name;
         state.height = height.value;
         state.width = width.value;
@@ -239,15 +239,16 @@ export function useDisplay () {
 export const displayRules = [
     'xxl', 'xl', 'lg', 'md', 'sm', 'xs',
     'xxlOnly', 'xlOnly', 'lgOnly', 'mdOnly', 'smOnly', 'xsOnly',
-    'xxlAndUp', 'xlAndUp', 'lgAndUp', 'mdAndUp', 'smAndUp', 'xsAndUp',
-    'smAndDown', 'mdAndDown', 'lgAndDown', 'xlAndDown'
+    'xxlUp', 'xlUp', 'lgUp', 'mdUp', 'smUp', 'xsUp',
+    'smDown', 'mdDown', 'lgDown', 'xlDown'
 ] as const;
 export const displayRulesKebab = [
     'xxl-only', 'xl-only', 'lg-only', 'md-only', 'sm-only', 'xs-only',
-    'xxl-and-up', 'xl-and-up', 'lg-and-up', 'md-and-up', 'sm-and-up', 'xs-and-up',
-    'sm-and-down', 'md-and-down', 'lg-and-down', 'xl-and-down'
+    'xxl-up', 'xl-up', 'lg-up', 'md-up', 'sm-up', 'xs-up',
+    'sm-down', 'md-down', 'lg-down', 'xl-down'
 ] as const;
 
+export type DisplayRuleSuffix = 'only' | 'up' | 'down';
 export type DisplayRuleKey = typeof displayRules[number];
 export type DisplayRuleKebab = typeof displayRulesKebab[number];
 export type DisplayRuleValue = number | string;
@@ -260,6 +261,8 @@ export type DisplayRuleListProp = DisplayRuleKey
     | DisplayRuleKebab
     | DisplayRuleKebab[];
 
+/** Hidden props */
+export type HiddenRuleProp = DisplayRuleListProp | boolean;
 
 /**
  * # calculateDisplayRuleValue
@@ -293,7 +296,7 @@ export function toDisplayStateKey(displayRule: string): string {
     }
     let value = toCamelCase(displayRule);
     if (isDisplayBreakpoint(value)) {
-        value = `${value}AndUp`;
+        value = `${value}Up`;
     }
     value = trimEnd(value, 'Only');
     toKebabCase.cache.set(displayRule, value);
@@ -313,12 +316,14 @@ export function toDisplayRuleKebab(displayRule: string): string {
     }
     let value = toKebabCase(displayRule);
     if (isDisplayBreakpoint(value)) {
-        value = `${value}-and-up`;
+        value = `${value}-up`;
     }
     toDisplayRuleKebab.cache.set(displayRule, value);
     return value;
 }
 toDisplayRuleKebab.cache = new Map<string, string>();
+
+
 
 
 /**
@@ -407,26 +412,46 @@ export function useDisplayRuleClasses<
     prefix: Prefix = undefined as Prefix
 ) {
     return computed(() => {
-        const prop = props[propName];
-        if (!prop) {
-            return [];
-        }
         const classes = [];
-        const rules = !Array.isArray(prop) ? [prop] : prop;
-        if (Array.isArray(rules)) {
-            for (const rule of rules) {
-                if (!isString(rule)) {
-                    // Gracefully ignore anything that is not a string.
-                    continue;
-                }
-                if (!isDisplayRule(rule)) {
-                    consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
-                    continue;
-                }
-                const suffix = toDisplayRuleKebab(rule);
-                classes.push(`${prefix}-${suffix}`);
+        const rules = toDisplayRuleArray(props[propName]);
+        for (const rule of rules) {
+            if (!isString(rule)) {
+                // Gracefully ignore anything that is not a string.
+                continue;
             }
+            if (!isDisplayRule(rule)) {
+                consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
+                continue;
+            }
+            const suffix = toDisplayRuleKebab(rule);
+            classes.push(`${prefix}-${suffix}`);
         }
         return classes;
     });
+}
+
+
+/**
+ * # toDisplayRuleArray
+ *
+ * @param prop
+ */
+export function toDisplayRuleArray(prop: unknown): string[] {
+    if (Array.isArray(prop)) {
+        return prop;
+    }
+    if (isString(prop)) {
+        return spaceSeparatedValues(prop as string);
+    }
+    if (isObject(prop)) {
+        return <string[]>Object.entries(prop)
+            .map(([key, value]) => {
+                if (isBoolean(value)) {
+                    return value ? key : undefined;
+                }
+                return isString(value) ? `${key}-${value.toLowerCase()}` : undefined;
+            })
+            .filter(value => value !== undefined);
+    }
+    return [];
 }

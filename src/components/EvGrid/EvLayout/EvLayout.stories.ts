@@ -20,13 +20,25 @@ const meta: Meta<typeof EvLayout> = {
                 'center': 'center',
                 'baseline': 'baseline',
                 'stretch': 'stretch'
-            }
+            },
+            description: ""
         },
         alignContent: {
             control: 'select',
             options: [
                 '', 'start', 'end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly'
-            ]
+            ],
+            mapping: {
+                '': undefined,
+                'start': 'start',
+                'end': 'end',
+                'center': 'center',
+                'stretch': 'stretch',
+                'space-between': 'space-between',
+                'space-around': 'space-around',
+                'space-evenly': 'space-evenly'
+            },
+            description: ""
         },
         column: {
             control: 'boolean',
@@ -54,13 +66,58 @@ const meta: Meta<typeof EvLayout> = {
                 600: 600,
                 800: 800,
                 "{ xs: 100, md: 200, xl: 300 }": { xs: 100, md: 200, xl: 300 }
-            }
+            },
+            description: ""
         },
         justify: {
             control: 'select',
             options: [
                 '', 'start', 'end', 'center', 'space-between', 'space-around', 'space-evenly'
-            ]
+            ],
+            mapping: {
+                '': undefined,
+                'start': 'start',
+                'end': 'end',
+                'center': 'center',
+                'space-between': 'space-between',
+                'space-around': 'space-around',
+                'space-evenly': 'space-evenly'
+            },
+            description: ""
+        },
+        tag: {
+            description: ""
+        },
+        height: {
+            control: 'select',
+            options: ['', 'auto', '300'],
+            description: "Set an explicit height to the block. Behaves similar to `width`."
+        },
+        width: {
+            control: 'select',
+            options: ['', '25%', '50%', '100%']
+        },
+        hidden: {
+            control: 'select',
+            options: [
+                '',
+                'true',
+                'false',
+                'xs-only',
+                'xs-only lg-up',
+                "['xs-only', 'lg-up']",
+                "{ xs: 'only', lg: 'up' }"
+            ],
+            mapping: {
+                '': undefined,
+                'true': true,
+                'false': false,
+                'xs-only': 'xs-only',
+                'xs-only lg-up': 'xs-only lg-up',
+                "['xs-only', 'lg-up']" : ['xs-only', 'lg-up'],
+                "{ xs: 'only', lg: 'up' }": { xs: 'only', lg: 'up' }
+            },
+            description: "Accepts a boolean, string or a display rule list as an array or object. "
         }
     },
     args: {
@@ -84,20 +141,20 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-            <ev-layout v-bind="args" style="height: 300px;">
+            <ev-layout v-bind="args">
                 <ev-block size="auto">
                     <ev-surface class="pa-100" elevation="overlay" style="height: 100%;">
-                        Column #1
+                        Block #1
                     </ev-surface>
                 </ev-block>
                 <ev-block size="auto">
                     <ev-surface class="pa-100" elevation="overlay" style="height: 100%">
-                        Column #2
+                        Block #2
                     </ev-surface>
                 </ev-block>
                 <ev-block size="auto">
                     <ev-surface class="pa-100" elevation="overlay" style="height: 100%">
-                        Column #3
+                        Block #3
                     </ev-surface>
                 </ev-block>
             </ev-layout>

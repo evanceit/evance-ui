@@ -105,11 +105,11 @@ const meta: Meta<typeof EvBlock> = {
                 "Accepts a number - pixels are assumed as the units. " +
                 "Accepts a string representing a number and units (e.g. `20%`), `auto` or `grow`. " +
                 "These values are also accepted as values within a display rule object where the keys may be one of " +
-                "`xs`, `sm`, `md`, `lg`, `xl`, `xxl` (breakpoints are the equivalent of `...AndUp` rules) " +
+                "`xs`, `sm`, `md`, `lg`, `xl`, `xxl` (breakpoints are the equivalent of `...Up` rules) " +
                 "`xsOnly`, `smOnly`, `mdOnly`, `lgOnly`, `xlOnly`, `xxlOnly` " +
-                "`smAndUp`, `mdAndUp`, `lgAndUp`, `xlAndUp`, " +
-                "`smAndDown`, `mdAndDown`, `lgAndDown`, `xlAndDown`. " +
-                "For example: `{ xs: 'auto', sm: '20%', mdAndUp: 300 }`."
+                "`smUp`, `mdUp`, `lgUp`, `xlUp`, " +
+                "`smDown`, `mdDown`, `lgDown`, `xlDown`. " +
+                "For example: `{ xs: 'auto', sm: '20%', mdUp: 300 }`."
         },
         height: {
             description: "Set an explicit height to the block. Behaves similar to `width`."
@@ -121,17 +121,20 @@ const meta: Meta<typeof EvBlock> = {
                 'true',
                 'false',
                 'xs-only',
-                "['xs-only', 'lg-and-up']"
+                'xs-only lg-up',
+                "['xs-only', 'lg-up']",
+                "{ xs: 'only', lg: 'up' }"
             ],
             mapping: {
                 '': undefined,
                 'true': true,
                 'false': false,
                 'xs-only': 'xs-only',
-                "['xs-only', 'lg-and-up']" : ['xs-only', 'lg-and-up']
+                'xs-only lg-up': 'xs-only lg-up',
+                "['xs-only', 'lg-up']" : ['xs-only', 'lg-up'],
+                "{ xs: 'only', lg: 'up' }": { xs: 'only', lg: 'up' }
             },
-            description: "Accepts a boolean, string or a display rule list as an array. " +
-                "For example, only visible on `sm` and `md` would look like: `:hidden=\"['lg']\"` is the equivalent of `lg-and-up`."
+            description: "Accepts a boolean, string or a display rule list as an array or object. "
         }
     },
     args: {
