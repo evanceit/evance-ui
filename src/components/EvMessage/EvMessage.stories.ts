@@ -1,9 +1,10 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvMessage } from "../EvMessage";
-import { EvButton } from "../EvButton";
+import {EvButton, EvButtonProps} from "../EvButton";
 import {Appearance} from "@/util";
 import {Reload} from "../../icons";
+import {EvAvatar} from "@/components";
 
 
 const meta: Meta<typeof EvMessage> = {
@@ -27,6 +28,9 @@ const meta: Meta<typeof EvMessage> = {
         },
         title: {
             control: 'text'
+        },
+        transparent: {
+            control: 'boolean'
         }
     },
     args: {
@@ -35,7 +39,8 @@ const meta: Meta<typeof EvMessage> = {
         expandable: false,
         default: 'Put your message content here',
         modelValue: true,
-        title: 'Example message title'
+        title: 'Example message title',
+        transparent: false,
     },
     tags: ['autodocs']
 };
@@ -46,12 +51,20 @@ type Story = StoryObj<typeof EvMessage>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvMessage, EvButton},
+        components: { EvMessage, EvButton, EvAvatar},
         setup() {
-            return { args, Reload };
+
+            const actions: EvButtonProps[] = [
+                {
+                    text: 'My Action',
+                    onClick: () => { console.log('foo'); }
+                }
+            ];
+
+            return { args, Reload, actions };
         },
         template: `
-            <ev-message v-bind="args">
+            <ev-message v-bind="args" :actions="actions">
                 <p>{{ args.default }}</p>
             </ev-message>
             

@@ -1,12 +1,12 @@
 import {makeAppearanceProps, propsFactory} from "@/util";
-import {IconValue} from "@/composables/icons.ts";
+import {IconProp} from "@/composables/icons.ts";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makePositionProps} from "@/composables/position.ts";
 import {makeEvTransitionProps} from "@/components/EvTransition";
 
 
 export const makeEvBadgeProps = propsFactory({
-    icon: IconValue,
+    icon: IconProp,
     bordered: Boolean,
     content: [Number, String],
     dot: Boolean,

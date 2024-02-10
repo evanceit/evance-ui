@@ -1,4 +1,7 @@
 .ev-message {
+    --action-background: var(--background-muted);
+    --action-color: var(--text-default);
+
     align-items: flex-start;
     background-color: var(--background-muted);
     border-radius: var(--sheet-radius, 4px);
@@ -16,18 +19,28 @@
 .ev-message {
 
     &.is-appearance-critical {
+        --action-color: var(--text-critical);
+        --action-background: var(--background-critical);
         background-color: var(--background-critical);
     }
     &.is-appearance-information {
+        --action-color: var(--text-information);
+        --action-background: var(--background-information);
         background-color: var(--background-information);
     }
     &.is-appearance-notice {
+        --action-color: var(--text-notice);
+        --action-background: var(--background-notice);
         background-color: var(--background-notice);
     }
     &.is-appearance-success {
+        --action-color: var(--text-success);
+        --action-background: var(--background-success);
         background-color: var(--background-success);
     }
     &.is-appearance-warning {
+        --action-color: var(--text-warning);
+        --action-background: var(--background-warning);
         background-color: var(--background-warning);
     }
 }
@@ -57,5 +70,83 @@
 
     button {
         margin: -6px;
+    }
+}
+
+.ev-message--expandable {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-50, 0.5rem);
+}
+
+.ev-message--actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacer-100);
+}
+
+
+.ev-message--actions {
+    .ev-button {
+        &.is-appearance-link {
+            padding: 0;
+
+            .ev-button--text {
+                padding: 0;
+                color: var(--action-color);
+            }
+        }
+    }
+}
+
+.ev-message:not(.is-transparent) {
+    .ev-message--actions {
+        .ev-button {
+            &.is-appearance-default {
+                background-color: var(--action-background);
+
+                &:hover,
+                &:active {
+                    background-color: var(--action-color);
+                    color: var(--surface-default);
+                }
+            }
+        }
+    }
+}
+
+.ev-message {
+    &.is-appearance-default {
+        .ev-message--actions {
+            .ev-button {
+                &.is-appearance-link {
+                    .ev-button--text {
+                        color: var(--link-default);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ev-message--expand {
+    .ev-button {
+        .ev-icon {
+            transition: transform 0.25s var(--easing-standard);
+            transform: rotate(0);
+        }
+
+        &.is-expanded {
+            .ev-icon {
+                transform: rotate(-180deg);
+            }
+        }
+    }
+
+}
+
+.ev-message {
+    &.is-transparent {
+        background: none;
     }
 }

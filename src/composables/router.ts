@@ -20,10 +20,10 @@ import {Browser, ClickEventListeners, hasEventListener, isString, propsFactory} 
  *
  */
 export interface RouterLinkOrHrefProps {
-    href: string | undefined;
-    replace: boolean | undefined;
-    to: RouteLocationRaw | undefined;
-    exact: boolean | undefined;
+    href?: string;
+    replace?: boolean;
+    to?: RouteLocationRaw;
+    exact?: boolean;
 }
 
 
@@ -65,7 +65,6 @@ export function isRouterLinkOrHref(props: RouterLinkOrHrefProps): ComputedRef<bo
         return !!(props.href || props.to);
     });
 }
-
 
 /**
  * # Make Router Props

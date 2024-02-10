@@ -5,24 +5,11 @@
  *  Uses `glyph` to render an SVG-based icon.
  */
 import './EvIcon.scss';
-import {IconSize} from "./EvIcon.ts";
+import {makeEvIconProps} from "./EvIcon.ts";
 import {computed, toRaw, useAttrs} from "vue";
-import {Appearance, appearanceModifier, AppearanceProp, sizeModifier} from "@/util";
-import {IconValue} from "@/composables/icons.ts";
+import {Appearance, appearanceModifier, sizeModifier} from "@/util";
 
-/**
- * ## Icon Props
- */
-interface IconProps {
-    appearance?: AppearanceProp,
-    glyph?: IconValue | boolean,
-    size?: IconSize
-}
-const props = withDefaults(defineProps<IconProps>(), {
-    appearance: 'default',
-    size: 'medium'
-});
-
+const props = defineProps(makeEvIconProps());
 const attrs = useAttrs();
 
 const iconColor = computed(() => {

@@ -63,14 +63,19 @@ export const makeInputAppearanceProps = propsFactory({
  */
 export enum InputSize {
     default = 'medium',
+    xSmall = 'x-small',
     small = 'small',
     medium = 'medium',
-    large = 'large'
+    large = 'large',
+    xLarge = 'x-large'
 }
-export type InputSizeProp = keyof typeof InputSize;
+
+export type InputSizeCamel = keyof typeof InputSize;
+export type InputSizeKebab =  InputSize[keyof InputSize];
+export type InputSizeProp = InputSizeCamel | InputSizeKebab;
 export const makeInputSizeProps = propsFactory({
     size: {
-        type: String,
+        type: String as PropType<InputSizeProp>,
         default: InputSize.default
     }
 }, 'InputSize');

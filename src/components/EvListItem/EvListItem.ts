@@ -1,6 +1,6 @@
 import {propsFactory} from "@/util";
 import {makeRouterLinkOrHrefProps} from "@/composables/router.ts";
-import {IconValue} from "@/composables/icons.ts";
+import {IconProp} from "@/composables/icons.ts";
 import {makeComponentProps} from "@/composables/component.ts";
 
 export const makeEvListItemProps = propsFactory({
@@ -13,8 +13,8 @@ export const makeEvListItemProps = propsFactory({
         default: undefined
     },
     disabled: Boolean,
-    iconEnd: IconValue,
-    iconStart: IconValue,
+    iconEnd: IconProp,
+    iconStart: IconProp,
     link: {
         type: Boolean,
         default: undefined

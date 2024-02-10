@@ -129,8 +129,8 @@ function onClick(e: MouseEvent): void {
         <span class="ev-button--icon-end" v-if="props.iconEnd">
             <ev-icon :glyph="props.iconEnd" />
         </span>
-        <span class="ev-button--loading">
-            <ev-progress-circular indeterminate v-if="props.loading" />
+        <span class="ev-button--loading" v-if="props.loading">
+            <ev-progress-circular indeterminate />
         </span>
     </component>
 </template>

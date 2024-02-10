@@ -1,5 +1,5 @@
 import {makeInputAppearanceProps, makeInputSizeProps, makeTextAlignProps, propsFactory} from "@/util";
-import {IconValue} from "@/composables/icons.ts";
+import {IconProp} from "@/composables/icons.ts";
 import {makeFormFieldProps} from "@/composables/validation.ts";
 import {makeComponentProps} from "@/composables/component.ts";
 
@@ -11,8 +11,8 @@ export const makeEvTextfieldProps = propsFactory({
     autofocus: Boolean,
     autoselect: Boolean,
     clearable: Boolean,
-    iconStart: IconValue,
-    iconEnd: IconValue,
+    iconStart: IconProp,
+    iconEnd: IconProp,
     label: String,
     loading: Boolean,
     placeholder: String,

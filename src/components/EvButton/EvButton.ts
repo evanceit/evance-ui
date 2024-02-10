@@ -1,6 +1,6 @@
 import {Appearance, InputSizeProp, propsFactory} from "@/util";
-import {IconValue} from "@/composables/icons.ts";
-import {makeRouterLinkOrHrefProps} from "@/composables/router.ts";
+import {IconProp, IconValue} from "@/composables/icons.ts";
+import {makeRouterLinkOrHrefProps, RouterLinkOrHrefProps} from "@/composables/router.ts";
 import {PropType} from "vue";
 
 /**
@@ -9,7 +9,25 @@ import {PropType} from "vue";
 export type ButtonAppearanceProp = 'default'
     | 'danger'
     | 'primary'
-    | 'subtle';
+    | 'subtle'
+    | 'link';
+
+/**
+ * # EvButtonProps
+ */
+export interface EvButtonProps extends RouterLinkOrHrefProps {
+    appearance?: ButtonAppearanceProp,
+    disabled?: boolean,
+    icon?: IconValue | boolean,
+    iconStart?: IconValue,
+    iconEnd?: IconValue,
+    rounded?: boolean,
+    size?: InputSizeProp,
+    fullWidth?: boolean,
+    text?: string,
+    loading?: boolean,
+    onClick?: () => void;
+}
 
 /**
  * # EvButton Props
@@ -24,8 +42,8 @@ export const makeEvButtonProps = propsFactory({
         default: false
     },
     icon: [Boolean, String, Function, Object] as PropType<boolean | IconValue>,
-    iconStart: IconValue,
-    iconEnd: IconValue,
+    iconStart: IconProp,
+    iconEnd: IconProp,
     rounded: Boolean,
     size: String as PropType<InputSizeProp>,
     fullWidth: Boolean,

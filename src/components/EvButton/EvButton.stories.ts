@@ -20,12 +20,12 @@ const meta: Meta<typeof EvButton> = {
         },
         appearance: {
             control: 'select',
-            options: ['default', 'danger', 'primary', 'subtle'],
+            options: ['default', 'danger', 'primary', 'subtle', 'link'],
             description: 'Changes the appearance of the button to either `default`, `danger`, `primary`, or `subtle`.'
         },
         size: {
             control: 'select',
-            options: ['small', 'medium', 'large'],
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
             description: 'Changes the size of the button, which may be either `small`, `medium`, or `large`.'
         },
         icon: {

@@ -13,7 +13,7 @@ export type IconValue =
     | string
     | (string | [path: string, opacity: number])[];
 
-export const IconValue = [String, Function, Object, Array] as PropType<IconValue>;
+export const IconProp = [String, Function, Object, Array] as PropType<IconValue>;
 
 
 /**
