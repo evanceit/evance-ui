@@ -1,6 +1,8 @@
-import {makeAppearanceProps, propsFactory} from "@/util";
+import {propsFactory} from "@/util";
+import {makeEvMessageProps} from "../EvMessage";
 
 export const makeEvNotificationProps = propsFactory({
-
-    ...makeAppearanceProps()
+    ...makeEvMessageProps({
+        tag: 'div' as const
+    })
 }, 'EvNotification');

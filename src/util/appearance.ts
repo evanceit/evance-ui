@@ -71,7 +71,7 @@ export enum InputSize {
 }
 
 export type InputSizeCamel = keyof typeof InputSize;
-export type InputSizeKebab =  InputSize[keyof InputSize];
+export type InputSizeKebab =  'x-small' | 'x-large';
 export type InputSizeProp = InputSizeCamel | InputSizeKebab;
 export const makeInputSizeProps = propsFactory({
     size: {

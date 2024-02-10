@@ -58,10 +58,6 @@
 .ev-message--title {
     font-size: var(--heading-size-5);
     margin-bottom: 0;
-
-    & + * {
-        margin-top: var(--spacer-50);
-    }
 }
 
 .ev-message--dismiss,
@@ -77,6 +73,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacer-50, 0.5rem);
+}
+
+.ev-message--description {
+    padding-top: var(--spacer-50);
 }
 
 .ev-message--actions {
@@ -148,5 +148,26 @@
 .ev-message {
     &.is-transparent {
         background: none;
+    }
+}
+
+
+
+.transition-message {
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
+        height: 0;
+    }
+
+    &-enter-active,
+    &-leave-active {
+        transition: height 0.25s var(--easing-standard), opacity 0.25s var(--easing-standard) 0.1s;
+        overflow: hidden;
+    }
+
+    &-leave-active {
+        transition: height 0.25s var(--easing-standard) 0.1s, opacity 0.25s var(--easing-standard);
     }
 }
