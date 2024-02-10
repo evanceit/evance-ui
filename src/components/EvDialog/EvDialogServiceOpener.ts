@@ -29,7 +29,7 @@ export interface EvDialogServiceSlots {
 /**
  * # EvDialogService
  */
-export class EvDialogService {
+export class EvDialogServiceOpener {
     private instanceId: number = 0;
 
     public constructor(

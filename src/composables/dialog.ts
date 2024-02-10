@@ -1,8 +1,8 @@
 import {inject, InjectionKey, provide} from "vue";
 import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogService} from "@/components/EvDialog/EvDialogService.ts";
+import {EvDialogServiceOpener} from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
-export const EvDialogServiceSymbol: InjectionKey<EvDialogService> = Symbol.for('ev:dialog-service');
+export const EvDialogServiceSymbol: InjectionKey<EvDialogServiceOpener> = Symbol.for('ev:dialog-service');
 export const EvDialogInstanceSymbol: InjectionKey<EvDialogInstance | undefined> = Symbol.for('ev:dialog-instance');
 
 /**
@@ -10,7 +10,7 @@ export const EvDialogInstanceSymbol: InjectionKey<EvDialogInstance | undefined> 
  *
  * Requires that the App has provided `EvDialogService`.
  */
-export function useDialog(): EvDialogService {
+export function useDialog(): EvDialogServiceOpener {
     const dialogService = inject(EvDialogServiceSymbol);
     if (!dialogService) {
         throw new Error('Unable to find injected dialog service');

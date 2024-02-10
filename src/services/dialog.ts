@@ -1,13 +1,13 @@
 import {App} from "vue";
 import {EvDialogServiceSymbol} from "@/composables/dialog.ts";
-import {EvDialogService} from "@/components/EvDialog/EvDialogService.ts";
+import {EvDialogServiceOpener} from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
 /**
  * # EvDialogService
  */
-export const EvDialogServicePlugin = {
+export default {
     install: (app: App) => {
-        const service = new EvDialogService(app);
+        const service = new EvDialogServiceOpener(app);
 
         // For options API - use with `this.$dialog`
         app.config.globalProperties.$dialog = service;
@@ -16,8 +16,3 @@ export const EvDialogServicePlugin = {
         app.provide(EvDialogServiceSymbol, service);
     }
 };
-
-export default EvDialogServicePlugin;
-
-
-

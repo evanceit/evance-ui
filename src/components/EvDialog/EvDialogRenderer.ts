@@ -1,7 +1,7 @@
 import {App, ComponentPublicInstance, h, mergeProps, render, shallowRef, VNode, VNodeProps} from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
 import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogServiceOptions, EvDialogServiceSlots} from "@/components/EvDialog/EvDialogService.ts";
+import {EvDialogServiceOptions, EvDialogServiceSlots} from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
 /**
  * # EvDialogInstance

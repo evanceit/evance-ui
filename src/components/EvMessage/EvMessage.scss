@@ -51,7 +51,8 @@
     }
 }
 
-.ev-message--closer {
+.ev-message--dismiss,
+.ev-message--expand {
     display: inline-flex;
 
     button {

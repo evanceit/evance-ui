@@ -15,14 +15,14 @@ The `EvDialogService` needs to be installed as an application plugin.
 
 ```ts
 import {createApp} from 'vue';
-import {EvDialogServicePlugin} from "@evance/amethyst/services";
+import {EvDialogService} from "@evance/amethyst/services";
 
 // Import the root component App from a single-file component & create the App
 import App from './App.vue'
 const app = createApp(App);
 
 // Load the service directly
-app.use(EvDialogServicePlugin);
+app.use(EvDialogService);
 ```
 
 For larger applications you may wish to load all of the Evance UI services.

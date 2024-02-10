@@ -44,7 +44,7 @@ export const Primary: Story = {
         setup() {
             return { Evance, args };
         },
-        template: `<ev-icon :glyph="Evance" v-bind="args" /> <ev-icon :glyph="Evance" />`
+        template: `<ev-icon :glyph="Evance" v-bind="args" />`
     }),
 };
 

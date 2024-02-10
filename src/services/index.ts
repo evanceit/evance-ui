@@ -1,1 +1,1 @@
-export * from './dialog.ts';
+export { default as EvDialogService } from './dialog.ts';

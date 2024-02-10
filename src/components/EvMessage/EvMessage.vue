@@ -5,36 +5,19 @@
  * `<ev-message />`
  */
 import './EvMessage.scss';
-import {Appearance, appearanceModifier, AppearanceProp} from "@/util";
+import {Appearance, appearanceModifier} from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import {
-    Cancel,
-    CheckCircle as CheckCircleIcon,
-    Danger as DangerIcon,
-    Help as HelpIcon,
-    Info as InfoIcon,
-    Note as NoteIcon,
-    Warning as WarningIcon
-} from "@/icons";
-import {computed} from "vue";
+import {Cancel, ChevronDown} from "@/icons";
+import {computed, shallowRef} from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {IconValue} from "@/composables/icons.ts";
+import {appearanceIcon} from "@/composables/icons.ts";
+import {makeEvMessageProps} from "./EvMessage.ts";
+import {useLocaleFunctions} from "@/composables/locale.ts";
+import {EvTransition} from "@/components/EvTransition";
 
-interface MessageProps {
-    appearance?: AppearanceProp,
-    closable?: boolean,
-    icon?: IconValue,
-    modelValue?: boolean,
-    title?: string
-}
-const props = withDefaults(defineProps<MessageProps>(), {
-    appearance: 'default',
-    closable: false,
-    icon: undefined,
-    modelValue: true
-});
-
+const props = defineProps(makeEvMessageProps());
+const { t } = useLocaleFunctions();
 
 // Emit
 const emit = defineEmits([
@@ -49,56 +32,72 @@ const iconGlyph = computed(() => {
     if (props.icon) {
         return props.icon;
     }
-    switch (props.appearance) {
-        case Appearance.critical:
-            return DangerIcon;
-        case Appearance.information:
-            return InfoIcon;
-        case Appearance.success:
-            return CheckCircleIcon;
-        case Appearance.notice:
-            return NoteIcon;
-        case Appearance.warning:
-            return WarningIcon;
-    }
-    return HelpIcon;
+    return appearanceIcon(props.appearance);
 });
 
 const modelProxy = useModelProxy(props, 'modelValue');
+
+const isExpanded = shallowRef(false);
 
 /**
  * ## On Click Close
  * @param e
  */
 function close(e: Event): void {
-    emit('click:close', e);
     modelProxy.value = false;
+    emit('click:close', e);
 }
 
+/**
+ * ## On Click Expand
+ * @param e
+ */
+function expand(e: Event): void {
+    isExpanded.value = !isExpanded.value;
+}
 
 </script>
 <template>
-    <section
+    <component
         v-if="modelProxy"
-        class="ev-message"
+        :is="props.tag"
         :class="[
-            appearanceModifier(props.appearance, [Appearance.default])
+            'ev-message',
+            appearanceModifier(props.appearance, [Appearance.default]),
+            props.class
         ]"
     >
         <div class="ev-message--icon">
             <ev-icon :appearance="props.appearance" :glyph="iconGlyph" />
         </div>
         <div class="ev-message--content">
-            <h2 class="ev-message--title">{{ title }}</h2>
-            <slot />
+            <h2 class="ev-message--title">{{ props.title }}</h2>
+            <transition name="transition-fade">
+                <div v-if="!props.expandable || isExpanded">
+                    <div class="ev-message--description">
+                        <slot />
+                    </div>
+                    <div class="ev-message--actions"></div>
+                </div>
+            </transition>
         </div>
-        <div class="ev-message--closer" v-if="closable">
+        <div class="ev-message--expand" v-if="props.expandable">
             <ev-button rounded
-                       :icon-start="Cancel"
+                       :aria-label="t('expand')"
+                       :icon="ChevronDown"
+                       size="small"
+                       appearance="subtle"
+                       @click="expand"
+            />
+        </div>
+        <div class="ev-message--dismiss" v-if="props.dismissible">
+            <ev-button rounded
+                       :aria-label="t('dismiss')"
+                       :icon="Cancel"
                        size="small"
                        appearance="subtle"
                        @click="close"
             />
         </div>
-    </section>
+    </component>
 </template>

@@ -13,7 +13,10 @@ const meta: Meta<typeof EvMessage> = {
             control: 'select',
             options: Object.values(Appearance)
         },
-        closable: {
+        expandable: {
+            control: 'boolean'
+        },
+        dismissible: {
             control: 'boolean'
         },
         default: {
@@ -28,7 +31,8 @@ const meta: Meta<typeof EvMessage> = {
     },
     args: {
         appearance: Appearance.default,
-        closable: true,
+        dismissible: false,
+        expandable: false,
         default: 'Put your message content here',
         modelValue: true,
         title: 'Example message title'
@@ -47,7 +51,12 @@ export const Primary: Story = {
             return { args, Reload };
         },
         template: `
-            <ev-message v-bind="args"><p>{{ args.default }}</p></ev-message>
-            <div v-if="!args.modelValue"><ev-button :icon="Reload" @click="args.modelValue = true">Reset</ev-button></div>`
+            <ev-message v-bind="args">
+                <p>{{ args.default }}</p>
+            </ev-message>
+            
+            <div v-if="!args.modelValue">
+                <ev-button :icon="Reload" @click="args.modelValue = true">Reset</ev-button>
+            </div>`
     })
 };
