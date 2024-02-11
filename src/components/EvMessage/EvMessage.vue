@@ -5,7 +5,7 @@
  * `<ev-message />`
  */
 import './EvMessage.scss';
-import {appearanceModifier} from "@/util";
+import {appearanceModifier, isNumber} from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel, ChevronDown} from "@/icons";
 import {computed, nextTick, shallowRef, useSlots} from "vue";
@@ -27,6 +27,7 @@ const { t } = useLocaleFunctions();
 
 // Emit
 const emit = defineEmits([
+    'dismissed',
     'click:dismiss',
     'click:expand',
     'update:modelValue'
@@ -43,7 +44,15 @@ const iconGlyph = computed(() => {
  * ## On Click Dismiss
  */
 function dismiss(): void {
-    modelProxy.value = false;
+    if (!props.dismissDelay) {
+        modelProxy.value = false;
+    } else if (isNumber(props.dismissDelay)) {
+        const delay = props.dismissDelay;
+        setTimeout(() => {
+            modelProxy.value = false;
+            emit('dismissed');
+        }, delay);
+    }
     emit('click:dismiss');
 }
 
@@ -109,8 +118,8 @@ const showExpandable = computed(() => {
 </script>
 <template>
     <component
-        v-if="modelProxy"
         :is="props.tag"
+        v-show="modelProxy"
         :class="[
             'ev-message',
             {
@@ -159,14 +168,16 @@ const showExpandable = computed(() => {
                        @click="expand"
             />
         </div>
-        <div class="ev-message--dismiss" v-if="props.dismissible">
-            <ev-button rounded
-                       :aria-label="t('dismiss')"
-                       :icon="Cancel"
-                       size="small"
-                       appearance="subtle"
-                       @click="dismiss"
-            />
-        </div>
+        <transition name="transition-fade">
+            <div class="ev-message--dismiss" v-if="props.dismissible">
+                <ev-button rounded
+                           :aria-label="t('dismiss')"
+                           :icon="Cancel"
+                           size="small"
+                           appearance="subtle"
+                           @click="dismiss"
+                />
+            </div>
+        </transition>
     </component>
 </template>

@@ -21,9 +21,9 @@ type Story = StoryObj<typeof EvNotification>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvNotification},
+        components: { EvNotification, EvButton},
         setup() {
-            return { args, EvButton, Reload };
+            return { args, Reload };
         },
         template: `
             <ev-notification v-bind="args">{{ args.default }}</ev-notification>

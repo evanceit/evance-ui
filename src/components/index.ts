@@ -18,6 +18,7 @@ export * from './EvListItem';
 export * from './EvLozenge';
 export * from './EvMenu';
 export * from './EvMessage';
+export * from './EvNotification';
 export * from './EvNumberField';
 export * from './EvOverlay';
 export * from './EvProgress';
