@@ -27,9 +27,9 @@ export interface EvMessageProps {
 }
 
 export interface EvMessageSlots {
-    icon?: object,
-    default?: object,
-    actions?: object
+    icon?: any,
+    default?: any,
+    actions?: any
 }
 
 

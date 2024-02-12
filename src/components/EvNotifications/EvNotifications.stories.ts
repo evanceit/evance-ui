@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
-import {EvNotificationOptions, EvNotifications} from "../EvNotifications";
-import {EvButton, EvNotificationProps} from "@/components";
+import {EvNotifications} from "../EvNotifications";
+import {EvNotificationProps} from "@/components/EvNotification";
+import {EvButton} from "@/components";
 import {ArrowContinue, Minus, Plus} from "../../icons";
 import {randomArrayItem} from "@/util";
 import {useNotification} from "@/composables/notification.ts";
@@ -25,25 +26,23 @@ export const Primary: Story = {
             const variants = ['subtle', 'tonal', 'bold'];
 
             function addItem() {
-                const options: EvNotificationOptions = {
-                    props: {
-                        title: `Wow a new notification`,
-                        appearance: randomArrayItem(appearances),
-                        variant: randomArrayItem(variants),
-                        timeout: 3000,
-                        description: "This will self-dismiss in <strong>3 seconds</strong>.",
-                        actions: [
-                            {
-                                text: 'Say Goodbye',
-                                iconEnd: ArrowContinue,
-                                onClick() {
-                                    dismiss()
-                                },
-                            }
-                        ]
-                    }
+                const props: EvNotificationProps = {
+                    title: `Wow a new notification`,
+                    appearance: randomArrayItem(appearances),
+                    variant: randomArrayItem(variants),
+                    timeout: 3000,
+                    description: "This will self-dismiss in <strong>3 seconds</strong>.",
+                    actions: [
+                        {
+                            text: 'Say Goodbye',
+                            iconEnd: ArrowContinue,
+                            onClick() {
+                                dismiss()
+                            },
+                        }
+                    ]
                 };
-                const {dismiss} = notification.add(options.props);
+                const {dismiss} = notification.add(props);
             }
 
             return { args, Plus, Minus, addItem };
