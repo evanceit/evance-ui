@@ -1,6 +1,6 @@
-import {h, mergeProps, ref, shallowRef, VNode, VNodeProps, watch} from "vue";
-import {EvNotificationOptions, Notification} from "./EvNotifications.ts";
-import {EvNotificationSlots} from "@/components";
+import {h, isRef, ref, shallowRef, VNode, VNodeProps, watch} from "vue";
+import {Notification} from "./EvNotifications.ts";
+import {EvNotificationProps, EvNotificationSlots} from "@/components";
 
 /**
  * # EvNotificationsManager
@@ -13,13 +13,18 @@ export class EvNotificationsManager {
     /**
      * ## add
      *
-     * @param options
+     * @param props
+     * @param slots
      */
-    public add(options: EvNotificationOptions) {
+    public add(props: EvNotificationProps, slots?: EvNotificationSlots) {
         const id = ++this.num;
-        const props = this.createProps(id, options);
-        const slots = this.createSlots(options);
-        this.notifications.value.unshift({ id, props, slots });
+        const renderedProps = this.createProps(id, props);
+        const renderedSlots = this.createSlots(slots);
+        this.notifications.value.unshift({
+            id,
+            props: renderedProps as object,
+            slots: renderedSlots as object
+        });
         return {
             id,
             dismiss: () => {
@@ -32,16 +37,16 @@ export class EvNotificationsManager {
      * ## createProps
      *
      * @param id
-     * @param options
+     * @param props
      * @private
      */
-    private createProps(id: number, options: EvNotificationOptions) {
-        const model = options.props?.modelValue ?? shallowRef(true);
+    private createProps(id: number, props: EvNotificationProps) {
+        const model = isRef(props.modelValue) ? props.modelValue : shallowRef(true);
         watch(model, () => {
             this.dismiss(id);
         });
-        return mergeProps(
-            options.props as VNodeProps,
+        return Object.assign(
+            props as VNodeProps,
             {
                 modelValue: model
             }
@@ -51,11 +56,11 @@ export class EvNotificationsManager {
     /**
      * ## createSlots
      *
-     * @param options
      * @private
+     * @param slots
      */
-    private createSlots(options: EvNotificationOptions) {
-        const internalSlots = options.slots ?? {};
+    private createSlots(slots?: EvNotificationSlots) {
+        const internalSlots = slots ?? {};
         const renderedSlots: { [key: string]: (props: any, slots: any) => VNode } = {};
         for (const key in internalSlots) {
             const component = internalSlots[key as keyof EvNotificationSlots];
@@ -67,7 +72,7 @@ export class EvNotificationsManager {
     }
 
     /**
-     * # Dismiss
+     * # dismiss
      *
      * @param id
      */

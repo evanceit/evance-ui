@@ -12,30 +12,42 @@ const meta: Meta<typeof EvMessage> = {
     argTypes: {
         appearance: {
             control: 'select',
-            options: Object.values(Appearance)
+            options: Object.values(Appearance),
+            description: "Set the color appearance of the message. Use in conjunction with `variant` to modify the strength of the message."
         },
         expandable: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether to hide the description and actions until the user expands the message."
+        },
+        description: {
+            control: 'text',
+            description: "Adds basic text below the title. Accepts HTML, but remember to sanitize first if you need to. " +
+                "For more complicated content use the `default` slot."
         },
         dismissible: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Whether the user can dismiss the message."
         },
         default: {
             control: 'text'
         },
         modelValue: {
-            control: 'boolean'
+            control: 'boolean',
+            description: "Can be used to hide the message."
         },
         title: {
-            control: 'text'
+            control: 'text',
+            description: "The `title` of the message is required."
         },
         variant: {
             control: 'select',
-            options: ['subtle', 'tonal', 'bold']
+            options: ['subtle', 'tonal', 'bold'],
+            description: "Adjust the strength of the `appearance`."
         }
     },
     args: {
         appearance: Appearance.default,
+        description: undefined,
         dismissible: false,
         expandable: false,
         default: 'Put your message content here',

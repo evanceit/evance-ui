@@ -22,7 +22,8 @@ export interface EvMessageProps {
     title?: string,
     variant?: EvMessageVariant,
     actions?: EvButtonProps[],
-    appearance?: AppearanceProp
+    appearance?: AppearanceProp,
+    onDismiss?: Function
 }
 
 export interface EvMessageSlots {

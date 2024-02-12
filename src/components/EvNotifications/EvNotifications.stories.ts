@@ -1,18 +1,13 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
-import {EvNotificationOptions, EvNotifications, useNotification} from "../EvNotifications";
-import {EvButton} from "@/components";
+import {EvNotificationOptions, EvNotifications} from "../EvNotifications";
+import {EvButton, EvNotificationProps} from "@/components";
 import {ArrowContinue, Minus, Plus} from "../../icons";
 import {randomArrayItem} from "@/util";
+import {useNotification} from "@/composables/notification.ts";
 
 const meta: Meta<typeof EvNotifications> = {
     component: EvNotifications,
-    argTypes: {
-
-    },
-    args: {
-
-    },
-    tags: ['autodocs']
+    title: 'Overlays/EvNotifications'
 };
 
 export default meta;
@@ -48,17 +43,49 @@ export const Primary: Story = {
                         ]
                     }
                 };
-                const {dismiss} = notification.add(options);
+                const {dismiss} = notification.add(options.props);
             }
 
             return { args, Plus, Minus, addItem };
         },
         template: `
             
+            <ev-notifications />
+            
             <p>Create a random Notfication</p>
             <ev-button @click="addItem" :icon-start="Plus">Add item</ev-button>
-            
+        `
+    })
+};
+
+export const Saved: Story = {
+    render: (args: any) =>  ({
+        components: { EvNotifications, EvButton},
+        setup() {
+
+            const notification = useNotification();
+
+            function save() {
+                const props: EvNotificationProps = {
+                    title: `Saved!`,
+                    appearance: 'success',
+                    actions: [
+                        {
+                            text: "Thanks",
+                            onClick: () => {
+                                dismiss();
+                            }
+                        }
+                    ]
+                };
+                const {dismiss} = notification.add(props);
+            }
+
+            return { args, save };
+        },
+        template: `
             <ev-notifications />
+            <ev-button @click="save">Save</ev-button>
         `
     })
 };

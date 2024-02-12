@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import './EvNotifications.scss';
 import {EvNotification} from "../EvNotification";
-import {shallowRef} from "vue";
+import {computed, shallowRef} from "vue";
 import {useTeleport} from "@/composables/teleport.ts";
-import { injectNotifications} from "@/components/EvNotifications/EvNotifications.ts";
+import {injectNotifications} from "@/composables/notification.ts";
+import { getLastZIndex } from '@/composables/stack';
 
 const teleportTarget = useTeleport(shallowRef(false));
 const service = injectNotifications();
 const notifications = service.notifications;
+
+const zIndex = computed(() => {
+    return getLastZIndex() ?? 2000;
+});
 
 </script>
 <template>
@@ -17,6 +22,9 @@ const notifications = service.notifications;
             name="transition-notification"
             class="ev-notifications"
             tag="div"
+            :style="{
+                zIndex
+            }"
         >
             <ev-notification
                 v-for="(notification, index) in notifications"

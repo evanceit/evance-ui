@@ -1,0 +1,102 @@
+import {Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as EvNotificationsStories from './EvNotifications.stories';
+
+<Meta of={EvNotificationsStories} />
+
+# EvNotifications
+
+`EvNotifications` is used to display alert/notification messages as an overlay using a service.
+
+## Notifications Service
+
+The `<ev-notifications />` component is controlled via the `EvNotificationService`, which needs to be installed
+as an application plugin.
+
+```ts
+import {createApp} from 'vue';
+import {EvNotificationService} from "@evance/amethyst/services";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+// Load the service directly
+app.use(EvNotificationService);
+```
+
+For larger applications you may wish to load all of the Evance UI services.
+
+```ts
+import {createApp} from 'vue';
+import * as services from "@evance/amethyst/services";
+import {createEvanceUi} from "@evance/amethyst/framework";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+const evanceUi = createEvanceUi({
+    services
+});
+
+// Load the service directly
+app.use(evanceUi);
+```
+
+## Usage
+Add the `<ev-notifications />` to your root component.
+
+```html
+<ev-notifications />
+```
+
+The notification service is available with the `useNotification()` function for Composition API
+and the `$notification` property of the application for the Options API.
+
+```ts
+// Composition API
+import { useNotification } from '@evance/amethyst/composables/notification';
+
+const notification = useNotification();
+
+// Options API
+const notification = this.$notification;
+```
+
+With the notification service available you can now programmatically add alert the user with `notification.add()`.
+Which accepts two arguments:
+
+- props: `EvNotificationProps` (required)
+- slots: `EvNotificationSlots` (optional) allowing you to supply custom slots.
+
+The `add()` method returns an object containing the `id` of the notification and a `dismiss` function,
+which you can use in any custom `actions`.
+
+```ts
+const {id, dismiss} = notification.add({
+    title: 'Saved!',
+    appearance: 'success',
+    actions: [
+        {
+            text: "Thanks",
+            onClick: () => {
+                // Do something and then...
+                dismiss();
+            }
+        }
+    ]
+});
+```
+Try it below:
+<Canvas>
+    <Story of={EvNotificationsStories.Saved} />
+</Canvas>
+
+## Random Examples
+
+Clicking on the button below will create random `EvNotification` examples.
+
+<Canvas>
+    <Story of={EvNotificationsStories.Primary} />
+</Canvas>

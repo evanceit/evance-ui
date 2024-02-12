@@ -40,6 +40,17 @@ const iconGlyph = computed(() => {
     return (props.icon) ? props.icon : appearanceIcon(props.appearance);
 });
 
+const showExpandable = computed(() => {
+    return (
+        (hasDefaultSlot.value || !!props.description || hasActionSlot.value || !!actions.value.length)
+        && (!props.expandable || isExpanded.value)
+    );
+});
+
+const variantModifier = computed(() => {
+    return makeClassName(props.variant, 'is-variant');
+});
+
 /**
  * ## On Click Dismiss
  */
@@ -82,6 +93,10 @@ const actions = computed(() => {
     return values;
 });
 
+/**
+ * # onEnter
+ * @param el
+ */
 function onEnter(el: Element) {
     nextTick(() => {
         const element = el as HTMLElement;
@@ -94,11 +109,19 @@ function onEnter(el: Element) {
     });
 }
 
+/**
+ * # onAfterEnter
+ * @param el
+ */
 function onAfterEnter(el: Element) {
     const element = el as HTMLElement;
     element.style.height = 'auto';
 }
 
+/**
+ * # onLeave
+ * @param el
+ */
 function onLeave(el: Element) {
     nextTick(() => {
         const element = el as HTMLElement;
@@ -108,17 +131,6 @@ function onLeave(el: Element) {
         });
     });
 }
-
-const showExpandable = computed(() => {
-    return (
-        (hasDefaultSlot.value || hasActionSlot.value || !!actions.value.length)
-        && (!props.expandable || isExpanded.value)
-    );
-});
-
-const variantModifier = computed(() => {
-    return makeClassName(props.variant, 'is-variant');
-});
 
 </script>
 <template>

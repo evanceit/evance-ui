@@ -7,9 +7,15 @@ import EvMessageStories from "../EvMessage/EvMessage.stories.ts";
 const meta: Meta<typeof EvNotification> = {
     component: EvNotification,
     argTypes: {
+        timeout: {
+            control: 'number',
+            description: "Sets the amount of milliseconds before the notification auto-dismisses."
+        },
+
         ...EvMessageStories.argTypes
     },
     args: {
+        timeout: undefined,
         ...EvMessageStories.args
     },
     tags: ['autodocs']
