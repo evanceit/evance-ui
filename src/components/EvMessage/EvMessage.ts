@@ -21,7 +21,7 @@ export interface EvMessageProps {
     modelValue?: Ref<boolean>,
     title?: string,
     variant?: EvMessageVariant,
-    actions?: EvButtonProps,
+    actions?: EvButtonProps[],
     appearance?: AppearanceProp
 }
 

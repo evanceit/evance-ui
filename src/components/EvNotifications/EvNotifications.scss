@@ -1,14 +1,16 @@
 .ev-notifications {
     position: fixed;
-    bottom: var(--spacer-300);
-    left: var(--spacer-300);
+    bottom: var(--spacer-200);
+    right: var(--spacer-200);
+    width: calc(100% - (2 * var(--spacer-200)));
+    max-width: 400px;
 
     .ev-notification {
-        width: 400px;
         position: absolute;
         bottom: 0;
         transition: transform 250ms ease-in-out 0s;
         pointer-events: auto;
+        width: 100%;
 
         &:nth-of-type(1) {
             z-index: 5;
@@ -44,7 +46,7 @@
     &-enter-from,
     &-leave-to {
         opacity: 0;
-        transform: translateX(calc(0px - 100% - 3rem)) !important;
+        transform: translateX(calc(0px + 100% + 3rem)) !important;
     }
 
     &-leave-active {
