@@ -1,31 +1,47 @@
-import {makeAppearanceProps, propsFactory} from "@/util";
+import {AppearanceProp, makeAppearanceProps, propsFactory} from "@/util";
 import {PropType, Ref} from "vue";
 import {IconProp, IconValue} from "@/composables/icons.ts";
 import {makeTagProps} from "@/composables/tag.ts";
 import {makeComponentProps} from "@/composables/component.ts";
 import {EvButtonProps} from "@/components";
 
+
 type ModelValueProp = boolean | Ref<boolean>;
 type EvMessageVariant = 'subtle' | 'tonal' | 'bold';
 
+
+/**
+ * # EvMessageProps
+ */
 export interface EvMessageProps {
+    description?: string,
     dismissible?: boolean,
     expandable?: boolean,
     icon?: IconValue,
-    modelValue: ModelValueProp,
+    modelValue?: Ref<boolean>,
     title?: string,
+    variant?: EvMessageVariant,
+    actions?: EvButtonProps,
+    appearance?: AppearanceProp
 }
+
+export interface EvMessageSlots {
+    icon?: object,
+    default?: object,
+    actions?: object
+}
+
 
 /**
  * # makeEvMessageProps
  */
 export const makeEvMessageProps = propsFactory({
-
+    description: String,
     dismissDelay: {
         type: [Boolean, Number],
         default: 0
     },
-    dismissible: Boolean,
+    dismissible: [Boolean, Object] as PropType<ModelValueProp>,
     expandable: Boolean,
     icon: IconProp,
     modelValue: {

@@ -146,9 +146,13 @@ const variantModifier = computed(() => {
                 @leave="onLeave"
             >
                 <div class="ev-message--expandable" v-if="showExpandable">
-                    <div class="ev-message--description" v-if="hasDefaultSlot">
+                    <div class="ev-message--description"
+                         v-if="hasDefaultSlot">
                         <slot name="default" />
                     </div>
+                    <div class="ev-message--description"
+                         v-else-if="!!props.description"
+                         v-html="props.description"></div>
                     <div class="ev-message--actions" v-if="hasActionSlot || actions.length">
                         <slot name="actions">
                             <ev-button

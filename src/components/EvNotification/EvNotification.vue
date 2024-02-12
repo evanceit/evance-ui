@@ -3,8 +3,8 @@ import './EvNotification.scss';
 import {makeEvNotificationProps} from "./EvNotification";
 import {EvMessage} from "../EvMessage";
 import {EvSurface} from "../EvSurface";
-import {filterComponentProps} from "@/util";
-import {computed, onMounted, ref, toRef, watch} from "vue";
+import {filterComponentProps, omit} from "@/util";
+import {computed, onMounted, toRef, watch} from "vue";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useStack} from "@/composables/stack.ts";
 
@@ -12,27 +12,21 @@ const props = defineProps(makeEvNotificationProps());
 const model = useModelProxy(props, 'modelValue');
 const timeout = useModelProxy(props, 'timeout');
 const messageProps = computed(() => {
-    return filterComponentProps(EvMessage, props);
+    return omit(filterComponentProps(EvMessage, props), ['modelValue']);
 });
 
 // Emit
 const emit = defineEmits([
-    'click:dismiss',
+    'dismiss',
     'update:modelValue'
 ]);
 
 function dismiss() {
     model.value = false;
-    emit('click:dismiss');
+    emit('dismiss');
 }
 
-const isActiveContent = computed({
-    get: () => model.value,
-    set: (value) => {
-        model.value = value;
-    }
-});
-const { stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
+const { stackStyles } = useStack(model, toRef(props, 'zIndex'), false);
 
 watch(timeout, () => {
     if (!timeout.value) {
@@ -43,13 +37,16 @@ watch(timeout, () => {
 });
 
 onMounted(() => {
+    if (!timeout.value) {
+        return;
+    }
     startTimer();
 });
 
-let timer = null;
+let timer: any = null;
 function startTimer() {
     timer = setTimeout(() => {
-        model.value = false;
+        dismiss();
     }, timeout.value);
 }
 

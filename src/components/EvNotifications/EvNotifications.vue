@@ -1,70 +1,16 @@
 <script setup lang="ts">
 import './EvNotifications.scss';
 import {EvNotification} from "../EvNotification";
-import {computed, ref, shallowRef} from "vue";
-import {EvButton} from "@/components";
-import {Minus, Plus} from "@/icons";
+import {shallowRef} from "vue";
 import {useTeleport} from "@/composables/teleport.ts";
-import {randomArrayItem} from "@/util";
+import { injectNotifications} from "@/components/EvNotifications/EvNotifications.ts";
 
-
-const teleportTarget = useTeleport(computed(() => false));
-
-let num = 0;
-const notifications = ref([]);
-
-const appearances = ['default', 'critical', 'success', 'warning', 'notice', 'information'];
-const variants = ['subtle', 'tonal', 'bold'];
-
-
-
-function addItem() {
-
-    const model = shallowRef(true);
-    const id = ++num;
-
-    const options = {
-        props: {
-            id: id,
-            title: `${id}. Wow a new notification`,
-            description: "This will self-dismiss in 3 seconds.",
-            dismissible: true,
-            appearance: randomArrayItem(appearances),
-            variant: randomArrayItem(variants),
-            timeout: 3000,
-            modelValue: model,
-            'onUpdate:modelValue': (v) => {
-                dismiss(id);
-            }
-        },
-        slots: {
-            default: "<p>This will self-dismiss in <strong>3 seconds</strong>.</p>"
-        }
-    };
-
-    notifications.value.unshift(options.props);
-}
-
-function createProps(options) {
-
-}
-
-
-function removeItem() {
-    notifications.value.shift();
-}
-
-function dismiss(id) {
-    const index = notifications.value.findIndex(notification => notification.id === id);
-    notifications.value.splice(index, 1);
-}
+const teleportTarget = useTeleport(shallowRef(false));
+const service = injectNotifications();
+const notifications = service.notifications;
 
 </script>
 <template>
-
-    <ev-button @click="addItem" :icon-start="Plus">Add item</ev-button>
-    &nbsp;
-    <ev-button @click="removeItem" :icon-start="Minus">Remove item</ev-button>
 
     <teleport :to="teleportTarget">
         <transition-group
@@ -75,10 +21,15 @@ function dismiss(id) {
             <ev-notification
                 v-for="(notification, index) in notifications"
                 :key="notification.id"
-                v-bind="notification"
-                :dismissible="index === 0"
-                :timeout="index === 0 ? notification.timeout : undefined"
-            >{{ notification.description }}</ev-notification>
+                v-bind="notification.props as object"
+                :dismissible="index === 0 ? notification.props.dismissible : false"
+                :timeout="index === 0 ? notification.props.timeout : undefined"
+                @dismiss="service.dismiss(notification.id)"
+            >
+                <template #icon><component :is="notification.slots.icon" /></template>
+                <template #default><component :is="notification.slots.default" /></template>
+                <template #actions><component :is="notification.slots.actions" /></template>
+            </ev-notification>
         </transition-group>
     </teleport>
 

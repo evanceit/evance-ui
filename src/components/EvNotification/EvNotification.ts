@@ -1,15 +1,31 @@
 import {propsFactory} from "@/util";
-import {makeEvMessageProps} from "../EvMessage";
+import {EvMessageProps, EvMessageSlots, makeEvMessageProps} from "../EvMessage";
 
+
+/**
+ * # EvNotificationProps
+ */
+export interface EvNotificationProps extends EvMessageProps {
+    timeout?: number
+}
+
+export interface EvNotificationSlots extends EvMessageSlots {}
+
+
+/**
+ * # makeEvNotificationProps
+ */
 export const makeEvNotificationProps = propsFactory({
+    timeout: Number,
     zIndex: {
         type: [Number, String],
         default: 2000,
     },
-    timeout: Number,
 
     ...makeEvMessageProps({
         tag: 'div' as const,
-        dismissDelay: true as const
+        dismissible: true,
+        dismissDelay: true as const,
+        variant: 'subtle'
     })
 }, 'EvNotification');

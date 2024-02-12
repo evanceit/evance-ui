@@ -139,6 +139,8 @@
 /** Appearance - Subtle */
 .ev-message {
     &.is-variant-subtle {
+        --message-action-link: var(--link-default);
+
         &.is-appearance-default {
             --message-icon: var(--icon-color);
         }
@@ -200,10 +202,10 @@
     .ev-button {
         &.is-appearance-link {
             padding: 0;
+            color: var(--message-action-link);
 
             .ev-button--text {
                 padding: 0;
-                color: var(--message-action-link);
             }
         }
     }
