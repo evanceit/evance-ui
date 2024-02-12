@@ -1,6 +1,7 @@
 export * from './anchor';
 export * from './animate';
 export * from './appearance';
+export * from './array';
 export * from './bindProps';
 export * from './browser';
 export * from './components';
@@ -14,7 +15,7 @@ export * from './keyboard';
 export * from './modifiers';
 export * from './numbers';
 export * from './props';
-export * from './strings';
 export * from './scroll';
+export * from './strings';
 export * from './style';
 export * from './units';

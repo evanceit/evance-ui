@@ -6,12 +6,14 @@ import {makeComponentProps} from "@/composables/component.ts";
 import {EvButtonProps} from "@/components";
 
 type ModelValueProp = boolean | Ref<boolean>;
+type EvMessageVariant = 'subtle' | 'tonal' | 'bold';
 
 export interface EvMessageProps {
     dismissible?: boolean,
     expandable?: boolean,
     icon?: IconValue,
-    title?: string
+    modelValue: ModelValueProp,
+    title?: string,
 }
 
 /**
@@ -31,7 +33,10 @@ export const makeEvMessageProps = propsFactory({
         default: true
     },
     title: String,
-    transparent: Boolean,
+    variant: {
+        type: String as PropType<EvMessageVariant>,
+        default: 'tonal'
+    },
     actions: Array as PropType<EvButtonProps[]>,
 
     ...makeAppearanceProps(),

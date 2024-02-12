@@ -5,7 +5,7 @@
  * `<ev-message />`
  */
 import './EvMessage.scss';
-import {appearanceModifier, isNumber} from "@/util";
+import {appearanceModifier, isNumber, makeClassName} from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import {Cancel, ChevronDown} from "@/icons";
 import {computed, nextTick, shallowRef, useSlots} from "vue";
@@ -74,7 +74,8 @@ const actions = computed(() => {
     const values = [];
     for (const action of props.actions) {
         const actionDefaults: EvButtonProps = {
-            appearance: 'link'
+            appearance: 'link',
+            size: 'x-small'
         };
         values.push(Object.assign(actionDefaults, action));
     }
@@ -115,6 +116,10 @@ const showExpandable = computed(() => {
     );
 });
 
+const variantModifier = computed(() => {
+    return makeClassName(props.variant, 'is-variant');
+});
+
 </script>
 <template>
     <component
@@ -122,16 +127,14 @@ const showExpandable = computed(() => {
         v-show="modelProxy"
         :class="[
             'ev-message',
-            {
-                'is-transparent': props.transparent
-            },
+            variantModifier,
             appearanceModifier(props.appearance),
             props.class
         ]"
     >
         <div class="ev-message--icon">
             <slot name="icon">
-                <ev-icon :appearance="props.appearance" :glyph="iconGlyph" />
+                <ev-icon :glyph="iconGlyph" />
             </slot>
         </div>
         <div class="ev-message--content">

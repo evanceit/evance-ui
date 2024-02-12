@@ -29,8 +29,9 @@ const meta: Meta<typeof EvMessage> = {
         title: {
             control: 'text'
         },
-        transparent: {
-            control: 'boolean'
+        variant: {
+            control: 'select',
+            options: ['subtle', 'tonal', 'bold']
         }
     },
     args: {
@@ -40,7 +41,7 @@ const meta: Meta<typeof EvMessage> = {
         default: 'Put your message content here',
         modelValue: true,
         title: 'Example message title',
-        transparent: false,
+        variant: 'tonal',
     },
     tags: ['autodocs']
 };
@@ -56,8 +57,13 @@ export const Primary: Story = {
 
             const actions: EvButtonProps[] = [
                 {
-                    text: 'My Action',
-                    onClick: () => { console.log('foo'); }
+                    text: 'Primary Action',
+                    appearance: 'default',
+                    onClick: () => { console.log('Primary'); }
+                },
+                {
+                    text: 'Secondary Action',
+                    onClick: () => { console.log('Secondary'); }
                 }
             ];
 

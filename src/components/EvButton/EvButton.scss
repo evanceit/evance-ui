@@ -94,11 +94,11 @@
     - subtle
  */
 .ev-button {
+    color: currentColor;
 
     /* Default */
     &.is-appearance-default {
         background-color: var(--button-default-background);
-        color: var(--text-default);
         &:hover {
             background-color: var(--button-default-background-hover);
         }
@@ -134,7 +134,6 @@
     /* Subtle */
     &.is-appearance-subtle {
         background-color: var(--button-subtle-background);
-        color: var(--text-default);
         &:hover {
             background-color: var(--button-subtle-background-hover);
         }

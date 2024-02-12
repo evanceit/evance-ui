@@ -1,49 +1,165 @@
 .ev-message {
-    --action-background: var(--background-muted);
-    --action-color: var(--text-default);
-
     align-items: flex-start;
-    background-color: var(--background-muted);
     border-radius: var(--sheet-radius, 4px);
     display: flex;
     flex-wrap: nowrap;
     gap: var(--spacer-100);
     padding: var(--spacer-100);
+    background-color: var(--message-background);
+    color: var(--message-text);
 
     > * {
         flex: 0 0 auto;
     }
 }
 
-/** Appearance */
-.ev-message {
+.ev-message--title {
+    font-size: var(--heading-size-5);
+    margin-bottom: 0;
+    color: var(--message-title, var(--heading-default));
+}
 
-    &.is-appearance-critical {
-        --action-color: var(--text-critical);
-        --action-background: var(--background-critical);
-        background-color: var(--background-critical);
-    }
-    &.is-appearance-information {
-        --action-color: var(--text-information);
-        --action-background: var(--background-information);
-        background-color: var(--background-information);
-    }
-    &.is-appearance-notice {
-        --action-color: var(--text-notice);
-        --action-background: var(--background-notice);
-        background-color: var(--background-notice);
-    }
-    &.is-appearance-success {
-        --action-color: var(--text-success);
-        --action-background: var(--background-success);
-        background-color: var(--background-success);
-    }
-    &.is-appearance-warning {
-        --action-color: var(--text-warning);
-        --action-background: var(--background-warning);
-        background-color: var(--background-warning);
+.ev-message--icon {
+    color: var(--message-icon);
+}
+
+/** Appearance - Tonal */
+.ev-message {
+    &.is-variant-tonal {
+
+        &.is-appearance-default {
+            --message-icon: var(--icon-color);
+            --message-background: var(--background-muted);
+            --message-action-link: var(--link-default);
+            --message-text: var(--text-on-muted);
+            --message-title: var(--heading-on-muted);
+        }
+
+        &.is-appearance-critical {
+            --message-icon: var(--text-critical);
+            --message-background: var(--background-critical);
+            --message-action-link: var(--text-critical);
+            --message-text: var(--text-on-critical);
+            --message-title: var(--heading-on-critical);
+        }
+        &.is-appearance-information {
+            --message-icon: var(--text-information);
+            --message-background: var(--background-information);
+            --message-action-link: var(--text-information);
+            --message-text: var(--text-on-information);
+            --message-title: var(--heading-on-information);
+        }
+        &.is-appearance-notice {
+            --message-icon: var(--text-notice);
+            --message-background: var(--background-notice);
+            --message-action-link: var(--text-notice);
+            --message-text: var(--text-on-notice);
+            --message-title: var(--heading-on-notice);
+        }
+        &.is-appearance-success {
+            --message-icon: var(--text-success);
+            --message-background: var(--background-success);
+            --message-action-link: var(--text-success);
+            --message-text: var(--text-on-success);
+            --message-title: var(--heading-on-success);
+        }
+        &.is-appearance-warning {
+            --message-icon: var(--text-warning);
+            --message-background: var(--background-warning);
+            --message-action-link: var(--text-warning);
+            --message-text: var(--text-on-warning);
+            --message-title: var(--heading-on-warning);
+        }
+
+        .ev-message--actions {
+            .ev-button {
+                &.is-appearance-default {
+                    background-color: var(--message-background);
+
+                    &:hover,
+                    &:active {
+                        background-color: var(--message-action-link);
+                        color: var(--surface-default);
+                    }
+                }
+            }
+        }
     }
 }
+
+/** Appearance - Bold */
+.ev-message {
+    &.is-variant-bold {
+
+        &.is-appearance-default {
+            --message-background: var(--background-muted-bold);
+            --message-text: var(--text-on-muted-bold);
+            --message-action-link: var(--text-on-muted-bold);
+            --message-title: var(--heading-on-muted-bold);
+            --message-icon: var(--heading-on-muted-bold);
+        }
+        &.is-appearance-critical {
+            --message-background: var(--background-critical-bold);
+            --message-text: var(--text-on-critical-bold);
+            --message-action-link: var(--text-on-critical-bold);
+            --message-title: var(--heading-on-critical-bold);
+            --message-icon: var(--heading-on-critical-bold);
+        }
+        &.is-appearance-information {
+            --message-background: var(--background-information-bold);
+            --message-text: var(--text-on-information-bold);
+            --message-action-link: var(--text-on-information-bold);
+            --message-title: var(--heading-on-information-bold);
+            --message-icon: var(--heading-on-information-bold);
+        }
+        &.is-appearance-notice {
+            --message-background: var(--background-notice-bold);
+            --message-text: var(--text-on-notice-bold);
+            --message-action-link: var(--text-on-notice-bold);
+            --message-title: var(--heading-on-notice-bold);
+            --message-icon: var(--heading-on-notice-bold);
+        }
+        &.is-appearance-success {
+            --message-background: var(--background-success-bold);
+            --message-text: var(--text-on-success-bold);
+            --message-action-link: var(--text-on-success-bold);
+            --message-title: var(--heading-on-success-bold);
+            --message-icon: var(--heading-on-success-bold);
+        }
+        &.is-appearance-warning {
+            --message-background: var(--background-warning-bold);
+            --message-text: var(--text-on-warning-bold);
+            --message-action-link: var(--text-on-warning-bold);
+            --message-title: var(--heading-on-warning-bold);
+            --message-icon: var(--heading-on-warning-bold);
+        }
+    }
+}
+
+/** Appearance - Subtle */
+.ev-message {
+    &.is-variant-subtle {
+        &.is-appearance-default {
+            --message-icon: var(--icon-color);
+        }
+        &.is-appearance-critical {
+            --message-icon: var(--text-critical);
+        }
+        &.is-appearance-information {
+            --message-icon: var(--text-information);
+        }
+        &.is-appearance-notice {
+            --message-icon: var(--text-notice);
+        }
+        &.is-appearance-success {
+            --message-icon: var(--text-success);
+        }
+        &.is-appearance-warning {
+            --message-icon: var(--text-warning);
+        }
+    }
+}
+
 
 .ev-message--content {
     flex: 1 0 auto;
@@ -53,11 +169,6 @@
 
 .ev-message--icon {
     display: inline-flex;
-}
-
-.ev-message--title {
-    font-size: var(--heading-size-5);
-    margin-bottom: 0;
 }
 
 .ev-message--dismiss,
@@ -85,7 +196,6 @@
     gap: var(--spacer-100);
 }
 
-
 .ev-message--actions {
     .ev-button {
         &.is-appearance-link {
@@ -93,37 +203,7 @@
 
             .ev-button--text {
                 padding: 0;
-                color: var(--action-color);
-            }
-        }
-    }
-}
-
-.ev-message:not(.is-transparent) {
-    .ev-message--actions {
-        .ev-button {
-            &.is-appearance-default {
-                background-color: var(--action-background);
-
-                &:hover,
-                &:active {
-                    background-color: var(--action-color);
-                    color: var(--surface-default);
-                }
-            }
-        }
-    }
-}
-
-.ev-message {
-    &.is-appearance-default {
-        .ev-message--actions {
-            .ev-button {
-                &.is-appearance-link {
-                    .ev-button--text {
-                        color: var(--link-default);
-                    }
-                }
+                color: var(--message-action-link);
             }
         }
     }
@@ -142,15 +222,7 @@
             }
         }
     }
-
 }
-
-.ev-message {
-    &.is-transparent {
-        background: none;
-    }
-}
-
 
 
 .transition-message {
