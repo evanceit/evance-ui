@@ -3,7 +3,7 @@
     display: inline-flex;
     height: 36px;
     align-items: center;
-    background: var(--background-muted);
+    background: var(--button-default-background);
     padding-inline: var(--spacer-100);
     border-radius: 2px;
     gap: 2px;
@@ -52,14 +52,13 @@
 
         &:before {
             transform: scale(1);
-            background-color: var(--text-notice);
+            background-color: var(--text-default);
         }
     }
 }
 
 .ev-tag {
     &:hover {
-        background-color: var(--background-notice);
-        color: var(--text-notice);
+        background-color: var(--button-default-background-hover);
     }
 }
