@@ -1,0 +1,65 @@
+
+.ev-tag {
+    display: inline-flex;
+    height: 36px;
+    align-items: center;
+    background: var(--background-muted);
+    padding-inline: var(--spacer-100);
+    border-radius: 2px;
+    gap: 2px;
+    transition: 0.25s color var(--easing-standard),
+                0.25s background-color var(--easing-standard);
+}
+
+.ev-tag--content {
+    display: inline-flex;
+    line-height: 1;
+}
+
+.ev-tag--close {
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    color: currentColor;
+    margin-right: -16px;
+    margin-left: -6px;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: 0.25s color var(--easing-standard);
+
+    &:before {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        z-index: -1;
+        transform: scale(0.6);
+        transition: 0.25s background-color var(--easing-standard),
+                    0.25s transform var(--easing-standard);
+    }
+    
+    &:hover,
+    &:focus-visible {
+        color: var(--surface-default);
+        outline: none;
+
+        &:before {
+            transform: scale(1);
+            background-color: var(--text-notice);
+        }
+    }
+}
+
+.ev-tag {
+    &:hover {
+        background-color: var(--background-notice);
+        color: var(--text-notice);
+    }
+}
