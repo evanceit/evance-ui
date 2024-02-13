@@ -5,26 +5,38 @@ import {EvIcon} from "@/components/EvIcon";
 import {Cancel} from "@/icons";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {computed} from "vue";
+import {computed, useAttrs} from "vue";
 import {KeyboardEvent} from "react";
+import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 
 const props = defineProps(makeEvTagProps());
+const attrs = useAttrs();
+const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 const {t} = useLocaleFunctions();
 const emit = defineEmits([
     'click',
     'click:close'
 ]);
 const isActive = useModelProxy(props, 'modelValue');
+const isLink = computed(() => {
+    return (props.link !== false && link.isLink.value);
+});
 const isClickable = computed(() => {
-    // @todo: still in progress
+    // @todo: still got !!group to do
     return (
         !props.disabled
+        && props.link !== false
+        && (props.link || link.isClickable.value)
     );
 });
 
 const tag = computed(() => {
     return props.tag;
 });
+
+const closeLabel = computed(() => {
+    return t('close');
+})
 
 /**
  * ## onClick
@@ -36,7 +48,9 @@ function onClick(e: MouseEvent) {
         return;
     }
     // link navigate
+    link.navigate?.(e);
     // group toggle
+    // @todo: group?.toggle()
 }
 
 /**
@@ -54,6 +68,9 @@ function onClickClose(e: MouseEvent) {
  * @param e
  */
 function onKeyDown(e: KeyboardEvent) {
+    if (isLink.value || !isClickable.value) {
+        return;
+    }
     e.preventDefault();
     onClick(e as any as MouseEvent);
 }
@@ -73,7 +90,10 @@ function onKeyDown(e: KeyboardEvent) {
         :style="[
             props.style
         ]"
+        :disabled="props.disabled || undefined"
         :draggable="props.draggable"
+        :href="link.href"
+        :tabindex="isClickable ? 0 : undefined"
         @click="onClick"
         @keydown.enter="onKeyDown"
         @keydown.space="onKeyDown"
@@ -85,7 +105,7 @@ function onKeyDown(e: KeyboardEvent) {
         <button
             v-if="props.closable"
             class="ev-tag--close"
-            :aria-label="t('close')"
+            :aria-label="closeLabel"
             @click="onClickClose"
         >
             <ev-icon :glyph="Cancel" size="small" />

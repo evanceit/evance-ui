@@ -32,6 +32,7 @@ export * from './EvSelect';
 export * from './EvSurface';
 export * from './EvSwitch';
 export * from './EvTag';
+export * from './EvTagGroup';
 export * from './EvTextarea';
 export * from './EvTextfield';
 export * from './EvTooltip';
