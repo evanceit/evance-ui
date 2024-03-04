@@ -133,7 +133,7 @@ export function objectPathToPropertyKeys(path: string): PropertyKey[] {
     const pattern = /^([\da-z_-]+)(?:[\/.]([\da-z_-]+)|\[(\d+)\])*$/i;
     const matches = path.match(pattern);
     if (!matches) {
-        throw new Error('Invalid Object Path');
+        throw new Error(`Evance UI: Invalid Object Path '${path}'.`);
     }
     path = path.replace(']', '')
         .replace('[', '.')

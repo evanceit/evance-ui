@@ -10,7 +10,7 @@ export const EvNotificationServiceSymbol: InjectionKey<EvNotificationsManager> =
 export function injectNotifications() {
     const service = inject(EvNotificationServiceSymbol);
     if (!service) {
-        throw new Error('Unable to find inject notification service');
+        throw new Error('Evance UI: Unable to find inject notification service.');
     }
     return service;
 }

@@ -62,7 +62,7 @@ export function createDate(options: DateOptions | undefined, locale: LocaleManag
 export function useDate() {
     const instance = inject(DateAdapterSymbol);
     if (!instance) {
-        throw new Error('Unable to find injected date adapter');
+        throw new Error('Evance UI: Unable to find injected date adapter.');
     }
     return instance;
 }

@@ -1,7 +1,7 @@
 import {propsFactory} from "@/util";
 import {makeTagProps} from "@/composables/tag.ts";
 import {makeComponentProps} from "@/composables/component.ts";
-import {makeGroupItemProps} from "@/composables/group.ts";
+import {makeGroupItemProps} from "@/composables/groupItem.ts";
 import {makeRoundedProps} from "@/composables/rounded.ts";
 
 export const makeEvTagProps = propsFactory({

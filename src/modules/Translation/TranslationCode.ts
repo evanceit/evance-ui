@@ -28,7 +28,7 @@ export class TranslationCode {
     public static fromString(code: string) {
         const matches = code.match(/^([a-zA-Z]{2,3})(?:[_-]([a-zA-Z]{2,3}))?$/);
         if (!matches) {
-            throw new Error(`The string '${code}' is not a valid Locale string`);
+            throw new Error(`Evance UI: The string '${code}' is not a valid Locale string`);
         }
         const languageCode = matches[1].toLowerCase();
         const countryCode = matches[2]?.toUpperCase() ||  null;

@@ -13,7 +13,7 @@ export const EvDialogInstanceSymbol: InjectionKey<EvDialogInstance | undefined> 
 export function useDialog(): EvDialogServiceOpener {
     const dialogService = inject(EvDialogServiceSymbol);
     if (!dialogService) {
-        throw new Error('Unable to find injected dialog service');
+        throw new Error('Evance UI: Unable to find injected dialog service');
     }
     return dialogService;
 }

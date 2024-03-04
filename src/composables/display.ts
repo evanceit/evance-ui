@@ -226,7 +226,7 @@ export function createDisplay(
 export function useDisplay () {
     const display = inject(DisplaySymbol);
     if (!display) {
-        throw new Error("Could not find 'ev:display' injection symbol");
+        throw new Error("Evance UI: Could not find `ev:display` injection symbol");
     }
     return display;
 }

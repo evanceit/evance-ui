@@ -51,7 +51,7 @@ export class Anchor {
      */
     public get physicalAlignment(): PhysicalAlignment {
         if (this.alignment === 'auto') {
-            throw new Error('Cannot convert `auto` to a physical alignment');
+            throw new Error('Evance UI: Cannot convert `auto` to a physical alignment');
         }
         return {
             center: 'center',

@@ -22,7 +22,7 @@ export function createLocaleManager(localeOptions: LocaleOptions) {
 export function useLocaleManager(): LocaleManager {
     const localeManager:LocaleManager | undefined = inject(LocaleSymbol);
     if (!localeManager) {
-        throw new Error('Evance UI could not find injected locale instance');
+        throw new Error('Evance UI: Could not find injected locale instance.');
     }
     return localeManager;
 }

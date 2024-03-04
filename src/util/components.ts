@@ -10,7 +10,7 @@ import {ComponentInternalInstance, getCurrentInstance} from "vue";
 export function getCurrentComponent(callee: string): ComponentInternalInstance {
     const component = getCurrentInstance();
     if (!component) {
-        throw new Error(`${callee} requires a component instance`);
+        throw new Error(`Evance UI: ${callee} requires a component instance`);
     }
     return component;
 }
