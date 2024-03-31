@@ -70,11 +70,16 @@ export const Primary: Story = {
             const actions: EvButtonProps[] = [
                 {
                     text: 'Primary Action',
-                    appearance: 'default',
+                    variant: 'bold',
                     onClick: () => { console.log('Primary'); }
                 },
                 {
                     text: 'Secondary Action',
+                    variant: 'tonal',
+                    onClick: () => { console.log('Secondary'); }
+                },
+                {
+                    text: 'Tertiary Action',
                     onClick: () => { console.log('Secondary'); }
                 }
             ];

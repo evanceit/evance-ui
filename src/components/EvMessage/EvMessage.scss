@@ -30,59 +30,38 @@
         &.is-appearance-default {
             --message-icon: var(--icon-color);
             --message-background: var(--background-neutral);
-            --message-action-link: var(--link-default);
-            --message-text: var(--text-on-muted);
             --message-title: var(--heading-on-muted);
         }
 
         &.is-appearance-danger {
             --message-icon: var(--text-danger);
             --message-background: var(--background-danger);
-            --message-action-link: var(--text-danger);
             --message-text: var(--text-on-danger);
             --message-title: var(--heading-on-danger);
         }
         &.is-appearance-information {
             --message-icon: var(--text-information);
             --message-background: var(--background-information);
-            --message-action-link: var(--text-information);
             --message-text: var(--text-on-information);
             --message-title: var(--heading-on-information);
         }
         &.is-appearance-notice {
             --message-icon: var(--text-notice);
             --message-background: var(--background-notice);
-            --message-action-link: var(--text-notice);
             --message-text: var(--text-on-notice);
             --message-title: var(--heading-on-notice);
         }
         &.is-appearance-success {
             --message-icon: var(--text-success);
             --message-background: var(--background-success);
-            --message-action-link: var(--text-success);
             --message-text: var(--text-on-success);
             --message-title: var(--heading-on-success);
         }
         &.is-appearance-warning {
             --message-icon: var(--text-warning);
             --message-background: var(--background-warning);
-            --message-action-link: var(--text-warning);
             --message-text: var(--text-on-warning);
             --message-title: var(--heading-on-warning);
-        }
-
-        .ev-message--actions {
-            .ev-button {
-                &.is-appearance-default {
-                    background-color: var(--message-background);
-
-                    &:hover,
-                    &:active {
-                        background-color: var(--message-action-link);
-                        color: var(--surface-default);
-                    }
-                }
-            }
         }
     }
 }
@@ -94,44 +73,68 @@
         &.is-appearance-default {
             --message-background: var(--background-neutral-bold);
             --message-text: var(--text-on-muted-bold);
-            --message-action-link: var(--text-on-muted-bold);
             --message-title: var(--heading-on-muted-bold);
             --message-icon: var(--heading-on-muted-bold);
         }
         &.is-appearance-danger {
             --message-background: var(--background-danger-bold);
             --message-text: var(--text-on-danger-bold);
-            --message-action-link: var(--text-on-danger-bold);
             --message-title: var(--heading-on-danger-bold);
             --message-icon: var(--heading-on-danger-bold);
         }
         &.is-appearance-information {
             --message-background: var(--background-information-bold);
             --message-text: var(--text-on-information-bold);
-            --message-action-link: var(--text-on-information-bold);
             --message-title: var(--heading-on-information-bold);
             --message-icon: var(--heading-on-information-bold);
         }
         &.is-appearance-notice {
             --message-background: var(--background-notice-bold);
             --message-text: var(--text-on-notice-bold);
-            --message-action-link: var(--text-on-notice-bold);
             --message-title: var(--heading-on-notice-bold);
             --message-icon: var(--heading-on-notice-bold);
         }
         &.is-appearance-success {
             --message-background: var(--background-success-bold);
             --message-text: var(--text-on-success-bold);
-            --message-action-link: var(--text-on-success-bold);
             --message-title: var(--heading-on-success-bold);
             --message-icon: var(--heading-on-success-bold);
         }
         &.is-appearance-warning {
             --message-background: var(--background-warning-bold);
             --message-text: var(--text-on-warning-bold);
-            --message-action-link: var(--text-on-warning-bold);
             --message-title: var(--heading-on-warning-bold);
             --message-icon: var(--heading-on-warning-bold);
+        }
+
+        /**
+            @todo: I think the issue with bold and tonal buttons could be improved
+         */
+        .ev-message--actions {
+            .ev-button {
+                &.is-variant-tonal {
+                    background: rgba(0, 0, 0, 0.1);
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.15);
+                    }
+                    &:active {
+                        background: rgba(0, 0, 0, 0.25);
+                    }
+                }
+
+                &.is-variant-bold {
+                    color: var(--message-background);
+                    background: rgba(0, 0, 0, 0.90);
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.80);
+                    }
+                    &:active {
+                        background: rgba(0, 0, 0, 0.65);
+                    }
+                }
+            }
         }
     }
 }
@@ -200,9 +203,8 @@
 
 .ev-message--actions {
     .ev-button {
-        &.is-appearance-link {
+        &.is-variant-link {
             padding: 0;
-            color: var(--message-action-link);
 
             .ev-button--text {
                 padding: 0;
