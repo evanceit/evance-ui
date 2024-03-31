@@ -35,12 +35,12 @@
             --message-title: var(--heading-on-muted);
         }
 
-        &.is-appearance-critical {
-            --message-icon: var(--text-critical);
-            --message-background: var(--background-critical);
-            --message-action-link: var(--text-critical);
-            --message-text: var(--text-on-critical);
-            --message-title: var(--heading-on-critical);
+        &.is-appearance-danger {
+            --message-icon: var(--text-danger);
+            --message-background: var(--background-danger);
+            --message-action-link: var(--text-danger);
+            --message-text: var(--text-on-danger);
+            --message-title: var(--heading-on-danger);
         }
         &.is-appearance-information {
             --message-icon: var(--text-information);
@@ -98,12 +98,12 @@
             --message-title: var(--heading-on-muted-bold);
             --message-icon: var(--heading-on-muted-bold);
         }
-        &.is-appearance-critical {
-            --message-background: var(--background-critical-bold);
-            --message-text: var(--text-on-critical-bold);
-            --message-action-link: var(--text-on-critical-bold);
-            --message-title: var(--heading-on-critical-bold);
-            --message-icon: var(--heading-on-critical-bold);
+        &.is-appearance-danger {
+            --message-background: var(--background-danger-bold);
+            --message-text: var(--text-on-danger-bold);
+            --message-action-link: var(--text-on-danger-bold);
+            --message-title: var(--heading-on-danger-bold);
+            --message-icon: var(--heading-on-danger-bold);
         }
         &.is-appearance-information {
             --message-background: var(--background-information-bold);
@@ -144,8 +144,8 @@
         &.is-appearance-default {
             --message-icon: var(--icon-color);
         }
-        &.is-appearance-critical {
-            --message-icon: var(--text-critical);
+        &.is-appearance-danger {
+            --message-icon: var(--text-danger);
         }
         &.is-appearance-information {
             --message-icon: var(--text-information);

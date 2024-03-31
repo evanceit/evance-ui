@@ -9,8 +9,8 @@ const meta: Meta<typeof EvAvatar> = {
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'notice', 'success', 'warning'],
-            description: "Appearance may be: `default`, `critical`, `information`, `notice`, `success`, or `warning`."
+            options: ['default', 'danger', 'information', 'notice', 'success', 'warning'],
+            description: "Appearance may be: `default`, `danger`, `information`, `notice`, `success`, or `warning`."
         },
         bold: {
             control: 'boolean',

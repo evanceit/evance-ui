@@ -17,7 +17,7 @@ const meta: Meta<typeof EvLozenge> = {
         appearance: {
             control: 'select',
             options: Object.values(Appearance),
-            description: "Appearance may be: `default`, `critical`, `information`, `notice`, `success`, or `warning`."
+            description: "Appearance may be: `default`, `danger`, `information`, `notice`, `success`, or `warning`."
         },
         maxWidth: {
             control: 'text',

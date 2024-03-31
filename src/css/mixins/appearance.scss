@@ -9,12 +9,12 @@
     }
 }
 
-@mixin appearance-critical {
-    background-color: var(--background-critical);
-    color: var(--text-critical);
+@mixin appearance-danger {
+    background-color: var(--background-danger);
+    color: var(--text-danger);
 
     &.is-bold {
-        background-color: var(--background-critical-bold);
+        background-color: var(--background-danger-bold);
         color: var(--surface-default);
     }
 }

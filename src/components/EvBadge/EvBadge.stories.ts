@@ -9,7 +9,7 @@ const meta: Meta<typeof EvBadge> = {
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'critical', 'information', 'notice', 'success', 'warning']
+            options: ['default', 'danger', 'information', 'notice', 'success', 'warning']
         },
         bold: {
             control: 'boolean'

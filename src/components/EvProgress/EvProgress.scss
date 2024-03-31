@@ -37,9 +37,9 @@
     ## Appearance
  */
 .ev-progress {
-    /* critical */
-    &.is-appearance-critical {
-        color: var(--background-critical-bold);
+    /* danger */
+    &.is-appearance-danger {
+        color: var(--background-danger-bold);
     }
     /* information */
     &.is-appearance-information {

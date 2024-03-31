@@ -20,11 +20,11 @@
 
 /* Appearance */
 .ev-progress-circular {
-    /* critical */
-    &.is-appearance-critical {
+    /* danger */
+    &.is-appearance-danger {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-critical-bold);
+            color: var(--background-danger-bold);
         }
     }
     /* information */

@@ -33,8 +33,8 @@
     --surface-sunken: #E7EBF3;
 
     /* Backgrounds */
-    --background-critical: #F0414126;
-    --background-critical-bold: #F04141;
+    --background-danger: #F0414126;
+    --background-danger-bold: #F04141;
     --background-information: #2A82EA26;
     --background-information-bold: #2A82EA;
     --background-muted: #47496614;
@@ -51,8 +51,8 @@
     /* Text */
     --eyebrow-default: #A4ABC1;
     --heading-default: #212945;
-    --heading-on-critical: #212945;
-    --heading-on-critical-bold: #FFFFFF;
+    --heading-on-danger: #212945;
+    --heading-on-danger-bold: #FFFFFF;
     --heading-on-information: #212945;
     --heading-on-information-bold: #FFFFFF;
     --heading-on-muted: #212945;
@@ -67,9 +67,9 @@
 
     --text-default: #5D6788;
     --text-subtle: #8B8DA7;
-    --text-critical: #F04141;
-    --text-on-critical: #5D6788;
-    --text-on-critical-bold: #F3F5F9;
+    --text-danger: #F04141;
+    --text-on-danger: #5D6788;
+    --text-on-danger-bold: #F3F5F9;
     --text-information: #2A82EA;
     --text-on-information: #5D6788;
     --text-on-information-bold: #F3F5F9;
@@ -146,8 +146,8 @@
     --surface-sunken: #13121C;
 
     /* Backgrounds */
-    --background-critical: #F0414126;
-    --background-critical-bold: #F04141;
+    --background-danger: #F0414126;
+    --background-danger-bold: #F04141;
     --background-information: #2A82EA26;
     --background-information-bold: #2A82EA;
     --background-muted: #47496626;
@@ -164,8 +164,8 @@
     /* Text */
     --eyebrow-default: #7781A2;
     --heading-default: #C4CBE3;
-    --heading-on-critical: #ead7df;
-    --heading-on-critical-bold: #181724;
+    --heading-on-danger: #ead7df;
+    --heading-on-danger-bold: #181724;
     --heading-on-information: #c8d3e9;
     --heading-on-information-bold: #181724;
     --heading-on-muted: #C4CBE3;
@@ -179,9 +179,9 @@
 
     --text-default: #A0A6BC;
     --text-subtle: #61647E;
-    --text-critical: #FF6161;
-    --text-on-critical: #cda2b4;
-    --text-on-critical-bold: #181724;
+    --text-danger: #FF6161;
+    --text-on-danger: #cda2b4;
+    --text-on-danger-bold: #181724;
     --text-information: #5BA7FF;
     --text-on-information: #8f9dbc;
     --text-on-information-bold: #181724;

@@ -22,7 +22,7 @@ export const Primary: Story = {
 
             const notification = useNotification();
 
-            const appearances = ['default', 'critical', 'success', 'warning', 'notice', 'information'];
+            const appearances = ['default', 'danger', 'success', 'warning', 'notice', 'information'];
             const variants = ['subtle', 'tonal', 'bold'];
 
             function addItem() {

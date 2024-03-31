@@ -25,7 +25,7 @@ export const IconProp = [String, Function, Object, Array] as PropType<IconValue>
  */
 export function appearanceIcon(appearance?: string) {
     switch (appearance) {
-        case Appearance.critical:
+        case Appearance.danger:
             return DangerIcon;
         case Appearance.information:
             return InfoIcon;

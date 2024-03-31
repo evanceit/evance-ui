@@ -35,9 +35,9 @@
         @include mixins.appearance-default;
     }
 
-    /* Critical */
-    &.is-appearance-critical {
-        @include mixins.appearance-critical;
+    /* Danger */
+    &.is-appearance-danger {
+        @include mixins.appearance-danger;
     }
 
     /* Information */

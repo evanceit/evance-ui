@@ -10,7 +10,7 @@ import {appearanceModifier} from "@/util/modifiers.ts";
  */
 export enum Appearance {
     default = 'default',
-    critical = 'critical',
+    danger = 'danger',
     information = 'information',
     notice = 'notice',
     success = 'success',
