@@ -105,50 +105,347 @@
         &:active {
             background-color: var(--background-neutral-pressed);
         }
+
+        &.is-variant-bold {
+            color: var(--text-inverse);
+            background-color: var(--background-neutral-bold);
+            &:hover {
+                background-color: var(--background-neutral-bold-hovered);
+            }
+            &:active {
+                background-color: var(--background-neutral-bold-pressed);
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-neutral-bold);
+            &:hover {
+                background-color: var(--background-neutral-hovered);
+            }
+            &:active {
+                background-color: var(--background-neutral-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: var(--background-neutral-subtle);
+            &:hover {
+                background-color: var(--background-neutral-subtle-hovered);
+            }
+            &:active {
+                background-color: var(--background-neutral-subtle-pressed);
+            }
+        }
     }
 
     /* Danger */
     &.is-appearance-danger {
-        background-color: var(--background-danger);
-        color: var(--surface-default);
+        background-color: var(--background-danger-bold);
+        color: var(--text-inverse);
         &:hover {
-            background-color: var(--background-danger-hovered);
+            background-color: var(--background-danger-bold-hovered);
         }
         &:active {
-            background-color: var(--background-danger-pressed);
+            background-color: var(--background-danger-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-danger-bold);
+            color: var(--text-danger);
+            &:hover {
+                background-color: var(--background-danger-hovered);
+            }
+            &:active {
+                background-color: var(--background-danger-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-danger-hovered);
+            }
+            &:active {
+                background-color: var(--background-danger-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-danger);
+            &:hover {
+                background-color: var(--background-danger-hovered);
+            }
+            &:active {
+                background-color: var(--background-danger-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--text-danger);
+        }
+    }
+
+    /* Information */
+    &.is-appearance-information {
+        background-color: var(--background-information-bold);
+        color: var(--text-inverse);
+        &:hover {
+            background-color: var(--background-information-bold-hovered);
+        }
+        &:active {
+            background-color: var(--background-information-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-information-bold);
+            color: var(--text-information);
+            &:hover {
+                background-color: var(--background-information-hovered);
+            }
+            &:active {
+                background-color: var(--background-information-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-information-hovered);
+            }
+            &:active {
+                background-color: var(--background-information-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-information);
+            &:hover {
+                background-color: var(--background-information-hovered);
+            }
+            &:active {
+                background-color: var(--background-information-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--text-information);
+        }
+    }
+
+    /* Notice */
+    &.is-appearance-notice {
+        background-color: var(--background-notice-bold);
+        color: var(--text-inverse);
+        &:hover {
+            background-color: var(--background-notice-bold-hovered);
+        }
+        &:active {
+            background-color: var(--background-notice-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-notice-bold);
+            color: var(--text-notice);
+            &:hover {
+                background-color: var(--background-notice-hovered);
+            }
+            &:active {
+                background-color: var(--background-notice-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-notice-hovered);
+            }
+            &:active {
+                background-color: var(--background-notice-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-notice);
+            &:hover {
+                background-color: var(--background-notice-hovered);
+            }
+            &:active {
+                background-color: var(--background-notice-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--text-notice);
         }
     }
 
     /* Primary */
     &.is-appearance-primary {
-        background-color: var(--background-brand);
-        color: var(--surface-default);
+        background-color: var(--background-brand-bold);
+        color: var(--text-inverse);
         &:hover {
-            background-color: var(--background-brand-hovered);
+            background-color: var(--background-brand-bold-hovered);
         }
         &:active {
-            background-color: var(--background-brand-pressed);
+            background-color: var(--background-brand-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-brand-bold);
+            color: var(--text-brand);
+            &:hover {
+                background-color: var(--background-brand-hovered);
+            }
+            &:active {
+                background-color: var(--background-brand-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-brand-hovered);
+            }
+            &:active {
+                background-color: var(--background-brand-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-brand);
+            &:hover {
+                background-color: var(--background-brand-hovered);
+            }
+            &:active {
+                background-color: var(--background-brand-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--link-default);
         }
     }
 
-    /* Subtle */
-    &.is-appearance-subtle {
-        background-color: var(--background-neutral-subtle);
+    /* Success */
+    &.is-appearance-success {
+        background-color: var(--background-success-bold);
+        color: var(--text-inverse);
         &:hover {
-            background-color: var(--background-neutral-subtle-hovered);
+            background-color: var(--background-success-bold-hovered);
         }
         &:active {
-            background-color: var(--background-neutral-subtle-pressed);
+            background-color: var(--background-success-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-success-bold);
+            color: var(--text-success);
+            &:hover {
+                background-color: var(--background-success-hovered);
+            }
+            &:active {
+                background-color: var(--background-success-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-success-hovered);
+            }
+            &:active {
+                background-color: var(--background-success-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-success);
+            &:hover {
+                background-color: var(--background-success-hovered);
+            }
+            &:active {
+                background-color: var(--background-success-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--text-success);
         }
     }
 
-    &.is-appearance-link {
+    /* Warning */
+    &.is-appearance-warning {
+        background-color: var(--background-warning-bold);
+        color: var(--text-inverse);
+        &:hover {
+            background-color: var(--background-warning-bold-hovered);
+        }
+        &:active {
+            background-color: var(--background-warning-bold-pressed);
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border: 1px solid var(--background-warning-bold);
+            color: var(--text-warning);
+            &:hover {
+                background-color: var(--background-warning-hovered);
+            }
+            &:active {
+                background-color: var(--background-warning-pressed);
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--background-warning-hovered);
+            }
+            &:active {
+                background-color: var(--background-warning-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+            background-color: var(--background-warning);
+            &:hover {
+                background-color: var(--background-warning-hovered);
+            }
+            &:active {
+                background-color: var(--background-warning-pressed);
+            }
+        }
+
+        &.is-variant-subtle,
+        &.is-variant-tonal,
+        &.is-variant-link {
+            color: var(--text-warning);
+        }
+    }
+
+    /** Link Variant */
+    &.is-variant-link {
         background: transparent;
-        color: var(--link-default);
 
         &:hover,
         &:active {
-            color: var(--link-default-hover);
+            background: transparent;
 
             .ev-button--text {
                 text-decoration: underline;

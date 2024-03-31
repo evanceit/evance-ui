@@ -20,8 +20,13 @@ const meta: Meta<typeof EvButton> = {
         },
         appearance: {
             control: 'select',
-            options: ['default', 'danger', 'primary', 'subtle', 'link'],
-            description: 'Changes the appearance of the button to either `default`, `danger`, `primary`, or `subtle`.'
+            options: ['default', 'danger', 'information', 'notice', 'primary', 'success', 'warning'],
+            description: 'Changes the appearance of the button.'
+        },
+        variant: {
+            control: 'select',
+            options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
+            description: 'Changes the appearance of the button.'
         },
         size: {
             control: 'select',
@@ -66,6 +71,7 @@ const meta: Meta<typeof EvButton> = {
     },
     args: {
         appearance: 'default',
+        variant: 'default',
         default: 'Continue',
         disabled: false,
         href: undefined,

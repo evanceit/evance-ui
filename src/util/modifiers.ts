@@ -45,3 +45,12 @@ export function sizeModifier(value?: string | number, exclude: (string | RegExp)
 export function appearanceModifier(value: string, exclude: (string | RegExp)[] = []): string | undefined {
     return makeClassName(value, 'is-appearance', exclude);
 }
+
+/**
+ * ## Make a Variant Modifier Class Name
+ * @param value
+ * @param exclude
+ */
+export function variantModifier(value: string, exclude: (string | RegExp)[] = []): string | undefined {
+    return makeClassName(value, 'is-variant', exclude);
+}

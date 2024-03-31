@@ -8,8 +8,17 @@ import {PropType} from "vue";
  */
 export type ButtonAppearanceProp = 'default'
     | 'danger'
+    | 'information'
+    | 'notice'
     | 'primary'
+    | 'success'
+    | 'warning';
+
+export type ButtonVariantProp = 'default'
+    | 'bold'
+    | 'outlined'
     | 'subtle'
+    | 'tonal'
     | 'link';
 
 /**
@@ -26,7 +35,8 @@ export interface EvButtonProps extends RouterLinkOrHrefProps {
     fullWidth?: boolean,
     text?: string,
     loading?: boolean,
-    onClick?: () => void;
+    onClick?: () => void,
+    variant?: ButtonVariantProp
 }
 
 /**
@@ -49,6 +59,10 @@ export const makeEvButtonProps = propsFactory({
     fullWidth: Boolean,
     text: String,
     loading: Boolean,
+    variant: {
+        type: String as PropType<ButtonVariantProp>,
+        default: 'default'
+    },
 
     ...makeRouterLinkOrHrefProps()
 }, 'EvButton');

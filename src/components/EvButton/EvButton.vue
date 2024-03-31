@@ -7,7 +7,7 @@ import {makeEvButtonProps} from "./EvButton.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {EvIcon} from "@/components/EvIcon";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
-import {appearanceModifier, InputSize, sizeModifier} from "@/util";
+import {appearanceModifier, InputSize, sizeModifier, variantModifier} from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 
@@ -97,6 +97,7 @@ function onClick(e: MouseEvent): void {
         class="ev-button"
         :class="[
             appearanceModifier(props.appearance),
+            variantModifier(props.variant),
             sizeModifier(props.size as string, [InputSize.default]),
             {
                 'is-icon': isIconLike,
