@@ -1,10 +1,10 @@
 
 @mixin appearance-default {
     color: var(--text-muted);
-    background: var(--background-muted);
+    background: var(--background-neutral);
 
     &.is-bold {
-        background-color: var(--background-muted-bold);
+        background-color: var(--background-neutral-bold);
         color: var(--surface-default);
     }
 }

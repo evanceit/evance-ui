@@ -26,27 +26,65 @@
     --color-primary: #814EFA;
 
     /* Surfaces */
-    --surface-default: #F3F5F9;
+    --surface-default: #EFF2F9;
     --surface-overlay: #FFFFFF;
     --surface-overlay-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F;
     --surface-panel: #FFFFFF;
-    --surface-sunken: #E7EBF3;
+    --surface-sunken: #D8DCE6;
 
     /* Backgrounds */
+    --background-brand: #7C4EFA26;
+    --background-brand-hovered: #7C4EFA40;
+    --background-brand-pressed: #7C4EFA54;
+    --background-brand-bold: #814EFA;
+    --background-brand-bold-hovered: #7647E4;
+    --background-brand-bold-pressed: #5C37B2;
     --background-danger: #F0414126;
+    --background-danger-hovered: #F0414140;
+    --background-danger-pressed: #F0414154;
     --background-danger-bold: #F04141;
-    --background-information: #2A82EA26;
+    --background-danger-bold-hovered: #DA3B3B;
+    --background-danger-bold-pressed: #AA2E2E;
+    --background-information: #2A63EA26;
+    --background-information-hovered: #2A63EA40;
+    --background-information-pressed: #2A63EA54;
     --background-information-bold: #2A82EA;
-    --background-muted: #47496614;
-    --background-muted-bold: #A4ABC1;
-    --background-notice: #814EFA26;
+    --background-information-bold-hovered: #265BD5;
+    --background-information-bold-pressed: #1E47A6;
+    --background-neutral: #0A14330F;
+    --background-neutral-hovered: #0A14331F;
+    --background-neutral-pressed: #0A14333D;
+    --background-neutral-bold: #959BAD;
+    --background-neutral-bold-hovered: #7B829A;
+    --background-neutral-bold-pressed: #696F87;
+    --background-neutral-subtle: transparent;
+    --background-neutral-subtle-hovered: #0A14330F;
+    --background-neutral-subtle-pressed: #0A14331F;
+    --background-notice: #7C4EFA26;
+    --background-notice-hovered: #7C4EFA40;
+    --background-notice-pressed: #7C4EFA54;
     --background-notice-bold: #814EFA;
-    --background-selected: #9772FF1A;
-    --background-success: #2AC29926;
-    --background-success-bold: #2AC299;
-    --background-warning: #FFC22126;
+    --background-notice-bold-hovered: #7647E4;
+    --background-notice-bold-pressed: #5C37B2;
+    --background-selected: #7C4EFA26;
+    --background-selected-hovered: #7C4EFA40;
+    --background-selected-pressed: #7C4EFA54;
+    --background-selected-bold: #814EFA;
+    --background-selected-bold-hovered: #7647E4;
+    --background-selected-bold-pressed: #5C37B2;
+    --background-success: #13AE8426;
+    --background-success-hovered: #13AE8440;
+    --background-success-pressed: #13AE8454;
+    --background-success-bold: #13AE84;
+    --background-success-bold-hovered: #119E78;
+    --background-success-bold-pressed: #0D7C5E;
+    --background-warning: #FF8C2126;
+    --background-warning-hovered: #FF8C2140;
+    --background-warning-pressed: #FF8C2154;
     --background-warning-bold: #FF8C21;
-    --background-overlay-veil: #12142f7d;
+    --background-warning-bold-hovered: #E87F1E;
+    --background-warning-bold-pressed: #B56317;
+    --background-veil: #0A14337D;
 
     /* Text */
     --eyebrow-default: #A4ABC1;
@@ -65,7 +103,7 @@
     --heading-on-warning-bold: #FFFFFF;
 
 
-    --text-default: #5D6788;
+    --text-default: #535A74;
     --text-subtle: #8B8DA7;
     --text-danger: #F04141;
     --text-on-danger: #5D6788;
@@ -90,9 +128,9 @@
     --link-default-hover: #9772FF;
 
     /* Buttons */
-    --button-default-background: #ACB3CE40;
-    --button-default-background-hover: #ACB3CE66;
-    --button-default-background-active: #acb3cead;
+    --button-default-background: #0A14330F;
+    --button-default-background-hover: #0A14331F;
+    --button-default-background-active: #0A14333D;
     --button-primary-background: #814EFA;
     --button-primary-background-hover: #6e45cf;
     --button-primary-background-active: #4c23a5;
@@ -139,30 +177,68 @@
     --color-primary: #9772FF;
 
     /* Surfaces */
-    --surface-default: #181724;
-    --surface-overlay: #202131;
+    --surface-default: #131321;
+    --surface-overlay: #1F1F31;
     --surface-overlay-shadow: inset 0px 0px 0px 1px #BCD6F01F, 0px 8px 12px #0304045C, 0px 0px 1px #03040480;
-    --surface-panel: #1C1D2C;
-    --surface-sunken: #13121C;
+    --surface-panel: #191929;
+    --surface-sunken: #0B0B14;
 
     /* Backgrounds */
+    --background-brand: #7C4EFA26;
+    --background-brand-hovered: #7C4EFA40;
+    --background-brand-pressed: #7C4EFA54;
+    --background-brand-bold: #9873FF;
+    --background-brand-bold-hovered: #AF93FD;
+    --background-brand-bold-pressed: #C3AEFD;
     --background-danger: #F0414126;
-    --background-danger-bold: #F04141;
-    --background-information: #2A82EA26;
-    --background-information-bold: #2A82EA;
-    --background-muted: #47496626;
-    --background-muted-bold: #474966;
-    --background-notice: #9772FF40;
-    --background-notice-bold: #9772FF;
-    --background-selected: #9772FF1A;
-    --background-success: #2AC29926;
-    --background-success-bold: #2AC299;
-    --background-warning: #FFC22126;
-    --background-warning-bold: #FF8C21;
-    --background-overlay-veil: #13131e99;
+    --background-danger-hovered: #F0414140;
+    --background-danger-pressed: #F0414154;
+    --background-danger-bold: #F36767;
+    --background-danger-bold-hovered: #F58080;
+    --background-danger-bold-pressed: #F8A8A8;
+    --background-information: #2A63EA26;
+    --background-information-hovered: #2A63EA40;
+    --background-information-pressed: #2A63EA54;
+    --background-information-bold: #5583EE;
+    --background-information-bold-hovered: #7097F1;
+    --background-information-bold-pressed: #9DB7F5;
+    --background-neutral: #A3A7CC14;
+    --background-neutral-hovered: #A3A7CC29;
+    --background-neutral-pressed: #A3A7CC47;
+    --background-neutral-bold: #4D5166;
+    --background-neutral-bold-hovered: #656D88;
+    --background-neutral-bold-pressed: #848DAA;
+    --background-neutral-subtle: transparent;
+    --background-neutral-subtle-hovered: #A3A7CC14;
+    --background-neutral-subtle-pressed: #A3A7CC29;
+    --background-notice: #7C4EFA26;
+    --background-notice-hovered: #7C4EFA40;
+    --background-notice-pressed: #7C4EFA54;
+    --background-notice-bold: #9873FF;
+    --background-notice-bold-hovered: #AF93FD;
+    --background-notice-bold-pressed: #C3AEFD;
+    --background-selected: #7C4EFA26;
+    --background-selected-hovered: #7C4EFA40;
+    --background-selected-pressed: #7C4EFA54;
+    --background-selected-bold: #9873FF;
+    --background-selected-bold-hovered: #AF93FD;
+    --background-selected-bold-pressed: #C3AEFD;
+    --background-success: #13AE8426;
+    --background-success-hovered: #13AE8440;
+    --background-success-pressed: #13AE8454;
+    --background-success-bold: #61C9AD;
+    --background-success-bold-hovered: #92DAC6;
+    --background-success-bold-pressed: #B6E6D9;
+    --background-warning: #FF8C2126;
+    --background-warning-hovered: #FF8C2140;
+    --background-warning-pressed: #FF8C2154;
+    --background-warning-bold: #FFB26A;
+    --background-warning-bold-hovered: #FFCA99;
+    --background-warning-bold-pressed: #FFDBBA;
+    --background-veil: #08080F;
 
     /* Text */
-    --eyebrow-default: #7781A2;
+    --eyebrow-default: #7B829A;
     --heading-default: #C4CBE3;
     --heading-on-danger: #ead7df;
     --heading-on-danger-bold: #181724;
@@ -202,9 +278,9 @@
     --link-default-hover: #9772FF;
 
     /* Buttons */
-    --button-default-background: #3D3B524D;
-    --button-default-background-hover: #3d3b5299;
-    --button-default-background-active: #4d4b6796;
+    --button-default-background: #A3A7CC14;
+    --button-default-background-hover: #A3A7CC29;
+    --button-default-background-active: #A3A7CC47;
     --button-primary-background: #9772FF;
     --button-primary-background-hover: #a585ff;
     --button-primary-background-active: #bda6ff;

@@ -29,7 +29,7 @@
 
         &.is-appearance-default {
             --message-icon: var(--icon-color);
-            --message-background: var(--background-muted);
+            --message-background: var(--background-neutral);
             --message-action-link: var(--link-default);
             --message-text: var(--text-on-muted);
             --message-title: var(--heading-on-muted);
@@ -92,7 +92,7 @@
     &.is-variant-bold {
 
         &.is-appearance-default {
-            --message-background: var(--background-muted-bold);
+            --message-background: var(--background-neutral-bold);
             --message-text: var(--text-on-muted-bold);
             --message-action-link: var(--text-on-muted-bold);
             --message-title: var(--heading-on-muted-bold);
