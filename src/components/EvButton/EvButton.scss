@@ -98,47 +98,47 @@
 
     /* Default */
     &.is-appearance-default {
-        background-color: var(--button-default-background);
+        background-color: var(--background-neutral);
         &:hover {
-            background-color: var(--button-default-background-hover);
+            background-color: var(--background-neutral-hovered);
         }
         &:active {
-            background-color: var(--button-default-background-active);
+            background-color: var(--background-neutral-pressed);
         }
     }
 
     /* Danger */
     &.is-appearance-danger {
-        background-color: var(--button-danger-background);
+        background-color: var(--background-danger);
         color: var(--surface-default);
         &:hover {
-            background-color: var(--button-danger-background-hover);
+            background-color: var(--background-danger-hovered);
         }
         &:active {
-            background-color: var(--button-danger-background-active);
+            background-color: var(--background-danger-pressed);
         }
     }
 
     /* Primary */
     &.is-appearance-primary {
-        background-color: var(--button-primary-background);
+        background-color: var(--background-brand);
         color: var(--surface-default);
         &:hover {
-            background-color: var(--button-primary-background-hover);
+            background-color: var(--background-brand-hovered);
         }
         &:active {
-            background-color: var(--button-primary-background-active);
+            background-color: var(--background-brand-pressed);
         }
     }
 
     /* Subtle */
     &.is-appearance-subtle {
-        background-color: var(--button-subtle-background);
+        background-color: var(--background-neutral-subtle);
         &:hover {
-            background-color: var(--button-subtle-background-hover);
+            background-color: var(--background-neutral-subtle-hovered);
         }
         &:active {
-            background-color: var(--button-subtle-background-active);
+            background-color: var(--background-neutral-subtle-pressed);
         }
     }
 

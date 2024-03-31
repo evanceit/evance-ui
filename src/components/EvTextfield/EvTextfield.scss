@@ -132,14 +132,14 @@
 
     &.is-appearance-button {
         border-color: transparent;
-        background-color: var(--button-default-background);
+        background-color: var(--background-neutral);
 
         &:hover {
-            background-color: var(--button-default-background-hover);
+            background-color: var(--background-neutral-hovered);
         }
 
         &.is-focused {
-            background-color: var(--button-default-background-hover);
+            background-color: var(--background-neutral-hovered);
         }
     }
 

@@ -3,7 +3,7 @@
     display: inline-flex;
     height: 36px;
     align-items: center;
-    background: var(--button-default-background);
+    background: var(--background-neutral);
     padding-inline: var(--spacer-100);
     border-radius: 2px;
     gap: 2px;
@@ -59,6 +59,6 @@
 
 .ev-tag {
     &:hover {
-        background-color: var(--button-default-background-hover);
+        background-color: var(--background-neutral-hovered);
     }
 }
