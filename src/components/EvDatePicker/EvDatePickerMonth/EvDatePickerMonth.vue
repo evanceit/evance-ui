@@ -161,15 +161,23 @@ function isDisabled(value: unknown) {
 }
 
 /**
- * ## Get Appearance
+ * ## Get Day Appearance
  * @param day
  */
 function getDayAppearance(day: Day) {
+    return (day.isSelected || day.isInRange || day.isToday) ? 'primary' : 'default';
+}
+
+/**
+ * ## Get Day Variant
+ * @param day
+ */
+function getDayVariant(day: Day) {
     if (day.isSelected || day.isInRange) {
-        return 'primary';
+        return 'bold';
     }
     if (day.isToday) {
-        return 'default';
+        return 'tonal';
     }
     return 'subtle';
 }
@@ -248,6 +256,7 @@ watch(displayValue, value => {
                     :icon="true"
                     :disabled="day.isDisabled"
                     :appearance="getDayAppearance(day)"
+                    :variant="getDayVariant(day)"
                     :text="day.localized"
                     @click="onClick(day.date)"
                 />

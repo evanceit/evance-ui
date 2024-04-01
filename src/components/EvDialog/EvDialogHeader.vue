@@ -29,7 +29,7 @@ function close() {
 
         <ev-button
             rounded
-            appearance="subtle"
+            variant="subtle"
             :icon="Cancel"
             @click="close()"
         />

@@ -38,7 +38,11 @@ function onClick(i: number) {
 }
 
 function getAppearance(value?: number) {
-  return (value === internalValue.value) ? 'primary' : 'subtle';
+  return (value === internalValue.value) ? 'primary' : 'default';
+}
+
+function getVariant(value?: number) {
+    return (value === internalValue.value) ? 'bold' : 'subtle';
 }
 
 </script>
@@ -49,6 +53,7 @@ function getAppearance(value?: number) {
         :key="i"
         :text="month.text"
         :appearance="getAppearance(month.value)"
+        :variant="getVariant(month.value)"
         @click="onClick(month.value)"
     />
   </div>

@@ -184,7 +184,7 @@ function onLeave(el: Element) {
                        :aria-label="t('expand')"
                        :icon="ChevronDown"
                        size="small"
-                       appearance="subtle"
+                       variant="subtle"
                        @click="expand"
             />
         </div>
@@ -194,7 +194,7 @@ function onLeave(el: Element) {
                            :aria-label="t('dismiss')"
                            :icon="Cancel"
                            size="small"
-                           appearance="subtle"
+                           variant="subtle"
                            @click="dismiss"
                 />
             </div>

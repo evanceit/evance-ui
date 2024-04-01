@@ -338,7 +338,7 @@ function stopIncrementing() {
                 rounded
                 size="small"
                 class="ev-number-field--minus"
-                appearance="subtle"
+                variant="subtle"
                 :icon="Minus"
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(-1)"
@@ -356,7 +356,7 @@ function stopIncrementing() {
                 rounded
                 size="small"
                 class="ev-number-field--plus"
-                appearance="subtle"
+                variant="subtle"
                 :icon="Plus"
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(1)"

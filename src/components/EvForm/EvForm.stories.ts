@@ -64,7 +64,7 @@ export const Primary: Story = {
                 Submit</ev-button>
             <ev-button 
                 type="reset" 
-                appearance="subtle" 
+                variant="subtle" 
                 full-width>
                 Reset</ev-button>
         </ev-form>`

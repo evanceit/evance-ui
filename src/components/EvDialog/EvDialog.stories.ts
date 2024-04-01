@@ -238,7 +238,7 @@ export const CustomContainer: Story = {
                                 Discover a world of new functionality.
                             </p>
                             <div style="display: flex; gap: 1rem; justify-content: center">
-                                <ev-button @click="close" appearance="subtle">Remind me later</ev-button>
+                                <ev-button @click="close" variant="subtle">Remind me later</ev-button>
                                 <ev-button :icon-end="ArrowContinue" appearance="primary" @click="close">Hell yeah, continue</ev-button>
                             </div>
                         </div>
