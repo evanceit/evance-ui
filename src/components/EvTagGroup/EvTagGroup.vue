@@ -1,8 +1,22 @@
 <script setup lang="ts">
 import './EvTagGroup.scss';
-import {makeEvTagGroupProps} from "./EvTagGroup.ts";
+import {EvTagGroupSymbol, makeEvTagGroupProps} from "./EvTagGroup.ts";
+import {useGroup} from "@/composables/group.ts";
+import {computed} from "vue";
 
 const props = defineProps(makeEvTagGroupProps());
+
+const { isSelected, select, next, prev, selected } = useGroup(props, EvTagGroupSymbol)
+
+const slotProps = computed(() => {
+    return {
+        isSelected,
+        select,
+        next,
+        prev,
+        selected: selected.value
+    };
+});
 
 </script>
 <template>
@@ -14,6 +28,6 @@ const props = defineProps(makeEvTagGroupProps());
         ]"
         :style="props.style"
     >
-        Tag Group
+        <slot v-bind="slotProps" />
     </component>
 </template>

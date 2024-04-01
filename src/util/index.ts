@@ -10,6 +10,7 @@ export * from './console';
 export * from './dimensions';
 export * from './events';
 export * from './helpers';
+export * from './injectSelf';
 export * from './is-functions';
 export * from './isFixedPosition';
 export * from './keyboard';
