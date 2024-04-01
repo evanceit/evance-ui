@@ -12,7 +12,8 @@ export type ButtonAppearanceProp = 'default'
     | 'notice'
     | 'primary'
     | 'success'
-    | 'warning';
+    | 'warning'
+    | 'inverse';
 
 export type ButtonVariantProp = 'default'
     | 'bold'

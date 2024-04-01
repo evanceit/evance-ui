@@ -85,6 +85,12 @@
     --background-warning-bold-hovered: #E87F1E;
     --background-warning-bold-pressed: #B56317;
     --background-veil: #0A14337D;
+    --background-inverse: #EFF2F926;
+    --background-inverse-hovered: #EFF2F940;
+    --background-inverse-pressed: #EFF2F966;
+    --background-inverse-bold: #EFF2F9CC;
+    --background-inverse-bold-hovered: #EFF2F9E6;
+    --background-inverse-bold-pressed: #EFF2F9;
 
     /* Text */
     --eyebrow-default: #A4ABC1;
@@ -128,6 +134,7 @@
     --link-default: #814EFA;
     --link-default-hover: #9772FF;
     --text-inverse: #EFF2F9;
+    --text-on-inverse: #535A74;
 
     /* Borders */
     --border-focused: #814EFA;
@@ -224,6 +231,12 @@
     --background-warning-bold-hovered: #FFCA99;
     --background-warning-bold-pressed: #FFDBBA;
     --background-veil: #0B0B1499;
+    --background-inverse: #0B0B1426;
+    --background-inverse-hovered: #0B0B1440;
+    --background-inverse-pressed: #0B0B1466;
+    --background-inverse-bold: #131321CC;
+    --background-inverse-bold-hovered: #131321E6;
+    --background-inverse-bold-pressed: #131321;
 
     /* Text */
     --eyebrow-default: #7B829A;
@@ -266,6 +279,7 @@
     --link-default: #AA86FF;
     --link-default-hover: #9772FF;
     --text-inverse: #131321;
+    --text-on-inverse: #A0A6BC;
 
     /* Borders */
     --border-focused: #AA86FF;

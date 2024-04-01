@@ -439,6 +439,33 @@
         }
     }
 
+    /* Inverse */
+    &.is-appearance-inverse {
+        background: var(--background-inverse);
+        &:hover {
+            background: var(--background-inverse-hovered);
+        }
+        &:active {
+            background: var(--background-inverse-pressed);
+        }
+
+        &.is-variant-bold {
+            color: var(--text-on-inverse);
+            background: var(--background-inverse-bold);
+
+            &:hover {
+                background: var(--background-inverse-bold-hovered);
+            }
+            &:active {
+                background: var(--background-inverse-bold-pressed);
+            }
+        }
+
+        &.is-variant-tonal {
+
+        }
+    }
+
     /** Link Variant */
     &.is-variant-link {
         background: transparent;

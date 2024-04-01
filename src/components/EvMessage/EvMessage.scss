@@ -106,37 +106,6 @@
             --message-title: var(--heading-on-warning-bold);
             --message-icon: var(--heading-on-warning-bold);
         }
-
-        /**
-            @todo: I think the issue with bold and tonal buttons could be improved
-            @todo: we need a background inverse for dark and light themes
-         */
-        .ev-message--actions {
-            .ev-button {
-                &.is-variant-tonal {
-                    background: rgba(0, 0, 0, 0.1);
-
-                    &:hover {
-                        background: rgba(0, 0, 0, 0.15);
-                    }
-                    &:active {
-                        background: rgba(0, 0, 0, 0.25);
-                    }
-                }
-
-                &.is-variant-bold {
-                    color: var(--message-background);
-                    background: rgba(0, 0, 0, 0.90);
-
-                    &:hover {
-                        background: rgba(0, 0, 0, 0.80);
-                    }
-                    &:active {
-                        background: rgba(0, 0, 0, 0.65);
-                    }
-                }
-            }
-        }
     }
 }
 
