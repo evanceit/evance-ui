@@ -33,9 +33,9 @@ setup((app) => {
  */
 const lightTheme = create({
   base: 'light',
-  appBg: '#F3F5F9',
-  appContentBg: '#F3F5F9',
-  barBg: '#F3F5F9'
+  appBg: '#EFF2F9',
+  appContentBg: '#EFF2F9',
+  barBg: '#EFF2F9'
 });
 
 /**
@@ -44,9 +44,9 @@ const lightTheme = create({
  */
 const darkTheme = create({
   base: 'dark',
-  appBg: '#181724',
-  appContentBg: '#181724',
-  barBg: '#181724'
+  appBg: '#131321',
+  appContentBg: '#131321',
+  barBg: '#131321'
 });
 
 
