@@ -3,7 +3,7 @@
 import {makeEvVirtualScrollProps} from "./EvVirtualScroll.ts";
 import {getCurrentComponent, getScrollParent, toWebUnit} from "@/util";
 import {useDimensions} from "@/composables/dimensions.ts";
-import {onMounted, onScopeDispose, toRef} from "vue";
+import {onMounted, onScopeDispose, Ref, toRef} from "vue";
 import {useVirtual} from "@/composables/virtual.ts";
 import {useToggleScope} from "@/composables/toggleScope.ts";
 import EvVirtualScrollItem from "./EvVirtualScrollItem.vue";
@@ -34,10 +34,17 @@ useToggleScope(() => props.renderless, () => {
     });
 });
 
-
 defineExpose({
     scrollToIndex
 });
+
+defineSlots<{
+    default(props: {
+        item: any,
+        index: number,
+        itemRef: Ref<HTMLElement|undefined>
+    }): any
+}>();
 
 </script>
 <template>
@@ -51,7 +58,9 @@ defineExpose({
             :renderless="props.renderless"
             @update:height="(height) => handleItemResize(item.index, height)"
         >
-            <slot v-bind="{ item: item.raw.props, index: item.index }"  />
+            <template #default="{ itemRef }">
+                <slot v-bind="{ item: item.raw.props, index: item.index, itemRef }"  />
+            </template>
         </ev-virtual-scroll-item>
         <div class="ev-virtual-scroll--spacer"
              :style="{ paddingBottom: toWebUnit(paddingBottom) }"
@@ -82,7 +91,9 @@ defineExpose({
                 :renderless="props.renderless"
                 @update:height="(height) => handleItemResize(item.index, height)"
             >
-                <slot v-bind="{ item: item.raw, index: item.index }"  />
+                <template #default="{ itemRef }">
+                    <slot name="default" v-bind="{ item: item.raw, index: item.index, itemRef }"  />
+                </template>
             </ev-virtual-scroll-item>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import {isDeepEqual, propsFactory} from "@/util";
+import {isDeepEqual, omit, propsFactory} from "@/util";
 import {makeListItemsProps} from "@/composables/lists";
 import {makeEvTextfieldProps} from "@/components/EvTextfield";
 import {ChevronDown} from "@/icons";
@@ -9,11 +9,11 @@ import {PropType} from "vue";
  */
 export const makeEvSelectProps = propsFactory({
 
-    hideNoItems: Boolean,
+    hideItemsEmpty: Boolean,
     hideSelected: Boolean,
     menuOpen: Boolean,
     multiple: Boolean,
-    noItemsText: {
+    itemsEmptyText: {
         type: String,
         default: 'select.noItemsText'
     },
@@ -27,8 +27,9 @@ export const makeEvSelectProps = propsFactory({
         itemChildren: false
     }),
 
-    ...makeEvTextfieldProps({
+    ...omit(makeEvTextfieldProps({
         modelValue: null,
         iconEnd: ChevronDown
-    })
+    }), ['align', 'monospace', 'type'])
+
 }, 'EvSelect');

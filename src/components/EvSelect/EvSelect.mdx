@@ -1,0 +1,33 @@
+import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+
+import * as EvSelectStories from './EvSelect.stories';
+
+<Meta of={EvSelectStories} />
+
+# EvSelect
+The `ev-select` component may be used to select one or more items from a list.
+
+<Canvas>
+    <Story of={EvSelectStories.Primary} />
+</Canvas>
+<ArgsTable story='Primary' />
+
+
+### Items affix with `items-prefix` &amp; `items-suffix` slots
+The list items within the menu may be prefixed and/or suffixed
+using the `items-prefix` and `items-suffix` slots respectively.
+
+Both are included within the scroll of the list, if you would like
+your components to appear outside the scrollable area you may use
+the `list-prefix` and/or `list-suffix` slots.
+
+<Canvas>
+    <Story of={EvSelectStories.ItemsAffix} />
+</Canvas>
+
+
+### Custom Item Rendering
+
+<Canvas>
+    <Story of={EvSelectStories.CustomItem} />
+</Canvas>

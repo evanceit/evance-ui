@@ -3,9 +3,8 @@ import {
     GetterPropertyKey,
     isArray,
     isDeepEqual,
-    isObject,
-    propsFactory,
-    splitObject
+    isObject, omit,
+    propsFactory
 } from "@/util";
 import {computed, PropType, Ref} from "vue";
 import {ListItemProps} from "@/components/EvList";
@@ -115,7 +114,7 @@ export function transformItem(
     const children = getPropertyValue(item, props.itemChildren);
     const itemProps = (props.itemProps === true)
         ? (isObject(item) && item != null && !isArray(item))
-            ? ('children' in item) ? splitObject(item, ['children'])[1] : item
+            ? ('children' in item) ? omit(item, ['children']) : item
             : undefined
         : getPropertyValue(item, props.itemProps);
 
