@@ -11,7 +11,7 @@
     display: flex;
     flex-wrap: nowrap;
     gap: var(--spacer-50);
-    height: var(--input-height-medium);
+    min-height: var(--input-height-medium);
     padding-inline: var(--spacer-75);
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
@@ -37,10 +37,14 @@
 /** Input */
 .ev-textfield--input {
     align-self: stretch;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     position: relative;
+    flex-wrap: wrap;
+    min-width: 0;
+    width: min-content;
+    gap: 4px;
 
     > input {
         background: transparent;

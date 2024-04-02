@@ -4,6 +4,7 @@
 
 .ev-select {
     .ev-textfield--input {
+        padding-block: 6px;
 
         > input {
             align-self: flex-start;
@@ -12,6 +13,7 @@
             width: 100%;
             transition: none;
             pointer-events: none;
+            top: 0;
         }
     }
 
@@ -22,4 +24,17 @@
             }
         }
     }
+}
+
+.ev-select--selected {
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+}
+
+.ev-select--selected-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
 }

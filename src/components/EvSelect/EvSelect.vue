@@ -241,11 +241,8 @@ const { t } = useLocaleFunctions();
             <slot name="label">{{ props.label }}</slot>
         </template>
         <template #default>
-            <div class="ev-select--selected">
-                <span
-                    class="ev-select--selected-text"
-                    v-for="(item, index) in selections"
-                >
+            <div class="ev-select--selected" v-for="(item, index) in selections">
+                <span class="ev-select--selected-text">
                     {{ item.title }}
                     <span v-if="props.multiple && (index < selections.length - 1)"
                           class="ev-select-seelected-comma">,</span>

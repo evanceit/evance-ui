@@ -139,7 +139,7 @@ export const Primary: Story = {
             for (let i = 0; i < 1000; i++) {
                 const num = i + 1;
                 items.push({
-                    title: `Item ${num}`,
+                    title: `Example Test Item ${num}`,
                     value: num
                 });
             }
