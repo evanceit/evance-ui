@@ -3,9 +3,11 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 import { EvSelect } from "@/components/EvSelect";
 import { EvListItem } from "@/components/EvListItem";
 import { EvDivider } from "@/components/EvDivider";
+import { EvLozenge } from "@/components/EvLozenge";
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import {omit} from "@/util";
 import {Plus} from "@/icons";
+import {EvAvatar, EvBlock, EvLayout} from "@/components";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -140,7 +142,7 @@ export const ItemsAffix: Story = {
  */
 export const CustomItem: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, Plus },
+        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar },
         data() {
             return {
                 selected: null
@@ -148,12 +150,29 @@ export const CustomItem: Story = {
         },
         setup() {
             const items = generateItemList(10);
-            return { items, Plus };
+
+            const avatar = (index) => `https://picsum.photos/id/${index + 1}/36/36`;
+
+            return { items, avatar };
         },
         template: `
             <ev-select :items="items">
                 <template #item="{item, index, props}">
-                    <ev-list-item v-bind="props"></ev-list-item>
+                    <ev-list-item v-bind="props">
+                        <ev-layout align="center" gutter="100">
+                            <ev-block size="auto">
+                                <ev-avatar :image="avatar(index)" />
+                            </ev-block>
+                            <ev-block size="grow">
+                                <strong>{{ props.title }}</strong>
+                                <br>
+                                This item is at 
+                            </ev-block>
+                            <ev-block size="auto">
+                                <ev-lozenge appearance="success">Active</ev-lozenge>
+                            </ev-block>
+                        </ev-layout>
+                    </ev-list-item>
                 </template>
             </ev-select>
             `
