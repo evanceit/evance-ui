@@ -245,7 +245,7 @@ const { t } = useLocaleFunctions();
                 <span class="ev-select--selected-text">
                     {{ item.title }}
                     <span v-if="props.multiple && (index < selections.length - 1)"
-                          class="ev-select-seelected-comma">,</span>
+                          class="ev-select--selected-comma">,</span>
                 </span>
             </div>
 
