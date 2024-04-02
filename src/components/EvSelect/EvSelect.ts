@@ -1,8 +1,7 @@
-import {isDeepEqual, omit, propsFactory} from "@/util";
+import {omit, propsFactory} from "@/util";
 import {makeListItemsProps} from "@/composables/lists";
 import {makeEvTextfieldProps} from "@/components/EvTextfield";
 import {ChevronDown} from "@/icons";
-import {PropType} from "vue";
 
 /**
  * # Make EvSelect Props
@@ -18,10 +17,6 @@ export const makeEvSelectProps = propsFactory({
         default: 'select.noItemsText'
     },
     openOnClear: Boolean,
-    valueComparator: {
-        type: Function as PropType<typeof isDeepEqual>,
-        default: isDeepEqual,
-    },
 
     ...makeListItemsProps({
         itemChildren: false

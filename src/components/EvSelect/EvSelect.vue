@@ -308,8 +308,8 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
                         <template #default="{ item, index, itemRef }">
                             <slot name="item" v-bind="{ item, index, props: itemProps(item, index, itemRef) }">
                                 <ev-list-item
-                                    :ref="toRef(itemRef)"
-                                    v-bind="item as ListItem"
+                                    :ref="itemRef"
+                                    v-bind="item.props"
                                     :key="index"
                                     @click="select(item as ListItem)"
                                 />

@@ -6,7 +6,7 @@ import {
     isObject, omit,
     propsFactory
 } from "@/util";
-import {computed, PropType, Ref} from "vue";
+import {computed, PropType} from "vue";
 import {ListItemProps} from "@/components/EvList";
 
 
@@ -57,6 +57,7 @@ export interface ListItemsProps {
     itemChildren: ListItemKey;
     itemProps: ListItemKey;
     returnObject: boolean;
+    valueComparator: typeof isDeepEqual;
 }
 
 
@@ -95,7 +96,11 @@ export const makeListItemsProps = propsFactory({
         type: [Boolean, String, Array, Function] as PropType<ListItemKey>,
         default: 'props',
     },
-    returnObject: Boolean
+    returnObject: Boolean,
+    valueComparator: {
+        type: Function as PropType<typeof isDeepEqual>,
+        default: isDeepEqual
+    }
 }, 'list-items');
 
 
@@ -110,7 +115,7 @@ export function transformItem(
     item: any
 ): ListItem {
     const title = getPropertyValue(item, props.itemTitle, item);
-    const value = props.returnObject ? item : getPropertyValue(item, props.itemValue, title);
+    const value = getPropertyValue(item, props.itemValue, title);
     const children = getPropertyValue(item, props.itemChildren);
     const itemProps = (props.itemProps === true)
         ? (isObject(item) && item != null && !isArray(item))
@@ -159,34 +164,31 @@ export function useItems(props: any) {
         return transformItems(props, props.items);
     });
 
-    return useTransformItems(items, (value) => {
-        return transformItem(props, value)
+    const hasNullItem = computed(() => {
+        return items.value.some(item => item.value === null);
     });
-}
 
+    function transformIn(value: any[]): ListItem[] {
+        if (!hasNullItem.value) {
+            // When the model value is null, return an ListItem
+            // based on null only if null is one of the items
+            value = value.filter(v => v !== null);
+        }
 
-/**
- * # Use Transform Items
- *
- * @param items
- * @param transform
- */
-export function useTransformItems <T extends { value: unknown }> (items: Ref<T[]>, transform: (value: unknown) => T) {
-    function transformIn (value: any[]): T[] {
-        return value
-            // When the model value is null, returns an InternalItem based on null
-            // only if null is one of the items
-            .filter(v => v !== null || items.value.some(item => item.value === null))
-            .map(v => {
-                const existingItem = items.value.find(item => isDeepEqual(v, item.value));
-                // Nullish existingItem means value is a custom input value from combobox
-                // In this case, use transformItem to create an InternalItem based on value
-                return existingItem ?? transform(v);
-            });
+        return value.map(v => {
+            if (props.returnObject && typeof v === 'string') {
+                // String model value means value is a custom input value
+                // Don't look up existing items if the model value is a string
+                return transformItem(props, v);
+            }
+            return items.value.find(item => props.valueComparator(v, item.value)) || transformItem(props, v);
+        })
     }
 
-    function transformOut (value: T[]) {
-        return value.map(({ value }) => value);
+    function transformOut (value: ListItem[]): any[] {
+        return props.returnObject
+            ? value.map(({ raw }) => raw)
+            : value.map(({ value }) => value);
     }
 
     return { items, transformIn, transformOut };

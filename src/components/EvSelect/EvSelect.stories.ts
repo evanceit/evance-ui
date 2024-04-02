@@ -153,7 +153,7 @@ export const CustomItem: Story = {
         template: `
             <ev-select :items="items">
                 <template #item="{item, index, props}">
-                    <ev-list-item v-bind="props" :title="item.title" :link="true"></ev-list-item>
+                    <ev-list-item v-bind="props"></ev-list-item>
                 </template>
             </ev-select>
             `

@@ -9,7 +9,6 @@ import {useToggleScope} from "@/composables/toggleScope.ts";
 import EvVirtualScrollItem from "./EvVirtualScrollItem.vue";
 
 const props = defineProps(makeEvVirtualScrollProps());
-
 const component = getCurrentComponent('EvVirtualScroll');
 const dimensionStyles = useDimensions(props);
 const {
@@ -59,7 +58,7 @@ defineSlots<{
             @update:height="(height) => handleItemResize(item.index, height)"
         >
             <template #default="{ itemRef }">
-                <slot v-bind="{ item: item.raw.props, index: item.index, itemRef }"  />
+                <slot v-bind="{ item: item.raw, index: item.index, itemRef }"  />
             </template>
         </ev-virtual-scroll-item>
         <div class="ev-virtual-scroll--spacer"

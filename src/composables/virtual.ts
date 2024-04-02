@@ -123,7 +123,7 @@ export function useVirtual <T> (
             raw: item,
             index: index + first.value
         }));
-    })
+    });
 
     const paddingTop = computed(() => {
         return calculateOffset(first.value);
