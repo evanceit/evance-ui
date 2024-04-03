@@ -30,6 +30,15 @@
     display: inline-flex;
     max-width: 100%;
     align-items: center;
+    flex: 1;
+}
+
+.ev-select {
+    &.is-multiple {
+        .ev-select--selected {
+            flex: 0;
+        }
+    }
 }
 
 .ev-select--selected-text {

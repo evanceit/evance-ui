@@ -257,7 +257,12 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
 <template>
     <ev-textfield
         ref="evTextfieldRef"
-        class="ev-select"
+        :class="[
+            'ev-select',
+            {
+                'is-multiple': props.multiple
+            }
+        ]"
         v-bind="evTextfieldProps"
         v-bind:modelValue="modelValue"
         v-model:focused="isFocused"
