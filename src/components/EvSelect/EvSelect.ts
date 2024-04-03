@@ -24,7 +24,8 @@ export const makeEvSelectProps = propsFactory({
 
     ...omit(makeEvTextfieldProps({
         modelValue: null,
-        iconEnd: ChevronDown
+        iconEnd: ChevronDown,
+        role: 'button'
     }), ['align', 'monospace', 'type'])
 
 }, 'EvSelect');

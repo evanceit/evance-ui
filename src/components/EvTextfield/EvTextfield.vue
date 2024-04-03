@@ -159,7 +159,6 @@ function onClickOutside(e: MouseEvent) {
             props.class
         ]"
         :style="props.style"
-        role="textbox"
         v-bind="containerAttrs"
         v-click-outside="onClickOutside"
     >
@@ -180,6 +179,7 @@ function onClickOutside(e: MouseEvent) {
                 sizeModifier(props.size, [InputSize.default]),
                 makeClassName(props.align, 'is-align', [TextAlign.default])
             ]"
+            :role="props.role"
             @click="onControlClick"
             @mousedown="onControlMousedown"
         >

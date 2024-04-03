@@ -17,6 +17,7 @@ export const makeEvTextfieldProps = propsFactory({
     loading: Boolean,
     placeholder: String,
     prefix: String,
+    role: String,
     rounded: Boolean,
     suffix: String,
     type: {

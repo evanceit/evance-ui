@@ -7,7 +7,7 @@ import { EvLozenge } from "@/components/EvLozenge";
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import {omit} from "@/util";
 import {Plus} from "@/icons";
-import {EvAvatar, EvBlock, EvLayout, EvQuickfind} from "@/components";
+import {EvAvatar, EvBlock, EvButton, EvLayout, EvQuickfind} from "@/components";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -220,6 +220,36 @@ export const CustomItem: Story = {
                             </ev-block>
                         </ev-layout>
                     </ev-list-item>
+                </template>
+            </ev-select>
+            `
+    })
+};
+
+
+/**
+ * ## Customizing empty list
+ */
+export const ItemsEmpty: Story = {
+    render: (args: any) =>  ({
+        components: { EvSelect, EvListItem, EvButton, Plus },
+        data() {
+            return {
+                selected: null
+            }
+        },
+        setup() {
+            const items: any[] = [];
+            return { items, Plus };
+        },
+        template: `
+            <ev-select :items="items">
+                <template #items-empty>
+                    <div style="padding: 2rem; text-align: center">
+                        <h4>Oops, no items</h4>
+                        <p>You don't have any items, would you like to add one?</p>
+                        <ev-button :icon-start="Plus" size="small">Add item</ev-button>
+                    </div>
                 </template>
             </ev-select>
             `
