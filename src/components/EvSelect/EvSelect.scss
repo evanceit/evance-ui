@@ -38,3 +38,21 @@
     white-space: nowrap;
     font-size: var(--input-font-size);
 }
+
+.ev-select--menu {
+    > .ev-overlay--content {
+        > .ev-surface {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+    }
+}
+.ev-select--list {
+    flex: 1;
+    overflow: auto;
+}
+.ev-select--list-prefix,
+.ev-select--list-suffix {
+    flex: 0;
+}

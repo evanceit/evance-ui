@@ -9,7 +9,7 @@ import {computed} from "vue";
 type QuickfindSize = 'small' | 'medium' | 'large';
 
 interface QuickfindProps {
-    modelValue?: string,
+    modelValue?: string|number,
     bold?: boolean,
     size?: QuickfindSize
 }

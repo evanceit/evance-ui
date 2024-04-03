@@ -17,7 +17,7 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
     const isScrolling = shallowRef(false);
     let scrollTimeout: number;
 
-    function onListScroll (e: Event) {
+    function onListScroll(e: Event) {
         cancelAnimationFrame(scrollTimeout);
         isScrolling.value = true;
         scrollTimeout = requestAnimationFrame(() => {
@@ -27,7 +27,7 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
         });
     }
 
-    async function finishScrolling () {
+    async function finishScrolling() {
         await new Promise(resolve => requestAnimationFrame(resolve));
         await new Promise(resolve => requestAnimationFrame(resolve));
         await new Promise(resolve => requestAnimationFrame(resolve));
@@ -43,7 +43,7 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
         });
     }
 
-    async function onListKeydown (e: KeyboardEvent) {
+    async function onListKeydown(e: KeyboardEvent) {
         if (e.key === 'Tab') {
             textFieldRef.value?.focus();
             return;

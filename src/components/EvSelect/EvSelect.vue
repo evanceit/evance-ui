@@ -4,21 +4,21 @@
  *
  */
 import './EvSelect.scss';
-import EvTextfield from "../EvTextfield/EvTextfield.vue";
-import {computed, mergeProps, Ref, ref, shallowRef, toRef, useSlots} from "vue";
 import {makeEvSelectProps} from "./EvSelect.ts";
-import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
-import {EvMenu} from "../EvMenu";
-import EvList from "../EvList/EvList.vue";
+import {useScrolling} from "./useScrolling.ts";
+import {EvTextfield} from "@/components/EvTextfield";
+import {EvMenu} from "@/components/EvMenu";
+import {EvList, ListItem} from "@/components/EvList";
+import {EvListItem} from "@/components/EvListItem";
+import {EvVirtualScroll} from "@/components/EvVirtualScroll";
 import {useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import {FocusEvent, MouseEvent} from "react";
-import EvVirtualScroll from "@/components/EvVirtualScroll/EvVirtualScroll.vue";
-import EvListItem from "@/components/EvListItem/EvListItem.vue";
-import {ListItem} from "@/components/EvList";
-import {useScrolling} from "./useScrolling.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useForm} from "@/composables/form.ts";
+import {computed, mergeProps, Ref, ref, shallowRef, useSlots} from "vue";
+import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
+import {FocusEvent, MouseEvent} from "react";
+import {EvSurface} from "@/components";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -224,6 +224,8 @@ const { t } = useLocaleFunctions();
 
 defineSlots<{
     label(): any,
+    'list-prefix'(): any,
+    'list-suffix'(): any,
     item(props: {
         item: any,
         index: number,
@@ -231,7 +233,11 @@ defineSlots<{
     }): any,
     'items-empty'(): any,
     'items-prefix'(): any,
-    'items-suffix'(): any
+    'items-suffix'(): any,
+    selection(
+        item: any,
+        index: number,
+    ): any
 }>();
 
 /**
@@ -267,15 +273,18 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
         </template>
         <template #default>
             <div class="ev-select--selected" v-for="(item, index) in selections">
-                <span class="ev-select--selected-text">
-                    {{ item.title }}
-                    <span v-if="props.multiple && (index < selections.length - 1)"
-                          class="ev-select--selected-comma">,</span>
-                </span>
+                <slot name="selection" v-bind="{ item, index }">
+                    <span class="ev-select--selected-text">
+                        {{ item.title }}
+                        <span v-if="props.multiple && (index < selections.length - 1)"
+                              class="ev-select--selected-comma">,</span>
+                    </span>
+                </slot>
             </div>
 
             <ev-menu
                 ref="evMenuRef"
+                class="ev-select--menu"
                 v-model="isMenuOpen"
                 max-height="310"
                 :disabled="isMenuDisabled"
@@ -284,43 +293,55 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
                 :openOnClick="false"
                 @after-leave="onMenuAfterLeave"
             >
-                <ev-list
-                    ref="evListRef"
-                    :selected="selected"
-                    :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
-                    @focusin="onListFocusIn"
-                    @keydown="onListKeydown"
-                    @mousedown="onListMouseDown"
-                    @scroll.passive="onListScroll"
-                    tabindex="-1"
-                >
-                    <slot name="items-prefix" />
+                <ev-surface elevation="overlay">
+                    <div class="ev-select--list-prefix" v-if="slots['list-prefix']">
+                        <slot name="list-prefix" />
+                    </div>
 
-                    <slot name="items-empty" v-if="!displayItems.length && !props.hideItemsEmpty">
-                        <ev-list-item :title="t(props.itemsEmptyText)"></ev-list-item>
-                    </slot>
-
-                    <ev-virtual-scroll
-                        renderless
-                        ref="evVirtualScrollRef"
-                        :items="displayItems"
+                    <ev-list
+                        ref="evListRef"
+                        class="ev-select--list"
+                        :selected="selected"
+                        :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
+                        @focusin="onListFocusIn"
+                        @keydown="onListKeydown"
+                        @mousedown="onListMouseDown"
+                        @scroll.passive="onListScroll"
+                        tabindex="-1"
                     >
-                        <template #default="{ item, index, itemRef }">
-                            <slot name="item" v-bind="{ item, index, props: itemProps(item, index, itemRef) }">
-                                <ev-list-item
-                                    :ref="itemRef"
-                                    v-bind="item.props"
-                                    :key="index"
-                                    @click="select(item as ListItem)"
-                                />
-                            </slot>
-                        </template>
-                    </ev-virtual-scroll>
+                        <slot name="items-prefix" />
 
-                    <slot name="items-suffix" />
+                        <slot name="items-empty" v-if="!displayItems.length && !props.hideItemsEmpty">
+                            <ev-list-item :title="t(props.itemsEmptyText)"></ev-list-item>
+                        </slot>
 
-                </ev-list>
+                        <ev-virtual-scroll
+                            renderless
+                            ref="evVirtualScrollRef"
+                            :items="displayItems"
+                        >
+                            <template #default="{ item, index, itemRef }">
+                                <slot name="item" v-bind="{ item, index, props: itemProps(item, index, itemRef) }">
+                                    <ev-list-item
+                                        :ref="itemRef"
+                                        v-bind="item.props"
+                                        :key="index"
+                                        @click="select(item as ListItem)"
+                                    />
+                                </slot>
+                            </template>
+                        </ev-virtual-scroll>
+
+                        <slot name="items-suffix" />
+
+                    </ev-list>
+
+                    <div class="ev-select--list-suffix" v-if="slots['list-suffix']">
+                        <slot name="list-suffix" />
+                    </div>
+                </ev-surface>
             </ev-menu>
+
         </template>
     </ev-textfield>
 

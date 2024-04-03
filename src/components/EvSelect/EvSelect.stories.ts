@@ -7,7 +7,7 @@ import { EvLozenge } from "@/components/EvLozenge";
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import {omit} from "@/util";
 import {Plus} from "@/icons";
-import {EvAvatar, EvBlock, EvLayout} from "@/components";
+import {EvAvatar, EvBlock, EvLayout, EvQuickfind} from "@/components";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -72,7 +72,10 @@ function generateItemList(amount: number) {
         const num = i + 1;
         items.push({
             title: `Example Test Item ${num}`,
-            value: num
+            value: num,
+            id: num,
+            sku: 'EX-PID-' + num,
+            image: `https://picsum.photos/id/1${i + 1}/36/36`
         });
     }
     return items;
@@ -106,7 +109,6 @@ export const Primary: Story = {
     })
 };
 
-
 /**
  * ## Items Affix Story
  */
@@ -137,12 +139,43 @@ export const ItemsAffix: Story = {
     })
 };
 
+
+/**
+ * ## List Affix Story
+ */
+export const ListAffix: Story = {
+    render: (args: any) =>  ({
+        components: { EvSelect, EvListItem, EvDivider, Plus },
+        data() {
+            return {
+                selected: null
+            }
+        },
+        setup() {
+            const items = generateItemList(100);
+            return { items, Plus };
+        },
+        template: `
+            <ev-select :items="items">
+                <template #list-prefix>
+                    <ev-list-item>Available items</ev-list-item>
+                    <ev-divider />
+                </template>
+                <template #list-suffix>
+                    <ev-divider />
+                    <ev-list-item :icon-start="Plus" :link="true">Add a new item</ev-list-item>
+                </template>
+            </ev-select>
+            `
+    })
+};
+
 /**
  * ## Custom Item Story
  */
 export const CustomItem: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar },
+        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar, EvQuickfind },
         data() {
             return {
                 selected: null
@@ -150,23 +183,37 @@ export const CustomItem: Story = {
         },
         setup() {
             const items = generateItemList(10);
-
-            const avatar = (index) => `https://picsum.photos/id/${index + 1}/36/36`;
-
-            return { items, avatar };
+            return { items };
         },
         template: `
-            <ev-select :items="items">
+            <ev-select :items="items" clearable>
+                <template #selection="{ item, index }">
+                    <ev-layout align="center" gutter="100">
+                        <ev-block size="auto">
+                            <ev-avatar :image="item.raw.image" />
+                        </ev-block>
+                        <ev-block size="grow">
+                            <span class="text-large">{{ item.raw.title }}</span>
+                            <br>
+                            SKU: {{ item.raw.sku }}
+                            <ev-quickfind size="small" v-model="item.raw.id" />
+                        </ev-block>
+                        <ev-block size="auto">
+                            <ev-lozenge appearance="success">Active</ev-lozenge>
+                        </ev-block>
+                    </ev-layout>
+                </template>
                 <template #item="{item, index, props}">
                     <ev-list-item v-bind="props">
                         <ev-layout align="center" gutter="100">
                             <ev-block size="auto">
-                                <ev-avatar :image="avatar(index)" />
+                                <ev-avatar :image="item.raw.image" />
                             </ev-block>
                             <ev-block size="grow">
-                                <strong>{{ props.title }}</strong>
+                                <span class="text-large">{{ item.raw.title }}</span>
                                 <br>
-                                This item is at 
+                                SKU: {{ item.raw.sku }}
+                                <ev-quickfind v-model="item.raw.id" />
                             </ev-block>
                             <ev-block size="auto">
                                 <ev-lozenge appearance="success">Active</ev-lozenge>

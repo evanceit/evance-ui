@@ -108,12 +108,6 @@ defineExpose({
     <ev-overlay
         ref="overlay"
         class="ev-menu"
-        :class="[
-            props.class
-        ]"
-        :style="[
-            props.style
-        ]"
         v-bind="props"
         v-bind:activator-props="activatorProps"
         v-model="isActive"
