@@ -17,6 +17,7 @@ export const makeEvSelectProps = propsFactory({
         default: 'select.noItemsText'
     },
     openOnClear: Boolean,
+    tags: Boolean,
 
     ...makeListItemsProps({
         itemChildren: false

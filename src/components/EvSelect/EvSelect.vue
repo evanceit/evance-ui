@@ -11,14 +11,15 @@ import {EvMenu} from "@/components/EvMenu";
 import {EvList, ListItem} from "@/components/EvList";
 import {EvListItem} from "@/components/EvListItem";
 import {EvVirtualScroll} from "@/components/EvVirtualScroll";
+import {EvSurface} from "@/components/EvSurface";
 import {useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useForm} from "@/composables/form.ts";
-import {computed, mergeProps, Ref, ref, shallowRef, useSlots} from "vue";
+import {computed, mergeProps, nextTick, Ref, ref, shallowRef, useSlots} from "vue";
 import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
 import {FocusEvent, MouseEvent} from "react";
-import {EvSurface} from "@/components";
+import {EvTag} from "@/components";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -140,7 +141,7 @@ function onFieldClear(e: MouseEvent) {
  * @param e
  */
 function onFieldKeydown(e: KeyboardEvent) {
-    if (props.readonly || form?.isReadonly.value) {
+    if (!e.key || props.readonly || form?.isReadonly.value) {
         return;
     }
 
@@ -190,22 +191,33 @@ function onFieldMousedown () {
 /**
  * ## Select
  * @param item
+ * @param set `null` means toggle
  */
-function select(item: ListItem) {
+function select(item: ListItem, set: boolean | null = true) {
+    if (item.props.disabled) {
+        return;
+    }
+
     if (props.multiple) {
-        const index = selected.value.findIndex((selection: any) => {
-            return props.valueComparator(selection, item.value);
+        const index = model.value.findIndex((selection: any) => {
+            return props.valueComparator(selection.value, item.value);
         });
-        if (index === -1) {
-            model.value = [...model.value, item];
-        } else {
-            const value = [...model.value];
+        const add = set == null ? !~index : set;
+
+        if (~index) {
+            const value = add ? [...model.value, item] : [...model.value];
             value.splice(index, 1);
             model.value = value;
+        } else if (add) {
+            model.value = [...model.value, item];
         }
     } else {
-        model.value = [item];
-        isMenuOpen.value = false;
+        const add = set !== false;
+        model.value = add ? [item] : [];
+
+        nextTick(() => {
+            isMenuOpen.value = false;
+        })
     }
 }
 
@@ -253,8 +265,37 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
     });
 }
 
+/**
+ * ## createTagProps
+ * @param item
+ */
+function createTagProps(item: ListItem) {
+    return {
+        'onClick:close' (e: Event) {
+            e.stopPropagation();
+            e.preventDefault();
+            select(item, false);
+        },
+        onKeydown (e: KeyboardEvent) {
+            if (e.key !== 'Enter' && e.key !== ' ') {
+                return;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            select(item, false);
+        },
+        onMousedown (e: MouseEvent) {
+            e.preventDefault()
+            e.stopPropagation()
+        },
+        // modelValue: true,
+        // 'onUpdate:modelValue': undefined,
+    };
+}
+
 </script>
 <template>
+    {{ modelValue }}
     <ev-textfield
         ref="evTextfieldRef"
         :class="[
@@ -277,9 +318,16 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
             <slot name="label">{{ props.label }}</slot>
         </template>
         <template #default>
-            <div class="ev-select--selected" v-for="(item, index) in selections">
+            <div class="ev-select--selected" v-for="(item, index) in selections" :key="item.key">
                 <slot name="selection" v-bind="{ item, index }">
-                    <span class="ev-select--selected-text">
+                    <ev-tag
+                        v-if="props.tags"
+                        closable
+                        v-bind="createTagProps(item)"
+                    >
+                        {{ item.title }} - {{ item.key }}
+                    </ev-tag>
+                    <span v-else class="ev-select--selected-text">
                         {{ item.title }}
                         <span v-if="props.multiple && (index < selections.length - 1)"
                               class="ev-select--selected-comma">,</span>
@@ -331,7 +379,7 @@ function itemProps(item: ListItem, index: number, itemRef: Ref<HTMLElement|undef
                                         :ref="itemRef"
                                         v-bind="item.props"
                                         :key="index"
-                                        @click="select(item as ListItem)"
+                                        @click="select(item as ListItem, null)"
                                     />
                                 </slot>
                             </template>

@@ -14,6 +14,7 @@ import {ListItemProps} from "@/components/EvList";
  * # List Item
  */
 export interface ListItem<T = any> {
+    key: number,
     title: string;
     value: any;
     props: {
@@ -103,6 +104,8 @@ export const makeListItemsProps = propsFactory({
     }
 }, 'list-items');
 
+// Tracks unique item Ids
+let lastItemKey = 0;
 
 /**
  * # Transform Item
@@ -130,6 +133,7 @@ export function transformItem(
     };
 
     return {
+        key: ++lastItemKey,
         title: String(transformedItemProps.title ?? ''),
         value: transformedItemProps.value,
         props: transformedItemProps,

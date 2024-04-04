@@ -9,6 +9,7 @@ import {computed, useAttrs} from "vue";
 import {KeyboardEvent} from "react";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 
+
 const props = defineProps(makeEvTagProps());
 const attrs = useAttrs();
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);

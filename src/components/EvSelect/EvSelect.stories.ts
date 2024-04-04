@@ -31,6 +31,9 @@ const meta: Meta<typeof EvSelect> = {
             control: 'boolean',
             description: "When `true` the `v-model` bound to the EvSelect will receive the full item instead of the item's value."
         },
+        tags: {
+            control: 'boolean',
+        },
 
         ...omit(EvTextfieldStories.argTypes as any, [
             'align',
@@ -190,13 +193,13 @@ export const CustomItem: Story = {
                 <template #selection="{ item, index }">
                     <ev-layout align="center" gutter="100">
                         <ev-block size="auto">
-                            <ev-avatar :image="item.raw.image" />
+                            <ev-avatar :image="item.raw.image"></ev-avatar>
                         </ev-block>
                         <ev-block size="grow">
                             <span class="text-large">{{ item.raw.title }}</span>
-                            <br>
+                            <br />
                             SKU: {{ item.raw.sku }}
-                            <ev-quickfind size="small" v-model="item.raw.id" />
+                            <ev-quickfind size="small" v-model="item.raw.id"></ev-quickfind>
                         </ev-block>
                         <ev-block size="auto">
                             <ev-lozenge appearance="success">Active</ev-lozenge>
@@ -207,13 +210,13 @@ export const CustomItem: Story = {
                     <ev-list-item v-bind="props">
                         <ev-layout align="center" gutter="100">
                             <ev-block size="auto">
-                                <ev-avatar :image="item.raw.image" />
+                                <ev-avatar :image="item.raw.image"></ev-avatar>
                             </ev-block>
                             <ev-block size="grow">
                                 <span class="text-large">{{ item.raw.title }}</span>
-                                <br>
+                                <br />
                                 SKU: {{ item.raw.sku }}
-                                <ev-quickfind v-model="item.raw.id" />
+                                <ev-quickfind v-model="item.raw.id"></ev-quickfind>
                             </ev-block>
                             <ev-block size="auto">
                                 <ev-lozenge appearance="success">Active</ev-lozenge>

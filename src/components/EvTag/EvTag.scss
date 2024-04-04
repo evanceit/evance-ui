@@ -9,11 +9,15 @@
     gap: 2px;
     transition: 0.25s color var(--easing-standard),
                 0.25s background-color var(--easing-standard);
+    white-space: nowrap;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .ev-tag--content {
-    display: inline-flex;
     line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ev-tag--close {
@@ -32,6 +36,7 @@
     position: relative;
     cursor: pointer;
     transition: 0.25s color var(--easing-standard);
+    flex: 0 0 auto;
 
     &:before {
         content: '';
