@@ -12,6 +12,7 @@ import {EvList, ListItem} from "@/components/EvList";
 import {EvListItem} from "@/components/EvListItem";
 import {EvVirtualScroll} from "@/components/EvVirtualScroll";
 import {EvSurface} from "@/components/EvSurface";
+import {EvTag} from "@/components/EvTag";
 import {useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
@@ -19,7 +20,6 @@ import {useForm} from "@/composables/form.ts";
 import {computed, mergeProps, nextTick, Ref, ref, shallowRef, useSlots, watch} from "vue";
 import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
 import {FocusEvent, MouseEvent} from "react";
-import {EvTag} from "@/components";
 
 // Props
 const props = defineProps(makeEvSelectProps());
