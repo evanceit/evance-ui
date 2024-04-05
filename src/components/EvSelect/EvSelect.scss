@@ -21,6 +21,14 @@
     }
 }
 
+.ev-select {
+    &.is-selecting {
+        .ev-select--selected:not(.is-selected) {
+            opacity: 0.6;
+        }
+    }
+}
+
 .ev-select:not(.is-searchable) {
     cursor: pointer;
 

@@ -531,7 +531,8 @@ const validationValue = computed(() => model.externalValue);
             {
                 'is-single': !props.multiple,
                 'is-multiple': props.multiple,
-                'is-searchable': isSearchable
+                'is-searchable': isSearchable,
+                'is-selecting': selectionIndex > -1
             }
         ]"
         v-bind="evTextfieldProps"
@@ -552,7 +553,15 @@ const validationValue = computed(() => model.externalValue);
             <slot name="label">{{ props.label }}</slot>
         </template>
         <template #default>
-            <div class="ev-select--selected" v-for="(item, index) in selections" :key="item.key">
+            <div v-for="(item, index) in selections"
+                 :key="item.key"
+                 :class="[
+                     'ev-select--selected',
+                     {
+                         'is-selected': index === selectionIndex
+                     }
+                 ]"
+            >
                 <slot name="selection" v-bind="{ item, index }">
                     <ev-tag
                         v-if="props.tags"
