@@ -396,6 +396,7 @@ function select(item: ListItem, set: boolean | null = true) {
         } else if (add) {
             model.value = [...model.value, item];
         }
+        search.value = '';
     } else {
         const add = set !== false;
         model.value = add ? [item] : [];
