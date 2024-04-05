@@ -1,18 +1,13 @@
 .ev-select {
-    cursor: pointer;
-}
-
-.ev-select {
     .ev-textfield--input {
         padding-block: 6px;
 
         > input {
-            align-self: flex-start;
-            flex: 0 0;
+            align-self: stretch;
+            flex: 1 1;
             position: absolute;
             width: 100%;
             transition: none;
-            pointer-events: none;
             top: 0;
         }
     }
@@ -21,6 +16,47 @@
         .ev-textfield--input {
             > input {
                 opacity: 0;
+            }
+        }
+    }
+}
+
+.ev-select:not(.is-searchable) {
+    cursor: pointer;
+
+    .ev-textfield--input {
+        > input {
+            pointer-events: none;
+        }
+    }
+}
+
+.ev-select {
+    &.is-searchable {
+        &.is-focused {
+            .ev-textfield--input {
+                > input {
+                    opacity: 1;
+                }
+            }
+
+            &.is-single {
+                .ev-select--selected {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}
+
+.ev-select {
+    &.is-searchable {
+        &.is-multiple {
+            .ev-textfield--input {
+                > input {
+                    position: unset;
+                    height: unset;
+                }
             }
         }
     }

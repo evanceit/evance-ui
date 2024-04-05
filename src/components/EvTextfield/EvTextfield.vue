@@ -106,7 +106,7 @@ function onFocus(e?: Event) {
  * @param e
  */
 function onControlClick(e: MouseEvent) {
-    onFocus();
+    inputRef.value?.focus(e as FocusEvent);
     emit('click:control', e);
 }
 

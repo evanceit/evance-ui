@@ -18,8 +18,9 @@ import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useForm} from "@/composables/form.ts";
 import {computed, mergeProps, nextTick, Ref, ref, shallowRef, useSlots, watch} from "vue";
-import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
+import {Browser, filterComponentProps, isComposingIgnoreKey, KeyLogger, matchesSelector, wrapInArray} from "@/util";
 import {FocusEvent, MouseEvent} from "react";
+import {useFilter} from "@/composables/filter.ts";
 
 // Props
 const props = defineProps(makeEvSelectProps());
@@ -45,7 +46,8 @@ defineSlots<{
 const emit = defineEmits([
     'update:focused',
     'update:menuOpen',
-    'update:modelValue'
+    'update:modelValue',
+    'update:search'
 ]);
 
 const slots = useSlots();
@@ -56,6 +58,10 @@ const evTextfieldProps = computed(() => {
    return filterComponentProps(EvTextfield, props);
 });
 const isFocused = shallowRef(false);
+const isPristine = shallowRef(true);
+const isSearchable = computed(() => props.behavior !== 'select');
+const listHasFocus = shallowRef(false);
+const isSelecting = shallowRef(false);
 
 // Menu
 const evMenuRef = ref<typeof EvMenu>();
@@ -79,13 +85,16 @@ const isMenuDisabled = computed(() => {
 // List
 const evListRef = ref<typeof EvList>();
 const evVirtualScrollRef = ref<typeof EvVirtualScroll>();
+const { items, transformIn, transformOut } = useItems(props);
+const search = useModelProxy(props, 'search', '');
+const { filteredItems, getMatches } = useFilter(props, items, () => (isPristine.value || !isSearchable.value) ? '' : search.value);
 const displayItems = computed(() => {
     if (props.hideSelected) {
-        return items.value.filter(item => !selections.value.some((s: any) => s === item));
+        return filteredItems.value.filter(filteredItem => !model.value.some((s: ListItem) => s.value === filteredItem.value));
     }
-    return items.value;
+    return filteredItems.value;
 });
-const { items, transformIn, transformOut } = useItems(props);
+
 const model = useModelProxy(
     props,
     "modelValue",
@@ -103,10 +112,24 @@ const selections = computed(() => {
         }) || value;
     });
 });
+const selectionIndex = shallowRef(-1);
 const selected = computed(() => {
     return selections.value.map((selection: any) => selection.props.value);
 });
 const keyLogger = new KeyLogger();
+
+const highlightFirst = computed(() => {
+    const selectFirst = (
+        props.autoSelectFirst === true
+        || (props.autoSelectFirst === 'exact' && search.value === displayItems.value[0]?.title)
+    );
+    return (
+        selectFirst
+        && displayItems.value.length > 0
+        && !isPristine.value
+        && !listHasFocus.value
+    );
+});
 
 let form = useForm();
 
@@ -127,6 +150,18 @@ function onMenuAfterLeave() {
  */
 function onListFocusIn(e:FocusEvent) {
     isFocused.value = true;
+    setTimeout(() => {
+        listHasFocus.value = true;
+    });
+}
+
+/**
+ * ## onListFocusOut
+ *
+ * @param e
+ */
+function onListFocusOut(e:FocusEvent) {
+    listHasFocus.value = false;
 }
 
 /**
@@ -151,6 +186,23 @@ function onFieldBlur(e: FocusEvent) {
 }
 
 /**
+ * ## onFieldChange
+ * If the field changed due to an autofill utility attempt to select an item.
+ * @param e
+ */
+function onFieldChange(e: Event) {
+    if (
+        matchesSelector(evTextfieldRef.value, ':autofill')
+        || matchesSelector(evTextfieldRef.value, ':-webkit-autofill')
+    ) {
+        const item = items.value.find(item => item.title === (e.target as HTMLInputElement).value);
+        if (item) {
+            select(item);
+        }
+    }
+}
+
+/**
  * ## On Field Clear
  * When the user clicks on the `clearable` icon.
  * @param e
@@ -159,6 +211,15 @@ function onFieldClear(e: MouseEvent) {
     if (props.openOnClear) {
         isMenuOpen.value = true;
     }
+    search.value = '';
+}
+
+/**
+ * ## On Field Input
+ * @param e
+ */
+function onFieldInput(e: InputEvent) {
+    search.value = (e.target as HTMLInputElement).value;
 }
 
 /**
@@ -166,22 +227,58 @@ function onFieldClear(e: MouseEvent) {
  * @param e
  */
 function onFieldKeydown(e: KeyboardEvent) {
-    if (!e.key || props.readonly || form?.isReadonly.value) {
+    if (
+        !e.key
+        || isComposingIgnoreKey(e)
+        || props.readonly
+        || form?.isReadonly.value
+    ) {
         return;
     }
 
-    if (['Enter', ' ', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) {
+    const preventKeys = ['Enter', 'ArrowDown', 'ArrowUp'];
+    const openerKeys = ['Enter', 'ArrowDown'];
+    const escapeKeys = ['Escape'];
+    if (!isSearchable.value) {
+        preventKeys.push(' ', 'Home', 'End');
+        openerKeys.push(' ');
+        escapeKeys.push('Tab');
+    }
+
+    if (selectionIndex.value > -1 || preventKeys.includes(e.key)) {
         e.preventDefault();
     }
 
-    if (['Enter', 'ArrowDown', ' '].includes(e.key)) {
+    if (openerKeys.includes(e.key)) {
         isMenuOpen.value = true;
     }
 
-    if (['Escape', 'Tab'].includes(e.key)) {
+    if (escapeKeys.includes(e.key)) {
         isMenuOpen.value = false;
     }
 
+    if (!isSearchable.value) {
+        // Use `keyLogger`
+        keydownBehaviorSelect(e);
+        return;
+    }
+
+    // @todo: <--- YOU ARE HERE!
+
+    const selectionStart = evTextfieldRef.value.selectionStart;
+    const length = model.value.length;
+
+
+}
+
+/**
+ * ## keydownBehaviorSelect
+ * Handles keydown events for the select control when the input field
+ * cannot be entered. Instead, we use `keyLogger` to track key events
+ * and then select the first available item in the list.
+ * @param e
+ */
+function keydownBehaviorSelect(e: KeyboardEvent) {
     if (e.key === 'Home') {
         evListRef.value?.focus('first');
     } else if (e.key === 'End') {
@@ -239,19 +336,33 @@ function select(item: ListItem, set: boolean | null = true) {
     } else {
         const add = set !== false;
         model.value = add ? [item] : [];
+        search.value = item.title;
 
         nextTick(() => {
             isMenuOpen.value = false;
+            isPristine.value = true;
+            isSelecting.value = false
         })
     }
 }
 
-const modelValue = computed(() => {
+/**
+ *
+ */
+const fieldValue = computed(() => {
+    if (isSearchable.value) {
+        return search.value;
+    }
     return model.value.map((value: any) => value.props.value).join(', ');
 });
 
+/**
+ * ## onModelValueUpdate
+ * When the model value is updated from the textfield.
+ * @param value
+ */
 function onModelValueUpdate(value: any) {
-    if (value === null) {
+    if (value === null || (value === '' && !props.multiple)) {
         model.value = [];
     }
 }
@@ -305,6 +416,30 @@ watch(isFocused, (value, oldValue) => {
     emit('update:focused', value);
 });
 
+
+/**
+ * Scroll to the last selected item when the menu opens.
+ */
+watch(isMenuOpen, () => {
+    if (
+        props.hideSelected
+        || !isMenuOpen.value
+        || !model.value.length
+        || !Browser.hasWindow
+    ) {
+        return;
+    }
+    const lastSelectedItem = model.value[model.value.length - 1];
+    const index = displayItems.value.findIndex(
+        item => (item.value === lastSelectedItem.value)
+    );
+    window.requestAnimationFrame(() => {
+        index >= 0 && evVirtualScrollRef.value?.scrollToIndex(index)
+    });
+});
+
+const validationValue = computed(() => model.externalValue);
+
 </script>
 <template>
     <ev-textfield
@@ -312,15 +447,21 @@ watch(isFocused, (value, oldValue) => {
         :class="[
             'ev-select',
             {
-                'is-multiple': props.multiple
+                'is-single': !props.multiple,
+                'is-multiple': props.multiple,
+                'is-searchable': isSearchable
             }
         ]"
         v-bind="evTextfieldProps"
-        v-bind:modelValue="modelValue"
+        v-bind:modelValue="fieldValue"
         v-model:focused="isFocused"
-        readonly
+        :readonly="!isSearchable || props.readonly"
+        :placeholder="model.length ? undefined : props.placeholder"
+        :validation-value="validationValue"
         @blur="onFieldBlur"
+        @change="onFieldChange"
         @click:clear="onFieldClear"
+        @input="onFieldInput"
         @keydown="onFieldKeydown"
         @mousedown:control="onFieldMousedown"
         @update:modelValue="onModelValueUpdate"
@@ -367,6 +508,7 @@ watch(isFocused, (value, oldValue) => {
                         :selected="selected"
                         :selectStrategy="props.multiple ? 'multi-any' : 'single-any'"
                         @focusin="onListFocusIn"
+                        @focusout="onListFocusOut"
                         @keydown="onListKeydown"
                         @mousedown="onListMouseDown"
                         @scroll.passive="onListScroll"

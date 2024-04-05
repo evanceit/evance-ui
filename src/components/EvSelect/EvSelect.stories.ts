@@ -14,12 +14,20 @@ const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
     title: 'Forms/EvSelect',
     argTypes: {
-
-        modelValue: {
-            description: "The `model-value` is the `v-model` value of the component."
+        behavior: {
+            control: 'select',
+            options: ['select', 'autocomplete', 'combobox'],
+            description: ''
         },
-        multiple: {
-            control: 'boolean'
+        hideItemsEmpty: {
+            control: 'boolean',
+            description: 'Hides the menu when there are no items to show. Useful for preventing the menu from opening ' +
+                'before results are fetched asynchronously. ' +
+                'Also has the effect of opening the menu when the items array changes if not already open.'
+        },
+        hideSelected: {
+            control: 'boolean',
+            description: 'Do not display in the select menu items that are already selected.'
         },
         items: {
             description: "An array of strings or objects. By default objects should have `title` (see `item-title`) and " +
@@ -35,6 +43,12 @@ const meta: Meta<typeof EvSelect> = {
         itemsEmptyText: {
             control: 'text',
             description: "Change the text that appears when no items are available, or use the `no-items` slot. Defaults to the `select.noItemsText` locale translation path."
+        },
+        modelValue: {
+            description: "The `model-value` is the `v-model` value of the component."
+        },
+        multiple: {
+            control: 'boolean'
         },
         openOnClear: {
             control: 'boolean'
@@ -57,11 +71,15 @@ const meta: Meta<typeof EvSelect> = {
         ])
     },
     args: {
+        behavior: 'select',
         modelValue: undefined,
         multiple: false,
+        hideItemsEmpty: false,
+        hideSelected: false,
         itemsEmptyText: undefined,
         openOnClear: false,
         returnObject: false,
+        tags: false,
 
         ...omit(EvTextfieldStories.args as any, [
             'align',
@@ -87,7 +105,7 @@ function generateItemList(amount: number) {
     for (let i = 0; i < amount; i++) {
         const num = i + 1;
         items.push({
-            title: `Example Test Item ${num}`,
+            title: `${num}. Example Test Item ${num}`,
             value: num,
             id: num,
             sku: 'EX-PID-' + num,
@@ -113,6 +131,7 @@ export const Primary: Story = {
             const items = generateItemList(1000);
 
             const requiredValidator = (value: any) => {
+                console.log(value);
                 if (!value) {
                     return 'Required';
                 }
@@ -121,7 +140,7 @@ export const Primary: Story = {
 
             return { args, items, requiredValidator };
         },
-        template: `<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`
+        template: `{{ selected }}<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`
     })
 };
 
@@ -287,6 +306,7 @@ export const AsyncItems: Story = {
         setup() {
             const items = ref([]);
             const isLoading = shallowRef(false);
+            const menuOpen = shallowRef(false);
             let isLoaded = false;
 
             const loadItems = async () => {
@@ -305,17 +325,20 @@ export const AsyncItems: Story = {
                     return;
                 }
                 loadItems();
+                menuOpen.value = true;
             };
 
-            return { items, Plus, onMenuOpen, isLoading};
+            return { items, Plus, onMenuOpen, isLoading, menuOpen };
         },
         template: `
             <ev-select 
+                :hide-items-empty="true"
                 :items="items" 
                 item-title="API"
                 item-value="Link"
                 :loading="isLoading"
-                @update:menuOpen="onMenuOpen" 
+                v-model:menuOpen="menuOpen"
+                @update:focused="onMenuOpen" 
             ></ev-select>
             `
     })

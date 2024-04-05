@@ -7,7 +7,7 @@ import {
     ToRefs,
     watchEffect
 } from "vue";
-import {getCurrentComponent, isArray, isFunction, isObjectNotArray} from "../util";
+import {Browser, getCurrentComponent, isArray, isFunction, isObjectNotArray} from "../util";
 
 
 /**
@@ -361,4 +361,27 @@ export function omit<
     exclude.forEach(prop => delete clone[prop])
 
     return clone
+}
+
+/**
+ * # matchesSelector
+ * Returns `null` if the CSS selector is not supported, or can't be checked.
+ * @param el
+ * @param selector
+ */
+export function matchesSelector(el: Element | undefined, selector: string): boolean | null {
+    const supportsSelector = Browser.hasWindow
+        && typeof CSS !== 'undefined'
+        && typeof CSS.supports !== 'undefined'
+        && CSS.supports(`selector(${selector})`);
+
+    if (!supportsSelector) {
+        return null
+    }
+
+    try {
+        return !!el && el.matches(selector);
+    } catch (err) {
+        return null;
+    }
 }
