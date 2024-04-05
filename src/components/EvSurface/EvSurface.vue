@@ -30,22 +30,16 @@ function makeRoundedClass(rounded?: string | number | boolean) {
  * @param scrollable
  */
 function makeScrollableClass(scrollable?: string | boolean) {
-    if (isEmpty(scrollable)) {
+    if (typeof scrollable === 'undefined') {
         return undefined;
     }
     if (scrollable === false) {
         return 'is-overflow-hidden';
     }
-    if (scrollable === true) {
-        return 'is-scrollable';
-    }
-    if (!isString(scrollable)) {
-        return undefined;
-    }
     switch (scrollable) {
         case 'x': return 'is-scrollable-x';
         case 'y': return 'is-scrollable-y';
-        default: return undefined;
+        default: return 'is-scrollable';
     }
 }
 

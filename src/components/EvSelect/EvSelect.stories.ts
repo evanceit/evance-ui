@@ -8,6 +8,7 @@ import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts"
 import {omit} from "@/util";
 import {Plus} from "@/icons";
 import {EvAvatar, EvBlock, EvButton, EvLayout, EvQuickfind} from "@/components";
+import {ref, shallowRef} from "vue";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -19,6 +20,17 @@ const meta: Meta<typeof EvSelect> = {
         },
         multiple: {
             control: 'boolean'
+        },
+        items: {
+            description: "An array of strings or objects. By default objects should have `title` (see `item-title`) and " +
+                "`value` (see `item-value`) properties, and can optionally have a `props` property containing any " +
+                "`EvListItem` props."
+        },
+        itemTitle: {
+            description: "Property on supplied items that contains its title. Defaults to 'title'."
+        },
+        itemValue: {
+            description: "Property on supplied items that contains its value - must be a primitive. Defaults to 'value'."
         },
         itemsEmptyText: {
             control: 'text',
@@ -33,6 +45,7 @@ const meta: Meta<typeof EvSelect> = {
         },
         tags: {
             control: 'boolean',
+            description: "Selections are shown as an `<ev-tag>`. "
         },
 
         ...omit(EvTextfieldStories.argTypes as any, [
@@ -243,7 +256,7 @@ export const ItemsEmpty: Story = {
         },
         setup() {
             const items: any[] = [];
-            return { items, Plus };
+            return { items, Plus};
         },
         template: `
             <ev-select :items="items">
@@ -255,6 +268,55 @@ export const ItemsEmpty: Story = {
                     </div>
                 </template>
             </ev-select>
+            `
+    })
+};
+
+
+/**
+ * ## Async Items
+ */
+export const AsyncItems: Story = {
+    render: (args: any) =>  ({
+        components: { EvSelect, EvListItem, EvButton, Plus },
+        data() {
+            return {
+                selected: null
+            }
+        },
+        setup() {
+            const items = ref([]);
+            const isLoading = shallowRef(false);
+            let isLoaded = false;
+
+            const loadItems = async () => {
+                isLoading.value = true;
+                const response = await fetch('https://api.publicapis.org/entries');
+
+                const data = await response.json();
+                items.value = data.entries;
+                isLoading.value = false;
+                isLoaded = true;
+            };
+
+            const onMenuOpen = (isOpen: boolean) => {
+                if (!isOpen || isLoaded) {
+                    isLoading.value = false;
+                    return;
+                }
+                loadItems();
+            };
+
+            return { items, Plus, onMenuOpen, isLoading};
+        },
+        template: `
+            <ev-select 
+                :items="items" 
+                item-title="API"
+                item-value="Link"
+                :loading="isLoading"
+                @update:menuOpen="onMenuOpen" 
+            ></ev-select>
             `
     })
 };

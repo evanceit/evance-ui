@@ -16,13 +16,38 @@ import {useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useForm} from "@/composables/form.ts";
-import {computed, mergeProps, nextTick, Ref, ref, shallowRef, useSlots} from "vue";
+import {computed, mergeProps, nextTick, Ref, ref, shallowRef, useSlots, watch} from "vue";
 import {filterComponentProps, KeyLogger, wrapInArray} from "@/util";
 import {FocusEvent, MouseEvent} from "react";
 import {EvTag} from "@/components";
 
 // Props
 const props = defineProps(makeEvSelectProps());
+
+defineSlots<{
+    label(): any,
+    'list-prefix'(): any,
+    'list-suffix'(): any,
+    item(props: {
+        item: any,
+        index: number,
+        props: any
+    }): any,
+    'items-empty'(): any,
+    'items-prefix'(): any,
+    'items-suffix'(): any,
+    selection(
+        item: any,
+        index: number,
+    ): any
+}>();
+
+const emit = defineEmits([
+    'update:focused',
+    'update:menuOpen',
+    'update:modelValue'
+]);
+
 const slots = useSlots();
 
 // TextField
@@ -234,24 +259,6 @@ function onModelValueUpdate(value: any) {
 
 const { t } = useLocaleFunctions();
 
-defineSlots<{
-    label(): any,
-    'list-prefix'(): any,
-    'list-suffix'(): any,
-    item(props: {
-        item: any,
-        index: number,
-        props: any
-    }): any,
-    'items-empty'(): any,
-    'items-prefix'(): any,
-    'items-suffix'(): any,
-    selection(
-        item: any,
-        index: number,
-    ): any
-}>();
-
 /**
  * @param item
  * @param index
@@ -287,15 +294,19 @@ function createTagProps(item: ListItem) {
         onMousedown (e: MouseEvent) {
             e.preventDefault()
             e.stopPropagation()
-        },
-        // modelValue: true,
-        // 'onUpdate:modelValue': undefined,
+        }
     };
 }
 
+watch(isFocused, (value, oldValue) => {
+    if (value === oldValue) {
+        return;
+    }
+    emit('update:focused', value);
+});
+
 </script>
 <template>
-    {{ modelValue }}
     <ev-textfield
         ref="evTextfieldRef"
         :class="[
@@ -324,9 +335,8 @@ function createTagProps(item: ListItem) {
                         v-if="props.tags"
                         closable
                         v-bind="createTagProps(item)"
-                    >
-                        {{ item.title }} - {{ item.key }}
-                    </ev-tag>
+                        :text="item.title"
+                    />
                     <span v-else class="ev-select--selected-text">
                         {{ item.title }}
                         <span v-if="props.multiple && (index < selections.length - 1)"
@@ -346,7 +356,7 @@ function createTagProps(item: ListItem) {
                 :openOnClick="false"
                 @after-leave="onMenuAfterLeave"
             >
-                <ev-surface elevation="overlay">
+                <ev-surface elevation="overlay" scrollable>
                     <div class="ev-select--list-prefix" v-if="slots['list-prefix']">
                         <slot name="list-prefix" />
                     </div>
