@@ -13,7 +13,7 @@ import {EvListItem} from "@/components/EvListItem";
 import {EvVirtualScroll} from "@/components/EvVirtualScroll";
 import {EvSurface} from "@/components/EvSurface";
 import {EvTag} from "@/components/EvTag";
-import {useItems} from "@/composables/lists";
+import {transformItem, useItems} from "@/composables/lists";
 import {useModelProxy} from "@/composables/modelProxy.ts";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useForm} from "@/composables/form.ts";
@@ -273,13 +273,65 @@ function onFieldKeydown(e: KeyboardEvent) {
         evListRef.value?.focus('next');
     }
 
-
-    // @todo: <--- YOU ARE HERE!
+    if (!props.multiple) {
+        return;
+    }
 
     const selectionStart = evTextfieldRef.value.selectionStart;
     const length = model.value.length;
 
+    // Backspacing
+    if (['Backspace', 'Delete'].includes(e.key)) {
+        if (selectionIndex.value < 0) {
+            if (e.key === 'Backspace' && !search.value) {
+                selectionIndex.value = length - 1;
+            }
+            return;
+        }
+        const originalSelectionIndex = selectionIndex.value;
+        const selectedItem = model.value[selectionIndex.value];
+        if (selectedItem && !selectedItem.props.disabled) {
+            select(selectedItem);
+        }
+        selectionIndex.value = originalSelectionIndex >= length - 1 ? (length - 2) : originalSelectionIndex;
+    }
 
+    // Left
+    if (e.key === 'ArrowLeft') {
+        if (selectionIndex.value < 0 && selectionStart > 0) {
+            return;
+        }
+        const prev = selectionIndex.value > -1 ? selectionIndex.value - 1 : length - 1;
+        if (model.value[prev]) {
+            selectionIndex.value = prev;
+        } else {
+            selectionIndex.value = -1;
+            evTextfieldRef.value.setSelectionRange(search.value?.length, search.value?.length);
+        }
+    }
+
+    // Right
+    if (e.key === 'ArrowRight') {
+        if (selectionIndex.value < 0) {
+            return;
+        }
+        const next = selectionIndex.value + 1;
+        if (model.value[next]) {
+            selectionIndex.value = next;
+        } else {
+            selectionIndex.value = -1;
+            evTextfieldRef.value.setSelectionRange(0, 0);
+        }
+    }
+    if (props.behavior !== 'combobox') {
+        return;
+    }
+
+    // Enter
+    if (e.key === 'Enter' && search.value) {
+        select(transformItem(props as any, search.value));
+        search.value = '';
+    }
 }
 
 /**
@@ -423,6 +475,11 @@ function createTagProps(item: ListItem) {
 watch(isFocused, (value, oldValue) => {
     if (value === oldValue) {
         return;
+    }
+    if (value) {
+
+    } else {
+
     }
     emit('update:focused', value);
 });
