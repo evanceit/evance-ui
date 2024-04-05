@@ -132,6 +132,7 @@ const highlightFirst = computed(() => {
 });
 
 let form = useForm();
+const { t } = useLocaleFunctions();
 
 /**
  * ## On Menu After Leave
@@ -139,6 +140,7 @@ let form = useForm();
  */
 function onMenuAfterLeave() {
     if (isFocused.value) {
+        isPristine.value = true;
         evTextfieldRef.value?.focus();
     }
 }
@@ -263,6 +265,15 @@ function onFieldKeydown(e: KeyboardEvent) {
         return;
     }
 
+    if (highlightFirst.value && ['Enter', 'Tab'].includes(e.key)) {
+        select(displayItems.value[0]);
+    }
+
+    if (e.key === 'ArrowDown' && highlightFirst.value) {
+        evListRef.value?.focus('next');
+    }
+
+
     // @todo: <--- YOU ARE HERE!
 
     const selectionStart = evTextfieldRef.value.selectionStart;
@@ -367,9 +378,6 @@ function onModelValueUpdate(value: any) {
     }
 }
 
-
-const { t } = useLocaleFunctions();
-
 /**
  * @param item
  * @param index
@@ -409,6 +417,9 @@ function createTagProps(item: ListItem) {
     };
 }
 
+/**
+ * Watch Focus
+ */
 watch(isFocused, (value, oldValue) => {
     if (value === oldValue) {
         return;
@@ -416,6 +427,18 @@ watch(isFocused, (value, oldValue) => {
     emit('update:focused', value);
 });
 
+/**
+ * Watch Search
+ */
+watch(search, (value, oldValue) => {
+    if (!isFocused.value || isSelecting.value) {
+        return;
+    }
+    if (value) {
+        isMenuOpen.value = true;
+    }
+    isPristine.value = !value;
+});
 
 /**
  * Scroll to the last selected item when the menu opens.
@@ -442,6 +465,7 @@ const validationValue = computed(() => model.externalValue);
 
 </script>
 <template>
+    {{ search }}
     <ev-textfield
         ref="evTextfieldRef"
         :class="[
