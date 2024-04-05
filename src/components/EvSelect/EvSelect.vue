@@ -291,7 +291,7 @@ function onFieldKeydown(e: KeyboardEvent) {
         const originalSelectionIndex = selectionIndex.value;
         const selectedItem = model.value[selectionIndex.value];
         if (selectedItem && !selectedItem.props.disabled) {
-            select(selectedItem);
+            select(selectedItem, false);
         }
         selectionIndex.value = originalSelectionIndex >= length - 1 ? (length - 2) : originalSelectionIndex;
     }
@@ -306,7 +306,7 @@ function onFieldKeydown(e: KeyboardEvent) {
             selectionIndex.value = prev;
         } else {
             selectionIndex.value = -1;
-            evTextfieldRef.value.setSelectionRange(search.value?.length, search.value?.length);
+            evTextfieldRef.value?.input.setSelectionRange(search.value?.length, search.value?.length);
         }
     }
 
@@ -320,7 +320,7 @@ function onFieldKeydown(e: KeyboardEvent) {
             selectionIndex.value = next;
         } else {
             selectionIndex.value = -1;
-            evTextfieldRef.value.setSelectionRange(0, 0);
+            evTextfieldRef.value?.input.setSelectionRange(0, 0);
         }
     }
     if (props.behavior !== 'combobox') {
@@ -522,7 +522,7 @@ const validationValue = computed(() => model.externalValue);
 
 </script>
 <template>
-    {{ search }}
+    {{ selectionIndex }}
     <ev-textfield
         ref="evTextfieldRef"
         :class="[
