@@ -37,10 +37,13 @@ defineSlots<{
     'items-empty'(): any,
     'items-prefix'(): any,
     'items-suffix'(): any,
+    placeholder(): any,
+    prefix(): any,
     selection(
         item: any,
         index: number,
-    ): any
+    ): any,
+    suffix(): any
 }>();
 
 const emit = defineEmits([
@@ -151,8 +154,8 @@ function onMenuAfterLeave() {
  * @param e
  */
 function onListFocusIn(e:FocusEvent) {
-    isFocused.value = true;
     setTimeout(() => {
+        isFocused.value = true;
         listHasFocus.value = true;
     });
 }
@@ -185,6 +188,7 @@ function onFieldBlur(e: FocusEvent) {
     if (!evListRef.value?.$el.contains(e.relatedTarget as HTMLElement)) {
         isMenuOpen.value = false;
     }
+    selectionIndex.value = -1;
 }
 
 /**
@@ -265,8 +269,12 @@ function onFieldKeydown(e: KeyboardEvent) {
         return;
     }
 
-    if (highlightFirst.value && ['Enter', 'Tab'].includes(e.key)) {
-        select(displayItems.value[0]);
+    if (['Enter', 'Tab'].includes(e.key)) {
+        if (highlightFirst.value) {
+            select(displayItems.value[0]);
+        } else if (!props.multiple && props.behavior === 'combobox') {
+            select(transformItem(props as any, search.value));
+        }
     }
 
     if (e.key === 'ArrowDown' && highlightFirst.value) {
@@ -405,9 +413,13 @@ function select(item: ListItem, set: boolean | null = true) {
         nextTick(() => {
             isMenuOpen.value = false;
             isPristine.value = true;
-            isSelecting.value = false
-        })
+            isSelecting.value = false;
+            evTextfieldRef.value.input.blur();
+            isFocused.value = false;
+        });
     }
+
+    selectionIndex.value = -1;
 }
 
 /**
@@ -471,21 +483,6 @@ function createTagProps(item: ListItem) {
 }
 
 /**
- * Watch Focus
- */
-watch(isFocused, (value, oldValue) => {
-    if (value === oldValue) {
-        return;
-    }
-    if (value) {
-
-    } else {
-
-    }
-    emit('update:focused', value);
-});
-
-/**
  * Watch Search
  */
 watch(search, (value, oldValue) => {
@@ -520,10 +517,10 @@ watch(isMenuOpen, () => {
 });
 
 const validationValue = computed(() => model.externalValue);
+const isPlaceholder = computed(() => (!selections.value.length && !!slots.placeholder));
 
 </script>
 <template>
-    {{ selectionIndex }}
     <ev-textfield
         ref="evTextfieldRef"
         :class="[
@@ -532,7 +529,8 @@ const validationValue = computed(() => model.externalValue);
                 'is-single': !props.multiple,
                 'is-multiple': props.multiple,
                 'is-searchable': isSearchable,
-                'is-selecting': selectionIndex > -1
+                'is-selecting': selectionIndex > -1,
+                'is-placeholder': isPlaceholder
             }
         ]"
         v-bind="evTextfieldProps"
@@ -551,6 +549,9 @@ const validationValue = computed(() => model.externalValue);
     >
         <template #label v-if="props.label || slots.label">
             <slot name="label">{{ props.label }}</slot>
+        </template>
+        <template #prefix>
+            <slot name="prefix" />
         </template>
         <template #default>
             <div v-for="(item, index) in selections"
@@ -575,6 +576,10 @@ const validationValue = computed(() => model.externalValue);
                               class="ev-select--selected-comma">,</span>
                     </span>
                 </slot>
+            </div>
+
+            <div class="ev-select--placeholder" v-if="isPlaceholder">
+                <slot name="placeholder" />
             </div>
 
             <ev-menu
@@ -638,6 +643,10 @@ const validationValue = computed(() => model.externalValue);
                 </ev-surface>
             </ev-menu>
 
+        </template>
+
+        <template #suffix>
+            <slot name="suffix" />
         </template>
     </ev-textfield>
 

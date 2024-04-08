@@ -1,7 +1,7 @@
 .ev-select {
+
     .ev-textfield--input {
         padding-block: 6px;
-
         > input {
             align-self: stretch;
             flex: 1 1;
@@ -9,9 +9,11 @@
             width: 100%;
             transition: none;
             top: 0;
+            line-height: 1.1;
         }
     }
 
+    &.is-placeholder,
     &.is-dirty {
         .ev-textfield--input {
             > input {
@@ -22,9 +24,29 @@
 }
 
 .ev-select {
+    &.is-focused {
+        .ev-select--placeholder {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+.ev-select {
     &.is-selecting {
-        .ev-select--selected:not(.is-selected) {
-            opacity: 0.6;
+        .ev-select--selected {
+            position: relative;
+
+            &:not(.is-selected) {
+                opacity: 0.6;
+            }
+
+            &.is-selected {
+                .ev-tag {
+                    background: var(--background-selected);
+                    color: var(--text-selected);
+                }
+            }
         }
     }
 }
@@ -90,6 +112,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: var(--input-font-size);
+    line-height: 1.1;
 }
 
 .ev-select--menu {
@@ -110,4 +133,25 @@
 .ev-select--list-prefix,
 .ev-select--list-suffix {
     flex: 0;
+}
+
+
+/* 1. declare transition */
+.selection-transition-move,
+.selection-transition-enter-active,
+.selection-transition-leave-active {
+    transition: all 0.25s var(--easing-standard);
+}
+
+/* 2. declare enter from and leave to state */
+.selection-transition-enter-from,
+.selection-transition-leave-to {
+    opacity: 0;
+    transform: translate(-1rem, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.selection-transition-leave-active {
+    position: absolute;
 }

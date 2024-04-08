@@ -148,6 +148,13 @@ let timer = -1;
 function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
     const poll = () => {
         clearTimeout(timer);
+        if (!img) {
+            return;
+        }
+        if (!img?.complete && state.value === 'loading' && timeout != null) {
+            timer = window.setTimeout(poll, timeout);
+            return;
+        }
         const {
             naturalHeight: imgHeight,
             naturalWidth: imgWidth
@@ -155,8 +162,6 @@ function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
         if (imgHeight || imgWidth) {
             naturalWidth.value = imgWidth;
             naturalHeight.value = imgHeight;
-        } else if (!img.complete && state.value === 'loading' && timeout != null) {
-            timer = window.setTimeout(poll, timeout);
         } else if (img.currentSrc.endsWith('.svg') || img.currentSrc.startsWith('data:image/svg+xml')) {
             naturalWidth.value = 1;
             naturalHeight.value = 1;

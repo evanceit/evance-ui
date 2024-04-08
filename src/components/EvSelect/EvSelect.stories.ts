@@ -6,7 +6,7 @@ import { EvDivider } from "@/components/EvDivider";
 import { EvLozenge } from "@/components/EvLozenge";
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import {omit} from "@/util";
-import {Plus} from "@/icons";
+import {Plus, Products} from "@/icons";
 import {EvAvatar, EvBlock, EvButton, EvLayout, EvQuickfind} from "@/components";
 import {ref, shallowRef} from "vue";
 
@@ -131,7 +131,6 @@ export const Primary: Story = {
             const items = generateItemList(1000);
 
             const requiredValidator = (value: any) => {
-                console.log(value);
                 if (!value) {
                     return 'Required';
                 }
@@ -140,7 +139,7 @@ export const Primary: Story = {
 
             return { args, items, requiredValidator };
         },
-        template: `{{ selected }}<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`
+        template: `<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`
     })
 };
 
@@ -210,18 +209,31 @@ export const ListAffix: Story = {
  */
 export const CustomItem: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar, EvQuickfind },
-        data() {
-            return {
-                selected: null
-            }
-        },
+        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar, EvQuickfind, Products },
         setup() {
             const items = generateItemList(10);
-            return { items };
+            return { items, Products };
         },
         template: `
-            <ev-select :items="items" clearable>
+            <ev-select 
+                clearable 
+                open-on-clear
+                behavior="autocomplete" 
+                :items="items" 
+                placeholder="Search for a product"
+                >
+                <template #placeholder>
+                    <ev-layout align="center" gutter="100">
+                        <ev-block size="auto">
+                            <ev-avatar :icon="Products"></ev-avatar>
+                        </ev-block>
+                        <ev-block size="grow">
+                            <span class="text-large">No Product selected</span>
+                            <br />
+                            Click here to search & select
+                        </ev-block>
+                    </ev-layout>
+                </template>
                 <template #selection="{ item, index }">
                     <ev-layout align="center" gutter="100">
                         <ev-block size="auto">

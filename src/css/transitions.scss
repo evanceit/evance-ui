@@ -39,6 +39,10 @@
 .transition-fade {
     @include transition-default();
 
+    &-leave-from {
+        opacity: 1;
+    }
+
     &-enter-from,
     &-leave-to {
         opacity: 0 !important;
