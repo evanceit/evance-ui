@@ -10,8 +10,9 @@ const props = defineProps(makeEvButtonGroupProps());
 
 provideDefaults({
     EvButton: {
-        appearance: 'default',
-        variant: 'subtle'
+        appearance: props.appearance,
+        variant: props.variant,
+        size: props.size
     }
 });
 
@@ -21,6 +22,9 @@ provideDefaults({
         :is="props.tag"
         :class="[
             'ev-button-group',
+            {
+                'is-rounded': props.rounded
+            },
             props.class
         ]"
         :style="props.style"

@@ -31,3 +31,12 @@
         }
     }
 }
+
+/**
+    ## Rounded modifier
+*/
+.ev-button-group {
+    &.is-rounded {
+        border-radius: 999px;
+    }
+}
