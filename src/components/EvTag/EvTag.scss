@@ -37,6 +37,7 @@
     cursor: pointer;
     transition: 0.25s color var(--easing-standard);
     flex: 0 0 auto;
+    z-index: 0;
 
     &:before {
         content: '';
