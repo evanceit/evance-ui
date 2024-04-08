@@ -566,7 +566,7 @@ const isPlaceholder = computed(() => (!selections.value.length && !!slots.placeh
                 <slot name="selection" v-bind="{ item, index }">
                     <ev-tag
                         v-if="props.tags"
-                        closable
+                        :closable="props.multiple"
                         v-bind="createTagProps(item)"
                         :text="item.title"
                     />

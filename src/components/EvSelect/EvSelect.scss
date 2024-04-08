@@ -134,24 +134,3 @@
 .ev-select--list-suffix {
     flex: 0;
 }
-
-
-/* 1. declare transition */
-.selection-transition-move,
-.selection-transition-enter-active,
-.selection-transition-leave-active {
-    transition: all 0.25s var(--easing-standard);
-}
-
-/* 2. declare enter from and leave to state */
-.selection-transition-enter-from,
-.selection-transition-leave-to {
-    opacity: 0;
-    transform: translate(-1rem, 0);
-}
-
-/* 3. ensure leaving items are taken out of layout flow so that moving
-      animations can be calculated correctly. */
-.selection-transition-leave-active {
-    position: absolute;
-}
