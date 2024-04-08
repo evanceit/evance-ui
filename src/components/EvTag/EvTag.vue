@@ -84,7 +84,8 @@ function onKeyDown(e: KeyboardEvent) {
         :class="[
             'ev-tag',
             {
-                'is-disabled': props.disabled
+                'is-disabled': props.disabled,
+                'is-clickable': isClickable
             },
             props.class
         ]"
@@ -99,6 +100,9 @@ function onKeyDown(e: KeyboardEvent) {
         @keydown.enter="onKeyDown"
         @keydown.space="onKeyDown"
     >
+
+
+
         <div class="ev-tag--content">
             <slot name="default">{{ props.text }}</slot>
         </div>

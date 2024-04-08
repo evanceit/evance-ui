@@ -35,12 +35,15 @@ const meta: Meta<typeof EvButton> = {
         },
         icon: {
             control: 'boolean',
-            description: "Places an icon before the content/text of the button when supplied as a String or as an SVG component/glyph. " +
-                "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style."
+            description: "May be supplied as a prop or a slot." +
+                "Places an icon before the content/text of the button when supplied as a String or as an SVG component/glyph. " +
+                "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style. "
+
         },
         iconStart: {
             control: 'select',
-            description: "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph.",
+            description: "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
+                "May also be supplied as a slot (see `icon-start` slot)",
             options: ['None', 'Check', 'Plus', 'Save'],
             mapping: {
                 'None': null,
@@ -51,7 +54,8 @@ const meta: Meta<typeof EvButton> = {
         },
         iconEnd: {
             control: 'select',
-            description: "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph.",
+            description: "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
+                "May also be supplied as a slot (see `icon-end` slot)",
             options: ['None', 'ArrowContinue'],
             mapping: {
                 'None': null,

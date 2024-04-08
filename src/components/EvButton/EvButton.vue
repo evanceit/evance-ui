@@ -10,9 +10,20 @@ import {EvProgressCircular} from "@/components/EvProgressCircular";
 import {appearanceModifier, InputSize, sizeModifier, variantModifier} from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
+import {useDefaults} from "@/composables/defaults.ts";
 
+defineSlots<{
+    default(): any,
+    icon(): any,
+    'icon-end'(): any,
+    'icon-start'(): any,
+    prefix(): any,
+    suffix(): any,
+}>();
 
-const props = defineProps(makeEvButtonProps());
+const definedProps = defineProps(makeEvButtonProps());
+const props = useDefaults(definedProps, 'EvButton');
+
 const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
@@ -111,14 +122,18 @@ function onClick(e: MouseEvent): void {
         :disabled="!isLink() ? disabled : null"
         @click="onClick"
     >
-        <span class="ev-button--icon-start" v-if="props.iconStart">
-            <ev-icon :glyph="props.iconStart" />
+        <span class="ev-button--icon-start" v-if="props.iconStart || slots['icon-start']">
+            <slot name="icon-start">
+                <ev-icon :glyph="props.iconStart" />
+            </slot>
         </span>
         <span class="ev-button--prefix" v-if="slots.prefix">
             <slot name="prefix" />
         </span>
-        <span class="ev-button--icon" v-if="props.icon && props.icon !== true">
-             <ev-icon :glyph="props.icon" />
+        <span class="ev-button--icon" v-if="(props.icon || slots.icon) && props.icon !== true">
+            <slot name="icon">
+                <ev-icon :glyph="props.icon" />
+            </slot>
         </span>
         <span class="ev-button--text" v-if="props.text || hasDefaultSlot" data-no-activator>
             <slot>{{ props.text }}</slot>
@@ -126,8 +141,10 @@ function onClick(e: MouseEvent): void {
         <span class="ev-button--suffix" v-if="slots.suffix">
             <slot name="suffix" />
         </span>
-        <span class="ev-button--icon-end" v-if="props.iconEnd">
-            <ev-icon :glyph="props.iconEnd" />
+        <span class="ev-button--icon-end" v-if="props.iconEnd || slots['icon-end']">
+            <slot name="icon-end">
+                <ev-icon :glyph="props.iconEnd" />
+            </slot>
         </span>
         <span class="ev-button--loading" v-if="props.loading">
             <ev-progress-circular indeterminate />

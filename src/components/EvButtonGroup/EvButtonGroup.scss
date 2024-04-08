@@ -1,0 +1,33 @@
+
+.ev-button-group {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    vertical-align: middle;
+    border-radius: var(--input-radius);
+
+    .ev-button {
+        border-radius: 0;
+        border-color: inherit;
+
+        &:not(:last-child) {
+            border-inline-end: none;
+        }
+
+        &:not(:first-child) {
+            border-inline-start: none;
+        }
+
+        &:first-child {
+            border-start-start-radius: inherit;
+            border-end-start-radius: inherit;
+        }
+
+        &:last-child {
+            border-start-end-radius: inherit;
+            border-end-end-radius: inherit;
+        }
+    }
+}

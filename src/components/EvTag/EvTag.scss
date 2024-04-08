@@ -64,7 +64,9 @@
 }
 
 .ev-tag {
-    &:hover {
-        background-color: var(--background-neutral-hovered);
+    &.is-clickable {
+        &:hover {
+            background-color: var(--background-neutral-hovered);
+        }
     }
 }

@@ -4,11 +4,13 @@ import {App, nextTick} from "vue";
 import {createLocaleManager, LocaleSymbol} from "@/composables/locale.ts";
 import {LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
 import {createDate, DateAdapterSymbol, DateOptions} from "@/composables/date/date.ts";
+import {createDefaults, DefaultsOptions, DefaultsSymbol} from "@/composables/defaults.ts";
 
 export interface EvanceUiOptions {
     blueprint?: Blueprint,
     components?: Record<string, any>,
     date?: DateOptions,
+    defaults?: DefaultsOptions,
     directives?: Record<string, any>,
     display?: DisplayOptions,
     locale?: LocaleOptions, // & RtlOptions,  // @todo: <--- YOU ARE HERE
@@ -37,6 +39,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         services = {}
     } = options;
 
+    const defaults = createDefaults(options.defaults);
     const display = createDisplay(options.display, options.ssr);
     const locale = createLocaleManager(options.locale ?? {}); // @todo: <--- YOU ARE HERE!
     const date = createDate(options.date, locale);
@@ -59,6 +62,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         }
 
         // Add default `provide` symbols
+        app.provide(DefaultsSymbol, defaults);
         app.provide(DisplaySymbol, display);
         app.provide(LocaleSymbol, locale);
         app.provide(DateAdapterSymbol, date);
