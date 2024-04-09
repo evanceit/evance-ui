@@ -18,5 +18,8 @@ export type EvButtonToggleSlots = {
  */
 export const makeEvButtonToggleProps = propsFactory({
     ...makeEvButtonGroupProps(),
-    ...makeGroupProps()
+    ...makeGroupProps({
+        selectedAppearance: 'primary',
+        selectedVariant: 'tonal'
+    })
 }, 'EvButtonToggle');

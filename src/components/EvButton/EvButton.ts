@@ -4,6 +4,7 @@ import {makeRouterLinkOrHrefProps, RouterLinkOrHrefProps} from "@/composables/ro
 import {PropType} from "vue";
 import {makeComponentProps} from "@/composables/component.ts";
 import {EvButtonToggleSymbol} from "@/components/EvButtonToggle/EvButtonToggle.ts";
+import {makeGroupItemProps} from "@/composables/groupItem.ts";
 
 /**
  * ## Button Appearance
@@ -58,10 +59,6 @@ export const makeEvButtonProps = propsFactory({
         type: String as PropType<ButtonAppearanceProp>,
         default: Appearance.default
     },
-    disabled: {
-        type: Boolean,
-        default: false
-    },
     icon: [Boolean, String, Function, Object] as PropType<boolean | IconValue>,
     iconStart: IconProp,
     iconEnd: IconProp,
@@ -76,5 +73,6 @@ export const makeEvButtonProps = propsFactory({
     },
 
     ...makeComponentProps(),
-    ...makeRouterLinkOrHrefProps()
+    ...makeRouterLinkOrHrefProps(),
+    ...makeGroupItemProps()
 }, 'EvButton');

@@ -11,6 +11,7 @@ import {
 import {EvButtonGroup} from "../EvButtonGroup";
 import {GroupProps, useGroup} from "@/composables/group.ts";
 import {filterComponentProps} from "@/util";
+import {computed} from "vue";
 
 const props = defineProps(makeEvButtonToggleProps());
 
@@ -20,7 +21,7 @@ defineEmits([
 
 defineSlots<EvButtonToggleSlots>();
 
-const { isSelected, next, prev, select, selected } = useGroup(props as any, EvButtonToggleSymbol);
+const { isSelected, next, prev, select, selected } = useGroup(props as any as GroupProps, EvButtonToggleSymbol);
 
 defineExpose({
     next,
@@ -28,7 +29,7 @@ defineExpose({
     select
 });
 
-const groupProps = filterComponentProps(EvButtonGroup, props);
+const groupProps = computed(() => filterComponentProps(EvButtonGroup, props));
 
 </script>
 <template>

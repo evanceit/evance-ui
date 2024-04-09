@@ -31,9 +31,10 @@ export interface GroupProps {
     mandatory?: boolean | 'force' | undefined,
     max?: number | undefined,
     selectedClass: string | undefined,
+    selectedAppearance: string | undefined,
+    selectedVariant: string | undefined,
     'onUpdate:modelValue': EventProp<[unknown]> | undefined
 }
-
 
 /**
  * # GroupProvide
@@ -47,6 +48,8 @@ export interface GroupProvide {
     prev: () => void,
     next: () => void,
     selectedClass: Ref<string | undefined>,
+    selectedAppearance: Ref<string | undefined>,
+    selectedVariant: Ref<string | undefined>,
     items: ComputedRef<{
         id: number
         value: unknown
@@ -69,6 +72,8 @@ export const makeGroupProps = propsFactory({
     mandatory: [Boolean, String] as PropType<boolean | 'force'>,
     max: Number,
     selectedClass: String,
+    selectedAppearance: String,
+    selectedVariant: String,
     disabled: Boolean,
 }, 'group');
 
@@ -277,6 +282,8 @@ export function useGroup(
         next: () => step(1),
         isSelected: (id: number) => selected.value.includes(id),
         selectedClass: computed(() => props.selectedClass),
+        selectedAppearance: computed(() => props.selectedAppearance),
+        selectedVariant: computed(() => props.selectedVariant),
         items: computed(() => items),
         getItemIndex: (value: unknown) => getItemIndex(items, value)
     }

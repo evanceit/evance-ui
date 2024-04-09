@@ -74,25 +74,24 @@ const isIconLike = computed(() => {
         && !props.fullWidth;
 });
 
+/**
+ * ## Is Link?
+ * Returns `true` if an `href` was supplied AND is NOT an empty string.
+ */
+const isLink = computed(() => {
+    return (link.isLink.value);
+});
 
 /**
- * ## Get Component Element
+ * ## Component Element
  *
  * An `<ev-button>` may render as:
  * - `<a>` when an `href` is supplied
  * - `<button>` when `href` is NOT supplied, or is an empty string
  */
-function getComponentElement() {
-    return isLink() ? 'a' : 'button';
-}
-
-/**
- * ## Is Link?
- * Returns `true` if an `href` was supplied AND is NOT an empty string.
- */
-function isLink() {
-    return (link.isLink.value);
-}
+const componentElement = computed(() => {
+    return isLink.value ? 'a' : 'button';
+});
 
 /**
  * # On Click
@@ -102,7 +101,7 @@ function onClick(e: MouseEvent): void {
     if (
         isDisabled.value
         || (
-            isLink()
+            isLink.value
             && (
                 e.metaKey
                 || e.ctrlKey
@@ -120,15 +119,37 @@ function onClick(e: MouseEvent): void {
 
 useSelectLink(link, group?.select);
 
+const appearance = computed(() => {
+    return (isActive.value)
+        ? group?.selectedAppearance.value ?? props.appearance
+        : props.appearance;
+});
+
+const variant = computed(() => {
+    return (isActive.value)
+        ? group?.selectedVariant.value ?? props.variant
+        : props.variant;
+});
+
+const valueAttr = computed(() => {
+    if (props.value === undefined || typeof props.value === 'symbol') {
+        return undefined;
+    }
+    return Object(props.value) === props.value
+        ? JSON.stringify(props.value, null, 0)
+        : props.value;
+});
+
 </script>
 <template>
     <component
-        :is="getComponentElement()"
+        :is="componentElement"
         :href="link.href.value"
         :class="[
             'ev-button',
-            appearanceModifier(props.appearance),
-            variantModifier(props.variant),
+            group?.selectedClass,
+            appearanceModifier(appearance),
+            variantModifier(variant),
             sizeModifier(props.size as string, [InputSize.default]),
             {
                 'is-active': isActive,
@@ -143,6 +164,7 @@ useSelectLink(link, group?.select);
         :style="props.style"
         tabindex="0"
         :disabled="isDisabled || undefined"
+        :value="valueAttr"
         @click="onClick"
     >
         <span class="ev-button--icon-start" v-if="props.iconStart || slots['icon-start']">

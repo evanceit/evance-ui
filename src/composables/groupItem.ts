@@ -1,5 +1,15 @@
 import {EventProp, getCurrentComponent, getNextId, propsFactory} from "@/util";
-import {computed, ExtractPropTypes, inject, InjectionKey, onBeforeUnmount, provide, Ref, toRef, watch} from "vue";
+import {
+    computed,
+    ExtractPropTypes,
+    inject,
+    InjectionKey,
+    onBeforeUnmount,
+    provide,
+    Ref,
+    toRef,
+    watch
+} from "vue";
 import {GroupProvide} from "@/composables/group.ts";
 
 
@@ -22,6 +32,8 @@ export interface GroupItemProvide {
     toggle: () => void,
     select: (value: boolean) => void,
     selectedClass: Ref<(string | undefined)[] | false>,
+    selectedAppearance: Ref<string | undefined>,
+    selectedVariant: Ref<string | undefined>,
     value: Ref<unknown>,
     disabled: Ref<boolean | undefined>,
     group: GroupProvide
@@ -34,6 +46,8 @@ export const makeGroupItemProps = propsFactory({
     value: null,
     disabled: Boolean,
     selectedClass: String,
+    selectedAppearance: String,
+    selectedVariant: String,
 }, 'group-item');
 
 
@@ -78,6 +92,12 @@ export function useGroupItem(
     const selectedClass = computed(() => {
         return isSelected.value && [group.selectedClass.value, props.selectedClass];
     });
+    const selectedAppearance = computed(() => {
+        return isSelected.value ? props.selectedAppearance ?? group?.selectedAppearance.value : undefined;
+    });
+    const selectedVariant = computed(() => {
+        return isSelected.value ? props.selectedVariant ?? group?.selectedVariant.value : undefined;
+    });
 
     group.register({
         id,
@@ -99,6 +119,8 @@ export function useGroupItem(
         toggle: () => group.select(id, !isSelected.value),
         select: (value: boolean) => group.select(id, value),
         selectedClass,
+        selectedAppearance,
+        selectedVariant,
         value,
         disabled,
         group

@@ -5,14 +5,15 @@
 import './EvButtonGroup.scss';
 import {makeEvButtonGroupProps} from "./EvButtonGroup.ts";
 import {provideDefaults} from "@/composables/defaults.ts";
+import {toRef} from "vue";
 
 const props = defineProps(makeEvButtonGroupProps());
 
 provideDefaults({
     EvButton: {
-        appearance: props.appearance,
-        variant: props.variant,
-        size: props.size
+        appearance: toRef(props, 'appearance'),
+        variant: toRef(props, 'variant'),
+        size: toRef(props, 'size')
     }
 });
 
