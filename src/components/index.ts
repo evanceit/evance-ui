@@ -2,6 +2,7 @@ export * from './EvAvatar';
 export * from './EvBadge';
 export * from './EvButton';
 export * from './EvButtonGroup';
+export * from './EvButtonToggle';
 export * from './EvCheckbox';
 export * from './EvDateField';
 export * from './EvDatePicker';
