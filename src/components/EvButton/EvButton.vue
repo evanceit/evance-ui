@@ -11,6 +11,8 @@ import {appearanceModifier, InputSize, sizeModifier, variantModifier} from "@/ut
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 import {useDefaults} from "@/composables/defaults.ts";
+import {useGroupItem} from "@/composables/groupItem.ts";
+import {useSelectLink} from "@/composables/selectLink.ts";
 
 defineSlots<{
     default(): any,
@@ -24,14 +26,29 @@ defineSlots<{
 const definedProps = defineProps(makeEvButtonProps());
 const props = useDefaults(definedProps, 'EvButton');
 
+defineEmits([
+    'group:selected'
+]);
+
 const attrs = useAttrs();
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, 'default');
+const group = useGroupItem(props as any, props.symbol, false);
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
+
+const isActive = computed(() => {
+    if (props.active !== undefined) {
+        return props.active;
+    }
+    if (link.isLink.value) {
+        return link.isActive?.value;
+    }
+    return group?.isSelected.value;
+});
 
 const isDisabled = computed(() => {
     // we'll add groups later
-    return props.disabled;
+    return (group?.disabled.value || props.disabled);
 });
 
 /**
@@ -98,28 +115,34 @@ function onClick(e: MouseEvent): void {
         return;
     }
     link.navigate?.(e);
+    group?.toggle();
 }
+
+useSelectLink(link, group?.select);
 
 </script>
 <template>
     <component
         :is="getComponentElement()"
         :href="link.href.value"
-        class="ev-button"
         :class="[
+            'ev-button',
             appearanceModifier(props.appearance),
             variantModifier(props.variant),
             sizeModifier(props.size as string, [InputSize.default]),
             {
+                'is-active': isActive,
+                'is-disabled': isDisabled,
                 'is-icon': isIconLike,
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
-                'is-disabled': props.disabled,
                 'is-rounded': props.rounded
-            }
+            },
+            props.class
         ]"
+        :style="props.style"
         tabindex="0"
-        :disabled="!isLink() ? disabled : null"
+        :disabled="isDisabled || undefined"
         @click="onClick"
     >
         <span class="ev-button--icon-start" v-if="props.iconStart || slots['icon-start']">

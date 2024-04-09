@@ -2,6 +2,8 @@ import {Appearance, InputSizeProp, propsFactory} from "@/util";
 import {IconProp, IconValue} from "@/composables/icons.ts";
 import {makeRouterLinkOrHrefProps, RouterLinkOrHrefProps} from "@/composables/router.ts";
 import {PropType} from "vue";
+import {makeComponentProps} from "@/composables/component.ts";
+import {EvButtonToggleSymbol} from "@/components/EvButtonToggle/EvButtonToggle.ts";
 
 /**
  * ## Button Appearance
@@ -44,6 +46,14 @@ export interface EvButtonProps extends RouterLinkOrHrefProps {
  * # EvButton Props
  */
 export const makeEvButtonProps = propsFactory({
+    active: {
+        type: Boolean,
+        default: undefined,
+    },
+    symbol: {
+        type: null,
+        default: EvButtonToggleSymbol,
+    },
     appearance: {
         type: String as PropType<ButtonAppearanceProp>,
         default: Appearance.default
@@ -65,5 +75,6 @@ export const makeEvButtonProps = propsFactory({
         default: 'default'
     },
 
+    ...makeComponentProps(),
     ...makeRouterLinkOrHrefProps()
 }, 'EvButton');
