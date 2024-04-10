@@ -8,7 +8,12 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
     plugins: [
         vue(),
-        dts(),
+        dts({
+            exclude: [
+                '**/*.stories.ts',
+                '**/*.test.ts'
+            ]
+        }),
         svgLoader({
             svgo: false
         })
@@ -22,6 +27,10 @@ export default defineConfig({
         rollupOptions: {
             external: ['vue', 'typescript'],
             output: {
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name === 'style.css') return 'evance-ui.css';
+                    return assetInfo.name;
+                },
                 globals: {
                     vue: 'Vue'
                 }
