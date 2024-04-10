@@ -496,6 +496,16 @@ watch(search, (value, oldValue) => {
 });
 
 /**
+ * Watch Focused
+ */
+watch(isFocused, (value, oldValue) => {
+    if (value === oldValue) {
+        return;
+    }
+    emit('update:focused', value);
+});
+
+/**
  * Scroll to the last selected item when the menu opens.
  */
 watch(isMenuOpen, () => {
