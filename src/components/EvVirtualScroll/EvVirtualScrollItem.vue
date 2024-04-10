@@ -43,6 +43,6 @@ watch(() => contentRect.value?.height, height => {
          :style="props.style"
          v-bind="attrs"
     >
-        <slot name="default" />
+        <slot name="default" v-bind="{ itemRef: toRef(resizeRef) }" />
     </div>
 </template>
