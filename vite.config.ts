@@ -13,6 +13,21 @@ export default defineConfig({
             svgo: false
         })
     ],
+    build: {
+        lib: {
+            entry: resolve('./src/entry-bundler.ts'),
+            name: 'EvanceUI',
+            fileName: 'evance-ui'
+        },
+        rollupOptions: {
+            external: ['vue', 'typescript'],
+            output: {
+                globals: {
+                    vue: 'Vue'
+                }
+            }
+        }
+    },
     resolve: {
         alias: [
             {find: /^evance$/, replacement: resolve('./src/framework.ts')},

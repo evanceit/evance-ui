@@ -18,11 +18,9 @@ createList();
 </script>
 <template>
     <slot>
-        <template v-for="{ props: itemProps } in props.items">
-          <slot name="item" v-bind="{ props: itemProps}">
-            <ev-list-item
-                v-bind="itemProps"
-            ></ev-list-item>
+        <template v-for="item in props.items" :key="item.key">
+          <slot name="item" v-bind="{ item, props: item.props }">
+            <ev-list-item v-bind="item.props" />
           </slot>
         </template>
     </slot>

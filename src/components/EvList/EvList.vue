@@ -12,10 +12,10 @@
  * @see EvListItem
  */
 import './EvList.scss';
-import {makeEvListProps, useListItems} from "./EvList.ts";
+import {makeEvListProps} from "./EvList.ts";
 import {computed, ref, shallowRef} from "vue";
 import {focusChild, FocusPosition} from "@/util";
-import {createList, NestedProps, useNestedList} from "@/composables/lists";
+import {createList, NestedProps, useItems, useNestedList} from "@/composables/lists";
 import {useDimensions} from "@/composables/dimensions.ts";
 import EvListChildren from "./EvListChildren.vue";
 
@@ -25,7 +25,7 @@ defineEmits([
 ]);
 
 const props = defineProps(makeEvListProps());
-const items = useListItems(props);
+const { items } = useItems(props);
 const { select } = useNestedList(props as NestedProps);
 const containerRef = ref<HTMLElement | undefined>(undefined);
 const isFocused = shallowRef(false);
@@ -34,6 +34,8 @@ const tabindex = computed(() => {
     return (props.disabled || isFocused.value) ? -1 : 0;
 });
 const dimensions = useDimensions(props);
+
+console.log(items);
 
 /**
  * Establish provide() and inject() functionality for list items.
