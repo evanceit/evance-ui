@@ -137,8 +137,12 @@
     --text-on-inverse: #535A74;
 
     /* Borders */
+    --border: #0A14331F;
+    --border-danger: #F04141;
     --border-focused: #814EFA;
+    --border-input: #0A14331F;
     --border-muted: #091E4226;
+    --border-selected: #814EFA;
 
     /* Input */
     --input-background: transparent;
@@ -282,8 +286,13 @@
     --text-on-inverse: #A0A6BC;
 
     /* Borders */
-    --border-focused: #AA86FF;
+    --border: #A3A7CC29;
+    --border-danger: #F36767;
+    --border-focused: #9873FF;
+    --border-input: #A3A7CC29;
     --border-muted: #BCD6F01F;
+    --border-selected: #9873FF;
+    --border-success: #2BC29A;
 
     /* Input */
     --input-background: transparent;

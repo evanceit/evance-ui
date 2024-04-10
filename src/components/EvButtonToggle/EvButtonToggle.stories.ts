@@ -15,8 +15,26 @@ const meta: Meta<typeof EvButtonToggle> = {
             control: 'select',
             options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
         },
+        selectedAppearance: {
+            control: 'select',
+            options: ['default', 'danger', 'information', 'notice', 'primary', 'success', 'warning'],
+        },
+        selectedVariant: {
+            control: 'select',
+            options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
+        },
         disabled: {
             control: 'boolean'
+        },
+        mandatory: {
+            control: 'boolean'
+        },
+        multiple: {
+            control: 'boolean'
+        },
+        size: {
+            control: 'select',
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
         },
         selectedClass: {
             description: 'The'
@@ -24,8 +42,13 @@ const meta: Meta<typeof EvButtonToggle> = {
     },
     args: {
         appearance: 'default',
-        variant: 'subtle',
-        disabled: false
+        variant: 'outlined',
+        selectedAppearance: 'primary',
+        selectedVariant: 'outlined',
+        disabled: false,
+        mandatory: false,
+        multiple: false,
+        size: 'medium'
     },
     tags: ['autodocs']
 };
@@ -46,6 +69,7 @@ export const Primary: Story = {
         <ev-button>Button 1</ev-button>
         <ev-button>Button 2</ev-button>
         <ev-button>Button 3</ev-button>
+        <ev-button>Button 4</ev-button>
     </ev-button-toggle>`
     })
 };

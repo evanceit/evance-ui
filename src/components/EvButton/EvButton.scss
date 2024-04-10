@@ -7,7 +7,7 @@
     --current-height: var(--input-height-medium);
 
     align-items: center;
-    border: 0;
+    border: 1px solid transparent;
     border-radius: var(--input-radius);
     cursor: pointer;
     display: inline-flex;
@@ -119,7 +119,10 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-neutral-bold);
+            border-color: var(--background-neutral-bold);
+            &.is-active {
+                background-color: var(--background-neutral);
+            }
             &:hover {
                 background-color: var(--background-neutral-hovered);
             }
@@ -152,8 +155,11 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-danger-bold);
+            border-color: var(--background-danger-bold);
             color: var(--text-danger);
+            &.is-active {
+                background-color: var(--background-danger);
+            }
             &:hover {
                 background-color: var(--background-danger-hovered);
             }
@@ -202,8 +208,11 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-information-bold);
+            border-color: var(--background-information-bold);
             color: var(--text-information);
+            &.is-active {
+                background-color: var(--background-information);
+            }
             &:hover {
                 background-color: var(--background-information-hovered);
             }
@@ -252,8 +261,11 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-notice-bold);
+            border-color: var(--background-notice-bold);
             color: var(--text-notice);
+            &.is-active {
+                background-color: var(--background-notice);
+            }
             &:hover {
                 background-color: var(--background-notice-hovered);
             }
@@ -302,8 +314,11 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-brand-bold);
+            border-color: var(--background-brand-bold);
             color: var(--text-brand);
+            &.is-active {
+                background-color: var(--background-brand);
+            }
             &:hover {
                 background-color: var(--background-brand-hovered);
             }
@@ -352,8 +367,11 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-success-bold);
+            border-color: var(--background-success-bold);
             color: var(--text-success);
+            &.is-active {
+                background-color: var(--background-success);
+            }
             &:hover {
                 background-color: var(--background-success-hovered);
             }
@@ -402,7 +420,7 @@
 
         &.is-variant-outlined {
             background: transparent;
-            border: 1px solid var(--background-warning-bold);
+            border-color: var(--background-warning-bold);
             color: var(--text-warning);
             &:hover {
                 background-color: var(--background-warning-hovered);

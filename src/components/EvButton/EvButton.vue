@@ -7,7 +7,7 @@ import {makeEvButtonProps} from "./EvButton.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {EvIcon} from "@/components/EvIcon";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
-import {appearanceModifier, InputSize, sizeModifier, variantModifier} from "@/util";
+import {appearanceModifier, InputSize, isBoolean, sizeModifier, variantModifier} from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 import {useDefaults} from "@/composables/defaults.ts";
@@ -119,16 +119,18 @@ function onClick(e: MouseEvent): void {
 
 useSelectLink(link, group?.select);
 
-const appearance = computed(() => {
-    return (isActive.value)
+const appearanceClass = computed(() => {
+    const value = (isActive.value)
         ? group?.selectedAppearance.value ?? props.appearance
         : props.appearance;
+    return appearanceModifier(value);
 });
 
-const variant = computed(() => {
-    return (isActive.value)
+const variantClass = computed(() => {
+    const value = (isActive.value)
         ? group?.selectedVariant.value ?? props.variant
         : props.variant;
+    return variantModifier(value);
 });
 
 const valueAttr = computed(() => {
@@ -148,8 +150,8 @@ const valueAttr = computed(() => {
         :class="[
             'ev-button',
             group?.selectedClass,
-            appearanceModifier(appearance),
-            variantModifier(variant),
+            appearanceClass,
+            variantClass,
             sizeModifier(props.size as string, [InputSize.default]),
             {
                 'is-active': isActive,
@@ -175,7 +177,7 @@ const valueAttr = computed(() => {
         <span class="ev-button--prefix" v-if="slots.prefix">
             <slot name="prefix" />
         </span>
-        <span class="ev-button--icon" v-if="(props.icon || slots.icon) && props.icon !== true">
+        <span class="ev-button--icon" v-if="(props.icon || slots.icon) && !isBoolean(props.icon)">
             <slot name="icon">
                 <ev-icon :glyph="props.icon" />
             </slot>

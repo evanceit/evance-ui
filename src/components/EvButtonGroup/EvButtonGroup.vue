@@ -5,7 +5,8 @@
 import './EvButtonGroup.scss';
 import {makeEvButtonGroupProps} from "./EvButtonGroup.ts";
 import {provideDefaults} from "@/composables/defaults.ts";
-import {toRef} from "vue";
+import {computed, toRef} from "vue";
+import {appearanceModifier, variantModifier} from "@/util";
 
 const props = defineProps(makeEvButtonGroupProps());
 
@@ -17,12 +18,18 @@ provideDefaults({
     }
 });
 
+
+const appearanceClass = computed(() => appearanceModifier(props.appearance));
+const variantClass = computed(() => variantModifier(props.variant));
+
 </script>
 <template>
     <component
         :is="props.tag"
         :class="[
             'ev-button-group',
+            appearanceClass,
+            variantClass,
             {
                 'is-rounded': props.rounded
             },
@@ -30,6 +37,8 @@ provideDefaults({
         ]"
         :style="props.style"
     >
-        <slot />
+        <div class="ev-button-group--container">
+            <slot />
+        </div>
     </component>
 </template>

@@ -4,20 +4,49 @@
     flex-wrap: nowrap;
     max-width: 100%;
     min-width: 0;
-    overflow: hidden;
     vertical-align: middle;
     border-radius: var(--input-radius);
+}
 
+.ev-button-group--container {
+    border-radius: inherit;
+    display: inline-flex;
+}
+
+/**
+    ## Rounded modifier
+*/
+.ev-button-group {
+    &.is-rounded {
+        border-radius: 999px;
+    }
+}
+
+.ev-button-group {
+    &.is-appearance-default {
+        &.is-variant-outlined {
+            border: 1px solid var(--border-input);
+
+            .ev-button {
+                &:not(.is-active) {
+                    border-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+
+.ev-button-group {
     .ev-button {
         border-radius: 0;
-        border-color: inherit;
 
         &:not(:last-child) {
-            border-inline-end: none;
+            border-inline-end-color: transparent;
         }
 
         &:not(:first-child) {
-            border-inline-start: none;
+            border-inline-start-color: transparent;
         }
 
         &:first-child {
@@ -32,11 +61,37 @@
     }
 }
 
-/**
-    ## Rounded modifier
-*/
 .ev-button-group {
-    &.is-rounded {
-        border-radius: 999px;
+    &.is-variant-outlined {
+        .ev-button-group--container {
+            margin: -1px;
+        }
+
+        .ev-button {
+            + .ev-button {
+                margin-inline-start: -1px;
+            }
+
+            &.is-variant-outlined {
+
+                &.is-active {
+                    border-inline-end-color: unset;
+                    border-inline-start-color: unset;
+                    border-radius: inherit;
+
+                    &:has(+ .is-active) {
+                        border-start-end-radius: 0;
+                        border-end-end-radius: 0;
+                        border-inline-end-color: transparent;
+                    }
+
+                    + .is-active {
+                        border-start-start-radius: 0;
+                        border-end-start-radius: 0;
+                        border-inline-start-color: transparent;
+                    }
+                }
+            }
+        }
     }
 }
