@@ -59,3 +59,18 @@ export function findChildrenWithProvide(
     }
     return [];
 }
+
+/**
+ * # focusableChildren
+ *
+ * Find children within the supplied `el` we focus to.
+ *
+ * @param el
+ * @param filterByTabIndex
+ */
+export function focusableChildren(el: Element, filterByTabIndex = true) {
+    const targets = ['button', '[href]', 'input:not([type="hidden"])', 'select', 'textarea', '[tabindex]']
+        .map(s => `${s}${filterByTabIndex ? ':not([tabindex="-1"])' : ''}:not([disabled])`)
+        .join(', ');
+    return [...el.querySelectorAll(targets)] as HTMLElement[];
+}

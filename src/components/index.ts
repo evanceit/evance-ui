@@ -31,6 +31,7 @@ export * from './EvRadio';
 export * from './EvRadioGroup';
 export * from './EvResponsive';
 export * from './EvSelect';
+export * from './EvSlideGroup';
 export * from './EvSurface';
 export * from './EvSwitch';
 export * from './EvTabs';

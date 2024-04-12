@@ -1,7 +1,7 @@
 import {propsFactory} from "@/util";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makeTagProps} from "@/composables/tag.ts";
-import {DisplayBreakpoint, DisplayRuleProp, HiddenRuleProp} from "@/composables/display.ts";
+import {DisplayBreakpoint, DisplayRuleProp, VisibilityRuleProp} from "@/composables/display.ts";
 import {PropType} from "vue";
 
 /** Align Items **/
@@ -43,7 +43,7 @@ export const makeEvLayoutProps = propsFactory({
     gutter: [String, Number, Object] as PropType<SpacerProp>,
     justify: [String, Object] as PropType<JustifyContentProp>,
     nowrap: Boolean,
-    hidden: [Boolean, String, Array] as PropType<HiddenRuleProp>,
+    hidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
     height: [String, Number, Object] as PropType<DisplayRuleProp>,
     width: [String, Number, Object] as PropType<DisplayRuleProp>,
 

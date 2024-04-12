@@ -3,7 +3,7 @@ import {makeComponentProps} from "@/composables/component.ts";
 import {makeTagProps} from "@/composables/tag.ts";
 import {
     DisplayBreakpoint,
-    DisplayRuleProp, HiddenRuleProp
+    DisplayRuleProp, VisibilityRuleProp
 } from "@/composables/display.ts";
 import {PropType} from "vue";
 
@@ -50,7 +50,7 @@ export const makeEvBlockProps = propsFactory({
     order: [String, Number, Object] as PropType<BlockNumberProp>,
     scrollable: Boolean,
     size: [String, Number, Object] as PropType<BlockSizeProp>,
-    hidden: [Boolean, String, Array] as PropType<HiddenRuleProp>,
+    hidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
     height: [String, Number, Object] as PropType<DisplayRuleProp>,
     width: [String, Number, Object] as PropType<DisplayRuleProp>,
 

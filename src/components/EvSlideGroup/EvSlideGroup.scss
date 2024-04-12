@@ -1,0 +1,11 @@
+.ev-slide-group {
+    display: flex;
+    overflow: hidden;
+}
+
+.ev-slide-group--next,
+.ev-slide-group--previous {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

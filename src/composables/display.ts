@@ -261,8 +261,8 @@ export type DisplayRuleListProp = DisplayRuleKey
     | DisplayRuleKebab
     | DisplayRuleKebab[];
 
-/** Hidden props */
-export type HiddenRuleProp = DisplayRuleListProp | boolean;
+/** Visibility props */
+export type VisibilityRuleProp = DisplayRuleListProp | boolean;
 
 /**
  * # calculateDisplayRuleValue
