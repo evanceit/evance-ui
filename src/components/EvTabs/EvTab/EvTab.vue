@@ -8,8 +8,10 @@ import {EvButton} from "@/components/EvButton";
 import {EvTabsSymbol} from "@/components/EvTabs/EvTabs.ts";
 import {computed, ref, shallowRef} from "vue";
 import {animate, easingStandard, filterComponentProps} from "@/util";
+import {useDefaults} from "@/composables";
 
-const props = defineProps(makeEvTabProps());
+const definedProps = defineProps(makeEvTabProps());
+const props = useDefaults(definedProps);
 const isSelected = shallowRef(false);
 const isHorizontal = computed(() => props.direction === 'horizontal');
 const buttonProps = computed(() => {
@@ -19,7 +21,6 @@ const rootEl = ref<typeof EvButton>();
 const sliderEl = ref<HTMLElement>();
 
 function updateSlider({ value }: { value: boolean }) {
-    isSelected.value = value;
 
     if (!value) {
         return;
@@ -45,10 +46,13 @@ function updateSlider({ value }: { value: boolean }) {
     const delta = prevPos > nextPos
         ? prevBox[rightBottom] - nextBox[rightBottom]
         : prevBox[xy] - nextBox[xy];
+
+
     const origin =
         Math.sign(delta) > 0 ? (isHorizontal.value ? 'right' : 'bottom')
             : Math.sign(delta) < 0 ? (isHorizontal.value ? 'left' : 'top')
                 : 'center';
+
     const size = Math.abs(delta) + (Math.sign(delta) < 0 ? prevBox[widthHeight] : nextBox[widthHeight]);
     const scale = size / Math.max(prevBox[widthHeight], nextBox[widthHeight]) || 0;
     const initialScale = prevBox[widthHeight] / nextBox[widthHeight] || 0;

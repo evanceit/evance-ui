@@ -19,6 +19,9 @@
 
 .ev-tabs {
     &.is-vertical {
+        .ev-tab {
+            justify-content: start;
+        }
         .ev-tab--slider {
             top: 0;
             height: 100%;
@@ -39,20 +42,20 @@
 }
 
 .ev-tabs {
-    &.is-align-tabs-end {
-        .ev-tab:first-child {
-            margin-inline-start: auto;
+    &:not(.is-vertical) {
+        &.is-align-tabs-end {
+            .ev-tab:first-child {
+                margin-inline-start: auto;
+            }
         }
-    }
-}
 
-.ev-tabs {
-    &.is-align-tabs-center {
-        .ev-tab:first-child {
-            margin-inline-start: auto;
-        }
-        .ev-tab:last-child {
-            margin-inline-end: auto;
+        &.is-align-tabs-center {
+            .ev-tab:first-child {
+                margin-inline-start: auto;
+            }
+            .ev-tab:last-child {
+                margin-inline-end: auto;
+            }
         }
     }
 }
