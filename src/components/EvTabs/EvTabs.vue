@@ -41,6 +41,7 @@ provideDefaults({
 });
 
 const slideGroupProps = computed(() => filterComponentProps(EvSlideGroup, props));
+const alignTabsClass = computed(() => `is-align-tabs-${props.alignTabs}`);
 
 </script>
 <template>
@@ -50,6 +51,7 @@ const slideGroupProps = computed(() => filterComponentProps(EvSlideGroup, props)
         v-model="model"
         :class="[
             'ev-tabs',
+            alignTabsClass,
             {
                 'is-grow': props.grow
             },

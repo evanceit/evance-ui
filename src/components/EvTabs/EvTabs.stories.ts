@@ -7,6 +7,10 @@ import {shallowRef} from "vue";
 const meta: Meta<typeof EvTabs> = {
     component: EvTabs,
     argTypes: {
+        alignTabs: {
+            control: 'select',
+            options: ['start', 'center', 'end']
+        },
         direction: {
             control: 'select',
             options: ['horizontal', 'vertical']
@@ -22,6 +26,7 @@ const meta: Meta<typeof EvTabs> = {
         },
     },
     args: {
+        alignTabs: 'start',
         direction: 'horizontal',
         grow: false,
         size: 'medium'
