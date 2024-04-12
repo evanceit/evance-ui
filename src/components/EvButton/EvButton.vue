@@ -146,7 +146,7 @@ const valueAttr = computed(() => {
 <template>
     <component
         :is="componentElement"
-        :href="link.href.value"
+        :href="link.href"
         :class="[
             'ev-button',
             group?.selectedClass,

@@ -35,8 +35,6 @@ const tabindex = computed(() => {
 });
 const dimensions = useDimensions(props);
 
-console.log(items);
-
 /**
  * Establish provide() and inject() functionality for list items.
  */

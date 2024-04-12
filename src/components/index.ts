@@ -33,6 +33,7 @@ export * from './EvResponsive';
 export * from './EvSelect';
 export * from './EvSurface';
 export * from './EvSwitch';
+export * from './EvTabs';
 export * from './EvTag';
 export * from './EvTagGroup';
 export * from './EvTextarea';

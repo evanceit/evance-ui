@@ -1,5 +1,5 @@
 {
-  "name": "amethyst",
+  "name": "evance-ui",
   "description": "Evance UI Component Library based on Vuetify",
   "version": "1.0.0",
   "license": "MIT",
@@ -16,7 +16,10 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Geoff Willings",
+    "email": "geoff@evance.io"
+  },
   "bugs": {
     "url": "https://github.com/evanceit/amethyst/issues"
   },
