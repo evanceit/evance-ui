@@ -4,7 +4,6 @@ import {propsFactory} from "@/util";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makeTagProps} from "@/composables/tag.ts";
 import {IconProp} from "@/composables/icons.ts";
-import {ChevronLeft, ChevronRight} from "@/icons";
 import {VisibilityRuleProp} from "@/composables/display.ts";
 
 
@@ -35,14 +34,8 @@ export const makeEvSlideGroupProps = propsFactory({
         type: String as PropType<'horizontal' | 'vertical'>,
         default: 'horizontal',
     },
-    iconNext: {
-        type: IconProp,
-        default: ChevronRight
-    },
-    iconPrevious: {
-        type: IconProp,
-        default: ChevronLeft
-    },
+    iconNext: IconProp,
+    iconPrevious: IconProp,
     symbol: {
         type: null,
         default: EvSlideGroupSymbol

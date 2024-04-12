@@ -10,6 +10,7 @@ import {Browser, clamp, focusableChildren, isBoolean} from "@/util";
 import {GroupProps, useGroup} from "@/composables/group.ts";
 import {useResizeObserver} from "@/composables/resizeObserver.ts";
 import {bias, calculateCenteredOffset, calculateUpdatedOffset} from "@/components/EvSlideGroup/helpers.ts";
+import {ChevronDown, ChevronLeft, ChevronRight, ChevronUp} from "@/icons";
 
 defineSlots<EvSlideGroupSlot>();
 
@@ -314,6 +315,20 @@ const arrowsAlignClass = computed(() => {
     return `is-arrows-${props.arrowsAlign}`;
 });
 
+const iconNext = computed(() => {
+    if (props.iconNext) {
+        return props.iconNext;
+    }
+    return isHorizontal.value ? ChevronRight : ChevronDown;
+});
+
+const iconPrevious = computed(() => {
+    if (props.iconPrevious) {
+        return props.iconPrevious;
+    }
+    return isHorizontal.value ? ChevronLeft : ChevronUp;
+});
+
 </script>
 <template>
     <component
@@ -365,7 +380,7 @@ const arrowsAlignClass = computed(() => {
         >
             <slot name="previous">
                 <ev-button
-                    :icon="isRtl ? props.iconNext : props.iconPrevious"
+                    :icon="isRtl && isHorizontal ? iconNext : iconPrevious"
                     variant="subtle"
                 />
             </slot>
@@ -384,7 +399,7 @@ const arrowsAlignClass = computed(() => {
         >
             <slot name="next">
                 <ev-button
-                    :icon="isRtl ? props.iconPrevious : props.iconNext"
+                    :icon="isRtl && isHorizontal ? iconPrevious : iconNext"
                     variant="subtle"
                 />
             </slot>
