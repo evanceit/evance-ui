@@ -25,9 +25,9 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-        <ev-slide-group v-bind="args" arrows-hidden>
+        <ev-slide-group v-bind="args">
             <ev-slide-group-item
-                v-for="n in 25"
+                v-for="n in 6"
                 :key="n"
                 v-slot="{ isSelected, toggle }"
             >

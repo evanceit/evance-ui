@@ -4,7 +4,7 @@ import {propsFactory} from "@/util";
 import {makeEvButtonGroupProps} from "@/components/EvButtonGroup/EvButtonGroup.ts";
 
 
-export type ButtonToggleSlotProps = 'isSelected' | 'select' | 'selected' | 'next' | 'prev';
+export type ButtonToggleSlotProps = 'isSelected' | 'select' | 'selected' | 'next' | 'previous';
 export interface DefaultButtonToggleSlot extends Pick<GroupProvide, ButtonToggleSlotProps> {}
 
 export const EvButtonToggleSymbol: InjectionKey<GroupProvide> = Symbol.for('ev:button-toggle');

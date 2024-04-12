@@ -309,9 +309,9 @@ function onFieldKeydown(e: KeyboardEvent) {
         if (selectionIndex.value < 0 && selectionStart > 0) {
             return;
         }
-        const prev = selectionIndex.value > -1 ? selectionIndex.value - 1 : length - 1;
-        if (model.value[prev]) {
-            selectionIndex.value = prev;
+        const previous = selectionIndex.value > -1 ? selectionIndex.value - 1 : length - 1;
+        if (model.value[previous]) {
+            selectionIndex.value = previous;
         } else {
             selectionIndex.value = -1;
             evTextfieldRef.value?.input.setSelectionRange(search.value?.length, search.value?.length);

@@ -287,7 +287,7 @@ const contentStyles = computed(() => {
 
 const slotProps = computed(() => ({
     next: group.next,
-    prev: group.prev,
+    previous: group.previous,
     select: group.select,
     isSelected: group.isSelected
 }));
@@ -299,6 +299,13 @@ const hasPrevious = computed(() => {
 const hasNext = computed(() => {
     // Check one scroll ahead to know the width of right-most item
     return contentSize.value > Math.abs(scrollOffset.value) + containerSize.value;
+});
+
+const hasAffix = computed(() => {
+    if (isBoolean(props.arrowsHidden) && props.arrowsHidden) {
+        return false;
+    }
+    return isOverflowing.value || Math.abs(scrollOffset.value) > 0;
 });
 
 </script>
@@ -339,6 +346,7 @@ const hasNext = computed(() => {
         </div>
 
         <div
+            v-if="hasAffix"
             key="previous"
             :class="[
                 'ev-slide-group--previous',
@@ -357,6 +365,7 @@ const hasNext = computed(() => {
         </div>
 
         <div
+            v-if="hasAffix"
             key="next"
             :class="[
                 'ev-slide-group--next',

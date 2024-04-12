@@ -21,11 +21,11 @@ defineEmits([
 
 defineSlots<EvButtonToggleSlots>();
 
-const { isSelected, next, prev, select, selected } = useGroup(props as any as GroupProps, EvButtonToggleSymbol);
+const { isSelected, next, previous, select, selected } = useGroup(props as any as GroupProps, EvButtonToggleSymbol);
 
 defineExpose({
     next,
-    prev,
+    previous,
     select
 });
 
@@ -41,6 +41,6 @@ const groupProps = computed(() => filterComponentProps(EvButtonGroup, props));
         :style="props.style"
         v-bind="groupProps"
     >
-        <slot v-bind="{isSelected, next, prev, select, selected}" />
+        <slot v-bind="{isSelected, next, previous, select, selected}" />
     </ev-button-group>
 </template>

@@ -77,7 +77,7 @@ export function provideDefaults(
             return injectedDefaults.value;
         }
 
-        let properties = mergeDeep(providedDefaults.value, { prev: injectedDefaults.value });
+        let properties = mergeDeep(providedDefaults.value, { previous: injectedDefaults.value });
 
         if (scoped) {
             return properties;
@@ -87,21 +87,21 @@ export function provideDefaults(
             const len = Number(reset || Infinity);
 
             for (let i = 0; i <= len; i++) {
-                if (!properties || !('prev' in properties)) {
+                if (!properties || !('previous' in properties)) {
                     break;
                 }
-                properties = properties.prev;
+                properties = properties.previous;
             }
 
             if (properties && typeof root === 'string' && root in properties) {
-                properties = mergeDeep(mergeDeep(properties, { prev: properties }), properties[root]);
+                properties = mergeDeep(mergeDeep(properties, { previous: properties }), properties[root]);
             }
 
             return properties;
         }
 
-        return properties.prev
-            ? mergeDeep(properties.prev, properties)
+        return properties.previous
+            ? mergeDeep(properties.previous, properties)
             : properties;
 
     }) as ComputedRef<DefaultsInstance>;

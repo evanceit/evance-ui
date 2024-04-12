@@ -12,19 +12,20 @@ export const EvSlideGroupSymbol: InjectionKey<GroupProvide> = Symbol.for('ev:sli
 
 export interface SlideGroupSlot {
     next: GroupProvide['next'];
-    prev: GroupProvide['prev'];
+    previous: GroupProvide['previous'];
     select: GroupProvide['select'];
     isSelected: GroupProvide['isSelected'];
 }
 
 export type EvSlideGroupSlot = {
     default: SlideGroupSlot,
-    prev: SlideGroupSlot,
+    previous: SlideGroupSlot,
     next: SlideGroupSlot
 };
 
 
 export const makeEvSlideGroupProps = propsFactory({
+    arrowsHidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
     centerActive: Boolean,
     direction: {
         type: String as PropType<'horizontal' | 'vertical'>,
@@ -38,7 +39,6 @@ export const makeEvSlideGroupProps = propsFactory({
         type: IconProp,
         default: ChevronLeft
     },
-    arrowsHidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
     symbol: {
         type: null,
         default: EvSlideGroupSymbol

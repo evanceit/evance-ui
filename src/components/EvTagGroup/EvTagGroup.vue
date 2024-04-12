@@ -6,14 +6,14 @@ import {computed} from "vue";
 
 const props = defineProps(makeEvTagGroupProps());
 
-const { isSelected, select, next, prev, selected } = useGroup(props, EvTagGroupSymbol)
+const { isSelected, select, next, previous, selected } = useGroup(props, EvTagGroupSymbol)
 
 const slotProps = computed(() => {
     return {
         isSelected,
         select,
         next,
-        prev,
+        previous,
         selected: selected.value
     };
 });
