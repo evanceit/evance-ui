@@ -149,7 +149,7 @@ const valueAttr = computed(() => {
         :href="link.href"
         :class="[
             'ev-button',
-            group?.selectedClass,
+            group?.selectedClass.value,
             appearanceClass,
             variantClass,
             sizeModifier(props.size as string, [InputSize.default]),

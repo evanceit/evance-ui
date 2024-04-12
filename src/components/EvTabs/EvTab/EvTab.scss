@@ -1,0 +1,28 @@
+.ev-tab--slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: var(--tab-slider-size, 2px);
+    width: 100%;
+    background: currentColor;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.ev-tab {
+    &.is-selected {
+        .ev-tab--slider {
+            opacity: 1;
+        }
+    }
+}
+
+.ev-tabs {
+    &.is-vertical {
+        .ev-tab--slider {
+            top: 0;
+            height: 100%;
+            width: var(--tab-slider-size, 2px);
+        }
+    }
+}
