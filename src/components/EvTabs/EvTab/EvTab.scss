@@ -10,7 +10,7 @@
 }
 
 .ev-tab {
-    &.is-selected {
+    &.is-active {
         .ev-tab--slider {
             opacity: 1;
         }

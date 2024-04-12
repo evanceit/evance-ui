@@ -33,10 +33,10 @@ const parsedItems = computed(() => parseItems(props.items));
 
 provideDefaults({
     EvTab: {
-        direction: toRef(props, 'direction')
-    },
-    EvButton: {
-        size: toRef(props, 'size')
+        direction: toRef(props, 'direction'),
+        size: toRef(props, 'size'),
+        selectedAppearance: toRef(props, 'selectedAppearance'),
+        selectedVariant: toRef(props, 'selectedVariant')
     }
 });
 

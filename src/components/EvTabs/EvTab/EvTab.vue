@@ -26,7 +26,7 @@ function updateSlider({ value }: { value: boolean }) {
         return;
     }
 
-    const prevEl: HTMLElement | undefined = rootEl.value?.$el.parentElement?.querySelector('.ev-tab.is-selected .ev-tab--slider');
+    const prevEl: HTMLElement | undefined = rootEl.value?.$el.parentElement?.querySelector('.ev-tab.is-active .ev-tab--slider');
     const nextEl = sliderEl.value;
     if (!prevEl || !nextEl) {
         return;
