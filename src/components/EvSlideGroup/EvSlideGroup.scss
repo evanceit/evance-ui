@@ -8,4 +8,39 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &.is-disabled {
+        pointer-events: none;
+        opacity: 0.6; // @todo: We need a disabled opacity
+    }
+}
+
+.ev-slide-group--container {
+    contain: content;
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.ev-slide-group--content {
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    transition: 0.2s all var(--easing-standard);
+    white-space: nowrap;
+
+    > * {
+        white-space: initial;
+    }
+}
+
+/* Vertical */
+.ev-slide-group {
+    &.is-vertical {
+        &,
+        .ev-slide-group--container,
+        .ev-slide-group--content {
+            flex-direction: column;
+        }
+    }
 }
