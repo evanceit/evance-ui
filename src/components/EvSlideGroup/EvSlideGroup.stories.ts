@@ -6,10 +6,13 @@ import {EvButton} from "@/components";
 const meta: Meta<typeof EvSlideGroup> = {
     component: EvSlideGroup,
     argTypes: {
-
+        arrowsAlign: {
+            control: 'select',
+            options: ['start', 'end', 'around']
+        }
     },
     args: {
-
+        arrowsAlign: 'around'
     },
     tags: ['autodocs']
 };
@@ -27,7 +30,7 @@ export const Primary: Story = {
         template: `
         <ev-slide-group v-bind="args">
             <ev-slide-group-item
-                v-for="n in 6"
+                v-for="n in 25"
                 :key="n"
                 v-slot="{ isSelected, toggle }"
             >

@@ -44,3 +44,33 @@
         }
     }
 }
+
+/** Arrows Around */
+.ev-slide-group {
+    &.is-arrows-around {
+        .ev-slide-group--next {
+            order: 3;
+        }
+        .ev-slide-group--previous {
+            order: 1;
+        }
+        .ev-slide-group--container {
+            order: 2;
+        }
+    }
+}
+
+/** Arrows Start */
+.ev-slide-group {
+    &.is-arrows-start {
+        .ev-slide-group--next {
+            order: 2;
+        }
+        .ev-slide-group--previous {
+            order: 1;
+        }
+        .ev-slide-group--container {
+            order: 3;
+        }
+    }
+}

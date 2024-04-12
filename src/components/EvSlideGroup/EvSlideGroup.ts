@@ -25,6 +25,10 @@ export type EvSlideGroupSlot = {
 
 
 export const makeEvSlideGroupProps = propsFactory({
+    arrowsAlign: {
+        type: String as PropType<'start' | 'end' | 'around'>,
+        default: 'around'
+    },
     arrowsHidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
     centerActive: Boolean,
     direction: {

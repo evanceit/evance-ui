@@ -3,13 +3,15 @@
  * # EvSlideGroup
  */
 import './EvSlideGroup.scss';
-import {EvButton, makeEvSlideGroupProps} from "@/components";
+import {EvButton, EvSlideGroupSlot, makeEvSlideGroupProps} from "@/components";
 import {useDisplayRuleClasses} from "@/composables/display.ts";
 import {computed, shallowRef, watch} from "vue";
 import {Browser, clamp, focusableChildren, isBoolean} from "@/util";
 import {GroupProps, useGroup} from "@/composables/group.ts";
 import {useResizeObserver} from "@/composables/resizeObserver.ts";
 import {bias, calculateCenteredOffset, calculateUpdatedOffset} from "@/components/EvSlideGroup/helpers.ts";
+
+defineSlots<EvSlideGroupSlot>();
 
 const props = defineProps(makeEvSlideGroupProps());
 const group = useGroup(props as any as GroupProps, props.symbol);
@@ -308,6 +310,10 @@ const hasAffix = computed(() => {
     return isOverflowing.value || Math.abs(scrollOffset.value) > 0;
 });
 
+const arrowsAlignClass = computed(() => {
+    return `is-arrows-${props.arrowsAlign}`;
+});
+
 </script>
 <template>
     <component
@@ -318,6 +324,7 @@ const hasAffix = computed(() => {
                 'is-overflowing': isOverflowing,
                 'is-vertical': !isHorizontal
             },
+            arrowsAlignClass,
             props.class
         ]"
         :style="props.style"
