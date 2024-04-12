@@ -33,7 +33,10 @@ const parsedItems = computed(() => parseItems(props.items));
 
 provideDefaults({
     EvTab: {
-        direction: toRef(props, 'direction'),
+        direction: toRef(props, 'direction')
+    },
+    EvButton: {
+        size: toRef(props, 'size')
     }
 });
 
@@ -47,6 +50,9 @@ const slideGroupProps = computed(() => filterComponentProps(EvSlideGroup, props)
         v-model="model"
         :class="[
             'ev-tabs',
+            {
+                'is-grow': props.grow
+            },
             props.class
         ]"
         :style="props.style"

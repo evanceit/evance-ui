@@ -26,3 +26,14 @@
         }
     }
 }
+
+.ev-tabs {
+    &.is-grow {
+        flex-grow: 1;
+
+        .ev-tab {
+            flex: 1 0 auto;
+            max-width: none;
+        }
+    }
+}

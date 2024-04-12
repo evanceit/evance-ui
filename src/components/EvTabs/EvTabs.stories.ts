@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 
 import {EvTab, EvTabs} from "../EvTabs";
 import {SalesEnquiry, SalesEnquiryFill, SalesOrder, SalesOrderFill, SalesQuotation, SalesQuotationFill} from "@/icons";
-import {computed, shallowRef} from "vue";
+import {shallowRef} from "vue";
 
 const meta: Meta<typeof EvTabs> = {
     component: EvTabs,
@@ -10,10 +10,21 @@ const meta: Meta<typeof EvTabs> = {
         direction: {
             control: 'select',
             options: ['horizontal', 'vertical']
-        }
+        },
+        grow: {
+            control: 'boolean'
+        },
+        size: {
+            control: 'select',
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
+            description: 'Changes the size of the tab, which may be either `small`, `medium`, or `large`. \n\n' +
+                'Defaults to `medium`.'
+        },
     },
     args: {
-
+        direction: 'horizontal',
+        grow: false,
+        size: 'medium'
     },
     tags: ['autodocs']
 };
