@@ -130,17 +130,17 @@ const vTouch = Touch;
             <slot name="default" v-bind="{ group }"></slot>
 
             <div v-if="props.showArrows !== false" class="ev-window--controls">
-                <template v-if="canMoveBack">
-                    <slot name="previous" v-bind="{ props: previousProps }">
-                        <ev-button v-bind="previousProps" />
-                    </slot>
-                </template>
-                <template v-if="canMoveForward">
-                    <slot name="next" v-bind="{ props: nextProps }">
-                        <ev-button v-bind="nextProps" />
-                    </slot>
-                </template>
+                <slot v-if="canMoveBack" name="previous" v-bind="{ props: previousProps }">
+                    <ev-button v-bind="previousProps" />
+                </slot>
+                <div v-else class="ev-window--control-placeholder"></div>
+
+                <slot v-if="canMoveForward" name="next" v-bind="{ props: nextProps }">
+                    <ev-button v-bind="nextProps" />
+                </slot>
+                <div v-else class="ev-window--control-placeholder"></div>
             </div>
+
         </div>
     </component>
 </template>
