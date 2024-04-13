@@ -1,4 +1,4 @@
-import {inject, InjectionKey} from "vue";
+import {inject, InjectionKey, shallowRef} from "vue";
 import {LocaleManager, LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
 import {TranslationOptions} from "@/modules/Translation/Translator.ts";
 
@@ -47,5 +47,18 @@ export function useLocaleFunctions() {
         ) => {
             return manager.numberFormatter.format(value, options, locale)
         }
+    }
+}
+
+/**
+ *
+ */
+export function useRtl() {
+    // @todo: Implement RTL in Locale Manager
+    const isRtl = shallowRef(false);
+    const rtlClasses = shallowRef([]);
+    return {
+        isRtl,
+        rtlClasses
     }
 }

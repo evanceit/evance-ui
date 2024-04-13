@@ -1,3 +1,9 @@
+.ev-tab {
+    &:focus-visible {
+        outline-offset: -2px;
+    }
+}
+
 .ev-tab--slider {
     position: absolute;
     bottom: 0;

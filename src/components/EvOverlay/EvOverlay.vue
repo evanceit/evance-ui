@@ -18,6 +18,7 @@ import {ActivatorProps, useActivator} from "./activator.ts";
 import {useScopeId} from "@/composables/scopeId.ts";
 import {usePositionStrategies} from "./position.ts";
 import {useScrollStrategies} from "./scroll.ts";
+import {useRtl} from "@/composables/locale.ts";
 
 defineOptions({
     inheritAttrs: false
@@ -56,9 +57,10 @@ const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } 
 const teleportTarget = useTeleport(computed(() => {
     return props.attach || props.contained;
 }));
+const { rtlClasses, isRtl } = useRtl();
 
 const { contentStyles, updatePosition } = usePositionStrategies(props, {
-    isRtl: computed(() => false), // @todo: Implement RTL via Locales
+    isRtl,
     contentEl,
     activatorEl,
     isActive: isActiveContent
@@ -229,11 +231,12 @@ const overlayAttributes = {
         :to="teleportTarget">
         <div
             ref="containerEl"
-            class="ev-overlay"
             :class="[
+                'ev-overlay',
                 {
                     'is-active': isActiveContent
                 },
+                rtlClasses,
                 props.class
             ]"
             :style="[

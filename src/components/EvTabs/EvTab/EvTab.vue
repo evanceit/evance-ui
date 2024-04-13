@@ -6,13 +6,13 @@ import './EvTab.scss';
 import {makeEvTabProps} from "./EvTab.ts";
 import {EvButton} from "@/components/EvButton";
 import {EvTabsSymbol} from "@/components/EvTabs/EvTabs.ts";
-import {computed, ref, shallowRef} from "vue";
+import {computed, ref} from "vue";
 import {animate, easingStandard, filterComponentProps} from "@/util";
 import {useDefaults} from "@/composables";
 
 const definedProps = defineProps(makeEvTabProps());
 const props = useDefaults(definedProps);
-const isSelected = shallowRef(false);
+const isSelected = computed(() => rootEl.value?.group?.isSelected.value ?? false);
 const isHorizontal = computed(() => props.direction === 'horizontal');
 const buttonProps = computed(() => {
     return filterComponentProps(EvButton, props);

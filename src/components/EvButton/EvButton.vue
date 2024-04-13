@@ -142,11 +142,15 @@ const valueAttr = computed(() => {
         : props.value;
 });
 
+defineExpose({
+    group
+});
+
 </script>
 <template>
     <component
         :is="componentElement"
-        :href="link.href"
+        :href="link.href.value"
         :class="[
             'ev-button',
             group?.selectedClass.value,

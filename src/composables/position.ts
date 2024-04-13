@@ -1,5 +1,6 @@
 import {Anchor, AnchorSelector, propsFactory} from "@/util";
-import {computed, CSSProperties, PropType, shallowRef} from "vue";
+import {computed, CSSProperties, PropType} from "vue";
+import {useRtl} from "@/composables/locale.ts";
 
 
 export interface PositionProps {
@@ -26,8 +27,7 @@ export function usePosition(
     opposite = false,
     offset?: (side: string) => number
 ) {
-    // @todo: Implement rtl from locale
-    const isRtl = shallowRef(false);
+    const { isRtl } = useRtl();
 
     const positionStyles = computed(() => {
         if (!props.position) {

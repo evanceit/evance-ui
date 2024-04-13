@@ -385,3 +385,7 @@ export function matchesSelector(el: Element | undefined, selector: string): bool
         return null;
     }
 }
+
+export function keys<O extends {}> (o: O) {
+    return Object.keys(o) as (keyof O)[]
+}

@@ -1,4 +1,8 @@
 export default {
+    carousel: {
+        next: 'Next',
+        previous: 'Previous'
+    },
     close: 'Close',
     dismiss: 'Dismiss',
     expand: 'Expand',

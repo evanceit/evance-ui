@@ -1,0 +1,108 @@
+.ev-window {
+    --window-transition: .3s cubic-bezier(.25, .8, .50, 1);
+
+    overflow: hidden;
+
+    &--container {
+        display: flex;
+        flex-direction: column;
+        height: inherit;
+        position: relative;
+        transition: var(--window-transition);
+    }
+
+    &--controls {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        pointer-events: none;
+
+        * {
+            pointer-events: auto;
+        }
+    }
+}
+
+/** Arrows on hover */
+.ev-window {
+    &.is-arrows-on-hover {
+        overflow: hidden;
+
+        .ev-window--left {
+            transform: translateX(-200%);
+        }
+
+        .ev-window--right {
+            transform: translateX(200%);
+        }
+
+        &:hover {
+            .ev-window--left,
+            .ev-window--right {
+                transform: translateX(0);
+            }
+        }
+    }
+}
+
+/** Window Transition */
+.ev-window {
+
+    &-x-transition,
+    &-x-reverse-transition,
+    &-y-transition,
+    &-y-reverse-transition {
+        &-enter-active,
+        &-leave-active {
+            transition: var(--window-transition);
+        }
+        &-leave-from,
+        &-leave-to {
+            position: absolute !important;
+            top: 0;
+            width: 100%;
+        }
+    }
+
+    &-x-transition {
+        &-enter-from {
+            transform: translateX(100%);
+        }
+        &-leave-to {
+            transform: translateX(-100%);
+        }
+    }
+
+    &-x-reverse-transition {
+        &-enter-from {
+            transform: translateX(-100%)
+        }
+        &-leave-to {
+            transform: translateX(100%);
+        }
+    }
+
+    &-y-transition {
+        &-enter-from {
+            transform: translateY(100%);
+        }
+        &-leave-to {
+            transform: translateY(-100%)
+        }
+    }
+
+    &-y-reverse-transition {
+        &-enter-from {
+            transform: translateY(-100%)
+        }
+        &-leave-to {
+            transform: translateY(100%)
+        }
+    }
+}

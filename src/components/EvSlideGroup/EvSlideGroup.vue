@@ -11,12 +11,13 @@ import {GroupProps, useGroup} from "@/composables/group.ts";
 import {useResizeObserver} from "@/composables/resizeObserver.ts";
 import {bias, calculateCenteredOffset, calculateUpdatedOffset} from "@/components/EvSlideGroup/helpers.ts";
 import {ChevronDown, ChevronLeft, ChevronRight, ChevronUp} from "@/icons";
+import {useRtl} from "@/composables/locale.ts";
 
 defineSlots<EvSlideGroupSlot>();
 
 const props = defineProps(makeEvSlideGroupProps());
 const group = useGroup(props as any as GroupProps, props.symbol);
-const isRtl = shallowRef(false); // @todo: Implement rtl from locale
+const { isRtl } = useRtl();
 const isFocused = shallowRef(false);
 const isOverflowing = shallowRef(false);
 const scrollOffset = shallowRef(0);
