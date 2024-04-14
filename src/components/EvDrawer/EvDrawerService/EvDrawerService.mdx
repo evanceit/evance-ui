@@ -1,0 +1,170 @@
+import {Canvas, Meta, Story} from '@storybook/blocks';
+
+import * as EvDrawerServiceStories from './EvDrawerService.stories';
+
+<Meta of={EvDrawerServiceStories} />
+
+# EvDrawerService
+
+Drawers can be created programmatically with any component supplied to the `EvDrawer` slots using the `EvDrawerService`.
+
+
+## Installation
+
+The `EvDrawerService` needs to be installed as an application plugin.
+
+```ts
+import {createApp} from 'vue';
+import {EvDrawerService} from "@evance/amethyst/services";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+// Load the service directly
+app.use(EvDrawerService);
+```
+
+For larger applications you may wish to load all of the Evance UI services.
+
+```ts
+import {createApp} from 'vue';
+import * as services from "@evance/amethyst/services";
+import {createEvanceUi} from "@evance/amethyst/framework";
+
+// Import the root component App from a single-file component & create the App
+import App from './App.vue'
+const app = createApp(App);
+
+const evanceUi = createEvanceUi({
+    services
+});
+
+// Load the service directly
+app.use(evanceUi);
+```
+
+
+## Accessing the service
+
+The service is available with the `useDrawer()` function for Composition API and the `$drawer` property of the
+application for the Options API.
+
+```ts
+// Composition API
+import { useDrawer} from '@evance/amethyst/composables/drawer';
+
+const drawer = useDrawer();
+
+// Options API
+const drawer = this.$drawer;
+```
+
+## Opening an EvDrawer programmatically
+
+The `open` function of the `EvDrawerService` is used to open an `EvDrawer` and accepts an options object which may contain:
+the `props` to assign the `EvDrawer`; the `slots` to render within the drawer; and the `data` you would like to pass to the
+components you supplied within the slots.
+
+```ts
+import ExampleComponent from './ExampleComponent';
+import { useDrawer } from '@evance/amethyst/composables/drawer';
+
+const drawer = useDrawer();
+
+function show() {
+    drawer.open({
+        props: {
+            width: 'large'
+        },
+        slots: {
+            default: ExampleComponent
+        },
+        data: {
+            title: 'Example #1'
+        }
+    });
+}
+
+```
+
+The component can also be loaded asynchronously - useful in conditional cases or to improve load times.
+
+```ts
+import { useDrawer } from '@evance/amethyst/composables/drawer';
+
+const drawer = useDrawer();
+
+const dynamicComponent = defineAsyncComponent(() => import('./ExampleComponent.vue'));
+
+function show() {
+    drawer.open({
+        slots: {
+            default: dynamicComponent
+        }
+    });
+}
+```
+
+## Closing a drawer instance
+
+The `close` function is available via the `EvDrawerInstance` which is injected into your component using the
+`injectDrawer()` function.
+
+```ts
+import { injectDrawer } from '@evance/amethyst/composables/drawer';
+
+const drawerInstance = injectDrawer();
+
+function close() {
+    drawerInstance.close();
+}
+```
+
+## Passing data between components
+
+Use the `data` property of the `open()` options object to pass data to your rendered component and
+the returned Promise to receive data from the drawer when it closes.
+
+```ts
+
+// Parent component
+const drawer = userDrawer();
+
+drawer.open({
+    slots: {
+        default: ExampleComponent
+    },
+    data: {
+        id: 1,
+        title: "My Example Title"
+    }
+}).then(response => {
+    console.log(response); // { success: true }
+});
+
+```
+
+Use the `close` function to pass data back as a response in the Promise created by the `open` function.
+
+```ts
+// ExampleComponent
+import { injectDrawer } from '@evance/amethyst/composables/drawer';
+
+const drawerInstance = injectDrawer();
+
+const data = drawerInstance.data; // { id: 1, title: "My Example Title" }
+
+function close() {
+    drawerInstance.close({
+        success: true
+    });
+}
+```
+
+## Example
+The Example below is a recursive drawer, which can open and receive data from each successive component.
+
+<Canvas>
+    <Story of={EvDrawerServiceStories.Primary} />
+</Canvas>

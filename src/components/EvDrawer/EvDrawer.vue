@@ -5,6 +5,7 @@ import {makeEvDrawerProps} from "@/components/EvDrawer/EvDrawer.ts";
 import {computed, ref} from "vue";
 import {filterComponentProps, omit} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import {provideDrawer} from "@/composables/drawer.ts";
 
 const props = defineProps(makeEvDrawerProps());
 const dialogProps = computed(() => {
@@ -14,7 +15,7 @@ const dialogProps = computed(() => {
     )
 });
 const isActive = useModelProxy(props, 'modelValue');
-const dialogRef = ref(null);
+const dialogRef = ref<typeof EvDialog>();
 
 const positionClass = computed(() => {
     return `is-position-${props.position}`;
@@ -29,6 +30,19 @@ const overlayWidth = computed(() => {
         return '100%';
     }
     return props.width ?? 'medium';
+});
+
+/**
+ * ## Close
+ */
+function close() {
+    isActive.value = false;
+}
+
+provideDrawer(props.__instance);
+
+defineExpose({
+    close
 });
 
 </script>

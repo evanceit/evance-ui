@@ -51,7 +51,7 @@ type Story = StoryObj<typeof EvWindow>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvWindow, EvWindowItem, EvButton, ArrowContinue, ArrowBack },
+        components: { EvWindow, EvWindowItem, EvButton },
         setup() {
             const step = shallowRef(1);
             const reverse = shallowRef(false);

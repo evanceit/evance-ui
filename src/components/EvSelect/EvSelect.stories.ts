@@ -148,7 +148,7 @@ export const Primary: Story = {
  */
 export const ItemsAffix: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, Plus },
+        components: { EvSelect, EvListItem, EvDivider },
         data() {
             return {
                 selected: null
@@ -179,7 +179,7 @@ export const ItemsAffix: Story = {
  */
 export const ListAffix: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, Plus },
+        components: { EvSelect, EvListItem, EvDivider },
         data() {
             return {
                 selected: null
@@ -209,7 +209,7 @@ export const ListAffix: Story = {
  */
 export const CustomItem: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar, EvQuickfind, Products },
+        components: { EvSelect, EvListItem, EvDivider, EvLozenge, EvLayout, EvBlock, EvAvatar, EvQuickfind },
         setup() {
             const items = generateItemList(10);
             return { items, Products };
@@ -279,7 +279,7 @@ export const CustomItem: Story = {
  */
 export const ItemsEmpty: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvButton, Plus },
+        components: { EvSelect, EvListItem, EvButton },
         data() {
             return {
                 selected: null
@@ -309,7 +309,7 @@ export const ItemsEmpty: Story = {
  */
 export const AsyncItems: Story = {
     render: (args: any) =>  ({
-        components: { EvSelect, EvListItem, EvButton, Plus },
+        components: { EvSelect, EvListItem, EvButton },
         data() {
             return {
                 selected: null
