@@ -1,14 +1,12 @@
 <script setup lang="ts">
-
+import './EvDrawer.scss';
 import {EvDialog} from "@/components/EvDialog";
 import {makeEvDrawerProps} from "@/components/EvDrawer/EvDrawer.ts";
-import {computed, useSlots} from "vue";
+import {computed, ref} from "vue";
 import {filterComponentProps, omit} from "@/util";
 import {useModelProxy} from "@/composables/modelProxy.ts";
-import slots from "@/directives/slots.ts";
 
 const props = defineProps(makeEvDrawerProps());
-const slotsDefined = useSlots();
 const dialogProps = computed(() => {
     return omit(
         filterComponentProps(EvDialog, props),
@@ -16,19 +14,40 @@ const dialogProps = computed(() => {
     )
 });
 const isActive = useModelProxy(props, 'modelValue');
-const vSlots = slots;
+const dialogRef = ref(null);
+
+const positionClass = computed(() => {
+    return `is-position-${props.position}`;
+});
+
+const transition = computed(() =>  {
+    return `ev-drawer--transition-${props.position}`;
+});
+
+const overlayWidth = computed(() => {
+    if (props.position === 'top' || props.position === 'bottom') {
+        return '100%';
+    }
+    return props.width ?? 'medium';
+});
 
 </script>
 <template>
     <ev-dialog
+        ref="dialogRef"
+        v-bind="dialogProps"
+        v-model="isActive"
         :class="[
             'ev-drawer',
+            positionClass,
             props.class
         ]"
         :style="props.style"
-        v-bind="dialogProps"
-        v-model="isActive"
-        v-slots="slotsDefined"
+        :transition="transition"
+        :width="overlayWidth"
     >
+        <template v-for="(slot, name) in $slots" v-slot:[name]="slotProps">
+            <component :is="slot" v-bind="slotProps" />
+        </template>
     </ev-dialog>
 </template>
