@@ -90,7 +90,8 @@ const evListRef = ref<typeof EvList>();
 const evVirtualScrollRef = ref<typeof EvVirtualScroll>();
 const { items, transformIn, transformOut } = useItems(props);
 const search = useModelProxy(props, 'search', '');
-const { filteredItems, getMatches } = useFilter(props, items, () => (isPristine.value || !isSearchable.value) ? '' : search.value);
+// @todo: implement getMatches
+const { filteredItems } = useFilter(props, items, () => (isPristine.value || !isSearchable.value) ? '' : search.value);
 const displayItems = computed(() => {
     if (props.hideSelected) {
         return filteredItems.value.filter(filteredItem => !model.value.some((s: ListItem) => s.value === filteredItem.value));
