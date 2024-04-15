@@ -1,8 +1,13 @@
 {
   "name": "evance-ui",
+  "private": false,
   "description": "Evance UI Component Library based on Vuetify",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/evanceit/amethyst.git"
@@ -24,6 +29,19 @@
     "url": "https://github.com/evanceit/amethyst/issues"
   },
   "homepage": "https://github.com/evanceit/amethyst#readme",
+  "main": "./dist/evance-ui.umd.js",
+  "module": "./dist/evance-ui.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/evance-ui.es.js",
+      "require": "./dist/evance-ui.umd.js"
+    },
+    "./dist/evance-ui.css": {
+      "import": "./dist/evance-ui.css",
+      "require": "./dist/evance-ui.css"
+    }
+  },
+  "types": "./dist/evance-ui.es.d.ts",
   "peerDependencies": {
     "typescript": "^5.0.2",
     "vue": "^3.3.4"

@@ -9,6 +9,7 @@ export default defineConfig({
     plugins: [
         vue(),
         dts({
+            insertTypesEntry: true,
             exclude: [
                 '**/*.stories.ts',
                 '**/*.test.ts'
@@ -22,7 +23,8 @@ export default defineConfig({
         lib: {
             entry: resolve('./src/entry-bundler.ts'),
             name: 'EvanceUI',
-            fileName: 'evance-ui'
+            formats: ["es", "cjs", "umd"],
+            fileName: format => `evance-ui.${format}.js`
         },
         rollupOptions: {
             external: ['vue', 'typescript'],
@@ -31,6 +33,7 @@ export default defineConfig({
                     if (assetInfo.name === 'style.css') return 'evance-ui.css';
                     return assetInfo.name;
                 },
+                exports: "named",
                 globals: {
                     vue: 'Vue'
                 }
