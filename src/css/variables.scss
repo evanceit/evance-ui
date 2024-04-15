@@ -41,8 +41,12 @@
 
 
     /* Spacers */
-    @each $percentage in map_keys(settings.$spacers) {
-        --spacer-#{$percentage}: #{map-get(settings.$spacers, $percentage)};
+    --spacer-0: 0;
+    @each $key in map_keys(settings.$spacers) {
+        --spacer-#{$key}: #{map-get(settings.$spacers, $key)};
+    }
+    @each $key in map_keys(settings.$negative-spacers) {
+        --spacer-#{$key}: #{map-get(settings.$negative-spacers, $key)};
     }
 
     /* Text */

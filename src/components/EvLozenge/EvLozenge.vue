@@ -51,7 +51,7 @@ const getMaxWidthOuter = () => {
  * the default padding.
  */
 const getMaxWidthInner = () => {
-    return isMaxWidthPercent() ? '100%' : `calc(${getMaxWidthWithUnits()} - var(--spacer-100))`
+    return isMaxWidthPercent() ? '100%' : `calc(${getMaxWidthWithUnits()} - var(--spacer-200))`
 };
 
 /**

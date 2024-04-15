@@ -38,17 +38,17 @@
 
 .ev-dialog--body {
     flex: 1;
-    padding: var(--spacer-200, 2rem);
+    padding: var(--spacer-400, 2rem);
 }
 
 .ev-dialog--footer {
     flex: 0;
-    padding: var(--spacer-100, 1rem);
+    padding: var(--spacer-200, 1rem);
     display: flex;
     align-items: center;
     position: relative;
     justify-content: flex-end;
-    gap: var(--spacer-100, 1rem);
+    gap: var(--spacer-200, 1rem);
 }
 
 .ev-dialog--surface {

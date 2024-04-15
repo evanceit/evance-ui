@@ -3,8 +3,8 @@
     border-radius: var(--sheet-radius, 4px);
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--spacer-100);
-    padding: var(--spacer-100);
+    gap: var(--spacer-200);
+    padding: var(--spacer-200);
     background-color: var(--message-background);
     color: var(--message-text);
 
@@ -158,17 +158,17 @@
 .ev-message--expandable {
     display: flex;
     flex-direction: column;
-    gap: var(--spacer-50, 0.5rem);
+    gap: var(--spacer-100, 0.5rem);
 }
 
 .ev-message--description {
-    padding-top: var(--spacer-50);
+    padding-top: var(--spacer-100);
 }
 
 .ev-message--actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacer-100);
+    gap: var(--spacer-200);
 }
 
 .ev-message--actions {

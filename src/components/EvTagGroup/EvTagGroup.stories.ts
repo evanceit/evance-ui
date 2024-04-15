@@ -32,6 +32,10 @@ export const Primary: Story = {
                 'Art',
                 'Tech',
                 'Creative Writing',
+                'Tents',
+                'Sleeping Mats',
+                'Sleeping Bags',
+                'Tarps',
             ];
             return { args, tags };
         },

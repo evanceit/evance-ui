@@ -540,11 +540,11 @@
 .ev-button {
     &.is-rounded {
         border-radius: 999px;
-        padding-inline: var(--spacer-100);
+        padding-inline: var(--spacer-200);
 
         /* Accommodate small size modifier */
         &.is-size-small {
-            padding-inline: var(--spacer-75);
+            padding-inline: var(--spacer-150);
         }
     }
 }

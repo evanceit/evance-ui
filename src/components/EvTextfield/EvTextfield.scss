@@ -10,9 +10,9 @@
     border-radius: var(--input-radius);
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--spacer-50);
+    gap: var(--spacer-100);
     min-height: var(--input-height-medium);
-    padding-inline: var(--spacer-75);
+    padding-inline: var(--spacer-150);
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
     will-change: border-color, box-shadow, background;
@@ -27,7 +27,7 @@
 .ev-textfield--control {
     &.is-size-small {
         height: var(--input-height-small);
-        padding-inline: var(--spacer-50);
+        padding-inline: var(--spacer-100);
     }
     &.is-size-large {
         height: var(--input-height-large);

@@ -34,7 +34,7 @@
         height: 100%;
         margin: 0;
         outline: none;
-        padding: var(--spacer-75);
+        padding: var(--spacer-150);
         width: 100%;
         resize: vertical;
         min-height: var(--input-height-medium);
@@ -56,7 +56,7 @@
     .ev-textarea--clearable {
         opacity: 0;
         transition: opacity 0.25s ease-in-out;
-        padding: var(--spacer-75);
+        padding: var(--spacer-150);
     }
 
     &:hover,

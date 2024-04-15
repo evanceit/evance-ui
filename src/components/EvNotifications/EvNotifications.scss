@@ -1,8 +1,8 @@
 .ev-notifications {
     position: fixed;
-    bottom: var(--spacer-200);
-    right: var(--spacer-200);
-    width: calc(100% - (2 * var(--spacer-200)));
+    bottom: var(--spacer-400);
+    right: var(--spacer-400);
+    width: calc(100% - (2 * var(--spacer-400)));
     max-width: 400px;
 
     .ev-notification {

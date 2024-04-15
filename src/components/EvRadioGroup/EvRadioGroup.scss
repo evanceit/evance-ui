@@ -1,12 +1,12 @@
 .ev-radio-group--label {
-    margin-bottom: var(--spacer-50);
+    margin-bottom: var(--spacer-100);
 }
 .ev-radio-group {
     &.is-inline {
 
         .ev-radio-group--control {
             display: flex;
-            gap: var(--spacer-50);
+            gap: var(--spacer-100);
         }
 
         .ev-radio {
