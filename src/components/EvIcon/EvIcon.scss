@@ -25,9 +25,9 @@
  */
 .ev-icon {
     &.is-size-small {
-        width: 16px;
+        width: var(--icon-size-small);
     }
     &.is-size-large {
-        width: 32px;
+        width: var(--icon-size-large);
     }
 }

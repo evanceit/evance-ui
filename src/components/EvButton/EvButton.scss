@@ -4,19 +4,19 @@
     # EvButton
  */
 .ev-button {
-    --current-height: var(--input-height-medium);
+    --current-size: var(--input-height-medium);
 
     align-items: center;
     border: 1px solid transparent;
     border-radius: var(--input-radius);
     cursor: pointer;
     display: inline-flex;
-    font-size: var(--text-medium);
+    font-size: var(--text-size-medium);
     font-weight: var(--font-weight-semibold);
-    height: var(--current-height);
+    height: var(--current-size);
     line-height: 1.15;
     justify-content: center;
-    padding-inline: calc(0.38 * var(--current-height));
+    padding-inline: calc((var(--current-size) - var(--icon-size-medium)) / 2);
     position: relative;
     text-decoration: none !important;
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -35,7 +35,7 @@
 }
 
 .ev-button--text {
-    padding-inline: calc(0.19 * var(--current-height));
+    padding-inline: calc(0.2 * var(--current-size));
 }
 
 /**
@@ -512,24 +512,24 @@
 
     /** X Small */
     &.is-size-x-small {
-        --current-height: var(--input-height-x-small);
+        --current-size: var(--input-height-x-small);
     }
 
     /* Small */
     &.is-size-small {
-        --current-height: var(--input-height-small);
+        --current-size: var(--input-height-small);
     }
 
     /* Large */
     &.is-size-large {
-        font-size: var(--text-large);
-        --current-height: var(--input-height-large);
+        font-size: var(--text-size-large);
+        --current-size: var(--input-height-large);
     }
 
     /* X Large */
     &.is-size-x-large {
-        font-size: var(--text-large);
-        --current-height: var(--input-height-x-large);
+        font-size: var(--text-size-large);
+        --current-size: var(--input-height-x-large);
     }
 }
 
@@ -540,12 +540,6 @@
 .ev-button {
     &.is-rounded {
         border-radius: 999px;
-        padding-inline: var(--spacer-200);
-
-        /* Accommodate small size modifier */
-        &.is-size-small {
-            padding-inline: var(--spacer-150);
-        }
     }
 }
 

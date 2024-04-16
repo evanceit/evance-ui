@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import './EvTag.scss';
-import {makeEvTagProps} from "./EvTag.ts";
+import {EvTagSlots, makeEvTagProps} from "./EvTag.ts";
 import {EvIcon} from "@/components/EvIcon";
 import {Cancel} from "@/icons";
 import {useLocaleFunctions} from "@/composables/locale.ts";
@@ -8,36 +8,40 @@ import {useModelProxy} from "@/composables/modelProxy.ts";
 import {computed, useAttrs} from "vue";
 import {KeyboardEvent} from "react";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
-
+import {GroupItemProps, useGroupItem} from "@/composables/groupItem.ts";
+import {EvTagGroupSymbol} from "@/components";
 
 const props = defineProps(makeEvTagProps());
+const slots = defineSlots<EvTagSlots>();
 const attrs = useAttrs();
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 const {t} = useLocaleFunctions();
 const emit = defineEmits([
     'click',
-    'click:close'
+    'click:close',
+    'group:selected',
+    'update:modelValue'
 ]);
 const isActive = useModelProxy(props, 'modelValue');
+const group = useGroupItem(props as any as GroupItemProps, EvTagGroupSymbol, false);
 const isLink = computed(() => {
     return (props.link !== false && link.isLink.value);
 });
 const isClickable = computed(() => {
-    // @todo: still got !!group to do
     return (
         !props.disabled
         && props.link !== false
-        && (props.link || link.isClickable.value)
+        && (!!group || props.link || link.isClickable.value)
     );
-});
-
-const tag = computed(() => {
-    return props.tag;
 });
 
 const closeLabel = computed(() => {
     return t('close');
-})
+});
+
+const tag = computed(() => {
+    return (link.isLink.value) ? 'a' : props.tag;
+});
 
 /**
  * ## onClick
@@ -48,10 +52,8 @@ function onClick(e: MouseEvent) {
     if (!isClickable.value) {
         return;
     }
-    // link navigate
     link.navigate?.(e);
-    // group toggle
-    // @todo: group?.toggle()
+    group?.toggle();
 }
 
 /**
@@ -76,6 +78,21 @@ function onKeyDown(e: KeyboardEvent) {
     onClick(e as any as MouseEvent);
 }
 
+const hasFilter = computed(() => {
+    return ((slots.filter || props.filter) && group);
+});
+
+const defaultSlotProps = computed(() => {
+    return {
+        isSelected: group?.isSelected.value,
+        selectedClass: group?.selectedClass.value,
+        select: group?.select,
+        toggle: group?.toggle,
+        value: group?.value.value,
+        disabled: props.disabled
+    };
+});
+
 </script>
 <template>
     <component
@@ -84,9 +101,11 @@ function onKeyDown(e: KeyboardEvent) {
         :class="[
             'ev-tag',
             {
+                'is-clickable': isClickable,
                 'is-disabled': props.disabled,
-                'is-clickable': isClickable
+                'is-filter': hasFilter
             },
+            group?.selectedClass.value,
             props.class
         ]"
         :style="[
@@ -101,13 +120,34 @@ function onKeyDown(e: KeyboardEvent) {
         @keydown.space="onKeyDown"
     >
 
+        <!-- @todo: filter -->
+        <template v-if="hasFilter">
+            <div
+                key="filter"
+                class="ev-tag--filter"
+                v-show="group?.isSelected.value"
+            >
+                <ev-icon key="filter-icon" :glyph="props.iconFilter" />
+            </div>
+        </template>
 
 
-        <div class="ev-tag--content">
-            <slot name="default">{{ props.text }}</slot>
+        <!-- @todo: prefix -->
+        <div key="prefix" class="ev-tag--prefix">
+
+        </div>
+
+        <div class="ev-tag--content" data-no-activator="">
+            <slot name="default" v-bind="defaultSlotProps">{{ props.text }}</slot>
+        </div>
+
+        <!-- @todo: suffix -->
+        <div key="suffix" class="ev-tag--suffix">
+
         </div>
 
         <button
+            key="close"
             v-if="props.closable"
             class="ev-tag--close"
             :aria-label="closeLabel"
