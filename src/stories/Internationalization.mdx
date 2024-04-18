@@ -46,6 +46,7 @@ Your Language Pack may include the full range of pluralization rule properties:
 - ```few```
 - ```many```
 - ```other``` - the "general" plural form, also used if the language only has one form
+- ```ordinal``` - an optional boolean indicating whether the pluralization needs to be ordinal
 
 ### Cardinal
 
@@ -71,7 +72,7 @@ Cardinal is the default type of pluralization.
 
 ### Ordinal
 
-Ordinal pluralization needs to be requested via Translation Options using an ```ordinal``` property.
+Ordinal pluralization needs to be represented using an ```ordinal: true``` property on your pluralization rule.
 
 ```javascript
 {
@@ -79,13 +80,14 @@ Ordinal pluralization needs to be requested via Translation Options using an ```
         one: "{ value }st",
         two: "{ value }nd",
         few: "{ value }rd",
-        other: "{ value }th"
+        other: "{ value }th",
+        ordinal: true
     }
 }
 ```
 
 ```javascript
-{{ t('place', { value: 23, ordinal: true }) }}
+{{ t('place', { value: 23 }) }}
 ```
 
 ```
