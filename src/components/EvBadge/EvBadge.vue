@@ -10,8 +10,10 @@ import {EvTransition} from "@/components/EvTransition";
 import {EvIcon} from "@/components/EvIcon";
 import {usePosition} from "@/composables/position.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
+import {useDefaults} from "@/composables";
 
-const props = defineProps(makeEvBadgeProps());
+const definedProps = defineProps(makeEvBadgeProps());
+const props = useDefaults(definedProps);
 const slots = useSlots();
 
 const modelValue = useModelProxy(props, 'modelValue');

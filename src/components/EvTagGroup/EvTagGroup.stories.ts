@@ -6,10 +6,12 @@ import { EvTagGroup } from "../EvTagGroup";
 const meta: Meta<typeof EvTagGroup> = {
     component: EvTagGroup,
     argTypes: {
-
+        filter: {
+            control: 'boolean'
+        }
     },
     args: {
-
+        filter: false
     },
     tags: ['autodocs']
 };

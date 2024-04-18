@@ -9,6 +9,7 @@ import {splitInputAttrs} from "@/util";
 import {EvErrors} from "@/components/EvErrors";
 import {EvLabel} from "@/components/EvLabel";
 import {useFormField} from "@/composables/validation.ts";
+import {useDefaults} from "@/composables";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -19,7 +20,8 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps(makeEvCheckboxProps());
+const definedProps = defineProps(makeEvCheckboxProps());
+const props = useDefaults(definedProps);
 const slots = useSlots();
 
 // Emit

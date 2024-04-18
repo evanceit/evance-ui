@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvTag } from "../EvTag";
-import {EvButton} from "@/components";
+import {EvButton, EvIcon} from "@/components";
 import {Reload} from "../../icons";
 
 const meta: Meta<typeof EvTag> = {
@@ -11,6 +11,9 @@ const meta: Meta<typeof EvTag> = {
             control: 'boolean'
         },
         disabled: {
+            control: 'boolean'
+        },
+        filter: {
             control: 'boolean'
         },
         modelValue: {
@@ -28,6 +31,7 @@ const meta: Meta<typeof EvTag> = {
     args: {
         closable: false,
         disabled: false,
+        filter: false,
         modelValue: true,
         tag: undefined,
         text: 'Example tag'
@@ -41,7 +45,7 @@ type Story = StoryObj<typeof EvTag>;
 
 export const Primary: Story = {
     render: (args: any) =>  ({
-        components: { EvTag, EvButton },
+        components: { EvTag, EvButton, EvIcon },
         setup() {
             const reset = () => {
                 args['onUpdate:modelValue'](true);
@@ -49,7 +53,8 @@ export const Primary: Story = {
             return { args, Reload, reset };
         },
         template: `
-            <ev-tag v-bind="args" />
+<ev-tag v-bind="args">       
+</ev-tag>
             
             <ev-button v-if="!args.modelValue" text="Reset" :icon="Reload" @click="reset" />
         `

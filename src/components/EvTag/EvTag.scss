@@ -1,10 +1,12 @@
 
 .ev-tag {
+    --current-size: 36px;
+
     display: inline-flex;
-    height: 36px;
+    height: var(--current-size);
     align-items: center;
     background: var(--background-neutral);
-    padding-inline: var(--spacer-200);
+    padding-inline: calc((var(--current-size) - var(--icon-size-medium)) / 2);
     border-radius: 2px;
     gap: 2px;
     transition: 0.25s color var(--easing-standard),
@@ -12,12 +14,17 @@
     white-space: nowrap;
     max-width: 100%;
     min-width: 0;
+
+    > * {
+        display: inline-flex;
+    }
 }
 
 .ev-tag--content {
-    line-height: 1;
+    line-height: 1.15;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-inline: calc(0.2 * var(--current-size));
 }
 
 .ev-tag--close {
@@ -25,7 +32,7 @@
     border: 0;
     border-radius: 50%;
     color: currentColor;
-    margin-right: -12px;
+    margin-right: -4px;
     margin-left: -4px;
     padding: 0;
     width: 32px;
@@ -69,4 +76,8 @@
             background-color: var(--background-neutral-hovered);
         }
     }
+}
+
+.ev-tag--filter {
+    transition: 0.15s var(--easing-standard);
 }

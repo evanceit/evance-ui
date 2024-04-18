@@ -9,8 +9,10 @@ import {EvIcon} from "@/components/EvIcon";
 import {EvImg} from "@/components/EvImg";
 import {useSize} from "@/composables/size.ts";
 import {useRounded} from "@/composables/rounded.ts";
+import {useDefaults} from "@/composables";
 
-const props = defineProps(makeEvAvatarProps());
+const definedProps = defineProps(makeEvAvatarProps());
+const props = useDefaults(definedProps);
 const { appearanceClasses } = useAppearance(props);
 const { sizeClasses, sizeStyles } = useSize(props);
 const { roundedClasses } = useRounded(props);

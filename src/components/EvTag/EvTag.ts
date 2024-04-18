@@ -15,7 +15,6 @@ export type EvTagSlots = {
         value: unknown,
         disabled: boolean
     },
-    label: never,
     prefix: never,
     suffix: never,
     filter: never
@@ -23,6 +22,8 @@ export type EvTagSlots = {
 
 export const makeEvTagProps = propsFactory({
     activeClass: String,
+    avatarEnd: String,
+    avatarStart: String,
     closable: Boolean,
     draggable: Boolean,
     filter: Boolean,
@@ -32,7 +33,6 @@ export const makeEvTagProps = propsFactory({
         default: Check
     },
     iconStart: IconProp,
-    label: Boolean,
     link: {
         type: Boolean,
         default: undefined,

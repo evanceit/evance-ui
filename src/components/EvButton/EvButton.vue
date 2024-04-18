@@ -24,7 +24,7 @@ defineSlots<{
 }>();
 
 const definedProps = defineProps(makeEvButtonProps());
-const props = useDefaults(definedProps, 'EvButton');
+const props = useDefaults(definedProps);
 
 defineEmits([
     'group:selected'

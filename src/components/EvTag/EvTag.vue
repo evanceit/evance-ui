@@ -2,6 +2,7 @@
 import './EvTag.scss';
 import {EvTagSlots, makeEvTagProps} from "./EvTag.ts";
 import {EvIcon} from "@/components/EvIcon";
+import {EvDefaultsProvider} from "@/components/EvDefaultsProvider";
 import {Cancel} from "@/icons";
 import {useLocaleFunctions} from "@/composables/locale.ts";
 import {useModelProxy} from "@/composables/modelProxy.ts";
@@ -9,9 +10,13 @@ import {computed, useAttrs} from "vue";
 import {KeyboardEvent} from "react";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 import {GroupItemProps, useGroupItem} from "@/composables/groupItem.ts";
-import {EvTagGroupSymbol} from "@/components";
+import {EvAvatar, EvTagGroupSymbol} from "@/components";
+import {EvExpandXTransition} from "@/components/EvTransition/transitions";
+import {useDefaults} from "@/composables";
+import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition.ts";
 
-const props = defineProps(makeEvTagProps());
+const definedProps = defineProps(makeEvTagProps());
+const props = useDefaults(definedProps);
 const slots = defineSlots<EvTagSlots>();
 const attrs = useAttrs();
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
@@ -93,6 +98,11 @@ const defaultSlotProps = computed(() => {
     };
 });
 
+const hasPrefixMedia = computed(() => !!(props.avatarStart || props.iconStart));
+const hasSuffixMedia = computed(() => !!(props.avatarEnd || props.iconEnd));
+const hasPrefix = computed(() => !!(hasPrefixMedia.value || slots.prefix));
+const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
+
 </script>
 <template>
     <component
@@ -113,36 +123,76 @@ const defaultSlotProps = computed(() => {
         ]"
         :disabled="props.disabled || undefined"
         :draggable="props.draggable"
-        :href="link.href"
+        :href="link.href.value"
         :tabindex="isClickable ? 0 : undefined"
         @click="onClick"
         @keydown.enter="onKeyDown"
         @keydown.space="onKeyDown"
     >
 
-        <!-- @todo: filter -->
         <template v-if="hasFilter">
-            <div
-                key="filter"
-                class="ev-tag--filter"
-                v-show="group?.isSelected.value"
-            >
-                <ev-icon key="filter-icon" :glyph="props.iconFilter" />
-            </div>
+            <ev-expand-x-transition key="filter">
+                <div
+                    key="filter"
+                    class="ev-tag--filter"
+                    v-show="group?.isSelected.value"
+                >
+                    <template v-if="!slots.filter">
+                        <ev-icon key="filter-icon" :glyph="props.iconFilter" />
+                    </template>
+                    <template v-else>
+                        <ev-defaults-provider
+                            key="filter-defaults"
+                            :disabled="!props.iconFilter"
+                            :defaults="{ EvIcon: { glyph: props.iconFilter }}"
+                        >
+                            <slot name="filter" />
+                        </ev-defaults-provider>
+                    </template>
+                </div>
+            </ev-expand-x-transition>
         </template>
 
-        <!-- @todo: prefix -->
-        <div key="prefix" class="ev-tag--prefix">
-            <ev-icon :glyph="props.iconStart" />
+        <div key="prefix" class="ev-tag--prefix" v-if="hasPrefix">
+            <template v-if="!slots.prefix">
+                <ev-icon v-if="props.iconStart" key="prefix-icon" :glyph="props.iconStart" />
+                <ev-avatar v-if="props.avatarStart" key="prefix-avatar" :image="props.avatarStart" />
+            </template>
+            <template v-else>
+                <ev-defaults-provider
+                    key="prefix-defaults"
+                    :disabled="!hasPrefixMedia"
+                    :defaults="{
+                        EvAvatar: { image: props.avatarStart },
+                        EvIcon: { glyph: props.iconStart }
+                    }"
+                >
+                    <slot name="prefix" />
+                </ev-defaults-provider>
+            </template>
         </div>
 
         <div class="ev-tag--content" data-no-activator="">
             <slot name="default" v-bind="defaultSlotProps">{{ props.text }}</slot>
         </div>
 
-        <!-- @todo: suffix -->
-        <div key="suffix" class="ev-tag--suffix">
-            <ev-icon :glyph="props.iconEnd" />
+        <div key="suffix" class="ev-tag--suffix" v-if="hasSuffix">
+            <template v-if="!slots.suffix">
+                <ev-icon v-if="props.iconEnd" key="prefix-icon" :glyph="props.iconEnd" />
+                <ev-avatar v-if="props.avatarEnd" key="suffix-avatar" :image="props.avatarEnd" />
+            </template>
+            <template v-else>
+                <ev-defaults-provider
+                    key="suffix-defaults"
+                    :disabled="!hasSuffixMedia"
+                    :defaults="{
+                        EvAvatar: { image: props.avatarEnd },
+                        EvIcon: { glyph: props.iconEnd }
+                    }"
+                >
+                    <slot name="suffix" />
+                </ev-defaults-provider>
+            </template>
         </div>
 
         <button
