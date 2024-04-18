@@ -131,10 +131,9 @@ const defaultSlotProps = computed(() => {
             </div>
         </template>
 
-
         <!-- @todo: prefix -->
         <div key="prefix" class="ev-tag--prefix">
-
+            <ev-icon :glyph="props.iconStart" />
         </div>
 
         <div class="ev-tag--content" data-no-activator="">
@@ -143,7 +142,7 @@ const defaultSlotProps = computed(() => {
 
         <!-- @todo: suffix -->
         <div key="suffix" class="ev-tag--suffix">
-
+            <ev-icon :glyph="props.iconEnd" />
         </div>
 
         <button

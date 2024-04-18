@@ -1,4 +1,4 @@
-import {isObject, isString} from "@/util";
+import {isBoolean, isObject, isString} from "@/util";
 
 /**
  * # Pluralization
@@ -12,7 +12,9 @@ export const pluralizationRuleKeys = ['zero', 'one', 'two', 'few', 'many', 'othe
 export type PluralizationRuleKey = typeof pluralizationRuleKeys[number];
 
 export type PluralizationRules = {
-    [K in PluralizationRuleKey]: string;
+    [K in PluralizationRuleKey]?: string
+} & {
+    ordinal?: boolean
 };
 
 
@@ -38,7 +40,10 @@ export function isPluralizationKey(key: any): key is PluralizationRuleKey {
 export function isPluralizationRules(value: any): value is PluralizationRules {
     if (isObject(value)) {
         return Object.entries(value).every(([key, val]) => {
-            return isPluralizationKey(key) && isString(val);
+            return (
+                (isPluralizationKey(key) && isString(val))
+                || (key === 'ordinal' && isBoolean(val))
+            );
         });
     }
     return false;

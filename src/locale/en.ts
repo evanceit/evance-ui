@@ -11,7 +11,8 @@ export default {
         "one": "{ value }st",
         "two": "{ value }nd",
         "few": "{ value }rd",
-        "other": "{ value }th"
+        "other": "{ value }th",
+        "ordinal": true
     },
     select: {
         noItemsText: 'No items available'

@@ -16,9 +16,6 @@ import {Localized} from "@/modules/Locale/Localized.ts";
 export type TranslationVariables = {
     [key: string]: string | number | boolean;
 };
-export type TranslationOptions = TranslationVariables & {
-    ordinal?: boolean;
-};
 
 
 /**
@@ -119,11 +116,11 @@ export class Translator extends Localized {
      *
      * @param locale
      * @param reference
-     * @param options
+     * @param variables
      */
     public translate(
         reference: string,
-        options: TranslationOptions = {},
+        variables: TranslationVariables = {},
         locale: string | undefined = undefined
     ): string | undefined {
         if (!locale) {
@@ -131,9 +128,9 @@ export class Translator extends Localized {
         }
         const translatable = this.getClosestTranslatable(locale, reference);
         if (translatable) {
-            return translatable.translate(options);
+            return translatable.translate(variables);
         }
         const fallback = new Translatable(locale, reference, reference);
-        return fallback.translate(options);
+        return fallback.translate(variables);
     }
 }

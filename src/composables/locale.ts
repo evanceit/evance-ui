@@ -1,6 +1,6 @@
 import {inject, InjectionKey, shallowRef} from "vue";
 import {LocaleManager, LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
-import {TranslationOptions} from "@/modules/Translation/Translator.ts";
+import {TranslationVariables} from "@/modules/Translation/Translator.ts";
 
 /**
  * # Locale Symbol
@@ -35,10 +35,10 @@ export function useLocaleFunctions() {
     return {
         t: (
             reference: string,
-            options?: TranslationOptions,
+            variables?: TranslationVariables,
             locale?: string
         ): string | undefined => {
-            return manager.translator.translate(reference, options, locale);
+            return manager.translator.translate(reference, variables, locale);
         },
         n: (
             value: number,

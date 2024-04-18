@@ -1,5 +1,6 @@
 import {getPropertyValueByPath} from "@/util";
 import {Translatable} from "@/modules/Translation/Translatable.ts";
+import {PluralizationRules} from "@/modules/Translation/Pluralization.ts";
 
 /**
  * # Language Pack
@@ -35,5 +36,5 @@ export class LanguagePack {
  * # Language Pack Data
  */
 export interface LanguagePackData {
-    [key: string]: LanguagePackData | string;
+    [key: string]: LanguagePackData | PluralizationRules | string;
 }
