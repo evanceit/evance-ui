@@ -13,6 +13,7 @@ export enum Appearance {
     danger = 'danger',
     information = 'information',
     notice = 'notice',
+    primary = 'primary',
     success = 'success',
     warning = 'warning'
 }
@@ -25,14 +26,13 @@ export const makeAppearanceProps = propsFactory({
 }, 'Appearance');
 
 export function useAppearance(
-    props: MaybeRef,
-    exclude: (string | RegExp)[] = []
+    props: MaybeRef
 ) {
 
     // Appearance modifier classes
     const appearanceClasses = computed(() => {
         const { appearance } = unref(props);
-        return appearanceModifier(appearance, exclude);
+        return appearanceModifier(appearance);
     });
 
     return { appearanceClasses };

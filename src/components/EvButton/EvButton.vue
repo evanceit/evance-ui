@@ -51,6 +51,10 @@ const isDisabled = computed(() => {
     return (group?.disabled.value || props.disabled);
 });
 
+const isClickable = computed(() => {
+    return (!isDisabled.value && !props.loading);
+});
+
 /**
  * ## Is Icon Like?
  *
@@ -163,7 +167,8 @@ defineExpose({
                 'is-icon': isIconLike,
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
-                'is-rounded': props.rounded
+                'is-rounded': props.rounded,
+                'is-clickable': isClickable
             },
             props.class
         ]"

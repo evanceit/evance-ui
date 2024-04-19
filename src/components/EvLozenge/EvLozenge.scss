@@ -22,10 +22,5 @@
     ## Appearance
  */
 .ev-lozenge {
-    @include mixins.appearance-default;
-    @include mixins.appearance-danger;
-    @include mixins.appearance-information;
-    @include mixins.appearance-notice;
-    @include mixins.appearance-success;
-    @include mixins.appearance-warning;
+    @include mixins.generate-appearances;
 }
