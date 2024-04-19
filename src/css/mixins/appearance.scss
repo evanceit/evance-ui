@@ -46,6 +46,18 @@
     }
 }
 
+@mixin appearance-primary {
+    &.is-appearance-primary {
+        background-color: var(--background-brand);
+        color: var(--text-brand);
+
+        &.is-variant-bold {
+            background-color: var(--background-brand-bold);
+            color: var(--surface-default);
+        }
+    }
+}
+
 @mixin appearance-success {
     &.is-appearance-success {
         background-color: var(--background-success);
