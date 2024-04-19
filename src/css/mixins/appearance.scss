@@ -1,83 +1,464 @@
 
-@mixin appearance-default {
+/* Default */
+@mixin appearance-default($maybeClickable: false) {
     &.is-appearance-default {
         background: var(--background-neutral);
 
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-neutral-hovered);
+                }
+                &:active {
+                    background-color: var(--background-neutral-pressed);
+                }
+            }
+        }
+
         &.is-variant-bold {
             background-color: var(--background-neutral-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-neutral-bold-hovered);
+                    }
+
+                    &:active {
+                        background-color: var(--background-neutral-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-neutral-bold);
+            &.is-active {
+                background-color: var(--background-neutral);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-neutral-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-neutral-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: var(--background-neutral-subtle);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-neutral-subtle-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-neutral-subtle-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-danger {
+
+/* Danger */
+@mixin appearance-danger($maybeClickable: false) {
     &.is-appearance-danger {
         background-color: var(--background-danger);
         color: var(--text-danger);
 
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-danger-hovered);
+                }
+                &:active {
+                    background-color: var(--background-danger-pressed);
+                }
+            }
+        }
+
         &.is-variant-bold {
             background-color: var(--background-danger-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-danger-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-danger-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-danger-bold);
+            &.is-active {
+                background-color: var(--background-danger);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-danger-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-danger-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-danger-hovered);
+                    }
+
+                    &:active {
+                        background-color: var(--background-danger-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-information {
+
+/** Information */
+@mixin appearance-information($maybeClickable: false) {
     &.is-appearance-information {
         background-color: var(--background-information);
         color: var(--text-information);
 
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-information-hovered);
+                }
+                &:active {
+                    background-color: var(--background-information-pressed);
+                }
+            }
+        }
+
         &.is-variant-bold {
             background-color: var(--background-information-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-information-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-information-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-information-bold);
+            &.is-active {
+                background-color: var(--background-information);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-information-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-information-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-information-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-information-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-notice {
+
+/** Notice */
+@mixin appearance-notice($maybeClickable: false) {
     &.is-appearance-notice {
         background-color: var(--background-notice);
         color: var(--text-notice);
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-notice-hovered);
+                }
+                &:active {
+                    background-color: var(--background-notice-pressed);
+                }
+            }
+        }
 
         &.is-variant-bold {
             background-color: var(--background-notice-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-notice-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-notice-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-notice-bold);
+            &.is-active {
+                background-color: var(--background-notice);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-notice-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-notice-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-notice-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-notice-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-primary {
+
+/** Primary */
+@mixin appearance-primary($maybeClickable: false) {
     &.is-appearance-primary {
         background-color: var(--background-brand);
         color: var(--text-brand);
 
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-brand-hovered);
+                }
+                &:active {
+                    background-color: var(--background-brand-pressed);
+                }
+            }
+        }
+
         &.is-variant-bold {
             background-color: var(--background-brand-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-brand-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-brand-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-brand-bold);
+            &.is-active {
+                background-color: var(--background-brand);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-brand-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-brand-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-brand-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-brand-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-success {
+
+/** Success */
+@mixin appearance-success($maybeClickable: false) {
     &.is-appearance-success {
         background-color: var(--background-success);
         color: var(--text-success);
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-success-hovered);
+                }
+                &:active {
+                    background-color: var(--background-success-pressed);
+                }
+            }
+        }
 
         &.is-variant-bold {
             background-color: var(--background-success-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-success-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-success-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-success-bold);
+            &.is-active {
+                background-color: var(--background-success);
+            }
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-success-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-success-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-success-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-success-pressed);
+                    }
+                }
+            }
         }
     }
 }
 
-@mixin appearance-warning {
+
+/** Warning */
+@mixin appearance-warning($maybeClickable: false) {
     &.is-appearance-warning {
         background-color: var(--background-warning);
         color: var(--text-warning);
 
+        @if $maybeClickable {
+            &.is-clickable {
+                &:hover {
+                    background-color: var(--background-warning-hovered);
+                }
+                &:active {
+                    background-color: var(--background-warning-pressed);
+                }
+            }
+        }
+
         &.is-variant-bold {
             background-color: var(--background-warning-bold);
-            color: var(--surface-default);
+            color: var(--text-inverse);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-warning-bold-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-warning-bold-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-outlined {
+            background: transparent;
+            border-color: var(--background-warning-bold);
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-warning-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-warning-pressed);
+                    }
+                }
+            }
+        }
+
+        &.is-variant-subtle {
+            background-color: transparent;
+            @if $maybeClickable {
+                &.is-clickable {
+                    &:hover {
+                        background-color: var(--background-warning-hovered);
+                    }
+                    &:active {
+                        background-color: var(--background-warning-pressed);
+                    }
+                }
+            }
         }
     }
 }
