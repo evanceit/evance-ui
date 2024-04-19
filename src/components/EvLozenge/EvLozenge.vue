@@ -69,7 +69,7 @@ const getMaxWidthWithUnits = () => {
         :class="[
             appearanceModifier(props.appearance),
             {
-                'is-bold': bold
+                'is-variant-bold': bold
             }
         ]"
         :style="{

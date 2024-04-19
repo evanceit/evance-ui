@@ -11,9 +11,9 @@ import {KeyboardEvent} from "react";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 import {GroupItemProps, useGroupItem} from "@/composables/groupItem.ts";
 import {EvAvatar, EvTagGroupSymbol} from "@/components";
-import {EvExpandXTransition} from "@/components/EvTransition/transitions";
+import {EvTransitionExpandX} from "@/components/EvTransition/transitions";
 import {useDefaults} from "@/composables";
-import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition.ts";
+import {appearanceModifier, variantModifier} from "@/util";
 
 const definedProps = defineProps(makeEvTagProps());
 const props = useDefaults(definedProps);
@@ -91,6 +91,8 @@ const defaultSlotProps = computed(() => {
     return {
         isSelected: group?.isSelected.value,
         selectedClass: group?.selectedClass.value,
+        selectedAppearance: group?.selectedAppearance.value,
+        selectedVariant: group?.selectedVariant.value,
         select: group?.select,
         toggle: group?.toggle,
         value: group?.value.value,
@@ -102,6 +104,20 @@ const hasPrefixMedia = computed(() => !!(props.avatarStart || props.iconStart));
 const hasSuffixMedia = computed(() => !!(props.avatarEnd || props.iconEnd));
 const hasPrefix = computed(() => !!(hasPrefixMedia.value || slots.prefix));
 const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
+
+const appearanceClass = computed(() => {
+    const value = (isActive.value)
+        ? group?.selectedAppearance.value ?? props.appearance
+        : props.appearance;
+    return appearanceModifier(value);
+});
+
+const variantClass = computed(() => {
+    const value = (isActive.value)
+        ? group?.selectedVariant.value ?? props.variant
+        : props.variant;
+    return variantModifier(value);
+});
 
 </script>
 <template>
@@ -116,6 +132,8 @@ const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
                 'is-filter': hasFilter
             },
             group?.selectedClass.value,
+            appearanceClass,
+            variantClass,
             props.class
         ]"
         :style="[
@@ -131,7 +149,7 @@ const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
     >
 
         <template v-if="hasFilter">
-            <ev-expand-x-transition key="filter">
+            <ev-transition-expand-x key="filter">
                 <div
                     key="filter"
                     class="ev-tag--filter"
@@ -150,7 +168,7 @@ const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
                         </ev-defaults-provider>
                     </template>
                 </div>
-            </ev-expand-x-transition>
+            </ev-transition-expand-x>
         </template>
 
         <div key="prefix" class="ev-tag--prefix" v-if="hasPrefix">

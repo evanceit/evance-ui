@@ -25,7 +25,7 @@ const { roundedClasses } = useRounded(props);
         :class="[
             'ev-avatar',
             {
-                'is-bold': props.bold
+                'is-variant-bold': props.bold
             },
             appearanceClasses,
             sizeClasses,

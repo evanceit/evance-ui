@@ -22,34 +22,10 @@
     ## Appearance
  */
 .ev-lozenge {
-
-    /* Default */
-    &.is-appearance-default {
-        @include mixins.appearance-default;
-    }
-
-    /* Danger */
-    &.is-appearance-danger {
-        @include mixins.appearance-danger;
-    }
-
-    /* Information */
-    &.is-appearance-information {
-        @include mixins.appearance-information;
-    }
-
-    /* Notice */
-    &.is-appearance-notice {
-        @include mixins.appearance-notice;
-    }
-
-    /* Success */
-    &.is-appearance-success {
-        @include mixins.appearance-success;
-    }
-
-    /* Warning */
-    &.is-appearance-warning {
-        @include mixins.appearance-warning;
-    }
+    @include mixins.appearance-default;
+    @include mixins.appearance-danger;
+    @include mixins.appearance-information;
+    @include mixins.appearance-notice;
+    @include mixins.appearance-success;
+    @include mixins.appearance-warning;
 }

@@ -34,7 +34,7 @@ const iconSize = computed(() => {
     <span class="ev-quickfind"
           :class="[
               {
-                  'is-bold': bold
+                  'is-variant-bold': bold
               },
               sizeModifier(size, ['medium'])
           ]"

@@ -1,60 +1,71 @@
 
 @mixin appearance-default {
-    color: var(--text-muted);
-    background: var(--background-neutral);
+    &.is-appearance-default {
+        background: var(--background-neutral);
 
-    &.is-bold {
-        background-color: var(--background-neutral-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-neutral-bold);
+            color: var(--surface-default);
+        }
     }
 }
 
 @mixin appearance-danger {
-    background-color: var(--background-danger);
-    color: var(--text-danger);
+    &.is-appearance-danger {
+        background-color: var(--background-danger);
+        color: var(--text-danger);
 
-    &.is-bold {
-        background-color: var(--background-danger-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-danger-bold);
+            color: var(--surface-default);
+        }
     }
 }
 
 @mixin appearance-information {
-    background-color: var(--background-information);
-    color: var(--text-information);
+    &.is-appearance-information {
+        background-color: var(--background-information);
+        color: var(--text-information);
 
-    &.is-bold {
-        background-color: var(--background-information-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-information-bold);
+            color: var(--surface-default);
+        }
     }
 }
 
 @mixin appearance-notice {
-    background-color: var(--background-notice);
-    color: var(--text-notice);
+    &.is-appearance-notice {
+        background-color: var(--background-notice);
+        color: var(--text-notice);
 
-    &.is-bold {
-        background-color: var(--background-notice-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-notice-bold);
+            color: var(--surface-default);
+        }
     }
 }
 
 @mixin appearance-success {
-    background-color: var(--background-success);
-    color: var(--text-success);
+    &.is-appearance-success {
+        background-color: var(--background-success);
+        color: var(--text-success);
 
-    &.is-bold {
-        background-color: var(--background-success-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-success-bold);
+            color: var(--surface-default);
+        }
     }
 }
 
 @mixin appearance-warning {
-    background-color: var(--background-warning);
-    color: var(--text-warning);
+    &.is-appearance-warning {
+        background-color: var(--background-warning);
+        color: var(--text-warning);
 
-    &.is-bold {
-        background-color: var(--background-warning-bold);
-        color: var(--surface-default);
+        &.is-variant-bold {
+            background-color: var(--background-warning-bold);
+            color: var(--surface-default);
+        }
     }
 }

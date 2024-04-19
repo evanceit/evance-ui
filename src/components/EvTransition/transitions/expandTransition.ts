@@ -11,12 +11,42 @@ interface HTMLExpandElement extends HTMLElement {
     };
 }
 
+/**
+ * @param expandedParentClass
+ * @param x
+ */
 export default function (expandedParentClass = '', x = false) {
     const sizeProperty = x ? 'width' : 'height' as 'width' | 'height';
     const offsetProperty = camelize(`offset-${sizeProperty}`) as 'offsetHeight' | 'offsetWidth';
 
+    /**
+     * ## onAfterLeave
+     * @param el
+     */
+    function onAfterLeave(el: HTMLExpandElement) {
+        if (expandedParentClass && el._parent) {
+            el._parent.classList.remove(expandedParentClass);
+        }
+        resetStyles(el);
+    }
+
+    /**
+     * ## resetStyles
+     * @param el
+     */
+    function resetStyles(el: HTMLExpandElement) {
+        const size = el._initialStyle![sizeProperty];
+        el.style.overflow = el._initialStyle!.overflow;
+        if (size != null) el.style[sizeProperty] = size;
+        delete el._initialStyle;
+    }
+
     return {
 
+        /**
+         * ## onBeforeEnter
+         * @param el
+         */
         onBeforeEnter(el: HTMLExpandElement) {
             el._parent = el.parentNode as (Node & ParentNode & HTMLElement) | null;
             el._initialStyle = {
@@ -26,6 +56,10 @@ export default function (expandedParentClass = '', x = false) {
             };
         },
 
+        /**
+         * ## onEnter
+         * @param el
+         */
         onEnter(el: HTMLExpandElement) {
             const initialStyle = el._initialStyle!;
 
@@ -48,9 +82,20 @@ export default function (expandedParentClass = '', x = false) {
             })
         },
 
+        /**
+         * ## onAfterEnter
+         */
         onAfterEnter: resetStyles,
+
+        /**
+         * ## onEnterCancelled
+         */
         onEnterCancelled: resetStyles,
 
+        /**
+         * ## onLeave
+         * @param el
+         */
         onLeave(el: HTMLExpandElement) {
             el._initialStyle = {
                 transition: '',
@@ -65,21 +110,14 @@ export default function (expandedParentClass = '', x = false) {
             requestAnimationFrame(() => (el.style[sizeProperty] = '0'));
         },
 
+        /**
+         * ## onAfterLeave
+         */
         onAfterLeave,
-        onLeaveCancelled: onAfterLeave,
-    }
 
-    function onAfterLeave (el: HTMLExpandElement) {
-        if (expandedParentClass && el._parent) {
-            el._parent.classList.remove(expandedParentClass)
-        }
-        resetStyles(el)
-    }
-
-    function resetStyles (el: HTMLExpandElement) {
-        const size = el._initialStyle![sizeProperty]
-        el.style.overflow = el._initialStyle!.overflow
-        if (size != null) el.style[sizeProperty] = size
-        delete el._initialStyle
+        /**
+         * ## onAfterLeave
+         */
+        onLeaveCancelled: onAfterLeave
     }
 }

@@ -1,10 +1,12 @@
-import {EventProp, propsFactory} from "@/util";
+import {Appearance, EventProp, propsFactory} from "@/util";
 import {makeTagProps} from "@/composables/tag.ts";
 import {makeComponentProps} from "@/composables/component.ts";
 import {makeGroupItemProps} from "@/composables/groupItem.ts";
 import {makeRoundedProps} from "@/composables/rounded.ts";
 import {IconProp} from "@/composables/icons.ts";
 import {Check} from "@/icons";
+import {PropType} from "vue";
+import {ButtonAppearanceProp, ButtonVariantProp} from "@/components";
 
 export type EvTagSlots = {
     default: {
@@ -22,6 +24,10 @@ export type EvTagSlots = {
 
 export const makeEvTagProps = propsFactory({
     activeClass: String,
+    appearance: {
+        type: String as PropType<ButtonAppearanceProp>,
+        default: Appearance.default
+    },
     avatarEnd: String,
     avatarStart: String,
     closable: Boolean,
@@ -42,6 +48,11 @@ export const makeEvTagProps = propsFactory({
         default: true
     },
     text: String,
+
+    variant: {
+        type: String as PropType<ButtonVariantProp>,
+        default: 'default'
+    },
 
     onClick: EventProp<[MouseEvent]>(),
     onClickOnce: EventProp<[MouseEvent]>(),

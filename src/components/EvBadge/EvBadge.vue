@@ -69,7 +69,7 @@ const { positionStyles }  = usePosition(props, true, side => {
                     'ev-badge--content',
                     appearanceModifier(props.appearance),
                     {
-                        'is-bold': props.bold,
+                        'is-variant-bold': props.bold,
                         'is-pulsate': props.pulsate
                     }
                 ]"
