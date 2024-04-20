@@ -1,4 +1,4 @@
-import {Appearance, InputSizeProp, propsFactory} from "@/util";
+import {Appearance, AppearanceProp, InputSizeProp, propsFactory, VariantProp} from "@/util";
 import {IconProp, IconValue} from "@/composables/icons.ts";
 import {makeRouterLinkOrHrefProps, RouterLinkOrHrefProps} from "@/composables/router.ts";
 import {PropType} from "vue";
@@ -9,21 +9,8 @@ import {makeGroupItemProps} from "@/composables/groupItem.ts";
 /**
  * ## Button Appearance
  */
-export type ButtonAppearanceProp = 'default'
-    | 'danger'
-    | 'information'
-    | 'notice'
-    | 'primary'
-    | 'success'
-    | 'warning'
-    | 'inverse';
-
-export type ButtonVariantProp = 'default'
-    | 'bold'
-    | 'outlined'
-    | 'subtle'
-    | 'tonal'
-    | 'link';
+export type ButtonAppearanceProp = AppearanceProp | 'inverse';
+export type ButtonVariantProp = VariantProp | 'link';
 
 /**
  * # EvButtonProps
