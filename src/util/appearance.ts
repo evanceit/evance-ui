@@ -1,6 +1,7 @@
 import {propsFactory} from "./props.ts";
-import {computed, MaybeRef, PropType, unref} from "vue";
-import {appearanceModifier} from "@/util/modifiers.ts";
+import {computed, MaybeRef, PropType, Ref, unref} from "vue";
+import {appearanceModifier, variantModifier} from "@/util/modifiers.ts";
+import {GroupItemProvide} from "@/composables/groupItem.ts";
 
 /**
  * # Appearance
@@ -18,24 +19,87 @@ export enum Appearance {
     warning = 'warning'
 }
 export type AppearanceProp = keyof typeof Appearance;
+
+export enum Variant {
+    default = 'default',
+    bold = 'bold',
+    outlined = 'outlined',
+    subtle = 'subtle',
+    tonal = 'tonal'
+}
+export type VariantProp = keyof typeof Variant;
+
+export interface AppearanceProps {
+    appearance: AppearanceProp,
+    variant: VariantProp
+}
+
+
 export const makeAppearanceProps = propsFactory({
     appearance: {
         type: String as PropType<AppearanceProp>,
         default: Appearance.default
+    },
+    variant: {
+        type: String as PropType<VariantProp>,
+        default: Variant.default
     }
 }, 'Appearance');
 
+
+/**
+ * # useAppearance
+ *
+ * @param props
+ * @param group
+ * @param isActive
+ * @param defaultVariant
+ */
 export function useAppearance(
-    props: MaybeRef
+    props: MaybeRef<Partial<AppearanceProps>>,
+    group: GroupItemProvide | null = null,
+    isActive: Ref<boolean|undefined> | null = null,
+    defaultVariant: string = Variant.default
 ) {
 
-    // Appearance modifier classes
-    const appearanceClasses = computed(() => {
+    const appearanceName = computed(() => {
         const { appearance } = unref(props);
-        return appearanceModifier(appearance);
+        const value = (isActive?.value)
+            ? group?.selectedAppearance.value ?? appearance
+            : appearance;
+        return value ?? Appearance.default;
     });
 
-    return { appearanceClasses };
+    // Appearance modifier classes
+    const appearanceClass = computed(() => {
+        return appearanceModifier(appearanceName.value);
+    });
+
+    const variantName = computed(() => {
+        const { variant } = unref(props);
+        let value = (isActive?.value)
+            ? group?.selectedVariant.value ?? variant
+            : variant;
+        value = value ?? Variant.default;
+        if (
+            appearanceName.value !== Appearance.default
+            && value === Variant.default
+        ) {
+            value = defaultVariant;
+        }
+        return value;
+    });
+
+    const variantClass = computed(() => {
+        return variantModifier(variantName.value);
+    });
+
+    return {
+        appearance: appearanceName,
+        appearanceClass,
+        variant: variantName,
+        variantClass
+    };
 }
 
 

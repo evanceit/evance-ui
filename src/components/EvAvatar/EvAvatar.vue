@@ -13,7 +13,7 @@ import {useDefaults} from "@/composables";
 
 const definedProps = defineProps(makeEvAvatarProps());
 const props = useDefaults(definedProps);
-const { appearanceClasses } = useAppearance(props);
+const { appearanceClass, variantClass } = useAppearance(props);
 const { sizeClasses, sizeStyles } = useSize(props);
 const { roundedClasses } = useRounded(props);
 
@@ -24,10 +24,8 @@ const { roundedClasses } = useRounded(props);
     <div
         :class="[
             'ev-avatar',
-            {
-                'is-variant-bold': props.bold
-            },
-            appearanceClasses,
+            appearanceClass,
+            variantClass,
             sizeClasses,
             roundedClasses,
             props.class

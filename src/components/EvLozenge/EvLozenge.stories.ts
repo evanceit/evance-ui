@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from "@storybook/vue3";
 
 import { EvLozenge } from "../EvLozenge";
-import {Appearance} from "../../util";
+import {Appearance, Variant} from "@/util";
 
 const meta: Meta<typeof EvLozenge> = {
     component: EvLozenge,
@@ -9,10 +9,6 @@ const meta: Meta<typeof EvLozenge> = {
         default: {
             control: 'text',
             description: 'Slot content'
-        },
-        bold: {
-            control: 'boolean',
-            description: "Whether to apply a solid background, giving the component a bolder appearance."
         },
         appearance: {
             control: 'select',
@@ -22,12 +18,17 @@ const meta: Meta<typeof EvLozenge> = {
         maxWidth: {
             control: 'text',
             description: 'May also be supplied as `max-width`.'
-        }
+        },
+        variant: {
+            control: 'select',
+            options: Object.values(Variant),
+            description: "Whether to apply a solid background, giving the component a bolder appearance."
+        },
     },
     args: {
         default: 'Example',
-        bold: false,
-        appearance: 'default'
+        appearance: 'default',
+        variant: 'default'
     },
     tags: ['autodocs']
 };

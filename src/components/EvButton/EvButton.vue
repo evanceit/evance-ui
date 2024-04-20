@@ -7,7 +7,16 @@ import {makeEvButtonProps} from "./EvButton.ts";
 import {computed, useAttrs, useSlots} from "vue";
 import {EvIcon} from "@/components/EvIcon";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
-import {appearanceModifier, InputSize, isBoolean, sizeModifier, variantModifier} from "@/util";
+import {
+    appearanceModifier,
+    AppearanceProps,
+    InputSize,
+    isBoolean,
+    sizeModifier,
+    useAppearance,
+    Variant,
+    variantModifier
+} from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
 import {useDefaults} from "@/composables/defaults.ts";
@@ -123,19 +132,7 @@ function onClick(e: MouseEvent): void {
 
 useSelectLink(link, group?.select);
 
-const appearanceClass = computed(() => {
-    const value = (isActive.value)
-        ? group?.selectedAppearance.value ?? props.appearance
-        : props.appearance;
-    return appearanceModifier(value);
-});
-
-const variantClass = computed(() => {
-    const value = (isActive.value)
-        ? group?.selectedVariant.value ?? props.variant
-        : props.variant;
-    return variantModifier(value);
-});
+const { appearanceClass, variantClass } = useAppearance(props as AppearanceProps, group, isActive, Variant.bold);
 
 const valueAttr = computed(() => {
     if (props.value === undefined || typeof props.value === 'symbol') {

@@ -5,18 +5,19 @@
  * `<ev-lozenge />`
  */
 import './EvLozenge.scss';
-import {appearanceModifier, AppearanceProp, isIntegerish} from "@/util";
+import {AppearanceProp, isIntegerish, useAppearance, VariantProp} from "@/util";
 
 /**
  * ## Lozenge Props
  */
 interface LozengeProps {
     appearance?: AppearanceProp,
-    bold?: boolean,
+    variant?: VariantProp,
     maxWidth?: number | string;
 }
 const props = withDefaults(defineProps<LozengeProps>(), {
     appearance: 'default',
+    variant: 'default',
     maxWidth: 200
 });
 
@@ -62,15 +63,15 @@ const getMaxWidthWithUnits = () => {
     return isMaxWidthNumeric() ? `${props.maxWidth}px` : props.maxWidth;
 }
 
+const { appearanceClass, variantClass } = useAppearance(props)
+
 </script>
 <template>
     <span
-        class="ev-lozenge"
         :class="[
-            appearanceModifier(props.appearance),
-            {
-                'is-variant-bold': bold
-            }
+            'ev-lozenge',
+            appearanceClass,
+            variantClass
         ]"
         :style="{
             'max-width': getMaxWidthOuter()

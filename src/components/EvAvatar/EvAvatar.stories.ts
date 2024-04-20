@@ -3,17 +3,19 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 import { EvAvatar } from "../EvAvatar";
 import {Check, Company, Evance} from "@/icons";
 import {EvIcon} from "@/components";
+import {Appearance, Variant} from "@/util";
 
 const meta: Meta<typeof EvAvatar> = {
     component: EvAvatar,
     argTypes: {
         appearance: {
             control: 'select',
-            options: ['default', 'danger', 'information', 'notice', 'success', 'warning'],
+            options: Object.values(Appearance),
             description: "Appearance may be: `default`, `danger`, `information`, `notice`, `success`, or `warning`."
         },
-        bold: {
-            control: 'boolean',
+        variant: {
+            control: 'select',
+            options: Object.values(Variant),
             description: "Whether to apply a solid background, giving the component a bolder appearance."
         },
         icon: {
@@ -59,8 +61,8 @@ const meta: Meta<typeof EvAvatar> = {
         }
     },
     args: {
-        appearance: undefined,
-        bold: false,
+        appearance: 'default',
+        variant: 'default',
         icon: 'None',
         size: undefined,
         image: undefined,

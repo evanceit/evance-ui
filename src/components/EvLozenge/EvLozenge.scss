@@ -22,5 +22,5 @@
     ## Appearance
  */
 .ev-lozenge {
-    @include mixins.generate-appearances;
+    @include mixins.generate-appearances(false);
 }
