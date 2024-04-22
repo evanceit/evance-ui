@@ -26,9 +26,9 @@
     "email": "geoff@evance.io"
   },
   "bugs": {
-    "url": "https://github.com/evanceit/amethyst/issues"
+    "url": "https://github.com/evanceit/evance-ui/issues"
   },
-  "homepage": "https://github.com/evanceit/amethyst#readme",
+  "homepage": "https://github.com/evanceit/evance-ui#readme",
   "main": "./dist/evance-ui.umd.js",
   "module": "./dist/evance-ui.es.js",
   "exports": {
