@@ -5,3 +5,13 @@
         align-items: center;
     }
 }
+
+.ev-tag-group {
+    &.is-column {
+        .ev-slide-group--content {
+            flex-wrap: wrap;
+            white-space: normal;
+            max-width: 100%;
+        }
+    }
+}

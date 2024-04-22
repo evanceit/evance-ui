@@ -561,7 +561,7 @@ const isPlaceholder = computed(() => (!selections.value.length && !!slots.placeh
         <template #label v-if="props.label || slots.label">
             <slot name="label">{{ props.label }}</slot>
         </template>
-        <template #prefix>
+        <template #prefix v-if="slots.prefix">
             <slot name="prefix" />
         </template>
         <template #default>
@@ -656,7 +656,7 @@ const isPlaceholder = computed(() => (!selections.value.length && !!slots.placeh
 
         </template>
 
-        <template #suffix>
+        <template #suffix v-if="slots.suffix">
             <slot name="suffix" />
         </template>
     </ev-textfield>

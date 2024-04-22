@@ -314,6 +314,21 @@ function stopIncrementing() {
     }
 }
 
+const hasPrefix = computed(() => {
+    return (
+        props.showButtons
+        || slots.prefix
+        || props.prefix
+    );
+});
+
+const hasSuffix = computed(() => {
+    return (
+        props.showButtons
+        || slots.suffix
+        || props.suffix
+    );
+});
 
 </script>
 <template>
@@ -332,7 +347,7 @@ function stopIncrementing() {
         <template #label v-if="props.label || slots.label">
             <slot name="label">{{ props.label }}</slot>
         </template>
-        <template #prefix>
+        <template #prefix v-if="hasPrefix">
             <ev-button
                 v-if="props.showButtons"
                 rounded
@@ -349,7 +364,7 @@ function stopIncrementing() {
             />
             <slot name="prefix">{{ props.prefix }}</slot>
         </template>
-        <template #suffix>
+        <template #suffix v-if="hasSuffix">
             <slot name="suffix">{{ props.suffix }}</slot>
             <ev-button
                 v-if="props.showButtons"
