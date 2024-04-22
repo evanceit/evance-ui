@@ -351,7 +351,7 @@ const hasSuffix = computed(() => {
             <ev-button
                 v-if="props.showButtons"
                 rounded
-                size="small"
+                size="x-small"
                 class="ev-number-field--minus"
                 variant="subtle"
                 :icon="Minus"
@@ -369,7 +369,7 @@ const hasSuffix = computed(() => {
             <ev-button
                 v-if="props.showButtons"
                 rounded
-                size="small"
+                size="x-small"
                 class="ev-number-field--plus"
                 variant="subtle"
                 :icon="Plus"

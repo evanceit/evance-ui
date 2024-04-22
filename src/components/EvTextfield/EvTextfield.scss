@@ -31,11 +31,11 @@
 /** Size modifiers */
 .ev-textfield--control {
     &.is-size-small {
-        height: var(--input-height-small);
+        min-height: var(--input-height-small);
         padding-inline: var(--spacer-100);
     }
     &.is-size-large {
-        height: var(--input-height-large);
+        min-height: var(--input-height-large);
         padding-inline: var(--spacer-150);
     }
 }
