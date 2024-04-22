@@ -2,7 +2,7 @@
   "name": "@evance/evance-ui",
   "private": false,
   "description": "Evance UI Component Library based on Vuetify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -36,12 +36,12 @@
       "import": "./dist/evance-ui.es.js",
       "require": "./dist/evance-ui.umd.js"
     },
-    "./dist/evance-ui.css": {
+    "./core.css": {
       "import": "./dist/evance-ui.css",
       "require": "./dist/evance-ui.css"
     }
   },
-  "types": "./dist/evance-ui.es.d.ts",
+  "types": "./dist/main.d.ts",
   "peerDependencies": {
     "typescript": "^5.0.2",
     "vue": "^3.3.4"
