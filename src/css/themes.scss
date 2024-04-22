@@ -1,3 +1,6 @@
+@use 'sass:map' as map;
+@use "./settings" as *;
+
 /*
   # Theme Colours
 
@@ -26,25 +29,25 @@
     --color-primary: #814EFA;
 
     /* Surfaces */
-    --surface-default: #EFF2F9;
-    --surface-overlay: #FFFFFF;
+    --surface-default: #{token('neutral.100')};
+    --surface-overlay: #{token('neutral.0')};
     --surface-overlay-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F;
-    --surface-panel: #FFFFFF;
-    --surface-sunken: #D8DCE6;
+    --surface-panel: #{token('neutral.0')};
+    --surface-sunken: #{token('neutral.200')};
 
     /* Backgrounds */
-    --background-brand: #7C4EFA26;
-    --background-brand-hovered: #7C4EFA40;
-    --background-brand-pressed: #7C4EFA54;
-    --background-brand-bold: #814EFA;
-    --background-brand-bold-hovered: #7647E4;
-    --background-brand-bold-pressed: #5C37B2;
-    --background-danger: #F0414126;
-    --background-danger-hovered: #F0414140;
-    --background-danger-pressed: #F0414154;
-    --background-danger-bold: #F04141;
-    --background-danger-bold-hovered: #DA3B3B;
-    --background-danger-bold-pressed: #AA2E2E;
+    --background-brand: #{token('purple.200A')};
+    --background-brand-hovered: #{token('purple.300A')};
+    --background-brand-pressed: #{token('purple.400A')};
+    --background-brand-bold: #{token('purple.600')};
+    --background-brand-bold-hovered: #{token('purple.700')};
+    --background-brand-bold-pressed: #{token('purple.800')};
+    --background-danger: #{token('red.200A')};
+    --background-danger-hovered: #{token('red.300A')};
+    --background-danger-pressed: #{token('red.400A')};
+    --background-danger-bold: #{token('red.600')};
+    --background-danger-bold-hovered: #{token('red.700')};
+    --background-danger-bold-pressed: #{token('red.800')};
     --background-information: #2A63EA26;
     --background-information-hovered: #2A63EA40;
     --background-information-pressed: #2A63EA54;

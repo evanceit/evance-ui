@@ -1,0 +1,158 @@
+@use '../tools/functions' as *;
+@use "sass:map";
+
+/**
+    # Colors
+
+    Note, HEXA values are quoted to prevent SASS outputting values as RGBA.
+ */
+$colors: () !default;
+$colors: map-deep-merge(
+    (
+        'purple': (
+            '100': #ECE5FF,
+            '200': #D6C8FD,
+            '300': #C3AEFD,
+            '400': #AF93FD,
+            '500': #9873FF,
+            '600': #814EFA,
+            '700': #7647E4,
+            '800': #5C37B2,
+            '900': #482B8A,
+            '1000': #35255A,
+            '100A': '#7C4EFA12',
+            '200A': '#7C4EFA26',
+            '300A': '#7C4EFA40',
+            '400A': '#7C4EFA54',
+            '500A': '#7C4EFA7D'
+        ),
+        'blue': (
+            '100': #E5EDFF,
+            '200': #BDCFF8,
+            '300': #9DB7F5,
+            '400': #7097F1,
+            '500': #5583EE,
+            '600': #2A63EA,
+            '700': #265BD5,
+            '800': #1E47A6,
+            '900': #173781,
+            '1000': #1B2742,
+            '100A': '#2A63EA12',
+            '200A': '#2A63EA26',
+            '300A': '#2A63EA40',
+            '400A': '#2A63EA54',
+            '500A': '#2A63EA7D'
+        ),
+        'green': (
+            '100': #E1FAF4,
+            '200': #B6E6D9,
+            '300': #92DAC6,
+            '400': #61C9AD,
+            '500': #2BC29A,
+            '600': #13AE84,
+            '700': #119E78,
+            '800': #0D7C5E,
+            '900': #0A6049,
+            '1000': #1B3136,
+            '100A': '#13AE8412',
+            '200A': '#13AE8426',
+            '300A': '#13AE8440',
+            '400A': '#13AE8454',
+            '500A': '#13AE847D'
+        ),
+        'red': (
+            '100': #FEECEC,
+            '200': #FAC4C4,
+            '300': #F8A8A8,
+            '400': #F58080,
+            '500': #F36767,
+            '600': #F04141,
+            '700': #DA3B3B,
+            '800': #AA2E2E,
+            '900': #842424,
+            '1000': #391E1E,
+            '100A': '#F0414112',
+            '200A': '#F0414126',
+            '300A': '#F0414140',
+            '400A': '#F0414154',
+            '500A': '#F041417D'
+        ),
+        'orange': (
+            '100': #FFF4E9,
+            '200': #FFDBBA,
+            '300': #FFCA99,
+            '400': #FFB26A,
+            '500': #FFA34D,
+            '600': #FF8C21,
+            '700': #E87F1E,
+            '800': #B56317,
+            '900': #8C4D12,
+            '1000': #3B3124,
+            '100A': '#FF8C2112',
+            '200A': '#FF8C2126',
+            '300A': '#FF8C2140',
+            '400A': '#FF8C2154',
+            '500A': '#FF8C217D'
+        ),
+        'neutral': (
+            '0': #FFFFFF,
+            '100': #EFF2F9,
+            '200': #D8DCE6,
+            '300': #C2C6D3,
+            '400': #ACB0C0,
+            '500': #959BAD,
+            '600': #7B829A,
+            '700': #696F87,
+            '800': #535A74,
+            '900': #353B4E,
+            '1000': #2A2E3D,
+            '1100': #13121C,
+            '100A': '#0A143308',
+            '200A': '#0A14330F',
+            '300A': '#0A14331F',
+            '400A': '#0A14333D',
+            '500A': '#0A14337D'
+        ),
+        'dark-neutral': (
+            '0': #0B0B14,
+            '100': #131321,
+            '200': #191929,
+            '300': #1F1F31,
+            '400': #303244,
+            '500': #4D5166,
+            '600': #656D88,
+            '700': #848DAA,
+            '800': #A3AECC,
+            '900': #BCC4DB,
+            '1000': #D5DBEA,
+            '1100': #EFF2F9,
+            '100A': '#A3A7CC0A',
+            '200A': '#A3A7CC14',
+            '300A': '#A3A7CC29',
+            '400A': '#A3A7CC47',
+            '500A': '#A3A7CC80'
+        )
+    ),
+    $colors
+);
+
+
+/**
+    # token
+ */
+@function token($color-name) {
+    $prefix: str-slice($color-name, 1, str-index($color-name, '.') - 1);
+    $variant: str-slice($color-name, str-index($color-name, '.') + 1);
+    $color-map: map-get($colors, $prefix);
+
+    @if $color-map != null {
+        @if map.has-key($color-map, $variant) {
+            // @todo Remove the comment - just being used to track progress
+            @return map.get($color-map, $variant) '/*' $color-name '*/';
+        } @else {
+            @error "Variant '#{$variant}'' not found in palette color '#{$prefix}'.";
+        }
+    } @else {
+        @error "Palette color '#{$prefix}' not found.";
+    }
+}
