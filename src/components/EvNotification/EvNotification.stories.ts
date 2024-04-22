@@ -6,6 +6,7 @@ import EvMessageStories from "../EvMessage/EvMessage.stories.ts";
 
 const meta: Meta<typeof EvNotification> = {
     component: EvNotification,
+    title: 'Overlays/EvNotification',
     argTypes: {
         timeout: {
             control: 'number',

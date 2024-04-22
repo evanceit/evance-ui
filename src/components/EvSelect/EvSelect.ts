@@ -24,6 +24,10 @@ export const makeEvSelectProps = propsFactory({
         type: String as PropType<SelectableBehavior>,
         default: 'select'
     },
+    delimiters: {
+        type: Array as PropType<string[]>,
+        default: [',']
+    },
     hideItemsEmpty: Boolean,
     hideSelected: Boolean,
     itemsEmptyText: {

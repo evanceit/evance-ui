@@ -5,7 +5,7 @@ import {EvButton} from "@/components";
 import {useDrawer} from "@/composables/drawer.ts";
 
 const meta: Meta = {
-    title: 'Overlays/EvDrawerService'
+    title: 'Services/EvDrawerService'
 };
 
 export default meta;

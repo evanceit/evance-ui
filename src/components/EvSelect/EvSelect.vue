@@ -332,12 +332,14 @@ function onFieldKeydown(e: KeyboardEvent) {
             evTextfieldRef.value?.input.setSelectionRange(0, 0);
         }
     }
+
     if (props.behavior !== 'combobox') {
         return;
     }
 
-    // Enter
-    if (e.key === 'Enter' && search.value) {
+    // Enter or delimiters
+    if ((props.delimiters.includes(e.key) || e.key === 'Enter') && search.value) {
+        e.preventDefault();
         select(transformItem(props as any, search.value));
         search.value = '';
     }

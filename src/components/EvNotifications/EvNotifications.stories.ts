@@ -8,7 +8,7 @@ import {useNotification} from "@/composables/notification.ts";
 
 const meta: Meta<typeof EvNotifications> = {
     component: EvNotifications,
-    title: 'Overlays/EvNotifications'
+    title: 'Services/EvNotifications'
 };
 
 export default meta;

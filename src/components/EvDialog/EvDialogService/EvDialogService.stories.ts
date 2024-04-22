@@ -5,7 +5,7 @@ import {EvButton} from "@/components";
 import {useDialog} from "@/composables/dialog.ts";
 
 const meta: Meta = {
-    title: 'Overlays/EvDialogService'
+    title: 'Services/EvDialogService'
 };
 
 export default meta;
