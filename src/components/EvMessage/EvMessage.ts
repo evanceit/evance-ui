@@ -50,13 +50,11 @@ export const makeEvMessageProps = propsFactory({
         default: true
     },
     title: String,
-    variant: {
-        type: String as PropType<EvMessageVariant>,
-        default: 'tonal'
-    },
     actions: Array as PropType<EvButtonProps[]>,
 
-    ...makeAppearanceProps(),
+    ...makeAppearanceProps({
+        variant: 'tonal'
+    }),
     ...makeTagProps({
         tag: 'section'
     }),

@@ -8,14 +8,12 @@ import {computed, useAttrs, useSlots} from "vue";
 import {EvIcon} from "@/components/EvIcon";
 import {EvProgressCircular} from "@/components/EvProgressCircular";
 import {
-    appearanceModifier,
     AppearanceProps,
     InputSize,
     isBoolean,
     sizeModifier,
     useAppearance,
-    Variant,
-    variantModifier
+    Variant
 } from "@/util";
 import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
 import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
