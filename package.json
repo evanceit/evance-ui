@@ -1,5 +1,5 @@
 {
-  "name": "evance-ui",
+  "name": "@evance/evance-ui",
   "private": false,
   "description": "Evance UI Component Library based on Vuetify",
   "version": "1.0.0",
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evanceit/amethyst.git"
+    "url": "git+https://github.com/evanceit/evance-ui.git"
   },
   "scripts": {
     "dev": "vite",
