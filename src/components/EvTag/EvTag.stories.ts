@@ -3,10 +3,19 @@ import type {Meta, StoryObj} from "@storybook/vue3";
 import { EvTag } from "../EvTag";
 import {EvButton, EvIcon} from "@/components";
 import {Reload} from "../../icons";
+import {Appearance, Variant} from "@/util";
 
 const meta: Meta<typeof EvTag> = {
     component: EvTag,
     argTypes: {
+        appearance: {
+            control: 'select',
+            options: Object.keys(Appearance)
+        },
+        variant: {
+            control: 'select',
+            options: Object.keys(Variant)
+        },
         closable: {
             control: 'boolean'
         },
@@ -19,6 +28,9 @@ const meta: Meta<typeof EvTag> = {
         modelValue: {
             control: 'boolean'
         },
+        rounded: {
+            control: 'boolean'
+        },
         tag: {
             control: 'text',
             description: "Sets the HTML tag used for the component."
@@ -29,10 +41,13 @@ const meta: Meta<typeof EvTag> = {
         }
     },
     args: {
+        appearance: Appearance.default,
+        variant: Variant.default,
         closable: false,
         disabled: false,
         filter: false,
         modelValue: true,
+        rounded: false,
         tag: undefined,
         text: 'Example tag'
     },

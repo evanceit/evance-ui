@@ -13,7 +13,7 @@ import {GroupItemProps, useGroupItem} from "@/composables/groupItem.ts";
 import {EvAvatar, EvTagGroupSymbol} from "@/components";
 import {EvTransitionExpandX} from "@/components/EvTransition/transitions";
 import {useDefaults} from "@/composables";
-import {appearanceModifier, variantModifier} from "@/util";
+import {AppearanceProps, useAppearance} from "@/util";
 
 const definedProps = defineProps(makeEvTagProps());
 const props = useDefaults(definedProps);
@@ -105,19 +105,9 @@ const hasSuffixMedia = computed(() => !!(props.avatarEnd || props.iconEnd));
 const hasPrefix = computed(() => !!(hasPrefixMedia.value || slots.prefix));
 const hasSuffix = computed(() => !!(hasSuffixMedia.value || slots.suffix));
 
-const appearanceClass = computed(() => {
-    const value = (isActive.value)
-        ? group?.selectedAppearance.value ?? props.appearance
-        : props.appearance;
-    return appearanceModifier(value);
-});
 
-const variantClass = computed(() => {
-    const value = (isActive.value)
-        ? group?.selectedVariant.value ?? props.variant
-        : props.variant;
-    return variantModifier(value);
-});
+const { appearanceClass, variantClass } = useAppearance(props as AppearanceProps, group, isActive)
+
 
 </script>
 <template>
@@ -127,9 +117,11 @@ const variantClass = computed(() => {
         :class="[
             'ev-tag',
             {
+                'is-active': group?.isSelected.value,
                 'is-clickable': isClickable,
                 'is-disabled': props.disabled,
-                'is-filter': hasFilter
+                'is-filter': hasFilter,
+                'is-rounded': props.rounded
             },
             group?.selectedClass.value,
             appearanceClass,

@@ -31,7 +31,9 @@ export const makeEvTagGroupProps = propsFactory({
     ...makeEvSlideGroupProps(),
     ...makeComponentProps(),
     ...makeGroupProps({
-        selectedClass: 'is-selected'
+        selectedClass: 'is-selected',
+        selectedAppearance: 'primary',
+        selectedVariant: 'outlined'
     }),
     ...makeTagProps()
 }, 'EvTagGroup');

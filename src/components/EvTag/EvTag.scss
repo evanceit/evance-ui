@@ -1,3 +1,4 @@
+@use "../../css/mixins";
 
 .ev-tag {
     --current-size: 36px;
@@ -70,14 +71,25 @@
     }
 }
 
-.ev-tag {
-    &.is-clickable {
-        &:hover {
-            background-color: var(--background-neutral-hovered);
-        }
-    }
-}
-
 .ev-tag--filter {
     transition: 0.15s var(--easing-standard);
+}
+
+/**
+    ## Appearance
+ */
+.ev-tag {
+    @include mixins.generate-appearances(true);
+}
+
+
+
+
+/**
+    ## Rounded modifier
+*/
+.ev-tag {
+    &.is-rounded {
+        border-radius: 999px;
+    }
 }

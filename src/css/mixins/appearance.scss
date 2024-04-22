@@ -116,6 +116,10 @@ $outline: 1px;
 
     & {
         border: $outline solid transparent;
+
+        &.is-clickable {
+            cursor: pointer;
+        }
     }
 
     @include appearance-default($maybeClickable);
