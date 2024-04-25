@@ -10,6 +10,7 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "outDir": "./dist", /* Redirect output structure to the directory. */
+    "declaration": true,
     "useDefineForClassFields": true,
     "skipLibCheck": true,
     "sourceMap": true, /* Generates corresponding '.map' file. */
@@ -20,7 +21,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "noEmit": true,
 
     /* Linting */
     "strict": true,

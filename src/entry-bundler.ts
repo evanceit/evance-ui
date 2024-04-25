@@ -4,9 +4,9 @@ import './css/core.scss';
 import * as components from './components';
 import * as directives from './directives';
 import * as services from './services';
-import { createEvanceUi as _createEvanceUi } from './framework.ts';
+import { createEvanceUi as _createEvanceUi } from './framework';
 
-import type { EvanceUiOptions } from "./framework.ts";
+import type { EvanceUiOptions } from "./framework";
 
 export const createEvanceUi = (options: EvanceUiOptions = {}) => {
     return _createEvanceUi({ components, directives, services, ...options });
