@@ -6,6 +6,9 @@ import {LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
 import {createDate, DateAdapterSymbol, DateOptions} from "@/composables/date/date.ts";
 import {createDefaults, DefaultsOptions, DefaultsSymbol} from "@/composables/defaults.ts";
 
+export * from './composables';
+export type { DateOptions, DateAdapterInstance } from '@/composables/date';
+
 export interface EvanceUiOptions {
     blueprint?: Blueprint,
     components?: Record<string, any>,
@@ -88,6 +91,9 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
 
     return {
         install,
-        display
+        defaults,
+        display,
+        locale,
+        date
     };
 }

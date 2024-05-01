@@ -7,7 +7,7 @@ import {
     EvButtonToggleSlots,
     EvButtonToggleSymbol,
     makeEvButtonToggleProps
-} from "@/components/EvButtonToggle/EvButtonToggle.ts";
+} from "./EvButtonToggle.ts";
 import {EvButtonGroup} from "../EvButtonGroup";
 import {GroupProps, useGroup} from "@/composables/group.ts";
 import {filterComponentProps} from "@/util";

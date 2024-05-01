@@ -1,19 +1,27 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
     "lib": [
       "ESNext",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "ScriptHost"
     ],
     "jsx": "preserve",
     "baseUrl": "./",
     "outDir": "./dist", /* Redirect output structure to the directory. */
     "declaration": true,
     "useDefineForClassFields": true,
+    "importHelpers": true,
     "skipLibCheck": true,
     "sourceMap": true, /* Generates corresponding '.map' file. */
+    "allowSyntheticDefaultImports": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "verbatimModuleSyntax": false, // todo: we will need to remove this at some point
 
     /* Bundler mode */
     "moduleResolution": "Node",
@@ -32,6 +40,7 @@
     "experimentalDecorators": true,           /* Enables experimental support for ES7 decorators. */
     "emitDecoratorMetadata": true,             /* Enables experimental support for emitting type metadata for decorators. */
 
+    "types": ["node", "vite/client"],
     "paths": {
       "@/*": [
         "src/*"
@@ -51,10 +60,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
   ]
 }

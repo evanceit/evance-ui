@@ -4,8 +4,11 @@ import svgLoader from 'vite-svg-loader';
 import {resolve} from 'path';
 import dts from 'vite-plugin-dts';
 import Components from 'unplugin-vue-components/vite';
-import fs, { readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import fg from 'fast-glob';
+import { fileURLToPath } from "url";
+import { peerDependencies, version } from "./package.json";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const componentsIndex = readFileSync(resolve('src/components/index.ts'), { encoding: 'utf8' });
 const block = Array.from(componentsIndex.matchAll(/^\/\/ export \* from '\.\/(.*)'$/gm), m => m[1]);
@@ -17,12 +20,85 @@ const map = new Map(components.flatMap(file => {
     return Array.from(matches, m => [m[1] || m[2], file.replace('src/', '@/').replace('.ts', '')]);
 }));
 
+const bannerTxt = `/*! Evance UI v${version} | MIT License */`;
+
+
 // https://vitejs.dev/config/
-export default defineConfig({
+/** @type {import('vite').UserConfig} */
+export default defineConfig(({ mode }) => ({
+    root: __dirname,
+    resolve: {
+        alias: {
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
+        },
+    },
+    server: {
+        open: true,
+        port: 3000,
+    },
+    build: {
+        emptyOutDir: false,
+        sourcemap: true,
+        minify: mode === "minify",
+        lib:
+            mode === "minify"
+                ? // build minified version with index.ts entry
+                {
+                    name: 'evance-ui',
+                    entry: resolve('./src/index.ts'),
+                    formats: ["umd", "es"],
+                    fileName: (format) =>
+                        format === "umd" ? "evance-ui.js" : "evance-ui.mjs"
+                }
+                : // build rollup output verions for all entries
+                {
+                    name: 'evance-ui',
+                    entry: resolve('./src/index.ts'),
+                },
+        rollupOptions: {
+            external: [...Object.keys(peerDependencies)],
+            output:
+                mode === "minify"
+                    ? // Browser build minified version
+                    {
+                        banner: bannerTxt,
+                        exports: "named",
+                        // Provide global variables to use in the UMD build
+                        // for externalized deps
+                        globals: {
+                            vue: "Vue",
+                        },
+                    }
+                    : [
+                        // ESM build
+                        {
+                            format: "esm",
+                            dir: "dist/esm",
+                            entryFileNames: "[name].mjs",
+                            chunkFileNames: "[name]-[hash].mjs",
+                            banner: bannerTxt,
+                            globals: {
+                                vue: "Vue",
+                            },
+                        },
+                        // SSR build
+                        {
+                            format: "cjs",
+                            dir: "dist/cjs",
+                            exports: "named",
+                            banner: bannerTxt,
+                            globals: {
+                                vue: "Vue",
+                            },
+                        },
+                    ],
+        }
+    },
     plugins: [
+        tsconfigPaths(),
         vue(),
         dts({
-            insertTypesEntry: true,
+            outDir: "./dist/types",
             exclude: [
                 '**/*.stories.ts',
                 '**/*.test.ts'
@@ -41,26 +117,5 @@ export default defineConfig({
                 }
             ]
         })
-    ],
-    build: {
-        lib: {
-            entry: resolve('./src/entry-bundler.ts'),
-            name: 'evance-ui',
-            fileName: (format) => `evance-ui.${format}.js`,
-        },
-        rollupOptions: {
-            external: ['vue'],
-            output: {
-                globals: {
-                    vue: 'Vue'
-                }
-            }
-        }
-    },
-    resolve: {
-        alias: [
-            {find: /^evance$/, replacement: resolve('./src/framework.ts')},
-            {find: /^@\/(.*)/, replacement: resolve('./src/$1')}
-        ]
-    }
-})
+    ]
+}));
