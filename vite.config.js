@@ -9,6 +9,7 @@ import fg from 'fast-glob';
 import { fileURLToPath } from "url";
 import { peerDependencies, version } from "./package.json";
 import tsconfigPaths from "vite-tsconfig-paths";
+import babel from "@rollup/plugin-babel";
 
 const componentsIndex = readFileSync(resolve('src/components/index.ts'), { encoding: 'utf8' });
 const block = Array.from(componentsIndex.matchAll(/^\/\/ export \* from '\.\/(.*)'$/gm), m => m[1]);
@@ -50,7 +51,7 @@ export default defineConfig(({ mode }) => ({
                     fileName: (format) =>
                         format === "umd" ? "evance-ui.js" : "evance-ui.mjs"
                 }
-                : // build rollup output verions for all entries
+                : // build rollup output versions for all entries
                 {
                     name: 'evance-ui',
                     entry: resolve('./src/index.ts'),
@@ -92,6 +93,12 @@ export default defineConfig(({ mode }) => ({
                             },
                         },
                     ],
+            // rollup plugins
+            plugins: [
+                babel({
+                    babelHelpers: "bundled"
+                })
+            ]
         }
     },
     plugins: [
@@ -107,6 +114,7 @@ export default defineConfig(({ mode }) => ({
         svgLoader({
             svgo: false
         }),
+        /*
         Components({
             dts: false,
             resolvers: [
@@ -117,5 +125,6 @@ export default defineConfig(({ mode }) => ({
                 }
             ]
         })
+        */
     ]
 }));

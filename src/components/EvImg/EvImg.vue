@@ -18,7 +18,7 @@ import {
     useSlots,
     watch
 } from "vue";
-import {Browser, filterComponentProps, toWebUnit} from "@/util";
+import {Browser, filterComponentProps, isObject, toWebUnit} from "@/util";
 
 const props = defineProps(makeEvImgProps());
 const slots = useSlots();
@@ -36,13 +36,17 @@ const naturalHeight = shallowRef<number>();
 const transition = useEvTransition(props);
 
 const normalisedSrc: ComputedRef<EvImgSrcObject> = computed(() => {
-    return props.src && typeof props.src === 'object'
+
+    const imgSrc = props as EvImgSrcObject | { src: EvImgSrcObject };
+
+    return (isObject(imgSrc.src))
         ? {
-            src: props.src.src,
-            srcset: props.srcset || props.src.srcset,
-            lazySrc: props.lazySrc || props.src.lazySrc,
-            aspect: props.aspectRatio || props.src.aspect || 0
-        } : {
+            src: imgSrc.src.src,
+            srcset: props.srcset || imgSrc.src.srcset,
+            lazySrc: props.lazySrc || imgSrc.src.lazySrc,
+            aspect: props.aspectRatio || imgSrc.src.aspect || 0
+        }
+        : {
             src: props.src,
             srcset: props.srcset,
             lazySrc: props.lazySrc,

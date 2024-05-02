@@ -13,11 +13,9 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
-      "style": "./dist/style.css",
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs",
-      "default": "./dist/evance-ui.mjs"
+      "require": "./dist/cjs/index.cjs"
     },
     "./styles": {
       "default": "./dist/style.css"
