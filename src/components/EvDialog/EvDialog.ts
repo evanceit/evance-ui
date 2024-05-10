@@ -1,7 +1,6 @@
 import { propsFactory } from "@/util";
 import { makeEvOverlayProps } from "@/components/EvOverlay";
 import EvDialogTransition from "@/components/EvDialog/EvDialogTransition.vue";
-import { Component } from "vue";
 
 /**
  * # makeEvDialogProps
@@ -24,7 +23,7 @@ export const makeEvDialogProps = propsFactory(
             scrollStrategy: "block" as const,
             positionStrategy: "static" as const,
             transition: {
-                component: EvDialogTransition as Component,
+                component: EvDialogTransition,
             },
             zIndex: 2400,
         }),

@@ -9,7 +9,7 @@ export const makeEvDrawerProps = propsFactory(
             default: "left",
         },
 
-        ...omit(makeEvDialogProps(), ["position", "transition"]),
+        ...omit(makeEvDialogProps(), ["position"]),
     },
     "EvDrawer",
 );

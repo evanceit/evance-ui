@@ -1,3 +1,5 @@
+import { ComponentInternalInstance } from "vue";
+
 declare global {
     interface HTMLCollection {
         [Symbol.iterator](): IterableIterator<Element>;
@@ -19,5 +21,11 @@ declare global {
 
     interface WheelEvent {
         path?: EventTarget[];
+    }
+}
+
+declare module "vue" {
+    interface ComponentInternalInstance {
+        provides: Record<string, any>;
     }
 }

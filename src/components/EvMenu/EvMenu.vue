@@ -16,7 +16,7 @@ import {
     watch,
 } from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
-import { focusChild, getNextId } from "@/util";
+import { filterComponentProps, focusChild, getNextId } from "@/util";
 import { EvMenuSymbol } from "./shared.ts";
 
 const props = defineProps({
@@ -117,12 +117,14 @@ defineExpose({
     id,
     openChildren,
 });
+
+const overlayProps = computed(() => filterComponentProps(EvOverlay, props));
 </script>
 
 <template>
     <ev-overlay
         ref="overlay"
-        v-bind="props"
+        v-bind="overlayProps"
         v-model="isActive"
         class="ev-menu"
         :activator-props="activatorProps"

@@ -54,7 +54,10 @@ defineExpose({
         :style="props.style"
         :transition="transition"
         :width="overlayWidth">
-        <template v-for="(slot, name) in $slots" #[name]="slotProps">
+        <template
+            v-for="(slot, name) in $slots"
+            :key="name"
+            #[name]="slotProps">
             <component :is="slot" v-bind="slotProps" />
         </template>
     </ev-dialog>

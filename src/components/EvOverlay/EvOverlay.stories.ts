@@ -125,7 +125,7 @@ const meta: Meta<typeof EvOverlay> = {
         closeOnContentClick: false,
         persistent: false,
         position: "auto",
-        transition: "true",
+        transition: true,
         veil: true,
     },
     tags: ["autodocs"],

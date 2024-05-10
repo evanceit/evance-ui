@@ -58,7 +58,7 @@ const meta: Meta<typeof EvSlideGroup> = {
     },
     args: {
         arrowsAlign: "around",
-        arrowsHidden: "false",
+        arrowsHidden: false,
         centerActive: false,
         direction: "horizontal",
         disabled: false,

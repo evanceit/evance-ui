@@ -1,6 +1,5 @@
 import { AnchorSelector, propsFactory } from "@/util";
 import { makeEvOverlayProps } from "@/components/EvOverlay/EvOverlay.ts";
-import { Component } from "vue";
 import EvMenuTransition from "./EvMenuTransition.vue";
 
 export const makeEvMenuProps = propsFactory(
@@ -15,7 +14,7 @@ export const makeEvMenuProps = propsFactory(
             openDelay: 250,
             veil: false,
             scrollStrategy: "reposition" as const,
-            transition: { component: EvMenuTransition as Component },
+            transition: { component: EvMenuTransition },
         }),
     },
     "EvMenu",
