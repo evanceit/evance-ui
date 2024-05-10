@@ -1,10 +1,10 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
-import { resolve } from "path";
+import path, { resolve } from "path";
 import dts from "vite-plugin-dts";
 import Components from "unplugin-vue-components/vite";
-import { readFileSync } from "fs";
+import fs, { readFileSync } from "fs";
 import fg from "fast-glob";
 import { fileURLToPath } from "url";
 import { peerDependencies, version } from "./package.json";
@@ -22,7 +22,7 @@ const files = fg.sync(["src/components/**/index.ts"], { cwd: __dirname });
 const components = files.filter(
     (file) => !block.some((name) => file.includes(`/${name}/`)),
 );
-const map = new Map(
+const componentsMap = new Map(
     components.flatMap((file) => {
         const src = readFileSync(file, { encoding: "utf8" });
         const matches = src.matchAll(
@@ -30,12 +30,16 @@ const map = new Map(
         );
         return Array.from(matches, (m) => [
             m[1] || m[2],
-            file.replace("src/", "@/").replace(".ts", ""),
+            resolve(__dirname, path.dirname(file)),
         ]);
     }),
 );
-
+const componentsList = Object.fromEntries(componentsMap);
 const bannerTxt = `/*! Evance UI v${version} | MIT License */`;
+const entries = {
+    index: resolve(__dirname, "./src/index.ts"),
+    ...componentsList,
+};
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
@@ -67,7 +71,7 @@ export default defineConfig(({ mode }) => ({
                 : // build rollup output versions for all entries
                   {
                       name: "evance-ui",
-                      entry: resolve("./src/index.ts"),
+                      entry: entries,
                   },
         rollupOptions: {
             external: [...Object.keys(peerDependencies)],
@@ -124,17 +128,15 @@ export default defineConfig(({ mode }) => ({
         svgLoader({
             svgo: false,
         }),
-        /*
-        Components({
+        Components({ // @todo: I don't think this is working!
             dts: false,
             resolvers: [
-                name => {
-                    if (map.has(name)) {
-                        return { name, from: map.get(name) }
+                (name) => {
+                    if (componentsMap.has(name)) {
+                        return { name, from: componentsMap.get(name) };
                     }
-                }
-            ]
-        })
-        */
+                },
+            ],
+        }),
     ],
 }));

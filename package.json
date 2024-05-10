@@ -20,7 +20,10 @@
     "./styles": {
       "default": "./dist/style.css"
     },
-    "./*": "./*"
+    "./*": "./*",
+    "./volar": {
+      "types": "./volar.d.ts"
+    }
   },
   "files": [
     "dist",
