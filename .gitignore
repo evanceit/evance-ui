@@ -1,6 +1,7 @@
 # Generated/build files
 node_modules
 dist
+components.d.ts
 
 
 # Logs

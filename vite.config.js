@@ -128,8 +128,8 @@ export default defineConfig(({ mode }) => ({
         svgLoader({
             svgo: false,
         }),
-        Components({ // @todo: I don't think this is working!
-            dts: false,
+        Components({
+            dts: true,
             resolvers: [
                 (name) => {
                     if (componentsMap.has(name)) {
