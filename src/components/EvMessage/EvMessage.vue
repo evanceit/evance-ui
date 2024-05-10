@@ -182,7 +182,6 @@ function onLeave(el: Element) {
         <div v-if="props.expandable" class="ev-message--expand">
             <ev-button
                 rounded
-                rounded
                 :class="[{ 'is-expanded': isExpanded }]"
                 :aria-label="t('expand')"
                 :icon="ChevronDown"

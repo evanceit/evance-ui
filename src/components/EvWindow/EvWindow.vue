@@ -131,7 +131,7 @@ const vTouch = Touch;
             },
             props.class,
         ]"
-        :style="props.style"
+        :style="props.style">
         <div
             class="ev-window--container"
             :style="{
