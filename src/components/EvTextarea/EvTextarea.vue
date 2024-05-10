@@ -2,25 +2,37 @@
 /**
  * # `<ev-textarea>`
  */
-import './EvTextarea.scss';
-import {makeEvTextareaProps} from "./EvTextarea.ts";
-import {computed, nextTick, ref, useAttrs, onUpdated, onMounted, useSlots} from "vue";
-import {Appearance, appearanceModifier, InputAppearance, splitInputAttrs} from "@/util";
-import {useAutofocus} from "@/composables/focus.ts";
-import {Cancel} from "@/icons";
-import {EvProgress} from "@/components/EvProgress";
-import {EvIcon} from "@/components/EvIcon";
-import {EvErrors} from "@/components/EvErrors";
-import {EvLabel} from "@/components/EvLabel";
-import {useFormField} from "@/composables/validation.ts";
-
+import "./EvTextarea.scss";
+import { makeEvTextareaProps } from "./EvTextarea.ts";
+import {
+    computed,
+    nextTick,
+    ref,
+    useAttrs,
+    onUpdated,
+    onMounted,
+    useSlots,
+} from "vue";
+import {
+    Appearance,
+    appearanceModifier,
+    InputAppearance,
+    splitInputAttrs,
+} from "@/util";
+import { useAutofocus } from "@/composables/focus.ts";
+import { Cancel } from "@/icons";
+import { EvProgress } from "@/components/EvProgress";
+import { EvIcon } from "@/components/EvIcon";
+import { EvErrors } from "@/components/EvErrors";
+import { EvLabel } from "@/components/EvLabel";
+import { useFormField } from "@/composables/validation.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
  * to the `<input>` field, so we need to turn off `inheritAttrs`.
  */
 defineOptions({
-    inheritAttrs: false
+    inheritAttrs: false,
 });
 
 const props = defineProps(makeEvTextareaProps());
@@ -28,20 +40,20 @@ const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
-    'click:clear',
-    'click:control',
-    'mousedown:control',
-    'update:focused',
-    'update:modelValue'
+    "click:clear",
+    "click:control",
+    "mousedown:control",
+    "update:focused",
+    "update:modelValue",
 ]);
 
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
-const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
+const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const formField = useFormField(props);
 const isClearable = computed(() => {
-    return (props.clearable && !!formField.value);
+    return props.clearable && !!formField.value;
 });
 
 /**
@@ -59,7 +71,7 @@ function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
         formField.value = null;
-        emit('click:clear', $event);
+        emit("click:clear", $event);
     });
     getInputElement()?.focus();
 }
@@ -69,8 +81,8 @@ function onClearableClick($event: MouseEvent) {
  * @param e
  */
 function onClearableMousedown(e: MouseEvent) {
-  e.preventDefault();
-  e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 }
 
 /**
@@ -78,10 +90,10 @@ function onClearableMousedown(e: MouseEvent) {
  * @param e
  */
 function onFocus(e?: Event) {
-  formField.focus(e);
-  if (props.autoselect) {
-    getInputElement()?.select();
-  }
+    formField.focus(e);
+    if (props.autoselect) {
+        getInputElement()?.select();
+    }
 }
 
 /**
@@ -92,8 +104,8 @@ function onFocus(e?: Event) {
  * @param e
  */
 function onControlClick(e: MouseEvent) {
-  onFocus();
-  emit('click:control', e);
+    onFocus();
+    emit("click:control", e);
 }
 
 /**
@@ -104,12 +116,12 @@ function onControlClick(e: MouseEvent) {
  * @param e
  */
 function onControlMousedown(e: MouseEvent) {
-  emit('mousedown:control', e);
-  if (e.target === inputRef.value) {
-    return;
-  }
-  onFocus();
-  e.preventDefault();
+    emit("mousedown:control", e);
+    if (e.target === inputRef.value) {
+        return;
+    }
+    onFocus();
+    e.preventDefault();
 }
 
 /**
@@ -153,10 +165,10 @@ function resize() {
     }
     const field = getInputElement();
     if (!field) {
-      return;
+        return;
     }
-    field.style.height = 'auto';
-    field.style.height = (field.scrollHeight + 1) + 'px';
+    field.style.height = "auto";
+    field.style.height = field.scrollHeight + 1 + "px";
 }
 
 /**
@@ -184,14 +196,14 @@ const vAutofocus = useAutofocus(props);
  * ## Expose stuff
  */
 defineExpose({
-  input: inputRef,
-  focus: () => {
-    getInputElement()?.focus();
-  },
-  ...formField.expose()
+    input: inputRef,
+    focus: () => {
+        getInputElement()?.focus();
+    },
+    ...formField.expose(),
 });
-
 </script>
+
 <template>
     <div
         ref="containerRef"
@@ -199,16 +211,15 @@ defineExpose({
         :class="[
             {
                 'is-loading': loading,
-                'is-autogrow': autogrow
+                'is-autogrow': autogrow,
             },
             formField.classes,
-            props.class
+            props.class,
         ]"
         :style="props.style"
         role="textbox"
-        v-bind="containerAttrs"
-    >
-        <div class="ev-textarea--label" v-if="props.label || slots.label">
+        v-bind="containerAttrs">
+        <div v-if="props.label || slots.label" class="ev-textarea--label">
             <ev-label :for="formField.id">
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
@@ -220,19 +231,18 @@ defineExpose({
                 appearanceModifier(props.appearance, [InputAppearance.default]),
             ]"
             @click="onControlClick"
-            @mousedown="onControlMousedown"
-        >
+            @mousedown="onControlMousedown">
             <div class="ev-textarea--input">
                 <textarea
-                    ref="inputRef"
                     :id="formField.id"
+                    ref="inputRef"
+                    v-model="formField.value"
+                    v-autofocus
                     :name="formField.name"
                     :disabled="formField.isDisabled"
                     :readonly="formField.isReadonly"
-                    v-model="formField.value"
                     :placeholder="placeholder"
                     :autofocus="autofocus"
-                    v-autofocus
                     v-bind="inputAttrs"
                     @focus="onFocus"
                     @blur="formField.blur"
@@ -241,20 +251,26 @@ defineExpose({
                     @keyup.enter="onKeyupEnter"></textarea>
             </div>
             <transition name="slide-fade">
-                <div class="ev-textarea--clearable" v-if="isClearable">
+                <div v-if="isClearable" class="ev-textarea--clearable">
                     <ev-icon
                         :glyph="Cancel"
                         @click="onClearableClick"
-                        @mousedown="onClearableMousedown"
-                    />
+                        @mousedown="onClearableMousedown" />
                 </div>
             </transition>
-            <div class="ev-textarea--loader" v-if="loading">
-                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" :size="2" />
+            <div v-if="loading" class="ev-textarea--loader">
+                <ev-progress
+                    indeterminate
+                    :appearance="
+                        formField.isFocused
+                            ? Appearance.notice
+                            : Appearance.default
+                    "
+                    :size="2" />
             </div>
         </div>
 
-        <div class="ev-textarea--errors" v-if="formField.isShowErrorMessages">
+        <div v-if="formField.isShowErrorMessages" class="ev-textarea--errors">
             <ev-errors :messages="formField.errorMessages" />
         </div>
     </div>

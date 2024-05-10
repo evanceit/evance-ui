@@ -1,5 +1,5 @@
-import {computed, ComputedRef} from "vue";
-import {SetupContext} from "@vue/runtime-core";
+import { computed, ComputedRef } from "vue";
+import { SetupContext } from "vue";
 
 /**
  * # Has slot with content
@@ -10,7 +10,10 @@ import {SetupContext} from "@vue/runtime-core";
  * @param slots
  * @param slotName
  */
-export function hasSlotWithContent(slots: SetupContext['slots'], slotName: string): ComputedRef {
+export function hasSlotWithContent(
+    slots: SetupContext["slots"],
+    slotName: string,
+): ComputedRef {
     return computed(() => {
         if (!slots[slotName]) {
             return false;

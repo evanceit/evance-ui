@@ -2,13 +2,13 @@
 /**
  * # `<ev-kbd>`
  */
-import './EvKbd.scss';
-import {makeEvKbdProps} from "./EvKbd.ts";
-import {InputSize, sizeModifier} from "@/util";
+import "./EvKbd.scss";
+import { makeEvKbdProps } from "./EvKbd.ts";
+import { InputSize, sizeModifier } from "@/util";
 
 const props = defineProps(makeEvKbdProps());
-
 </script>
+
 <template>
     <kbd
         :class="[

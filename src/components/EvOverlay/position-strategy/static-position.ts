@@ -1,6 +1,6 @@
-import {PositionStrategyData, PositionStrategyProps} from "../position.ts";
-import {Ref} from "vue";
-import {StyleProp} from "@/util";
+import { PositionStrategyData, PositionStrategyProps } from "../position.ts";
+import { Ref } from "vue";
+import { StyleProp } from "@/util";
 
 /**
  * # Static Position Strategy
@@ -10,7 +10,7 @@ import {StyleProp} from "@/util";
 export function staticPositionStrategy(
     data: PositionStrategyData,
     props: PositionStrategyProps,
-    contentStyles: Ref<StyleProp>
+    contentStyles: Ref<StyleProp>,
 ) {
     // todo
 }

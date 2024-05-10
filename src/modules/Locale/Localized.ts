@@ -1,19 +1,18 @@
-import {Ref} from "vue/dist/vue";
-import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
+import { Ref } from "vue/dist/vue";
+import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
 
 /**
  * # Localized
  */
 export class Localized {
-
     /**
      * @param defaultLocale
      * @param currentLocale
      */
     constructor(
         public readonly defaultLocale: Ref<string>,
-        public readonly currentLocale: Ref<string>
-    ) { }
+        public readonly currentLocale: Ref<string>,
+    ) {}
 
     /**
      * ## Get Translation Codes
@@ -27,7 +26,11 @@ export class Localized {
         const localeCode = LocaleCode.fromString(locale) as LocaleCode;
         const translationCodes = localeCode.toTranslationCodes();
         // Add our default if it is not in the list
-        if (!translationCodes.find((code: string) => (code === this.defaultLocale.value))) {
+        if (
+            !translationCodes.find(
+                (code: string) => code === this.defaultLocale.value,
+            )
+        ) {
             translationCodes.push(this.defaultLocale.value);
         }
         return translationCodes;

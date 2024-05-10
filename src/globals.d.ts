@@ -1,7 +1,6 @@
 declare global {
-
     interface HTMLCollection {
-        [Symbol.iterator] (): IterableIterator<Element>;
+        [Symbol.iterator](): IterableIterator<Element>;
     }
 
     interface MouseEvent {
@@ -9,7 +8,7 @@ declare global {
     }
 
     interface UIEvent {
-        initUIEvent (
+        initUIEvent(
             typeArg: string,
             canBubbleArg: boolean,
             cancelableArg: boolean,

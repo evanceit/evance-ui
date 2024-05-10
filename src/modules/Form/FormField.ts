@@ -1,15 +1,31 @@
-import {computed, nextTick, onBeforeMount, onBeforeUnmount, onMounted, Ref, ref, shallowRef, watch} from "vue";
-import {FormFieldProps, Validator} from "@/composables/validation.ts";
-import {Browser, consoleWarn, getNextId, isFunction, isString, wrapInArray} from "@/util";
-import {Form} from "@/modules/Form/Form.ts";
-import {useToggleScope} from "@/composables/toggleScope.ts";
-import {useModelProxy} from "@/composables/modelProxy.ts";
+import {
+    computed,
+    nextTick,
+    onBeforeMount,
+    onBeforeUnmount,
+    onMounted,
+    Ref,
+    ref,
+    shallowRef,
+    watch,
+} from "vue";
+import { FormFieldProps, Validator } from "@/composables/validation.ts";
+import {
+    Browser,
+    consoleWarn,
+    getNextId,
+    isFunction,
+    isString,
+    wrapInArray,
+} from "@/util";
+import { Form } from "@/modules/Form/Form.ts";
+import { useToggleScope } from "@/composables/toggleScope.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 
 /**
  * # Form Field
  */
 export class FormField {
-
     public readonly focused: Ref<boolean>;
 
     public readonly focusedVisible: Ref<boolean>;
@@ -29,15 +45,19 @@ export class FormField {
     constructor(
         public readonly form: Form | null,
         private props: FormFieldProps,
-        private group: FormField | undefined = undefined
+        private group: FormField | undefined = undefined,
     ) {
-        this.model = this.group ? this.group.model : useModelProxy(this.props, 'modelValue');
-        this.focused =  useModelProxy(this.props, 'focused');
+        this.model = this.group
+            ? this.group.model
+            : useModelProxy(this.props, "modelValue");
+        this.focused = useModelProxy(this.props, "focused");
         this.focusedVisible = ref(false);
 
         // We use a computed() Ref here for a valid watch()
         this.validationModel = computed(() => {
-            return (this.props.validationValue === undefined) ? this.model.value : this.props.validationValue;
+            return this.props.validationValue === undefined
+                ? this.model.value
+                : this.props.validationValue;
         });
 
         onBeforeMount(() => {
@@ -54,39 +74,51 @@ export class FormField {
             }
         });
 
-        useToggleScope(() => this.validateOn.input, () => {
-            watch(this.validationModel, () => {
-                if (this.validationModel.value != null) {
-                    this.validate();
-                } else if (this.isFocused) {
-                    const unwatch = watch(() => this.focused.value, (value) => {
+        useToggleScope(
+            () => this.validateOn.input,
+            () => {
+                watch(this.validationModel, () => {
+                    if (this.validationModel.value != null) {
+                        this.validate();
+                    } else if (this.isFocused) {
+                        const unwatch = watch(
+                            () => this.focused.value,
+                            (value) => {
+                                if (!value) {
+                                    this.validate();
+                                }
+                                unwatch();
+                            },
+                        );
+                    }
+                });
+            },
+        );
+
+        useToggleScope(
+            () => this.validateOn.blur,
+            () => {
+                watch(
+                    () => this.focused.value,
+                    (value) => {
                         if (!value) {
                             this.validate();
                         }
-                        unwatch();
-                    });
-                }
-            });
-        });
-
-        useToggleScope(() => this.validateOn.blur, () => {
-            watch(() => this.focused.value, (value) => {
-                if (!value) {
-                    this.validate();
-                }
-            });
-        });
+                    },
+                );
+            },
+        );
     }
 
     get classes() {
         return {
-            'is-error': this.isValid === false,
-            'is-dirty': this.isDirty,
-            'is-disabled': this.isDisabled,
-            'is-readonly': this.isReadonly,
-            'is-focused': this.isFocused,
-            'is-focused-visible': this.isFocusedVisible
-        }
+            "is-error": this.isValid === false,
+            "is-dirty": this.isDirty,
+            "is-disabled": this.isDisabled,
+            "is-readonly": this.isReadonly,
+            "is-focused": this.isFocused,
+            "is-focused-visible": this.isFocusedVisible,
+        };
     }
 
     get errorMessages() {
@@ -99,13 +131,22 @@ export class FormField {
 
     get isDirty() {
         return !!(
-            wrapInArray(this.model.value === '' ? null : this.model.value).length ||
-            wrapInArray(this.validationModel.value === '' ? null : this.validationModel.value).length
+            wrapInArray(this.model.value === "" ? null : this.model.value)
+                .length ||
+            wrapInArray(
+                this.validationModel.value === ""
+                    ? null
+                    : this.validationModel.value,
+            ).length
         );
     }
 
     get isDisabled(): boolean {
-        return !!(this.props.disabled ?? this.group?.isDisabled ?? this.form?.isDisabled.value);
+        return !!(
+            this.props.disabled ??
+            this.group?.isDisabled ??
+            this.form?.isDisabled.value
+        );
     }
 
     get isFocused(): boolean {
@@ -117,7 +158,11 @@ export class FormField {
     }
 
     get isReadonly(): boolean {
-        return !!(this.props.readonly ?? this.group?.isReadonly ?? this.form?.isReadonly.value);
+        return !!(
+            this.props.readonly ??
+            this.group?.isReadonly ??
+            this.form?.isReadonly.value
+        );
     }
 
     get isPristine(): boolean {
@@ -139,7 +184,9 @@ export class FormField {
             return true;
         }
         if (this.isPristine) {
-            return this.messages.value.length || this.validateOn.lazy ? null : true;
+            return this.messages.value.length || this.validateOn.lazy
+                ? null
+                : true;
         } else {
             return !this.messages.value.length;
         }
@@ -154,18 +201,19 @@ export class FormField {
     }
 
     get validateOn() {
-        let value = (this.props.validateOn ?? this.form?.validateOn.value) || 'input';
-        if (value === 'lazy') {
-            value = 'input lazy';
+        let value =
+            (this.props.validateOn ?? this.form?.validateOn.value) || "input";
+        if (value === "lazy") {
+            value = "input lazy";
         }
-        const set = new Set(value?.split(' ') ?? []);
+        const set = new Set(value?.split(" ") ?? []);
         return {
-            blur: set.has('blur') || set.has('input'),
-            input: set.has('input'),
-            submit: set.has('submit'),
-            lazy: set.has('lazy')
+            blur: set.has("blur") || set.has("input"),
+            input: set.has("input"),
+            submit: set.has("submit"),
+            lazy: set.has("lazy"),
         };
-    };
+    }
 
     get value() {
         return this.model.value;
@@ -213,7 +261,7 @@ export class FormField {
         return {
             reset: this.reset.bind(this),
             resetValidation: this.resetValidation.bind(this),
-            validate: this.validate.bind(this)
+            validate: this.validate.bind(this),
         };
     }
 
@@ -225,7 +273,7 @@ export class FormField {
     public focus(e?: Event): void {
         this.focused.value = true;
         const el = e?.target as HTMLElement;
-        if (Browser.supportsFocusVisible && el?.matches(':focus-visible')) {
+        if (Browser.supportsFocusVisible && el?.matches(":focus-visible")) {
             this.focusedVisible.value = true;
         }
     }
@@ -259,13 +307,17 @@ export class FormField {
         const results: string[] = [];
         this.validating.value = true;
         for (const validator of this.props.validators) {
-            const validatorFn = isFunction(validator) ? validator : () => validator;
+            const validatorFn = isFunction(validator)
+                ? validator
+                : () => validator;
             const result = await validatorFn(this.validationModel.value);
             if (result === true) {
                 continue;
             }
             if (!isString(result)) {
-                consoleWarn(`${result} is not a valid value. Validator functions must return boolean true or a string.`);
+                consoleWarn(
+                    `${result} is not a valid value. Validator functions must return boolean true or a string.`,
+                );
                 continue;
             }
             results.push(result);

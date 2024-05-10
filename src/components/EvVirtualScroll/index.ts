@@ -1,2 +1,2 @@
-export * from './EvVirtualScroll.ts';
-export { default as EvVirtualScroll } from './EvVirtualScroll.vue';
+export * from "./EvVirtualScroll.ts";
+export { default as EvVirtualScroll } from "./EvVirtualScroll.vue";

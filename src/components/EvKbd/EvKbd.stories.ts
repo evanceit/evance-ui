@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-import {EvKbd} from "../EvKbd";
+import { EvKbd } from "../EvKbd";
 
 const meta: Meta<typeof EvKbd> = {
     component: EvKbd,
@@ -8,18 +8,18 @@ const meta: Meta<typeof EvKbd> = {
         size: {
             control: "select",
             description: "The size of the item",
-            options: ['small', 'medium', 'large']
+            options: ["small", "medium", "large"],
         },
         value: {
             control: "text",
-            description: "The text to display as a keyboard item"
-        }
+            description: "The text to display as a keyboard item",
+        },
     },
     args: {
         size: undefined,
-        value: 'Ctrl'
+        value: "Ctrl",
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -27,11 +27,12 @@ export default meta;
 type Story = StoryObj<typeof EvKbd>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args) => ({
         components: { EvKbd },
         setup() {
             return { args };
         },
-        template: 'The keyboard button component <ev-kbd v-bind="args" /> + <ev-kbd v-bind="args" /> should remain inline'
+        template:
+            'The keyboard button component <ev-kbd v-bind="args" /> + <ev-kbd v-bind="args" /> should remain inline',
     }),
 };

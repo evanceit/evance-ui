@@ -5,14 +5,13 @@
  *
  * @param values
  */
-export function spaceSeparatedValues(values: string = ''): string[] {
+export function spaceSeparatedValues(values: string = ""): string[] {
     if (spaceSeparatedValues.cache.has(values)) {
         return spaceSeparatedValues.cache.get(values)!;
     }
-    return values.split(' ').map(value => value.trim());
+    return values.split(" ").map((value) => value.trim());
 }
 spaceSeparatedValues.cache = new Map<string, string[]>();
-
 
 /**
  * # To Kebab Case
@@ -21,19 +20,18 @@ spaceSeparatedValues.cache = new Map<string, string[]>();
  *
  * @param value
  */
-export function toKebabCase (value: string = ''): string {
+export function toKebabCase(value: string = ""): string {
     if (toKebabCase.cache.has(value)) {
         return toKebabCase.cache.get(value)!;
     }
     const kebabValue = value
-        .replace(/[^a-z]/gi, '-')
-        .replace(/\B([A-Z])/g, '-$1')
+        .replace(/[^a-z]/gi, "-")
+        .replace(/\B([A-Z])/g, "-$1")
         .toLowerCase();
     toKebabCase.cache.set(value, kebabValue);
     return kebabValue;
 }
 toKebabCase.cache = new Map<string, string>();
-
 
 /**
  * # To Camel Case
@@ -42,16 +40,17 @@ toKebabCase.cache = new Map<string, string>();
  *
  * @param value
  */
-export function toCamelCase(value: string = ''): string {
+export function toCamelCase(value: string = ""): string {
     if (toCamelCase.cache.has(value)) {
         return toCamelCase.cache.get(value)!;
     }
-    const camelValue = value.replace(/-([a-z])/g, (_, match) => match.toUpperCase());
+    const camelValue = value.replace(/-([a-z])/g, (_, match) =>
+        match.toUpperCase(),
+    );
     toCamelCase.cache.set(value, camelValue);
     return camelValue;
 }
 toCamelCase.cache = new Map<string, string>();
-
 
 /**
  * ## Template Variables
@@ -65,7 +64,6 @@ export type TemplateVariables = {
     [variable: string]: number | string;
 };
 
-
 /**
  * # Template Function
  *
@@ -75,7 +73,6 @@ export type TemplateVariables = {
  * @see createStringTemplate
  */
 export type TemplateFunction = (variables?: TemplateVariables) => string;
-
 
 /**
  * # String Template
@@ -93,13 +90,13 @@ export type TemplateFunction = (variables?: TemplateVariables) => string;
  */
 export function createStringTemplate(
     template: string,
-    defaultVariables: TemplateVariables = {}
+    defaultVariables: TemplateVariables = {},
 ): TemplateFunction {
     /** Variable lookup pattern */
     const variablePattern = /{([\s\S]+?)}/g;
 
     return (variables: TemplateVariables = {}) => {
-        const dictionary = { ...defaultVariables, ...variables};
+        const dictionary = { ...defaultVariables, ...variables };
 
         return template.replaceAll(variablePattern, (match, raw): string => {
             const variable = raw.trim();
@@ -119,10 +116,9 @@ export function createStringTemplate(
  * @param length
  * @param char
  */
-export function padEnd (str: string, length: number, char = '0') {
-    return str + char.repeat(Math.max(0, length - str.length))
+export function padEnd(str: string, length: number, char = "0") {
+    return str + char.repeat(Math.max(0, length - str.length));
 }
-
 
 /**
  * # Pad Start
@@ -131,10 +127,9 @@ export function padEnd (str: string, length: number, char = '0') {
  * @param length
  * @param char
  */
-export function padStart (str: string, length: number, char = '0') {
-    return char.repeat(Math.max(0, length - str.length)) + str
+export function padStart(str: string, length: number, char = "0") {
+    return char.repeat(Math.max(0, length - str.length)) + str;
 }
-
 
 /**
  * # Trim End

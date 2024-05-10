@@ -1,32 +1,29 @@
 <script setup lang="ts">
-import './EvNotification.scss';
-import {makeEvNotificationProps} from "./EvNotification";
-import {EvMessage} from "../EvMessage";
-import {EvSurface} from "../EvSurface";
-import {filterComponentProps, omit} from "@/util";
-import {computed, onMounted, toRef, watch} from "vue";
-import {useModelProxy} from "@/composables/modelProxy.ts";
-import {useStack} from "@/composables/stack.ts";
+import "./EvNotification.scss";
+import { makeEvNotificationProps } from "./EvNotification";
+import { EvMessage } from "../EvMessage";
+import { EvSurface } from "../EvSurface";
+import { filterComponentProps, omit } from "@/util";
+import { computed, onMounted, toRef, watch } from "vue";
+import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useStack } from "@/composables/stack.ts";
 
 const props = defineProps(makeEvNotificationProps());
-const model = useModelProxy(props, 'modelValue');
-const timeout = useModelProxy(props, 'timeout');
+const model = useModelProxy(props, "modelValue");
+const timeout = useModelProxy(props, "timeout");
 const messageProps = computed(() => {
-    return omit(filterComponentProps(EvMessage, props), ['modelValue']);
+    return omit(filterComponentProps(EvMessage, props), ["modelValue"]);
 });
 
 // Emit
-const emit = defineEmits([
-    'dismiss',
-    'update:modelValue'
-]);
+const emit = defineEmits(["dismiss", "update:modelValue"]);
 
 function dismiss() {
     model.value = false;
-    emit('dismiss');
+    emit("dismiss");
 }
 
-const { stackStyles } = useStack(model, toRef(props, 'zIndex'), false);
+const { stackStyles } = useStack(model, toRef(props, "zIndex"), false);
 
 watch(timeout, () => {
     if (!timeout.value) {
@@ -53,22 +50,16 @@ function startTimer() {
 function stopTimer() {
     clearTimeout(timer);
 }
-
 </script>
+
 <template>
     <ev-surface
         class="ev-notification"
         role="alert"
         rounded="small"
         elevation="overlay"
-        :style="[
-            stackStyles
-        ]"
-    >
-        <ev-message
-            v-bind="messageProps"
-            @click:dismiss="dismiss"
-        >
+        :style="[stackStyles]">
+        <ev-message v-bind="messageProps" @click:dismiss="dismiss">
             <template #icon>
                 <slot name="icon" />
             </template>

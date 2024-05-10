@@ -1,22 +1,36 @@
-import {DelayOpenCloseProps, makeDelayOpenCloseProps, useDelayOpenClose} from "@/composables/delay.ts";
+import {
+    DelayOpenCloseProps,
+    makeDelayOpenCloseProps,
+    useDelayOpenClose,
+} from "@/composables/delay.ts";
 import {
     ComponentInternalInstance,
     ComponentPublicInstance,
     computed,
-    ComputedRef, effectScope, EffectScope,
-    inject, mergeProps,
-    nextTick, onScopeDispose,
+    ComputedRef,
+    effectScope,
+    EffectScope,
+    inject,
+    mergeProps,
+    nextTick,
+    onScopeDispose,
     PropType,
     ref,
     Ref,
     watch,
-    watchEffect
+    watchEffect,
 } from "vue";
-import {bindProps, Browser, getCurrentComponent, propsFactory, refElement, unbindProps} from "@/util";
-import {EvMenuSymbol} from "../EvMenu/shared.ts";
+import {
+    bindProps,
+    Browser,
+    getCurrentComponent,
+    propsFactory,
+    refElement,
+    unbindProps,
+} from "@/util";
+import { EvMenuSymbol } from "../EvMenu/shared.ts";
 
-
-type ActivatorSelector = 'parent' | string | Element | ComponentPublicInstance;
+type ActivatorSelector = "parent" | string | Element | ComponentPublicInstance;
 
 export interface ActivatorProps extends DelayOpenCloseProps {
     activator?: ActivatorSelector;
@@ -27,27 +41,28 @@ export interface ActivatorProps extends DelayOpenCloseProps {
     closeOnContentClick: boolean;
 }
 
-export const makeActivatorProps = propsFactory({
-    activator: [String, Object] as PropType<ActivatorProps['activator']>,
-    activatorProps: {
-        type: Object as PropType<ActivatorProps['activatorProps']>,
-        default: () => ({}),
-    },
-    openOnClick: {
-        type: Boolean,
-        default: undefined
-    },
-    openOnHover: Boolean,
-    openOnFocus: {
-        type: Boolean,
-        default: undefined
-    },
-    closeOnContentClick: Boolean,
+export const makeActivatorProps = propsFactory(
+    {
+        activator: [String, Object] as PropType<ActivatorProps["activator"]>,
+        activatorProps: {
+            type: Object as PropType<ActivatorProps["activatorProps"]>,
+            default: () => ({}),
+        },
+        openOnClick: {
+            type: Boolean,
+            default: undefined,
+        },
+        openOnHover: Boolean,
+        openOnFocus: {
+            type: Boolean,
+            default: undefined,
+        },
+        closeOnContentClick: Boolean,
 
-    ...makeDelayOpenCloseProps()
-}, 'EvOverlay/activator');
-
-
+        ...makeDelayOpenCloseProps(),
+    },
+    "EvOverlay/activator",
+);
 
 interface ActivatorEvents {
     onBlur?: (e: FocusEvent) => void;
@@ -77,7 +92,7 @@ interface VeilEvents {
  * of a hack to avoid issues with the build.
  */
 interface UIMouseEvent extends MouseEvent {
-    sourceCapabilities?: { firesTouchEvents: boolean }
+    sourceCapabilities?: { firesTouchEvents: boolean };
 }
 
 /**
@@ -90,7 +105,7 @@ interface UIMouseEvent extends MouseEvent {
 export function useActivator(
     props: ActivatorProps,
     isActive: Ref<boolean>,
-    isTopOfStack: Ref<boolean>
+    isTopOfStack: Ref<boolean>,
 ) {
     return new Activator(props, isActive, isTopOfStack);
 }
@@ -118,11 +133,21 @@ class Activator {
     constructor(
         public props: ActivatorProps,
         public isActive: Ref<boolean>,
-        public isTopOfStack: Ref<boolean>
+        public isTopOfStack: Ref<boolean>,
     ) {
-        this.component = getCurrentComponent('Activator');
-        this.openOnFocus = computed(() => props.openOnFocus || (props.openOnFocus == null && props.openOnHover));
-        this.openOnClick = computed(() => props.openOnClick || (props.openOnClick == null && !props.openOnHover && !this.openOnFocus.value));
+        this.component = getCurrentComponent("Activator");
+        this.openOnFocus = computed(
+            () =>
+                props.openOnFocus ||
+                (props.openOnFocus == null && props.openOnHover),
+        );
+        this.openOnClick = computed(
+            () =>
+                props.openOnClick ||
+                (props.openOnClick == null &&
+                    !props.openOnHover &&
+                    !this.openOnFocus.value),
+        );
         const { delayOpen, delayClose } = this.createDelayFunctions();
         this.delayOpen = delayOpen;
         this.delayClose = delayClose;
@@ -202,11 +227,15 @@ class Activator {
      */
     private createDelayFunctions() {
         return useDelayOpenClose(this.props, (value) => {
-            const canOpenHover = (this.props.openOnHover && this.isHovered);
-            const canOpenFocus = (this.openOnFocus.value && this.isFocused);
+            const canOpenHover = this.props.openOnHover && this.isHovered;
+            const canOpenFocus = this.openOnFocus.value && this.isFocused;
             if (
-                (value === (canOpenHover || canOpenFocus))
-                && !(this.props.openOnHover && this.isActive.value && !this.isTopOfStack.value)
+                value === (canOpenHover || canOpenFocus) &&
+                !(
+                    this.props.openOnHover &&
+                    this.isActive.value &&
+                    !this.isTopOfStack.value
+                )
             ) {
                 if (this.isActive.value !== value) {
                     this.firstEnter = true;
@@ -236,7 +265,7 @@ class Activator {
                     this.delayClose();
                 };
             }
-            return events
+            return events;
         });
     }
 
@@ -245,19 +274,21 @@ class Activator {
      * @param selector
      * @private
      */
-    public getActivatorEl(selector: ActivatorSelector | undefined = this.props.activator) {
+    public getActivatorEl(
+        selector: ActivatorSelector | undefined = this.props.activator,
+    ) {
         let activator;
         if (selector) {
-            if (selector === 'parent') {
+            if (selector === "parent") {
                 let el = this.component?.proxy?.$el?.parentNode;
-                while (el.hasAttribute('data-no-activator')) {
+                while (el.hasAttribute("data-no-activator")) {
                     el = el.parentNode;
                 }
                 activator = el;
-            } else if (typeof selector === 'string') {
+            } else if (typeof selector === "string") {
                 // Selector
                 activator = document.querySelector(selector);
-            } else if ('$el' in selector) {
+            } else if ("$el" in selector) {
                 // Component (ref)
                 activator = selector.$el;
             } else {
@@ -277,7 +308,7 @@ class Activator {
             onClick: this.onClick.bind(this),
             onFocus: this.onFocus.bind(this),
             onMouseenter: this.onMouseenter.bind(this),
-            onMouseleave: this.onMouseleave.bind(this)
+            onMouseleave: this.onMouseleave.bind(this),
         };
     }
 
@@ -337,8 +368,8 @@ class Activator {
      */
     public onFocus(e: FocusEvent) {
         if (
-            Browser.supportsFocusVisible
-            && !(e.target as HTMLElement).matches(':focus-visible')
+            Browser.supportsFocusVisible &&
+            !(e.target as HTMLElement).matches(":focus-visible")
         ) {
             return;
         }
@@ -376,7 +407,8 @@ class Activator {
      */
     public setActivatorEl(activator?: HTMLElement) {
         // The activator should only be a valid element (Ignore comments and text nodes)
-        this.activatorEl.value = (activator?.nodeType === Node.ELEMENT_NODE) ? activator : undefined;
+        this.activatorEl.value =
+            activator?.nodeType === Node.ELEMENT_NODE ? activator : undefined;
         return this.activatorEl.value;
     }
 
@@ -385,16 +417,20 @@ class Activator {
      * @private
      */
     private watchActivatorProp() {
-        watch(() => !!this.props.activator, (value) => {
-            if (value && Browser.hasWindow) {
-                this.scope = effectScope();
-                this.scope.run(() => {
-                    this.watcher = new ActivatorWatcher(this);
-                });
-            } else if (this.scope) {
-                this.scope.stop();
-            }
-        }, { flush: 'post', immediate: true });
+        watch(
+            () => !!this.props.activator,
+            (value) => {
+                if (value && Browser.hasWindow) {
+                    this.scope = effectScope();
+                    this.scope.run(() => {
+                        this.watcher = new ActivatorWatcher(this);
+                    });
+                } else if (this.scope) {
+                    this.scope.stop();
+                }
+            },
+            { flush: "post", immediate: true },
+        );
 
         onScopeDispose(() => {
             this.scope?.stop();
@@ -416,7 +452,7 @@ class Activator {
             nextTick(() => {
                 this.activatorEl.value = refElement(this.activatorRef.value);
             });
-        })
+        });
     }
 
     /**
@@ -425,59 +461,74 @@ class Activator {
      */
     private watchIsTopOfStack() {
         watch(this.isTopOfStack, (value) => {
-            if (value && (
-                (this.isOpenOnHover() && !this.isHovered && (!this.isOpenOnFocus() || !this.isFocused)) ||
-                (this.isOpenOnFocus() && !this.isFocused && (!this.isOpenOnHover() || !this.isHovered))
-            )) {
+            if (
+                value &&
+                ((this.isOpenOnHover() &&
+                    !this.isHovered &&
+                    (!this.isOpenOnFocus() || !this.isFocused)) ||
+                    (this.isOpenOnFocus() &&
+                        !this.isFocused &&
+                        (!this.isOpenOnHover() || !this.isHovered)))
+            ) {
                 this.isActive.value = false;
             }
         });
     }
 }
 
-
 class ActivatorWatcher {
-    constructor(
-        public readonly activator: Activator
-    ) {
+    constructor(public readonly activator: Activator) {
         this.watchActivator();
     }
 
     private addActivatorPropsEventListeners(
         el = this.activator.getActivatorEl(),
-        activatorProps = this.activator.props.activatorProps
+        activatorProps = this.activator.props.activatorProps,
     ) {
         if (!el) {
             return;
         }
-        bindProps(el, mergeProps(this.activator.activatorEvents.value, activatorProps));
+        bindProps(
+            el,
+            mergeProps(this.activator.activatorEvents.value, activatorProps),
+        );
     }
 
     private removeActivatorPropsEventListeners(
         el = this.activator.getActivatorEl(),
-        activatorProps = this.activator.props.activatorProps
+        activatorProps = this.activator.props.activatorProps,
     ) {
         if (!el) {
             return;
         }
-        unbindProps(el, mergeProps(this.activator.activatorEvents.value, activatorProps));
+        unbindProps(
+            el,
+            mergeProps(this.activator.activatorEvents.value, activatorProps),
+        );
     }
 
     private watchActivator() {
+        watch(
+            () => this.activator.props.activator,
+            (value, oldValue) => {
+                if (oldValue && value !== oldValue) {
+                    const activator = this.activator.getActivatorEl(oldValue);
+                    activator &&
+                        this.removeActivatorPropsEventListeners(activator);
+                }
+                if (value) {
+                    nextTick(() => this.addActivatorPropsEventListeners());
+                }
+            },
+            { immediate: true },
+        );
 
-        watch(() => this.activator.props.activator, (value, oldValue) => {
-            if (oldValue && value !== oldValue) {
-                const activator = this.activator.getActivatorEl(oldValue);
-                activator && this.removeActivatorPropsEventListeners(activator);
-            }
-            if (value) {
-                nextTick(() => this.addActivatorPropsEventListeners());
-            }
-        }, { immediate: true });
-
-        watch(() => this.activator.props.activatorProps, () => {
-            this.addActivatorPropsEventListeners();
-        });
+        watch(
+            () => this.activator.props.activatorProps,
+            () => {
+                this.addActivatorPropsEventListeners();
+            },
+        );
 
         onScopeDispose(() => {
             this.removeActivatorPropsEventListeners();

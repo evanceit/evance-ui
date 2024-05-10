@@ -1,65 +1,70 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-import {EvSlideGroup, EvSlideGroupItem} from "../EvSlideGroup";
-import {EvButton} from "@/components";
+import { EvSlideGroup, EvSlideGroupItem } from "../EvSlideGroup";
+import { EvButton } from "@/components";
 
 const meta: Meta<typeof EvSlideGroup> = {
     component: EvSlideGroup,
     argTypes: {
         arrowsAlign: {
-            control: 'select',
-            options: ['start', 'end', 'around'],
-            description: "Allows you to position the arrows at the start, end or around the slide group content. " +
-                "Defaults to `around`."
+            control: "select",
+            options: ["start", "end", "around"],
+            description:
+                "Allows you to position the arrows at the start, end or around the slide group content. " +
+                "Defaults to `around`.",
         },
         arrowsHidden: {
-            control: 'select',
-            options: ['true', 'false', 'md-down'],
+            control: "select",
+            options: ["true", "false", "md-down"],
             mapping: {
-                'true': true,
-                'false': false,
-                'md-down': 'md-down'
+                true: true,
+                false: false,
+                "md-down": "md-down",
             },
-            description: 'Arrows will appear when needed unless you decide to hide them. ' +
-                'You can supply a boolean or a responsive rule such as `md-down` to hide arrows at particular breakpoint. '  +
-                'Accepts `breakpoint`-`direction` responsive rules where the breakpoint is represented by `xs`, `sm`, `md`, ' +
-                '`lg`, `xl`, `xxl` and the direction may be `down`, `up` or `only`.'
+            description:
+                "Arrows will appear when needed unless you decide to hide them. " +
+                "You can supply a boolean or a responsive rule such as `md-down` to hide arrows at particular breakpoint. " +
+                "Accepts `breakpoint`-`direction` responsive rules where the breakpoint is represented by `xs`, `sm`, `md`, " +
+                "`lg`, `xl`, `xxl` and the direction may be `down`, `up` or `only`.",
         },
         centerActive: {
-            control: 'boolean'
+            control: "boolean",
         },
         direction: {
-            control: 'select',
-            options: ['horizontal', 'vertical']
+            control: "select",
+            options: ["horizontal", "vertical"],
         },
         disabled: {
-            control: 'boolean'
+            control: "boolean",
         },
         iconNext: {
-            description: 'Allows you to customize the next icon. Alternatively you can use the `next` slot.'
+            description:
+                "Allows you to customize the next icon. Alternatively you can use the `next` slot.",
         },
         iconPrevious: {
-            description: 'Allows you to customise the previous icon. Alternatively you can use the `previous` slot.'
+            description:
+                "Allows you to customise the previous icon. Alternatively you can use the `previous` slot.",
         },
         multiple: {
-            control: 'boolean'
+            control: "boolean",
         },
         symbol: {
-            description: 'The Symbol used to hook into group functionality for components like `<ev-button-toggle>`.'
+            description:
+                "The Symbol used to hook into group functionality for components like `<ev-button-toggle>`.",
         },
         tag: {
-            description: 'Specify a custom tag used on the root element.'
-        }
+            description: "Specify a custom tag used on the root element.",
+        },
     },
     args: {
-        arrowsAlign: 'around',
-        arrowsHidden: 'false',
+        arrowsAlign: "around",
+        arrowsHidden: "false",
         centerActive: false,
-        direction: 'horizontal',
+        direction: "horizontal",
         disabled: false,
         multiple: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -67,7 +72,7 @@ export default meta;
 type Story = StoryObj<typeof EvSlideGroup>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvSlideGroup, EvSlideGroupItem, EvButton },
         setup() {
             return { args };
@@ -86,6 +91,6 @@ export const Primary: Story = {
                 >My button {{ n }}</ev-button>
             </ev-slide-group-item>
 </ev-slide-group>
-        `
-    })
+        `,
+    }),
 };

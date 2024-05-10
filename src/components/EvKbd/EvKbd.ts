@@ -1,10 +1,13 @@
-import {InputSizeProp, propsFactory} from "@/util";
-import {makeComponentProps} from "@/composables/component.ts";
-import {PropType} from "vue";
+import { InputSizeProp, propsFactory } from "@/util";
+import { makeComponentProps } from "@/composables/component.ts";
+import { PropType } from "vue";
 
-export const makeEvKbdProps = propsFactory({
-    value: String,
-    size: String as PropType<InputSizeProp>,
+export const makeEvKbdProps = propsFactory(
+    {
+        value: String,
+        size: String as PropType<InputSizeProp>,
 
-    ...makeComponentProps()
-}, 'EvKbd');
+        ...makeComponentProps(),
+    },
+    "EvKbd",
+);

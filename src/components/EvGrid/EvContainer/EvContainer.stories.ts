@@ -1,60 +1,62 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvBlock } from "../EvBlock";
-import {EvLayout} from "../EvLayout";
-import {EvSurface} from "../../EvSurface";
-import {EvContainer} from "../EvContainer";
+import { EvLayout } from "../EvLayout";
+import { EvSurface } from "../../EvSurface";
+import { EvContainer } from "../EvContainer";
 
 const meta: Meta<typeof EvContainer> = {
     component: EvContainer,
-    title: 'Components/EvGrid/EvContainer',
+    title: "Components/EvGrid/EvContainer",
     argTypes: {
         fluid: {
-            control: 'boolean'
+            control: "boolean",
         },
         fill: {
-            control: 'boolean'
+            control: "boolean",
         },
         tag: {
-            description: ""
+            description: "",
         },
         height: {
-            control: 'select',
-            options: ['', 'auto', '300'],
-            description: "Set an explicit height to the block. Behaves similar to `width`."
+            control: "select",
+            options: ["", "auto", "300"],
+            description:
+                "Set an explicit height to the block. Behaves similar to `width`.",
         },
         width: {
-            control: 'select',
-            options: ['', '25%', '50%', '100%']
+            control: "select",
+            options: ["", "25%", "50%", "100%"],
         },
         hidden: {
-            control: 'select',
+            control: "select",
             options: [
-                '',
-                'true',
-                'false',
-                'xs-only',
-                'xs-only lg-up',
+                "",
+                "true",
+                "false",
+                "xs-only",
+                "xs-only lg-up",
                 "['xs-only', 'lg-up']",
-                "{ xs: 'only', lg: 'up' }"
+                "{ xs: 'only', lg: 'up' }",
             ],
             mapping: {
-                '': undefined,
-                'true': true,
-                'false': false,
-                'xs-only': 'xs-only',
-                'xs-only lg-up': 'xs-only lg-up',
-                "['xs-only', 'lg-up']" : ['xs-only', 'lg-up'],
-                "{ xs: 'only', lg: 'up' }": { xs: 'only', lg: 'up' }
+                "": undefined,
+                true: true,
+                false: false,
+                "xs-only": "xs-only",
+                "xs-only lg-up": "xs-only lg-up",
+                "['xs-only', 'lg-up']": ["xs-only", "lg-up"],
+                "{ xs: 'only', lg: 'up' }": { xs: "only", lg: "up" },
             },
-            description: "Accepts a boolean, string or a display rule list as an array or object. "
-        }
+            description:
+                "Accepts a boolean, string or a display rule list as an array or object. ",
+        },
     },
     args: {
         fluid: false,
         fill: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -62,7 +64,7 @@ export default meta;
 type Story = StoryObj<typeof EvBlock>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvBlock, EvLayout, EvSurface, EvContainer },
         setup() {
             return { args };
@@ -87,6 +89,6 @@ export const Primary: Story = {
                     </ev-block>
                 </ev-layout>
             </ev-container>
-        `
-    })
+        `,
+    }),
 };

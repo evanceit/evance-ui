@@ -1,6 +1,6 @@
-import {getPropertyValueByPath} from "@/util";
-import {Translatable} from "@/modules/Translation/Translatable.ts";
-import {PluralizationRules} from "@/modules/Translation/Pluralization.ts";
+import { getPropertyValueByPath } from "@/util";
+import { Translatable } from "@/modules/Translation/Translatable.ts";
+import { PluralizationRules } from "@/modules/Translation/Pluralization.ts";
 
 /**
  * # Language Pack
@@ -12,7 +12,7 @@ export class LanguagePack {
      */
     constructor(
         public translationCode: string,
-        public data: LanguagePackData = {}
+        public data: LanguagePackData = {},
     ) {}
 
     /**
@@ -21,11 +21,19 @@ export class LanguagePack {
      */
     public getTranslatable(reference: string): Translatable | null {
         try {
-            const translationData = getPropertyValueByPath(this.data, reference, null);
+            const translationData = getPropertyValueByPath(
+                this.data,
+                reference,
+                null,
+            );
             if (!translationData) {
                 return null;
             }
-            return new Translatable(this.translationCode, reference, translationData);
+            return new Translatable(
+                this.translationCode,
+                reference,
+                translationData,
+            );
         } catch (e) {
             return null;
         }

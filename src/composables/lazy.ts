@@ -1,9 +1,12 @@
-import {propsFactory} from "@/util";
-import {computed, Ref, shallowRef, watch} from "vue";
+import { propsFactory } from "@/util";
+import { computed, Ref, shallowRef, watch } from "vue";
 
-export const makeLazyProps = propsFactory({
-    eager: Boolean
-}, 'lazy');
+export const makeLazyProps = propsFactory(
+    {
+        eager: Boolean,
+    },
+    "lazy",
+);
 
 /**
  * # useLazy
@@ -13,9 +16,11 @@ export const makeLazyProps = propsFactory({
  */
 export function useLazy(props: { eager: boolean }, active: Ref<boolean>) {
     const isBooted = shallowRef(false);
-    const hasContent = computed(() => isBooted.value || props.eager || active.value);
+    const hasContent = computed(
+        () => isBooted.value || props.eager || active.value,
+    );
 
-    watch(active, () => isBooted.value = true);
+    watch(active, () => (isBooted.value = true));
 
     function onAfterLeave() {
         if (!props.eager) {

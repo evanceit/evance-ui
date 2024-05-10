@@ -1,93 +1,106 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvButton } from "../EvButton";
-import {ArrowContinue, Check, Plus, Save} from "../../icons";
+import { ArrowContinue, Check, Plus, Save } from "../../icons";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,
     argTypes: {
         default: {
-            control: 'text',
-            description: 'Label'
+            control: "text",
+            description: "Label",
         },
         disabled: {
-            control: 'boolean'
+            control: "boolean",
         },
         href: {
-            control: 'text',
-            description: 'Renders as an `<a>` link when an `href` is supplied and is not an empty string, ' +
-                'otherwise is rendered as a `<button>`.'
+            control: "text",
+            description:
+                "Renders as an `<a>` link when an `href` is supplied and is not an empty string, " +
+                "otherwise is rendered as a `<button>`.",
         },
         appearance: {
-            control: 'select',
-            options: ['default', 'danger', 'information', 'notice', 'primary', 'success', 'warning'],
-            description: 'Changes the appearance of the button.'
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "primary",
+                "success",
+                "warning",
+            ],
+            description: "Changes the appearance of the button.",
         },
         variant: {
-            control: 'select',
-            options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
-            description: 'Changes the appearance of the button.'
+            control: "select",
+            options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
+            description: "Changes the appearance of the button.",
         },
         size: {
-            control: 'select',
-            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
-            description: 'Changes the size of the button, which may be either `small`, `medium`, or `large`.'
+            control: "select",
+            options: ["x-small", "small", "medium", "large", "x-large"],
+            description:
+                "Changes the size of the button, which may be either `small`, `medium`, or `large`.",
         },
         icon: {
-            control: 'boolean',
-            description: "May be supplied as a prop or a slot." +
+            control: "boolean",
+            description:
+                "May be supplied as a prop or a slot." +
                 "Places an icon before the content/text of the button when supplied as a String or as an SVG component/glyph. " +
-                "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style. "
-
+                "May also be supplied as a boolean to indicate that the `text` or default slot should be rendered within an icon-like style. ",
         },
         iconStart: {
-            control: 'select',
-            description: "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
+            control: "select",
+            description:
+                "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
                 "May also be supplied as a slot (see `icon-start` slot)",
-            options: ['None', 'Check', 'Plus', 'Save'],
+            options: ["None", "Check", "Plus", "Save"],
             mapping: {
-                'None': null,
-                'Check': Check,
-                'Plus': Plus,
-                'Save': Save
-            }
+                None: null,
+                Check: Check,
+                Plus: Plus,
+                Save: Save,
+            },
         },
         iconEnd: {
-            control: 'select',
-            description: "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
+            control: "select",
+            description:
+                "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
                 "May also be supplied as a slot (see `icon-end` slot)",
-            options: ['None', 'ArrowContinue'],
+            options: ["None", "ArrowContinue"],
             mapping: {
-                'None': null,
-                'ArrowContinue': ArrowContinue
-            }
+                None: null,
+                ArrowContinue: ArrowContinue,
+            },
         },
         fullWidth: {
-            control: 'boolean'
+            control: "boolean",
         },
         loading: {
-            control: 'boolean',
-            description: "Puts the button into a loading state, effectively disabling it."
+            control: "boolean",
+            description:
+                "Puts the button into a loading state, effectively disabling it.",
         },
         rounded: {
-            control: 'boolean'
-        }
+            control: "boolean",
+        },
     },
     args: {
-        appearance: 'default',
-        variant: 'default',
-        default: 'Continue',
+        appearance: "default",
+        variant: "default",
+        default: "Continue",
         disabled: false,
         href: undefined,
         icon: false,
-        iconStart: 'None',
-        iconEnd: 'None',
-        size: 'medium',
+        iconStart: "None",
+        iconEnd: "None",
+        size: "medium",
         fullWidth: false,
         loading: false,
-        rounded: false
+        rounded: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -95,11 +108,11 @@ export default meta;
 type Story = StoryObj<typeof EvButton>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvButton },
         setup() {
             return { Check, ArrowContinue, args };
         },
-        template: '<ev-button v-bind="args">{{ args.default }}</ev-button>'
-    })
+        template: '<ev-button v-bind="args">{{ args.default }}</ev-button>',
+    }),
 };

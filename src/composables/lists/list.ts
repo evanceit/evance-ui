@@ -1,13 +1,12 @@
-import {inject, InjectionKey, provide, Ref, shallowRef} from "vue";
+import { inject, InjectionKey, provide, Ref, shallowRef } from "vue";
 
 /**
  * # List Key
  */
 export const ListKey: InjectionKey<{
-    hasPrepend: Ref<boolean>
-    updateHasPrepend: (value: boolean) => void
-}> = Symbol.for('ev:list');
-
+    hasPrepend: Ref<boolean>;
+    updateHasPrepend: (value: boolean) => void;
+}> = Symbol.for("ev:list");
 
 /**
  * # Create List
@@ -16,7 +15,7 @@ export const ListKey: InjectionKey<{
 export function createList() {
     const defaultValue = {
         hasPrepend: shallowRef(false),
-        updateHasPrepend: () => null
+        updateHasPrepend: () => null,
     };
     const parent = inject(ListKey, defaultValue);
     const data = {
@@ -25,8 +24,8 @@ export function createList() {
             if (value) {
                 data.hasPrepend.value = value;
             }
-        }
-    }
+        },
+    };
     provide(ListKey, data);
     return parent;
 }

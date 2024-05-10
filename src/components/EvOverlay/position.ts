@@ -1,8 +1,10 @@
-import {onScopeDispose, PropType, ref, Ref, watch} from "vue";
-import {connectedPositionStrategy, staticPositionStrategy} from "./position-strategy";
-import {AnchorSelector, Browser, isFunction, propsFactory} from "@/util";
-import {useToggleScope} from "@/composables/toggleScope.ts";
-
+import { onScopeDispose, PropType, ref, Ref, watch } from "vue";
+import {
+    connectedPositionStrategy,
+    staticPositionStrategy,
+} from "./position-strategy";
+import { AnchorSelector, Browser, isFunction, propsFactory } from "@/util";
+import { useToggleScope } from "@/composables/toggleScope.ts";
 
 export interface PositionStrategyData {
     contentEl: Ref<HTMLElement | undefined>;
@@ -14,18 +16,18 @@ export interface PositionStrategyData {
 type PositionStrategyFn = (
     data: PositionStrategyData,
     props: PositionStrategyProps,
-    contentStyles: Ref<Record<string, string>>
+    contentStyles: Ref<Record<string, string>>,
 ) => undefined | { updatePosition: (e: Event) => void };
 
 const positionStrategies = {
     static: staticPositionStrategy, // specific viewport position, usually centered
-    connected: connectedPositionStrategy // connected to a certain element
+    connected: connectedPositionStrategy, // connected to a certain element
 };
 
 export interface PositionStrategyProps {
     positionStrategy: keyof typeof positionStrategies | PositionStrategyFn;
     position: AnchorSelector;
-    origin: AnchorSelector | 'overlap';
+    origin: AnchorSelector | "overlap";
     offset?: number | string | number[];
     maxHeight?: number | string;
     maxWidth?: number | string;
@@ -36,30 +38,37 @@ export interface PositionStrategyProps {
 /**
  * # Make Position Strategy Props
  */
-export const makePositionStrategyProps = propsFactory({
-    positionStrategy: {
-        type: [String, Function] as PropType<PositionStrategyProps['positionStrategy']>,
-        default: 'connected',
-        validator: (value: any) => typeof value === 'function' || value in positionStrategies
+export const makePositionStrategyProps = propsFactory(
+    {
+        positionStrategy: {
+            type: [String, Function] as PropType<
+                PositionStrategyProps["positionStrategy"]
+            >,
+            default: "connected",
+            validator: (value: any) =>
+                typeof value === "function" || value in positionStrategies,
+        },
+        position: {
+            type: String as PropType<AnchorSelector>,
+            default: "auto",
+        },
+        origin: {
+            type: String as PropType<PositionStrategyProps["origin"]>,
+            default: "auto",
+        },
+        offset: [Number, String, Array] as PropType<
+            PositionStrategyProps["offset"]
+        >,
     },
-    position: {
-        type: String as PropType<AnchorSelector>,
-        default: 'auto'
-    },
-    origin: {
-        type: String as PropType<PositionStrategyProps['origin']>,
-        default: 'auto',
-    },
-    offset: [Number, String, Array] as PropType<PositionStrategyProps['offset']>
-}, 'EvOverlay/position');
-
+    "EvOverlay/position",
+);
 
 /**
  * # Use Position Strategies
  */
 export function usePositionStrategies(
     props: PositionStrategyProps,
-    data: PositionStrategyData
+    data: PositionStrategyData,
 ) {
     const contentStyles = ref({});
     const updatePosition = ref<(e: Event) => void>();
@@ -87,22 +96,28 @@ export function usePositionStrategies(
                 if (isFunction(props.positionStrategy)) {
                     positionStrategyFn = props.positionStrategy;
                 } else {
-                    positionStrategyFn = positionStrategies[props.positionStrategy] as PositionStrategyFn;
+                    positionStrategyFn = positionStrategies[
+                        props.positionStrategy
+                    ] as PositionStrategyFn;
                 }
-                updatePosition.value = positionStrategyFn(data, props, contentStyles)?.updatePosition;
-            }
+                updatePosition.value = positionStrategyFn(
+                    data,
+                    props,
+                    contentStyles,
+                )?.updatePosition;
+            },
         );
 
-        window.addEventListener('resize', onResize, { passive: true });
+        window.addEventListener("resize", onResize, { passive: true });
 
         onScopeDispose(() => {
-            window.removeEventListener('resize', onResize);
+            window.removeEventListener("resize", onResize);
             updatePosition.value = undefined;
         });
     }
 
     return {
         contentStyles,
-        updatePosition
+        updatePosition,
     };
 }

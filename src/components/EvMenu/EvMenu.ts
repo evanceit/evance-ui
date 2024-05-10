@@ -1,19 +1,22 @@
-import {AnchorSelector, propsFactory} from "@/util";
-import {makeEvOverlayProps} from "@/components/EvOverlay/EvOverlay.ts";
-import {Component} from "vue";
+import { AnchorSelector, propsFactory } from "@/util";
+import { makeEvOverlayProps } from "@/components/EvOverlay/EvOverlay.ts";
+import { Component } from "vue";
 import EvMenuTransition from "./EvMenuTransition.vue";
 
-export const makeEvMenuProps = propsFactory({
-    id: String,
+export const makeEvMenuProps = propsFactory(
+    {
+        id: String,
 
-    ...makeEvOverlayProps({
-        closeDelay: 250,
-        closeOnContentClick: true,
-        position: 'bottom-start' as AnchorSelector,
-        positionStrategy: 'connected' as const,
-        openDelay: 250,
-        veil: false,
-        scrollStrategy: 'reposition' as const,
-        transition: { component: EvMenuTransition as Component }
-    })
-}, 'EvMenu');
+        ...makeEvOverlayProps({
+            closeDelay: 250,
+            closeOnContentClick: true,
+            position: "bottom-start" as AnchorSelector,
+            positionStrategy: "connected" as const,
+            openDelay: 250,
+            veil: false,
+            scrollStrategy: "reposition" as const,
+            transition: { component: EvMenuTransition as Component },
+        }),
+    },
+    "EvMenu",
+);

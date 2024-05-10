@@ -1,8 +1,8 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDrawer } from "../EvDrawer";
-import {EvButton} from "@/components";
-import {omit} from "@/util";
+import { EvButton } from "@/components";
+import { omit } from "@/util";
 import EvDialogStories from "@/components/EvDialog/EvDialog.stories.ts";
 
 const meta: Meta<typeof EvDrawer> = {
@@ -10,23 +10,17 @@ const meta: Meta<typeof EvDrawer> = {
     title: "Overlays/EvDrawer",
     argTypes: {
         position: {
-            control: 'select',
-            options: ['left', 'right', 'bottom', 'top']
+            control: "select",
+            options: ["left", "right", "bottom", "top"],
         },
 
-        ...omit(EvDialogStories.argTypes as any, [
-            'position',
-            'transition'
-        ])
+        ...omit(EvDialogStories.argTypes as any, ["position", "transition"]),
     },
     args: {
-        position: 'left',
-        ...omit(EvDialogStories.args as any, [
-            'position',
-            'transition'
-        ])
+        position: "left",
+        ...omit(EvDialogStories.args as any, ["position", "transition"]),
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -34,8 +28,8 @@ export default meta;
 type Story = StoryObj<typeof EvDrawer>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
-        components: { EvDrawer, EvButton},
+    render: (args: any) => ({
+        components: { EvDrawer, EvButton },
         setup() {
             return { args };
         },
@@ -48,6 +42,6 @@ export const Primary: Story = {
         Hello World!
     </template>
 </ev-drawer>
-        `
-    })
+        `,
+    }),
 };

@@ -2,12 +2,11 @@
  * # Key Logger
  */
 export class KeyLogger {
-
     public lastTime: number = 0;
 
     public timeToKeep: number = 1000;
 
-    public value: string = '';
+    public value: string = "";
 
     /**
      * ## Log
@@ -19,14 +18,13 @@ export class KeyLogger {
         }
         const now = performance.now();
         if (now - this.lastTime > this.timeToKeep) {
-            this.value = '';
+            this.value = "";
         }
         this.value += e.key.toLowerCase();
         this.lastTime = now;
         return true;
     }
 }
-
 
 /**
  * # Is Key Event Loggable?
@@ -38,7 +36,6 @@ export function isKeyEventLoggable(e: KeyboardEvent): boolean {
     return isPrintableChar && noModifier;
 }
 
-
 /**
  * # compositionIgnoreKeys
  * Keys to ignore whilst the keyboard is in a composing sequence,
@@ -46,16 +43,15 @@ export function isKeyEventLoggable(e: KeyboardEvent): boolean {
  * such as Chinese, Japanese, or Korean.
  */
 const compositionIgnoreKeys = [
-    'ArrowUp',
-    'ArrowDown',
-    'ArrowRight',
-    'ArrowLeft',
-    'Enter',
-    'Escape',
-    'Tab',
-    ' ',
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowRight",
+    "ArrowLeft",
+    "Enter",
+    "Escape",
+    "Tab",
+    " ",
 ];
-
 
 /**
  * # isComposingIgnoreKey
@@ -63,6 +59,5 @@ const compositionIgnoreKeys = [
  * and the key pressed is included within `compositionIgnoreKeys`.
  */
 export function isComposingIgnoreKey(e: KeyboardEvent): boolean {
-
     return e.isComposing && compositionIgnoreKeys.includes(e.key);
 }

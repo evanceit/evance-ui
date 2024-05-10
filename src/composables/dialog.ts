@@ -1,9 +1,12 @@
-import {inject, InjectionKey, provide} from "vue";
-import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogServiceOpener} from "@/components/EvDialog/EvDialogServiceOpener.ts";
+import { inject, InjectionKey, provide } from "vue";
+import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance.ts";
+import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
-export const EvDialogServiceSymbol: InjectionKey<EvDialogServiceOpener> = Symbol.for('ev:dialog-service');
-export const EvDialogInstanceSymbol: InjectionKey<EvDialogInstance | undefined> = Symbol.for('ev:dialog-instance');
+export const EvDialogServiceSymbol: InjectionKey<EvDialogServiceOpener> =
+    Symbol.for("ev:dialog-service");
+export const EvDialogInstanceSymbol: InjectionKey<
+    EvDialogInstance | undefined
+> = Symbol.for("ev:dialog-instance");
 
 /**
  * # useDialog
@@ -13,7 +16,7 @@ export const EvDialogInstanceSymbol: InjectionKey<EvDialogInstance | undefined> 
 export function useDialog(): EvDialogServiceOpener {
     const dialogService = inject(EvDialogServiceSymbol);
     if (!dialogService) {
-        throw new Error('Evance UI: Unable to find injected dialog service');
+        throw new Error("Evance UI: Unable to find injected dialog service");
     }
     return dialogService;
 }

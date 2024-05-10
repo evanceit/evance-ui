@@ -1,17 +1,19 @@
-import {DateAdapter} from "@/composables/date/DateAdapter.ts";
-import {createRange, isFunction, isString, padStart} from "@/util";
-import {LocaleCode} from "@/modules/Locale/LocaleCode.ts";
+import { DateAdapter } from "@/composables/date/DateAdapter.ts";
+import { createRange, isFunction, isString, padStart } from "@/util";
+import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
 
-type CustomDateFormat = Intl.DateTimeFormatOptions | ((date: Date, formatString: string, locale: string) => string);
+type CustomDateFormat =
+    | Intl.DateTimeFormatOptions
+    | ((date: Date, formatString: string, locale: string) => string);
 
 /**
  * # Default Date Adapter
  */
 export class DefaultDateAdapter implements DateAdapter<Date> {
-
-    protected static readonly PATTERN_ISO = /([12]\d{3}-([1-9]|0[1-9]|1[0-2])-([1-9]|0[1-9]|[12]\d|3[01]))/;
+    protected static readonly PATTERN_ISO =
+        /([12]\d{3}-([1-9]|0[1-9]|1[0-2])-([1-9]|0[1-9]|[12]\d|3[01]))/;
     protected static readonly firstDayOfWeek: Record<string, number> = {
-        '001': 1,
+        "001": 1,
         AD: 1,
         AE: 6,
         AF: 6,
@@ -162,18 +164,30 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
         ZA: 0,
         ZW: 0,
     };
-    protected static readonly formatOptions: Record<string, Intl.DateTimeFormatOptions> = {
-        'fullDateWithWeekday': { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' },
-        'normalDateWithWeekday': { weekday: 'short', day: 'numeric', month: 'short' },
-        'keyboardDate': { day: '2-digit', month: '2-digit', year: 'numeric' },
-        'monthAndDate': { month: 'long', day: 'numeric' },
-        'monthAndYear': { month: 'long', year: 'numeric' },
-        'month': { month: 'long' },
-        'monthShort': { month: 'short' },
-        'dayOfMonth': { day: 'numeric' },
-        'shortDate': { year: '2-digit', month: 'numeric', day: 'numeric' },
-        'year': { year: 'numeric' },
-        'displayDate': { day: '2-digit', month: 'short', year: 'numeric' }
+    protected static readonly formatOptions: Record<
+        string,
+        Intl.DateTimeFormatOptions
+    > = {
+        fullDateWithWeekday: {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        },
+        normalDateWithWeekday: {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+        },
+        keyboardDate: { day: "2-digit", month: "2-digit", year: "numeric" },
+        monthAndDate: { month: "long", day: "numeric" },
+        monthAndYear: { month: "long", year: "numeric" },
+        month: { month: "long" },
+        monthShort: { month: "short" },
+        dayOfMonth: { day: "numeric" },
+        shortDate: { year: "2-digit", month: "numeric", day: "numeric" },
+        year: { year: "numeric" },
+        displayDate: { day: "2-digit", month: "short", year: "numeric" },
     };
 
     public locale: string;
@@ -182,7 +196,10 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
     /**
      * @param options
      */
-    constructor(options: { locale: string, formats?: Record<string, CustomDateFormat> }) {
+    constructor(options: {
+        locale: string;
+        formats?: Record<string, CustomDateFormat>;
+    }) {
         this.locale = options.locale;
         this.formats = options.formats;
     }
@@ -237,7 +254,15 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @param date
      */
     public endOfDay(date: Date) {
-        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
+        return new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            23,
+            59,
+            59,
+            999,
+        );
     }
 
     /**
@@ -267,7 +292,9 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
         if (isFunction(customFormat)) {
             return customFormat(newDate, formatString, this.locale);
         }
-        const options: Intl.DateTimeFormatOptions = DefaultDateAdapter.formatOptions[formatString] || (customFormat ?? { timeZone: 'UTC', timeZoneName: 'short' });
+        const options: Intl.DateTimeFormatOptions =
+            DefaultDateAdapter.formatOptions[formatString] ||
+            (customFormat ?? { timeZone: "UTC", timeZoneName: "short" });
         return new Intl.DateTimeFormat(this.locale, options).format(newDate);
     }
 
@@ -286,11 +313,19 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @param comparing
      * @param unit
      */
-    public getDiff(date: Date, comparing: string | Date, unit?: string): number {
+    public getDiff(
+        date: Date,
+        comparing: string | Date,
+        unit?: string,
+    ): number {
         const d = new Date(date);
         const c = new Date(comparing);
-        if (unit === 'month') {
-            return d.getMonth() - c.getMonth() + ((d.getFullYear() - c.getFullYear()) * 12);
+        if (unit === "month") {
+            return (
+                d.getMonth() -
+                c.getMonth() +
+                (d.getFullYear() - c.getFullYear()) * 12
+            );
         }
         return Math.floor((d.getTime() - c.getTime()) / (1000 * 60 * 60 * 24));
     }
@@ -328,12 +363,16 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
         let currentWeek = [];
         const firstDayOfMonth = this.startOfMonth(date);
         const lastDayOfMonth = this.endOfMonth(date);
-        const firstDayWeekIndex = (firstDayOfMonth.getDay() - this.getFirstDayOfWeek() + 7) % 7;
-        const lastDayWeekIndex = (lastDayOfMonth.getDay() - this.getFirstDayOfWeek() + 7) % 7;
+        const firstDayWeekIndex =
+            (firstDayOfMonth.getDay() - this.getFirstDayOfWeek() + 7) % 7;
+        const lastDayWeekIndex =
+            (lastDayOfMonth.getDay() - this.getFirstDayOfWeek() + 7) % 7;
 
         for (let i = 0; i < firstDayWeekIndex; i++) {
             const adjacentDay = new Date(firstDayOfMonth);
-            adjacentDay.setDate(adjacentDay.getDate() - (firstDayWeekIndex - i));
+            adjacentDay.setDate(
+                adjacentDay.getDate() - (firstDayWeekIndex - i),
+            );
             currentWeek.push(adjacentDay);
         }
 
@@ -367,12 +406,14 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
     public getWeekdays(): string[] {
         const firstSundayOf2023 = new Date(2023, 0, 1);
         const daysFromSunday = this.getFirstDayOfWeek();
-        return createRange(7).map(index => {
+        return createRange(7).map((index) => {
             // Start with a known Sunday (2023-01-01)
             const weekday = new Date(firstSundayOf2023);
-            weekday.setDate(firstSundayOf2023.getDate() + daysFromSunday + index);
+            weekday.setDate(
+                firstSundayOf2023.getDate() + daysFromSunday + index,
+            );
             return new Intl.DateTimeFormat(this.locale, {
-                weekday: 'narrow'
+                weekday: "narrow",
             }).format(weekday);
         });
     }
@@ -428,9 +469,9 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      */
     public isSameDay(date: Date, comparing: Date): boolean {
         return (
-            date.getDate() === comparing.getDate()
-            && date.getMonth() === comparing.getMonth()
-            && date.getFullYear() === comparing.getFullYear()
+            date.getDate() === comparing.getDate() &&
+            date.getMonth() === comparing.getMonth() &&
+            date.getFullYear() === comparing.getFullYear()
         );
     }
 
@@ -441,8 +482,8 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      */
     public isSameMonth(date: Date, comparing: Date): boolean {
         return (
-            date.getMonth() === comparing.getMonth()
-            && date.getFullYear() === comparing.getFullYear()
+            date.getMonth() === comparing.getMonth() &&
+            date.getFullYear() === comparing.getFullYear()
         );
     }
 
@@ -461,10 +502,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @param range
      */
     public isWithinRange(date: Date, range: [Date, Date]): boolean {
-        return (
-            this.isAfter(date, range[0])
-            && this.isBefore(date, range[1])
-        );
+        return this.isAfter(date, range[0]) && this.isBefore(date, range[1]);
     }
 
     /**
@@ -476,7 +514,7 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      * @protected
      */
     public parseISO(value: string): Date {
-        const [year, month, day] = value.split('-').map(Number);
+        const [year, month, day] = value.split("-").map(Number);
         return new Date(year, month - 1, day);
     }
 
@@ -532,8 +570,8 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
      */
     public toISO(date: Date): string {
         const year = date.getFullYear();
-        const month = padStart(String(date.getMonth() + 1), 2, '0');
-        const day = padStart(String(date.getDate()), 2, '0');
+        const month = padStart(String(date.getMonth() + 1), 2, "0");
+        const day = padStart(String(date.getDate()), 2, "0");
         return `${year}-${month}-${day}`;
     }
 

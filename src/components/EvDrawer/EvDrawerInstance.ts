@@ -1,12 +1,10 @@
-import {EvDrawerRenderer} from "@/components/EvDrawer/EvDrawerRenderer.ts";
+import { EvDrawerRenderer } from "@/components/EvDrawer/EvDrawerRenderer.ts";
 
 /**
  * # EvDrawerInstance
  */
 export class EvDrawerInstance {
-    public constructor(
-        private renderer: EvDrawerRenderer
-    ) {}
+    public constructor(private renderer: EvDrawerRenderer) {}
 
     get data() {
         return this.renderer.data;

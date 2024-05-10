@@ -1,13 +1,12 @@
-import {App} from "vue";
-import {EvNotificationsManager} from "@/components/EvNotifications/EvNotificationsManager.ts";
-import {EvNotificationServiceSymbol} from "@/composables/notification.ts";
+import { App } from "vue";
+import { EvNotificationsManager } from "@/components/EvNotifications/EvNotificationsManager.ts";
+import { EvNotificationServiceSymbol } from "@/composables/notification.ts";
 
 /**
  * # EvNotificationService
  */
 export default {
     install: (app: App) => {
-
         const service = new EvNotificationsManager();
 
         // For options API - use with `this.$dialog`
@@ -15,5 +14,5 @@ export default {
 
         // For composition API - use with `useDialog()`
         app.provide(EvNotificationServiceSymbol, service);
-    }
+    },
 };

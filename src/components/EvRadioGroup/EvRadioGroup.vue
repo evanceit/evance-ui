@@ -1,15 +1,14 @@
 <script setup lang="ts">
-
-import './EvRadioGroup.scss';
+import "./EvRadioGroup.scss";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
-import {EvRadioGroupSymbol, makeEvRadioGroupProps} from "./EvRadioGroup.ts";
-import {computed, provide, useSlots} from "vue";
-import {getNextId} from "@/util";
-import {useFormField} from "@/composables/validation.ts";
+import { EvRadioGroupSymbol, makeEvRadioGroupProps } from "./EvRadioGroup.ts";
+import { computed, provide, useSlots } from "vue";
+import { getNextId } from "@/util";
+import { useFormField } from "@/composables/validation.ts";
 import EvErrors from "@/components/EvErrors/EvErrors.vue";
 
 defineOptions({
-    inheritAttrs: false
+    inheritAttrs: false,
 });
 
 // Props & slots
@@ -17,9 +16,7 @@ const props = defineProps(makeEvRadioGroupProps());
 const slots = useSlots();
 
 // Emit
-defineEmits([
-    'update:modelValue'
-]);
+defineEmits(["update:modelValue"]);
 
 const uid = getNextId();
 const id = computed(() => {
@@ -28,27 +25,27 @@ const id = computed(() => {
 
 const formField = useFormField(props);
 provide(EvRadioGroupSymbol, formField);
-
 </script>
+
 <template>
     <div
+        :id="id"
         :class="[
             'ev-radio-group',
             props.class,
             {
-                'is-inline': props.inline
-            }
+                'is-inline': props.inline,
+            },
         ]"
-        :style="props.style"
-        :id="id"
-    >
-
-        <div class="ev-radio-group--label" v-if="props.label || slots.label">
+        :style="props.style">
+        <div v-if="props.label || slots.label" class="ev-radio-group--label">
             <ev-label>
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
 
-            <div class="ev-radio-group-errors" v-if="formField.isShowErrorMessages">
+            <div
+                v-if="formField.isShowErrorMessages"
+                class="ev-radio-group-errors">
                 <ev-errors :messages="formField.errorMessages" />
             </div>
         </div>
@@ -56,6 +53,5 @@ provide(EvRadioGroupSymbol, formField);
         <div class="ev-radio-group--control">
             <slot />
         </div>
-
     </div>
 </template>

@@ -4,21 +4,26 @@
  *
  * `<ev-lozenge />`
  */
-import './EvLozenge.scss';
-import {AppearanceProp, isIntegerish, useAppearance, VariantProp} from "@/util";
+import "./EvLozenge.scss";
+import {
+    AppearanceProp,
+    isIntegerish,
+    useAppearance,
+    VariantProp,
+} from "@/util";
 
 /**
  * ## Lozenge Props
  */
 interface LozengeProps {
-    appearance?: AppearanceProp,
-    variant?: VariantProp,
+    appearance?: AppearanceProp;
+    variant?: VariantProp;
     maxWidth?: number | string;
 }
 const props = withDefaults(defineProps<LozengeProps>(), {
-    appearance: 'default',
-    variant: 'default',
-    maxWidth: 200
+    appearance: "default",
+    variant: "default",
+    maxWidth: 200,
 });
 
 /**
@@ -42,7 +47,7 @@ const isMaxWidthPercent = () => {
  * or simply returns '100%'.
  */
 const getMaxWidthOuter = () => {
-    return isMaxWidthPercent() ? props.maxWidth : '100%';
+    return isMaxWidthPercent() ? props.maxWidth : "100%";
 };
 
 /**
@@ -52,7 +57,9 @@ const getMaxWidthOuter = () => {
  * the default padding.
  */
 const getMaxWidthInner = () => {
-    return isMaxWidthPercent() ? '100%' : `calc(${getMaxWidthWithUnits()} - var(--spacer-200))`
+    return isMaxWidthPercent()
+        ? "100%"
+        : `calc(${getMaxWidthWithUnits()} - var(--spacer-200))`;
 };
 
 /**
@@ -61,25 +68,21 @@ const getMaxWidthInner = () => {
  */
 const getMaxWidthWithUnits = () => {
     return isMaxWidthNumeric() ? `${props.maxWidth}px` : props.maxWidth;
-}
+};
 
-const { appearanceClass, variantClass } = useAppearance(props)
-
+const { appearanceClass, variantClass } = useAppearance(props);
 </script>
+
 <template>
     <span
-        :class="[
-            'ev-lozenge',
-            appearanceClass,
-            variantClass
-        ]"
+        :class="['ev-lozenge', appearanceClass, variantClass]"
         :style="{
-            'max-width': getMaxWidthOuter()
+            'max-width': getMaxWidthOuter(),
         }">
         <span
             class="ev-lozenge--label"
             :style="{
-                'max-width': getMaxWidthInner()
+                'max-width': getMaxWidthInner(),
             }">
             <slot />
         </span>

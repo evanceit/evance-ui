@@ -1,4 +1,4 @@
-import {isBoolean, isObject, isString} from "@/util";
+import { isBoolean, isObject, isString } from "@/util";
 
 /**
  * # Pluralization
@@ -7,16 +7,22 @@ import {isBoolean, isObject, isString} from "@/util";
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules
  */
-export const pluralizationRuleKeys = ['zero', 'one', 'two', 'few', 'many', 'other'] as const;
+export const pluralizationRuleKeys = [
+    "zero",
+    "one",
+    "two",
+    "few",
+    "many",
+    "other",
+] as const;
 
-export type PluralizationRuleKey = typeof pluralizationRuleKeys[number];
+export type PluralizationRuleKey = (typeof pluralizationRuleKeys)[number];
 
 export type PluralizationRules = {
-    [K in PluralizationRuleKey]?: string
+    [K in PluralizationRuleKey]?: string;
 } & {
-    ordinal?: boolean
+    ordinal?: boolean;
 };
-
 
 /**
  * ## Is Pluralization Key
@@ -29,7 +35,6 @@ export function isPluralizationKey(key: any): key is PluralizationRuleKey {
     return pluralizationRuleKeys.includes(key);
 }
 
-
 /**
  * # Is Pluralization Rules
  *
@@ -41,8 +46,8 @@ export function isPluralizationRules(value: any): value is PluralizationRules {
     if (isObject(value)) {
         return Object.entries(value).every(([key, val]) => {
             return (
-                (isPluralizationKey(key) && isString(val))
-                || (key === 'ordinal' && isBoolean(val))
+                (isPluralizationKey(key) && isString(val)) ||
+                (key === "ordinal" && isBoolean(val))
             );
         });
     }

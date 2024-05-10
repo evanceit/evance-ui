@@ -1,4 +1,4 @@
-import {InjectionKey} from "vue";
+import { InjectionKey } from "vue";
 
 interface MenuProvide {
     register(): void;
@@ -6,4 +6,4 @@ interface MenuProvide {
     closeParents(): void;
 }
 
-export const EvMenuSymbol: InjectionKey<MenuProvide> = Symbol.for('ev:menu');
+export const EvMenuSymbol: InjectionKey<MenuProvide> = Symbol.for("ev:menu");

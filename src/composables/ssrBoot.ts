@@ -1,4 +1,4 @@
-import {computed, onMounted, readonly, shallowRef} from "vue";
+import { computed, onMounted, readonly, shallowRef } from "vue";
 
 /**
  * # useSsrBoot
@@ -12,9 +12,13 @@ export function useSsrBoot() {
         });
     });
 
-    const ssrBootStyles = computed(() => !isBooted.value ? ({
-        transition: 'none !important'
-    }) : undefined);
+    const ssrBootStyles = computed(() =>
+        !isBooted.value
+            ? {
+                  transition: "none !important",
+              }
+            : undefined,
+    );
 
     return { ssrBootStyles, isBooted: readonly(isBooted) };
 }

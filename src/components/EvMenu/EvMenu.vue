@@ -2,17 +2,26 @@
 /**
  * # EvMenu
  */
-import './EvMenu.scss';
-import {makeEvMenuProps} from "./EvMenu.ts";
-import {EvOverlay} from "@/components/EvOverlay";
-import {computed, inject, mergeProps, provide, ref, shallowRef, useSlots, watch} from "vue";
-import {useModelProxy} from "@/composables/modelProxy.ts";
-import {focusChild, getNextId} from "@/util";
-import {EvMenuSymbol} from "./shared.ts";
+import "./EvMenu.scss";
+import { makeEvMenuProps } from "./EvMenu.ts";
+import { EvOverlay } from "@/components/EvOverlay";
+import {
+    computed,
+    inject,
+    mergeProps,
+    provide,
+    ref,
+    shallowRef,
+    useSlots,
+    watch,
+} from "vue";
+import { useModelProxy } from "@/composables/modelProxy.ts";
+import { focusChild, getNextId } from "@/util";
+import { EvMenuSymbol } from "./shared.ts";
 
 const props = defineProps(makeEvMenuProps());
 const slots = useSlots();
-const isActive = useModelProxy(props, 'modelValue');
+const isActive = useModelProxy(props, "modelValue");
 const uid = getNextId();
 const id = computed(() => {
     return props.id || `ev-menu-${uid}`;
@@ -22,24 +31,24 @@ const parent = inject(EvMenuSymbol, null);
 const openChildren = shallowRef(0);
 
 provide(EvMenuSymbol, {
-    register () {
+    register() {
         ++openChildren.value;
     },
-    unregister () {
+    unregister() {
         --openChildren.value;
     },
-    closeParents () {
+    closeParents() {
         setTimeout(() => {
             if (!openChildren.value) {
                 isActive.value = false;
                 parent?.closeParents();
             }
         }, 40);
-    }
+    },
 });
 
 watch(isActive, (value) => {
-   return value ? parent?.register() : parent?.unregister();
+    return value ? parent?.register() : parent?.unregister();
 });
 
 function onClickOutside() {
@@ -50,7 +59,7 @@ function onKeydown(e: KeyboardEvent) {
     if (props.disabled) {
         return;
     }
-    if (e.key === 'Tab') {
+    if (e.key === "Tab") {
         isActive.value = false;
         overlay.value?.activatorEl?.focus();
     }
@@ -67,14 +76,14 @@ function onActivatorKeydown(e: KeyboardEvent) {
     }
     const el = overlay.value?.contentEl;
     if (el && isActive.value) {
-        if (e.key === 'ArrowDown') {
+        if (e.key === "ArrowDown") {
             e.preventDefault();
-            focusChild(el, 'next');
-        } else if (e.key === 'ArrowUp') {
+            focusChild(el, "next");
+        } else if (e.key === "ArrowUp") {
             e.preventDefault();
-            focusChild(el, 'previous');
+            focusChild(el, "previous");
         }
-    } else if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
+    } else if (["ArrowDown", "ArrowUp"].includes(e.key)) {
         isActive.value = true;
         e.preventDefault();
         setTimeout(() => setTimeout(() => onActivatorKeydown(e)));
@@ -88,12 +97,15 @@ function onActivatorKeydown(e: KeyboardEvent) {
  * and ARIA attributes for accessibility.
  */
 const activatorProps = computed(() => {
-    return mergeProps({
-        'aria-haspopup': 'menu',
-        'aria-expanded': String(isActive.value),
-        'aria-owns': id.value,
-        onKeydown: onActivatorKeydown
-    }, props.activatorProps);
+    return mergeProps(
+        {
+            "aria-haspopup": "menu",
+            "aria-expanded": String(isActive.value),
+            "aria-owns": id.value,
+            onKeydown: onActivatorKeydown,
+        },
+        props.activatorProps,
+    );
 });
 
 /**
@@ -101,21 +113,21 @@ const activatorProps = computed(() => {
  */
 defineExpose({
     id,
-    openChildren
+    openChildren,
 });
 </script>
+
 <template>
     <ev-overlay
         ref="overlay"
-        class="ev-menu"
         v-bind="props"
-        v-bind:activator-props="activatorProps"
         v-model="isActive"
+        class="ev-menu"
+        :activator-props="activatorProps"
         @click:outside="onClickOutside"
-        @keydown="onKeydown"
-    >
-        <template #activator="{ isActive, props }" v-if="slots.activator">
-            <slot name="activator" :isActive="isActive" :props="props" />
+        @keydown="onKeydown">
+        <template v-if="slots.activator" #activator="{ isActive, props }">
+            <slot name="activator" :is-active="isActive" :props="props" />
         </template>
         <template #default>
             <slot name="default" />

@@ -1,8 +1,5 @@
-
-
-export const axes = ['x', 'y'] as const;
-export type Axis = typeof axes[number];
-
+export const axes = ["x", "y"] as const;
+export type Axis = (typeof axes)[number];
 
 /**
  * # Coordinates
@@ -51,22 +48,22 @@ export class Rect implements Coordinates, Dimensions, Position {
         public x: number,
         public y: number,
         public width: number,
-        public height: number
+        public height: number,
     ) {}
 
-    get top () {
+    get top() {
         return this.y;
     }
 
-    get bottom () {
+    get bottom() {
         return this.y + this.height;
     }
 
-    get left () {
+    get left() {
         return this.x;
     }
 
-    get right () {
+    get right() {
         return this.x + this.width;
     }
 
@@ -86,7 +83,10 @@ export class Rect implements Coordinates, Dimensions, Position {
      * @param el
      * @param beforeTransforms
      */
-    public static fromElement(el: HTMLElement, beforeTransforms: boolean = false): Rect {
+    public static fromElement(
+        el: HTMLElement,
+        beforeTransforms: boolean = false,
+    ): Rect {
         if (!beforeTransforms) {
             return Rect.fromRect(el.getBoundingClientRect());
         }
@@ -113,11 +113,10 @@ export class Rect implements Coordinates, Dimensions, Position {
             top: Math.max(0, b.top - this.top),
             right: Math.max(0, this.right - b.right),
             bottom: Math.max(0, this.bottom - b.bottom),
-            left: Math.max(0, b.left - this.left)
+            left: Math.max(0, b.left - this.left),
         };
     }
 }
-
 
 /**
  * # Adjust Bounding Rect
@@ -136,13 +135,13 @@ export function adjustedBoundingRect(el: HTMLElement): Rect {
 
     if (tx) {
         let ta, sx, sy, dx, dy;
-        if (tx.startsWith('matrix3d(')) {
+        if (tx.startsWith("matrix3d(")) {
             ta = tx.slice(9, -1).split(/, /);
             sx = +ta[0];
             sy = +ta[5];
             dx = +ta[12];
             dy = +ta[13];
-        } else if (tx.startsWith('matrix(')) {
+        } else if (tx.startsWith("matrix(")) {
             ta = tx.slice(7, -1).split(/, /);
             sx = +ta[0];
             sy = +ta[3];
@@ -154,7 +153,8 @@ export function adjustedBoundingRect(el: HTMLElement): Rect {
 
         const to = style.transformOrigin;
         const x = rect.x - dx - (1 - sx) * parseFloat(to);
-        const y = rect.y - dy - (1 - sy) * parseFloat(to.slice(to.indexOf(' ') + 1));
+        const y =
+            rect.y - dy - (1 - sy) * parseFloat(to.slice(to.indexOf(" ") + 1));
         const w = sx ? rect.width / sx : el.offsetWidth + 1;
         const h = sy ? rect.height / sy : el.offsetHeight + 1;
 
@@ -163,7 +163,6 @@ export function adjustedBoundingRect(el: HTMLElement): Rect {
         return Rect.fromRect(rect);
     }
 }
-
 
 /**
  * # getTargetRect

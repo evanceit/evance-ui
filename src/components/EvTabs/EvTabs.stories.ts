@@ -1,38 +1,46 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-import {EvTab, EvTabs} from "../EvTabs";
-import {SalesEnquiry, SalesEnquiryFill, SalesOrder, SalesOrderFill, SalesQuotation, SalesQuotationFill} from "@/icons";
-import {shallowRef} from "vue";
-import {EvIcon} from "@/components";
+import { EvTab, EvTabs } from "../EvTabs";
+import {
+    SalesEnquiry,
+    SalesEnquiryFill,
+    SalesOrder,
+    SalesOrderFill,
+    SalesQuotation,
+    SalesQuotationFill,
+} from "@/icons";
+import { shallowRef } from "vue";
+import { EvIcon } from "@/components";
 
 const meta: Meta<typeof EvTabs> = {
     component: EvTabs,
     argTypes: {
         alignTabs: {
-            control: 'select',
-            options: ['start', 'center', 'end']
+            control: "select",
+            options: ["start", "center", "end"],
         },
         direction: {
-            control: 'select',
-            options: ['horizontal', 'vertical']
+            control: "select",
+            options: ["horizontal", "vertical"],
         },
         grow: {
-            control: 'boolean'
+            control: "boolean",
         },
         size: {
-            control: 'select',
-            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
-            description: 'Changes the size of the tab, which may be either `small`, `medium`, or `large`. \n\n' +
-                'Defaults to `medium`.'
+            control: "select",
+            options: ["x-small", "small", "medium", "large", "x-large"],
+            description:
+                "Changes the size of the tab, which may be either `small`, `medium`, or `large`. \n\n" +
+                "Defaults to `medium`.",
         },
     },
     args: {
-        alignTabs: 'start',
-        direction: 'horizontal',
+        alignTabs: "start",
+        direction: "horizontal",
         grow: false,
-        size: 'medium'
+        size: "medium",
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -40,7 +48,7 @@ export default meta;
 type Story = StoryObj<typeof EvTabs>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvTabs, EvTab, EvIcon },
         setup() {
             const selection = shallowRef(1);
@@ -53,7 +61,7 @@ export const Primary: Story = {
                 SalesEnquiry,
                 SalesEnquiryFill,
                 SalesQuotation,
-                SalesQuotationFill
+                SalesQuotationFill,
             };
         },
         template: `
@@ -86,6 +94,6 @@ export const Primary: Story = {
                     <ev-icon :glyph="selection == 3 ? SalesQuotationFill : SalesQuotation" />
                 </ev-tab>
             </ev-tabs>
-        `
-    })
+        `,
+    }),
 };

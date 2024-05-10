@@ -1,12 +1,10 @@
-import {EvDialogRenderer} from "@/components/EvDialog/EvDialogRenderer.ts";
+import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer.ts";
 
 /**
  * # EvDialogInstance
  */
 export class EvDialogInstance {
-    public constructor(
-        private renderer: EvDialogRenderer
-    ) {}
+    public constructor(private renderer: EvDialogRenderer) {}
 
     get data() {
         return this.renderer.data;

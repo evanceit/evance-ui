@@ -1,25 +1,34 @@
-import {GroupProvide, makeGroupProps} from "@/composables/group.ts";
-import {InjectionKey} from "vue";
-import {propsFactory} from "@/util";
-import {makeEvButtonGroupProps} from "@/components/EvButtonGroup/EvButtonGroup.ts";
+import { GroupProvide, makeGroupProps } from "@/composables/group.ts";
+import { InjectionKey } from "vue";
+import { propsFactory } from "@/util";
+import { makeEvButtonGroupProps } from "@/components/EvButtonGroup/EvButtonGroup.ts";
 
+export type ButtonToggleSlotProps =
+    | "isSelected"
+    | "select"
+    | "selected"
+    | "next"
+    | "previous";
+export interface DefaultButtonToggleSlot
+    extends Pick<GroupProvide, ButtonToggleSlotProps> {}
 
-export type ButtonToggleSlotProps = 'isSelected' | 'select' | 'selected' | 'next' | 'previous';
-export interface DefaultButtonToggleSlot extends Pick<GroupProvide, ButtonToggleSlotProps> {}
-
-export const EvButtonToggleSymbol: InjectionKey<GroupProvide> = Symbol.for('ev:button-toggle');
+export const EvButtonToggleSymbol: InjectionKey<GroupProvide> =
+    Symbol.for("ev:button-toggle");
 
 export type EvButtonToggleSlots = {
-    default: DefaultButtonToggleSlot
-}
+    default: DefaultButtonToggleSlot;
+};
 
 /**
  * # makeEvButtonToggleProps
  */
-export const makeEvButtonToggleProps = propsFactory({
-    ...makeEvButtonGroupProps(),
-    ...makeGroupProps({
-        selectedAppearance: 'primary',
-        selectedVariant: 'tonal'
-    })
-}, 'EvButtonToggle');
+export const makeEvButtonToggleProps = propsFactory(
+    {
+        ...makeEvButtonGroupProps(),
+        ...makeGroupProps({
+            selectedAppearance: "primary",
+            selectedVariant: "tonal",
+        }),
+    },
+    "EvButtonToggle",
+);

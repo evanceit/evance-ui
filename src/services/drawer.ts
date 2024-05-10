@@ -1,6 +1,6 @@
-import {App} from "vue";
-import {EvDrawerServiceSymbol} from "@/composables/drawer.ts";
-import {EvDrawerServiceOpener} from "@/components/EvDrawer/EvDrawerServiceOpener.ts";
+import { App } from "vue";
+import { EvDrawerServiceSymbol } from "@/composables/drawer.ts";
+import { EvDrawerServiceOpener } from "@/components/EvDrawer/EvDrawerServiceOpener.ts";
 
 /**
  * # EvDialogService
@@ -14,5 +14,5 @@ export default {
 
         // For composition API - use with `useDrawer()`
         app.provide(EvDrawerServiceSymbol, service);
-    }
+    },
 };

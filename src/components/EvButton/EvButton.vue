@@ -2,45 +2,46 @@
 /**
  * # EvButton
  */
-import './EvButton.scss';
-import {makeEvButtonProps} from "./EvButton.ts";
-import {computed, useAttrs, useSlots} from "vue";
-import {EvIcon} from "@/components/EvIcon";
-import {EvProgressCircular} from "@/components/EvProgressCircular";
+import "./EvButton.scss";
+import { makeEvButtonProps } from "./EvButton.ts";
+import { computed, useAttrs, useSlots } from "vue";
+import { EvIcon } from "@/components/EvIcon";
+import { EvProgressCircular } from "@/components/EvProgressCircular";
 import {
     AppearanceProps,
     InputSize,
     isBoolean,
     sizeModifier,
     useAppearance,
-    Variant
+    Variant,
 } from "@/util";
-import {hasSlotWithContent} from "@/composables/hasSlotWithContent.ts";
-import {RouterLinkOrHrefProps, useRouterLinkOrHref} from "@/composables/router.ts";
-import {useDefaults} from "@/composables/defaults.ts";
-import {useGroupItem} from "@/composables/groupItem.ts";
-import {useSelectLink} from "@/composables/selectLink.ts";
+import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
+import {
+    RouterLinkOrHrefProps,
+    useRouterLinkOrHref,
+} from "@/composables/router.ts";
+import { useDefaults } from "@/composables/defaults.ts";
+import { useGroupItem } from "@/composables/groupItem.ts";
+import { useSelectLink } from "@/composables/selectLink.ts";
 
 defineSlots<{
-    default(): any,
-    icon(): any,
-    'icon-end'(): any,
-    'icon-start'(): any,
-    prefix(): any,
-    suffix(): any,
+    default(): never;
+    icon(): never;
+    "icon-end"(): never;
+    "icon-start"(): never;
+    prefix(): never;
+    suffix(): never;
 }>();
 
 const definedProps = defineProps(makeEvButtonProps());
 const props = useDefaults(definedProps);
 
-defineEmits([
-    'group:selected'
-]);
+defineEmits(["group:selected"]);
 
 const attrs = useAttrs();
 const slots = useSlots();
-const hasDefaultSlot = hasSlotWithContent(slots, 'default');
-const group = useGroupItem(props as any, props.symbol, false);
+const hasDefaultSlot = hasSlotWithContent(slots, "default");
+const group = useGroupItem(props, props.symbol, false);
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 
 const isActive = computed(() => {
@@ -55,11 +56,11 @@ const isActive = computed(() => {
 
 const isDisabled = computed(() => {
     // we'll add groups later
-    return (group?.disabled.value || props.disabled);
+    return group?.disabled.value || props.disabled;
 });
 
 const isClickable = computed(() => {
-    return (!isDisabled.value && !props.loading);
+    return !isDisabled.value && !props.loading;
 });
 
 /**
@@ -73,16 +74,14 @@ const isClickable = computed(() => {
  * OR, the `icon` prop is supplied as `true`.
  */
 const isIconLike = computed(() => {
-    const icons = [props.icon, props.iconStart, props.iconEnd].filter((icon) => !!icon);
+    const icons = [props.icon, props.iconStart, props.iconEnd].filter(
+        (icon) => !!icon,
+    );
     return (
-            (
-                icons.length === 1
-                && !hasDefaultSlot.value
-                && !props.text
-            )
-            || props.icon === true
-        )
-        && !props.fullWidth;
+        ((icons.length === 1 && !hasDefaultSlot.value && !props.text) ||
+            props.icon === true) &&
+        !props.fullWidth
+    );
 });
 
 /**
@@ -90,7 +89,7 @@ const isIconLike = computed(() => {
  * Returns `true` if an `href` was supplied AND is NOT an empty string.
  */
 const isLink = computed(() => {
-    return (link.isLink.value);
+    return link.isLink.value;
 });
 
 /**
@@ -101,7 +100,7 @@ const isLink = computed(() => {
  * - `<button>` when `href` is NOT supplied, or is an empty string
  */
 const componentElement = computed(() => {
-    return isLink.value ? 'a' : 'button';
+    return isLink.value ? "a" : "button";
 });
 
 /**
@@ -110,17 +109,13 @@ const componentElement = computed(() => {
  */
 function onClick(e: MouseEvent): void {
     if (
-        isDisabled.value
-        || (
-            isLink.value
-            && (
-                e.metaKey
-                || e.ctrlKey
-                || e.shiftKey
-                || e.button !== 0
-                || attrs.target === '_blank'
-            )
-        )
+        isDisabled.value ||
+        (isLink.value &&
+            (e.metaKey ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.button !== 0 ||
+                attrs.target === "_blank"))
     ) {
         return;
     }
@@ -130,10 +125,15 @@ function onClick(e: MouseEvent): void {
 
 useSelectLink(link, group?.select);
 
-const { appearanceClass, variantClass } = useAppearance(props as AppearanceProps, group, isActive, Variant.bold);
+const { appearanceClass, variantClass } = useAppearance(
+    props as AppearanceProps,
+    group,
+    isActive,
+    Variant.bold,
+);
 
 const valueAttr = computed(() => {
-    if (props.value === undefined || typeof props.value === 'symbol') {
+    if (props.value === undefined || typeof props.value === "symbol") {
         return undefined;
     }
     return Object(props.value) === props.value
@@ -142,10 +142,10 @@ const valueAttr = computed(() => {
 });
 
 defineExpose({
-    group
+    group,
 });
-
 </script>
+
 <template>
     <component
         :is="componentElement"
@@ -163,41 +163,49 @@ defineExpose({
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
                 'is-rounded': props.rounded,
-                'is-clickable': isClickable
+                'is-clickable': isClickable,
             },
-            props.class
+            props.class,
         ]"
         :style="props.style"
         tabindex="0"
         :disabled="isDisabled || undefined"
         :value="valueAttr"
-        @click="onClick"
-    >
-        <span class="ev-button--icon-start" v-if="props.iconStart || slots['icon-start']">
+        @click="onClick">
+        <span
+            v-if="props.iconStart || slots['icon-start']"
+            class="ev-button--icon-start">
             <slot name="icon-start">
                 <ev-icon :glyph="props.iconStart" />
             </slot>
         </span>
-        <span class="ev-button--prefix" v-if="slots.prefix">
+        <span v-if="slots.prefix" class="ev-button--prefix">
             <slot name="prefix" />
         </span>
-        <span class="ev-button--icon" v-if="(props.icon || slots.icon) && !isBoolean(props.icon)">
+        <span
+            v-if="(props.icon || slots.icon) && !isBoolean(props.icon)"
+            class="ev-button--icon">
             <slot name="icon">
                 <ev-icon :glyph="props.icon" />
             </slot>
         </span>
-        <span class="ev-button--text" v-if="props.text || hasDefaultSlot" data-no-activator>
+        <span
+            v-if="props.text || hasDefaultSlot"
+            class="ev-button--text"
+            data-no-activator>
             <slot>{{ props.text }}</slot>
         </span>
-        <span class="ev-button--suffix" v-if="slots.suffix">
+        <span v-if="slots.suffix" class="ev-button--suffix">
             <slot name="suffix" />
         </span>
-        <span class="ev-button--icon-end" v-if="props.iconEnd || slots['icon-end']">
+        <span
+            v-if="props.iconEnd || slots['icon-end']"
+            class="ev-button--icon-end">
             <slot name="icon-end">
                 <ev-icon :glyph="props.iconEnd" />
             </slot>
         </span>
-        <span class="ev-button--loading" v-if="props.loading">
+        <span v-if="props.loading" class="ev-button--loading">
             <ev-progress-circular indeterminate />
         </span>
     </component>

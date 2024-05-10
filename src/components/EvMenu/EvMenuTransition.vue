@@ -6,11 +6,11 @@
  *
  * @see https://vuejs.org/guide/built-ins/transition.html#javascript-hooks
  */
-import {computed, PropType} from "vue";
-import {animate, easingAccelerate, easingStandard, Rect} from "@/util";
+import { computed, PropType } from "vue";
+import { animate, easingAccelerate, easingStandard, Rect } from "@/util";
 
 const props = defineProps({
-    target: Object as PropType<HTMLElement>
+    target: Object as PropType<HTMLElement>,
 });
 
 /**
@@ -24,11 +24,12 @@ const props = defineProps({
  *
  * @param el
  */
-function getChildren (el: Element) {
-    const els = el.querySelector(':scope > .ev-card, :scope > .ev-surface, :scope > .ev-list')?.children;
+function getChildren(el: Element) {
+    const els = el.querySelector(
+        ":scope > .ev-card, :scope > .ev-surface, :scope > .ev-list",
+    )?.children;
     return els && [...els];
 }
-
 
 /**
  * ## Get Dimensions
@@ -39,42 +40,49 @@ function getDimensions(target: HTMLElement, el: HTMLElement) {
     const targetBox = Rect.fromElement(target);
     const elBox = Rect.fromElement(el, true);
     const elStyle = getComputedStyle(el);
-    const [originX, originY] = elStyle.transformOrigin.split(' ').map(v => parseFloat(v));
-    const [anchorSide, anchorOffset] = elStyle.getPropertyValue('--ev-overlay-position').split(' ');
+    const [originX, originY] = elStyle.transformOrigin
+        .split(" ")
+        .map((v) => parseFloat(v));
+    const [anchorSide, anchorOffset] = elStyle
+        .getPropertyValue("--ev-overlay-position")
+        .split(" ");
 
     let offsetX = targetBox.left;
-    if (anchorSide === 'center' || anchorOffset === 'center') {
+    if (anchorSide === "center" || anchorOffset === "center") {
         offsetX += targetBox.width / 2;
-    } else if (anchorSide === 'right' || anchorOffset === 'right') {
+    } else if (anchorSide === "right" || anchorOffset === "right") {
         offsetX += targetBox.width;
     }
 
     let offsetY = targetBox.top;
-    if (anchorSide === 'center' || anchorOffset === 'center') {
+    if (anchorSide === "center" || anchorOffset === "center") {
         offsetY += targetBox.height / 2;
-    } else if (anchorSide === 'bottom' || anchorOffset === 'bottom') {
+    } else if (anchorSide === "bottom" || anchorOffset === "bottom") {
         offsetY += targetBox.height;
     }
 
     const targetScaleX = targetBox.width / elBox.width;
     const targetScaleY = targetBox.height / elBox.height;
     const maxScale = Math.max(1, targetScaleX, targetScaleY);
-    const scaleX =  targetScaleX / maxScale || 0;
-    const scaleY =  targetScaleY / maxScale || 0;
+    const scaleX = targetScaleX / maxScale || 0;
+    const scaleY = targetScaleY / maxScale || 0;
 
     // Animate elements larger than 12% of the screen area up to 1.5x slower
-    const screenPercentage = (elBox.width * elBox.height) / (window.innerWidth * window.innerHeight);
-    const speedFactor = (screenPercentage > 0.12) ? Math.min(1.5, (screenPercentage - 0.12) * 10 + 1) : 1;
+    const screenPercentage =
+        (elBox.width * elBox.height) / (window.innerWidth * window.innerHeight);
+    const speedFactor =
+        screenPercentage > 0.12
+            ? Math.min(1.5, (screenPercentage - 0.12) * 10 + 1)
+            : 1;
 
     return {
         x: offsetX - (originX + elBox.left),
         y: offsetY - (originY + elBox.top),
         scaleX,
         scaleY,
-        speedFactor
+        speedFactor,
     };
 }
-
 
 /**
  * ## On Before Enter
@@ -84,10 +92,9 @@ function getDimensions(target: HTMLElement, el: HTMLElement) {
  * @param el
  */
 function onBeforeEnter(el: Element) {
-    (el as HTMLElement).style.pointerEvents = 'none';
-    (el as HTMLElement).style.visibility = 'hidden';
+    (el as HTMLElement).style.pointerEvents = "none";
+    (el as HTMLElement).style.visibility = "hidden";
 }
-
 
 /**
  * ## On Enter
@@ -98,35 +105,37 @@ function onBeforeEnter(el: Element) {
  * @param done
  */
 async function onEnter(el: Element, done: () => void) {
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    (el as HTMLElement).style.visibility = '';
-    const { x, y, scaleX, scaleY, speedFactor } = getDimensions(props.target!, el as HTMLElement);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    (el as HTMLElement).style.visibility = "";
+    const { x, y, scaleX, scaleY, speedFactor } = getDimensions(
+        props.target!,
+        el as HTMLElement,
+    );
     const duration = 250;
 
-    const animation = animate(el, [
-        {
-            transform: `translate(${x}px, ${y}px) scale(${scaleX}, ${scaleY})`,
-            opacity: 0
-        },
-        {},
-    ], {
-        duration: duration * speedFactor,
-        easing: easingStandard
-    });
-    getChildren(el)?.forEach(el => {
-        animate(el, [
-            { opacity: 0 },
-            { opacity: 0, offset: 0.25 },
+    const animation = animate(
+        el,
+        [
+            {
+                transform: `translate(${x}px, ${y}px) scale(${scaleX}, ${scaleY})`,
+                opacity: 0,
+            },
             {},
-        ], {
+        ],
+        {
             duration: duration * speedFactor,
-            easing: easingStandard
+            easing: easingStandard,
+        },
+    );
+    getChildren(el)?.forEach((el) => {
+        animate(el, [{ opacity: 0 }, { opacity: 0, offset: 0.25 }, {}], {
+            duration: duration * speedFactor,
+            easing: easingStandard,
         });
-    })
+    });
     animation.finished.then(() => done());
 }
-
 
 /**
  * ## On After Enter
@@ -136,9 +145,8 @@ async function onEnter(el: Element, done: () => void) {
  * @param el
  */
 function onAfterEnter(el: Element) {
-    (el as HTMLElement).style.removeProperty('pointer-events');
+    (el as HTMLElement).style.removeProperty("pointer-events");
 }
-
 
 /**
  * ## On Before Leave
@@ -148,9 +156,8 @@ function onAfterEnter(el: Element) {
  * @param el
  */
 function onBeforeLeave(el: Element) {
-    (el as HTMLElement).style.pointerEvents = 'none';
+    (el as HTMLElement).style.pointerEvents = "none";
 }
-
 
 /**
  * ## On Leave
@@ -161,33 +168,35 @@ function onBeforeLeave(el: Element) {
  * @param done
  */
 async function onLeave(el: Element, done: () => void) {
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    const { x, y, scaleX, scaleY, speedFactor } = getDimensions(props.target!, el as HTMLElement);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    const { x, y, scaleX, scaleY, speedFactor } = getDimensions(
+        props.target!,
+        el as HTMLElement,
+    );
 
-    const animation = animate(el, [
-        {},
+    const animation = animate(
+        el,
+        [
+            {},
+            {
+                transform: `translate(${x}px, ${y}px) scale(${scaleX}, ${scaleY})`,
+                opacity: 0,
+            },
+        ],
         {
-            transform: `translate(${x}px, ${y}px) scale(${scaleX}, ${scaleY})`,
-            opacity: 0
-        }
-    ], {
-        duration: 125 * speedFactor,
-        easing: easingAccelerate
-    })
+            duration: 125 * speedFactor,
+            easing: easingAccelerate,
+        },
+    );
     animation.finished.then(() => done());
 
-    getChildren(el)?.forEach(el => {
-        animate(el, [
-            {},
-            { opacity: 0, offset: 0.25 },
-            { opacity: 0 },
-        ], {
+    getChildren(el)?.forEach((el) => {
+        animate(el, [{}, { opacity: 0, offset: 0.25 }, { opacity: 0 }], {
             duration: 250 * speedFactor,
-            easing: easingStandard
-        })
+            easing: easingStandard,
+        });
     });
 }
-
 
 /**
  * ## On After Leave
@@ -197,31 +206,29 @@ async function onLeave(el: Element, done: () => void) {
  * @param el
  */
 function onAfterLeave(el: Element) {
-    (el as HTMLElement).style.removeProperty('pointer-events');
+    (el as HTMLElement).style.removeProperty("pointer-events");
 }
-
 
 /**
  * Calculate transition props so we can use v-bind.
  */
 const transitionProps = computed(() => {
-   return (props.target) ? {
-           css: false,
-           onBeforeEnter,
-           onEnter,
-           onAfterEnter,
-           onBeforeLeave,
-           onLeave,
-           onAfterLeave
-       } : {};
+    return props.target
+        ? {
+              css: false,
+              onBeforeEnter,
+              onEnter,
+              onAfterEnter,
+              onBeforeLeave,
+              onLeave,
+              onAfterLeave,
+          }
+        : {};
 });
-
 </script>
+
 <template>
-    <transition
-        name="ev-menu-transition"
-        v-bind="transitionProps"
-    >
+    <transition name="ev-menu-transition" v-bind="transitionProps">
         <slot />
     </transition>
 </template>

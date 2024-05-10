@@ -1,29 +1,41 @@
-import {computed, inject, InjectionKey, isRef, reactive, Ref, shallowRef, toRefs, watchEffect} from "vue";
+import {
+    computed,
+    inject,
+    InjectionKey,
+    isRef,
+    reactive,
+    Ref,
+    shallowRef,
+    toRefs,
+    watchEffect,
+} from "vue";
 import {
     Browser,
-    consoleWarn, isBoolean,
+    consoleWarn,
+    isBoolean,
     isObject,
     isString,
-    mergeDeep, spaceSeparatedValues,
+    mergeDeep,
+    spaceSeparatedValues,
     toCamelCase,
     toKebabCase,
     toWebUnit,
-    trimEnd
+    trimEnd,
 } from "@/util";
-import {ResponsiveProp, ResponsivePropObject} from "@/components";
+import { ResponsiveProp, ResponsivePropObject } from "@/components";
 
 /**
  * # Breakpoints
  * Excludes `xs` as this is the smallest size - not really a breakpoint.
  */
-export const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const;
+export const breakpoints = ["sm", "md", "lg", "xl", "xxl"] as const;
 
-export type Breakpoint = typeof breakpoints[number];
+export type Breakpoint = (typeof breakpoints)[number];
 
-export type DisplayBreakpoint = 'xs' | Breakpoint;
+export type DisplayBreakpoint = "xs" | Breakpoint;
 
 export type DisplayThresholds = {
-    [key in DisplayBreakpoint]: number
+    [key in DisplayBreakpoint]: number;
 };
 
 export interface DisplayOptions {
@@ -36,10 +48,12 @@ export interface InternalDisplayOptions {
     thresholds: DisplayThresholds;
 }
 
-export type SSROptions = boolean | {
-    clientWidth: number,
-    clientHeight?: number
-};
+export type SSROptions =
+    | boolean
+    | {
+          clientWidth: number;
+          clientHeight?: number;
+      };
 
 export interface DisplayPlatform {
     android: boolean;
@@ -85,24 +99,30 @@ export interface DisplayInstance {
     /** @internal */
     ssr: boolean;
 
-    update (): void;
+    update(): void;
 }
 
-
-const parseDisplayOptions = (options: DisplayOptions = defaultDisplayOptions) => {
+const parseDisplayOptions = (
+    options: DisplayOptions = defaultDisplayOptions,
+) => {
     return mergeDeep(defaultDisplayOptions, options) as InternalDisplayOptions;
+};
+
+function getClientWidth(ssr?: SSROptions) {
+    return Browser.hasWindow && !ssr
+        ? window.innerWidth
+        : (isObject(ssr) && ssr.clientWidth) || 0;
 }
 
-function getClientWidth (ssr?: SSROptions) {
-    return (Browser.hasWindow && !ssr) ? window.innerWidth : (isObject(ssr) && ssr.clientWidth) || 0;
+function getClientHeight(ssr?: SSROptions) {
+    return Browser.hasWindow && !ssr
+        ? window.innerHeight
+        : (isObject(ssr) && ssr.clientHeight) || 0;
 }
 
-function getClientHeight (ssr?: SSROptions) {
-    return (Browser.hasWindow && !ssr) ? window.innerHeight : (isObject(ssr) && ssr.clientHeight) || 0;
-}
-
-function getPlatform (ssr?: SSROptions): DisplayPlatform {
-    const userAgent = (Browser.hasWindow && !ssr) ? window.navigator.userAgent : 'ssr';
+function getPlatform(ssr?: SSROptions): DisplayPlatform {
+    const userAgent =
+        Browser.hasWindow && !ssr ? window.navigator.userAgent : "ssr";
 
     function isUserAgent(regexp: RegExp) {
         return Boolean(userAgent.match(regexp));
@@ -121,23 +141,24 @@ function getPlatform (ssr?: SSROptions): DisplayPlatform {
         mac: isUserAgent(/mac/i),
         linux: isUserAgent(/linux/i),
         touch: Browser.supportsTouch,
-        ssr: userAgent === 'ssr'
-    }
+        ssr: userAgent === "ssr",
+    };
 }
 
-export const DisplaySymbol: InjectionKey<DisplayInstance> = Symbol.for('ev:display')
+export const DisplaySymbol: InjectionKey<DisplayInstance> =
+    Symbol.for("ev:display");
 
 export const defaultDisplayOptions: DisplayOptions = {
-    mobileBreakpoint: 'lg',
+    mobileBreakpoint: "lg",
     thresholds: {
         xs: 0,
         sm: 600,
         md: 960,
         lg: 1200,
         xl: 1600,
-        xxl: 2400
-    }
-}
+        xxl: 2400,
+    },
+};
 
 /**
  * # Create Display
@@ -146,7 +167,7 @@ export const defaultDisplayOptions: DisplayOptions = {
  */
 export function createDisplay(
     options?: DisplayOptions,
-    ssr?: SSROptions
+    ssr?: SSROptions,
 ): DisplayInstance {
     const { thresholds, mobileBreakpoint } = parseDisplayOptions(options);
 
@@ -155,12 +176,12 @@ export function createDisplay(
     const state = reactive({} as DisplayInstance);
     const width = shallowRef(getClientWidth(ssr));
 
-    function updateSize () {
+    function updateSize() {
         height.value = getClientHeight();
         width.value = getClientWidth();
     }
 
-    function update () {
+    function update() {
         updateSize();
         platform.value = getPlatform();
     }
@@ -173,14 +194,21 @@ export function createDisplay(
         const lg = width.value < thresholds.xl && !(md || sm || xs);
         const xl = width.value < thresholds.xxl && !(lg || md || sm || xs);
         const xxl = width.value >= thresholds.xxl;
-        const name =
-            xs ? 'xs'
-                : sm ? 'sm'
-                    : md ? 'md'
-                        : lg ? 'lg'
-                            : xl ? 'xl'
-                                : 'xxl';
-        const breakpointValue = typeof mobileBreakpoint === 'number' ? mobileBreakpoint : thresholds[mobileBreakpoint];
+        const name = xs
+            ? "xs"
+            : sm
+              ? "sm"
+              : md
+                ? "md"
+                : lg
+                  ? "lg"
+                  : xl
+                    ? "xl"
+                    : "xxl";
+        const breakpointValue =
+            typeof mobileBreakpoint === "number"
+                ? mobileBreakpoint
+                : thresholds[mobileBreakpoint];
         const mobile = width.value < breakpointValue;
 
         state.xs = xs;
@@ -209,24 +237,25 @@ export function createDisplay(
     });
 
     if (Browser.hasWindow) {
-        window.addEventListener('resize', updateSize, { passive: true });
+        window.addEventListener("resize", updateSize, { passive: true });
     }
 
     return {
         ...toRefs(state),
         update,
-        ssr: !!ssr
+        ssr: !!ssr,
     };
 }
-
 
 /**
  * # Use Display (from Symbol);
  */
-export function useDisplay () {
+export function useDisplay() {
     const display = inject(DisplaySymbol);
     if (!display) {
-        throw new Error("Evance UI: Could not find `ev:display` injection symbol");
+        throw new Error(
+            "Evance UI: Could not find `ev:display` injection symbol",
+        );
     }
     return display;
 }
@@ -237,26 +266,58 @@ export function useDisplay () {
  * These are listed in order of calculation priority.
  */
 export const displayRules = [
-    'xxl', 'xl', 'lg', 'md', 'sm', 'xs',
-    'xxlOnly', 'xlOnly', 'lgOnly', 'mdOnly', 'smOnly', 'xsOnly',
-    'xxlUp', 'xlUp', 'lgUp', 'mdUp', 'smUp', 'xsUp',
-    'smDown', 'mdDown', 'lgDown', 'xlDown'
+    "xxl",
+    "xl",
+    "lg",
+    "md",
+    "sm",
+    "xs",
+    "xxlOnly",
+    "xlOnly",
+    "lgOnly",
+    "mdOnly",
+    "smOnly",
+    "xsOnly",
+    "xxlUp",
+    "xlUp",
+    "lgUp",
+    "mdUp",
+    "smUp",
+    "xsUp",
+    "smDown",
+    "mdDown",
+    "lgDown",
+    "xlDown",
 ] as const;
 export const displayRulesKebab = [
-    'xxl-only', 'xl-only', 'lg-only', 'md-only', 'sm-only', 'xs-only',
-    'xxl-up', 'xl-up', 'lg-up', 'md-up', 'sm-up', 'xs-up',
-    'sm-down', 'md-down', 'lg-down', 'xl-down'
+    "xxl-only",
+    "xl-only",
+    "lg-only",
+    "md-only",
+    "sm-only",
+    "xs-only",
+    "xxl-up",
+    "xl-up",
+    "lg-up",
+    "md-up",
+    "sm-up",
+    "xs-up",
+    "sm-down",
+    "md-down",
+    "lg-down",
+    "xl-down",
 ] as const;
 
-export type DisplayRuleSuffix = 'only' | 'up' | 'down';
-export type DisplayRuleKey = typeof displayRules[number];
-export type DisplayRuleKebab = typeof displayRulesKebab[number];
+export type DisplayRuleSuffix = "only" | "up" | "down";
+export type DisplayRuleKey = (typeof displayRules)[number];
+export type DisplayRuleKebab = (typeof displayRulesKebab)[number];
 export type DisplayRuleValue = number | string;
 export type DisplayRuleObject = {
-    [key in DisplayRuleKey]?: DisplayRuleValue
+    [key in DisplayRuleKey]?: DisplayRuleValue;
 };
 export type DisplayRuleProp = DisplayRuleValue | DisplayRuleObject;
-export type DisplayRuleListProp = DisplayRuleKey
+export type DisplayRuleListProp =
+    | DisplayRuleKey
     | DisplayRuleKey[]
     | DisplayRuleKebab
     | DisplayRuleKebab[];
@@ -269,13 +330,15 @@ export type VisibilityRuleProp = DisplayRuleListProp | boolean;
  *
  * @param rules
  */
-export function calculateDisplayRuleValue(rules?: DisplayRuleObject | DisplayRuleValue) {
+export function calculateDisplayRuleValue(
+    rules?: DisplayRuleObject | DisplayRuleValue,
+) {
     const display = useDisplay();
     if (!isObject(rules)) {
         return toWebUnit(rules);
     }
     for (const ruleKey of displayRules) {
-        let displayKey = toDisplayStateKey(ruleKey);
+        const displayKey = toDisplayStateKey(ruleKey);
         const displayState = display[displayKey as keyof DisplayInstance];
         if (isRef(displayState) && displayState.value && !!rules[ruleKey]) {
             return toWebUnit(rules[ruleKey]);
@@ -283,7 +346,6 @@ export function calculateDisplayRuleValue(rules?: DisplayRuleObject | DisplayRul
     }
     return undefined;
 }
-
 
 /**
  * # To Display Key
@@ -298,12 +360,11 @@ export function toDisplayStateKey(displayRule: string): string {
     if (isDisplayBreakpoint(value)) {
         value = `${value}Up`;
     }
-    value = trimEnd(value, 'Only');
+    value = trimEnd(value, "Only");
     toKebabCase.cache.set(displayRule, value);
     return value;
 }
 toDisplayStateKey.cache = new Map<string, string>();
-
 
 /**
  * # To Display Rule Kebab
@@ -323,33 +384,32 @@ export function toDisplayRuleKebab(displayRule: string): string {
 }
 toDisplayRuleKebab.cache = new Map<string, string>();
 
-
-
-
 /**
  * # isDisplayRule
  *
  * @param value
  * @param acceptKebabs
  */
-export function isDisplayRule(value: unknown, acceptKebabs: boolean = true): value is DisplayRuleKey | DisplayRuleKebab {
+export function isDisplayRule(
+    value: unknown,
+    acceptKebabs: boolean = true,
+): value is DisplayRuleKey | DisplayRuleKebab {
     return (
-        displayRules.includes(value as DisplayRuleKey)
-        || (acceptKebabs && displayRulesKebab.includes(value as DisplayRuleKebab))
+        displayRules.includes(value as DisplayRuleKey) ||
+        (acceptKebabs && displayRulesKebab.includes(value as DisplayRuleKebab))
     );
 }
-
 
 /**
  * # isDisplayBreakpoint
  *
  * @param value
  */
-export function isDisplayBreakpoint(value: unknown): value is DisplayBreakpoint {
-    return ['xs', ...breakpoints].includes(value as DisplayBreakpoint);
+export function isDisplayBreakpoint(
+    value: unknown,
+): value is DisplayBreakpoint {
+    return ["xs", ...breakpoints].includes(value as DisplayBreakpoint);
 }
-
-
 
 /**
  * # createBreakpointClasses
@@ -363,12 +423,12 @@ export function useBreakpointClasses<
     PropsObject extends object,
     PropName extends Extract<keyof PropsObject, string>,
     Prefix extends string | undefined,
-    UseXs extends boolean
-> (
+    UseXs extends boolean,
+>(
     props: PropsObject,
     propName: PropName,
     prefix: Prefix = undefined as Prefix,
-    useXs: UseXs = false as UseXs
+    useXs: UseXs = false as UseXs,
 ) {
     return computed(() => {
         const prop = props[propName] as ResponsiveProp;
@@ -376,24 +436,24 @@ export function useBreakpointClasses<
             return [];
         }
         const classes = [];
-        const values = (typeof prop !== 'object')
-            ? { xs: prop } as ResponsivePropObject
-            : prop;
+        const values =
+            typeof prop !== "object"
+                ? ({ xs: prop } as ResponsivePropObject)
+                : prop;
         for (const [breakpoint, value] of Object.entries(values)) {
             const className = [];
             if (prefix) {
                 className.push(prefix);
             }
-            if (useXs || breakpoint !== 'xs') {
+            if (useXs || breakpoint !== "xs") {
                 className.push(breakpoint);
             }
             className.push(value);
-            classes.push(className.join('-'));
+            classes.push(className.join("-"));
         }
         return classes;
     });
 }
-
 
 /**
  * # useDisplayRuleClasses
@@ -405,11 +465,11 @@ export function useBreakpointClasses<
 export function useDisplayRuleClasses<
     PropsObject extends object,
     PropName extends Extract<keyof PropsObject, string>,
-    Prefix extends string | undefined
-> (
+    Prefix extends string | undefined,
+>(
     props: PropsObject,
     propName: PropName,
-    prefix: Prefix = undefined as Prefix
+    prefix: Prefix = undefined as Prefix,
 ) {
     return computed(() => {
         const classes = [];
@@ -420,7 +480,9 @@ export function useDisplayRuleClasses<
                 continue;
             }
             if (!isDisplayRule(rule)) {
-                consoleWarn(`The display rule '${rule}' is not valid and will be ignored.`);
+                consoleWarn(
+                    `The display rule '${rule}' is not valid and will be ignored.`,
+                );
                 continue;
             }
             const suffix = toDisplayRuleKebab(rule);
@@ -429,7 +491,6 @@ export function useDisplayRuleClasses<
         return classes;
     });
 }
-
 
 /**
  * # toDisplayRuleArray
@@ -449,9 +510,11 @@ export function toDisplayRuleArray(prop: unknown): string[] {
                 if (isBoolean(value)) {
                     return value ? key : undefined;
                 }
-                return isString(value) ? `${key}-${value.toLowerCase()}` : undefined;
+                return isString(value)
+                    ? `${key}-${value.toLowerCase()}`
+                    : undefined;
             })
-            .filter(value => value !== undefined);
+            .filter((value) => value !== undefined);
     }
     return [];
 }

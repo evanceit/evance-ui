@@ -1,2 +1,2 @@
-export * from './EvTab.ts';
-export { default as EvTab } from './EvTab.vue';
+export * from "./EvTab.ts";
+export { default as EvTab } from "./EvTab.vue";

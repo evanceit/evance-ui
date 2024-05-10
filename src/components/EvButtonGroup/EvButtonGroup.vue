@@ -2,27 +2,26 @@
 /**
  * # EvButtonGroup
  */
-import './EvButtonGroup.scss';
-import {makeEvButtonGroupProps} from "./EvButtonGroup.ts";
-import {provideDefaults} from "@/composables/defaults.ts";
-import {computed, toRef} from "vue";
-import {appearanceModifier, variantModifier} from "@/util";
+import "./EvButtonGroup.scss";
+import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
+import { provideDefaults } from "@/composables/defaults.ts";
+import { computed, toRef } from "vue";
+import { appearanceModifier, variantModifier } from "@/util";
 
 const props = defineProps(makeEvButtonGroupProps());
 
 provideDefaults({
     EvButton: {
-        appearance: toRef(props, 'appearance'),
-        variant: toRef(props, 'variant'),
-        size: toRef(props, 'size')
-    }
+        appearance: toRef(props, "appearance"),
+        variant: toRef(props, "variant"),
+        size: toRef(props, "size"),
+    },
 });
-
 
 const appearanceClass = computed(() => appearanceModifier(props.appearance));
 const variantClass = computed(() => variantModifier(props.variant));
-
 </script>
+
 <template>
     <component
         :is="props.tag"
@@ -31,12 +30,11 @@ const variantClass = computed(() => variantModifier(props.variant));
             appearanceClass,
             variantClass,
             {
-                'is-rounded': props.rounded
+                'is-rounded': props.rounded,
             },
-            props.class
+            props.class,
         ]"
-        :style="props.style"
-    >
+        :style="props.style">
         <div class="ev-button-group--container">
             <slot />
         </div>

@@ -1,31 +1,36 @@
-<script setup lang="ts">/**
+<script setup lang="ts">
+/**
  * EvWindowItem
  */
-import {computed, inject, nextTick, shallowRef} from "vue";
-import {makeEvWindowItemProps} from "./EvWindowItem.ts";
-import {EvWindowGroupSymbol, EvWindowSymbol} from "../EvWindow.ts";
-import {EvTransition} from "@/components/EvTransition";
-import {GroupItemProps, useGroupItem} from "@/composables/groupItem.ts";
-import {useSsrBoot} from "@/composables/ssrBoot.ts";
-import {isString, toWebUnit} from "@/util";
-import {useLazy} from "@/composables/lazy.ts";
-
+import { computed, inject, nextTick, shallowRef } from "vue";
+import { makeEvWindowItemProps } from "./EvWindowItem.ts";
+import { EvWindowGroupSymbol, EvWindowSymbol } from "../EvWindow.ts";
+import { EvTransition } from "@/components/EvTransition";
+import { GroupItemProps, useGroupItem } from "@/composables/groupItem.ts";
+import { useSsrBoot } from "@/composables/ssrBoot.ts";
+import { isString, toWebUnit } from "@/util";
+import { useLazy } from "@/composables/lazy.ts";
 
 const props = defineProps(makeEvWindowItemProps());
 const window = inject(EvWindowSymbol);
-const groupItem = useGroupItem(props as any as GroupItemProps, EvWindowGroupSymbol);
+const groupItem = useGroupItem(
+    props as any as GroupItemProps,
+    EvWindowGroupSymbol,
+);
 const { isBooted } = useSsrBoot();
 
 if (!window || !groupItem) {
-    throw new Error('Evance UI: EvWindowItem must be used inside EvWindow');
+    throw new Error("Evance UI: EvWindowItem must be used inside EvWindow");
 }
 
 const isTransitioning = shallowRef(false);
-const hasTransition = computed(() => isBooted.value && (
-    window.isReversed.value
-        ? props.reverseTransition !== false
-        : props.transition !== false
-));
+const hasTransition = computed(
+    () =>
+        isBooted.value &&
+        (window.isReversed.value
+            ? props.reverseTransition !== false
+            : props.transition !== false),
+);
 
 /**
  * ## onAfterTransition
@@ -57,7 +62,9 @@ function onBeforeTransition() {
     isTransitioning.value = true;
     if (window.transitionCount.value === 0) {
         // Set initial height for height transition.
-        window.transitionHeight.value = toWebUnit(window.rootRef.value?.clientHeight);
+        window.transitionHeight.value = toWebUnit(
+            window.rootRef.value?.clientHeight,
+        );
     }
     window.transitionCount.value += 1;
 }
@@ -93,33 +100,30 @@ const transition = computed(() => {
         ? props.reverseTransition
         : props.transition;
 
-    return !hasTransition.value ? false : {
-        name: !isString(name) ? window.transition.value : name,
-        onBeforeEnter: onBeforeTransition,
-        onAfterEnter: onAfterTransition,
-        onEnterCancelled: onTransitionCancelled,
-        onBeforeLeave: onBeforeTransition,
-        onAfterLeave: onAfterTransition,
-        onLeaveCancelled: onTransitionCancelled,
-        onEnter: onEnterTransition
-    };
+    return !hasTransition.value
+        ? false
+        : {
+              name: !isString(name) ? window.transition.value : name,
+              onBeforeEnter: onBeforeTransition,
+              onAfterEnter: onAfterTransition,
+              onEnterCancelled: onTransitionCancelled,
+              onBeforeLeave: onBeforeTransition,
+              onAfterLeave: onAfterTransition,
+              onLeaveCancelled: onTransitionCancelled,
+              onEnter: onEnterTransition,
+          };
 });
 
 const { hasContent } = useLazy(props, groupItem.isSelected);
-
 </script>
+
 <template>
     <ev-transition :transition="transition" :disabled="!isBooted">
         <div
-            :class="[
-                'ev-window-item',
-                props.class
-            ]"
-            :style="props.style"
             v-show="groupItem.isSelected.value"
-        >
+            :class="['ev-window-item', props.class]"
+            :style="props.style">
             <slot v-if="hasContent" />
         </div>
     </ev-transition>
-
 </template>

@@ -9,7 +9,6 @@ export function is(a?: any, b?: any): boolean {
     return Object.is(a, b);
 }
 
-
 /**
  * # Is Array?
  * @param value
@@ -23,30 +22,27 @@ export function isArray(value: unknown): boolean {
  * @param value
  */
 export function isBoolean(value: unknown): value is boolean {
-    return typeof value === 'boolean';
+    return typeof value === "boolean";
 }
 
 /**
  * # Is CSS Variable
  * @param value
  */
-export function isCssVariable(value: unknown): boolean
-{
+export function isCssVariable(value: unknown): boolean {
     if (!isString(value)) {
         return false;
     }
     return /^--[\w-]+$/.test(value as string);
 }
 
-
 /**
  * # Is Date?
  * @param value
  */
 export function isDate(value: unknown): value is Date {
-    return (value instanceof Date);
+    return value instanceof Date;
 }
-
 
 /**
  * # Is Date Equal
@@ -57,9 +53,8 @@ export function isDate(value: unknown): value is Date {
  * @param b
  */
 export function isDateEqual(a: Date, b: Date): boolean {
-    return (a.getTime() === b.getTime());
+    return a.getTime() === b.getTime();
 }
-
 
 /**
  * # Is Deep Equal?
@@ -77,8 +72,12 @@ export function isDeepEqual(a: any, b: any): boolean {
         return true;
     }
     // Check types
-    if (typeof a !== typeof b) { return false; }
-    if (a == null || b == null) { return false; }
+    if (typeof a !== typeof b) {
+        return false;
+    }
+    if (a == null || b == null) {
+        return false;
+    }
 
     // Check dates
     if (isDate(a) && isDate(b) && !isDateEqual(a, b)) {
@@ -102,25 +101,20 @@ export function isDeepEqual(a: any, b: any): boolean {
 }
 
 export function isElement(el: unknown): el is Element {
-    return (
-        !!el
-        && el instanceof Element
-        && el.nodeType === Node.ELEMENT_NODE
-    );
+    return !!el && el instanceof Element && el.nodeType === Node.ELEMENT_NODE;
 }
 
 /**
  * # Is Empty
  * @param value
  */
-export function isEmpty (value: any): boolean {
+export function isEmpty(value: any): boolean {
     return (
-        value === null
-        || value === undefined
-        || (typeof value === 'string' && value.trim() === '')
+        value === null ||
+        value === undefined ||
+        (typeof value === "string" && value.trim() === "")
     );
 }
-
 
 /**
  * # Is Equal NaN
@@ -130,7 +124,7 @@ export function isEmpty (value: any): boolean {
  * @param value
  */
 export function isEqualNaN(value: unknown): boolean {
-    return (value !== value);
+    return value !== value;
 }
 
 /**
@@ -138,7 +132,7 @@ export function isEqualNaN(value: unknown): boolean {
  * @param value
  */
 export function isFunction(value: unknown): value is Function {
-    return (typeof value === 'function');
+    return typeof value === "function";
 }
 
 /**
@@ -146,7 +140,7 @@ export function isFunction(value: unknown): value is Function {
  * @param value
  */
 export function isNumber(value: unknown): value is number {
-    return (typeof value === 'number');
+    return typeof value === "number";
 }
 
 /**
@@ -154,7 +148,7 @@ export function isNumber(value: unknown): value is number {
  * @param value
  */
 export function isObject(value: unknown): value is object {
-    return (typeof value === 'object');
+    return typeof value === "object";
 }
 
 /**
@@ -172,7 +166,9 @@ export const isOn = (key: string) => isOnPattern.test(key);
  *
  * @param value
  */
-export function isPrimitive (value: unknown): value is string | number | boolean {
+export function isPrimitive(
+    value: unknown,
+): value is string | number | boolean {
     return Object(value) !== value;
 }
 
@@ -181,10 +177,7 @@ export function isPrimitive (value: unknown): value is string | number | boolean
  * @param value
  */
 export function isShadowRoot(value: unknown): value is ShadowRoot {
-    return (
-        typeof ShadowRoot !== 'undefined'
-        && value instanceof ShadowRoot
-    );
+    return typeof ShadowRoot !== "undefined" && value instanceof ShadowRoot;
 }
 
 /**
@@ -192,10 +185,10 @@ export function isShadowRoot(value: unknown): value is ShadowRoot {
  * @param value
  */
 export function isString(value: unknown): value is string {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return true;
     }
-    if (typeof value !== 'object') {
+    if (typeof value !== "object") {
         return false;
     }
     try {

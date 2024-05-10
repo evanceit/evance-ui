@@ -1,5 +1,5 @@
 // Utilities
-import { propsFactory } from '@/util';
+import { propsFactory } from "@/util";
 
 // Types
 export interface TagProps {
@@ -7,9 +7,12 @@ export interface TagProps {
 }
 
 // Tag Props
-export const makeTagProps = propsFactory({
-    tag: {
-        type: String,
-        default: 'div',
+export const makeTagProps = propsFactory(
+    {
+        tag: {
+            type: String,
+            default: "div",
+        },
     },
-}, 'tag');
+    "tag",
+);

@@ -1,19 +1,19 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-import {EvTooltip, EvButton} from "../../components";
+import { EvTooltip, EvButton } from "../../components";
 
 const meta: Meta<typeof EvTooltip> = {
     component: EvTooltip,
     title: "Overlays/EvTooltip",
     argTypes: {
         modelValue: {
-            control: 'boolean'
-        }
+            control: "boolean",
+        },
     },
     args: {
-        modelValue: false
+        modelValue: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -21,7 +21,7 @@ export default meta;
 type Story = StoryObj<typeof EvTooltip>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args) => ({
         components: { EvTooltip, EvButton },
         setup() {
             return { args };
@@ -46,6 +46,6 @@ export const Primary: Story = {
                 Right
                 <ev-tooltip activator="parent" position="right"><code>position="right"</code></ev-tooltip>
             </ev-button>
-        `
+        `,
     }),
 };

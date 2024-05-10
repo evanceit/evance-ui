@@ -1,14 +1,29 @@
-import {NavigationGuardNext, RouteLocationRaw, Router, RouterLink, useLink, UseLinkOptions} from "vue-router";
+import {
+    NavigationGuardNext,
+    RouteLocationRaw,
+    Router,
+    RouterLink,
+    useLink,
+    UseLinkOptions,
+} from "vue-router";
 import {
     computed,
-    ComputedRef, nextTick, onScopeDispose, PropType,
+    ComputedRef,
+    nextTick,
+    onScopeDispose,
+    PropType,
     Ref,
     resolveDynamicComponent,
     SetupContext,
-    toRef
+    toRef,
 } from "vue";
-import {Browser, ClickEventListeners, hasEventListener, isString, propsFactory} from "@/util";
-
+import {
+    Browser,
+    ClickEventListeners,
+    hasEventListener,
+    isString,
+    propsFactory,
+} from "@/util";
 
 /**
  * # RouterLink or Href Props
@@ -26,16 +41,15 @@ export interface RouterLinkOrHrefProps {
     exact?: boolean;
 }
 
-
 /**
  * # Use RouterLink or Href
  */
-export interface UseRouterLinkOrHref extends Omit<Partial<ReturnType<typeof useLink>>, 'href'> {
-    isLink: ComputedRef<boolean>
-    isClickable: ComputedRef<boolean>
-    href: Ref<string | undefined>
+export interface UseRouterLinkOrHref
+    extends Omit<Partial<ReturnType<typeof useLink>>, "href"> {
+    isLink: ComputedRef<boolean>;
+    isClickable: ComputedRef<boolean>;
+    href: Ref<string | undefined>;
 }
-
 
 /**
  * # Is Clickable Link
@@ -44,23 +58,24 @@ export interface UseRouterLinkOrHref extends Omit<Partial<ReturnType<typeof useL
  */
 export function isClickableLink(
     props: RouterLinkOrHrefProps & ClickEventListeners,
-    attrs: SetupContext['attrs']
+    attrs: SetupContext["attrs"],
 ): ComputedRef<boolean> {
     return computed(() => {
         return (
-            !!(props.href || props.to)
-            || hasEventListener(attrs, 'click')
-            || hasEventListener(props, 'click')
+            !!(props.href || props.to) ||
+            hasEventListener(attrs, "click") ||
+            hasEventListener(props, "click")
         );
     });
 }
-
 
 /**
  * # Is RouterLink or Href
  * @param props
  */
-export function isRouterLinkOrHref(props: RouterLinkOrHrefProps): ComputedRef<boolean> {
+export function isRouterLinkOrHref(
+    props: RouterLinkOrHrefProps,
+): ComputedRef<boolean> {
     return computed(() => {
         return !!(props.href || props.to);
     });
@@ -69,13 +84,15 @@ export function isRouterLinkOrHref(props: RouterLinkOrHrefProps): ComputedRef<bo
 /**
  * # Make Router Props
  */
-export const makeRouterLinkOrHrefProps = propsFactory({
-    href: String,
-    replace: Boolean,
-    to: [String, Object] as PropType<RouteLocationRaw>,
-    exact: Boolean,
-}, 'router');
-
+export const makeRouterLinkOrHrefProps = propsFactory(
+    {
+        href: String,
+        replace: Boolean,
+        to: [String, Object] as PropType<RouteLocationRaw>,
+        exact: Boolean,
+    },
+    "router",
+);
 
 /**
  * # Use Router Link or Href
@@ -88,27 +105,35 @@ export const makeRouterLinkOrHrefProps = propsFactory({
  */
 export function useRouterLinkOrHref(
     props: RouterLinkOrHrefProps,
-    attrs: SetupContext['attrs']
+    attrs: SetupContext["attrs"],
 ): UseRouterLinkOrHref {
-    const routerLink = resolveDynamicComponent('RouterLink') as typeof RouterLink | string;
+    const routerLink = resolveDynamicComponent("RouterLink") as
+        | typeof RouterLink
+        | string;
     const isLink = isRouterLinkOrHref(props);
     const isClickable = isClickableLink(props, attrs);
     if (isString(routerLink)) {
         return {
             isLink,
             isClickable,
-            href: toRef(props, 'href')
+            href: toRef(props, "href"),
         };
     }
-    const link = props.to ? routerLink.useLink(props as UseLinkOptions) : undefined;
+    const link = props.to
+        ? routerLink.useLink(props as UseLinkOptions)
+        : undefined;
     return {
         isLink,
         isClickable,
         route: link?.route,
         navigate: link?.navigate,
-        isActive: link && computed(() => props.exact ? link.isExactActive?.value : link.isActive?.value),
+        isActive:
+            link &&
+            computed(() =>
+                props.exact ? link.isExactActive?.value : link.isActive?.value,
+            ),
         isExactActive: link?.isExactActive,
-        href: computed(() => props.to ? link?.route.value.href : props.href)
+        href: computed(() => (props.to ? link?.route.value.href : props.href)),
     };
 }
 
@@ -125,13 +150,13 @@ export function useRouterLinkOrHref(
 let isTransitioning = false;
 export function useBackButton(
     router: Router | undefined,
-    callback: (next: NavigationGuardNext) => void
+    callback: (next: NavigationGuardNext) => void,
 ) {
     let isPopped = false;
     let removeBefore: (() => void) | undefined;
     let removeAfter: (() => void) | undefined;
 
-    function onPopState (e: PopStateEvent) {
+    function onPopState(e: PopStateEvent) {
         if (e.state?.replaced) {
             return;
         }
@@ -141,9 +166,8 @@ export function useBackButton(
     }
 
     if (Browser.hasWindow) {
-
         nextTick(() => {
-            window.addEventListener('popstate', onPopState);
+            window.addEventListener("popstate", onPopState);
             removeBefore = router?.beforeEach((to, from, next) => {
                 if (!isTransitioning) {
                     // Use setTimeout to be asynchronous
@@ -161,7 +185,7 @@ export function useBackButton(
         });
 
         onScopeDispose(() => {
-            window.removeEventListener('popstate', onPopState);
+            window.removeEventListener("popstate", onPopState);
             removeBefore?.();
             removeAfter?.();
         });

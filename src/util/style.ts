@@ -1,4 +1,3 @@
-
 export type StyleProp = Record<string, string>;
 
 /**
@@ -8,8 +7,8 @@ export type StyleProp = Record<string, string>;
  */
 export function toFixedPosition(style: StyleProp, isRtl: boolean = false) {
     Object.assign(style, {
-        position: 'fixed',
+        position: "fixed",
         top: 0,
-        [isRtl ? 'right' : 'left']: 0
+        [isRtl ? "right" : "left"]: 0,
     });
 }

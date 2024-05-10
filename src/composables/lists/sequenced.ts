@@ -8,7 +8,4 @@
  * - 'first' - Position a node as the first child in the sequence
  * - 'last' - Position a node as the last child in the sequence
  */
-export type SequencedPosition = 'after'
-    | 'before'
-    | 'first'
-    | 'last';
+export type SequencedPosition = "after" | "before" | "first" | "last";

@@ -1,6 +1,6 @@
-import {App} from "vue";
-import {EvDialogServiceSymbol} from "@/composables/dialog.ts";
-import {EvDialogServiceOpener} from "@/components/EvDialog/EvDialogServiceOpener.ts";
+import { App } from "vue";
+import { EvDialogServiceSymbol } from "@/composables/dialog.ts";
+import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
 /**
  * # EvDialogService
@@ -14,5 +14,5 @@ export default {
 
         // For composition API - use with `useDialog()`
         app.provide(EvDialogServiceSymbol, service);
-    }
+    },
 };

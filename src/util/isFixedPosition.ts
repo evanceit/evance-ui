@@ -1,6 +1,6 @@
-export function isFixedPosition (el?: HTMLElement) {
+export function isFixedPosition(el?: HTMLElement) {
     while (el) {
-        if (window.getComputedStyle(el).position === 'fixed') {
+        if (window.getComputedStyle(el).position === "fixed") {
             return true;
         }
         el = el.offsetParent as HTMLElement;

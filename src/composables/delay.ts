@@ -1,15 +1,17 @@
-import {propsFactory} from "../util";
-
+import { propsFactory } from "../util";
 
 export interface DelayOpenCloseProps {
     closeDelay?: number | string;
     openDelay?: number | string;
 }
 
-export const makeDelayOpenCloseProps = propsFactory({
-    closeDelay: [Number, String],
-    openDelay: [Number, String]
-}, 'delay');
+export const makeDelayOpenCloseProps = propsFactory(
+    {
+        closeDelay: [Number, String],
+        openDelay: [Number, String],
+    },
+    "delay",
+);
 
 export type DelayOpenCloseCallback = (value: boolean) => void;
 
@@ -21,13 +23,13 @@ export type DelayOpenCloseCallback = (value: boolean) => void;
  */
 export function useDelayOpenClose(
     props: DelayOpenCloseProps,
-    callback?: DelayOpenCloseCallback
+    callback?: DelayOpenCloseCallback,
 ) {
     const delays: Partial<Record<keyof DelayOpenCloseProps, number>> = {};
 
     const createDelay = (prop: keyof DelayOpenCloseProps) => {
         return (): Promise<boolean> => {
-            const isOpening = (prop === 'openDelay');
+            const isOpening = prop === "openDelay";
 
             if (delays.closeDelay) {
                 window.clearTimeout(delays.closeDelay);
@@ -43,11 +45,11 @@ export function useDelayOpenClose(
                     resolve(isOpening);
                 }, duration);
             });
-        }
-    }
+        };
+    };
 
     return {
-        delayClose: createDelay('closeDelay'),
-        delayOpen: createDelay('openDelay')
+        delayClose: createDelay("closeDelay"),
+        delayOpen: createDelay("openDelay"),
     };
 }

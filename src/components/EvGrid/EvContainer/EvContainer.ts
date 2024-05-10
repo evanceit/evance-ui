@@ -1,22 +1,25 @@
-import {propsFactory} from "@/util";
-import {makeComponentProps} from "@/composables/component.ts";
-import {makeTagProps} from "@/composables/tag.ts";
-import {PropType} from "vue";
-import {DisplayRuleProp, VisibilityRuleProp} from "@/composables/display.ts";
+import { propsFactory } from "@/util";
+import { makeComponentProps } from "@/composables/component.ts";
+import { makeTagProps } from "@/composables/tag.ts";
+import { PropType } from "vue";
+import { DisplayRuleProp, VisibilityRuleProp } from "@/composables/display.ts";
 
 /**
  * # makeEvContainerProps
  */
-export const makeEvContainerProps = propsFactory({
-    fluid: {
-        type: Boolean,
-        default: false,
-    },
-    fill: Boolean,
-    hidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
-    height: [String, Number, Object] as PropType<DisplayRuleProp>,
-    width: [String, Number, Object] as PropType<DisplayRuleProp>,
+export const makeEvContainerProps = propsFactory(
+    {
+        fluid: {
+            type: Boolean,
+            default: false,
+        },
+        fill: Boolean,
+        hidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,
+        height: [String, Number, Object] as PropType<DisplayRuleProp>,
+        width: [String, Number, Object] as PropType<DisplayRuleProp>,
 
-    ...makeComponentProps(),
-    ...makeTagProps()
-}, 'EvContainer');
+        ...makeComponentProps(),
+        ...makeTagProps(),
+    },
+    "EvContainer",
+);

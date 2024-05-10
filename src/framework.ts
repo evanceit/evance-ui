@@ -1,27 +1,40 @@
-import {createDisplay, DisplayOptions, DisplaySymbol, SSROptions} from "./composables/display.ts";
-import {Browser, getNextId, mergeDeep} from "./util";
-import {App, nextTick} from "vue";
-import {createLocaleManager, LocaleSymbol} from "@/composables/locale.ts";
-import {LocaleOptions} from "@/modules/Locale/LocaleManager.ts";
-import {createDate, DateAdapterSymbol, DateOptions} from "@/composables/date/date.ts";
-import {createDefaults, DefaultsOptions, DefaultsSymbol} from "@/composables/defaults.ts";
+import {
+    createDisplay,
+    DisplayOptions,
+    DisplaySymbol,
+    SSROptions,
+} from "./composables/display.ts";
+import { Browser, getNextId, mergeDeep } from "./util";
+import { App, nextTick } from "vue";
+import { createLocaleManager, LocaleSymbol } from "@/composables/locale.ts";
+import { LocaleOptions } from "@/modules/Locale/LocaleManager.ts";
+import {
+    createDate,
+    DateAdapterSymbol,
+    DateOptions,
+} from "@/composables/date/date.ts";
+import {
+    createDefaults,
+    DefaultsOptions,
+    DefaultsSymbol,
+} from "@/composables/defaults.ts";
 
-export * from './composables';
-export type { DateOptions, DateAdapterInstance } from '@/composables/date';
+export * from "./composables";
+export type { DateOptions, DateAdapterInstance } from "@/composables/date";
 
 export interface EvanceUiOptions {
-    blueprint?: Blueprint,
-    components?: Record<string, any>,
-    date?: DateOptions,
-    defaults?: DefaultsOptions,
-    directives?: Record<string, any>,
-    display?: DisplayOptions,
-    locale?: LocaleOptions, // & RtlOptions,  // @todo: <--- YOU ARE HERE
-    ssr?: SSROptions,
-    services?: Record<string, any>
+    blueprint?: Blueprint;
+    components?: Record<string, any>;
+    date?: DateOptions;
+    defaults?: DefaultsOptions;
+    directives?: Record<string, any>;
+    display?: DisplayOptions;
+    locale?: LocaleOptions; // & RtlOptions,  // @todo: <--- YOU ARE HERE
+    ssr?: SSROptions;
+    services?: Record<string, any>;
 }
 
-export interface Blueprint extends Omit<EvanceUiOptions, 'blueprint'> {}
+export interface Blueprint extends Omit<EvanceUiOptions, "blueprint"> {}
 
 // Added to prevent strict errors
 interface NuxtApp {
@@ -36,11 +49,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     const { blueprint, ...rest } = evanceUi;
     const options: EvanceUiOptions = mergeDeep(blueprint, rest);
 
-    const {
-        components = {},
-        directives = {},
-        services = {}
-    } = options;
+    const { components = {}, directives = {}, services = {} } = options;
 
     const defaults = createDefaults(options.defaults);
     const display = createDisplay(options.display, options.ssr);
@@ -48,7 +57,6 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     const date = createDate(options.date, locale);
 
     const install = (app: App) => {
-
         // Install Directives
         for (const key in directives) {
             app.directive(key, directives[key]);
@@ -71,8 +79,8 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         app.provide(DateAdapterSymbol, date);
 
         if (Browser.hasWindow && options.ssr) {
-            if ('$nuxt' in app) {
-                (app.$nuxt as NuxtApp).hook('app:suspense:resolve', () => {
+            if ("$nuxt" in app) {
+                (app.$nuxt as NuxtApp).hook("app:suspense:resolve", () => {
                     display.update();
                 });
             } else {
@@ -82,7 +90,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
                     nextTick(() => display.update());
                     app.mount = mount;
                     return vm;
-                }
+                };
             }
         }
 
@@ -94,6 +102,6 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         defaults,
         display,
         locale,
-        date
+        date,
     };
 }

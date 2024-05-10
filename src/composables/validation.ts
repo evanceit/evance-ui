@@ -1,9 +1,8 @@
-import {propsFactory} from "@/util";
-import {PropType} from "vue";
-import {makeFocusProps} from "@/composables/focus.ts";
-import {useForm} from "@/composables/form.ts";
-import {FormField} from "@/modules/Form/FormField.ts";
-
+import { propsFactory } from "@/util";
+import { PropType } from "vue";
+import { makeFocusProps } from "@/composables/focus.ts";
+import { useForm } from "@/composables/form.ts";
+import { FormField } from "@/modules/Form/FormField.ts";
 
 /**
  * # Validation Error
@@ -23,7 +22,8 @@ export type ValidationResult = string | boolean;
 /**
  * # Validator
  */
-export type Validator = ValidationResult
+export type Validator =
+    | ValidationResult
     | PromiseLike<ValidationResult>
     | ((value: any) => ValidationResult)
     | ((value: any) => PromiseLike<ValidationResult>);
@@ -31,7 +31,7 @@ export type Validator = ValidationResult
 /**
  * # Validate On Event
  */
-export type ValidateOnEvent = 'blur' | 'input' | 'submit';
+export type ValidateOnEvent = "blur" | "input" | "submit";
 
 /**
  * # Form Field Props
@@ -45,30 +45,36 @@ export interface FormFieldProps {
     readonly?: boolean;
     validators: Validator[];
     modelValue?: any;
-    validateOn?: ValidateOnEvent | `${ValidateOnEvent} lazy` | `lazy ${ValidateOnEvent}` | 'lazy';
+    validateOn?:
+        | ValidateOnEvent
+        | `${ValidateOnEvent} lazy`
+        | `lazy ${ValidateOnEvent}`
+        | "lazy";
     validationValue?: any;
 }
 
 /**
  * # Make Form Field Props
  */
-export const makeFormFieldProps = propsFactory({
-    id: String,
-    disabled: Boolean,
-    error: Boolean,
-    name: String,
-    readonly: Boolean,
-    validators: {
-        type: Array as PropType<FormFieldProps['validators']>,
-        default: [],
+export const makeFormFieldProps = propsFactory(
+    {
+        id: String,
+        disabled: Boolean,
+        error: Boolean,
+        name: String,
+        readonly: Boolean,
+        validators: {
+            type: Array as PropType<FormFieldProps["validators"]>,
+            default: [],
+        },
+        modelValue: null,
+        validateOn: String as PropType<FormFieldProps["validateOn"]>,
+        validationValue: null,
+
+        ...makeFocusProps(),
     },
-    modelValue: null,
-    validateOn: String as PropType<FormFieldProps['validateOn']>,
-    validationValue: null,
-
-    ...makeFocusProps()
-}, 'validation');
-
+    "validation",
+);
 
 /**
  * # Use Form Field
@@ -77,12 +83,8 @@ export const makeFormFieldProps = propsFactory({
  */
 export function useFormField(
     props: FormFieldProps,
-    group: FormField | undefined = undefined
+    group: FormField | undefined = undefined,
 ) {
     const form = useForm();
-    return new FormField(
-        form,
-        props,
-        group
-    );
+    return new FormField(form, props, group);
 }

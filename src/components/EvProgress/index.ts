@@ -1,1 +1,1 @@
-export { default as EvProgress } from './EvProgress.vue';
+export { default as EvProgress } from "./EvProgress.vue";

@@ -1,19 +1,15 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
-import {EvForm} from "../EvForm";
-import {ref, shallowRef} from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { EvForm } from "../EvForm";
+import { ref, shallowRef } from "vue";
 import EvTextfield from "../EvTextfield/EvTextfield.vue";
 import EvButton from "../EvButton/EvButton.vue";
 
 const meta: Meta<typeof EvForm> = {
     component: EvForm,
-    title: 'Forms/EvForm',
-    argTypes: {
-
-    },
-    args: {
-
-    },
-    tags: ['autodocs']
+    title: "Forms/EvForm",
+    argTypes: {},
+    args: {},
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -23,21 +19,21 @@ type Story = StoryObj<typeof EvForm>;
 const formRef = ref();
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args) => ({
         components: { EvForm, EvTextfield, EvButton },
         setup() {
-            let timeout:any;
+            let timeout: any;
 
             const loading = shallowRef(false);
-            let username = shallowRef('');
+            const username = shallowRef("");
 
             const requiredValidator = async (value: any) => {
-                return new Promise(resolve => {
-                   clearTimeout(timeout);
-                   timeout = setTimeout(() => {
-                        if (!value) return resolve('Please enter a username');
+                return new Promise((resolve) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        if (!value) return resolve("Please enter a username");
                         return resolve(true);
-                   }, 1000);
+                    }, 1000);
                 });
             };
 
@@ -49,7 +45,7 @@ export const Primary: Story = {
                 const results = await event;
                 this.loading = false;
                 console.log(results);
-            }
+            },
         },
         template: `<ev-form 
             validate-on="submit lazy" 
@@ -67,6 +63,6 @@ export const Primary: Story = {
                 variant="subtle" 
                 full-width>
                 Reset</ev-button>
-        </ev-form>`
+        </ev-form>`,
     }),
 };

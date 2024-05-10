@@ -1,6 +1,6 @@
-import {SelectStrategy} from "@/composables/lists";
-import {singleAny} from "./single-any.ts";
-import {toRaw} from "vue";
+import { SelectStrategy } from "@/composables/lists";
+import { singleAny } from "./single-any.ts";
+import { toRaw } from "vue";
 
 /**
  * # Single Leaf Select Strategy
@@ -21,6 +21,6 @@ export const singleLeaf = (isRequired?: boolean): SelectStrategy => {
             return parentStrategy.select({ id, selected, children, ...rest });
         },
         in: parentStrategy.in,
-        out: parentStrategy.out
+        out: parentStrategy.out,
     };
 };

@@ -1,37 +1,38 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvIcon } from "../EvIcon";
-import {EvanceCircle, Evance, Help, Minus, Plus} from "../../icons";
-import {Appearance} from "../../util";
+import { EvanceCircle, Evance, Help, Minus, Plus } from "../../icons";
+import { Appearance } from "../../util";
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
     argTypes: {
         appearance: {
-            control: 'select',
-            options: Object.values(Appearance)
+            control: "select",
+            options: Object.values(Appearance),
         },
         size: {
-            control: 'select',
-            options: ['small', 'medium', 'large'],
-            description: "There are three icon sizes: `small` (16px), `medium` (24px), and `large` (32px). This pixel size refers to the canvas the icon sits on, not the size of the icon shape itself."
+            control: "select",
+            options: ["small", "medium", "large"],
+            description:
+                "There are three icon sizes: `small` (16px), `medium` (24px), and `large` (32px). This pixel size refers to the canvas the icon sits on, not the size of the icon shape itself.",
         },
         glyph: {
-            control: 'select',
-            description: 'The SVG contents to display in the icon.',
-            options: ['Evance', 'EvanceCircle', 'Help', 'Minus', 'Plus'],
+            control: "select",
+            description: "The SVG contents to display in the icon.",
+            options: ["Evance", "EvanceCircle", "Help", "Minus", "Plus"],
             mapping: {
-                'Evance': Evance,
-                'EvanceCircle': EvanceCircle,
-                'Help': Help,
-                'Minus': Minus,
-                'Plus': Plus
-            }
-        }
+                Evance: Evance,
+                EvanceCircle: EvanceCircle,
+                Help: Help,
+                Minus: Minus,
+                Plus: Plus,
+            },
+        },
     },
     args: {
-        glyph: 'Evance'
-    }
+        glyph: "Evance",
+    },
 };
 
 export default meta;
@@ -39,12 +40,11 @@ export default meta;
 type Story = StoryObj<typeof EvIcon>;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args) => ({
         components: { EvIcon },
         setup() {
             return { Evance, args };
         },
-        template: `<ev-icon :glyph="Evance" v-bind="args" />`
+        template: `<ev-icon :glyph="Evance" v-bind="args" />`,
     }),
 };
-

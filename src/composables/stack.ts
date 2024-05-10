@@ -6,26 +6,28 @@ import {
     onScopeDispose,
     provide,
     reactive,
-    readonly, Ref,
+    readonly,
+    Ref,
     shallowRef,
     toRaw,
-    watchEffect
+    watchEffect,
 } from "vue";
-import {getCurrentComponent} from "../util";
-import {useToggleScope} from "./toggleScope.ts";
+import { getCurrentComponent } from "../util";
+import { useToggleScope } from "./toggleScope.ts";
 
 interface StackProvide {
     activeChildren: Set<number>;
 }
 
-const StackSymbol: InjectionKey<StackProvide> = Symbol.for('ev:stack');
+const StackSymbol: InjectionKey<StackProvide> = Symbol.for("ev:stack");
 
 type StackEntry = [componentId: number, zIndex: number];
 
 const globalStack = reactive<StackEntry[]>([]);
 
-
-export function getComponentIndex(component: ComponentInternalInstance): number {
+export function getComponentIndex(
+    component: ComponentInternalInstance,
+): number {
     return toRaw(globalStack).findIndex((stackEntry) => {
         return stackEntry[0] === component.uid;
     });
@@ -50,12 +52,12 @@ export function isTopComponent(component: ComponentInternalInstance): boolean {
  * @param zIndex
  * @param isDisableGlobalStack
  */
-export function useStack (
+export function useStack(
     isActive: Readonly<Ref<boolean>>,
     zIndex: Readonly<Ref<string | number>>,
-    isDisableGlobalStack: boolean
+    isDisableGlobalStack: boolean,
 ) {
-    const component = getCurrentComponent('useStack');
+    const component = getCurrentComponent("useStack");
     const isCreateStackEntry = !isDisableGlobalStack;
     const parentStack = inject(StackSymbol, undefined);
     const stack: StackProvide = reactive({
@@ -76,13 +78,13 @@ export function useStack (
             }
             parentStack?.activeChildren.delete(component.uid);
         });
-    })
+    });
 
     const isTopGlobal = shallowRef(true);
     if (isCreateStackEntry) {
         watchEffect(() => {
             const isTop = isTopComponent(component);
-            setTimeout(() => isTopGlobal.value = isTop);
+            setTimeout(() => (isTopGlobal.value = isTop));
         });
     }
 
@@ -91,6 +93,6 @@ export function useStack (
     return {
         isTopGlobal: readonly(isTopGlobal),
         isTopLocal: isTopLocal,
-        stackStyles: computed(() => ({ zIndex: zIndexRef.value }))
+        stackStyles: computed(() => ({ zIndex: zIndexRef.value })),
     };
 }

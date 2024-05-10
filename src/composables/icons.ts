@@ -1,20 +1,22 @@
-import {PropType} from "vue";
-import {Appearance} from "@/util";
+import { PropType } from "vue";
+import { Appearance } from "@/util";
 import {
     CheckCircle as CheckCircleIcon,
     Danger as DangerIcon,
     Help as HelpIcon,
     Info as InfoIcon,
     Note as NoteIcon,
-    Warning as WarningIcon
+    Warning as WarningIcon,
 } from "@/icons";
 
-export type IconValue =
-    | string
-    | (string | [path: string, opacity: number])[];
+export type IconValue = string | (string | [path: string, opacity: number])[];
 
-export const IconProp = [String, Function, Object, Array] as PropType<IconValue>;
-
+export const IconProp = [
+    String,
+    Function,
+    Object,
+    Array,
+] as PropType<IconValue>;
 
 /**
  * # appearanceIcon

@@ -1,59 +1,80 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvBlock } from "../EvBlock";
-import {EvLayout} from "../EvLayout";
-import {EvSurface} from "../../EvSurface";
+import { EvLayout } from "../EvLayout";
+import { EvSurface } from "../../EvSurface";
 
 const meta: Meta<typeof EvLayout> = {
     component: EvLayout,
-    title: 'Components/EvGrid/EvLayout',
+    title: "Components/EvGrid/EvLayout",
     argTypes: {
         align: {
-            control: 'select',
-            options: [
-                '', 'start', 'end', 'center', 'baseline', 'stretch'
-            ],
+            control: "select",
+            options: ["", "start", "end", "center", "baseline", "stretch"],
             mapping: {
-                '': undefined,
-                'start': 'start',
-                'end': 'end',
-                'center': 'center',
-                'baseline': 'baseline',
-                'stretch': 'stretch'
+                "": undefined,
+                start: "start",
+                end: "end",
+                center: "center",
+                baseline: "baseline",
+                stretch: "stretch",
             },
-            description: ""
+            description: "",
         },
         alignContent: {
-            control: 'select',
+            control: "select",
             options: [
-                '', 'start', 'end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly'
+                "",
+                "start",
+                "end",
+                "center",
+                "stretch",
+                "space-between",
+                "space-around",
+                "space-evenly",
             ],
             mapping: {
-                '': undefined,
-                'start': 'start',
-                'end': 'end',
-                'center': 'center',
-                'stretch': 'stretch',
-                'space-between': 'space-between',
-                'space-around': 'space-around',
-                'space-evenly': 'space-evenly'
+                "": undefined,
+                start: "start",
+                end: "end",
+                center: "center",
+                stretch: "stretch",
+                "space-between": "space-between",
+                "space-around": "space-around",
+                "space-evenly": "space-evenly",
             },
-            description: ""
+            description: "",
         },
         column: {
-            control: 'boolean',
-            description: "The direction of a layout is 'row' by default. Making each `ev-block` within the layout " +
-                "a column. However, setting the layout to a column means each `ev-block` could be considered a row."
+            control: "boolean",
+            description:
+                "The direction of a layout is 'row' by default. Making each `ev-block` within the layout " +
+                "a column. However, setting the layout to a column means each `ev-block` could be considered a row.",
         },
         gutter: {
-            control: 'select',
+            control: "select",
             options: [
-                '',
-                0, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 600, 800, 1000, 1200, 1600,
-                "{ xs: 100, md: 200, xl: 300 }"
+                "",
+                0,
+                25,
+                50,
+                75,
+                100,
+                150,
+                200,
+                250,
+                300,
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1200,
+                1600,
+                "{ xs: 100, md: 200, xl: 300 }",
             ],
             mapping: {
-                '': undefined,
+                "": undefined,
                 0: 0,
                 25: 25,
                 50: 50,
@@ -65,60 +86,68 @@ const meta: Meta<typeof EvLayout> = {
                 400: 400,
                 600: 600,
                 800: 800,
-                "{ xs: 100, md: 200, xl: 300 }": { xs: 100, md: 200, xl: 300 }
+                "{ xs: 100, md: 200, xl: 300 }": { xs: 100, md: 200, xl: 300 },
             },
-            description: ""
+            description: "",
         },
         justify: {
-            control: 'select',
+            control: "select",
             options: [
-                '', 'start', 'end', 'center', 'space-between', 'space-around', 'space-evenly'
+                "",
+                "start",
+                "end",
+                "center",
+                "space-between",
+                "space-around",
+                "space-evenly",
             ],
             mapping: {
-                '': undefined,
-                'start': 'start',
-                'end': 'end',
-                'center': 'center',
-                'space-between': 'space-between',
-                'space-around': 'space-around',
-                'space-evenly': 'space-evenly'
+                "": undefined,
+                start: "start",
+                end: "end",
+                center: "center",
+                "space-between": "space-between",
+                "space-around": "space-around",
+                "space-evenly": "space-evenly",
             },
-            description: ""
+            description: "",
         },
         tag: {
-            description: ""
+            description: "",
         },
         height: {
-            control: 'select',
-            options: ['', 'auto', '300'],
-            description: "Set an explicit height to the block. Behaves similar to `width`."
+            control: "select",
+            options: ["", "auto", "300"],
+            description:
+                "Set an explicit height to the block. Behaves similar to `width`.",
         },
         width: {
-            control: 'select',
-            options: ['', '25%', '50%', '100%']
+            control: "select",
+            options: ["", "25%", "50%", "100%"],
         },
         hidden: {
-            control: 'select',
+            control: "select",
             options: [
-                '',
-                'true',
-                'false',
-                'xs-only',
-                'xs-only lg-up',
+                "",
+                "true",
+                "false",
+                "xs-only",
+                "xs-only lg-up",
                 "['xs-only', 'lg-up']",
-                "{ xs: 'only', lg: 'up' }"
+                "{ xs: 'only', lg: 'up' }",
             ],
             mapping: {
-                '': undefined,
-                'true': true,
-                'false': false,
-                'xs-only': 'xs-only',
-                'xs-only lg-up': 'xs-only lg-up',
-                "['xs-only', 'lg-up']" : ['xs-only', 'lg-up'],
-                "{ xs: 'only', lg: 'up' }": { xs: 'only', lg: 'up' }
+                "": undefined,
+                true: true,
+                false: false,
+                "xs-only": "xs-only",
+                "xs-only lg-up": "xs-only lg-up",
+                "['xs-only', 'lg-up']": ["xs-only", "lg-up"],
+                "{ xs: 'only', lg: 'up' }": { xs: "only", lg: "up" },
             },
-            description: "Accepts a boolean, string or a display rule list as an array or object. "
-        }
+            description:
+                "Accepts a boolean, string or a display rule list as an array or object. ",
+        },
     },
     args: {
         align: undefined,
@@ -127,7 +156,7 @@ const meta: Meta<typeof EvLayout> = {
         gutter: undefined,
         justify: undefined,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -135,7 +164,7 @@ export default meta;
 type Story = StoryObj<typeof EvBlock>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvBlock, EvLayout, EvSurface },
         setup() {
             return { args };
@@ -158,6 +187,6 @@ export const Primary: Story = {
                     </ev-surface>
                 </ev-block>
             </ev-layout>
-        `
-    })
+        `,
+    }),
 };

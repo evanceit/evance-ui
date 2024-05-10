@@ -1,14 +1,21 @@
 import {
-    ComponentInternalInstance, ComponentOptions,
+    ComponentInternalInstance,
+    ComponentOptions,
     ComponentPublicInstance,
     computed,
     ComputedGetter,
-    reactive, toRefs,
+    reactive,
+    toRefs,
     ToRefs,
-    watchEffect
+    watchEffect,
 } from "vue";
-import {Browser, getCurrentComponent, isArray, isFunction, isObjectNotArray} from "../util";
-
+import {
+    Browser,
+    getCurrentComponent,
+    isArray,
+    isFunction,
+    isObjectNotArray,
+} from "../util";
 
 /**
  * # Get Next ID
@@ -16,7 +23,7 @@ import {Browser, getCurrentComponent, isArray, isFunction, isObjectNotArray} fro
 let currentId: number = 0;
 let assignedIds = new WeakMap<ComponentInternalInstance, number>();
 export function getNextId(): number {
-    const component = getCurrentComponent('getNextId()');
+    const component = getCurrentComponent("getNextId()");
     if (assignedIds.has(component)) {
         return assignedIds.get(component)!;
     }
@@ -27,8 +34,7 @@ export function getNextId(): number {
 getNextId.reset = () => {
     currentId = 0;
     assignedIds = new WeakMap();
-}
-
+};
 
 /**
  * # Getter Property Key
@@ -48,7 +54,6 @@ export type GetterPropertyKey =
     | (string | number)[]
     | ((item: Record<string, any>, fallback?: any) => any);
 
-
 /**
  * # Get Property
  *
@@ -59,19 +64,19 @@ export type GetterPropertyKey =
 export function getPropertyValue(
     subject: any,
     property: GetterPropertyKey,
-    fallback?: any
+    fallback?: any,
 ): any {
     if (property == null) {
-        return (subject === undefined) ? fallback : subject;
+        return subject === undefined ? fallback : subject;
     }
     if (subject !== Object(subject)) {
-        if (typeof property !== 'function') {
+        if (typeof property !== "function") {
             return fallback;
         }
         const value = property(subject, fallback);
-        return (typeof value === 'undefined') ? fallback : value;
+        return typeof value === "undefined" ? fallback : value;
     }
-    if (typeof property === 'string') {
+    if (typeof property === "string") {
         return getPropertyValueByPath(subject, property, fallback);
     }
     if (Array.isArray(property)) {
@@ -81,9 +86,8 @@ export function getPropertyValue(
         return fallback;
     }
     const value = property(subject, fallback);
-    return (typeof value === 'undefined') ? fallback : value;
+    return typeof value === "undefined" ? fallback : value;
 }
-
 
 /**
  * # Get Property from Path
@@ -94,14 +98,17 @@ export function getPropertyValue(
  * @param objectPath
  * @param fallback
  */
-export function getPropertyValueByPath(subject: any, objectPath: string, fallback?: any) {
+export function getPropertyValueByPath(
+    subject: any,
+    objectPath: string,
+    fallback?: any,
+) {
     if (subject == null || !objectPath) {
         return fallback;
     }
     const propertyKeys = objectPathToPropertyKeys(objectPath);
     return getNestedPropertyValue(subject, propertyKeys, fallback);
 }
-
 
 /**
  * # Get Nested Property Value
@@ -110,7 +117,11 @@ export function getPropertyValueByPath(subject: any, objectPath: string, fallbac
  * @param propertyKeys
  * @param fallback
  */
-export function getNestedPropertyValue(subject: any, propertyKeys: PropertyKey[], fallback?: any): any {
+export function getNestedPropertyValue(
+    subject: any,
+    propertyKeys: PropertyKey[],
+    fallback?: any,
+): any {
     let lastValue = subject;
     for (const property of propertyKeys) {
         if (lastValue === undefined) {
@@ -118,9 +129,8 @@ export function getNestedPropertyValue(subject: any, propertyKeys: PropertyKey[]
         }
         lastValue = lastValue[property];
     }
-    return (lastValue === undefined) ? fallback : lastValue;
+    return lastValue === undefined ? fallback : lastValue;
 }
-
 
 /**
  * # Object Path To Array
@@ -135,23 +145,21 @@ export function objectPathToPropertyKeys(path: string): PropertyKey[] {
     if (!matches) {
         throw new Error(`Evance UI: Invalid Object Path '${path}'.`);
     }
-    path = path.replace(']', '')
-        .replace('[', '.')
-        .replace('/', '.');
-    return path.split('.');
+    path = path.replace("]", "").replace("[", ".").replace("/", ".");
+    return path.split(".");
 }
-
 
 /**
  * # Ref Element
  * @param obj
  */
-export function refElement<T extends object | undefined> (obj: T): Exclude<T, ComponentPublicInstance> | HTMLElement {
-    return obj && '$el' in obj
-        ? obj.$el as HTMLElement
-        : obj as HTMLElement;
+export function refElement<T extends object | undefined>(
+    obj: T,
+): Exclude<T, ComponentPublicInstance> | HTMLElement {
+    return obj && "$el" in obj
+        ? (obj.$el as HTMLElement)
+        : (obj as HTMLElement);
 }
-
 
 /**
  * # Split Object
@@ -168,27 +176,28 @@ export function refElement<T extends object | undefined> (obj: T): Exclude<T, Co
 export function splitObject<
     Subject extends object,
     SubjectKey extends Extract<keyof Subject, string>,
-    Exclusions extends Extract<keyof Subject, string>
-> (
+    Exclusions extends Extract<keyof Subject, string>,
+>(
     subject: Subject,
     paths: (SubjectKey | RegExp)[],
-    exclude?:  Exclusions[]
+    exclude?: Exclusions[],
 ): [matched: Partial<Subject>, unmatched: Partial<Subject>] {
     const matching = Object.create(null);
     const remaining = Object.create(null);
     for (const key in subject) {
         if (
-            paths.some(path => (path instanceof RegExp) ? path.test(key) : path === key)
-            && !exclude?.some(path => path === key)
+            paths.some((path) =>
+                path instanceof RegExp ? path.test(key) : path === key,
+            ) &&
+            !exclude?.some((path) => path === key)
         ) {
             matching[key] = subject[key];
         } else {
             remaining[key] = subject[key];
         }
     }
-    return [ matching, remaining ];
+    return [matching, remaining];
 }
-
 
 /**
  * ## Split Input Attrs
@@ -200,9 +209,8 @@ export function splitObject<
  * @param attrs
  */
 export function splitInputAttrs(attrs: Record<string, unknown>) {
-    return splitObject(attrs, ['class', 'style', 'id', /^data-/]);
+    return splitObject(attrs, ["class", "style", "id", /^data-/]);
 }
-
 
 /**
  * # Clamp
@@ -211,13 +219,17 @@ export function splitInputAttrs(attrs: Record<string, unknown>) {
  * @param min
  * @param max
  */
-export function clamp (value: number, min = 0, max = 1) {
-    return Math.max(min, Math.min(max, value))
+export function clamp(value: number, min = 0, max = 1) {
+    return Math.max(min, Math.min(max, value));
 }
 
 // Only allow a single return type
 type NotAUnion<T> = [T] extends [infer U] ? _NotAUnion<U, U> : never;
-type _NotAUnion<T, U> = U extends any ? [T] extends [U] ? unknown : never : never;
+type _NotAUnion<T, U> = U extends any
+    ? [T] extends [U]
+        ? unknown
+        : never
+    : never;
 
 /**
  * # Destruct Computed
@@ -225,18 +237,22 @@ type _NotAUnion<T, U> = U extends any ? [T] extends [U] ? unknown : never : neve
  * Convert a computed ref to a record of refs.
  * The getter function must always return an object with the same keys.
  */
-export function destructComputed<T extends object> (getter: ComputedGetter<T & NotAUnion<T>>): ToRefs<T>;
-export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
+export function destructComputed<T extends object>(
+    getter: ComputedGetter<T & NotAUnion<T>>,
+): ToRefs<T>;
+export function destructComputed<T extends object>(getter: ComputedGetter<T>) {
     const refs = reactive({}) as T;
     const base = computed(getter);
-    watchEffect(() => {
-        for (const key in base.value) {
-            refs[key] = base.value[key];
-        }
-    }, { flush: 'sync' });
+    watchEffect(
+        () => {
+            for (const key in base.value) {
+                refs[key] = base.value[key];
+            }
+        },
+        { flush: "sync" },
+    );
     return toRefs(refs);
 }
-
 
 /**
  * # Union To Intersection
@@ -245,8 +261,11 @@ export function destructComputed<T extends object> (getter: ComputedGetter<T>) {
  * This can be helpful when you want to combine multiple types into a single type, where all properties from each type
  * become part of the resulting type.
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
-
+export type UnionToIntersection<U> = (
+    U extends any ? (k: U) => void : never
+) extends (k: infer I) => void
+    ? I
+    : never;
 
 /**
  * # Get Descriptor
@@ -268,7 +287,6 @@ export function getPropertyDescriptor(obj: any, key: PropertyKey) {
     return undefined;
 }
 
-
 /**
  * # Filter Component Props
  *
@@ -279,27 +297,32 @@ export function getPropertyDescriptor(obj: any, key: PropertyKey) {
  * @param component
  * @param props
  */
-export function filterComponentProps(component: ComponentOptions<any>, props: Record<string, any>)  {
-    return splitObject(props, Object.keys(component.props), ['class', 'style'])[0];
+export function filterComponentProps(
+    component: ComponentOptions<any>,
+    props: Record<string, any>,
+) {
+    return splitObject(props, Object.keys(component.props), [
+        "class",
+        "style",
+    ])[0];
 }
-
 
 /**
  * # If Any
  */
-type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
-
+type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N;
 
 /**
  * # Wrap In Array
  * @param value
  */
-export function wrapInArray<T> (value: T | null | undefined): T extends readonly any[] ? IfAny<T, T[], T> : NonNullable<T>[] {
-    return (value == null) ? [] : isArray(value) ? value as any : [value];
+export function wrapInArray<T>(
+    value: T | null | undefined,
+): T extends readonly any[] ? IfAny<T, T[], T> : NonNullable<T>[] {
+    return value == null ? [] : isArray(value) ? (value as any) : [value];
 }
 
-
-export function mergeDeep (
+export function mergeDeep(
     source: Record<string, any> = {},
     target: Record<string, any> = {},
     arrayFn?: (a: unknown[], b: unknown[]) => unknown[],
@@ -316,7 +339,10 @@ export function mergeDeep (
 
         // Only continue deep merging if
         // both properties are objects
-        if (isObjectNotArray(sourceProperty) && isObjectNotArray(targetProperty)) {
+        if (
+            isObjectNotArray(sourceProperty) &&
+            isObjectNotArray(targetProperty)
+        ) {
             out[key] = mergeDeep(sourceProperty, targetProperty, arrayFn);
             continue;
         }
@@ -332,17 +358,15 @@ export function mergeDeep (
     return out;
 }
 
-
 /**
  * # Create Range
  *
  * @param length
  * @param start
  */
-export function createRange (length: number, start = 0): number[] {
+export function createRange(length: number, start = 0): number[] {
     return Array.from({ length }, (v, k) => start + k);
 }
-
 
 /**
  * # Omit
@@ -352,15 +376,15 @@ export function createRange (length: number, start = 0): number[] {
  * @param obj
  * @param exclude
  */
-export function omit<
-    T extends object,
-    U extends Extract<keyof T, string>
-> (obj: T, exclude: U[]): Omit<T, U> {
-    const clone = { ...obj }
+export function omit<T extends object, U extends Extract<keyof T, string>>(
+    obj: T,
+    exclude: U[],
+): Omit<T, U> {
+    const clone = { ...obj };
 
-    exclude.forEach(prop => delete clone[prop])
+    exclude.forEach((prop) => delete clone[prop]);
 
-    return clone
+    return clone;
 }
 
 /**
@@ -369,14 +393,18 @@ export function omit<
  * @param el
  * @param selector
  */
-export function matchesSelector(el: Element | undefined, selector: string): boolean | null {
-    const supportsSelector = Browser.hasWindow
-        && typeof CSS !== 'undefined'
-        && typeof CSS.supports !== 'undefined'
-        && CSS.supports(`selector(${selector})`);
+export function matchesSelector(
+    el: Element | undefined,
+    selector: string,
+): boolean | null {
+    const supportsSelector =
+        Browser.hasWindow &&
+        typeof CSS !== "undefined" &&
+        typeof CSS.supports !== "undefined" &&
+        CSS.supports(`selector(${selector})`);
 
     if (!supportsSelector) {
-        return null
+        return null;
     }
 
     try {
@@ -386,6 +414,6 @@ export function matchesSelector(el: Element | undefined, selector: string): bool
     }
 }
 
-export function keys<O extends {}> (o: O) {
-    return Object.keys(o) as (keyof O)[]
+export function keys<O extends {}>(o: O) {
+    return Object.keys(o) as (keyof O)[];
 }

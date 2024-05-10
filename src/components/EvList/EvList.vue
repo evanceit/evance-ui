@@ -11,18 +11,20 @@
  *
  * @see EvListItem
  */
-import './EvList.scss';
-import {makeEvListProps} from "./EvList.ts";
-import {computed, ref, shallowRef} from "vue";
-import {focusChild, FocusPosition} from "@/util";
-import {createList, NestedProps, useItems, useNestedList} from "@/composables/lists";
-import {useDimensions} from "@/composables/dimensions.ts";
+import "./EvList.scss";
+import { makeEvListProps } from "./EvList.ts";
+import { computed, ref, shallowRef } from "vue";
+import { focusChild, FocusPosition } from "@/util";
+import {
+    createList,
+    NestedProps,
+    useItems,
+    useNestedList,
+} from "@/composables/lists";
+import { useDimensions } from "@/composables/dimensions.ts";
 import EvListChildren from "./EvListChildren.vue";
 
-defineEmits([
-    'update:selected',
-    'click:select'
-]);
+defineEmits(["update:selected", "click:select"]);
 
 const props = defineProps(makeEvListProps());
 const { items } = useItems(props);
@@ -31,7 +33,7 @@ const containerRef = ref<HTMLElement | undefined>(undefined);
 const isFocused = shallowRef(false);
 const lastFocus = shallowRef<HTMLElement | undefined>(undefined);
 const tabindex = computed(() => {
-    return (props.disabled || isFocused.value) ? -1 : 0;
+    return props.disabled || isFocused.value ? -1 : 0;
 });
 const dimensions = useDimensions(props);
 
@@ -47,9 +49,12 @@ createList();
  */
 function onFocus(e: FocusEvent): void {
     if (
-        !isFocused.value
-        && !(e.relatedTarget && containerRef.value?.contains(e.relatedTarget as Node))
-        && containerRef.value
+        !isFocused.value &&
+        !(
+            e.relatedTarget &&
+            containerRef.value?.contains(e.relatedTarget as Node)
+        ) &&
+        containerRef.value
     ) {
         if (lastFocus.value) {
             lastFocus.value.focus();
@@ -82,10 +87,10 @@ function onFocusOut(e: FocusEvent): void {
  */
 function onKeyDown(e: KeyboardEvent): void {
     const keys: { [key: string]: string } = {
-        ArrowDown: 'next',
-        ArrowUp: 'previous',
-        Home: 'first',
-        End: 'last'
+        ArrowDown: "next",
+        ArrowUp: "previous",
+        Home: "first",
+        End: "last",
     };
     const position = keys[e.key];
     if (position && containerRef.value) {
@@ -104,10 +109,10 @@ function focus(position?: FocusPosition): void {
 
 defineExpose({
     focus,
-    select
+    select,
 });
-
 </script>
+
 <template>
     <component
         :is="props.tag"
@@ -115,21 +120,17 @@ defineExpose({
         role="listbox"
         :class="[
             'ev-list',
-             {
-                 'is-disabled': props.disabled
-             },
-             props.class
-         ]"
-        :style="[
-            props.style,
-            dimensions
+            {
+                'is-disabled': props.disabled,
+            },
+            props.class,
         ]"
+        :style="[props.style, dimensions]"
         :tabindex="tabindex"
         @keydown="onKeyDown"
         @focus="onFocus"
         @focusin="onFocusIn"
-        @focusout="onFocusOut"
-    >
+        @focusout="onFocusOut">
         <ev-list-children :items="items">
             <slot />
         </ev-list-children>

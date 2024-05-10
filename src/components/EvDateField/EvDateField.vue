@@ -2,17 +2,17 @@
 /**
  * `<ev-date-field>`
  */
-import './EvDateField.scss';
-import {makeEvDateFieldProps} from "./EvDateField.ts";
-import {EvTextfield} from "@/components/EvTextfield";
-import {EvMenu} from "@/components/EvMenu";
-import {EvDatePicker} from "@/components/EvDatePicker";
-import {EvSurface} from "@/components/EvSurface";
-import {computed, ref, shallowRef, useSlots, watch} from "vue";
-import {FocusEvent} from "react";
-import {useModelProxy} from "@/composables/modelProxy.ts";
-import {filterComponentProps, omit, wrapInArray} from "@/util";
-import {useDate} from "@/composables/date/date.ts";
+import "./EvDateField.scss";
+import { makeEvDateFieldProps } from "./EvDateField.ts";
+import { EvTextfield } from "@/components/EvTextfield";
+import { EvMenu } from "@/components/EvMenu";
+import { EvDatePicker } from "@/components/EvDatePicker";
+import { EvSurface } from "@/components/EvSurface";
+import { computed, ref, shallowRef, useSlots, watch } from "vue";
+import { FocusEvent } from "react";
+import { useModelProxy } from "@/composables/modelProxy.ts";
+import { filterComponentProps, omit, wrapInArray } from "@/util";
+import { useDate } from "@/composables/date/date.ts";
 
 const dateAdapter = useDate();
 const props = defineProps(makeEvDateFieldProps());
@@ -22,28 +22,28 @@ const slots = useSlots();
 const evMenuRef = ref<typeof EvMenu>();
 const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
-    return omit(filterComponentProps(EvTextfield, props), ['modelValue']);
+    return omit(filterComponentProps(EvTextfield, props), ["modelValue"]);
 });
 const isFocused = shallowRef(false);
 
 // Date Picker
 const datePickerRef = ref<typeof EvDatePicker>();
 const datePickerProps = computed(() => {
-    return omit(filterComponentProps(EvDatePicker, props), ['modelValue']);
+    return omit(filterComponentProps(EvDatePicker, props), ["modelValue"]);
 });
 
 // Menu
 const isMenuOpen = shallowRef(false);
 const modelValue = useModelProxy(
     props,
-    'modelValue',
+    "modelValue",
     undefined,
     (value) => wrapInArray(value),
     (value: any) => {
         return value[0] ?? null;
-    }
+    },
 );
-const displayValue = shallowRef<String|null>(null);
+const displayValue = shallowRef<string | null>(null);
 
 /**
  * ## On Menu After Leave
@@ -75,7 +75,7 @@ function onFieldBlur(e: FocusEvent) {
  * Maintain focus on the field when actions within the date picker occur.
  * @param e
  */
-function onDatePickerFocusIn(e:FocusEvent) {
+function onDatePickerFocusIn(e: FocusEvent) {
     isFocused.value = true;
 }
 
@@ -98,10 +98,10 @@ function onInput(e: Event) {
     }
     const date = dateAdapter.date(displayValue.value);
     if (
-        date
-        && dateAdapter.isValid(date)
-        && dateAdapter.getYear(date).toString().length === 4
-        && dateAdapter.format(date, 'displayDate') === displayValue.value
+        date &&
+        dateAdapter.isValid(date) &&
+        dateAdapter.getYear(date).toString().length === 4 &&
+        dateAdapter.format(date, "displayDate") === displayValue.value
     ) {
         setModelValue(date);
     }
@@ -112,53 +112,47 @@ watch(modelValue, () => {
     if (!date || !dateAdapter.isValid(date)) {
         displayValue.value = null;
     } else {
-        displayValue.value = dateAdapter.format(modelValue.value[0], 'displayDate');
+        displayValue.value = dateAdapter.format(
+            modelValue.value[0],
+            "displayDate",
+        );
     }
 });
-
 </script>
-<template>
 
+<template>
     <ev-textfield
         ref="evTextfieldRef"
-        class="ev-date-field"
         v-bind="evTextfieldProps"
-        v-bind:validation-value="modelValue"
         v-model="displayValue"
         v-model:focused="isFocused"
+        class="ev-date-field"
+        :validation-value="modelValue"
         @click:control="onFieldFocus"
         @blur="onFieldBlur"
         @click:clear="onClearInput"
-        @input="onInput"
-    >
-        <template #label v-if="props.label || slots.label">
-          <slot name="label">{{ props.label }}</slot>
+        @input="onInput">
+        <template v-if="props.label || slots.label" #label>
+            <slot name="label">{{ props.label }}</slot>
         </template>
         <template #default>
             <ev-menu
                 ref="evMenuRef"
+                v-model="isMenuOpen"
                 activator="parent"
                 position="bottom-start"
-                :openOnClick="false"
-                :closeOnContentClick="false"
-                v-model="isMenuOpen"
-                @after-leave="onMenuAfterLeave"
-            >
-                <ev-surface
-                    elevation="overlay"
-                    class="ev-date-field--surface"
-                >
+                :open-on-click="false"
+                :close-on-content-click="false"
+                @after-leave="onMenuAfterLeave">
+                <ev-surface elevation="overlay" class="ev-date-field--surface">
                     <ev-date-picker
                         ref="datePickerRef"
                         v-bind="datePickerProps"
                         v-model="modelValue"
                         @focusin="onDatePickerFocusIn"
-                        @update:modelValue="onUpdateModelValue()"
-                    />
+                        @update:model-value="onUpdateModelValue()" />
                 </ev-surface>
             </ev-menu>
         </template>
     </ev-textfield>
-
-
 </template>

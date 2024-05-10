@@ -1,5 +1,5 @@
-import {DirectiveBinding} from "vue";
-import {isFunction, isObject, isShadowRoot} from "@/util";
+import { DirectiveBinding } from "vue";
+import { isFunction, isObject, isShadowRoot } from "@/util";
 
 /**
  * ## Click Outside Args
@@ -33,7 +33,10 @@ interface ClickOutsideHTMLElement extends HTMLElement {
  */
 function getRoot(el: HTMLElement): null | Document | ShadowRoot {
     const root = el.getRootNode();
-    if (root !== document && root.getRootNode({composed: true}) !== document) {
+    if (
+        root !== document &&
+        root.getRootNode({ composed: true }) !== document
+    ) {
         return null;
     }
     return root as Document | ShadowRoot;
@@ -46,10 +49,12 @@ function getRoot(el: HTMLElement): null | Document | ShadowRoot {
  * @param binding
  */
 function isActive(e: MouseEvent, binding: ClickOutsideBinding): boolean {
-    const isActiveCallback = (isObject(binding.value) && (binding.value as ClickOutsideArgs).condition) || (() => true);
+    const isActiveCallback =
+        (isObject(binding.value) &&
+            (binding.value as ClickOutsideArgs).condition) ||
+        (() => true);
     return isActiveCallback(e);
 }
-
 
 /**
  * ## Is Event Outside?
@@ -62,7 +67,11 @@ function isActive(e: MouseEvent, binding: ClickOutsideBinding): boolean {
  * @param el
  * @param binding
  */
-function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBinding): boolean {
+function isEventOutside(
+    e: MouseEvent,
+    el: HTMLElement,
+    binding: ClickOutsideBinding,
+): boolean {
     // 1 Check isActive callback
     if (!e || !isActive(e, binding)) {
         return false;
@@ -71,9 +80,13 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
     if (isShadowRoot(root) && root.host === e.target) {
         return false;
     }
-    const elements = ((isObject(binding.value) && (binding.value as ClickOutsideArgs).include) || (() => []))();
+    const elements = (
+        (isObject(binding.value) &&
+            (binding.value as ClickOutsideArgs).include) ||
+        (() => [])
+    )();
     elements.push(el);
-    return !elements.some(el => {
+    return !elements.some((el) => {
         return el?.contains(e.target as Node);
     });
 }
@@ -85,9 +98,18 @@ function isEventOutside(e: MouseEvent, el: HTMLElement, binding: ClickOutsideBin
  * @param el
  * @param binding
  */
-function onClickHandler(e: MouseEvent, el: ClickOutsideHTMLElement, binding: ClickOutsideBinding) {
-    const handler = isFunction(binding.value) ? binding.value : binding.value.handler;
-    if (!el.__clickOutside!.wasMousedownOutside || !isEventOutside(e, el, binding)) {
+function onClickHandler(
+    e: MouseEvent,
+    el: ClickOutsideHTMLElement,
+    binding: ClickOutsideBinding,
+) {
+    const handler = isFunction(binding.value)
+        ? binding.value
+        : binding.value.handler;
+    if (
+        !el.__clickOutside!.wasMousedownOutside ||
+        !isEventOutside(e, el, binding)
+    ) {
         return;
     }
     // setTimeout so the callback function is executed asynchronously
@@ -120,7 +142,6 @@ function handleCallback(el: HTMLElement, callback: Function): void {
  * caused dialogs to close unwantedly.
  */
 export const clickOutside = {
-
     /**
      * Add event listeners when the component is mounted.
      * @param el
@@ -131,11 +152,15 @@ export const clickOutside = {
             onClickHandler(e as MouseEvent, el, binding);
         };
         const onMousedown = (e: Event) => {
-            el.__clickOutside!.wasMousedownOutside = isEventOutside(e as MouseEvent, el, binding);
+            el.__clickOutside!.wasMousedownOutside = isEventOutside(
+                e as MouseEvent,
+                el,
+                binding,
+            );
         };
         handleCallback(el, (app: HTMLElement) => {
-            app.addEventListener('click', onClick, true);
-            app.addEventListener('mousedown', onMousedown, true);
+            app.addEventListener("click", onClick, true);
+            app.addEventListener("mousedown", onMousedown, true);
         });
         if (!el.__clickOutside) {
             el.__clickOutside = {
@@ -158,12 +183,13 @@ export const clickOutside = {
             if (!app || !el.__clickOutside?.[binding.instance!.$.uid]) {
                 return;
             }
-            const {onClick, onMousedown} = el.__clickOutside[binding.instance!.$.uid]!;
-            app.removeEventListener('click', onClick, true);
-            app.removeEventListener('mousedown', onMousedown, true);
+            const { onClick, onMousedown } =
+                el.__clickOutside[binding.instance!.$.uid]!;
+            app.removeEventListener("click", onClick, true);
+            app.removeEventListener("mousedown", onMousedown, true);
         });
         delete el.__clickOutside[binding.instance!.$.uid];
-    }
+    },
 };
 
 export default clickOutside;

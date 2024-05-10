@@ -3,10 +3,10 @@ import {
     SelectStrategyData,
     SelectStrategyFn,
     SelectTransformInFn,
-    SelectTransformOutFn
+    SelectTransformOutFn,
 } from "@/composables/lists";
-import {multiAny} from "./multi-any.ts";
-import {toRaw} from "vue";
+import { multiAny } from "./multi-any.ts";
+import { toRaw } from "vue";
 
 /**
  * # Single Any
@@ -19,12 +19,15 @@ export const singleAny = (isRequired?: boolean): SelectStrategy => {
     const parentStrategy = multiAny(isRequired);
 
     const selectFn: SelectStrategyFn = (data: SelectStrategyData) => {
-        const id = toRaw(data.id)
-        const singleSelection = (data.selected.has(id) || isRequired) ? new Map([[id, data.selected.get(id)!]]) : new Map();
+        const id = toRaw(data.id);
+        const singleSelection =
+            data.selected.has(id) || isRequired
+                ? new Map([[id, data.selected.get(id)!]])
+                : new Map();
         return parentStrategy.select({
             ...data,
             id: id,
-            selected: singleSelection
+            selected: singleSelection,
         });
     };
 
@@ -43,6 +46,6 @@ export const singleAny = (isRequired?: boolean): SelectStrategy => {
     return {
         select: selectFn,
         in: transformIn,
-        out: transformOut
+        out: transformOut,
     };
 };

@@ -2,10 +2,10 @@
 /**
  * `<ev-img>`
  */
-import './EvImg.scss';
-import {makeEvImgProps, EvImgSrcObject} from "./EvImg.ts";
-import {EvResponsive} from "@/components/EvResponsive";
-import {EvTransition, useEvTransition} from "@/components/EvTransition";
+import "./EvImg.scss";
+import { makeEvImgProps, EvImgSrcObject } from "./EvImg.ts";
+import { EvResponsive } from "@/components/EvResponsive";
+import { EvTransition, useEvTransition } from "@/components/EvTransition";
 import {
     computed,
     ComputedRef,
@@ -16,52 +16,53 @@ import {
     ref,
     shallowRef,
     useSlots,
-    watch
+    watch,
 } from "vue";
-import {Browser, filterComponentProps, isObject, toWebUnit} from "@/util";
+import { Browser, filterComponentProps, isObject, toWebUnit } from "@/util";
 
 const props = defineProps(makeEvImgProps());
 const slots = useSlots();
-const emit = defineEmits([
-    'loadstart',
-    'load',
-    'error'
-]);
+const emit = defineEmits(["loadstart", "load", "error"]);
 
-const currentSrc = shallowRef('');
+const currentSrc = shallowRef("");
 const image = ref<HTMLImageElement>();
-const state = shallowRef<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle');
+const state = shallowRef<"idle" | "loading" | "loaded" | "error">(
+    props.eager ? "loading" : "idle",
+);
 const naturalWidth = shallowRef<number>();
 const naturalHeight = shallowRef<number>();
 const transition = useEvTransition(props);
 
 const normalisedSrc: ComputedRef<EvImgSrcObject> = computed(() => {
-
     const imgSrc = props as EvImgSrcObject | { src: EvImgSrcObject };
 
-    return (isObject(imgSrc.src))
+    return isObject(imgSrc.src)
         ? {
-            src: imgSrc.src.src,
-            srcset: props.srcset || imgSrc.src.srcset,
-            lazySrc: props.lazySrc || imgSrc.src.lazySrc,
-            aspect: props.aspectRatio || imgSrc.src.aspect || 0
-        }
+              src: imgSrc.src.src,
+              srcset: props.srcset || imgSrc.src.srcset,
+              lazySrc: props.lazySrc || imgSrc.src.lazySrc,
+              aspect: props.aspectRatio || imgSrc.src.aspect || 0,
+          }
         : {
-            src: props.src,
-            srcset: props.srcset,
-            lazySrc: props.lazySrc,
-            aspect: props.aspectRatio || 0
-        };
+              src: props.src,
+              srcset: props.srcset,
+              lazySrc: props.lazySrc,
+              aspect: props.aspectRatio || 0,
+          };
 });
 
 const aspectRatio = computed(() => {
-    return normalisedSrc.value.aspect || naturalWidth.value! / naturalHeight.value! || 0;
+    return (
+        normalisedSrc.value.aspect ||
+        naturalWidth.value! / naturalHeight.value! ||
+        0
+    );
 });
 
 const objectFitClasses = computed(() => {
     return {
-        'is-object-cover': props.cover,
-        'is-object-contain': !props.cover
+        "is-object-cover": props.cover,
+        "is-object-contain": !props.cover,
     };
 });
 
@@ -84,14 +85,10 @@ function init(isIntersecting?: boolean) {
     if (props.eager && isIntersecting) {
         return;
     }
-    if (
-        Browser.supportsIntersection
-        && !isIntersecting
-        && !props.eager
-    ) {
+    if (Browser.supportsIntersection && !isIntersecting && !props.eager) {
         return;
     }
-    state.value ='loading';
+    state.value = "loading";
 
     if (normalisedSrc.value.lazySrc) {
         const lazyImg = new Image();
@@ -104,19 +101,19 @@ function init(isIntersecting?: boolean) {
     }
 
     nextTick(() => {
-        emit('loadstart', image.value?.currentSrc || normalisedSrc.value.src);
+        emit("loadstart", image.value?.currentSrc || normalisedSrc.value.src);
         setTimeout(() => {
             if (image.value?.complete) {
                 if (!image.value.naturalWidth) {
                     onError();
                 }
-                if (state.value === 'error') {
+                if (state.value === "error") {
                     return;
                 }
                 if (!aspectRatio.value) {
                     pollForSize(image.value, null);
                 }
-                if (state.value === 'loading') {
+                if (state.value === "loading") {
                     onLoad();
                 }
             } else {
@@ -133,8 +130,8 @@ function init(isIntersecting?: boolean) {
  * ## onError
  */
 function onError() {
-    state.value = 'error';
-    emit('error', image.value?.currentSrc || normalisedSrc.value.src);
+    state.value = "error";
+    emit("error", image.value?.currentSrc || normalisedSrc.value.src);
 }
 
 /**
@@ -143,10 +140,9 @@ function onError() {
 function onLoad() {
     getSrc();
     pollForSize(image.value!);
-    state.value = 'loaded';
-    emit('load', image.value?.currentSrc || normalisedSrc.value.src);
+    state.value = "loaded";
+    emit("load", image.value?.currentSrc || normalisedSrc.value.src);
 }
-
 
 let timer = -1;
 function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
@@ -155,18 +151,18 @@ function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
         if (!img) {
             return;
         }
-        if (!img?.complete && state.value === 'loading' && timeout != null) {
+        if (!img?.complete && state.value === "loading" && timeout != null) {
             timer = window.setTimeout(poll, timeout);
             return;
         }
-        const {
-            naturalHeight: imgHeight,
-            naturalWidth: imgWidth
-        } = img;
+        const { naturalHeight: imgHeight, naturalWidth: imgWidth } = img;
         if (imgHeight || imgWidth) {
             naturalWidth.value = imgWidth;
             naturalHeight.value = imgHeight;
-        } else if (img.currentSrc.endsWith('.svg') || img.currentSrc.startsWith('data:image/svg+xml')) {
+        } else if (
+            img.currentSrc.endsWith(".svg") ||
+            img.currentSrc.startsWith("data:image/svg+xml")
+        ) {
             naturalWidth.value = 1;
             naturalHeight.value = 1;
         }
@@ -174,14 +170,17 @@ function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
     poll();
 }
 
-watch(() => props.src, () => {
-    if (state.value !== 'idle') {
-        state.value = 'idle';
-        nextTick(() => {
-            init(true);
-        });
-    }
-});
+watch(
+    () => props.src,
+    () => {
+        if (state.value !== "idle") {
+            state.value = "idle";
+            nextTick(() => {
+                init(true);
+            });
+        }
+    },
+);
 
 watch(aspectRatio, (val, oldVal) => {
     if (!val && oldVal && image.value) {
@@ -191,19 +190,18 @@ watch(aspectRatio, (val, oldVal) => {
 
 onBeforeMount(() => init());
 
-
 if (Browser.hasWindow) {
     const windowWidth = ref(window.innerWidth);
     const onWindowResize = () => {
         windowWidth.value = window.innerWidth;
     };
     onMounted(() => {
-        window.addEventListener('resize', onWindowResize);
+        window.addEventListener("resize", onWindowResize);
         onWindowResize();
     });
 
     onBeforeUnmount(() => {
-        window.removeEventListener('resize', onWindowResize);
+        window.removeEventListener("resize", onWindowResize);
     });
 
     watch(windowWidth, (newWidth, oldWidth) => {
@@ -215,7 +213,7 @@ if (Browser.hasWindow) {
 
 const isBooted = shallowRef(false);
 {
-    const stop = watch(aspectRatio, val => {
+    const stop = watch(aspectRatio, (val) => {
         if (val) {
             // Doesn't work with nextTick, idk why
             requestAnimationFrame(() => {
@@ -229,10 +227,12 @@ const isBooted = shallowRef(false);
 }
 
 const isLoaded = computed(() => {
-    return state.value === 'loaded';
+    return state.value === "loaded";
 });
 
-const responsiveProps = computed(() => filterComponentProps(EvResponsive, props));
+const responsiveProps = computed(() =>
+    filterComponentProps(EvResponsive, props),
+);
 
 const imgProps = computed(() => ({
     src: normalisedSrc.value.src,
@@ -241,42 +241,44 @@ const imgProps = computed(() => ({
     crossorigin: props.crossorigin,
     referrerpolicy: props.referrerpolicy,
     draggable: props.draggable,
-    sizes: props.sizes
+    sizes: props.sizes,
 }));
-
 </script>
+
 <template>
     <ev-responsive
+        v-intersect.once="{
+            handler: init,
+            options: props.options,
+        }"
         :class="[
             'ev-img',
             {
-                'is-booting': !isBooted
+                'is-booting': !isBooted,
             },
-            props.class
+            props.class,
         ]"
         :style="[
             {
-                width: toWebUnit(props.width === 'auto' ? naturalWidth : props.width)
+                width: toWebUnit(
+                    props.width === 'auto' ? naturalWidth : props.width,
+                ),
             },
-            props.style
+            props.style,
         ]"
         v-bind="responsiveProps"
         :aria-label="props.alt"
         :aspect-ratio="aspectRatio"
-        :role="props.alt ? 'img' : undefined"
-        v-intersect.once="{
-            handler: init,
-            options: props.options
-        }"
-    >
+        :role="props.alt ? 'img' : undefined">
         <template #additional>
-
-            <ev-transition v-if="normalisedSrc.src && state !== 'idle'" :transition="transition" appear>
+            <ev-transition
+                v-if="normalisedSrc.src && state !== 'idle'"
+                :transition="transition"
+                appear>
                 <picture
                     v-if="slots.sources"
-                    class="ev-img--picture"
                     v-show="isLoaded"
-                >
+                    class="ev-img--picture">
                     <slot name="sources" />
                     <img
                         ref="image"
@@ -284,47 +286,52 @@ const imgProps = computed(() => ({
                         :style="{ objectPosition: props.position }"
                         v-bind="imgProps"
                         @load="onLoad"
-                        @error="onError"
-                    />
+                        @error="onError" />
                 </picture>
                 <img
                     v-else
+                    v-show="isLoaded"
                     ref="image"
                     :class="['ev-img--img', objectFitClasses]"
                     :style="{ objectPosition: props.position }"
                     v-bind="imgProps"
-                    v-show="isLoaded"
                     @load="onLoad"
-                    @error="onError"
-                />
+                    @error="onError" />
             </ev-transition>
 
             <ev-transition :transition="transition">
                 <img
                     v-if="normalisedSrc.lazySrc && state !== 'loaded'"
-                    :class="['ev-img--img', 'ev-img--preload', objectFitClasses]"
+                    :class="[
+                        'ev-img--img',
+                        'ev-img--preload',
+                        objectFitClasses,
+                    ]"
                     :style="{ objectPosition: props.position }"
                     :src="normalisedSrc.lazySrc"
                     :alt="props.alt"
                     :crossorigin="props.crossorigin"
                     :referrerpolicy="props.referrerpolicy"
-                    :draggable="props.draggable"
-                />
+                    :draggable="props.draggable" />
             </ev-transition>
 
             <div
                 v-if="props.gradient"
                 class="ev-img--gradient"
                 :style="{
-                    backgroundImage: `linear-gradient(${props.gradient})`
-                }"
-            ></div>
+                    backgroundImage: `linear-gradient(${props.gradient})`,
+                }"></div>
 
-            <ev-transition v-if="slots.placeholder" :transition="transition" appear>
+            <ev-transition
+                v-if="slots.placeholder"
+                :transition="transition"
+                appear>
                 <div
-                    v-if="state === 'loading' || (state === 'error' && !slots.error)"
-                    class="ev-img--placeholder"
-                >
+                    v-if="
+                        state === 'loading' ||
+                        (state === 'error' && !slots.error)
+                    "
+                    class="ev-img--placeholder">
                     <slot name="placeholder" />
                 </div>
             </ev-transition>
@@ -334,7 +341,6 @@ const imgProps = computed(() => ({
                     <slot name="error" />
                 </div>
             </ev-transition>
-
         </template>
         <template #default>
             <slot name="default" />

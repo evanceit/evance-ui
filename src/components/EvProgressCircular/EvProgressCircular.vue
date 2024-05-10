@@ -2,32 +2,32 @@
 /**
  * # EvProgressCircular
  */
-import './EvProgressCircular.scss';
-import {appearanceModifier, AppearanceProp, toWebUnit} from "@/util";
-import {ref} from "vue";
+import "./EvProgressCircular.scss";
+import { appearanceModifier, AppearanceProp, toWebUnit } from "@/util";
+import { ref } from "vue";
 
-type Size = 'default';
+type Size = "default";
 
 interface ProgressProps {
-    appearance?: AppearanceProp,
-    indeterminate?: boolean,
-    percentage?: number,
-    rotate?: number,
-    size?: Size | number,
-    thickness?: number
+    appearance?: AppearanceProp;
+    indeterminate?: boolean;
+    percentage?: number;
+    rotate?: number;
+    size?: Size | number;
+    thickness?: number;
 }
 const props = withDefaults(defineProps<ProgressProps>(), {
-    appearance: 'default',
-    size: 'default',
+    appearance: "default",
+    size: "default",
     indeterminate: false,
     percentage: 0,
     rotate: 0,
-    thickness: 2
+    thickness: 2,
 });
 
 const container = ref<HTMLElement | null>(null);
 const defaultSize = 48;
-const defaultRadius = (defaultSize / 2);
+const defaultRadius = defaultSize / 2;
 const defaultRotation = -90;
 
 /**
@@ -35,7 +35,7 @@ const defaultRotation = -90;
  * The default units is `px` when only a number is supplied.
  */
 function getSizeWithUnits() {
-    if (props.size === 'default') {
+    if (props.size === "default") {
         return undefined;
     }
     return toWebUnit(props.size);
@@ -54,7 +54,7 @@ function getCircumference() {
  * Returns the width of the container.
  */
 function getContainerWidth() {
-    return (!container.value) ? defaultSize : container.value.clientWidth;
+    return !container.value ? defaultSize : container.value.clientWidth;
 }
 
 /**
@@ -62,7 +62,9 @@ function getContainerWidth() {
  * Calculate progress offset based on the percentage of the circumference.
  */
 function getProgressOffset() {
-    return (props.indeterminate) ? 0 : (getCircumference() * (1 - props.percentage/100));
+    return props.indeterminate
+        ? 0
+        : getCircumference() * (1 - props.percentage / 100);
 }
 
 /**
@@ -70,7 +72,7 @@ function getProgressOffset() {
  * Calculate the radius of the
  */
 function getRadius() {
-    return defaultRadius - (getThickness() / 2);
+    return defaultRadius - getThickness() / 2;
 }
 
 /**
@@ -89,11 +91,11 @@ function getRotation() {
  */
 function getThickness() {
     const maxThickness = defaultSize / 2;
-    const thickness = ((props.thickness / getContainerWidth()) * defaultSize);
-    return (thickness > maxThickness) ? maxThickness : thickness;
+    const thickness = (props.thickness / getContainerWidth()) * defaultSize;
+    return thickness > maxThickness ? maxThickness : thickness;
 }
-
 </script>
+
 <template>
     <span
         ref="container"
@@ -105,31 +107,34 @@ function getThickness() {
         :class="[
             {
                 'is-indeterminate': props.indeterminate,
-                'is-size-default': props.size === 'default'
+                'is-size-default': props.size === 'default',
             },
-            appearanceModifier(props.appearance, ['default'])
+            appearanceModifier(props.appearance, ['default']),
         ]"
         :style="{
-            'width': getSizeWithUnits(),
-            'height': getSizeWithUnits()
-        }"
-    >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 48 48"
-             :style="{
-                'transform': getRotation()
-             }"
-        >
+            width: getSizeWithUnits(),
+            height: getSizeWithUnits(),
+        }">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            :style="{
+                transform: getRotation(),
+            }">
             <circle
                 class="ev-progress-circular--track"
-                fill="transparent" cx="50%" cy="50%"
+                fill="transparent"
+                cx="50%"
+                cy="50%"
                 :r="getRadius()"
                 :stroke-width="getThickness()"
                 :stroke-dasharray="getCircumference()"
                 stroke-dashoffset="0"></circle>
             <circle
                 class="ev-progress-circular--bar"
-                fill="transparent" cx="50%" cy="50%"
+                fill="transparent"
+                cx="50%"
+                cy="50%"
                 :r="getRadius()"
                 :stroke-width="getThickness()"
                 :stroke-dasharray="getCircumference()"

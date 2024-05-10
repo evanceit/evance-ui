@@ -1,4 +1,4 @@
-import {OpenStrategy} from "../open-strategies";
+import { OpenStrategy } from "../open-strategies";
 
 /**
  * # Multiple Open Strategy
@@ -17,5 +17,5 @@ export const multipleOpenStrategy: OpenStrategy = {
         opened.delete(id);
         return opened;
     },
-    select: () => null
+    select: () => null,
 };

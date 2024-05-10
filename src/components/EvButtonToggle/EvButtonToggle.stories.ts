@@ -1,56 +1,72 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvButtonToggle } from "../EvButtonToggle";
-import {EvButton} from "@/components";
-import {shallowRef} from "vue";
+import { EvButton } from "@/components";
+import { shallowRef } from "vue";
 
 const meta: Meta<typeof EvButtonToggle> = {
     component: EvButtonToggle,
     argTypes: {
         appearance: {
-            control: 'select',
-            options: ['default', 'danger', 'information', 'notice', 'primary', 'success', 'warning'],
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "primary",
+                "success",
+                "warning",
+            ],
         },
         variant: {
-            control: 'select',
-            options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
+            control: "select",
+            options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
         },
         selectedAppearance: {
-            control: 'select',
-            options: ['default', 'danger', 'information', 'notice', 'primary', 'success', 'warning'],
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "primary",
+                "success",
+                "warning",
+            ],
         },
         selectedVariant: {
-            control: 'select',
-            options: ['default', 'bold', 'outlined', 'subtle', 'tonal', 'link'],
+            control: "select",
+            options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
         },
         disabled: {
-            control: 'boolean'
+            control: "boolean",
         },
         mandatory: {
-            control: 'boolean'
+            control: "boolean",
         },
         multiple: {
-            control: 'boolean'
+            control: "boolean",
         },
         size: {
-            control: 'select',
-            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
+            control: "select",
+            options: ["x-small", "small", "medium", "large", "x-large"],
         },
         selectedClass: {
-            description: 'The'
-        }
+            description: "The",
+        },
     },
     args: {
-        appearance: 'default',
-        variant: 'outlined',
-        selectedAppearance: 'primary',
-        selectedVariant: 'outlined',
+        appearance: "default",
+        variant: "outlined",
+        selectedAppearance: "primary",
+        selectedVariant: "outlined",
         disabled: false,
         mandatory: false,
         multiple: false,
-        size: 'medium'
+        size: "medium",
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -58,7 +74,7 @@ export default meta;
 type Story = StoryObj<typeof EvButtonToggle>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvButtonToggle, EvButton },
         setup() {
             const selected = shallowRef();
@@ -70,6 +86,6 @@ export const Primary: Story = {
         <ev-button>Button 2</ev-button>
         <ev-button>Button 3</ev-button>
         <ev-button>Button 4</ev-button>
-    </ev-button-toggle>`
-    })
+    </ev-button-toggle>`,
+    }),
 };

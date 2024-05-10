@@ -2,43 +2,48 @@
 /**
  * # EvOverlay
  */
-import './EvOverlay.scss';
-import {makeEvOverlayProps} from "./EvOverlay.ts";
-import {useModelProxy} from "@/composables/modelProxy.ts";
-import {computed, mergeProps, ref, shallowRef, toRef, useAttrs, useSlots, watch} from "vue";
-import {useTeleport} from "@/composables/teleport.ts";
-import {useEvTransition, EvTransition} from "@/components/EvTransition";
-import {useDimensions} from "@/composables/dimensions.ts";
-import {clickBlockedAnimation, getScrollParent, toWebUnit} from "@/util";
-import {useStack} from "@/composables/stack.ts";
-import {useRouter} from "vue-router";
-import {useToggleScope} from "@/composables/toggleScope.ts";
-import {useBackButton} from "@/composables/router.ts";
-import {ActivatorProps, useActivator} from "./activator.ts";
-import {useScopeId} from "@/composables/scopeId.ts";
-import {usePositionStrategies} from "./position.ts";
-import {useScrollStrategies} from "./scroll.ts";
-import {useRtl} from "@/composables/locale.ts";
+import "./EvOverlay.scss";
+import { makeEvOverlayProps } from "./EvOverlay.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
+import {
+    computed,
+    mergeProps,
+    ref,
+    shallowRef,
+    toRef,
+    useAttrs,
+    useSlots,
+    watch,
+} from "vue";
+import { useTeleport } from "@/composables/teleport.ts";
+import { useEvTransition, EvTransition } from "@/components/EvTransition";
+import { useDimensions } from "@/composables/dimensions.ts";
+import { clickBlockedAnimation, getScrollParent, toWebUnit } from "@/util";
+import { useStack } from "@/composables/stack.ts";
+import { useRouter } from "vue-router";
+import { useToggleScope } from "@/composables/toggleScope.ts";
+import { useBackButton } from "@/composables/router.ts";
+import { ActivatorProps, useActivator } from "./activator.ts";
+import { useScopeId } from "@/composables/scopeId.ts";
+import { usePositionStrategies } from "./position.ts";
+import { useScrollStrategies } from "./scroll.ts";
+import { useRtl } from "@/composables/locale.ts";
 
 defineOptions({
-    inheritAttrs: false
+    inheritAttrs: false,
 });
 
 // Emit
-const emit = defineEmits([
-    'click:outside',
-    'update:modelValue',
-    'afterLeave'
-]);
+const emit = defineEmits(["click:outside", "update:modelValue", "afterLeave"]);
 
 const props = defineProps({
     disableGlobalStack: Boolean,
-    ...makeEvOverlayProps()
+    ...makeEvOverlayProps(),
 });
 const attrs = useAttrs();
 const slots = useSlots();
 const router = useRouter();
-const model = useModelProxy(props, 'modelValue');
+const model = useModelProxy(props, "modelValue");
 const containerEl = ref<HTMLElement | undefined>(undefined);
 const contentEl = ref<HTMLElement | undefined>(undefined);
 const contentTransition = useEvTransition(props);
@@ -50,20 +55,32 @@ const isActiveContent = computed({
         if (!(value && props.disabled)) {
             model.value = value;
         }
-    }
+    },
 });
-const { isTopGlobal, isTopLocal, stackStyles } = useStack(isActiveContent, toRef(props, 'zIndex'), props.disableGlobalStack);
-const { activatorEl, activatorRef, activatorEvents, contentEvents, veilEvents } = useActivator(props as ActivatorProps, isActiveContent, isTopLocal);
-const teleportTarget = useTeleport(computed(() => {
-    return props.attach || props.contained;
-}));
+const { isTopGlobal, isTopLocal, stackStyles } = useStack(
+    isActiveContent,
+    toRef(props, "zIndex"),
+    props.disableGlobalStack,
+);
+const {
+    activatorEl,
+    activatorRef,
+    activatorEvents,
+    contentEvents,
+    veilEvents,
+} = useActivator(props as ActivatorProps, isActiveContent, isTopLocal);
+const teleportTarget = useTeleport(
+    computed(() => {
+        return props.attach || props.contained;
+    }),
+);
 const { rtlClasses, isRtl } = useRtl();
 
 const { contentStyles, updatePosition } = usePositionStrategies(props, {
     isRtl,
     contentEl,
     activatorEl,
-    isActive: isActiveContent
+    isActive: isActiveContent,
 });
 
 useScrollStrategies(props, {
@@ -71,7 +88,7 @@ useScrollStrategies(props, {
     contentEl,
     activatorEl,
     isActive: isActiveContent,
-    updatePosition
+    updatePosition,
 });
 
 /**
@@ -82,24 +99,27 @@ defineExpose({
     contentEl,
     isTopGlobal,
     isTopLocal,
-    updatePosition
+    updatePosition,
 });
 
 /**
  * When disabled update the model value via the isActive computed prop
  */
-watch(() => props.disabled, (value) => {
-    if (value) {
-        isActiveContent.value = false;
-    }
-});
+watch(
+    () => props.disabled,
+    (value) => {
+        if (value) {
+            isActiveContent.value = false;
+        }
+    },
+);
 
 /**
  * The veil transitions into view at the same time as the content,
  * but only if it is enabled by `props.veil`.
  */
 const isActiveVeil = computed(() => {
-    return (isActiveContent.value && !!props.veil);
+    return isActiveContent.value && !!props.veil;
 });
 
 /**
@@ -119,7 +139,7 @@ watch(isActiveContent, () => {
  * Allows or denies the click outside event to trigger.
  */
 function clickOutsideCondition(): boolean {
-    return (isActiveContent.value && isTopGlobal.value);
+    return isActiveContent.value && isTopGlobal.value;
 }
 
 /**
@@ -144,65 +164,73 @@ function dismiss(focusActivator: boolean = false) {
  */
 function onAfterLeave() {
     isActiveTeleport.value = false;
-    emit('afterLeave');
+    emit("afterLeave");
 }
-
 
 const clickOutsideDirectiveArgs = {
     handler: onClickOutside,
     condition: clickOutsideCondition,
-    include: () => [activatorEl.value]
+    include: () => [activatorEl.value],
 };
 
 function onClickOutside(e: MouseEvent) {
-    emit('click:outside', e);
+    emit("click:outside", e);
     dismiss(false);
 }
 
 function onKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && isTopGlobal.value) {
+    if (e.key === "Escape" && isTopGlobal.value) {
         dismiss(true);
     }
 }
 // Listen for keydown events only when the content is active
-watch(isActiveContent, (active) => {
-    if (active) {
-        window.addEventListener('keydown', onKeydown);
-    } else {
-        window.removeEventListener('keydown', onKeydown);
-    }
-}, { immediate: true });
+watch(
+    isActiveContent,
+    (active) => {
+        if (active) {
+            window.addEventListener("keydown", onKeydown);
+        } else {
+            window.removeEventListener("keydown", onKeydown);
+        }
+    },
+    { immediate: true },
+);
 
 /**
  * Integrate with Back button for single page apps.
  */
-useToggleScope(() => props.closeOnBack, () => {
-    useBackButton(router, next => {
-        if (isTopGlobal.value && isActiveContent.value) {
-            next(false);
-            dismiss(false);
-        } else {
-            next();
-        }
-    });
-});
+useToggleScope(
+    () => props.closeOnBack,
+    () => {
+        useBackButton(router, (next) => {
+            if (isTopGlobal.value && isActiveContent.value) {
+                next(false);
+                dismiss(false);
+            } else {
+                next();
+            }
+        });
+    },
+);
 
 /**
  * Calculate the `top` position
  */
 const top = ref<number>();
-watch(() => (
-    isActiveContent.value
-    && (props.absolute || props.contained)
-    && teleportTarget.value == null
-), (value) => {
-    if (value) {
-        const scrollParent = getScrollParent(containerEl.value);
-        if (scrollParent && scrollParent !== document.scrollingElement) {
-            top.value = scrollParent.scrollTop;
+watch(
+    () =>
+        isActiveContent.value &&
+        (props.absolute || props.contained) &&
+        teleportTarget.value == null,
+    (value) => {
+        if (value) {
+            const scrollParent = getScrollParent(containerEl.value);
+            if (scrollParent && scrollParent !== document.scrollingElement) {
+                top.value = scrollParent.scrollTop;
+            }
         }
-    }
-});
+    },
+);
 
 /**
  * Dynamically create a local component we can render using:
@@ -211,18 +239,22 @@ watch(() => (
 const activatorSlot = () => {
     return slots.activator?.({
         isActive: isActiveContent.value,
-        props: mergeProps({ ref: activatorRef }, activatorEvents.value, props.activatorProps)
+        props: mergeProps(
+            { ref: activatorRef },
+            activatorEvents.value,
+            props.activatorProps,
+        ),
     });
 };
 
 const contentAttributes = mergeProps(contentEvents.value, props.contentProps);
 const overlayAttributes = {
     ...scopeId,
-    ...attrs
+    ...attrs,
 };
 </script>
-<template>
 
+<template>
     <activator-slot />
 
     <teleport
@@ -234,49 +266,42 @@ const overlayAttributes = {
             :class="[
                 'ev-overlay',
                 {
-                    'is-active': isActiveContent
+                    'is-active': isActiveContent,
                 },
                 rtlClasses,
-                props.class
+                props.class,
             ]"
             :style="[
                 stackStyles,
                 {
-                    top: toWebUnit(top)
+                    top: toWebUnit(top),
                 },
-                props.style
+                props.style,
             ]"
-            v-bind="overlayAttributes"
-        >
-            <transition appear
-                        name="transition-fade">
-                <div v-if="isActiveVeil"
-                     class="ev-overlay--veil"
-                     v-bind="veilEvents"></div>
+            v-bind="overlayAttributes">
+            <transition appear name="transition-fade">
+                <div
+                    v-if="isActiveVeil"
+                    class="ev-overlay--veil"
+                    v-bind="veilEvents"></div>
             </transition>
 
-            <ev-transition appear
-                           :transition="contentTransition"
-                           :target="activatorEl"
-                           @after-leave="onAfterLeave">
+            <ev-transition
+                appear
+                :transition="contentTransition"
+                :target="activatorEl"
+                @after-leave="onAfterLeave">
                 <div
-                    ref="contentEl"
-                    class="ev-overlay--content"
-                    :class="[
-                        props.contentClass
-                    ]"
-                    :style="[
-                        dimensions,
-                        contentStyles
-                    ]"
-                    v-bind="contentAttributes"
                     v-show="isActiveContent"
+                    ref="contentEl"
                     v-click-outside="clickOutsideDirectiveArgs"
-                >
+                    class="ev-overlay--content"
+                    :class="[props.contentClass]"
+                    :style="[dimensions, contentStyles]"
+                    v-bind="contentAttributes">
                     <slot />
                 </div>
             </ev-transition>
-
         </div>
     </teleport>
 </template>

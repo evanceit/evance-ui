@@ -1,2 +1,2 @@
-export * from './EvNotification.ts';
-export { default as EvNotification } from './EvNotification.vue';
+export * from "./EvNotification.ts";
+export { default as EvNotification } from "./EvNotification.vue";

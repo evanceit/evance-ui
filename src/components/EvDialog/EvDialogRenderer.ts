@@ -1,7 +1,19 @@
-import {App, ComponentPublicInstance, h, mergeProps, render, shallowRef, VNode, VNodeProps} from "vue";
+import {
+    App,
+    ComponentPublicInstance,
+    h,
+    mergeProps,
+    render,
+    shallowRef,
+    VNode,
+    VNodeProps,
+} from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
-import {EvDialogInstance} from "@/components/EvDialog/EvDialogInstance.ts";
-import {EvDialogServiceOptions, EvDialogServiceSlots} from "@/components/EvDialog/EvDialogServiceOpener.ts";
+import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance.ts";
+import {
+    EvDialogServiceOptions,
+    EvDialogServiceSlots,
+} from "@/components/EvDialog/EvDialogServiceOpener.ts";
 
 /**
  * # EvDialogInstance
@@ -45,9 +57,9 @@ export class EvDialogRenderer {
      * @private
      */
     private createContainer() {
-        this.container = document.createElement('div');
+        this.container = document.createElement("div");
         this.container.id = `ev-dialog-instance-${this.id}`;
-        document.querySelector('body')!.appendChild(this.container);
+        document.querySelector("body")!.appendChild(this.container);
     }
 
     /**
@@ -56,14 +68,11 @@ export class EvDialogRenderer {
      */
     private createProps() {
         const props = this.options.props ?? {};
-        return mergeProps(
-            props as VNodeProps,
-            {
-                modelValue: this.modelValue,
-                onAfterLeave: () => this.onAfterLeave(),
-                __instance: new EvDialogInstance(this)
-            }
-        );
+        return mergeProps(props as VNodeProps, {
+            modelValue: this.modelValue,
+            onAfterLeave: () => this.onAfterLeave(),
+            __instance: new EvDialogInstance(this),
+        });
     }
 
     /**
@@ -76,7 +85,9 @@ export class EvDialogRenderer {
      */
     private createSlots() {
         const internalSlots = this.options.slots ?? {};
-        const renderedSlots: { [key: string]: (props: any, slots: any) => VNode } = {};
+        const renderedSlots: {
+            [key: string]: (props: any, slots: any) => VNode;
+        } = {};
         for (const key in internalSlots) {
             const component = internalSlots[key as keyof EvDialogServiceSlots];
             renderedSlots[key] = (props, slots) => {
@@ -119,7 +130,7 @@ export class EvDialogRenderer {
         const renderedDialog = h(
             EvDialog,
             this.createProps(),
-            this.createSlots()
+            this.createSlots(),
         );
         renderedDialog.appContext = this.app._context;
         render(renderedDialog, this.container!);

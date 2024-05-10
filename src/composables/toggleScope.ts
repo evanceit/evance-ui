@@ -7,24 +7,27 @@
  * @see https://vuejs.org/api/reactivity-advanced.html#effectscope
  */
 // Utilities
-import { effectScope, onScopeDispose, watch } from 'vue'
+import { effectScope, onScopeDispose, watch } from "vue";
 
 // Types
-import type { EffectScope, WatchSource } from 'vue'
+import type { EffectScope, WatchSource } from "vue";
 
 export function useToggleScope(
     source: WatchSource<boolean>,
-    fn: (reset: () => void) => void
+    fn: (reset: () => void) => void,
 ): void {
-
     let scope: EffectScope | undefined;
 
     function start(): void {
         scope = effectScope();
         scope.run(() => {
-                return fn.length ? fn(() => { scope?.stop(); start(); }) : (fn as any)();
-            }
-        );
+            return fn.length
+                ? fn(() => {
+                      scope?.stop();
+                      start();
+                  })
+                : (fn as any)();
+        });
     }
 
     function watchCallback(active: boolean): void {
@@ -37,7 +40,7 @@ export function useToggleScope(
     }
 
     const watchOptions = {
-        immediate: true
+        immediate: true,
     };
 
     watch(source, watchCallback, watchOptions);

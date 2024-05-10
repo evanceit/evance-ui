@@ -1,11 +1,10 @@
 // Utilities
-import {shallowRef, watch} from 'vue'
+import { shallowRef, watch } from "vue";
 
 // Types
-import type { Ref } from 'vue'
-import {EvList} from "../EvList";
-import {EvTextfield} from "../EvTextfield";
-
+import type { Ref } from "vue";
+import { EvList } from "../EvList";
+import { EvTextfield } from "../EvTextfield";
 
 /**
  * # Use Scrolling
@@ -13,7 +12,10 @@ import {EvTextfield} from "../EvTextfield";
  * @param listRef
  * @param textFieldRef
  */
-export function useScrolling (listRef: Ref<typeof EvList | undefined>, textFieldRef: Ref<typeof EvTextfield | undefined>) {
+export function useScrolling(
+    listRef: Ref<typeof EvList | undefined>,
+    textFieldRef: Ref<typeof EvTextfield | undefined>,
+) {
     const isScrolling = shallowRef(false);
     let scrollTimeout: number;
 
@@ -28,10 +30,10 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
     }
 
     async function finishScrolling() {
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        await new Promise<void>(resolve => {
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await new Promise<void>((resolve) => {
             if (isScrolling.value) {
                 const stop = watch(isScrolling, () => {
                     stop();
@@ -44,12 +46,12 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
     }
 
     async function onListKeydown(e: KeyboardEvent) {
-        if (e.key === 'Tab') {
+        if (e.key === "Tab") {
             textFieldRef.value?.focus();
             return;
         }
 
-        if (!['PageDown', 'PageUp', 'Home', 'End'].includes(e.key)) {
+        if (!["PageDown", "PageUp", "Home", "End"].includes(e.key)) {
             return;
         }
         const el: HTMLElement = listRef.value?.$el;
@@ -57,18 +59,20 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
             return;
         }
 
-        if (e.key === 'Home' || e.key === 'End') {
+        if (e.key === "Home" || e.key === "End") {
             el.scrollTo({
-                top: e.key === 'Home' ? 0 : el.scrollHeight,
-                behavior: 'smooth'
+                top: e.key === "Home" ? 0 : el.scrollHeight,
+                behavior: "smooth",
             });
         }
 
         await finishScrolling();
 
-        const children = el.querySelectorAll(':scope > :not(.ev-virtual-scroll--spacer)');
+        const children = el.querySelectorAll(
+            ":scope > :not(.ev-virtual-scroll--spacer)",
+        );
 
-        if (e.key === 'PageDown' || e.key === 'Home') {
+        if (e.key === "PageDown" || e.key === "Home") {
             const top = el.getBoundingClientRect().top;
             for (const child of children) {
                 if (child.getBoundingClientRect().top >= top) {
@@ -89,6 +93,6 @@ export function useScrolling (listRef: Ref<typeof EvList | undefined>, textField
 
     return {
         onListScroll,
-        onListKeydown
+        onListKeydown,
     };
 }

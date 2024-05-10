@@ -1,15 +1,15 @@
-import {computed} from "vue";
-import {propsFactory} from "@/util";
-import {makeComponentProps} from "@/composables/component.ts";
-import {makeDimensionsProps} from "@/composables/dimensions.ts";
+import { computed } from "vue";
+import { propsFactory } from "@/util";
+import { makeComponentProps } from "@/composables/component.ts";
+import { makeDimensionsProps } from "@/composables/dimensions.ts";
 
 export type EvResponsiveSlots = {
-    default: never,
-    content: never
+    default: never;
+    content: never;
 };
 
 export type AspectRatioProps = {
-    aspectRatio?: string | number
+    aspectRatio?: string | number;
 };
 
 /**
@@ -29,19 +29,20 @@ export function useAspectStyles(props: AspectRatioProps) {
             }
             const ratio = String(props.aspectRatio);
             return {
-                aspectRatio: ratio.replace(':', '/')
+                aspectRatio: ratio.replace(":", "/"),
             };
-        })
+        }),
     };
 }
 
+export const makeEvResponsiveProps = propsFactory(
+    {
+        aspectRatio: [String, Number],
+        contentClass: String,
+        inline: Boolean,
 
-export const makeEvResponsiveProps = propsFactory({
-    aspectRatio: [String, Number],
-    contentClass: String,
-    inline: Boolean,
-
-    ...makeComponentProps(),
-    ...makeDimensionsProps()
-
-}, 'EvResponsive');
+        ...makeComponentProps(),
+        ...makeDimensionsProps(),
+    },
+    "EvResponsive",
+);

@@ -1,5 +1,5 @@
-import {isElement} from "./is-functions.ts";
-import {Axis} from "./dimensions.ts";
+import { isElement } from "./is-functions.ts";
+import { Axis } from "./dimensions.ts";
 
 /**
  * # Get Scroll Parent
@@ -10,7 +10,11 @@ import {Axis} from "./dimensions.ts";
  * @param isIncludeHidden
  * @param axis
  */
-export function getScrollParent(el?: Element, isIncludeHidden = false, axis: Axis | null = 'y'): HTMLElement {
+export function getScrollParent(
+    el?: Element,
+    isIncludeHidden = false,
+    axis: Axis | null = "y",
+): HTMLElement {
     while (el) {
         if (isIncludeHidden ? isScrollable(el, axis) : hasScrollbar(el, axis)) {
             return el as HTMLElement;
@@ -19,7 +23,6 @@ export function getScrollParent(el?: Element, isIncludeHidden = false, axis: Axi
     }
     return document.scrollingElement as HTMLElement;
 }
-
 
 /**
  * # Get Scroll Parents
@@ -33,7 +36,11 @@ export function getScrollParent(el?: Element, isIncludeHidden = false, axis: Axi
  * @param stopAt
  * @param axis
  */
-export function getScrollParents(el: Element | undefined, stopAt?: Element | null, axis: Axis | null = 'y'): HTMLElement[] {
+export function getScrollParents(
+    el: Element | undefined,
+    stopAt?: Element | null,
+    axis: Axis | null = "y",
+): HTMLElement[] {
     const elements: HTMLElement[] = [];
     if (isElement(el) && isElement(stopAt) && !stopAt!.contains(el)) {
         return elements;
@@ -50,7 +57,6 @@ export function getScrollParents(el: Element | undefined, stopAt?: Element | nul
     return elements;
 }
 
-
 /**
  * # Has Scrollbar?
  *
@@ -64,19 +70,25 @@ export function getScrollParents(el: Element | undefined, stopAt?: Element | nul
  * @param el
  * @param axis
  */
-export function hasScrollbar(el?: Element | null, axis: Axis | null = 'y'): boolean {
+export function hasScrollbar(
+    el?: Element | null,
+    axis: Axis | null = "y",
+): boolean {
     if (!isElement(el)) {
         return false;
     }
     const style = window.getComputedStyle(el!);
-    const hasScrollbarX =  style.overflowX === 'scroll' || (style.overflowX === 'auto' && el!.scrollWidth > el!.clientWidth);
-    const hasScrollbarY =  style.overflowY === 'scroll' || (style.overflowY === 'auto' && el!.scrollHeight > el!.clientHeight);
+    const hasScrollbarX =
+        style.overflowX === "scroll" ||
+        (style.overflowX === "auto" && el!.scrollWidth > el!.clientWidth);
+    const hasScrollbarY =
+        style.overflowY === "scroll" ||
+        (style.overflowY === "auto" && el!.scrollHeight > el!.clientHeight);
     return (
-        ((!axis || axis === 'x') && hasScrollbarX)
-        || ((!axis || axis ==='y') && hasScrollbarY)
+        ((!axis || axis === "x") && hasScrollbarX) ||
+        ((!axis || axis === "y") && hasScrollbarY)
     );
 }
-
 
 /**
  * # Is Scrollable?
@@ -89,13 +101,18 @@ export function hasScrollbar(el?: Element | null, axis: Axis | null = 'y'): bool
  * @param el
  * @param axis
  */
-export function isScrollable(el: Element | null, axis: Axis | null = 'y'): boolean {
+export function isScrollable(
+    el: Element | null,
+    axis: Axis | null = "y",
+): boolean {
     if (!isElement(el)) {
         return false;
     }
     const style = window.getComputedStyle(el!);
     return (
-        ((!axis || axis === 'x') && ['scroll', 'auto'].includes(style.overflowX))
-        || ((!axis || axis === 'y') && ['scroll', 'auto'].includes(style.overflowY))
+        ((!axis || axis === "x") &&
+            ["scroll", "auto"].includes(style.overflowX)) ||
+        ((!axis || axis === "y") &&
+            ["scroll", "auto"].includes(style.overflowY))
     );
 }

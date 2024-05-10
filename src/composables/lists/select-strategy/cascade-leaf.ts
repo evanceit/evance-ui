@@ -1,5 +1,5 @@
-import {SelectStrategy} from "@/composables/lists";
-import {toRaw} from "vue";
+import { SelectStrategy } from "@/composables/lists";
+import { toRaw } from "vue";
 
 /**
  * # Cascade Leaf Select Strategy
@@ -23,7 +23,7 @@ export const cascadeLeaf = (isRequired?: boolean): SelectStrategy => {
             while (items.length) {
                 const item = items.shift()!;
 
-                selected.set(item, value ? 'on' : 'off');
+                selected.set(item, value ? "on" : "off");
 
                 if (children.has(item)) {
                     items.push(...children.get(item)!);
@@ -34,10 +34,21 @@ export const cascadeLeaf = (isRequired?: boolean): SelectStrategy => {
 
             while (parent) {
                 const childrenIds = children.get(parent)!;
-                const everySelected = childrenIds.every(cid => selected.get(cid) === 'on');
-                const noneSelected = childrenIds.every(cid => !selected.has(cid) || selected.get(cid) === 'off');
+                const everySelected = childrenIds.every(
+                    (cid) => selected.get(cid) === "on",
+                );
+                const noneSelected = childrenIds.every(
+                    (cid) => !selected.has(cid) || selected.get(cid) === "off",
+                );
 
-                selected.set(parent, everySelected ? 'on' : noneSelected ? 'off' : 'indeterminate');
+                selected.set(
+                    parent,
+                    everySelected
+                        ? "on"
+                        : noneSelected
+                          ? "off"
+                          : "indeterminate",
+                );
 
                 parent = parents.get(parent);
             }
@@ -45,7 +56,11 @@ export const cascadeLeaf = (isRequired?: boolean): SelectStrategy => {
             // If mandatory and planned deselect results in no selected
             // items then we can't do it, so return original state
             if (isRequired && !value) {
-                const on = Array.from(selected.entries()).reduce((arr, [key, value]) => value === 'on' ? [...arr, key] : arr, [] as unknown[]);
+                const on = Array.from(selected.entries()).reduce(
+                    (arr, [key, value]) =>
+                        value === "on" ? [...arr, key] : arr,
+                    [] as unknown[],
+                );
                 if (on.length === 0) {
                     return original;
                 }
@@ -55,7 +70,7 @@ export const cascadeLeaf = (isRequired?: boolean): SelectStrategy => {
         },
         in: (values: any, children, parents) => {
             let map = new Map();
-            for (const id of (values || [])) {
+            for (const id of values || []) {
                 map = strategy.select({
                     id,
                     value: true,
@@ -69,13 +84,13 @@ export const cascadeLeaf = (isRequired?: boolean): SelectStrategy => {
         out: (values, children) => {
             const arr = [];
             for (const [key, value] of values.entries()) {
-                if (value === 'on' && !children.has(key)) {
+                if (value === "on" && !children.has(key)) {
                     arr.push(key);
                 }
             }
             return arr;
-        }
-    }
+        },
+    };
 
     return strategy;
-}
+};

@@ -1,4 +1,9 @@
-import {EventProp, getCurrentComponent, getNextId, propsFactory} from "@/util";
+import {
+    EventProp,
+    getCurrentComponent,
+    getNextId,
+    propsFactory,
+} from "@/util";
 import {
     computed,
     ExtractPropTypes,
@@ -8,56 +13,56 @@ import {
     provide,
     Ref,
     toRef,
-    watch
+    watch,
 } from "vue";
-import {GroupProvide} from "@/composables/group.ts";
-
+import { GroupProvide } from "@/composables/group.ts";
 
 /**
  * # GroupItem
  */
 export interface GroupItem {
-    id: number,
-    value: Ref<unknown>,
-    disabled: Ref<boolean | undefined>
+    id: number;
+    value: Ref<unknown>;
+    disabled: Ref<boolean | undefined>;
 }
-
 
 /**
  * # GroupItemProvide
  */
 export interface GroupItemProvide {
-    id: number,
-    isSelected: Ref<boolean>,
-    toggle: () => void,
-    select: (value: boolean) => void,
-    selectedClass: Ref<(string | undefined)[] | false>,
-    selectedAppearance: Ref<string | undefined>,
-    selectedVariant: Ref<string | undefined>,
-    value: Ref<unknown>,
-    disabled: Ref<boolean | undefined>,
-    group: GroupProvide
+    id: number;
+    isSelected: Ref<boolean>;
+    toggle: () => void;
+    select: (value: boolean) => void;
+    selectedClass: Ref<(string | undefined)[] | false>;
+    selectedAppearance: Ref<string | undefined>;
+    selectedVariant: Ref<string | undefined>;
+    value: Ref<unknown>;
+    disabled: Ref<boolean | undefined>;
+    group: GroupProvide;
 }
 
 /**
  * # makeGroupItemProps
  */
-export const makeGroupItemProps = propsFactory({
-    value: null,
-    disabled: Boolean,
-    selectedClass: String,
-    selectedAppearance: String,
-    selectedVariant: String,
-}, 'group-item');
-
+export const makeGroupItemProps = propsFactory(
+    {
+        value: null,
+        disabled: Boolean,
+        selectedClass: String,
+        selectedAppearance: String,
+        selectedVariant: String,
+    },
+    "group-item",
+);
 
 /**
  * # GroupItemProps
  */
-export interface GroupItemProps extends ExtractPropTypes<ReturnType<typeof makeGroupItemProps>> {
-    'onGroup:selected': EventProp<[{ value: boolean }]> | undefined
+export interface GroupItemProps
+    extends ExtractPropTypes<ReturnType<typeof makeGroupItemProps>> {
+    "onGroup:selected"?: EventProp<[{ value: boolean }]> | undefined;
 }
-
 
 /**
  * # useGroupItem
@@ -66,10 +71,12 @@ export function useGroupItem(
     props: GroupItemProps,
     injectKey: InjectionKey<GroupProvide>,
     required?: boolean,
-): GroupItemProvide | null {
-    const component = getCurrentComponent('useGroupItem');
+): GroupItemProvide | undefined {
+    const component = getCurrentComponent("useGroupItem");
     if (!component) {
-        throw new Error('Evance UI: `useGroupItem()` composable must be used inside a component setup function');
+        throw new Error(
+            "Evance UI: `useGroupItem()` composable must be used inside a component setup function",
+        );
     }
     const id = getNextId();
     provide(Symbol.for(`${injectKey.description}:id`), id);
@@ -77,12 +84,14 @@ export function useGroupItem(
     const group = inject(injectKey, null);
     if (!group) {
         if (!required) {
-            return group;
+            return undefined;
         }
-        throw new Error(`Evance UI: Could not find \`useGroup()\` injection with symbol '${injectKey.description}'.`);
+        throw new Error(
+            `Evance UI: Could not find \`useGroup()\` injection with symbol '${injectKey.description}'.`,
+        );
     }
 
-    const value = toRef(props, 'value');
+    const value = toRef(props, "value");
     const disabled = computed(() => {
         return !!(group.disabled.value || props.disabled);
     });
@@ -90,27 +99,36 @@ export function useGroupItem(
         return group.isSelected(id);
     });
     const selectedClass = computed(() => {
-        return isSelected.value && [group.selectedClass.value, props.selectedClass];
+        return (
+            isSelected.value && [group.selectedClass.value, props.selectedClass]
+        );
     });
     const selectedAppearance = computed(() => {
-        return isSelected.value ? props.selectedAppearance ?? group?.selectedAppearance.value : undefined;
+        return isSelected.value
+            ? props.selectedAppearance ?? group?.selectedAppearance.value
+            : undefined;
     });
     const selectedVariant = computed(() => {
-        return isSelected.value ? props.selectedVariant ?? group?.selectedVariant.value : undefined;
+        return isSelected.value
+            ? props.selectedVariant ?? group?.selectedVariant.value
+            : undefined;
     });
 
-    group.register({
-        id,
-        value,
-        disabled,
-    }, component);
+    group.register(
+        {
+            id,
+            value,
+            disabled,
+        },
+        component,
+    );
 
     onBeforeUnmount(() => {
         group.unregister(id);
     });
 
-    watch(isSelected, value => {
-        component.emit('group:selected', { value });
+    watch(isSelected, (value) => {
+        component.emit("group:selected", { value });
     });
 
     return {
@@ -123,6 +141,6 @@ export function useGroupItem(
         selectedVariant,
         value,
         disabled,
-        group
+        group,
     };
 }

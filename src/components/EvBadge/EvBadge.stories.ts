@@ -1,69 +1,76 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvBadge } from "../EvBadge";
-import {Cancel, Check, Evance} from "@/icons";
-import {EvIcon} from "@/components";
+import { Cancel, Check, Evance } from "@/icons";
+import { EvIcon } from "@/components";
 
 const meta: Meta<typeof EvBadge> = {
     component: EvBadge,
     argTypes: {
         appearance: {
-            control: 'select',
-            options: ['default', 'danger', 'information', 'notice', 'success', 'warning']
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "success",
+                "warning",
+            ],
         },
         bold: {
-            control: 'boolean'
+            control: "boolean",
         },
         bordered: {
-            control: 'boolean'
+            control: "boolean",
         },
         content: {
             control: {
-                type: 'range',
+                type: "range",
                 min: 0,
-                max: 100
-            }
+                max: 100,
+            },
         },
         dot: {
-            control: 'boolean'
+            control: "boolean",
         },
         floating: {
-            control: 'boolean'
+            control: "boolean",
         },
         icon: {
-            control: 'select',
-            options: ['undefined', 'Check', 'Cancel'],
+            control: "select",
+            options: ["undefined", "Check", "Cancel"],
             mapping: {
-                'undefined': undefined,
-                'Check': Check,
-                'Cancel': Cancel
-            }
+                undefined: undefined,
+                Check: Check,
+                Cancel: Cancel,
+            },
         },
         inline: {
-            control: 'boolean'
+            control: "boolean",
         },
         max: {
-            control: 'number'
+            control: "number",
         },
         modelValue: {
-            control: 'boolean'
+            control: "boolean",
         },
         position: {
-            control: 'select',
+            control: "select",
             options: [
-                'top-start',
-                'top-center',
-                'top-end',
-                'bottom-start',
-                'bottom-center',
-                'bottom-end',
-                'left-center',
-                'right-center'
-            ]
+                "top-start",
+                "top-center",
+                "top-end",
+                "bottom-start",
+                "bottom-center",
+                "bottom-end",
+                "left-center",
+                "right-center",
+            ],
         },
         pulsate: {
-            control: 'boolean'
-        }
+            control: "boolean",
+        },
     },
     args: {
         appearance: undefined,
@@ -77,9 +84,9 @@ const meta: Meta<typeof EvBadge> = {
         max: undefined,
         modelValue: true,
         position: undefined,
-        pulsate: false
+        pulsate: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -87,13 +94,13 @@ export default meta;
 type Story = StoryObj<typeof EvBadge>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvBadge, EvIcon },
         setup() {
             return { EvIcon, Evance, args };
         },
         template: `<ev-badge v-bind="args">
             <ev-icon :glyph="Evance" size="large" />
-        </ev-badge>`
-    })
+        </ev-badge>`,
+    }),
 };

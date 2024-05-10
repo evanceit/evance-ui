@@ -1,9 +1,6 @@
 # Generated/build files
-components.d.ts
 node_modules
 dist
-lib
-types-temp
 
 
 # Logs
@@ -15,8 +12,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-
-dist-ssr
 *.local
 
 # Editor directories and files

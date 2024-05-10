@@ -1,4 +1,4 @@
-import {isEmpty} from "./is-functions.ts";
+import { isEmpty } from "./is-functions.ts";
 
 /**
  * # Animate
@@ -15,9 +15,9 @@ import {isEmpty} from "./is-functions.ts";
 export function animate(
     el: Element,
     keyframes: Keyframe[] | PropertyIndexedKeyframes | null,
-    options?: number | KeyframeAnimationOptions
+    options?: number | KeyframeAnimationOptions,
 ) {
-    if (typeof Animation === 'undefined' || isEmpty(el.animate)) {
+    if (typeof Animation === "undefined" || isEmpty(el.animate)) {
         return animateFinished;
     }
     let animation: Animation;
@@ -27,22 +27,22 @@ export function animate(
         return animateFinished;
     }
     // Polyfill if `finished` is unavailable
-    if (!('finished' in Animation.prototype) || isEmpty(animation.finished)) {
+    if (!("finished" in Animation.prototype) || isEmpty(animation.finished)) {
         (animation as any).finished = new Promise((resolve) => {
             animation.onfinish = () => {
                 resolve(animation);
-            }
+            };
         });
     }
     // Polyfill if `cancel` is unavailable
-    if (!('cancel' in Animation.prototype) || isEmpty(animation.cancel)) {
+    if (!("cancel" in Animation.prototype) || isEmpty(animation.cancel)) {
         (animation as any).cancel = new Promise((resolve, reject) => {
             animation.oncancel = () => {
                 reject(animation);
-            }
+            };
         });
     }
-    return animation
+    return animation;
 }
 
 /**
@@ -51,9 +51,8 @@ export function animate(
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Animation/finished
  */
 export const animateFinished = {
-    finished: Promise.resolve()
+    finished: Promise.resolve(),
 } as const;
-
 
 /**
  * # Click Blocked Animation
@@ -63,16 +62,19 @@ export function clickBlockedAnimation(el: HTMLElement | null | undefined) {
     if (isEmpty(el)) {
         return null;
     }
-    return animate(el!, [
-        { transformOrigin: 'center' },
-        { transform: 'scale(1.05) translateY(-3px)' },
-        { transformOrigin: 'center' },
-    ], {
-        duration: 250,
-        easing:  'cubic-bezier(0.4, 0, 0.2, 1)'
-    });
+    return animate(
+        el!,
+        [
+            { transformOrigin: "center" },
+            { transform: "scale(1.05) translateY(-3px)" },
+            { transformOrigin: "center" },
+        ],
+        {
+            duration: 250,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+        },
+    );
 }
-
 
 let clean = true;
 const frames = [] as any[];
@@ -81,7 +83,7 @@ const frames = [] as any[];
  * Schedule a task to run in an animation frame on its own
  * This is useful for heavy tasks that may cause jank if all ran together
  */
-export function requestNewFrame (callback: () => void) {
+export function requestNewFrame(callback: () => void) {
     if (!clean || frames.length) {
         frames.push(callback);
         run();
@@ -93,7 +95,7 @@ export function requestNewFrame (callback: () => void) {
 }
 
 let raf = -1;
-function run () {
+function run() {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => {
         const frame = frames.shift();
@@ -105,10 +107,9 @@ function run () {
         } else {
             clean = true;
         }
-    })
+    });
 }
 
-
-export const easingStandard = 'cubic-bezier(0.4, 0, 0.2, 1)'
-export const easingDecelerate = 'cubic-bezier(0.0, 0, 0.2, 1)' // Entering
-export const easingAccelerate = 'cubic-bezier(0.4, 0, 1, 1)' // Leaving
+export const easingStandard = "cubic-bezier(0.4, 0, 0.2, 1)";
+export const easingDecelerate = "cubic-bezier(0.0, 0, 0.2, 1)"; // Entering
+export const easingAccelerate = "cubic-bezier(0.4, 0, 1, 1)"; // Leaving

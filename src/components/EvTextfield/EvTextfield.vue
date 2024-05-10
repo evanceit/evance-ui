@@ -2,33 +2,34 @@
 /**
  * # `<ev-textfield>`
  */
-import './EvTextfield.scss';
-import { makeEvTextfieldProps} from "./EvTextfield.ts";
-import {computed, nextTick, ref, useAttrs, useSlots} from "vue";
-import {EvIcon, useIcon} from "@/components/EvIcon";
-import {Cancel} from "@/icons";
+import "./EvTextfield.scss";
+import { makeEvTextfieldProps } from "./EvTextfield.ts";
+import { computed, nextTick, ref, useAttrs, useSlots } from "vue";
+import { EvIcon, useIcon } from "@/components/EvIcon";
+import { Cancel } from "@/icons";
 import {
     Appearance,
     appearanceModifier,
     InputAppearance,
-    InputSize, makeClassName,
+    InputSize,
+    makeClassName,
     sizeModifier,
-    splitInputAttrs, TextAlign
+    splitInputAttrs,
+    TextAlign,
 } from "@/util";
-import {useAutofocus} from "@/composables/focus.ts";
-import {EvLabel} from "@/components/EvLabel";
-import {EvErrors} from "@/components/EvErrors";
-import {EvProgress} from "@/components/EvProgress";
-import {EvProgressCircular} from "@/components/EvProgressCircular";
-import {useFormField} from "@/composables/validation.ts";
-
+import { useAutofocus } from "@/composables/focus.ts";
+import { EvLabel } from "@/components/EvLabel";
+import { EvErrors } from "@/components/EvErrors";
+import { EvProgress } from "@/components/EvProgress";
+import { EvProgressCircular } from "@/components/EvProgressCircular";
+import { useFormField } from "@/composables/validation.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
  * to the `<input>` field, so we need to turn off `inheritAttrs`.
  */
 defineOptions({
-    inheritAttrs: false
+    inheritAttrs: false,
 });
 
 // Props & slots
@@ -37,24 +38,24 @@ const slots = useSlots();
 
 // Emit
 const emit = defineEmits([
-    'click:clear',
-    'click:control',
-    'click:outside',
-    'mousedown:control',
-    'update:focused',
-    'update:modelValue'
+    "click:clear",
+    "click:control",
+    "click:outside",
+    "mousedown:control",
+    "update:focused",
+    "update:modelValue",
 ]);
 
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
-const [ containerAttrs, inputAttrs ] = splitInputAttrs(attrs);
+const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const formField = useFormField(props);
 const isClearable = computed(() => {
-    return (props.clearable && !!formField.value);
+    return props.clearable && !!formField.value;
 });
-const iconStart = useIcon(props, 'iconStart');
-const iconEnd = useIcon(props, 'iconEnd');
+const iconStart = useIcon(props, "iconStart");
+const iconEnd = useIcon(props, "iconEnd");
 
 /**
  * ## Get Input Element
@@ -71,7 +72,7 @@ function onClearableClick($event: MouseEvent) {
     $event.stopPropagation();
     nextTick(() => {
         formField.value = null;
-        emit('click:clear', $event);
+        emit("click:clear", $event);
     });
     if (!props.readonly) {
         getInputElement()?.focus();
@@ -107,7 +108,7 @@ function onFocus(e?: Event) {
  */
 function onControlClick(e: MouseEvent) {
     inputRef.value?.focus(e as FocusOptions);
-    emit('click:control', e);
+    emit("click:control", e);
 }
 
 /**
@@ -118,7 +119,7 @@ function onControlClick(e: MouseEvent) {
  * @param e
  */
 function onControlMousedown(e: MouseEvent) {
-    emit('mousedown:control', e);
+    emit("mousedown:control", e);
     if (e.target === inputRef.value) {
         return;
     }
@@ -139,30 +140,29 @@ defineExpose({
     focus: () => {
         getInputElement()?.focus();
     },
-    ...formField.expose()
+    ...formField.expose(),
 });
 
 function onClickOutside(e: MouseEvent) {
-    emit('click:outside');
+    emit("click:outside");
 }
-
 </script>
+
 <template>
     <div
         ref="containerRef"
+        v-click-outside="onClickOutside"
         :class="[
             'ev-textfield',
             {
-                'is-loading': props.loading
+                'is-loading': props.loading,
             },
             formField.classes,
-            props.class
+            props.class,
         ]"
         :style="props.style"
-        v-bind="containerAttrs"
-        v-click-outside="onClickOutside"
-    >
-        <div class="ev-textfield--label" v-if="props.label || slots.label">
+        v-bind="containerAttrs">
+        <div v-if="props.label || slots.label" class="ev-textfield--label">
             <ev-label :for="formField.id">
                 <slot name="label">{{ props.label }}</slot>
             </ev-label>
@@ -173,65 +173,82 @@ function onClickOutside(e: MouseEvent) {
                 'ev-textfield--control',
                 {
                     'is-rounded': props.rounded,
-                    'is-monospace': !!props.monospace
+                    'is-monospace': !!props.monospace,
                 },
                 appearanceModifier(props.appearance, [InputAppearance.default]),
                 sizeModifier(props.size, [InputSize.default]),
-                makeClassName(props.align, 'is-align', [TextAlign.default])
+                makeClassName(props.align, 'is-align', [TextAlign.default]),
             ]"
             :role="props.role"
             @click="onControlClick"
-            @mousedown="onControlMousedown"
-        >
-            <div class="ev-textfield--icon-start" v-if="iconStart">
+            @mousedown="onControlMousedown">
+            <div v-if="iconStart" class="ev-textfield--icon-start">
                 <transition name="fade-in-out" mode="out-in">
                     <ev-icon v-if="!props.loading" :glyph="iconStart" />
-                    <ev-progress-circular v-else  indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" />
+                    <ev-progress-circular
+                        v-else
+                        indeterminate
+                        :appearance="
+                            formField.isFocused
+                                ? Appearance.notice
+                                : Appearance.default
+                        " />
                 </transition>
             </div>
-            <div class="ev-textfield--prefix" v-if="props.prefix || slots.prefix">
+            <div
+                v-if="props.prefix || slots.prefix"
+                class="ev-textfield--prefix">
                 <slot name="prefix">{{ props.prefix }}</slot>
             </div>
             <div class="ev-textfield--input" data-no-activator>
                 <slot />
                 <input
+                    :id="formField.id"
                     ref="inputRef"
+                    v-model="formField.value"
+                    v-autofocus
                     class="ev-textfield--input-native"
                     :type="props.type"
-                    :id="formField.id"
                     :name="formField.name"
                     :disabled="formField.isDisabled"
                     :readonly="formField.isReadonly"
-                    v-model="formField.value"
                     :autofocus="props.autofocus"
                     :placeholder="props.placeholder"
-                    v-autofocus
                     v-bind="inputAttrs"
                     @focus="onFocus"
-                    @blur="formField.blur"
-                />
+                    @blur="formField.blur" />
             </div>
             <transition name="slide-fade">
-                <div class="ev-textfield--clearable" v-if="isClearable">
+                <div v-if="isClearable" class="ev-textfield--clearable">
                     <ev-icon
                         :glyph="Cancel"
                         @click="onClearableClick"
-                        @mousedown="onClearableMousedown"
-                    />
+                        @mousedown="onClearableMousedown" />
                 </div>
             </transition>
-            <div class="ev-textfield--suffix" v-if="props.suffix || slots.suffix">
+            <div
+                v-if="props.suffix || slots.suffix"
+                class="ev-textfield--suffix">
                 <slot name="suffix">{{ props.suffix }}</slot>
             </div>
-            <div class="ev-textfield--icon-end" v-if="iconEnd">
+            <div v-if="iconEnd" class="ev-textfield--icon-end">
                 <ev-icon :glyph="iconEnd" />
             </div>
-            <div class="ev-textfield--loader" v-if="props.loading && !props.iconStart">
-                <ev-progress indeterminate :appearance="formField.isFocused ? Appearance.notice : Appearance.default" :size="2" />
+            <div
+                v-if="props.loading && !props.iconStart"
+                class="ev-textfield--loader">
+                <ev-progress
+                    indeterminate
+                    :appearance="
+                        formField.isFocused
+                            ? Appearance.notice
+                            : Appearance.default
+                    "
+                    :size="2" />
             </div>
         </div>
 
-        <div class="ev-textfield--errors" v-if="formField.isShowErrorMessages">
+        <div v-if="formField.isShowErrorMessages" class="ev-textfield--errors">
             <ev-errors :messages="formField.errorMessages" />
         </div>
     </div>

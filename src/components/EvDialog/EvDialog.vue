@@ -2,32 +2,39 @@
 /**
  * `<ev-dialog>`
  */
-import './EvDialog.scss';
-import {DialogSize, DialogSizeToWidth, makeEvDialogProps} from "./EvDialog.ts";
-import {computed, mergeProps, nextTick, ref, useSlots, watch} from "vue";
-import EvOverlay from "@/components/EvOverlay/EvOverlay.vue";
+import "./EvDialog.scss";
+import {
+    DialogSize,
+    DialogSizeToWidth,
+    makeEvDialogProps,
+} from "./EvDialog.ts";
+import { computed, mergeProps, nextTick, ref, useSlots, watch } from "vue";
+import { EvOverlay } from "@/components/EvOverlay";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
-import {Browser, filterComponentProps, getFocusableChildren} from "@/util";
-import {useModelProxy} from "@/composables/modelProxy.ts";
+import { Browser, filterComponentProps, getFocusableChildren } from "@/util";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
 import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
 import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
-import {provideDialog} from "@/composables/dialog.ts";
+import { provideDialog } from "@/composables/dialog.ts";
 
 const props = defineProps(makeEvDialogProps());
 const slots = useSlots();
 const overlayRef = ref();
-const isActive = useModelProxy(props, 'modelValue');
-const isFullscreen = useModelProxy(props, 'fullscreen');
+const isActive = useModelProxy(props, "modelValue");
+const isFullscreen = useModelProxy(props, "fullscreen");
 const overlayProps = computed(() => {
     return filterComponentProps(EvOverlay, props);
 });
 
 const activatorProps = computed(() => {
-    mergeProps({
-        'aria-haspopup': 'dialog',
-        'aria-expanded': String(isActive.value)
-    }, props.activatorProps);
+    return mergeProps(
+        {
+            "aria-haspopup": "dialog",
+            "aria-expanded": String(isActive.value),
+        },
+        props.activatorProps,
+    );
 });
 
 /**
@@ -41,10 +48,9 @@ const activatorProps = computed(() => {
  * - 'x-large'
  */
 const width = computed(() => {
-    let size = props.width ?? DialogSizeToWidth[DialogSize.medium];
+    const size = props.width ?? DialogSizeToWidth[DialogSize.medium];
     return DialogSizeToWidth[size] ?? size;
 });
-
 
 /**
  * ## onFocusin
@@ -66,11 +72,11 @@ function onFocusin(e: FocusEvent) {
     const targetEl = e.target as HTMLElement | null;
 
     if (
-        previousEl !== targetEl
-        && overlayRef.value?.contentEl
-        && overlayRef.value?.isTopGlobal
-        && ![document, overlayRef.value.contentEl].includes(targetEl)
-        && !overlayRef.value.contentEl.contains(targetEl)
+        previousEl !== targetEl &&
+        overlayRef.value?.contentEl &&
+        overlayRef.value?.isTopGlobal &&
+        ![document, overlayRef.value.contentEl].includes(targetEl) &&
+        !overlayRef.value.contentEl.contains(targetEl)
     ) {
         const focusable = getFocusableChildren(overlayRef.value.contentEl);
         if (!focusable.length) {
@@ -96,14 +102,14 @@ if (Browser.hasWindow) {
         () => isActive.value && props.retainFocus,
         (value) => {
             if (value) {
-                document.addEventListener('focusin', onFocusin);
+                document.addEventListener("focusin", onFocusin);
             } else {
-                document.removeEventListener('focusin', onFocusin);
+                document.removeEventListener("focusin", onFocusin);
             }
         },
         {
-            immediate: true
-        }
+            immediate: true,
+        },
     );
 }
 
@@ -112,7 +118,7 @@ if (Browser.hasWindow) {
  * focus on the content element. When it is closed revert focus
  * to the activator element if it is available.
  */
-watch(isActive, async value => {
+watch(isActive, async (value) => {
     await nextTick();
     if (value) {
         overlayRef.value!.contentEl?.focus({ preventScroll: true });
@@ -131,31 +137,30 @@ function close() {
 provideDialog(props.__instance);
 
 defineExpose({
-    close
+    close,
 });
-
 </script>
+
 <template>
     <ev-overlay
         ref="overlayRef"
+        v-bind="overlayProps"
+        v-model="isActive"
         aria-modal="true"
         role="dialog"
         :class="[
             'ev-dialog',
             {
                 'is-fullscreen': isFullscreen,
-                'is-scrollable': props.scrollable
+                'is-scrollable': props.scrollable,
             },
-            props.class
+            props.class,
         ]"
         :style="props.style"
-        v-bind="overlayProps"
-        :activatorProps="activatorProps"
-        :width="width"
-        v-model="isActive"
-    >
-        <template v-if="slots.activator" #activator="{isActive, props}">
-            <slot name="activator" :isActive="isActive" :props="props" />
+        :activator-props="activatorProps"
+        :width="width">
+        <template v-if="slots.activator" #activator="{ isActive, props }">
+            <slot name="activator" :is-active="isActive" :props="props" />
         </template>
 
         <slot v-if="slots.container" name="container" />
@@ -163,11 +168,8 @@ defineExpose({
             v-else
             class="ev-dialog--surface"
             elevation="overlay"
-            rounded="small"
-        >
-            <ev-dialog-header
-                v-if="props.showHeader"
-                v-model="isActive">
+            rounded="small">
+            <ev-dialog-header v-if="props.showHeader" v-model="isActive">
                 <slot name="header" />
             </ev-dialog-header>
             <ev-dialog-body>
@@ -177,6 +179,5 @@ defineExpose({
                 <slot name="footer" />
             </ev-dialog-footer>
         </ev-surface>
-
     </ev-overlay>
 </template>

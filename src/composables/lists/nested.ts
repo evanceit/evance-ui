@@ -1,10 +1,10 @@
-import {SequencedPosition} from "./sequenced.ts";
+import { SequencedPosition } from "./sequenced.ts";
 import {
     makeSelectedProps,
     Selected,
     SelectStrategyProps,
     useSelectedValues,
-    useSelectStrategy
+    useSelectStrategy,
 } from "./select-strategies.ts";
 import {
     computed,
@@ -16,11 +16,15 @@ import {
     Ref,
     ref,
     shallowRef,
-    toRaw
+    toRaw,
 } from "vue";
-import {getCurrentComponent, getNextId, propsFactory} from "@/util";
-import {useModelProxy} from "../modelProxy.ts";
-import {makeOpenStrategyProps, OpenStrategyProps, useOpenStrategy} from "@/composables/lists/open-strategies.ts";
+import { getCurrentComponent, getNextId, propsFactory } from "@/util";
+import { useModelProxy } from "../modelProxy.ts";
+import {
+    makeOpenStrategyProps,
+    OpenStrategyProps,
+    useOpenStrategy,
+} from "@/composables/lists/open-strategies.ts";
 
 /**
  * # Nested Position
@@ -29,30 +33,29 @@ import {makeOpenStrategyProps, OpenStrategyProps, useOpenStrategy} from "@/compo
  *
  * 'inside' - Position a node as a child of another node
  */
-export type NestedPosition = SequencedPosition & 'inside';
+export type NestedPosition = SequencedPosition & "inside";
 
-export interface NestedProps extends SelectStrategyProps, OpenStrategyProps {
-
-}
+export interface NestedProps extends SelectStrategyProps, OpenStrategyProps {}
 
 type NestedProvide = {
-    id: Ref<unknown>,
-    isGroupActivator?: boolean,
+    id: Ref<unknown>;
+    isGroupActivator?: boolean;
     root: {
-        children: Ref<Map<unknown, unknown[]>>,
-        parents: Ref<Map<unknown, unknown>>,
-        opened: Ref<Set<unknown>>,
-        select: (id: unknown, value: boolean, event?: Event) => void,
-        selected: Ref<Map<unknown, Selected>>,
-        selectedValues: Ref<unknown[]>,
-        register: (id: unknown, parentId: unknown, isGroup?: boolean) => void,
-        unregister: (id: unknown) => void,
-        open: (id: unknown, value: boolean, event?: Event) => void,
-        openOnSelect: (id: unknown, value: boolean, event?: Event) => void
-    }
-}
+        children: Ref<Map<unknown, unknown[]>>;
+        parents: Ref<Map<unknown, unknown>>;
+        opened: Ref<Set<unknown>>;
+        select: (id: unknown, value: boolean, event?: Event) => void;
+        selected: Ref<Map<unknown, Selected>>;
+        selectedValues: Ref<unknown[]>;
+        register: (id: unknown, parentId: unknown, isGroup?: boolean) => void;
+        unregister: (id: unknown) => void;
+        open: (id: unknown, value: boolean, event?: Event) => void;
+        openOnSelect: (id: unknown, value: boolean, event?: Event) => void;
+    };
+};
 
-export const EvNestedSymbol: InjectionKey<NestedProvide> = Symbol.for('ev:nested');
+export const EvNestedSymbol: InjectionKey<NestedProvide> =
+    Symbol.for("ev:nested");
 
 /**
  * # Empty Nested List
@@ -69,18 +72,20 @@ export const emptyNestedList: NestedProvide = {
         register: () => null,
         unregister: () => null,
         open: () => null,
-        openOnSelect: () => null
-    }
-}
+        openOnSelect: () => null,
+    },
+};
 
 /**
  * # Make Nested Props
  */
-export const makeNestedProps = propsFactory({
-    ...makeSelectedProps(),
-    ...makeOpenStrategyProps()
-}, 'nested');
-
+export const makeNestedProps = propsFactory(
+    {
+        ...makeSelectedProps(),
+        ...makeOpenStrategyProps(),
+    },
+    "nested",
+);
 
 /**
  * # Use Nested List
@@ -88,40 +93,47 @@ export const makeNestedProps = propsFactory({
  */
 export const useNestedList = (props: NestedProps) => {
     let isUnmounted = false;
-    const component = getCurrentComponent('nested');
+    const component = getCurrentComponent("nested");
     const children = ref(new Map<unknown, unknown[]>());
     const parents = ref(new Map<unknown, unknown>());
     const selectStrategy = useSelectStrategy(props);
     const selected: Ref<Map<unknown, Selected>> = useModelProxy(
         props,
-        'selected',
+        "selected",
         props.selected,
         (values) => {
-            return selectStrategy.value.in(values, children.value, parents.value);
+            return selectStrategy.value.in(
+                values,
+                children.value,
+                parents.value,
+            );
         },
         (values) => {
-            return selectStrategy.value.out(values, children.value, parents.value);
-        }
+            return selectStrategy.value.out(
+                values,
+                children.value,
+                parents.value,
+            );
+        },
     );
     const openStrategy = useOpenStrategy(props);
     const opened = useModelProxy(
         props,
-        'opened',
+        "opened",
         props.opened,
         (values) => {
             return new Set(values);
         },
         (values) => {
             return [...values.values()];
-        }
+        },
     );
-
 
     onBeforeMount(() => {
         isUnmounted = true;
     });
 
-    function getPath (id: unknown) {
+    function getPath(id: unknown) {
         const path: unknown[] = [];
         let parent: unknown = id;
         while (parent != null) {
@@ -139,11 +151,11 @@ export const useNestedList = (props: NestedProps) => {
             selected: selected,
             selectedValues: useSelectedValues(selected),
             select: (id, value, event) => {
-                component.emit('click:select', {
+                component.emit("click:select", {
                     id,
                     value,
                     path: getPath(id),
-                    event
+                    event,
                 });
                 const newSelected = selectStrategy.value.select({
                     id,
@@ -151,7 +163,7 @@ export const useNestedList = (props: NestedProps) => {
                     selected: new Map(selected.value),
                     children: children.value,
                     parents: parents.value,
-                    event
+                    event,
                 });
                 newSelected && (selected.value = newSelected);
 
@@ -163,10 +175,13 @@ export const useNestedList = (props: NestedProps) => {
                     children.value.set(id, []);
                 }
                 if (parentId != null) {
-                    children.value.set(parentId, [...children.value.get(parentId) || [], id]);
+                    children.value.set(parentId, [
+                        ...(children.value.get(parentId) || []),
+                        id,
+                    ]);
                 }
             },
-            unregister: id => {
+            unregister: (id) => {
                 if (isUnmounted) {
                     return;
                 }
@@ -174,17 +189,20 @@ export const useNestedList = (props: NestedProps) => {
                 const parent = parents.value.get(id);
                 if (parent) {
                     const list = children.value.get(parent) ?? [];
-                    children.value.set(parent, list.filter(child => child !== id));
+                    children.value.set(
+                        parent,
+                        list.filter((child) => child !== id),
+                    );
                 }
                 parents.value.delete(id);
             },
             opened: opened,
             open: (id, value, event) => {
-                component.emit('click:open', {
+                component.emit("click:open", {
                     id,
                     value,
                     path: getPath(id),
-                    event
+                    event,
                 });
                 const newOpened = openStrategy.value.open({
                     id,
@@ -192,7 +210,7 @@ export const useNestedList = (props: NestedProps) => {
                     opened: new Set(opened.value),
                     children: children.value,
                     parents: parents.value,
-                    event
+                    event,
                 });
                 newOpened && (opened.value = newOpened);
             },
@@ -204,17 +222,16 @@ export const useNestedList = (props: NestedProps) => {
                     opened: new Set(opened.value),
                     children: children.value,
                     parents: parents.value,
-                    event
-                })
+                    event,
+                });
                 newOpened && (opened.value = newOpened);
-            }
-        }
+            },
+        },
     };
 
     provide(EvNestedSymbol, nested);
     return nested.root;
 };
-
 
 /**
  * # Use Nested List Item
@@ -225,7 +242,7 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
     const parent = inject(EvNestedSymbol, emptyNestedList);
     const idSymbol = Symbol(getNextId());
     const idComputed = computed(() => {
-        return (id.value !== undefined) ? id.value : idSymbol;
+        return id.value !== undefined ? id.value : idSymbol;
     });
     const item = {
         ...parent,
@@ -235,17 +252,23 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
             return parent.root.select(idComputed.value, selected, e);
         },
         isSelected: computed(() => {
-            return parent.root.selected.value.get(toRaw(idComputed.value)) === 'on';
+            return (
+                parent.root.selected.value.get(toRaw(idComputed.value)) === "on"
+            );
         }),
         isIndeterminate: computed(() => {
-            return parent.root.selected.value.get(idComputed.value) === 'indeterminate';
+            return (
+                parent.root.selected.value.get(idComputed.value) ===
+                "indeterminate"
+            );
         }),
         isLeaf: computed(() => {
             return !parent.root.children.value.get(idComputed.value);
         }),
-        isGroupActivator: parent.isGroupActivator
+        isGroupActivator: parent.isGroupActivator,
     };
-    !parent.isGroupActivator && parent.root.register(idComputed.value, parent.id.value, isGroup);
+    !parent.isGroupActivator &&
+        parent.root.register(idComputed.value, parent.id.value, isGroup);
     onBeforeUnmount(() => {
         !parent.isGroupActivator && parent.root.unregister(idComputed.value);
     });
@@ -253,12 +276,12 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
         provide(EvNestedSymbol, item);
     }
     return item;
-}
+};
 
 /**
  *
  */
 export const useNestedGroupActivator = () => {
-    const parent = inject(EvNestedSymbol, emptyNestedList)
+    const parent = inject(EvNestedSymbol, emptyNestedList);
     provide(EvNestedSymbol, { ...parent, isGroupActivator: true });
-}
+};

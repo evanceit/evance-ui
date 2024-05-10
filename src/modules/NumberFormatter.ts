@@ -1,14 +1,13 @@
-import {Localized} from "@/modules/Locale/Localized.ts";
+import { Localized } from "@/modules/Locale/Localized.ts";
 
 /**
  * # Number Formatter
  */
 export class NumberFormatter extends Localized {
-
     public format(
         value: number,
         options?: Intl.NumberFormatOptions,
-        locale?: string
+        locale?: string,
     ) {
         return this.formatter(options, locale).format(value);
     }

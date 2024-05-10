@@ -1,1 +1,1 @@
-export { default as EvLozenge } from './EvLozenge.vue';
+export { default as EvLozenge } from "./EvLozenge.vue";

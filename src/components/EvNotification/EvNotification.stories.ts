@@ -1,25 +1,26 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNotification } from "../EvNotification";
-import {Reload} from "../../icons";
-import {EvButton} from "@/components/EvButton";
+import { Reload } from "../../icons";
+import { EvButton } from "@/components/EvButton";
 import EvMessageStories from "../EvMessage/EvMessage.stories.ts";
 
 const meta: Meta<typeof EvNotification> = {
     component: EvNotification,
-    title: 'Overlays/EvNotification',
+    title: "Overlays/EvNotification",
     argTypes: {
         timeout: {
-            control: 'number',
-            description: "Sets the amount of milliseconds before the notification auto-dismisses."
+            control: "number",
+            description:
+                "Sets the amount of milliseconds before the notification auto-dismisses.",
         },
 
-        ...EvMessageStories.argTypes
+        ...EvMessageStories.argTypes,
     },
     args: {
         timeout: undefined,
-        ...EvMessageStories.args
+        ...EvMessageStories.args,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -27,8 +28,8 @@ export default meta;
 type Story = StoryObj<typeof EvNotification>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
-        components: { EvNotification, EvButton},
+    render: (args: any) => ({
+        components: { EvNotification, EvButton },
         setup() {
             return { args, Reload };
         },
@@ -37,6 +38,6 @@ export const Primary: Story = {
             
             <div v-if="!args.modelValue">
                 <ev-button :icon="Reload" @click="args.modelValue = true">Reset</ev-button>
-            </div>`
-    })
+            </div>`,
+    }),
 };

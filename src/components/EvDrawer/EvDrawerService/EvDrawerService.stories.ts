@@ -1,11 +1,11 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import ExampleDrawer from "./ExampleDrawer.vue";
-import {EvButton} from "@/components";
-import {useDrawer} from "@/composables/drawer.ts";
+import { EvButton } from "@/components";
+import { useDrawer } from "@/composables/drawer.ts";
 
 const meta: Meta = {
-    title: 'Services/EvDrawerService'
+    title: "Services/EvDrawerService",
 };
 
 export default meta;
@@ -13,22 +13,21 @@ export default meta;
 type Story = StoryObj;
 
 export const Primary: Story = {
-    render: (args) =>  ({
+    render: (args) => ({
         components: { EvButton, ExampleDrawer },
         setup() {
-
             const drawer = useDrawer();
 
             function open() {
                 drawer.open({
                     slots: {
-                        default: ExampleDrawer
-                    }
+                        default: ExampleDrawer,
+                    },
                 });
             }
 
             return { args, open };
         },
-        template: `<ev-button @click="open">Open drawer</ev-button>`
+        template: `<ev-button @click="open">Open drawer</ev-button>`,
     }),
 };

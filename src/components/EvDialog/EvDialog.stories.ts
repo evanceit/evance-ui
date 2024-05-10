@@ -1,76 +1,89 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDialog } from "../EvDialog";
-import {shallowRef} from "vue";
-import {Collapse, Expand, ArrowContinue} from "@/icons";
-import DialogHeaderExample from '@/stories/assets/dialog-header-example.png?url';
-import {EvSurface, EvButton} from "@/components";
+import { shallowRef } from "vue";
+import { Collapse, Expand, ArrowContinue } from "@/icons";
+import DialogHeaderExample from "@/stories/assets/dialog-header-example.png?url";
+import { EvSurface, EvButton } from "@/components";
 import EvOverlayStories from "../EvOverlay/EvOverlay.stories.ts";
-import {omit} from "@/util";
+import { omit } from "@/util";
 
 const meta: Meta<typeof EvDialog> = {
     component: EvDialog,
     title: "Overlays/EvDialog",
     argTypes: {
         fullscreen: {
-            control: 'boolean',
-            description: 'Forces a dialog to enter fullscreen mode. This does not use the fullscreen API, ' +
-                'it maximizes the dialog to the full window size. Defaults to `false`.'
+            control: "boolean",
+            description:
+                "Forces a dialog to enter fullscreen mode. This does not use the fullscreen API, " +
+                "it maximizes the dialog to the full window size. Defaults to `false`.",
         },
         showHeader: {
-            control: 'boolean',
-            description: "The default `EvDialogHeader` includes a Close icon. " +
+            control: "boolean",
+            description:
+                "The default `EvDialogHeader` includes a Close icon. " +
                 "However, you can add further tools/icons to the header using the `header` slot." +
-                "In most scenarios we want to show a close icon, so this defaults to `true`."
+                "In most scenarios we want to show a close icon, so this defaults to `true`.",
         },
         width: {
-            control: 'select',
-            options: ['small', 'medium', 'large', 'x-large', 500, '300px', '75%'],
-            description: "Evance UI attempts to standardise dialog widths using named sizes:" +
+            control: "select",
+            options: [
+                "small",
+                "medium",
+                "large",
+                "x-large",
+                500,
+                "300px",
+                "75%",
+            ],
+            description:
+                "Evance UI attempts to standardise dialog widths using named sizes:" +
                 "`small`, `medium` (default), `large`, and `x-large`. This is the recommended usage." +
-                "However, the `width` may also be set to a number in pixels, or as a percentage."
+                "However, the `width` may also be set to a number in pixels, or as a percentage.",
         },
         header: {
-            description: "The default `EvDialogHeader` is intended to accommodate most scenarios in Evance where" +
+            description:
+                "The default `EvDialogHeader` is intended to accommodate most scenarios in Evance where" +
                 "a cancel icon is available to close a dialog. You can add additional icons/buttons to the header " +
-                "using the `header` slot."
+                "using the `header` slot.",
         },
         default: {
-            description: "The `default` slot is rendered within the standard `EvDialogBody` which offers padding " +
-                "appropriate for most content and forms. `EvDialogBody` comes scrollable by default."
+            description:
+                "The `default` slot is rendered within the standard `EvDialogBody` which offers padding " +
+                "appropriate for most content and forms. `EvDialogBody` comes scrollable by default.",
         },
         footer: {
-            description: 'The default `EvDialogFooter` is intended for adding action buttons to a dialog. ' +
-                'By default it will align buttons to the right and standardises the spacing between buttons. ' +
-                'If you do not add any buttons to the `footer` slot, it will not render - allowing the `body` ' +
-                'slot to extend to the full height of the dialog.'
+            description:
+                "The default `EvDialogFooter` is intended for adding action buttons to a dialog. " +
+                "By default it will align buttons to the right and standardises the spacing between buttons. " +
+                "If you do not add any buttons to the `footer` slot, it will not render - allowing the `body` " +
+                "slot to extend to the full height of the dialog.",
         },
 
         // EvOverlayProps
 
         ...omit(EvOverlayStories.argTypes as any, [
-            'offset',
-            'origin',
-            'scroll-strategy',
-            'position',
-            'position-strategy',
-            'transition'
-        ])
-
+            "offset",
+            "origin",
+            "scroll-strategy",
+            "position",
+            "position-strategy",
+            "transition",
+        ]),
     },
     args: {
         fullscreen: undefined,
         width: undefined,
 
         ...omit(EvOverlayStories.args as any, [
-            'offset',
-            'origin',
-            'scroll-strategy',
-            'position',
-            'position-strategy',
-            'transition'
-        ])
-    }
+            "offset",
+            "origin",
+            "scroll-strategy",
+            "position",
+            "position-strategy",
+            "transition",
+        ]),
+    },
 };
 
 export default meta;
@@ -78,10 +91,9 @@ export default meta;
 type Story = StoryObj<typeof EvDialog>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvDialog, EvButton },
         setup() {
-
             const modelValue = shallowRef(false);
 
             function close() {
@@ -116,15 +128,14 @@ export const Primary: Story = {
                     <ev-button @click="close()" appearance="primary">Save</ev-button>
                 </template>
             </ev-dialog>
-        `
-    })
+        `,
+    }),
 };
 
 export const ScrollingBody: Story = {
-    render: () =>  ({
+    render: () => ({
         components: { EvDialog, EvButton },
         setup() {
-
             const modelValue = shallowRef(false);
 
             function close() {
@@ -205,24 +216,28 @@ export const ScrollingBody: Story = {
                     </p>
                 </template>
             </ev-dialog>
-        `
-    })
+        `,
+    }),
 };
 
-
-
 export const CustomContainer: Story = {
-    render: () =>  ({
+    render: () => ({
         components: { EvDialog, EvButton, EvSurface },
         setup() {
-
             const modelValue = shallowRef(false);
 
             function close() {
                 modelValue.value = false;
             }
 
-            return { close, modelValue, DialogHeaderExample, EvButton, EvSurface, ArrowContinue };
+            return {
+                close,
+                modelValue,
+                DialogHeaderExample,
+                EvButton,
+                EvSurface,
+                ArrowContinue,
+            };
         },
         template: `
             <ev-dialog v-model="modelValue">
@@ -246,6 +261,6 @@ export const CustomContainer: Story = {
                     </ev-surface>
                 </template>
             </ev-dialog>
-        `
-    })
+        `,
+    }),
 };

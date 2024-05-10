@@ -1,2 +1,2 @@
-export * from './EvBlock.ts';
-export { default as EvBlock } from './EvBlock.vue';
+export * from "./EvBlock.ts";
+export { default as EvBlock } from "./EvBlock.vue";

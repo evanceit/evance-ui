@@ -1,4 +1,4 @@
-import {Axis} from "@/util/dimensions.ts";
+import { Axis } from "@/util/dimensions.ts";
 
 /**
  * # Anchors
@@ -10,18 +10,18 @@ type HorizontalSide = "left" | "right";
 type SelectorSeparator = " " | "-";
 
 export type AnchorSelector =
-    VerticalSide
+    | VerticalSide
     | HorizontalSide
     | `${VerticalSide}${SelectorSeparator}${EdgeAlignment}`
     | `${HorizontalSide}${SelectorSeparator}${EdgeAlignment}`
-    | 'auto'
-    | `auto${SelectorSeparator}${EdgeAlignment | 'auto'}`
-    | 'center'
+    | "auto"
+    | `auto${SelectorSeparator}${EdgeAlignment | "auto"}`
+    | "center"
     | `center${SelectorSeparator}center`;
 
-export type AnchorSide = VerticalSide | HorizontalSide | 'auto' | 'center';
-export type AnchorAlignment = EdgeAlignment | 'auto';
-export type PhysicalAlignment = 'left' | 'right' | 'center';
+export type AnchorSide = VerticalSide | HorizontalSide | "auto" | "center";
+export type AnchorAlignment = EdgeAlignment | "auto";
+export type PhysicalAlignment = "left" | "right" | "center";
 export type PhysicalSide = HorizontalSide | VerticalSide;
 
 /**
@@ -32,10 +32,9 @@ export type PhysicalSide = HorizontalSide | VerticalSide;
  *
  */
 export class Anchor {
-
     public constructor(
         public side: AnchorSide,
-        public alignment: AnchorAlignment
+        public alignment: AnchorAlignment,
     ) {}
 
     /**
@@ -43,20 +42,22 @@ export class Anchor {
      * Returns either x or y axis.
      */
     public get axis(): Axis {
-        return ['left', 'right'].includes(this.side) ? 'x' : 'y';
+        return ["left", "right"].includes(this.side) ? "x" : "y";
     }
 
     /**
      * ## Physical Alignment
      */
     public get physicalAlignment(): PhysicalAlignment {
-        if (this.alignment === 'auto') {
-            throw new Error('Evance UI: Cannot convert `auto` to a physical alignment');
+        if (this.alignment === "auto") {
+            throw new Error(
+                "Evance UI: Cannot convert `auto` to a physical alignment",
+            );
         }
         return {
-            center: 'center',
-            start: 'left',
-            end: 'right'
+            center: "center",
+            start: "left",
+            end: "right",
         }[this.alignment] as PhysicalAlignment;
     }
 
@@ -64,7 +65,7 @@ export class Anchor {
      * ## Center Align
      */
     public centerAlign() {
-        return new Anchor(this.side, 'center');
+        return new Anchor(this.side, "center");
     }
 
     /**
@@ -72,10 +73,10 @@ export class Anchor {
      */
     public flipAlignment() {
         const alignment = {
-            auto: 'auto',
-            center: 'center',
-            end: 'start',
-            start: 'end'
+            auto: "auto",
+            center: "center",
+            end: "start",
+            start: "end",
         }[this.alignment];
         return new Anchor(this.side, alignment as AnchorAlignment);
     }
@@ -92,12 +93,12 @@ export class Anchor {
      */
     public flipSide(): Anchor {
         const side = {
-            auto: 'auto',
-            center: 'center',
-            top: 'bottom',
-            bottom: 'top',
-            left: 'right',
-            right: 'left',
+            auto: "auto",
+            center: "center",
+            top: "bottom",
+            bottom: "top",
+            left: "right",
+            right: "left",
         }[this.side];
         return new Anchor(side as AnchorSide, this.alignment);
     }
@@ -108,17 +109,23 @@ export class Anchor {
      * @param isRtl
      * @private
      */
-    public static fromSelector(selector: AnchorSelector, isRtl: boolean = false): Anchor {
-        let [side, alignment] = selector.split(/[\s\-]/) as [AnchorSide, AnchorAlignment | undefined];
+    public static fromSelector(
+        selector: AnchorSelector,
+        isRtl: boolean = false,
+    ): Anchor {
+        let [side, alignment] = selector.split(/[\s\-]/) as [
+            AnchorSide,
+            AnchorAlignment | undefined,
+        ];
         if (!alignment) {
-            alignment = (side === 'auto') ? 'auto' : 'center';
+            alignment = side === "auto" ? "auto" : "center";
         }
         const anchor = new Anchor(side, alignment);
         if (isRtl) {
-            if (anchor.side === 'left') {
-                anchor.side = 'right';
-            } else if (anchor.side === 'right') {
-                anchor.side = 'left';
+            if (anchor.side === "left") {
+                anchor.side = "right";
+            } else if (anchor.side === "right") {
+                anchor.side = "left";
             }
         }
         return anchor;

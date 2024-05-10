@@ -1,6 +1,6 @@
-import {SelectStrategy} from "@/composables/lists";
-import {multiAny} from "./multi-any.ts";
-import {toRaw} from "vue";
+import { SelectStrategy } from "@/composables/lists";
+import { multiAny } from "./multi-any.ts";
+import { toRaw } from "vue";
 
 /**
  * # Multi-Leaf Select Strategy
@@ -10,7 +10,7 @@ import {toRaw} from "vue";
  * @param isRequired
  */
 export const multiLeaf = (isRequired?: boolean): SelectStrategy => {
-    const parentStrategy = multiAny(isRequired)
+    const parentStrategy = multiAny(isRequired);
 
     return {
         select: ({ id, selected, children, ...rest }) => {
@@ -21,6 +21,6 @@ export const multiLeaf = (isRequired?: boolean): SelectStrategy => {
             return parentStrategy.select({ id, selected, children, ...rest });
         },
         in: parentStrategy.in,
-        out: parentStrategy.out
+        out: parentStrategy.out,
     };
 };

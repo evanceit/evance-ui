@@ -1,5 +1,5 @@
-import {OpenStrategy} from "../open-strategies";
-import {multipleOpenStrategy} from "./multiple";
+import { OpenStrategy } from "../open-strategies";
+import { multipleOpenStrategy } from "./multiple";
 
 /**
  * # List Open Strategy
@@ -17,5 +17,5 @@ export const listOpenStrategy: OpenStrategy = {
             parent = parents.get(parent);
         }
         return new Set(path);
-    }
+    },
 };

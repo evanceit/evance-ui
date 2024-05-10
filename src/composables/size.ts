@@ -1,13 +1,12 @@
-import {destructComputed, propsFactory, toWebUnit} from "@/util";
-
+import { destructComputed, propsFactory, toWebUnit } from "@/util";
 
 export enum Size {
-    default = 'medium',
-    xSmall = 'x-small',
-    small = 'small',
-    medium = 'medium',
-    large = 'large',
-    xLarge = 'x-large'
+    default = "medium",
+    xSmall = "x-small",
+    small = "small",
+    medium = "medium",
+    large = "large",
+    xLarge = "x-large",
 }
 
 export const predefinedSizes = [
@@ -15,19 +14,22 @@ export const predefinedSizes = [
     Size.small,
     Size.medium,
     Size.large,
-    Size.xLarge
+    Size.xLarge,
 ];
 
 export interface SizeProps {
     size?: string | number;
 }
 
-export const makeSizeProps = propsFactory({
-    size: {
-        type: [String, Number],
-        default: Size.default,
+export const makeSizeProps = propsFactory(
+    {
+        size: {
+            type: [String, Number],
+            default: Size.default,
+        },
     },
-}, 'size');
+    "size",
+);
 
 export function useSize(props: SizeProps) {
     return destructComputed(() => {
@@ -39,9 +41,9 @@ export function useSize(props: SizeProps) {
         } else if (props.size) {
             sizeStyles = {
                 width: toWebUnit(props.size),
-                height: toWebUnit(props.size)
+                height: toWebUnit(props.size),
             };
         }
-        return {sizeClasses, sizeStyles};
+        return { sizeClasses, sizeStyles };
     });
 }

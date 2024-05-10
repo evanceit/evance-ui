@@ -1,44 +1,44 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvTag } from "../EvTag";
-import {EvButton, EvIcon} from "@/components";
-import {Reload} from "../../icons";
-import {Appearance, Variant} from "@/util";
+import { EvButton, EvIcon } from "@/components";
+import { Reload } from "../../icons";
+import { Appearance, Variant } from "@/util";
 
 const meta: Meta<typeof EvTag> = {
     component: EvTag,
     argTypes: {
         appearance: {
-            control: 'select',
-            options: Object.keys(Appearance)
+            control: "select",
+            options: Object.keys(Appearance),
         },
         variant: {
-            control: 'select',
-            options: Object.keys(Variant)
+            control: "select",
+            options: Object.keys(Variant),
         },
         closable: {
-            control: 'boolean'
+            control: "boolean",
         },
         disabled: {
-            control: 'boolean'
+            control: "boolean",
         },
         filter: {
-            control: 'boolean'
+            control: "boolean",
         },
         modelValue: {
-            control: 'boolean'
+            control: "boolean",
         },
         rounded: {
-            control: 'boolean'
+            control: "boolean",
         },
         tag: {
-            control: 'text',
-            description: "Sets the HTML tag used for the component."
+            control: "text",
+            description: "Sets the HTML tag used for the component.",
         },
         text: {
-            control: 'text',
-            description: "Sets the text inside the component."
-        }
+            control: "text",
+            description: "Sets the text inside the component.",
+        },
     },
     args: {
         appearance: Appearance.default,
@@ -49,9 +49,9 @@ const meta: Meta<typeof EvTag> = {
         modelValue: true,
         rounded: false,
         tag: undefined,
-        text: 'Example tag'
+        text: "Example tag",
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -59,11 +59,11 @@ export default meta;
 type Story = StoryObj<typeof EvTag>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvTag, EvButton, EvIcon },
         setup() {
             const reset = () => {
-                args['onUpdate:modelValue'](true);
+                args["onUpdate:modelValue"](true);
             };
             return { args, Reload, reset };
         },
@@ -72,6 +72,6 @@ export const Primary: Story = {
 </ev-tag>
             
             <ev-button v-if="!args.modelValue" text="Reset" :icon="Reload" @click="reset" />
-        `
-    })
+        `,
+    }),
 };

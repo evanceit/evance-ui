@@ -1,44 +1,44 @@
-import {isEmpty, omit, propsFactory} from "@/util";
-import {makeEvTextfieldProps} from "@/components/EvTextfield/EvTextfield.ts";
-import {LocaleManager} from "@/modules/Locale/LocaleManager.ts";
-import {PropType, watch} from "vue";
+import { isEmpty, omit, propsFactory } from "@/util";
+import { makeEvTextfieldProps } from "@/components/EvTextfield/EvTextfield.ts";
+import { LocaleManager } from "@/modules/Locale/LocaleManager.ts";
+import { PropType, watch } from "vue";
 
-export type NumberFieldModeProp = 'decimal' | 'currency';
+export type NumberFieldModeProp = "decimal" | "currency";
 
-export const makeEvNumberFieldProps = propsFactory({
-    minFractionDigits: Number,
-    maxFractionDigits: Number,
-    currency: String,
-    currencyDisplay: {
-        type: String,
-        default: 'narrowSymbol'
-    },
-    locale: String,
-    localeMatcher: String,
-    min: {
-        type: Number,
-        default: undefined
-    },
-    max: {
-        type: Number,
-        default: undefined
-    },
-    mode: {
-        type: String as PropType<NumberFieldModeProp>,
-        default: 'decimal'
-    },
-    showButtons: Boolean,
-    step: {
-        type: Number,
-        default: 1
-    },
-    useGrouping: Boolean,
+export const makeEvNumberFieldProps = propsFactory(
+    {
+        minFractionDigits: Number,
+        maxFractionDigits: Number,
+        currency: String,
+        currencyDisplay: {
+            type: String,
+            default: "narrowSymbol",
+        },
+        locale: String,
+        localeMatcher: String,
+        min: {
+            type: Number,
+            default: undefined,
+        },
+        max: {
+            type: Number,
+            default: undefined,
+        },
+        mode: {
+            type: String as PropType<NumberFieldModeProp>,
+            default: "decimal",
+        },
+        showButtons: Boolean,
+        step: {
+            type: Number,
+            default: 1,
+        },
+        useGrouping: Boolean,
 
-    ...omit(makeEvTextfieldProps(), [
-        'type'
-    ]),
-}, 'EvNumberField');
-
+        ...omit(makeEvTextfieldProps(), ["type"]),
+    },
+    "EvNumberField",
+);
 
 export interface NumberParserProps {
     // Required props
@@ -56,12 +56,10 @@ export interface NumberParserProps {
     useGrouping?: boolean;
 }
 
-
 /**
  * # Number Parser
  */
 export class NumberParser {
-
     private _currencyPattern!: RegExp;
     private _decimalPattern!: RegExp;
     private _groupPattern!: RegExp;
@@ -75,7 +73,7 @@ export class NumberParser {
 
     constructor(
         public localeManager: LocaleManager,
-        public props: NumberParserProps
+        public props: NumberParserProps,
     ) {
         this.cachePatterns();
         this.watchProps();
@@ -103,8 +101,14 @@ export class NumberParser {
     }
 
     get groupChar(): string {
-        const formatter = new Intl.NumberFormat(this.locale, { useGrouping: true });
-        return formatter.format(1000000).trim().replace(this.numeralPattern, '').charAt(0);
+        const formatter = new Intl.NumberFormat(this.locale, {
+            useGrouping: true,
+        });
+        return formatter
+            .format(1000000)
+            .trim()
+            .replace(this.numeralPattern, "")
+            .charAt(0);
     }
 
     get groupPattern() {
@@ -137,13 +141,13 @@ export class NumberParser {
 
     get options(): Intl.NumberFormatOptions {
         return {
-            localeMatcher: 'best fit',
+            localeMatcher: "best fit",
             style: this.props.mode,
             currency: this.props.currency,
             currencyDisplay: this.props.currencyDisplay,
             useGrouping: this.props.useGrouping,
             minimumFractionDigits: this.props.minFractionDigits,
-            maximumFractionDigits: this.props.maxFractionDigits
+            maximumFractionDigits: this.props.maxFractionDigits,
         };
     }
 
@@ -151,10 +155,10 @@ export class NumberParser {
         const options = {
             style: this.props.mode,
             currency: this.props.currency,
-            currencyDisplay: this.props.currencyDisplay
+            currencyDisplay: this.props.currencyDisplay,
         };
         const formatter = new Intl.NumberFormat(this.locale, options);
-        return formatter.format(1).split('1')[0];
+        return formatter.format(1).split("1")[0];
     }
 
     get prefixPattern() {
@@ -167,10 +171,10 @@ export class NumberParser {
             currency: this.props.currency,
             currencyDisplay: this.props.currencyDisplay,
             minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+            maximumFractionDigits: 0,
         };
         const formatter = new Intl.NumberFormat(this.locale, options);
-        return formatter.format(1).split('1')[1];
+        return formatter.format(1).split("1")[1];
     }
 
     get suffixPattern() {
@@ -183,17 +187,20 @@ export class NumberParser {
      */
     private createCurrencyPattern() {
         if (!this.props.currency) {
-            return new RegExp(`[]`, 'g');
+            return new RegExp(`[]`, "g");
         }
         const options = {
-            style: 'currency',
+            style: "currency",
             currency: this.props.currency,
             currencyDisplay: this.props.currencyDisplay,
             minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+            maximumFractionDigits: 0,
         };
         const formatter = new Intl.NumberFormat(this.locale, options);
-        return new RegExp(`[${formatter.format(1).replace(/\s/g, '').replace(this.numeralPattern, '').replace(this.groupPattern, '')}]`, 'g');
+        return new RegExp(
+            `[${formatter.format(1).replace(/\s/g, "").replace(this.numeralPattern, "").replace(this.groupPattern, "")}]`,
+            "g",
+        );
     }
 
     /**
@@ -201,8 +208,14 @@ export class NumberParser {
      * @private
      */
     private createDecimalPattern() {
-        const formatter = new Intl.NumberFormat(this.locale, { ...this.options, useGrouping: false });
-        return new RegExp(`[${formatter.format(1.1).replace(this.currencyPattern, '').trim().replace(this.numeralPattern, '')}]`, 'g');
+        const formatter = new Intl.NumberFormat(this.locale, {
+            ...this.options,
+            useGrouping: false,
+        });
+        return new RegExp(
+            `[${formatter.format(1.1).replace(this.currencyPattern, "").trim().replace(this.numeralPattern, "")}]`,
+            "g",
+        );
     }
 
     /**
@@ -210,7 +223,7 @@ export class NumberParser {
      * @private
      */
     private createGroupPattern() {
-        return new RegExp(`[${this.groupChar}]`, 'g');
+        return new RegExp(`[${this.groupChar}]`, "g");
     }
 
     /**
@@ -218,8 +231,13 @@ export class NumberParser {
      * @private
      */
     private createMinusSignPattern(): RegExp {
-        const formatter = new Intl.NumberFormat(this.locale, { useGrouping: false });
-        return new RegExp(`[${formatter.format(-1).trim().replace(this.numeralPattern, '')}]`, 'g');
+        const formatter = new Intl.NumberFormat(this.locale, {
+            useGrouping: false,
+        });
+        return new RegExp(
+            `[${formatter.format(-1).trim().replace(this.numeralPattern, "")}]`,
+            "g",
+        );
     }
 
     /**
@@ -227,7 +245,11 @@ export class NumberParser {
      * @private
      */
     private createNumerals(): string[] {
-        return [...new Intl.NumberFormat(this.locale, { useGrouping: false }).format(9876543210)].reverse();
+        return [
+            ...new Intl.NumberFormat(this.locale, {
+                useGrouping: false,
+            }).format(9876543210),
+        ].reverse();
     }
 
     /**
@@ -236,7 +258,7 @@ export class NumberParser {
      */
     private createNumeralsIndex() {
         const index = new Map(this.numerals.map((d, i) => [d, i]));
-        return (d: string) => index.get(d)?.toString() ?? '';
+        return (d: string) => index.get(d)?.toString() ?? "";
     }
 
     /**
@@ -244,7 +266,7 @@ export class NumberParser {
      * @private
      */
     private createNumeralPattern(): RegExp {
-        return new RegExp(`[${this.numerals.join('')}]`, 'g');
+        return new RegExp(`[${this.numerals.join("")}]`, "g");
     }
 
     /**
@@ -252,7 +274,7 @@ export class NumberParser {
      * @private
      */
     private createPrefixPattern() {
-        return new RegExp(`${this.escapeRegExp(this.prefixChar || '')}`, 'g');
+        return new RegExp(`${this.escapeRegExp(this.prefixChar || "")}`, "g");
     }
 
     /**
@@ -260,7 +282,7 @@ export class NumberParser {
      * @private
      */
     private createSuffixPattern() {
-        return new RegExp(`${this.escapeRegExp(this.suffixChar || '')}`, 'g');
+        return new RegExp(`${this.escapeRegExp(this.suffixChar || "")}`, "g");
     }
 
     /**
@@ -268,7 +290,7 @@ export class NumberParser {
      * @param text
      */
     public escapeRegExp(text: string) {
-        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     }
 
     /**
@@ -280,14 +302,14 @@ export class NumberParser {
      */
     public formatValue(value: unknown): string {
         if (isEmpty(value)) {
-            return '';
+            return "";
         }
         // Minus sign
-        if (value === '-') {
+        if (value === "-") {
             return value;
         }
-        let formatter = new Intl.NumberFormat(this.locale, this.options);
-        let formattedValue = formatter.format(value as number);
+        const formatter = new Intl.NumberFormat(this.locale, this.options);
+        const formattedValue = formatter.format(value as number);
         // Remove currency symbol - we'll use this in the prefix instead
         return formattedValue;
     }
@@ -306,22 +328,22 @@ export class NumberParser {
      */
     public parseValue(text: string | null | undefined): number | string | null {
         if (text === null || text === undefined) {
-            text = '';
+            text = "";
         }
-        let filteredText = text
-            .replace(this.suffixPattern, '')
-            .replace(this.prefixPattern, '')
+        const filteredText = text
+            .replace(this.suffixPattern, "")
+            .replace(this.prefixPattern, "")
             .trim()
-            .replace(this.currencyPattern, '')
-            .replace(this.groupPattern, '')
-            .replace(this.minusSignPattern, '-')
-            .replace(this.decimalPattern, '.')
+            .replace(this.currencyPattern, "")
+            .replace(this.groupPattern, "")
+            .replace(this.minusSignPattern, "-")
+            .replace(this.decimalPattern, ".")
             .replace(this.numeralPattern, this.numeralsIndex);
 
         if (!filteredText) {
             return null;
         }
-        if (filteredText === '-') {
+        if (filteredText === "-") {
             return filteredText;
         }
 
@@ -345,20 +367,23 @@ export class NumberParser {
      * @private
      */
     private watchProps() {
-        watch([
-            this.localeManager.currentLocale,
-            () => this.props.locale,
-            () => this.props.localeMatcher,
-            () => this.props.mode,
-            () => this.props.currency,
-            () => this.props.currencyDisplay,
-            () => this.props.useGrouping,
-            () => this.props.minFractionDigits,
-            () => this.props.maxFractionDigits
-        ], (value, oldValue) => {
-            if (value !== oldValue) {
-                this.cachePatterns();
-            }
-        });
+        watch(
+            [
+                this.localeManager.currentLocale,
+                () => this.props.locale,
+                () => this.props.localeMatcher,
+                () => this.props.mode,
+                () => this.props.currency,
+                () => this.props.currencyDisplay,
+                () => this.props.useGrouping,
+                () => this.props.minFractionDigits,
+                () => this.props.maxFractionDigits,
+            ],
+            (value, oldValue) => {
+                if (value !== oldValue) {
+                    this.cachePatterns();
+                }
+            },
+        );
     }
 }

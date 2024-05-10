@@ -1,4 +1,4 @@
-import {TranslationCode} from "@/modules/Translation/TranslationCode.ts";
+import { TranslationCode } from "@/modules/Translation/TranslationCode.ts";
 
 /**
  * # Locale Code
@@ -10,18 +10,16 @@ export class LocaleCode extends TranslationCode {
      */
     constructor(
         public languageCode: string,
-        public countryCode: string
+        public countryCode: string,
     ) {
-        super(languageCode, countryCode)
+        super(languageCode, countryCode);
     }
 
     /**
      * ## To Translation Codes
      */
     public toTranslationCodes(): string[] {
-        const codes = [
-            this.toString()
-        ];
+        const codes = [this.toString()];
         if (this.isRegional) {
             codes.push(this.languageCode);
         }

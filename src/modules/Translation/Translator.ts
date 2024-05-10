@@ -1,6 +1,9 @@
-import {LanguagePack, LanguagePackData} from "@/modules/Translation/LanguagePack.ts";
-import {Translatable} from "@/modules/Translation/Translatable.ts";
-import {Localized} from "@/modules/Locale/Localized.ts";
+import {
+    LanguagePack,
+    LanguagePackData,
+} from "@/modules/Translation/LanguagePack.ts";
+import { Translatable } from "@/modules/Translation/Translatable.ts";
+import { Localized } from "@/modules/Locale/Localized.ts";
 
 /**
  * # Translation Options
@@ -17,12 +20,10 @@ export type TranslationVariables = {
     [key: string]: string | number | boolean;
 };
 
-
 /**
  * # Translator
  */
 export class Translator extends Localized {
-
     private languagePacks: LanguagePack[] = [];
 
     private translatables: Map<string, Translatable> = new Map();
@@ -52,8 +53,10 @@ export class Translator extends Localized {
      * @param locale
      * @param reference
      */
-    private getClosestTranslatable(locale: string, reference: string): Translatable | undefined {
-
+    private getClosestTranslatable(
+        locale: string,
+        reference: string,
+    ): Translatable | undefined {
         const translatableKey = `${locale}:${reference}`;
 
         if (this.translatables.has(translatableKey)) {
@@ -62,7 +65,10 @@ export class Translator extends Localized {
 
         const translationCodes = this.getTranslationCodes(locale);
         for (const translationCode of translationCodes) {
-            const translatable = this.getTranslatable(translationCode, reference);
+            const translatable = this.getTranslatable(
+                translationCode,
+                reference,
+            );
             if (translatable) {
                 this.translatables.set(translatableKey, translatable);
                 return translatable;
@@ -85,9 +91,11 @@ export class Translator extends Localized {
      *
      * @param translationCode
      */
-    private getLanguagePacksForTranslationCode(translationCode: string): LanguagePack[] {
+    private getLanguagePacksForTranslationCode(
+        translationCode: string,
+    ): LanguagePack[] {
         return this.languagePacks.filter((languagePack) => {
-            return (languagePack.translationCode === translationCode);
+            return languagePack.translationCode === translationCode;
         });
     }
 
@@ -100,7 +108,10 @@ export class Translator extends Localized {
      * @param translationCode
      * @param reference
      */
-    private getTranslatable(translationCode: string, reference: string): Translatable | null {
+    private getTranslatable(
+        translationCode: string,
+        reference: string,
+    ): Translatable | null {
         const packs = this.getLanguagePacksForTranslationCode(translationCode);
         for (const pack of packs) {
             const translatable = pack.getTranslatable(reference);
@@ -121,7 +132,7 @@ export class Translator extends Localized {
     public translate(
         reference: string,
         variables: TranslationVariables = {},
-        locale: string | undefined = undefined
+        locale: string | undefined = undefined,
     ): string | undefined {
         if (!locale) {
             locale = this.currentLocale.value ?? this.defaultLocale.value;

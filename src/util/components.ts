@@ -1,4 +1,4 @@
-import {ComponentInternalInstance, getCurrentInstance} from "vue";
+import { ComponentInternalInstance, getCurrentInstance } from "vue";
 
 /**
  * # Get Current Component

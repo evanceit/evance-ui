@@ -1,45 +1,46 @@
 <script setup lang="ts">
-import './EvContainer.scss';
-import {makeEvContainerProps} from "./EvContainer.ts";
-import {calculateDisplayRuleValue, useDisplayRuleClasses} from "@/composables/display.ts";
-import {computed} from "vue";
-import {isBoolean, isEmpty} from "@/util";
+import "./EvContainer.scss";
+import { makeEvContainerProps } from "./EvContainer.ts";
+import {
+    calculateDisplayRuleValue,
+    useDisplayRuleClasses,
+} from "@/composables/display.ts";
+import { computed } from "vue";
+import { isBoolean, isEmpty } from "@/util";
 
 const props = defineProps(makeEvContainerProps());
 
 /**
  * Hidden
  */
-const hiddenClasses = useDisplayRuleClasses(props, 'hidden', 'hidden');
+const hiddenClasses = useDisplayRuleClasses(props, "hidden", "hidden");
 const hiddenAttribute = computed(() => {
-    return (isBoolean(props.hidden) && props.hidden);
+    return isBoolean(props.hidden) && props.hidden;
 });
 
 /**
  * Height
  */
 const heightStyles = computed(() => {
-    let value = calculateDisplayRuleValue(props.height);
+    const value = calculateDisplayRuleValue(props.height);
     if (isEmpty(value)) {
         return undefined;
     }
-    return { height: value + ' !important' };
+    return { height: value + " !important" };
 });
 
 /**
  * Width
  */
 const widthStyles = computed(() => {
-    let value = calculateDisplayRuleValue(props.width);
+    const value = calculateDisplayRuleValue(props.width);
     if (isEmpty(value)) {
         return undefined;
     }
-    return (value === 'grow')
-        ? { width: '100%' }
-        : { width: value };
+    return value === "grow" ? { width: "100%" } : { width: value };
 });
-
 </script>
+
 <template>
     <component
         :is="props.tag"
@@ -47,18 +48,13 @@ const widthStyles = computed(() => {
             'ev-container',
             {
                 'is-fluid': props.fluid,
-                'fill-height': props.fill
+                'fill-height': props.fill,
             },
             ...hiddenClasses,
-            props.class
+            props.class,
         ]"
-        :style="[
-            props.style,
-            widthStyles,
-            heightStyles
-        ]"
-        :hidden="hiddenAttribute"
-    >
+        :style="[props.style, widthStyles, heightStyles]"
+        :hidden="hiddenAttribute">
         <slot />
     </component>
 </template>

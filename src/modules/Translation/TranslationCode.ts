@@ -11,7 +11,7 @@ export class TranslationCode {
      */
     constructor(
         public languageCode: string,
-        public countryCode: string | null = null
+        public countryCode: string | null = null,
     ) {}
 
     get isRegional(): boolean {
@@ -28,10 +28,12 @@ export class TranslationCode {
     public static fromString(code: string) {
         const matches = code.match(/^([a-zA-Z]{2,3})(?:[_-]([a-zA-Z]{2,3}))?$/);
         if (!matches) {
-            throw new Error(`Evance UI: The string '${code}' is not a valid Locale string`);
+            throw new Error(
+                `Evance UI: The string '${code}' is not a valid Locale string`,
+            );
         }
         const languageCode = matches[1].toLowerCase();
-        const countryCode = matches[2]?.toUpperCase() ||  null;
+        const countryCode = matches[2]?.toUpperCase() || null;
         return new this(languageCode, countryCode);
     }
 
@@ -39,6 +41,8 @@ export class TranslationCode {
      * ## To String
      */
     public toString(): string {
-        return this.languageCode + (this.isRegional ? '-' + this.countryCode : '');
+        return (
+            this.languageCode + (this.isRegional ? "-" + this.countryCode : "")
+        );
     }
 }

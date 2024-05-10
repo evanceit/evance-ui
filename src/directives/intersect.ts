@@ -1,6 +1,5 @@
-import {DirectiveBinding} from "vue/dist/vue";
-import {Browser} from "@/util";
-
+import { DirectiveBinding } from "vue/dist/vue";
+import { Browser } from "@/util";
 
 type ObserverHandler = (
     isIntersecting: boolean,
@@ -9,15 +8,18 @@ type ObserverHandler = (
 ) => void;
 
 interface ObserveHTMLElement extends HTMLElement {
-    _observe?: { init: boolean, observer: IntersectionObserver }[];
+    _observe?: { init: boolean; observer: IntersectionObserver }[];
 }
 
-export interface ObserverDirectiveBinding extends Omit<DirectiveBinding, 'modifiers' | 'value'> {
-    value?: ObserverHandler | { handler: ObserverHandler, options?: IntersectionObserverInit },
+export interface ObserverDirectiveBinding
+    extends Omit<DirectiveBinding, "modifiers" | "value"> {
+    value?:
+        | ObserverHandler
+        | { handler: ObserverHandler; options?: IntersectionObserverInit };
     modifiers: {
-        once?: boolean,
-        quiet?: boolean
-    }
+        once?: boolean;
+        quiet?: boolean;
+    };
 }
 
 /**
@@ -29,34 +31,40 @@ function mounted(el: ObserveHTMLElement, binding: ObserverDirectiveBinding) {
     }
     const modifiers = binding.modifiers || {};
     const value = binding.value;
-    const { handler, options } = typeof value === 'object' ? value : { handler: value, options: {} };
+    const { handler, options } =
+        typeof value === "object" ? value : { handler: value, options: {} };
 
-    const observer = new IntersectionObserver((
-        entries: IntersectionObserverEntry[] = [],
-        observer: IntersectionObserver
-    ) => {
-        const _observe = el._observe?.[binding.instance!.$.uid];
-        // Just in case, should never fire
-        if (!_observe) {
-            return;
-        }
-        const isIntersecting = entries.some(entry => entry.isIntersecting);
+    const observer = new IntersectionObserver(
+        (
+            entries: IntersectionObserverEntry[] = [],
+            observer: IntersectionObserver,
+        ) => {
+            const _observe = el._observe?.[binding.instance!.$.uid];
+            // Just in case, should never fire
+            if (!_observe) {
+                return;
+            }
+            const isIntersecting = entries.some(
+                (entry) => entry.isIntersecting,
+            );
 
-        // If is not quiet or has already been initialized, invoke the user callback
-        if (
-            handler
-            && (!modifiers.quiet || _observe.init)
-            && (!modifiers.once || isIntersecting || _observe.init)
-        ) {
-            handler(isIntersecting, entries, observer);
-        }
+            // If is not quiet or has already been initialized, invoke the user callback
+            if (
+                handler &&
+                (!modifiers.quiet || _observe.init) &&
+                (!modifiers.once || isIntersecting || _observe.init)
+            ) {
+                handler(isIntersecting, entries, observer);
+            }
 
-        if (isIntersecting && modifiers.once) {
-            unmounted(el, binding);
-        } else {
-            _observe.init = true;
-        }
-    }, options);
+            if (isIntersecting && modifiers.once) {
+                unmounted(el, binding);
+            } else {
+                _observe.init = true;
+            }
+        },
+        options,
+    );
 
     el._observe = Object(el._observe);
     el._observe![binding.instance!.$.uid] = { init: false, observer };
@@ -79,6 +87,6 @@ function unmounted(el: ObserveHTMLElement, binding: ObserverDirectiveBinding) {
 export const Intersect = {
     mounted,
     unmounted,
-}
+};
 
 export default Intersect;

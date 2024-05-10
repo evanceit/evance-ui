@@ -1,5 +1,5 @@
-import {DirectiveBinding} from "vue/dist/vue";
-import {VNode} from "vue";
+import { DirectiveBinding } from "vue/dist/vue";
+import { VNode } from "vue";
 
 export const SlotsDirective = {
     beforeMount(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
@@ -13,7 +13,7 @@ export const SlotsDirective = {
         Object.keys(slots).forEach((slotName) => {
             subComponentVNode.slots[slotName] = slots[slotName];
         });
-    }
+    },
 };
 
 export default SlotsDirective;

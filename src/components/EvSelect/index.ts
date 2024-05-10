@@ -1,2 +1,2 @@
-export * from './EvSelect.ts';
-export { default as EvSelect } from './EvSelect.vue';
+export * from "./EvSelect.ts";
+export { default as EvSelect } from "./EvSelect.vue";

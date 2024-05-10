@@ -2,27 +2,27 @@
 /**
  * # EvProgress
  */
-import './EvProgress.scss';
+import "./EvProgress.scss";
 import {
     appearanceModifier,
     sizeModifier,
     IntegerishPattern,
     isIntegerish,
     AppearanceProp,
-    InputSizeProp
+    InputSizeProp,
 } from "@/util";
 
 interface ProgressProps {
-    appearance?: AppearanceProp,
-    indeterminate?: boolean,
-    percentage?: number,
-    size?: InputSizeProp | number
+    appearance?: AppearanceProp;
+    indeterminate?: boolean;
+    percentage?: number;
+    size?: InputSizeProp | number;
 }
 const props = withDefaults(defineProps<ProgressProps>(), {
-    appearance: 'default',
+    appearance: "default",
     indeterminate: false,
     percentage: 0,
-    size: 'medium'
+    size: "medium",
 });
 
 function getPercentageTranslation() {
@@ -34,14 +34,14 @@ function getPercentageTranslation() {
  * ## Get Size Class
  */
 function getSizeHeight() {
-    return (!isSizeNumeric()) ? undefined : props.size + 'px';
+    return !isSizeNumeric() ? undefined : props.size + "px";
 }
 
 function isSizeNumeric(): boolean {
     return isIntegerish(props.size);
 }
-
 </script>
+
 <template>
     <div
         role="progressbar"
@@ -51,24 +51,26 @@ function isSizeNumeric(): boolean {
         class="ev-progress"
         :class="[
             {
-                'is-indeterminate': props.indeterminate
+                'is-indeterminate': props.indeterminate,
             },
             appearanceModifier(props.appearance, ['default']),
-            sizeModifier(props.size, [IntegerishPattern])
+            sizeModifier(props.size, [IntegerishPattern]),
         ]"
         :style="{
-            height: getSizeHeight()
-        }"
-    >
+            height: getSizeHeight(),
+        }">
         <div class="ev-progress--track"></div>
-        <div class="ev-progress--bar" v-if="!props.indeterminate"
-             :style="{
-                transform: getPercentageTranslation()
-             }"
-        ></div>
-        <div class="ev-progress--indeterminate" v-if="props.indeterminate">
-            <div class="ev-progress--bar ev-progress--indeterminate--primary"></div>
-            <div class="ev-progress--bar ev-progress--indeterminate--secondary"></div>
+        <div
+            v-if="!props.indeterminate"
+            class="ev-progress--bar"
+            :style="{
+                transform: getPercentageTranslation(),
+            }"></div>
+        <div v-if="props.indeterminate" class="ev-progress--indeterminate">
+            <div
+                class="ev-progress--bar ev-progress--indeterminate--primary"></div>
+            <div
+                class="ev-progress--bar ev-progress--indeterminate--secondary"></div>
         </div>
     </div>
 </template>

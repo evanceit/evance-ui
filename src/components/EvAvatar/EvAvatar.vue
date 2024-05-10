@@ -2,14 +2,14 @@
 /**
  * `<ev-avatar>`
  */
-import './EvAvatar.scss';
-import {makeEvAvatarProps} from "./EvAvatar.ts";
-import {useAppearance} from "@/util";
-import {EvIcon} from "@/components/EvIcon";
-import {EvImg} from "@/components/EvImg";
-import {useSize} from "@/composables/size.ts";
-import {useRounded} from "@/composables/rounded.ts";
-import {useDefaults} from "@/composables";
+import "./EvAvatar.scss";
+import { makeEvAvatarProps } from "./EvAvatar.ts";
+import { useAppearance } from "@/util";
+import { EvIcon } from "@/components/EvIcon";
+import { EvImg } from "@/components/EvImg";
+import { useSize } from "@/composables/size.ts";
+import { useRounded } from "@/composables/rounded.ts";
+import { useDefaults } from "@/composables";
 
 const definedProps = defineProps(makeEvAvatarProps());
 const props = useDefaults(definedProps);
@@ -18,8 +18,8 @@ const { sizeClasses, sizeStyles } = useSize(props);
 const { roundedClasses } = useRounded(props);
 
 // @todo: color styles
-
 </script>
+
 <template>
     <div
         :class="[
@@ -28,14 +28,15 @@ const { roundedClasses } = useRounded(props);
             variantClass,
             sizeClasses,
             roundedClasses,
-            props.class
+            props.class,
         ]"
-        :style="[
-            sizeStyles,
-            props.style
-        ]"
-    >
-        <ev-img v-if="props.image" key="image" alt="" cover :src="props.image" />
+        :style="[sizeStyles, props.style]">
+        <ev-img
+            v-if="props.image"
+            key="image"
+            alt=""
+            cover
+            :src="props.image" />
         <ev-icon v-else-if="props.icon" :glyph="props.icon" />
         <slot v-else name="default">{{ props.text }}</slot>
     </div>

@@ -1,5 +1,8 @@
-import {propsFactory} from "@/util";
+import { propsFactory } from "@/util";
 
-export const makeEvDatePickerMonthsProps = propsFactory({
-    modelValue: Number
-}, 'EvDatePickerMonths');
+export const makeEvDatePickerMonthsProps = propsFactory(
+    {
+        modelValue: Number,
+    },
+    "EvDatePickerMonths",
+);

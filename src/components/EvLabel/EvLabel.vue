@@ -2,23 +2,22 @@
 /**
  * # `<ev-label>`
  */
-import './EvLabel.scss';
-import {makeEvLabelProps} from "./EvLabel.ts";
+import "./EvLabel.scss";
+import { makeEvLabelProps } from "./EvLabel.ts";
 
 const props = defineProps(makeEvLabelProps());
-
 </script>
+
 <template>
     <label
         :class="[
             'ev-label',
             {
-                'is-clickable': props.clickable
+                'is-clickable': props.clickable,
             },
-            props.class
+            props.class,
         ]"
-        :style="props.style"
-    >
+        :style="props.style">
         <slot>{{ props.text }}</slot>
     </label>
 </template>

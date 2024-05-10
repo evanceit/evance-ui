@@ -1,48 +1,48 @@
-import type {Meta, StoryObj} from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
-import {EvWindow, EvWindowItem} from "../EvWindow";
-import {shallowRef} from "vue";
-import {EvButton} from "@/components";
-import {ArrowBack, ArrowContinue} from "@/icons";
+import { EvWindow, EvWindowItem } from "../EvWindow";
+import { shallowRef } from "vue";
+import { EvButton } from "@/components";
+import { ArrowBack, ArrowContinue } from "@/icons";
 
 const meta: Meta<typeof EvWindow> = {
     component: EvWindow,
     argTypes: {
         continuous: {
-            control: 'boolean'
+            control: "boolean",
         },
         disabled: {
-            control: 'boolean'
+            control: "boolean",
         },
         iconNext: {
-            description: 'Allows you to change the icon to go forwards, alternatively you can use the `next` slot.'
+            description:
+                "Allows you to change the icon to go forwards, alternatively you can use the `next` slot.",
         },
         iconPrevious: {
-            description: 'Allows you to change the icon to go back, alternatively you can use the `previous` slot.'
+            description:
+                "Allows you to change the icon to go back, alternatively you can use the `previous` slot.",
         },
         modelValue: {
-            description: 'The current window'
+            description: "The current window",
         },
         reverse: {
-            description: 'Reverse the direction of animation between slides.'
+            description: "Reverse the direction of animation between slides.",
         },
-        selectedClass: {
-
-        },
+        selectedClass: {},
         showArrows: {
-            control: 'select',
-            options: [true, false, 'hover']
+            control: "select",
+            options: [true, false, "hover"],
         },
         touch: {
-            description: 'Custom touch functions'
-        }
+            description: "Custom touch functions",
+        },
     },
     args: {
         continuous: false,
         disabled: false,
-        showArrows: false
+        showArrows: false,
     },
-    tags: ['autodocs']
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -50,7 +50,7 @@ export default meta;
 type Story = StoryObj<typeof EvWindow>;
 
 export const Primary: Story = {
-    render: (args: any) =>  ({
+    render: (args: any) => ({
         components: { EvWindow, EvWindowItem, EvButton },
         setup() {
             const step = shallowRef(1);
@@ -82,6 +82,6 @@ export const Primary: Story = {
                     <ev-button @click="goto(1)" :icon-start="ArrowBack">Start over</ev-button>
                 </ev-window-item>
             </ev-window>
-        `
-    })
+        `,
+    }),
 };

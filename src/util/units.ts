@@ -1,11 +1,14 @@
-import {isEmpty} from "./is-functions.ts";
+import { isEmpty } from "./is-functions.ts";
 
 /**
  * # To Web Unit
  * @param value
  * @param unit
  */
-export function toWebUnit(value?: string | number, unit: string = 'px'): string | undefined {
+export function toWebUnit(
+    value?: string | number,
+    unit: string = "px",
+): string | undefined {
     if (isEmpty(value)) {
         return undefined;
     }
@@ -46,6 +49,6 @@ export function extractWebUnit(value: string) {
     }
     return {
         value: parseFloat(match[1]),
-        unit: match[2] ?? 'px'
+        unit: match[2] ?? "px",
     };
 }

@@ -1,25 +1,27 @@
-import {isDeepEqual, propsFactory} from "@/util";
-import {makeFormFieldProps} from "@/composables/validation.ts";
-import {makeComponentProps} from "@/composables/component.ts";
-import {computed, ExtractPropTypes, PropType, Ref} from "vue";
+import { isDeepEqual, propsFactory } from "@/util";
+import { makeFormFieldProps } from "@/composables/validation.ts";
+import { makeComponentProps } from "@/composables/component.ts";
+import { computed, ExtractPropTypes, PropType, Ref } from "vue";
 
 /**
  * # Make EvCheckbox Props
  */
-export const makeEvCheckboxProps = propsFactory({
-    label: String,
-    trueValue: null,
-    falseValue: null,
-    value: null,
-    valueComparator: {
-        type: Function as PropType<typeof isDeepEqual>,
-        default: isDeepEqual,
+export const makeEvCheckboxProps = propsFactory(
+    {
+        label: String,
+        trueValue: null,
+        falseValue: null,
+        value: null,
+        valueComparator: {
+            type: Function as PropType<typeof isDeepEqual>,
+            default: isDeepEqual,
+        },
+
+        ...makeFormFieldProps(),
+        ...makeComponentProps(),
     },
-
-    ...makeFormFieldProps(),
-    ...makeComponentProps()
-}, 'EvSwitch');
-
+    "EvSwitch",
+);
 
 /**
  * # Use Toggle Control
@@ -29,9 +31,8 @@ export const makeEvCheckboxProps = propsFactory({
  */
 export function useToggleControl(
     modelProxy: Ref<any>,
-    props: ExtractPropTypes<ReturnType<typeof makeEvCheckboxProps>>
+    props: ExtractPropTypes<ReturnType<typeof makeEvCheckboxProps>>,
 ) {
-
     /**
      * ## True Value
      */
@@ -39,7 +40,7 @@ export function useToggleControl(
         if (props.trueValue !== undefined) {
             return props.trueValue;
         }
-        return (props.value !== undefined) ? props.value : true;
+        return props.value !== undefined ? props.value : true;
     });
 
     /**
@@ -61,15 +62,15 @@ export function useToggleControl(
                 return;
             }
             const currentValue = value ? trueValue.value : falseValue.value;
-            let newValue = currentValue;
+            const newValue = currentValue;
             // I might do some funky stuff here later for multi-selection and groups
             modelProxy.value = newValue;
-        }
+        },
     });
 
     return {
         trueValue,
         falseValue,
-        isChecked
+        isChecked,
     };
 }
