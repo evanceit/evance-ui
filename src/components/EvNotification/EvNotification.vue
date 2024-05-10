@@ -8,7 +8,9 @@ import { computed, onMounted, toRef, watch } from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useStack } from "@/composables/stack.ts";
 
-const props = defineProps(makeEvNotificationProps());
+const props = defineProps({
+    ...makeEvNotificationProps(),
+});
 const model = useModelProxy(props, "modelValue");
 const timeout = useModelProxy(props, "timeout");
 const messageProps = computed(() => {

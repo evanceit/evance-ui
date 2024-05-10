@@ -10,7 +10,9 @@ import { wrapInArray } from "@/util";
 import { computed, watch } from "vue";
 import { EvButton } from "@/components/EvButton";
 
-const props = defineProps(makeEvDatePickerMonthProps());
+const props = defineProps({
+    ...makeEvDatePickerMonthProps(),
+});
 const dateAdapter = useDate();
 defineEmits(["update:modelValue", "update:month", "update:year"]);
 

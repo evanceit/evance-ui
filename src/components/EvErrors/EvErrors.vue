@@ -7,7 +7,9 @@ import { makeEvErrorsProps } from "./EvErrors.ts";
 import { computed } from "vue";
 import { wrapInArray } from "@/util";
 
-const props = defineProps(makeEvErrorsProps());
+const props = defineProps({
+    ...makeEvErrorsProps(),
+});
 
 const messages = computed(() => {
     return wrapInArray(props.messages);

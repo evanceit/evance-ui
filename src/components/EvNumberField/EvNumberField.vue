@@ -14,7 +14,9 @@ import { useLocaleManager } from "@/composables/locale.ts";
 import { KeyboardEvent } from "react";
 
 const localeManager = useLocaleManager();
-const props = defineProps(makeEvNumberFieldProps());
+const props = defineProps({
+    ...makeEvNumberFieldProps(),
+});
 const slots = useSlots();
 
 // EvTextfield

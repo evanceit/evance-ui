@@ -15,7 +15,9 @@ import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { useDate } from "@/composables/date/date.ts";
 
 const dateAdapter = useDate();
-const props = defineProps(makeEvDateFieldProps());
+const props = defineProps({
+    ...makeEvDateFieldProps(),
+});
 const slots = useSlots();
 
 // Text Field

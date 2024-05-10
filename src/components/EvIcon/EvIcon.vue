@@ -10,7 +10,9 @@ import { computed, toRaw, useAttrs } from "vue";
 import { Appearance, appearanceModifier, sizeModifier } from "@/util";
 import { useDefaults } from "@/composables";
 
-const definedProps = defineProps(makeEvIconProps());
+const definedProps = defineProps({
+    ...makeEvIconProps(),
+});
 const props = useDefaults(definedProps);
 const attrs = useAttrs();
 

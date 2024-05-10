@@ -7,7 +7,9 @@ import { useVirtual } from "@/composables/virtual.ts";
 import { useToggleScope } from "@/composables/toggleScope.ts";
 import EvVirtualScrollItem from "./EvVirtualScrollItem.vue";
 
-const props = defineProps(makeEvVirtualScrollProps());
+const props = defineProps({
+    ...makeEvVirtualScrollProps(),
+});
 const component = getCurrentComponent("EvVirtualScroll");
 const dimensionStyles = useDimensions(props);
 const {

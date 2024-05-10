@@ -19,7 +19,9 @@ import { useModelProxy } from "@/composables/modelProxy.ts";
 import { focusChild, getNextId } from "@/util";
 import { EvMenuSymbol } from "./shared.ts";
 
-const props = defineProps(makeEvMenuProps());
+const props = defineProps({
+    ...makeEvMenuProps(),
+});
 const slots = useSlots();
 const isActive = useModelProxy(props, "modelValue");
 const uid = getNextId();

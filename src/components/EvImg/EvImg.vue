@@ -20,7 +20,9 @@ import {
 } from "vue";
 import { Browser, filterComponentProps, isObject, toWebUnit } from "@/util";
 
-const props = defineProps(makeEvImgProps());
+const props = defineProps({
+    ...makeEvImgProps(),
+});
 const slots = useSlots();
 const emit = defineEmits(["loadstart", "load", "error"]);
 

@@ -17,7 +17,9 @@ import { useLocaleFunctions } from "@/composables/locale.ts";
 import { EvButtonProps } from "@/components/EvButton";
 import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
 
-const props = defineProps(makeEvMessageProps());
+const props = defineProps({
+    ...makeEvMessageProps(),
+});
 const slots = useSlots();
 const hasDefaultSlot = hasSlotWithContent(slots, "default");
 const hasActionSlot = hasSlotWithContent(slots, "action");

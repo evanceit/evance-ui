@@ -11,7 +11,9 @@ import EvListItem from "../EvListItem/EvListItem.vue";
 import { makeEvListChildrenProps } from "./EvList.ts";
 import { createList } from "@/composables/lists";
 
-const props = defineProps(makeEvListChildrenProps());
+const props = defineProps({
+    ...makeEvListChildrenProps(),
+});
 
 createList();
 </script>

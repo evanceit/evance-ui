@@ -9,7 +9,9 @@ import {
 import { computed } from "vue";
 import { isBoolean, isEmpty } from "@/util";
 
-const props = defineProps(makeEvLayoutProps());
+const props = defineProps({
+    ...makeEvLayoutProps(),
+});
 
 const alignItemsClasses = useBreakpointClasses(props, "align", "align");
 const alignContentClasses = useBreakpointClasses(

@@ -26,7 +26,9 @@ import EvListChildren from "./EvListChildren.vue";
 
 defineEmits(["update:selected", "click:select"]);
 
-const props = defineProps(makeEvListProps());
+const props = defineProps({
+    ...makeEvListProps(),
+});
 const { items } = useItems(props);
 const { select } = useNestedList(props as NestedProps);
 const containerRef = ref<HTMLElement | undefined>(undefined);

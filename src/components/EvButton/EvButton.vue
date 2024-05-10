@@ -33,7 +33,9 @@ defineSlots<{
     suffix(): never;
 }>();
 
-const definedProps = defineProps(makeEvButtonProps());
+const definedProps = defineProps({
+    ...makeEvButtonProps(),
+});
 const props = useDefaults(definedProps);
 
 defineEmits(["group:selected"]);

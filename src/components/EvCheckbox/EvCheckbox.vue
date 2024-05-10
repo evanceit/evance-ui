@@ -20,7 +20,9 @@ defineOptions({
 });
 
 // Props & slots
-const definedProps = defineProps(makeEvCheckboxProps());
+const definedProps = defineProps({
+    ...makeEvCheckboxProps(),
+});
 const props = useDefaults(definedProps);
 const slots = useSlots();
 

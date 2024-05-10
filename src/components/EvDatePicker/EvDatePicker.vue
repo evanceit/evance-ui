@@ -16,7 +16,9 @@ import { EvButton } from "@/components/EvButton";
 import { EvSpacer } from "@/components/EvGrid";
 import { ChevronLeft, ChevronRight } from "@/icons";
 
-const props = defineProps(makeEvDatePickerProps());
+const props = defineProps({
+    ...makeEvDatePickerProps(),
+});
 const dateAdapter = useDate();
 const isReversing = shallowRef(false);
 

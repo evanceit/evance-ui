@@ -18,7 +18,9 @@ import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
 import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
 import { provideDialog } from "@/composables/dialog.ts";
 
-const props = defineProps(makeEvDialogProps());
+const props = defineProps({
+    ...makeEvDialogProps(),
+});
 const slots = useSlots();
 const overlayRef = ref();
 const isActive = useModelProxy(props, "modelValue");

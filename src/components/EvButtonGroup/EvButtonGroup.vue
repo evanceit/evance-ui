@@ -8,7 +8,9 @@ import { provideDefaults } from "@/composables/defaults.ts";
 import { computed, toRef } from "vue";
 import { appearanceModifier, variantModifier } from "@/util";
 
-const props = defineProps(makeEvButtonGroupProps());
+const props = defineProps({
+    ...makeEvButtonGroupProps(),
+});
 
 provideDefaults({
     EvButton: {

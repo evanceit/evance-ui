@@ -31,7 +31,6 @@ import type { ComponentObjectPropsOptions, Prop, PropType } from "vue";
  * Copied from Vuetify
  * @see https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/util/propsFactory.ts
  */
-
 export function propsFactory<PropsOptions extends ComponentObjectPropsOptions>(
     props: PropsOptions,
     source: string,

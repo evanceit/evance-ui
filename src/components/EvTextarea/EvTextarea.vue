@@ -35,7 +35,9 @@ defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps(makeEvTextareaProps());
+const props = defineProps({
+    ...makeEvTextareaProps(),
+});
 const slots = useSlots();
 
 // Emit

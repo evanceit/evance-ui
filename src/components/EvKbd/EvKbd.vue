@@ -6,7 +6,9 @@ import "./EvKbd.scss";
 import { makeEvKbdProps } from "./EvKbd.ts";
 import { InputSize, sizeModifier } from "@/util";
 
-const props = defineProps(makeEvKbdProps());
+const props = defineProps({
+    ...makeEvKbdProps(),
+});
 </script>
 
 <template>

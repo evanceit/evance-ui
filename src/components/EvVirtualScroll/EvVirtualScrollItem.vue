@@ -11,7 +11,9 @@ defineSlots<{
     default(props: { itemRef: Ref<HTMLElement | undefined> }): any;
 }>();
 
-const props = defineProps(makeEvVirtualScrollItemProps());
+const props = defineProps({
+    ...makeEvVirtualScrollItemProps(),
+});
 
 const emit = defineEmits(["update:height"]);
 const attrs = useAttrs();

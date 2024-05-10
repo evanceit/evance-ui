@@ -15,7 +15,9 @@ import { computed, provide, ref, shallowRef, watch } from "vue";
 import { TouchHandlers, Touch } from "@/directives";
 import { EvButton } from "@/components";
 
-const props = defineProps(makeEvWindowProps());
+const props = defineProps({
+    ...makeEvWindowProps(),
+});
 const { isRtl } = useRtl();
 const { t } = useLocaleFunctions();
 const group = useGroup(props as any as GroupProps, EvWindowGroupSymbol);

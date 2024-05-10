@@ -12,7 +12,9 @@ import { useDate } from "@/composables/date/date.ts";
 import { wrapInArray } from "@/util";
 
 const dateAdapter = useDate();
-const props = defineProps(makeEvDatePickerYearsProps());
+const props = defineProps({
+    ...makeEvDatePickerYearsProps(),
+});
 defineEmits(["update:modelValue"]);
 
 const modelValue = useModelProxy(

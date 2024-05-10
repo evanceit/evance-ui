@@ -39,7 +39,9 @@ import { FocusEvent, MouseEvent } from "react";
 import { useFilter } from "@/composables/filter.ts";
 
 // Props
-const props = defineProps(makeEvSelectProps());
+const props = defineProps({
+    ...makeEvSelectProps(),
+});
 
 defineSlots<{
     label(): any;

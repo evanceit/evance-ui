@@ -5,7 +5,9 @@
 import "./EvLabel.scss";
 import { makeEvLabelProps } from "./EvLabel.ts";
 
-const props = defineProps(makeEvLabelProps());
+const props = defineProps({
+    ...makeEvLabelProps(),
+});
 </script>
 
 <template>

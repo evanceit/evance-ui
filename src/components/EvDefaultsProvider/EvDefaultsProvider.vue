@@ -3,7 +3,9 @@ import { toRefs } from "vue";
 import { provideDefaults } from "@/composables/defaults.ts";
 import { makeEvDefaultsProviderProps } from "./EvDefaultsProvider.ts";
 
-const props = defineProps(makeEvDefaultsProviderProps());
+const props = defineProps({
+    ...makeEvDefaultsProviderProps(),
+});
 
 const { defaults, disabled, reset, root, scoped } = toRefs(props);
 

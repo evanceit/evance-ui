@@ -7,7 +7,9 @@ import { makeEvResponsiveProps, useAspectStyles } from "./EvResponsive.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
 import { useSlots } from "vue";
 
-const props = defineProps(makeEvResponsiveProps());
+const props = defineProps({
+    ...makeEvResponsiveProps(),
+});
 const slots = useSlots();
 
 const { aspectStyles } = useAspectStyles(props);

@@ -25,7 +25,9 @@ function parseItems(items: readonly TabItem[] | undefined) {
     });
 }
 
-const props = defineProps(makeEvTabsProps());
+const props = defineProps({
+    ...makeEvTabsProps(),
+});
 const model = useModelProxy(props, "modelValue");
 const parsedItems = computed(() => parseItems(props.items));
 

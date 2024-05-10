@@ -33,7 +33,9 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps(makeEvTextfieldProps());
+const props = defineProps({
+    ...makeEvTextfieldProps(),
+});
 const slots = useSlots();
 
 // Emit

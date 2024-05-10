@@ -4,7 +4,9 @@ import { makeEvFormProps } from "./EvForm.ts";
 import { createForm, SubmitEventPromise } from "@/composables/form.ts";
 
 const formRef = ref<HTMLFormElement>();
-const props = defineProps(makeEvFormProps());
+const props = defineProps({
+    ...makeEvFormProps(),
+});
 const form = createForm(props);
 const emit = defineEmits(["update:modelValue", "submit"]);
 

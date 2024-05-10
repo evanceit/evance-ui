@@ -21,7 +21,9 @@ defineEmits(["group:selected"]);
 
 defineSlots<EvSlideGroupItemSlots>();
 
-const props = defineProps(makeGroupItemProps());
+const props = defineProps({
+    ...makeGroupItemProps(),
+});
 const slideGroupItem = useGroupItem(
     props as any as GroupItemProps,
     EvSlideGroupSymbol,

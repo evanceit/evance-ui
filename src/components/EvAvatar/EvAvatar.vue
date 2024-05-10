@@ -11,7 +11,9 @@ import { useSize } from "@/composables/size.ts";
 import { useRounded } from "@/composables/rounded.ts";
 import { useDefaults } from "@/composables";
 
-const definedProps = defineProps(makeEvAvatarProps());
+const definedProps = defineProps({
+    ...makeEvAvatarProps(),
+});
 const props = useDefaults(definedProps);
 const { appearanceClass, variantClass } = useAppearance(props);
 const { sizeClasses, sizeStyles } = useSize(props);

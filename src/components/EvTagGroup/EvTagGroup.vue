@@ -11,7 +11,9 @@ import { provideDefaults } from "@/composables/defaults.ts";
 import { filterComponentProps } from "@/util";
 import { EvSlideGroup } from "@/components/EvSlideGroup";
 
-const props = defineProps(makeEvTagGroupProps());
+const props = defineProps({
+    ...makeEvTagGroupProps(),
+});
 
 const { isSelected, select, next, previous, selected } = useGroup(
     props as any as GroupProps,

@@ -8,7 +8,9 @@ import {
 import { computed } from "vue";
 import { isBoolean, isEmpty } from "@/util";
 
-const props = defineProps(makeEvContainerProps());
+const props = defineProps({
+    ...makeEvContainerProps(),
+});
 
 /**
  * Hidden

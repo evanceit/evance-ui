@@ -14,7 +14,9 @@ import { useModelProxy } from "@/composables/modelProxy.ts";
 import { Cancel } from "@/icons";
 import EvButton from "../EvButton/EvButton.vue";
 
-const props = defineProps(makeEvDialogHeaderProps());
+const props = defineProps({
+    ...makeEvDialogHeaderProps(),
+});
 const isActive = useModelProxy(props, "modelValue");
 
 /**

@@ -2,7 +2,9 @@
 import "./EvSpacer.scss";
 import { makeEvSpacerProps } from "./EvSpacer.ts";
 
-const props = defineProps(makeEvSpacerProps());
+const props = defineProps({
+    ...makeEvSpacerProps(),
+});
 </script>
 
 <template>

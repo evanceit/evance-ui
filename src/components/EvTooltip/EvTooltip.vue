@@ -6,7 +6,9 @@ import { filterComponentProps, getNextId } from "@/util";
 import { EvOverlay, PositionStrategyProps } from "@/components/EvOverlay";
 import { computed, mergeProps, ref } from "vue";
 
-const props = defineProps(makeEvTooltipProps());
+const props = defineProps({
+    ...makeEvTooltipProps(),
+});
 
 const isActive = useModelProxy(props, "modelValue");
 const uid = getNextId();

@@ -23,7 +23,9 @@ import { useRtl } from "@/composables/locale.ts";
 
 defineSlots<EvSlideGroupSlot>();
 
-const props = defineProps(makeEvSlideGroupProps());
+const props = defineProps({
+    ...makeEvSlideGroupProps(),
+});
 const group = useGroup(props as any as GroupProps, props.symbol);
 const { isRtl } = useRtl();
 const isFocused = shallowRef(false);

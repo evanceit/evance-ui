@@ -19,7 +19,9 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps(makeEvRadioProps());
+const props = defineProps({
+    ...makeEvRadioProps(),
+});
 const slots = useSlots();
 const group = inject(EvRadioGroupSymbol, undefined);
 

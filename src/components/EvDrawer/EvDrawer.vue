@@ -7,7 +7,9 @@ import { filterComponentProps, omit } from "@/util";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { provideDrawer } from "@/composables/drawer.ts";
 
-const props = defineProps(makeEvDrawerProps());
+const props = defineProps({
+    ...makeEvDrawerProps(),
+});
 const dialogProps = computed(() => {
     return omit(filterComponentProps(EvDialog, props), ["position"]);
 });

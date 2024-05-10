@@ -4,7 +4,9 @@ import { makeElevationClass, makeEvSurfaceProps } from "./EvSurface.ts";
 import { isEmpty, isString, makeClassName } from "@/util";
 import { useDimensions } from "@/composables/dimensions.ts";
 
-const props = defineProps(makeEvSurfaceProps());
+const props = defineProps({
+    ...makeEvSurfaceProps(),
+});
 const dimensions = useDimensions(props);
 
 /**

@@ -20,7 +20,9 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps(makeEvSwitchProps());
+const props = defineProps({
+    ...makeEvSwitchProps(),
+});
 const slots = useSlots();
 
 // Emit

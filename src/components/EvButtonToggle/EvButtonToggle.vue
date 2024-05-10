@@ -13,7 +13,9 @@ import { GroupProps, useGroup } from "@/composables/group.ts";
 import { filterComponentProps } from "@/util";
 import { computed } from "vue";
 
-const props = defineProps(makeEvButtonToggleProps());
+const props = defineProps({
+    ...makeEvButtonToggleProps(),
+});
 
 defineEmits(["update:modelValue"]);
 

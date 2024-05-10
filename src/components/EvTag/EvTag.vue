@@ -18,7 +18,9 @@ import { EvTransitionExpandX } from "@/components/EvTransition/transitions";
 import { useDefaults } from "@/composables";
 import { AppearanceProps, useAppearance } from "@/util";
 
-const definedProps = defineProps(makeEvTagProps());
+const definedProps = defineProps({
+    ...makeEvTagProps(),
+});
 const props = useDefaults(definedProps);
 const slots = defineSlots<EvTagSlots>();
 const attrs = useAttrs();

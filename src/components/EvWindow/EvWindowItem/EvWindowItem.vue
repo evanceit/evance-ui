@@ -11,7 +11,9 @@ import { useSsrBoot } from "@/composables/ssrBoot.ts";
 import { isString, toWebUnit } from "@/util";
 import { useLazy } from "@/composables/lazy.ts";
 
-const props = defineProps(makeEvWindowItemProps());
+const props = defineProps({
+    ...makeEvWindowItemProps(),
+});
 const window = inject(EvWindowSymbol);
 const groupItem = useGroupItem(
     props as any as GroupItemProps,

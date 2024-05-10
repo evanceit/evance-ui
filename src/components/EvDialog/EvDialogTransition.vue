@@ -25,7 +25,9 @@ import {
     getTargetRect,
 } from "@/util";
 
-const props = defineProps(makeEvDialogTransitionProps());
+const props = defineProps({
+    ...makeEvDialogTransitionProps(),
+});
 
 /**
  * ## getDimensions

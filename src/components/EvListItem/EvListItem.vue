@@ -13,7 +13,9 @@ import { useIcon, EvIcon } from "@/components/EvIcon";
 // Emit
 const emit = defineEmits(["click"]);
 
-const props = defineProps(makeEvListItemProps());
+const props = defineProps({
+    ...makeEvListItemProps(),
+});
 
 const attrs = useAttrs();
 const slots = useSlots();

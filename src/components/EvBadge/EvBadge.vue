@@ -12,7 +12,9 @@ import { usePosition } from "@/composables/position.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useDefaults } from "@/composables";
 
-const definedProps = defineProps(makeEvBadgeProps());
+const definedProps = defineProps({
+    ...makeEvBadgeProps(),
+});
 const props = useDefaults(definedProps);
 const slots = useSlots();
 

@@ -9,7 +9,9 @@ import {
 } from "@/composables/display.ts";
 import { isBoolean, isEmpty } from "@/util";
 
-const props = defineProps(makeEvBlockProps());
+const props = defineProps({
+    ...makeEvBlockProps(),
+});
 
 /**
  * # Size Classes

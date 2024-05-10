@@ -11,7 +11,9 @@ import { createRange } from "@/util";
 import { EvButton } from "@/components/EvButton";
 
 const dateAdapter = useDate();
-const props = defineProps(makeEvDatePickerMonthsProps());
+const props = defineProps({
+    ...makeEvDatePickerMonthsProps(),
+});
 const modelValue = useModelProxy(props, "modelValue");
 defineEmits(["update:modelValue"]);
 

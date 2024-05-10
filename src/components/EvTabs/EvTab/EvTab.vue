@@ -10,7 +10,9 @@ import { computed, ref } from "vue";
 import { animate, easingStandard, filterComponentProps } from "@/util";
 import { useDefaults } from "@/composables";
 
-const definedProps = defineProps(makeEvTabProps());
+const definedProps = defineProps({
+    ...makeEvTabProps(),
+});
 const props = useDefaults(definedProps);
 const isSelected = computed(
     () => rootEl.value?.group?.isSelected.value ?? false,

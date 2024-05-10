@@ -12,7 +12,9 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps(makeEvRadioGroupProps());
+const props = defineProps({
+    ...makeEvRadioGroupProps(),
+});
 const slots = useSlots();
 
 // Emit
