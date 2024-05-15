@@ -5,25 +5,13 @@
  * `<ev-lozenge />`
  */
 import "./EvLozenge.scss";
-import {
-    AppearanceProp,
-    isIntegerish,
-    useAppearance,
-    VariantProp,
-} from "@/util";
+import { makeEvLozengeProps } from "./EvLozenge.ts";
+import { isIntegerish, useAppearance } from "@/util";
+import { computed } from "vue";
+import { EvIcon } from "../EvIcon";
 
-/**
- * ## Lozenge Props
- */
-interface LozengeProps {
-    appearance?: AppearanceProp;
-    variant?: VariantProp;
-    maxWidth?: number | string;
-}
-const props = withDefaults(defineProps<LozengeProps>(), {
-    appearance: "default",
-    variant: "default",
-    maxWidth: 200,
+const props = defineProps({
+    ...makeEvLozengeProps(),
 });
 
 /**
@@ -35,56 +23,26 @@ const isMaxWidthNumeric = () => {
 };
 
 /**
- * ## Is the `maxWidth` prop a percentage?
- */
-const isMaxWidthPercent = () => {
-    return /%$/.test(props.maxWidth.toString());
-};
-
-/**
  * ## Get Outer Max Width
  * Returns the `maxWidth` prop value if it was supplied as a percentage,
  * or simply returns '100%'.
  */
-const getMaxWidthOuter = () => {
-    return isMaxWidthPercent() ? props.maxWidth : "100%";
-};
-
-/**
- * ## Get Inner Max Width
- * Returns '100%' if the `maxWidth` prop was supplied as a percentage,
- * or returns a calculation of the `maxWidth` supplied minus double
- * the default padding.
- */
-const getMaxWidthInner = () => {
-    return isMaxWidthPercent()
-        ? "100%"
-        : `calc(${getMaxWidthWithUnits()} - var(--spacer-200))`;
-};
-
-/**
- * ## Get Max Width with Units
- * When a `maxWidth` is numeric (supplied without units), we assume `px`.
- */
-const getMaxWidthWithUnits = () => {
+const maxWidthOuter = computed(() => {
     return isMaxWidthNumeric() ? `${props.maxWidth}px` : props.maxWidth;
-};
+});
 
 const { appearanceClass, variantClass } = useAppearance(props);
 </script>
 
 <template>
-    <span
-        :class="['ev-lozenge', appearanceClass, variantClass]"
-        :style="{
-            'max-width': getMaxWidthOuter(),
-        }">
-        <span
-            class="ev-lozenge--label"
-            :style="{
-                'max-width': getMaxWidthInner(),
-            }">
+    <component
+        :is="props.tag"
+        :class="['ev-lozenge', appearanceClass, variantClass, props.class]"
+        :style="[{ 'max-width': maxWidthOuter }, props.style]">
+        <ev-icon v-if="props.iconStart" :glyph="props.iconStart" size="small" />
+        <span class="ev-lozenge--label">
             <slot />
         </span>
-    </span>
+        <ev-icon v-if="props.iconEnd" :glyph="props.iconEnd" size="small" />
+    </component>
 </template>

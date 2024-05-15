@@ -1,21 +1,23 @@
 @use "../../css/mixins";
 
 .ev-lozenge {
+    align-items: center;
     border-radius: 3px;
     display: inline-flex;
     max-width: 100%;
-    padding-inline: var(--spacer-100, 8px);
+    padding-inline: var(--spacer-50, 4px);
 }
 
 .ev-lozenge--label {
+    font-size: 0.6875rem;
     font-weight: var(--font-weight-bold, 700);
+    line-height: 1.375rem;
+    letter-spacing: 0.1em;
     overflow: hidden;
+    padding-inline: var(--spacer-50, 4px);
     text-overflow: ellipsis;
     text-transform: uppercase;
     white-space: nowrap;
-    font-size: 0.6875rem;
-    line-height: 1.375rem;
-    letter-spacing: 0.1em;
 }
 
 /**

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvLozenge } from "../EvLozenge";
 import { Appearance, Variant } from "@/util";
+import {Check, ChevronDown} from "@/icons";
 
 const meta: Meta<typeof EvLozenge> = {
     component: EvLozenge,
@@ -26,11 +27,29 @@ const meta: Meta<typeof EvLozenge> = {
             description:
                 "Whether to apply a solid background, giving the component a bolder appearance.",
         },
+        iconStart: {
+            control: "select",
+            options: ["None", "Check"],
+            mapping: {
+                None: undefined,
+                Check: Check,
+            },
+        },
+        iconEnd: {
+            control: "select",
+            options: ["None", "ChevronDown"],
+            mapping: {
+                None: undefined,
+                ChevronDown: ChevronDown,
+            },
+        },
     },
     args: {
         default: "Example",
         appearance: "default",
         variant: "default",
+        iconStart: undefined,
+        iconEnd: undefined,
     },
     tags: ["autodocs"],
 };
