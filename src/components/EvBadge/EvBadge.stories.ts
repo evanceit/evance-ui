@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvBadge } from "../EvBadge";
 import { Cancel, Check, Evance } from "@/icons";
-import { EvIcon } from "@/components";
+import { EvBlock, EvIcon, EvLayout } from "@/components";
 
 const meta: Meta<typeof EvBadge> = {
     component: EvBadge,
@@ -95,12 +95,25 @@ type Story = StoryObj<typeof EvBadge>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvBadge, EvIcon },
+        components: { EvBadge, EvIcon, EvLayout, EvBlock },
         setup() {
             return { EvIcon, Evance, args };
         },
-        template: `<ev-badge v-bind="args">
-            <ev-icon :glyph="Evance" size="large" />
-        </ev-badge>`,
+        template: `
+
+        <ev-layout>
+            <ev-block>
+                <p>Positioned relative to the default slot content.</p>
+                <ev-badge v-bind="args">
+                    <ev-icon :glyph="Evance" size="large" />
+                </ev-badge>
+            </ev-block>
+            <ev-block>
+                <p>Or, inline if the default slot is unused</p>
+                <ev-badge v-bind="args" />
+            </ev-block>
+        </ev-layout>
+        
+        `,
     }),
 };

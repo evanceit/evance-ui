@@ -4,7 +4,7 @@
  */
 import "./EvBadge.scss";
 import { makeEvBadgeProps } from "./EvBadge.ts";
-import { computed, useSlots } from "vue";
+import { computed } from "vue";
 import { appearanceModifier } from "@/util";
 import { EvTransition } from "@/components/EvTransition";
 import { EvIcon } from "@/components/EvIcon";
@@ -16,7 +16,10 @@ const definedProps = defineProps({
     ...makeEvBadgeProps(),
 });
 const props = useDefaults(definedProps);
-const slots = useSlots();
+const slots = defineSlots<{
+    default(): never;
+    content(): never;
+}>();
 
 const modelValue = useModelProxy(props, "modelValue");
 
@@ -44,6 +47,10 @@ const { positionStyles } = usePosition(props, true, (side) => {
               : 0)
     );
 });
+
+const isInline = computed(() => {
+    return props.inline ? true : !slots.default;
+});
 </script>
 
 <template>
@@ -51,7 +58,7 @@ const { positionStyles } = usePosition(props, true, (side) => {
         :class="[
             'ev-badge',
             {
-                'is-inline': props.inline,
+                'is-inline': isInline,
                 'is-dot': props.dot,
                 'is-bordered': props.bordered,
                 'is-floating': props.floating,
@@ -72,7 +79,7 @@ const { positionStyles } = usePosition(props, true, (side) => {
                         'is-pulsate': props.pulsate,
                     },
                 ]"
-                :style="[props.inline ? {} : positionStyles]"
+                :style="[isInline ? {} : positionStyles]"
                 aria-atomic="true"
                 :aria-label="contentNumber.toString()"
                 aria-live="polite"
