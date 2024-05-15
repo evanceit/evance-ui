@@ -4,15 +4,7 @@
  */
 import "./EvTextarea.scss";
 import { makeEvTextareaProps } from "./EvTextarea.ts";
-import {
-    computed,
-    nextTick,
-    ref,
-    useAttrs,
-    onUpdated,
-    onMounted,
-    useSlots,
-} from "vue";
+import { computed, nextTick, ref, useAttrs, onUpdated, onMounted } from "vue";
 import {
     Appearance,
     appearanceModifier,
@@ -38,7 +30,9 @@ defineOptions({
 const props = defineProps({
     ...makeEvTextareaProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+}>();
 
 // Emit
 const emit = defineEmits([

@@ -12,7 +12,6 @@ import {
     provide,
     ref,
     shallowRef,
-    useSlots,
     watch,
 } from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
@@ -22,7 +21,10 @@ import { EvMenuSymbol } from "./shared.ts";
 const props = defineProps({
     ...makeEvMenuProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    activator(props: { isActive: boolean; props: any }): never;
+    default(): never;
+}>();
 const isActive = useModelProxy(props, "modelValue");
 const uid = getNextId();
 const id = computed(() => {

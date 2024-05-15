@@ -3,7 +3,7 @@
  * # `<ev-radio>`
  */
 import "./EvRadio.scss";
-import { computed, inject, ref, useAttrs, useSlots } from "vue";
+import { computed, inject, ref, useAttrs } from "vue";
 import { isDeepEqual, splitInputAttrs } from "@/util";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
 import { EvRadioGroupSymbol } from "@/components/EvRadioGroup";
@@ -22,7 +22,9 @@ defineOptions({
 const props = defineProps({
     ...makeEvRadioProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+}>();
 const group = inject(EvRadioGroupSymbol, undefined);
 
 // Emit

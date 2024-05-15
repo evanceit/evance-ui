@@ -33,6 +33,7 @@ defineExpose({
 });
 
 const groupProps = computed(() => filterComponentProps(EvButtonGroup, props));
+const slotProps = { isSelected, next, previous, select, selected };
 </script>
 
 <template>
@@ -40,6 +41,6 @@ const groupProps = computed(() => filterComponentProps(EvButtonGroup, props));
         :class="['ev-button-toggle', props.class]"
         :style="props.style"
         v-bind="groupProps">
-        <slot v-bind="{ isSelected, next, previous, select, selected }" />
+        <slot v-bind="slotProps" />
     </ev-button-group>
 </template>

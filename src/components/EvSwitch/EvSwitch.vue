@@ -3,7 +3,7 @@
  * # `<ev-switch>`
  */
 import "./EvSwitch.scss";
-import { ref, useAttrs, useSlots } from "vue";
+import { ref, useAttrs } from "vue";
 import { splitInputAttrs } from "@/util";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
@@ -23,7 +23,9 @@ defineOptions({
 const props = defineProps({
     ...makeEvSwitchProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+}>();
 
 // Emit
 defineEmits(["update:focused", "update:modelValue"]);

@@ -8,7 +8,7 @@ import { EvTextfield } from "@/components/EvTextfield";
 import { EvMenu } from "@/components/EvMenu";
 import { EvDatePicker } from "@/components/EvDatePicker";
 import { EvSurface } from "@/components/EvSurface";
-import { computed, ref, shallowRef, useSlots, watch } from "vue";
+import { computed, ref, shallowRef, watch } from "vue";
 import { FocusEvent } from "react";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
@@ -18,7 +18,9 @@ const dateAdapter = useDate();
 const props = defineProps({
     ...makeEvDateFieldProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+}>();
 
 // Text Field
 const evMenuRef = ref<typeof EvMenu>();

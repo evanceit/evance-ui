@@ -5,7 +5,7 @@
 import "./EvNumberField.scss";
 import { makeEvNumberFieldProps, NumberParser } from "./EvNumberField.ts";
 import { EvTextfield } from "@/components/EvTextfield";
-import { computed, nextTick, Ref, ref, shallowRef, useSlots, watch } from "vue";
+import { computed, nextTick, Ref, ref, shallowRef, watch } from "vue";
 import { filterComponentProps, isEmpty, omit } from "@/util";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { EvButton } from "@/components/EvButton";
@@ -17,7 +17,11 @@ const localeManager = useLocaleManager();
 const props = defineProps({
     ...makeEvNumberFieldProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+    prefix(): never;
+    suffix(): never;
+}>();
 
 // EvTextfield
 const evTextfieldRef = ref<typeof EvTextfield>();

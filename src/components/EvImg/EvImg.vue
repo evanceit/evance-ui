@@ -15,7 +15,6 @@ import {
     onMounted,
     ref,
     shallowRef,
-    useSlots,
     watch,
 } from "vue";
 import { Browser, filterComponentProps, isObject, toWebUnit } from "@/util";
@@ -23,7 +22,12 @@ import { Browser, filterComponentProps, isObject, toWebUnit } from "@/util";
 const props = defineProps({
     ...makeEvImgProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    default(): never;
+    error(): never;
+    placeholder(): never;
+    sources(): never;
+}>();
 const emit = defineEmits(["loadstart", "load", "error"]);
 
 const currentSrc = shallowRef("");

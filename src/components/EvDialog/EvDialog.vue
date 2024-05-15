@@ -8,7 +8,7 @@ import {
     DialogSizeToWidth,
     makeEvDialogProps,
 } from "./EvDialog.ts";
-import { computed, mergeProps, nextTick, ref, useSlots, watch } from "vue";
+import { computed, mergeProps, nextTick, ref, watch } from "vue";
 import { EvOverlay } from "@/components/EvOverlay";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import { Browser, filterComponentProps, getFocusableChildren } from "@/util";
@@ -21,7 +21,13 @@ import { provideDialog } from "@/composables/dialog.ts";
 const props = defineProps({
     ...makeEvDialogProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    activator(): never;
+    container(): never;
+    default(): never;
+    footer(): never;
+    header(): never;
+}>();
 const overlayRef = ref();
 const isActive = useModelProxy(props, "modelValue");
 const isFullscreen = useModelProxy(props, "fullscreen");

@@ -12,7 +12,6 @@ import {
     shallowRef,
     toRef,
     useAttrs,
-    useSlots,
     watch,
 } from "vue";
 import { useTeleport } from "@/composables/teleport.ts";
@@ -41,7 +40,10 @@ const props = defineProps({
     ...makeEvOverlayProps(),
 });
 const attrs = useAttrs();
-const slots = useSlots();
+const slots = defineSlots<{
+    activator(props: { isActive: boolean; props: any }): any;
+    default(): never;
+}>();
 const router = useRouter();
 const model = useModelProxy(props, "modelValue");
 const containerEl = ref<HTMLElement | undefined>(undefined);

@@ -4,7 +4,7 @@
  */
 import "./EvTextfield.scss";
 import { makeEvTextfieldProps } from "./EvTextfield.ts";
-import { computed, nextTick, ref, useAttrs, useSlots } from "vue";
+import { computed, nextTick, ref, useAttrs } from "vue";
 import { EvIcon, useIcon } from "@/components/EvIcon";
 import { Cancel } from "@/icons";
 import {
@@ -36,7 +36,12 @@ defineOptions({
 const props = defineProps({
     ...makeEvTextfieldProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+    prefix(): never;
+    default(): never;
+    suffix(): never;
+}>();
 
 // Emit
 const emit = defineEmits([

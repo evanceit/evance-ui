@@ -19,6 +19,10 @@ const { appearanceClass, variantClass } = useAppearance(props);
 const { sizeClasses, sizeStyles } = useSize(props);
 const { roundedClasses } = useRounded(props);
 
+defineSlots<{
+    default(): never;
+}>();
+
 // @todo: color styles
 </script>
 

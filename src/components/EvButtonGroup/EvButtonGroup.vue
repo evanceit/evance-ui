@@ -12,6 +12,10 @@ const props = defineProps({
     ...makeEvButtonGroupProps(),
 });
 
+defineSlots<{
+    default(): never;
+}>();
+
 provideDefaults({
     EvButton: {
         appearance: toRef(props, "appearance"),

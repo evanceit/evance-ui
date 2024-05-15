@@ -4,7 +4,7 @@
  */
 import "./EvCheckbox.scss";
 import { makeEvCheckboxProps, useToggleControl } from "./EvCheckbox.ts";
-import { ref, useAttrs, useSlots } from "vue";
+import { ref, useAttrs } from "vue";
 import { splitInputAttrs } from "@/util";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
@@ -24,7 +24,9 @@ const definedProps = defineProps({
     ...makeEvCheckboxProps(),
 });
 const props = useDefaults(definedProps);
-const slots = useSlots();
+const slots = defineSlots<{
+    label(): never;
+}>();
 
 // Emit
 defineEmits(["update:focused", "update:modelValue"]);

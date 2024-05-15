@@ -2,7 +2,7 @@
 import "./EvRadioGroup.scss";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
 import { EvRadioGroupSymbol, makeEvRadioGroupProps } from "./EvRadioGroup.ts";
-import { computed, provide, useSlots } from "vue";
+import { computed, provide } from "vue";
 import { getNextId } from "@/util";
 import { useFormField } from "@/composables/validation.ts";
 import EvErrors from "@/components/EvErrors/EvErrors.vue";
@@ -15,7 +15,10 @@ defineOptions({
 const props = defineProps({
     ...makeEvRadioGroupProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    default(): never;
+    label(): never;
+}>();
 
 // Emit
 defineEmits(["update:modelValue"]);

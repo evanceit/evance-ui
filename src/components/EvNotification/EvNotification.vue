@@ -11,6 +11,11 @@ import { useStack } from "@/composables/stack.ts";
 const props = defineProps({
     ...makeEvNotificationProps(),
 });
+const slots = defineSlots<{
+    actions(): never;
+    default(): never;
+    icon(): never;
+}>();
 const model = useModelProxy(props, "modelValue");
 const timeout = useModelProxy(props, "timeout");
 const messageProps = computed(() => {

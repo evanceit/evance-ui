@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvListItem.scss";
 import { makeEvListItemProps } from "./EvListItem.ts";
-import { computed, useAttrs, useSlots } from "vue";
+import { computed, useAttrs } from "vue";
 import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
@@ -16,9 +16,13 @@ const emit = defineEmits(["click"]);
 const props = defineProps({
     ...makeEvListItemProps(),
 });
+const slots = defineSlots<{
+    default(): never;
+    prefix(): never;
+    suffix(): never;
+}>();
 
 const attrs = useAttrs();
-const slots = useSlots();
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 const list = useList();
 const id = computed(() =>

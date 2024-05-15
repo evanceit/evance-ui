@@ -14,10 +14,31 @@ import { GroupProps, useGroup } from "@/composables/group.ts";
 import { computed, provide, ref, shallowRef, watch } from "vue";
 import { TouchHandlers, Touch } from "@/directives";
 import { EvButton } from "@/components";
+import { IconValue } from "@/composables/icons.ts";
 
 const props = defineProps({
     ...makeEvWindowProps(),
 });
+defineSlots<{
+    default(): never;
+    next(props: {
+        props: {
+            icon: IconValue;
+            class: string;
+            onClick: () => void;
+            ariaLabel: string;
+        };
+    }): never;
+    previous(props: {
+        props: {
+            icon: IconValue;
+            class: string;
+            onClick: () => void;
+            ariaLabel: string;
+        };
+    }): never;
+}>();
+
 const { isRtl } = useRtl();
 const { t } = useLocaleFunctions();
 const group = useGroup(props as any as GroupProps, EvWindowGroupSymbol);

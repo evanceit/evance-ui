@@ -8,7 +8,7 @@ import "./EvMessage.scss";
 import { appearanceModifier, isNumber, makeClassName } from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import { Cancel, ChevronDown } from "@/icons";
-import { computed, nextTick, shallowRef, useSlots } from "vue";
+import { computed, nextTick, shallowRef } from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { appearanceIcon } from "@/composables/icons.ts";
@@ -20,7 +20,11 @@ import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
 const props = defineProps({
     ...makeEvMessageProps(),
 });
-const slots = useSlots();
+const slots = defineSlots<{
+    actions(): never;
+    default(): never;
+    icon(): never;
+}>();
 const hasDefaultSlot = hasSlotWithContent(slots, "default");
 const hasActionSlot = hasSlotWithContent(slots, "action");
 const modelProxy = useModelProxy(props, "modelValue");
@@ -174,7 +178,8 @@ function onLeave(el: Element) {
                         class="ev-message--actions">
                         <slot name="actions">
                             <ev-button
-                                v-for="action in actions"
+                                v-for="(action, index) in actions"
+                                :key="index"
                                 v-bind="action" />
                         </slot>
                     </div>
