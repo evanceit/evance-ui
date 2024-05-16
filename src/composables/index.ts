@@ -14,3 +14,8 @@ export type {
     DisplayInstance,
     DisplayThresholds,
 } from "./display";
+
+// Service related composables
+export { useDialog, injectDialog } from "./dialog";
+export { useDrawer, injectDrawer } from "./drawer";
+export { useNotification } from "./notification";

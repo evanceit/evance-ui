@@ -16,6 +16,7 @@ export * from "./isFixedPosition";
 export * from "./keyboard";
 export * from "./modifiers";
 export * from "./numbers";
+export * from "./plugins";
 export * from "./props";
 export * from "./scroll";
 export * from "./strings";
