@@ -9,7 +9,7 @@ import { computed, nextTick, Ref, ref, shallowRef, watch } from "vue";
 import { filterComponentProps, isEmpty, omit } from "@/util";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { EvButton } from "@/components/EvButton";
-import { Minus, Plus } from "@/icons";
+import { MinusIcon, PlusIcon } from "@/icons";
 import { useLocaleManager } from "@/composables/locale.ts";
 import { KeyboardEvent } from "react";
 
@@ -369,7 +369,7 @@ const hasSuffix = computed(() => {
                 size="x-small"
                 class="ev-number-field--minus"
                 variant="subtle"
-                :icon="Minus"
+                :icon="MinusIcon"
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(-1)"
                 @keyup="stopIncrementing()"
@@ -386,7 +386,7 @@ const hasSuffix = computed(() => {
                 size="x-small"
                 class="ev-number-field--plus"
                 variant="subtle"
-                :icon="Plus"
+                :icon="PlusIcon"
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(1)"
                 @keyup="stopIncrementing()"

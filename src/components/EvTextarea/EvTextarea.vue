@@ -12,7 +12,7 @@ import {
     splitInputAttrs,
 } from "@/util";
 import { useAutofocus } from "@/composables/focus.ts";
-import { Cancel } from "@/icons";
+import { CancelIcon } from "@/icons";
 import { EvProgress } from "@/components/EvProgress";
 import { EvIcon } from "@/components/EvIcon";
 import { EvErrors } from "@/components/EvErrors";
@@ -249,7 +249,7 @@ defineExpose({
             <transition name="slide-fade">
                 <div v-if="isClearable" class="ev-textarea--clearable">
                     <ev-icon
-                        :glyph="Cancel"
+                        :glyph="CancelIcon"
                         @click="onClearableClick"
                         @mousedown="onClearableMousedown" />
                 </div>

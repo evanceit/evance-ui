@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvTextfield } from "../EvTextfield";
-import { Search } from "../../icons";
+import { SearchIcon } from "@/icons";
 import { InputAppearance, InputSize } from "@/util";
 
 const meta: Meta<typeof EvTextfield> = {
@@ -85,19 +85,19 @@ const meta: Meta<typeof EvTextfield> = {
         },
         iconStart: {
             control: "select",
-            options: ["none", "Search"],
+            options: ["none", "SearchIcon"],
             mapping: {
                 none: null,
-                Search: Search,
+                SearchIcon: SearchIcon,
             },
             description: "Appears before input prefix. ",
         },
         iconEnd: {
             control: "select",
-            options: ["none", "Search"],
+            options: ["none", "SearchIcon"],
             mapping: {
                 none: null,
-                Search: Search,
+                SearchIcon: SearchIcon,
             },
             description: "Appears after input suffix. ",
         },

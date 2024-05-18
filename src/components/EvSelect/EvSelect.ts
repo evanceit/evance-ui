@@ -1,7 +1,7 @@
 import { omit, propsFactory } from "@/util";
 import { makeListItemsProps } from "@/composables/lists";
 import { makeEvTextfieldProps } from "@/components/EvTextfield";
-import { ChevronDown } from "@/icons";
+import { ChevronDownIcon } from "@/icons";
 import { PropType } from "vue";
 import { makeFilterProps } from "@/composables/filter.ts";
 
@@ -50,7 +50,7 @@ export const makeEvSelectProps = propsFactory(
         ...omit(
             makeEvTextfieldProps({
                 modelValue: null,
-                iconEnd: ChevronDown,
+                iconEnd: ChevronDownIcon,
                 role: "select",
             }),
             ["align", "monospace", "type"],

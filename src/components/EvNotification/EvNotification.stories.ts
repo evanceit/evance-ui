@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNotification } from "../EvNotification";
-import { Reload } from "../../icons";
+import { ReloadIcon } from "../../icons";
 import { EvButton } from "@/components/EvButton";
 import EvMessageStories from "../EvMessage/EvMessage.stories.ts";
 
@@ -31,13 +31,13 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvNotification, EvButton },
         setup() {
-            return { args, Reload };
+            return { args, ReloadIcon };
         },
         template: `
             <ev-notification v-bind="args">{{ args.default }}</ev-notification>
             
             <div v-if="!args.modelValue">
-                <ev-button :icon="Reload" @click="args.modelValue = true">Reset</ev-button>
+                <ev-button :icon="ReloadIcon" @click="args.modelValue = true">Reset</ev-button>
             </div>`,
     }),
 };

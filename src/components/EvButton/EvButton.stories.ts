@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvButton } from "../EvButton";
-import { ArrowContinue, Check, Plus, Save } from "../../icons";
+import { ArrowContinueIcon, CheckIcon, PlusIcon, SaveIcon } from "../../icons";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,
@@ -55,12 +55,12 @@ const meta: Meta<typeof EvButton> = {
             description:
                 "Places an icon at the start of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
                 "May also be supplied as a slot (see `icon-start` slot)",
-            options: ["None", "Check", "Plus", "Save"],
+            options: ["None", "CheckIcon", "PlusIcon", "SaveIcon"],
             mapping: {
                 None: null,
-                Check: Check,
-                Plus: Plus,
-                Save: Save,
+                CheckIcon: CheckIcon,
+                PlusIcon: PlusIcon,
+                SaveIcon: SaveIcon,
             },
         },
         iconEnd: {
@@ -68,10 +68,10 @@ const meta: Meta<typeof EvButton> = {
             description:
                 "Places an icon at the end of the button. The icon may be supplied as a String or as an SVG component/glyph. " +
                 "May also be supplied as a slot (see `icon-end` slot)",
-            options: ["None", "ArrowContinue"],
+            options: ["None", "ArrowContinueIcon"],
             mapping: {
                 None: null,
-                ArrowContinue: ArrowContinue,
+                ArrowContinueIcon: ArrowContinueIcon,
             },
         },
         fullWidth: {
@@ -111,7 +111,7 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvButton },
         setup() {
-            return { Check, ArrowContinue, args };
+            return { CheckIcon, ArrowContinueIcon, args };
         },
         template: '<ev-button v-bind="args">{{ args.default }}</ev-button>',
     }),

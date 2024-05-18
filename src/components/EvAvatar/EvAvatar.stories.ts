@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvAvatar } from "../EvAvatar";
-import { Check, Company, Evance } from "@/icons";
+import { CheckIcon, CompanyIcon, EvanceIcon } from "@/icons";
 import { EvIcon } from "@/components";
 import { Appearance, Variant } from "@/util";
 
@@ -22,12 +22,12 @@ const meta: Meta<typeof EvAvatar> = {
         },
         icon: {
             control: "select",
-            options: ["None", "Evance", "Check", "Company"],
+            options: ["None", "EvanceIcon", "CheckIcon", "CompanyIcon"],
             mapping: {
                 None: undefined,
-                Evance: Evance,
-                Check: Check,
-                Company: Company,
+                EvanceIcon: EvanceIcon,
+                CheckIcon: CheckIcon,
+                CompanyIcon: CompanyIcon,
             },
             description:
                 "Render an imag using the `glyph` attribute for `<ev-icon>`.",
@@ -95,7 +95,7 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvAvatar, EvIcon },
         setup() {
-            return { EvIcon, Evance, args };
+            return { EvIcon, EvanceIcon, args };
         },
         template: `<ev-avatar v-bind="args" />`,
     }),

@@ -4,7 +4,7 @@ import { makeComponentProps } from "@/composables/component.ts";
 import { makeGroupItemProps } from "@/composables/groupItem.ts";
 import { makeRoundedProps } from "@/composables/rounded.ts";
 import { IconProp } from "@/composables/icons.ts";
-import { Check } from "@/icons";
+import { CheckIcon } from "@/icons";
 import { PropType } from "vue";
 import { ButtonAppearanceProp, ButtonVariantProp } from "@/components";
 
@@ -37,7 +37,7 @@ export const makeEvTagProps = propsFactory(
         iconEnd: IconProp,
         iconFilter: {
             type: IconProp,
-            default: Check,
+            default: CheckIcon,
         },
         iconStart: IconProp,
         link: {

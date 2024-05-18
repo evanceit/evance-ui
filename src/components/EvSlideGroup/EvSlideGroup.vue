@@ -18,7 +18,12 @@ import {
     calculateCenteredOffset,
     calculateUpdatedOffset,
 } from "@/components/EvSlideGroup/helpers.ts";
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@/icons";
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
+} from "@/icons";
 import { useRtl } from "@/composables/locale.ts";
 
 defineSlots<EvSlideGroupSlot>();
@@ -366,14 +371,14 @@ const iconNext = computed(() => {
     if (props.iconNext) {
         return props.iconNext;
     }
-    return isHorizontal.value ? ChevronRight : ChevronDown;
+    return isHorizontal.value ? ChevronRightIcon : ChevronDownIcon;
 });
 
 const iconPrevious = computed(() => {
     if (props.iconPrevious) {
         return props.iconPrevious;
     }
-    return isHorizontal.value ? ChevronLeft : ChevronUp;
+    return isHorizontal.value ? ChevronLeftIcon : ChevronUpIcon;
 });
 </script>
 

@@ -1,8 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvIcon } from "../EvIcon";
-import { EvanceCircle, Evance, Help, Minus, Plus } from "../../icons";
-import { Appearance } from "../../util";
+import {
+    EvanceCircleIcon,
+    EvanceIcon,
+    HelpIcon,
+    MinusIcon,
+    PlusIcon,
+} from "@/icons";
+import { Appearance } from "@/util";
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
@@ -20,13 +26,19 @@ const meta: Meta<typeof EvIcon> = {
         glyph: {
             control: "select",
             description: "The SVG contents to display in the icon.",
-            options: ["Evance", "EvanceCircle", "Help", "Minus", "Plus"],
+            options: [
+                "EvanceIcon",
+                "EvanceCircleIcon",
+                "HelpIcon",
+                "MinusIcon",
+                "PlusIcon",
+            ],
             mapping: {
-                Evance: Evance,
-                EvanceCircle: EvanceCircle,
-                Help: Help,
-                Minus: Minus,
-                Plus: Plus,
+                EvanceIcon: EvanceIcon,
+                EvanceCircleIcon: EvanceCircleIcon,
+                HelpIcon: HelpIcon,
+                MinusIcon: MinusIcon,
+                PlusIcon: PlusIcon,
             },
         },
     },
@@ -43,8 +55,8 @@ export const Primary: Story = {
     render: (args) => ({
         components: { EvIcon },
         setup() {
-            return { Evance, args };
+            return { EvanceIcon, args };
         },
-        template: `<ev-icon :glyph="Evance" v-bind="args" />`,
+        template: `<ev-icon :glyph="EvanceIcon" v-bind="args" />`,
     }),
 };

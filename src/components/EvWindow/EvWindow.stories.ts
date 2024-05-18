@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvWindow, EvWindowItem } from "../EvWindow";
 import { shallowRef } from "vue";
 import { EvButton } from "@/components";
-import { ArrowBack, ArrowContinue } from "@/icons";
+import { ArrowBackIcon, ArrowContinueIcon } from "@/icons";
 
 const meta: Meta<typeof EvWindow> = {
     component: EvWindow,
@@ -61,25 +61,25 @@ export const Primary: Story = {
                 step.value = n;
             };
 
-            return { args, step, goto, reverse, ArrowContinue, ArrowBack };
+            return { args, step, goto, reverse, ArrowContinueIcon, ArrowBackIcon };
         },
         template: `
             <ev-window v-bind="args" v-model="step" :reverse="reverse">
                 <ev-window-item :value="1">
                     <h3>Step 1</h3>
                     <p>A step with only one line</p>
-                    <ev-button @click="goto(2)" :icon-end="ArrowContinue">Go to step 2</ev-button>
+                    <ev-button @click="goto(2)" :icon-end="ArrowContinueIcon">Go to step 2</ev-button>
                 </ev-window-item>
                 <ev-window-item :value="2">
                     <h3>Step 2</h3>
                     <p>A step with this line</p>
                     <p>And, with this line</p>
-                    <ev-button @click="goto(3)" :icon-end="ArrowContinue">Go to step 3</ev-button>
+                    <ev-button @click="goto(3)" :icon-end="ArrowContinueIcon">Go to step 3</ev-button>
                 </ev-window-item>
                 <ev-window-item :value="3">
                     <h3>Step 3</h3>
                     <p>A step with only one line</p>
-                    <ev-button @click="goto(1)" :icon-start="ArrowBack">Start over</ev-button>
+                    <ev-button @click="goto(1)" :icon-start="ArrowBackIcon">Start over</ev-button>
                 </ev-window-item>
             </ev-window>
         `,

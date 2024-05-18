@@ -6,7 +6,7 @@ import "./EvTextfield.scss";
 import { makeEvTextfieldProps } from "./EvTextfield.ts";
 import { computed, nextTick, ref, useAttrs } from "vue";
 import { EvIcon, useIcon } from "@/components/EvIcon";
-import { Cancel } from "@/icons";
+import { CancelIcon } from "@/icons";
 import {
     Appearance,
     appearanceModifier,
@@ -228,7 +228,7 @@ function onClickOutside(e: MouseEvent) {
             <transition name="slide-fade">
                 <div v-if="isClearable" class="ev-textfield--clearable">
                     <ev-icon
-                        :glyph="Cancel"
+                        :glyph="CancelIcon"
                         @click="onClearableClick"
                         @mousedown="onClearableMousedown" />
                 </div>

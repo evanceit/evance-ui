@@ -59,6 +59,7 @@
     "build:watch": "npm link && npm run build:vue:watch",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
     "build:vue:watch": "vite build --mode minify --watch",
+    "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

@@ -6,7 +6,7 @@ import { EvDivider } from "@/components/EvDivider";
 import { EvLozenge } from "@/components/EvLozenge";
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
 import { omit } from "@/util";
-import { Plus, Products } from "@/icons";
+import { PlusIcon, ProductsIcon } from "@/icons";
 import {
     EvAvatar,
     EvBlock,
@@ -168,7 +168,7 @@ export const ItemsAffix: Story = {
         },
         setup() {
             const items = generateItemList(10);
-            return { items, Plus };
+            return { items, PlusIcon };
         },
         template: `
             <ev-select :items="items">
@@ -178,7 +178,7 @@ export const ItemsAffix: Story = {
                 </template>
                 <template #items-suffix>
                     <ev-divider />
-                    <ev-list-item :icon-start="Plus" :link="true">Add a new item</ev-list-item>
+                    <ev-list-item :icon-start="PlusIcon" :link="true">Add a new item</ev-list-item>
                 </template>
             </ev-select>
             `,
@@ -198,7 +198,7 @@ export const ListAffix: Story = {
         },
         setup() {
             const items = generateItemList(100);
-            return { items, Plus };
+            return { items, PlusIcon };
         },
         template: `
             <ev-select :items="items">
@@ -208,7 +208,7 @@ export const ListAffix: Story = {
                 </template>
                 <template #list-suffix>
                     <ev-divider />
-                    <ev-list-item :icon-start="Plus" :link="true">Add a new item</ev-list-item>
+                    <ev-list-item :icon-start="PlusIcon" :link="true">Add a new item</ev-list-item>
                 </template>
             </ev-select>
             `,
@@ -232,7 +232,7 @@ export const CustomItem: Story = {
         },
         setup() {
             const items = generateItemList(10);
-            return { items, Products };
+            return { items, ProductsIcon };
         },
         template: `
             <ev-select 
@@ -245,7 +245,7 @@ export const CustomItem: Story = {
                 <template #placeholder>
                     <ev-layout align="center" gutter="100">
                         <ev-block size="auto">
-                            <ev-avatar :icon="Products"></ev-avatar>
+                            <ev-avatar :icon="ProductsIcon"></ev-avatar>
                         </ev-block>
                         <ev-block size="grow">
                             <span class="text-large">No Product selected</span>
@@ -306,7 +306,7 @@ export const ItemsEmpty: Story = {
         },
         setup() {
             const items: any[] = [];
-            return { items, Plus };
+            return { items, PlusIcon };
         },
         template: `
             <ev-select :items="items">
@@ -314,7 +314,7 @@ export const ItemsEmpty: Story = {
                     <div style="padding: 2rem; text-align: center">
                         <h4>Oops, no items</h4>
                         <p>You don't have any items, would you like to add one?</p>
-                        <ev-button :icon-start="Plus" size="small">Add item</ev-button>
+                        <ev-button :icon-start="PlusIcon" size="small">Add item</ev-button>
                     </div>
                 </template>
             </ev-select>
@@ -360,7 +360,7 @@ export const AsyncItems: Story = {
                 menuOpen.value = true;
             };
 
-            return { items, Plus, onMenuOpen, isLoading, menuOpen };
+            return { items, PlusIcon, onMenuOpen, isLoading, menuOpen };
         },
         template: `
             <ev-select 

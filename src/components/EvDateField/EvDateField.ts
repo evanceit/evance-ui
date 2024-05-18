@@ -1,13 +1,13 @@
 import { omit, propsFactory } from "@/util";
 import { makeEvDatePickerProps } from "@/components/EvDatePicker";
 import { makeEvTextfieldProps } from "@/components/EvTextfield";
-import { Calendar } from "@/icons";
+import { CalendarIcon } from "@/icons";
 
 export const makeEvDateFieldProps = propsFactory(
     {
         ...omit(
             makeEvTextfieldProps({
-                iconStart: Calendar,
+                iconStart: CalendarIcon,
             }),
             ["type"],
         ),

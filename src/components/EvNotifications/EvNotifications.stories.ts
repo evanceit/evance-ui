@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNotifications } from "../EvNotifications";
 import { EvNotificationProps } from "@/components/EvNotification";
 import { EvButton } from "@/components";
-import { ArrowContinue, Minus, Plus } from "../../icons";
+import { ArrowContinueIcon, MinusIcon, PlusIcon } from "../../icons";
 import { randomArrayItem } from "@/util";
 import { useNotification } from "@/composables/notification.ts";
 
@@ -42,7 +42,7 @@ export const Primary: Story = {
                     actions: [
                         {
                             text: "Say Goodbye",
-                            iconEnd: ArrowContinue,
+                            iconEnd: ArrowContinueIcon,
                             onClick() {
                                 dismiss();
                             },
@@ -52,14 +52,14 @@ export const Primary: Story = {
                 const { dismiss } = notification.add(props);
             }
 
-            return { args, Plus, Minus, addItem };
+            return { args, PlusIcon, MinusIcon, addItem };
         },
         template: `
             
             <ev-notifications />
             
             <p>Create a random Notfication</p>
-            <ev-button @click="addItem" :icon-start="Plus">Add item</ev-button>
+            <ev-button @click="addItem" :icon-start="PlusIcon">Add item</ev-button>
         `,
     }),
 };

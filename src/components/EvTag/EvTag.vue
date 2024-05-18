@@ -3,7 +3,7 @@ import "./EvTag.scss";
 import { EvTagSlots, makeEvTagProps } from "./EvTag.ts";
 import { EvIcon } from "@/components/EvIcon";
 import { EvDefaultsProvider } from "@/components/EvDefaultsProvider";
-import { Cancel } from "@/icons";
+import { CancelIcon } from "@/icons";
 import { useLocaleFunctions } from "@/composables/locale.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { computed, useAttrs } from "vue";
@@ -228,7 +228,7 @@ const { appearanceClass, variantClass } = useAppearance(
             class="ev-tag--close"
             :aria-label="closeLabel"
             @click="onClickClose">
-            <ev-icon :glyph="Cancel" size="small" />
+            <ev-icon :glyph="CancelIcon" size="small" />
         </button>
     </component>
 </template>

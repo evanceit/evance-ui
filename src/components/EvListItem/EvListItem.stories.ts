@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvListItem } from "../EvListItem";
-import { ChevronRight, Dot } from "../../icons";
+import { ChevronRightIcon, DotIcon } from "@/icons";
 
 const meta: Meta<typeof EvListItem> = {
     component: EvListItem,
@@ -26,20 +26,20 @@ const meta: Meta<typeof EvListItem> = {
         },
         iconStart: {
             control: "select",
-            options: ["none", "ChevronRight", "Dot"],
+            options: ["none", "ChevronRightIcon", "DotIcon"],
             mapping: {
                 none: null,
-                ChevronRight: ChevronRight,
-                Dot: Dot,
+                ChevronRightIcon: ChevronRightIcon,
+                DotIcon: DotIcon,
             },
         },
         iconEnd: {
             control: "select",
-            options: ["none", "ChevronRight", "Dot"],
+            options: ["none", "ChevronRightIcon", "DotIcon"],
             mapping: {
                 none: null,
-                ChevronRight: ChevronRight,
-                Dot: Dot,
+                ChevronRightIcon: ChevronRightIcon,
+                DotIcon: DotIcon,
             },
         },
         link: {
@@ -77,7 +77,7 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvListItem },
         setup() {
-            return { args, Dot, ChevronRight };
+            return { args, DotIcon, ChevronRightIcon };
         },
         template: '<ev-list-item v-bind="args">{{ args.title }}</ev-list-item>',
     }),

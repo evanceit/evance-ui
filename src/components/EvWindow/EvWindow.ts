@@ -5,7 +5,7 @@ import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component.ts";
 import { makeTagProps } from "@/composables/tag.ts";
 import { IconProp } from "@/composables/icons.ts";
-import { ArrowBack, ArrowContinue } from "@/icons";
+import { ArrowBackIcon, ArrowContinueIcon } from "@/icons";
 import { TouchHandlers } from "@/directives";
 
 export type EvWindowSlots = {
@@ -37,11 +37,11 @@ export const makeEvWindowProps = propsFactory(
         disabled: Boolean,
         iconNext: {
             type: IconProp,
-            default: ArrowContinue,
+            default: ArrowContinueIcon,
         },
         iconPrevious: {
             type: IconProp,
-            default: ArrowBack,
+            default: ArrowBackIcon,
         },
         // TODO: mandatory should probably not be exposed but do this for now
         mandatory: {

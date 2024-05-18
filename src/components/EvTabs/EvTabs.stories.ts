@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvTab, EvTabs } from "../EvTabs";
 import {
-    SalesEnquiry,
-    SalesEnquiryFill,
-    SalesOrder,
-    SalesOrderFill,
-    SalesQuotation,
-    SalesQuotationFill,
+    SalesEnquiryIcon,
+    SalesEnquiryFillIcon,
+    SalesOrderIcon,
+    SalesOrderFillIcon,
+    SalesQuotationIcon,
+    SalesQuotationFillIcon,
 } from "@/icons";
 import { shallowRef } from "vue";
 import { EvIcon } from "@/components";
@@ -56,12 +56,12 @@ export const Primary: Story = {
             return {
                 args,
                 selection,
-                SalesOrder,
-                SalesOrderFill,
-                SalesEnquiry,
-                SalesEnquiryFill,
-                SalesQuotation,
-                SalesQuotationFill,
+                SalesOrderIcon,
+                SalesOrderFillIcon,
+                SalesEnquiryIcon,
+                SalesEnquiryFillIcon,
+                SalesQuotationIcon,
+                SalesQuotationFillIcon,
             };
         },
         template: `
@@ -70,28 +70,28 @@ export const Primary: Story = {
                 <ev-tab 
                     text="Orders" 
                     :value="1" 
-                    :icon-start="selection == 1 ? SalesOrderFill : SalesOrder" />
+                    :icon-start="selection == 1 ? SalesOrderFillIcon : SalesOrderIcon" />
                 <ev-tab 
                     text="Enquiries" 
                     :value="2" 
-                    :icon-start="selection == 2 ? SalesEnquiryFill : SalesEnquiry"  />
+                    :icon-start="selection == 2 ? SalesEnquiryFillIcon : SalesEnquiryIcon"  />
                 <ev-tab 
                     text="Quotes" 
                     :value="3" 
-                    :icon-start="selection == 3 ? SalesQuotationFill : SalesQuotation"  />
+                    :icon-start="selection == 3 ? SalesQuotationFillIcon : SalesQuotationIcon"  />
             </ev-tabs>
             
             <p>&nbsp;</p>
             <p>Example of tags with icon only</p>
             <ev-tabs v-bind="args" v-model="selection">
                 <ev-tab :value="1" :icon="true">
-                    <ev-icon :glyph="selection == 1 ? SalesOrderFill : SalesOrder" />
+                    <ev-icon :glyph="selection == 1 ? SalesOrderFillIcon : SalesOrderIcon" />
                 </ev-tab>
                 <ev-tab :value="2" :icon="true">
-                    <ev-icon :glyph="selection == 2 ? SalesEnquiryFill : SalesEnquiry" />
+                    <ev-icon :glyph="selection == 2 ? SalesEnquiryFillIcon : SalesEnquiryIcon" />
                 </ev-tab>
                 <ev-tab :value="3" :icon="true">
-                    <ev-icon :glyph="selection == 3 ? SalesQuotationFill : SalesQuotation" />
+                    <ev-icon :glyph="selection == 3 ? SalesQuotationFillIcon : SalesQuotationIcon" />
                 </ev-tab>
             </ev-tabs>
         `,

@@ -7,7 +7,7 @@
 import "./EvMessage.scss";
 import { appearanceModifier, isNumber, makeClassName } from "@/util";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import { Cancel, ChevronDown } from "@/icons";
+import { CancelIcon, ChevronDownIcon } from "@/icons";
 import { computed, nextTick, shallowRef } from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
@@ -191,7 +191,7 @@ function onLeave(el: Element) {
                 rounded
                 :class="[{ 'is-expanded': isExpanded }]"
                 :aria-label="t('expand')"
-                :icon="ChevronDown"
+                :icon="ChevronDownIcon"
                 size="small"
                 variant="subtle"
                 @click="expand" />
@@ -201,7 +201,7 @@ function onLeave(el: Element) {
                 <ev-button
                     rounded
                     :aria-label="t('dismiss')"
-                    :icon="Cancel"
+                    :icon="CancelIcon"
                     size="small"
                     variant="subtle"
                     @click="dismiss" />

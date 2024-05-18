@@ -11,7 +11,7 @@ export const makeEvDialogHeaderProps = propsFactory(
 
 <script setup lang="ts">
 import { useModelProxy } from "@/composables/modelProxy.ts";
-import { Cancel } from "@/icons";
+import { CancelIcon } from "@/icons";
 import EvButton from "../EvButton/EvButton.vue";
 
 const props = defineProps({
@@ -31,6 +31,6 @@ function close() {
     <div class="ev-dialog---header">
         <slot />
 
-        <ev-button rounded variant="subtle" :icon="Cancel" @click="close()" />
+        <ev-button rounded variant="subtle" :icon="CancelIcon" @click="close()" />
     </div>
 </template>

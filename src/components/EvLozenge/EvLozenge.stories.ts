@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvLozenge } from "../EvLozenge";
 import { Appearance, Variant } from "@/util";
-import {Check, ChevronDown} from "@/icons";
+import { CheckIcon, ChevronDownIcon } from "@/icons";
 
 const meta: Meta<typeof EvLozenge> = {
     component: EvLozenge,
@@ -29,18 +29,18 @@ const meta: Meta<typeof EvLozenge> = {
         },
         iconStart: {
             control: "select",
-            options: ["None", "Check"],
+            options: ["None", "CheckIcon"],
             mapping: {
                 None: undefined,
-                Check: Check,
+                CheckIcon: CheckIcon,
             },
         },
         iconEnd: {
             control: "select",
-            options: ["None", "ChevronDown"],
+            options: ["None", "ChevronDownIcon"],
             mapping: {
                 None: undefined,
-                ChevronDown: ChevronDown,
+                ChevronDownIcon: ChevronDownIcon,
             },
         },
     },

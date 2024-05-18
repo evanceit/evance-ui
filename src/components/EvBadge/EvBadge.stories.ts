@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvBadge } from "../EvBadge";
-import { Cancel, Check, Evance } from "@/icons";
+import { CancelIcon, CheckIcon, EvanceIcon } from "@/icons";
 import { EvBlock, EvIcon, EvLayout } from "@/components";
 
 const meta: Meta<typeof EvBadge> = {
@@ -39,11 +39,11 @@ const meta: Meta<typeof EvBadge> = {
         },
         icon: {
             control: "select",
-            options: ["undefined", "Check", "Cancel"],
+            options: ["undefined", "CheckIcon", "CancelIcon"],
             mapping: {
                 undefined: undefined,
-                Check: Check,
-                Cancel: Cancel,
+                CheckIcon: CheckIcon,
+                CancelIcon: CancelIcon,
             },
         },
         inline: {
@@ -97,7 +97,7 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvBadge, EvIcon, EvLayout, EvBlock },
         setup() {
-            return { EvIcon, Evance, args };
+            return { EvIcon, EvanceIcon, args };
         },
         template: `
 
@@ -105,7 +105,7 @@ export const Primary: Story = {
             <ev-block>
                 <p>Positioned relative to the default slot content.</p>
                 <ev-badge v-bind="args">
-                    <ev-icon :glyph="Evance" size="large" />
+                    <ev-icon :glyph="EvanceIcon" size="large" />
                 </ev-badge>
             </ev-block>
             <ev-block>

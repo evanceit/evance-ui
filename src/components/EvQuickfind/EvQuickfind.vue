@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvQuickfind.scss";
 import EvIcon from "../EvIcon/EvIcon.vue";
-import { Quickfind } from "../../icons";
+import { QuickfindIcon } from "@/icons";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { sizeModifier } from "@/util";
 import { computed } from "vue";
@@ -39,7 +39,7 @@ const iconSize = computed(() => {
             },
             sizeModifier(size, ['medium']),
         ]">
-        <ev-icon :glyph="Quickfind" :size="iconSize" />
+        <ev-icon :glyph="QuickfindIcon" :size="iconSize" />
         <span class="ev-quickfind--code">{{ modelProxy }}</span>
     </span>
 </template>

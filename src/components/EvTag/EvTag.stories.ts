@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvTag } from "../EvTag";
 import { EvButton, EvIcon } from "@/components";
-import { Reload } from "../../icons";
+import { ReloadIcon } from "../../icons";
 import { Appearance, Variant } from "@/util";
 
 const meta: Meta<typeof EvTag> = {
@@ -65,13 +65,13 @@ export const Primary: Story = {
             const reset = () => {
                 args["onUpdate:modelValue"](true);
             };
-            return { args, Reload, reset };
+            return { args, ReloadIcon, reset };
         },
         template: `
 <ev-tag v-bind="args">       
 </ev-tag>
             
-            <ev-button v-if="!args.modelValue" text="Reset" :icon="Reload" @click="reset" />
+            <ev-button v-if="!args.modelValue" text="Reset" :icon="ReloadIcon" @click="reset" />
         `,
     }),
 };

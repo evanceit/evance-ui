@@ -1,12 +1,12 @@
 import { PropType } from "vue";
 import { Appearance } from "@/util";
 import {
-    CheckCircle as CheckCircleIcon,
-    Danger as DangerIcon,
-    Help as HelpIcon,
-    Info as InfoIcon,
-    Note as NoteIcon,
-    Warning as WarningIcon,
+    CheckCircleIcon,
+    DangerIcon,
+    HelpIcon,
+    InfoIcon,
+    NoteIcon,
+    WarningIcon,
 } from "@/icons";
 
 export type IconValue = string | (string | [path: string, opacity: number])[];

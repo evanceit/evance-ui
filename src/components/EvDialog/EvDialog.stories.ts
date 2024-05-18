@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDialog } from "../EvDialog";
 import { shallowRef } from "vue";
-import { Collapse, Expand, ArrowContinue } from "@/icons";
+import { CollapseIcon, ExpandIcon, ArrowContinueIcon } from "@/icons";
 import DialogHeaderExample from "@/stories/assets/dialog-header-example.png?url";
 import { EvSurface, EvButton } from "@/components";
 import EvOverlayStories from "../EvOverlay/EvOverlay.stories.ts";
@@ -104,7 +104,7 @@ export const Primary: Story = {
                 args.fullscreen = !args.fullscreen;
             }
 
-            return { args, close, modelValue, Collapse, Expand, fullscreen };
+            return { args, close, modelValue, CollapseIcon, ExpandIcon, fullscreen };
         },
         template: `
             <ev-dialog v-bind="args" v-model="modelValue">
@@ -236,7 +236,7 @@ export const CustomContainer: Story = {
                 DialogHeaderExample,
                 EvButton,
                 EvSurface,
-                ArrowContinue,
+                ArrowContinueIcon,
             };
         },
         template: `
@@ -254,7 +254,7 @@ export const CustomContainer: Story = {
                             </p>
                             <div style="display: flex; gap: 1rem; justify-content: center">
                                 <ev-button @click="close" variant="subtle">Remind me later</ev-button>
-                                <ev-button :icon-end="ArrowContinue" appearance="primary" @click="close">Hell yeah, continue</ev-button>
+                                <ev-button :icon-end="ArrowContinueIcon" appearance="primary" @click="close">Hell yeah, continue</ev-button>
                             </div>
                         </div>
                             

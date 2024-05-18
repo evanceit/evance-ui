@@ -14,7 +14,7 @@ import { EvDatePickerMonths } from "./EvDatePickerMonths";
 import { EvDatePickerYears } from "./EvDatePickerYears";
 import { EvButton } from "@/components/EvButton";
 import { EvSpacer } from "@/components/EvGrid";
-import { ChevronLeft, ChevronRight } from "@/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 
 const props = defineProps({
     ...makeEvDatePickerProps(),
@@ -179,7 +179,7 @@ function toggleViewYear() {
                     rounded
                     variant="subtle"
                     :disabled="viewMode !== 'month'"
-                    :icon="ChevronLeft"
+                    :icon="ChevronLeftIcon"
                     @click="onClickPrevious()" />
             </div>
 
@@ -188,7 +188,7 @@ function toggleViewYear() {
                     rounded
                     variant="subtle"
                     :disabled="viewMode !== 'month'"
-                    :icon="ChevronRight"
+                    :icon="ChevronRightIcon"
                     @click="onClickNext()" />
             </div>
         </div>

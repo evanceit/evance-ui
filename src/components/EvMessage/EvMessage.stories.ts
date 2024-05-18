@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvMessage } from "../EvMessage";
 import { EvButton, EvButtonProps } from "../EvButton";
 import { Appearance } from "@/util";
-import { Reload } from "../../icons";
+import { ReloadIcon } from "../../icons";
 import { EvAvatar } from "@/components";
 
 const meta: Meta<typeof EvMessage> = {
@@ -91,7 +91,7 @@ export const Primary: Story = {
                 },
             ];
 
-            return { args, Reload, actions };
+            return { args, ReloadIcon, actions };
         },
         template: `
             <ev-message v-bind="args" :actions="actions">
@@ -99,7 +99,7 @@ export const Primary: Story = {
             </ev-message>
             
             <div v-if="!args.modelValue">
-                <ev-button :icon="Reload" @click="args.modelValue = true">Reset</ev-button>
+                <ev-button :icon="ReloadIcon" @click="args.modelValue = true">Reset</ev-button>
             </div>`,
     }),
 };
