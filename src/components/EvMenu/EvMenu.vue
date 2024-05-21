@@ -126,9 +126,10 @@ const overlayProps = computed(() => filterComponentProps(EvOverlay, props));
 <template>
     <ev-overlay
         ref="overlay"
-        v-bind="overlayProps"
         v-model="isActive"
-        class="ev-menu"
+        v-bind="overlayProps"
+        :class="['ev-menu', props.class]"
+        :style="props.style"
         :activator-props="activatorProps"
         @click:outside="onClickOutside"
         @keydown="onKeydown">
