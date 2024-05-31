@@ -9,25 +9,27 @@ import { GroupItemProvide } from "@/composables/groupItem.ts";
  * Default appearance keys for
  *
  */
-export enum Appearance {
-    default = "default",
-    danger = "danger",
-    information = "information",
-    notice = "notice",
-    primary = "primary",
-    success = "success",
-    warning = "warning",
-}
-export type AppearanceProp = keyof typeof Appearance;
+export const Appearance = {
+    default: "default",
+    danger: "danger",
+    information: "information",
+    notice: "notice",
+    primary: "primary",
+    success: "success",
+    warning: "warning",
+} as const;
 
-export enum Variant {
-    default = "default",
-    bold = "bold",
-    outlined = "outlined",
-    subtle = "subtle",
-    tonal = "tonal",
-}
-export type VariantProp = keyof typeof Variant;
+export type AppearanceProp = (typeof Appearance)[keyof typeof Appearance];
+
+export const Variant = {
+    default: "default",
+    bold: "bold",
+    outlined: "outlined",
+    subtle: "subtle",
+    tonal: "tonal",
+} as const;
+
+export type VariantProp = (typeof Variant)[keyof typeof Variant];
 
 export interface AppearanceProps {
     appearance: AppearanceProp;
@@ -105,14 +107,16 @@ export function useAppearance(
 /**
  * # Input Appearance
  */
-export enum InputAppearance {
-    default = Appearance.default,
-    button = "button",
-    none = "none",
-    subtle = "subtle",
-}
-export type InputAppearanceKey = keyof typeof InputAppearance;
-export type InputAppearanceProp = (typeof InputAppearance)[InputAppearanceKey];
+export const InputAppearance = {
+    default: Appearance.default,
+    button: "button",
+    none: "none",
+    subtle: "subtle",
+} as const;
+
+export type InputAppearanceProp =
+    (typeof InputAppearance)[keyof typeof InputAppearance];
+
 export const makeInputAppearanceProps = propsFactory(
     {
         appearance: {
@@ -126,18 +130,16 @@ export const makeInputAppearanceProps = propsFactory(
 /**
  * # Input Sizes
  */
-export enum InputSize {
-    default = "medium",
-    xSmall = "x-small",
-    small = "small",
-    medium = "medium",
-    large = "large",
-    xLarge = "x-large",
-}
+export const InputSize = {
+    default: "medium",
+    xSmall: "x-small",
+    small: "small",
+    medium: "medium",
+    large: "large",
+    xLarge: "x-large",
+} as const;
 
-export type InputSizeCamel = keyof typeof InputSize;
-export type InputSizeKebab = "x-small" | "x-large";
-export type InputSizeProp = InputSizeCamel | InputSizeKebab;
+export type InputSizeProp = (typeof InputSize)[keyof typeof InputSize];
 export const makeInputSizeProps = propsFactory(
     {
         size: {
@@ -151,14 +153,13 @@ export const makeInputSizeProps = propsFactory(
 /**
  * # Text Align
  */
-export enum TextAlign {
-    default = "left",
-    left = "left",
-    center = "center",
-    right = "right",
-}
-export type TextAlignKey = keyof typeof TextAlign;
-export type TextAlignProp = (typeof TextAlign)[TextAlignKey];
+export const TextAlign = {
+    default: "left",
+    left: "left",
+    center: "center",
+    right: "right",
+} as const;
+export type TextAlignProp = (typeof TextAlign)[keyof typeof TextAlign];
 export const makeTextAlignProps = propsFactory(
     {
         align: {

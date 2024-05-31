@@ -33,15 +33,14 @@ export const makeEvDialogProps = propsFactory(
     "EvDialog",
 );
 
-export enum DialogSize {
-    default = "medium",
-    small = "small",
-    medium = "medium",
-    large = "large",
-    xLarge = "x-large",
-}
-export type DialogSizeKey = keyof typeof DialogSize;
-export type DialogSizeProp = (typeof DialogSize)[DialogSizeKey];
+export const DialogSize = {
+    default: "medium",
+    small: "small",
+    medium: "medium",
+    large: "large",
+    xLarge: "x-large",
+} as const;
+export type DialogSizeProp = (typeof DialogSize)[keyof typeof DialogSize];
 export const DialogSizeToWidth: Record<string, number> = {
     [DialogSize.small]: 400,
     [DialogSize.medium]: 600,

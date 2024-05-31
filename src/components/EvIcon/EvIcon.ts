@@ -1,11 +1,22 @@
 import { computed, PropType, toRaw } from "vue";
-import { makeAppearanceProps, propsFactory } from "@/util";
+import { Appearance, propsFactory } from "@/util";
 import { IconProp } from "@/composables/icons.ts";
 
 /**
  * ## Icon Size
  */
 export type IconSize = "small" | "medium" | "large";
+
+export const IconAppearance = {
+    ...Appearance,
+    subtle: "subtle",
+} as const;
+
+/**
+ * ## Icon Appearance
+ */
+export type IconAppearanceProp =
+    (typeof IconAppearance)[keyof typeof IconAppearance];
 
 /**
  * # Use Icon
@@ -22,8 +33,10 @@ export const makeEvIconProps = propsFactory(
     {
         glyph: IconProp,
         size: String as PropType<IconSize>,
-
-        ...makeAppearanceProps(),
+        appearance: {
+            type: String as PropType<IconAppearanceProp>,
+            default: Appearance.default,
+        },
     },
     "EvIcon",
 );
