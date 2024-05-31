@@ -1,0 +1,54 @@
+.ev-swatch {
+
+    width: 2rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    overflow: hidden;
+
+    background-image: linear-gradient(45deg, var(--border) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--border) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--border) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--border) 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+
+    align-items: stretch;
+    justify-content: stretch;
+    display: inline-flex;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        border: 2px solid var(--border);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+}
+
+.ev-swatch {
+    &.is-size-x-small {
+        width: 24px;
+    }
+
+    &.is-size-small {
+        width: 28px;
+    }
+
+    &.is-size-medium {
+        width: 34px;
+    }
+
+    &.is-size-large {
+        width: 40px;
+    }
+
+    &.is-size-x-large {
+        width: 48px;
+    }
+}
+
+.ev-swatch--sample {
+    /* background: rgba(240, 65, 65, 0.73); */
+}
