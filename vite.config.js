@@ -6,7 +6,6 @@ import dts from "vite-plugin-dts";
 import Components from "unplugin-vue-components/vite";
 import fs, { readFileSync } from "fs";
 import fg from "fast-glob";
-import { fileURLToPath } from "url";
 import { peerDependencies, version } from "./package.json";
 import tsconfigPaths from "vite-tsconfig-paths";
 import babel from "@rollup/plugin-babel";
@@ -30,14 +29,14 @@ const componentsMap = new Map(
         );
         return Array.from(matches, (m) => [
             m[1] || m[2],
-            resolve(__dirname, path.dirname(file)),
+            path.resolve(__dirname, path.dirname(file)),
         ]);
     }),
 );
 const componentsList = Object.fromEntries(componentsMap);
 const bannerTxt = `/*! Evance UI v${version} | MIT License */`;
 const entries = {
-    index: resolve(__dirname, "./src/index.ts"),
+    index: path.resolve(__dirname, "./src/index.ts"),
     ...componentsList,
 };
 
@@ -47,12 +46,12 @@ export default defineConfig(({ mode }) => ({
     root: __dirname,
     resolve: {
         alias: {
-            "@": fileURLToPath(new URL("./src", import.meta.url)),
+            "@": path.resolve(__dirname, "src"),
         },
     },
     server: {
         open: true,
-        port: 3000,
+        port: +(process.env.PORT ?? 8090),
     },
     build: {
         emptyOutDir: false,
@@ -63,7 +62,7 @@ export default defineConfig(({ mode }) => ({
                 ? // build minified version with index.ts entry
                   {
                       name: "evance-ui",
-                      entry: resolve("./src/index.ts"),
+                      entry: path.resolve(__dirname, "./src/index.ts"),
                       formats: ["umd", "es"],
                       fileName: (format) =>
                           format === "umd" ? "evance-ui.js" : "evance-ui.mjs",
@@ -130,13 +129,7 @@ export default defineConfig(({ mode }) => ({
         }),
         Components({
             dts: true,
-            resolvers: [
-                (name) => {
-                    if (componentsMap.has(name)) {
-                        return { name, from: componentsMap.get(name) };
-                    }
-                },
-            ],
+            globs: ["src/components/**/Ev*.vue"],
         }),
     ],
 }));

@@ -20,16 +20,14 @@
     "./styles": {
       "default": "./dist/style.css"
     },
-    "./*": "./*",
-    "./volar": {
-      "types": "./components.d.ts"
-    }
+    "./*": "./*"
   },
   "files": [
     "dist",
     "src",
-    "types/*.d.ts",
-    "volar.d.ts",
+    "src/components",
+    "src/icons",
+    "components.d.ts",
     "README.md"
   ],
   "sideEffects": [
@@ -57,9 +55,12 @@
     "dev": "vite",
     "build": "rimraf dist && npm run test:ts && npm run build:vue",
     "build:watch": "npm link && npm run build:vue:watch",
-    "build:vue": "rimraf dist && vite build && vite build --mode minify",
+    "build:vue-uncompressed": "rimraf dist && vite build && npm run gen:dts",
+    "build:vue": "rimraf dist && vite build && vite build --mode minify && npm run gen:dts",
     "build:vue:watch": "vite build --mode minify --watch",
+    "build:icons": "",
     "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
+    "gen:dts": "node .scripts/transform-dts.mjs --bundle --platform=node",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
