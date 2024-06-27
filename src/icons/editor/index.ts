@@ -139,3 +139,4 @@ export { default as VerticalAlignMiddleIcon } from "./glyph/VerticalAlignMiddleI
 export { default as VerticalAlignTopIcon } from "./glyph/VerticalAlignTopIcon.svg";
 export { default as VideoIcon } from "./glyph/VideoIcon.svg";
 export { default as WidescreenIcon } from "./glyph/WidescreenIcon.svg";
+export { default as WrapIcon } from "./glyph/WrapIcon.svg";
