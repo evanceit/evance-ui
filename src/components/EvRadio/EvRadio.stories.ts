@@ -21,7 +21,7 @@ const meta: Meta<typeof EvRadio> = {
                 "The ID associated with the form field and the component wrapper",
         },
         modelValue: {
-            control: "string",
+            control: "text",
             description:
                 "The `model-value` is the `v-model` value of the component.",
         },
@@ -66,7 +66,7 @@ const meta: Meta<typeof EvRadio> = {
                 "This then sets the `modelValue` to `null`.",
         },
         value: {
-            control: "string",
+            control: "text",
             description:
                 "The value of the input is assigned to `modelValue` when checked.",
         },
