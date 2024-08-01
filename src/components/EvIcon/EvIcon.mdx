@@ -1,4 +1,4 @@
-import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+import {Canvas, Meta, Controls} from '@storybook/blocks';
 
 import * as EvIconStories from './EvIcon.stories';
 
@@ -8,11 +8,9 @@ import * as EvIconStories from './EvIcon.stories';
 
 Evance's EvIcon component uses SVG-based glyphs designed within a viewBox width and height of `24px`.
 
-<Canvas>
-    <Story of={EvIconStories.Primary} />
-</Canvas>
+<Canvas of={EvIconStories.Primary} />
 
-<ArgsTable story='Primary' />
+<Controls />
 
 ## SVG glyphs
 

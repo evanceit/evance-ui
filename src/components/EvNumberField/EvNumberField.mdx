@@ -1,4 +1,4 @@
-import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+import {Canvas, Meta, Controls} from '@storybook/blocks';
 
 import * as EvNumberFieldStories from './EvNumberField.stories';
 
@@ -15,9 +15,6 @@ the value as `50`.
 When using the number field in `mode="currency"` with an accompanying `currency` (e.g. 'GBP') the field will remove
 currency formatting on focus.
 
-<Canvas>
-    <Story of={EvNumberFieldStories.Primary} />
-</Canvas>
+<Canvas of={EvNumberFieldStories.Primary} />
 
-
-<ArgsTable story='Primary' />
+<Controls />

@@ -1,18 +1,15 @@
-import {Canvas, Meta, ArgsTable, Story} from '@storybook/blocks';
+import {Canvas, Meta, Controls} from '@storybook/blocks';
 
 import * as EvSelectStories from './EvSelect.stories';
 
 <Meta of={EvSelectStories} />
 
 
-
 # EvSelect
 The `ev-select` component may be used to select one or more items from a list.
 
-<Canvas>
-    <Story of={EvSelectStories.Primary} />
-</Canvas>
-<ArgsTable story='Primary' />
+<Canvas of={EvSelectStories.Primary} />
+<Controls />
 
 
 ---
@@ -26,9 +23,7 @@ Both are included within the scroll of the list, if you would like
 your components to appear outside the scrollable area of the list
 you may use the `list-prefix` and/or `list-suffix` slots.
 
-<Canvas>
-    <Story of={EvSelectStories.ItemsAffix} />
-</Canvas>
+<Canvas of={EvSelectStories.ItemsAffix} />
 
 
 ---
@@ -42,9 +37,7 @@ Both exist outside the scrollable area of the list. If you would like
 your components to appear inside the scrollable list area you may use
 the `items-prefix` and/or `items-suffix` slots.
 
-<Canvas>
-    <Story of={EvSelectStories.ListAffix} />
-</Canvas>
+<Canvas of={EvSelectStories.ListAffix} />
 
 
 ---
@@ -76,9 +69,7 @@ of selected items.
 
 The example below shows a rough custom item and selection.
 
-<Canvas>
-    <Story of={EvSelectStories.CustomItem} />
-</Canvas>
+<Canvas of={EvSelectStories.CustomItem} />
 
 
 ---
@@ -88,6 +79,4 @@ The example below shows a rough custom item and selection.
 ### Custom `items-empty` rendering
 You can customize the appearance of an empty list using the `items-empty` slot.
 
-<Canvas>
-    <Story of={EvSelectStories.ItemsEmpty} />
-</Canvas>
+<Canvas of={EvSelectStories.ItemsEmpty} />
