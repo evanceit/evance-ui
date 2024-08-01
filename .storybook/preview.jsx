@@ -13,6 +13,8 @@ import '../src/css/core.scss';
 const brandTheme = {
     brandTitle: 'Evance UI',
     brandImage: 'src/stories/assets/evance-ui-logo.svg',
+    fontBase: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif',
+    fontCode: 'ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace',
 }
 
 /**
@@ -23,10 +25,17 @@ const lightTheme = {
     ...themes.light,
     ...brandTheme,
     appBg: '#EFF2F9',
+    appBorderColor: '#0A14331F',
     appContentBg: '#EFF2F9',
     appPreviewBg: '#EFF2F9',
     barBg: '#EFF2F9',
-    textColor: '#535A74'
+    barHoverColor: '#814EFA',
+    barSelectedColor: '#814EFA',
+    barTextColor: '#535A74',
+    colorPrimary: '#814EFA',
+    colorSecondary: '#814EFA',
+    textColor: '#535A74',
+    textMutedColor: '#747794'
 };
 
 /**
@@ -37,10 +46,17 @@ const darkTheme = {
     ...themes.dark,
     ...brandTheme,
     appBg: '#131321',
+    appBorderColor: '#A3A7CC29',
     appContentBg: '#131321',
     appPreviewBg: '#131321',
     barBg: '#131321',
-    textColor: '#A0A6BC'
+    barHoverColor: '#9873FF',
+    barSelectedColor: '#9873FF',
+    barTextColor: '#A0A6BC',
+    colorPrimary: '#9772FF',
+    colorSecondary: '#9772FF',
+    textColor: '#A0A6BC',
+    textMutedColor: '#8386A5',
 };
 
 const channel = addons.getChannel();
