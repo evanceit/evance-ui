@@ -1,43 +1,21 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
-import path, { resolve } from "path";
+import path from "path";
 import dts from "vite-plugin-dts";
 import Components from "unplugin-vue-components/vite";
-import fs, { readFileSync } from "fs";
-import fg from "fast-glob";
 import { peerDependencies, version } from "./package.json";
 import tsconfigPaths from "vite-tsconfig-paths";
 import babel from "@rollup/plugin-babel";
+import { getComponents } from ".scripts/utils.mjs";
 
-const componentsIndex = readFileSync(resolve("src/components/index.ts"), {
-    encoding: "utf8",
-});
-const block = Array.from(
-    componentsIndex.matchAll(/^\/\/ export \* from '\.\/(.*)'$/gm),
-    (m) => m[1],
-);
-const files = fg.sync(["src/components/**/index.ts"], { cwd: __dirname });
-const components = files.filter(
-    (file) => !block.some((name) => file.includes(`/${name}/`)),
-);
-const componentsMap = new Map(
-    components.flatMap((file) => {
-        const src = readFileSync(file, { encoding: "utf8" });
-        const matches = src.matchAll(
-            /export const (Ev\w+)|export {\s+default as (Ev\w+)\s+}/gm,
-        );
-        return Array.from(matches, (m) => [
-            m[1] || m[2],
-            path.resolve(__dirname, path.dirname(file)),
-        ]);
-    }),
-);
-const componentsList = Object.fromEntries(componentsMap);
 const bannerTxt = `/*! Evance UI v${version} | MIT License */`;
 const entries = {
     index: path.resolve(__dirname, "./src/index.ts"),
-    ...componentsList,
+    ...getComponents(),
+    icons: path.resolve(__dirname, "./src/icons/index.ts"),
+    "icons/editor": path.resolve(__dirname, "./src/icons/editor/index.ts"),
+    "icons/brand": path.resolve(__dirname, "./src/icons/brand/index.ts"),
 };
 
 // https://vitejs.dev/config/

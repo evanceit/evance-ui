@@ -104,7 +104,14 @@ export const Primary: Story = {
                 args.fullscreen = !args.fullscreen;
             }
 
-            return { args, close, modelValue, CollapseIcon, ExpandIcon, fullscreen };
+            return {
+                args,
+                close,
+                modelValue,
+                CollapseIcon,
+                ExpandIcon,
+                fullscreen,
+            };
         },
         template: `
             <ev-dialog v-bind="args" v-model="modelValue">

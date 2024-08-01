@@ -7,7 +7,6 @@ const meta: Meta<typeof EvErrors> = {
     title: "Forms/EvErrors",
     argTypes: {
         messages: {
-            control: "array",
             description:
                 "The `messages` prop may contain an array of zero or more error messages or a string",
         },

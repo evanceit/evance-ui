@@ -61,7 +61,14 @@ export const Primary: Story = {
                 step.value = n;
             };
 
-            return { args, step, goto, reverse, ArrowContinueIcon, ArrowBackIcon };
+            return {
+                args,
+                step,
+                goto,
+                reverse,
+                ArrowContinueIcon,
+                ArrowBackIcon,
+            };
         },
         template: `
             <ev-window v-bind="args" v-model="step" :reverse="reverse">
