@@ -78,7 +78,7 @@
     "build-storybook": "storybook build",
     "test": "jest",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
-    "types": "vue-tsc "
+    "types": "vue-tsc"
   },
   "peerDependencies": {
     "vue": "^3.3.4"

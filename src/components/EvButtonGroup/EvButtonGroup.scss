@@ -36,27 +36,20 @@
     }
 }
 
-
 .ev-button-group {
-    .ev-button {
-        border-radius: 0;
+    &.is-variant-tonal,
+    &.is-variant-bold,
+    &.is-variant-default {
+        .ev-button {
+            &:has(+ .ev-button) {
+                border-start-end-radius: 0;
+                border-end-end-radius: 0;
+            }
 
-        &:not(:last-child) {
-            border-inline-end-color: transparent;
-        }
-
-        &:not(:first-child) {
-            border-inline-start-color: transparent;
-        }
-
-        &:first-child {
-            border-start-start-radius: inherit;
-            border-end-start-radius: inherit;
-        }
-
-        &:last-child {
-            border-start-end-radius: inherit;
-            border-end-end-radius: inherit;
+            + .ev-button {
+                border-start-start-radius: 0;
+                border-end-start-radius: 0;
+            }
         }
     }
 }
@@ -66,31 +59,24 @@
         .ev-button-group--container {
             margin: -1px;
         }
+    }
+}
 
-        .ev-button {
-            + .ev-button {
-                margin-inline-start: -1px;
+.ev-button-group {
+    .ev-button {
+        &.is-active {
+            border-radius: inherit;
+
+            &:has(+ .is-active) {
+                border-start-end-radius: 0;
+                border-end-end-radius: 0;
+                border-inline-end-color: transparent;
             }
 
-            &.is-variant-outlined {
-
-                &.is-active {
-                    border-inline-end-color: unset;
-                    border-inline-start-color: unset;
-                    border-radius: inherit;
-
-                    &:has(+ .is-active) {
-                        border-start-end-radius: 0;
-                        border-end-end-radius: 0;
-                        border-inline-end-color: transparent;
-                    }
-
-                    + .is-active {
-                        border-start-start-radius: 0;
-                        border-end-start-radius: 0;
-                        border-inline-start-color: transparent;
-                    }
-                }
+            + .is-active {
+                border-start-start-radius: 0;
+                border-end-start-radius: 0;
+                border-inline-start-color: transparent;
             }
         }
     }
