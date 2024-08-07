@@ -5,8 +5,37 @@ import { EvButton } from "@/components";
 
 const meta: Meta<typeof EvButtonGroup> = {
     component: EvButtonGroup,
-    argTypes: {},
-    args: {},
+    argTypes: {
+        appearance: {
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "primary",
+                "success",
+                "warning",
+            ],
+        },
+        variant: {
+            control: "select",
+            options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
+        },
+        size: {
+            control: "select",
+            options: ["x-small", "small", "medium", "large", "x-large"],
+        },
+        rounded: {
+            control: "boolean",
+        },
+    },
+    args: {
+        appearance: "default",
+        variant: "outlined",
+        size: "medium",
+        rounded: false,
+    },
     tags: ["autodocs"],
 };
 

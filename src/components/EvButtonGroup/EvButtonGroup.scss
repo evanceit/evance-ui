@@ -22,6 +22,18 @@
     }
 }
 
+
+.ev-button-group {
+    .ev-button:first-child {
+        border-start-start-radius: inherit;
+        border-end-start-radius: inherit;
+    }
+    .ev-button:last-child {
+        border-start-end-radius: inherit;
+        border-end-end-radius: inherit;
+    }
+}
+
 .ev-button-group {
     &.is-appearance-default {
         &.is-variant-outlined {
