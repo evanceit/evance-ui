@@ -7,10 +7,20 @@
     padding-inline: 10px;
 }
 
-.ev-toolbar--section {
+.ev-toolbar--section-start,
+.ev-toolbar--section-end,
+.ev-toolbar--prefix,
+.ev-toolbar--start,
+.ev-toolbar--end {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+.ev-toolbar--section-start {
+    gap: 3rem;
+}
+.ev-toolbar--section-end {
+    gap: 0.5rem;
 }
 
 .ev-toolbar--title {
@@ -25,4 +35,18 @@
 
 .ev-toolbar .ev-tabs {
     margin-bottom: -1px;
+}
+
+.ev-toolbar--icon {
+    display: inline-flex;
+    width: var(--input-height-small);
+    height: var(--input-height-small);
+    align-items: center;
+    justify-content: center;
+}
+
+.ev-toolbar--actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacer-100);
 }

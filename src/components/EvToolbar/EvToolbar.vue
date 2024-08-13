@@ -4,29 +4,37 @@ import { makeEvToolbarProps } from "./EvToolbar.ts";
 import { EvButton } from "../EvButton";
 import { EvIcon } from "../EvIcon";
 import { EvTabs, EvTab } from "../EvTabs";
-import { ArrowBackIcon, CancelIcon, DotIcon } from "@/icons";
+import { ArrowBackIcon, CancelIcon } from "@/icons";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
 });
 
+
 </script>
 
 <template>
     <div class="ev-toolbar">
-        <div class="ev-toolbar--section">
-            <!-- back icon -->
-            <ev-button
-                rounded
-                size="small"
-                variant="subtle"
-                :icon="ArrowBackIcon" />
+        <div class="ev-toolbar--section-start">
+            <div class="ev-toolbar--prefix">
+                <div class="ev-toolbar--back">
+                    <ev-button
+                        rounded
+                        size="small"
+                        variant="subtle"
+                        :icon="ArrowBackIcon" />
+                </div>
 
-            <ev-icon :glyph="DotIcon" />
+                <div v-if="props.icon" class="ev-toolbar--icon">
+                    <ev-icon :glyph="props.icon" />
+                </div>
 
-            <div class="ev-toolbar--title">{{ title }}</div>
-
+                <div v-if="props.title" class="ev-toolbar--title">
+                    {{ props.title }}
+                </div>
+            </div>
             <div class="ev-toolbar--start">
+                <!-- todo: tabs -->
                 <ev-tabs size="x-large">
                     <ev-tab>Tab 1</ev-tab>
                     <ev-tab>Tab 2</ev-tab>
@@ -34,17 +42,20 @@ const props = defineProps({
                 </ev-tabs>
             </div>
         </div>
-        <div class="ev-toolbar--section">
+        <div class="ev-toolbar--section-end">
             <div class="ev-toolbar--end">
-                [end or actions]
+                <div class="ev-toolbar--actions">
+                    <ev-button>Button 1</ev-button>
+                    <ev-button>Button 2</ev-button>
+                </div>
             </div>
-
-            <!-- close icon -->
-            <ev-button
-                rounded
-                size="small"
-                :icon="CancelIcon"
-                variant="subtle" />
+            <div class="ev-toolbar--close">
+                <ev-button
+                    rounded
+                    size="small"
+                    :icon="CancelIcon"
+                    variant="subtle" />
+            </div>
         </div>
     </div>
 </template>
