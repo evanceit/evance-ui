@@ -41,6 +41,7 @@ export * from "./EvTag";
 export * from "./EvTagGroup";
 export * from "./EvTextarea";
 export * from "./EvTextfield";
+export * from "./EvToolbar";
 export * from "./EvTooltip";
 export * from "./EvTransition";
 export * from "./EvVirtualScroll";

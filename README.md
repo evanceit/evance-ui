@@ -1,18 +1,38 @@
-# Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Evance UI
+Evance UI is a Vue Component and Icon library, which is a [MIT licensed](http://opensource.org/licenses/MIT) project 
+developed and maintained by [Evance](https://www.evance.io) for Evance's core UI and Apps.
 
-## Recommended IDE Setup
+We could not have done this project without [Vuetify](https://github.com/vuetifyjs/vuetify), 
+which influences this codebase and has been adapted to suit Evance.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Installation
+Evance UI is available as a `npm` package.
+```
+npm i @evance/evance-ui
+```
 
-## Type Support For `.vue` Imports in TS
+In the file where you create the Vue application, add the following code:
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+```ts
+import {createApp} from "vue";
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+import "@evance/evance-ui/styles";
+import { createEvanceUi, components, directives, services } from "@evance/evance-ui";
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+const evanceUi = createEvanceUi({
+    components,
+    directives,
+    services
+});
+app.use(evanceUi);
+
+app.mount('#app');
+```
+
+### Documentation
+TODO
+
+### License
+
+Evance UI is available under the [MIT](http://opensource.org/licenses/MIT) software license.

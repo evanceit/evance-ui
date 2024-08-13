@@ -6,7 +6,7 @@
 
 .ev-tab--slider {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     height: var(--tab-slider-size, 2px);
     width: 100%;
