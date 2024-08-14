@@ -85,6 +85,32 @@ const meta: Meta<typeof EvButton> = {
         rounded: {
             control: "boolean",
         },
+        value: {
+            description: "A button may have a value.",
+        },
+        selectedClass: {
+            description: "The class applied when selected.",
+        },
+        selectedAppearance: {
+            description: "The appearance to use when selected.",
+        },
+        selectedVariant: {
+            description: "The appearance variant to use when selected.",
+        },
+        selectedIcon: {
+            description: "The `icon` glyph to use when selected.",
+        },
+        selectedIconStart: {
+            description: "The icon glyph to use as `icon-start` when selected",
+        },
+        selectedIconEnd: {
+            description: "The icon glyph to use as `icon-end` when selected.",
+        },
+        additional: {
+            description:
+                "This slot may be used by parent components to inject additional content into the button. " +
+                "For example, `EvTab` uses the additional slot to inject an absolutely positioned selection indicator.",
+        },
     },
     args: {
         appearance: "default",
