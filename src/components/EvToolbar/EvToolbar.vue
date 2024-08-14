@@ -7,6 +7,8 @@ import { EvTabs } from "@/components/EvTabs";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { ArrowBackIcon, CancelIcon } from "@/icons";
 import { computed, getCurrentInstance } from "vue";
+import { useModelProxy } from "@/composables/modelProxy.ts";
+import { sizeModifier } from "@/util";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
@@ -19,7 +21,7 @@ const slots = defineSlots<{
 
 const instance = getCurrentInstance();
 
-const emit = defineEmits(["click:back", "click:close"]);
+const emit = defineEmits(["click:back", "click:close", "update:tab"]);
 
 const hasBackButton = computed(() => {
     return !!instance?.vnode.props["onClick:back"];
@@ -38,10 +40,39 @@ function onCloseClick($event: MouseEvent) {
     $event.stopPropagation();
     emit("click:close", $event);
 }
+
+const tab = useModelProxy(props, "tab");
+
+const sizeClass = computed(() => sizeModifier(props.size));
+
+const tabSize = computed(() => {
+    switch (props.size) {
+        case "large":
+            return "x-large";
+        case "small":
+            return "medium";
+        case "medium":
+        default:
+            return "large";
+    }
+});
+
+const actionSize = computed(() => {
+    switch (props.size) {
+        case "large":
+            return "medium";
+        case "small":
+            return "x-small";
+        case "medium":
+        default:
+            return "small";
+    }
+});
+
 </script>
 
 <template>
-    <div class="ev-toolbar">
+    <div :class="['ev-toolbar', sizeClass]">
         <div class="ev-toolbar--section-start">
             <div class="ev-toolbar--prefix">
                 <div v-if="hasBackButton" class="ev-toolbar--back">
@@ -63,7 +94,10 @@ function onCloseClick($event: MouseEvent) {
             </div>
             <div v-if="slots.start || props.tabs" class="ev-toolbar--start">
                 <slot name="start">
-                    <ev-tabs size="x-large" :items="props.tabs" />
+                    <ev-tabs
+                        v-model="tab"
+                        :size="tabSize"
+                        :items="props.tabs" />
                 </slot>
             </div>
         </div>
@@ -71,7 +105,10 @@ function onCloseClick($event: MouseEvent) {
             <div v-if="slots.end || props.actions" class="ev-toolbar--end">
                 <slot name="end">
                     <div class="ev-toolbar--actions">
-                        <ev-button-group :items="props.actions" />
+                        <ev-button-group
+                            gap="medium"
+                            :items="props.actions"
+                            :size="actionSize" />
                     </div>
                 </slot>
             </div>

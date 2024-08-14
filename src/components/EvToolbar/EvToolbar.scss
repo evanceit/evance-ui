@@ -3,8 +3,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 3.5rem;
-    padding-inline: 10px;
 }
 
 .ev-toolbar--section-start,
@@ -49,4 +47,33 @@
     display: flex;
     align-items: center;
     gap: var(--spacer-100);
+}
+
+.ev-toolbar {
+    &.is-size-large {
+        min-height: 56px;
+        padding-inline: 10px;
+    }
+
+    &.is-size-medium {
+        min-height: 52px;
+        padding-inline: 8px;
+
+        .ev-tabs {
+            padding-top: 4px;
+        }
+    }
+
+    &.is-size-small {
+        min-height: 48px;
+        padding-inline: 6px;
+
+        .ev-tabs {
+            padding-top: 6px;
+        }
+
+        .ev-toolbar--title {
+            font-size: var(--text-size-medium);
+        }
+    }
 }

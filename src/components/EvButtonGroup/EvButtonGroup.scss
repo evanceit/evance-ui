@@ -26,13 +26,16 @@
 
 
 .ev-button-group {
-    .ev-button:first-child {
-        border-start-start-radius: inherit;
-        border-end-start-radius: inherit;
-    }
-    .ev-button:last-child {
-        border-start-end-radius: inherit;
-        border-end-end-radius: inherit;
+    &.is-gap-none {
+        .ev-button:first-child {
+            border-start-start-radius: inherit;
+            border-end-start-radius: inherit;
+        }
+
+        .ev-button:last-child {
+            border-start-end-radius: inherit;
+            border-end-end-radius: inherit;
+        }
     }
 }
 
