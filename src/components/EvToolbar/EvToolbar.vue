@@ -1,23 +1,36 @@
 <script setup lang="ts">
 import "./EvToolbar.scss";
 import { makeEvToolbarProps } from "./EvToolbar.ts";
-import { EvButton } from "../EvButton";
-import { EvIcon } from "../EvIcon";
-import { EvTabs, EvTab } from "../EvTabs";
+import { EvButton } from "@/components/EvButton";
+import { EvIcon } from "@/components/EvIcon";
+import { EvTabs } from "@/components/EvTabs";
+import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { ArrowBackIcon, CancelIcon } from "@/icons";
+import { computed } from "vue";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
 });
 
+const slots = defineSlots<{
+    start(): never;
+    end(): never;
+}>();
 
+const hasBackButton = computed(() => {
+    return true;
+});
+
+const hasCloseButton = computed(() => {
+    return true;
+});
 </script>
 
 <template>
     <div class="ev-toolbar">
         <div class="ev-toolbar--section-start">
             <div class="ev-toolbar--prefix">
-                <div class="ev-toolbar--back">
+                <div v-if="hasBackButton" class="ev-toolbar--back">
                     <ev-button
                         rounded
                         size="small"
@@ -33,23 +46,21 @@ const props = defineProps({
                     {{ props.title }}
                 </div>
             </div>
-            <div class="ev-toolbar--start">
-                <!-- todo: tabs -->
-                <ev-tabs size="x-large">
-                    <ev-tab>Tab 1</ev-tab>
-                    <ev-tab>Tab 2</ev-tab>
-                    <ev-tab>Tab 3</ev-tab>
-                </ev-tabs>
+            <div v-if="slots.start || props.tabs" class="ev-toolbar--start">
+                <slot name="start">
+                    <ev-tabs size="x-large" :items="props.tabs" />
+                </slot>
             </div>
         </div>
         <div class="ev-toolbar--section-end">
-            <div class="ev-toolbar--end">
-                <div class="ev-toolbar--actions">
-                    <ev-button>Button 1</ev-button>
-                    <ev-button>Button 2</ev-button>
-                </div>
+            <div v-if="slots.end || props.actions" class="ev-toolbar--end">
+                <slot name="end">
+                    <div class="ev-toolbar--actions">
+                        <ev-button-group :items="props.actions" />
+                    </div>
+                </slot>
             </div>
-            <div class="ev-toolbar--close">
+            <div v-if="hasCloseButton" class="ev-toolbar--close">
                 <ev-button
                     rounded
                     size="small"

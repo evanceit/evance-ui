@@ -219,9 +219,7 @@ const iconEnd = computed(() => {
         <span v-if="slots.suffix" class="ev-button--suffix">
             <slot name="suffix" />
         </span>
-        <span
-            v-if="iconEnd || slots['icon-end']"
-            class="ev-button--icon-end">
+        <span v-if="iconEnd || slots['icon-end']" class="ev-button--icon-end">
             <slot name="icon-end">
                 <ev-icon :glyph="iconEnd" />
             </slot>
