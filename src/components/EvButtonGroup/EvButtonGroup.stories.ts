@@ -57,3 +57,49 @@ export const Primary: Story = {
     </ev-button-group>`,
     }),
 };
+
+/**
+ * Buttons may also be rendered using the `items` prop,
+ * which accepts an array of `EvButtonProps`.
+ *
+ * ```html
+ * <script>
+ * const items = [
+ *  {
+ *      text: "Button 1"
+ *  },
+ *  {
+ *      text: "Button 2"
+ *  },
+ *  {
+ *      text: "Button 3"
+ *  }
+ * ];
+ * </script>
+ * <template>
+ *     <ev-button-group :items="items">
+ * </template>
+ * ```
+ */
+export const TheItemsProp: Story = {
+    render: (args: any) => ({
+        components: { EvButtonGroup },
+        setup() {
+            const items = [
+                {
+                    text: "Button 1",
+                },
+                {
+                    text: "Button 2",
+                },
+                {
+                    text: "Button 3",
+                },
+            ];
+            return { items };
+        },
+        template: `
+        <ev-button-group :items="items" />
+        `,
+    }),
+};

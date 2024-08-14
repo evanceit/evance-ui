@@ -5,10 +5,15 @@ import { PropType } from "vue";
 import {
     ButtonAppearanceProp,
     ButtonVariantProp,
+    EvButtonProps,
 } from "@/components/EvButton/EvButton.ts";
 
 export const makeEvButtonGroupProps = propsFactory(
     {
+        items: {
+            type: Array as PropType<readonly EvButtonProps[]>,
+            default: () => [],
+        },
         appearance: {
             type: String as PropType<ButtonAppearanceProp>,
             default: Appearance.default,

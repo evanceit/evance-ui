@@ -6,7 +6,8 @@ import "./EvButtonGroup.scss";
 import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
 import { provideDefaults } from "@/composables/defaults.ts";
 import { computed, toRef } from "vue";
-import { appearanceModifier, variantModifier } from "@/util";
+import { appearanceModifier, getNextId, variantModifier } from "@/util";
+import { EvButton } from "../EvButton";
 
 const props = defineProps({
     ...makeEvButtonGroupProps(),
@@ -22,6 +23,17 @@ provideDefaults({
         variant: toRef(props, "variant"),
         size: toRef(props, "size"),
     },
+});
+
+const parsedItems = computed(() => {
+    const items = [];
+    for (const item of props.items) {
+        items.push({
+            props: item,
+            id: getNextId(),
+        });
+    }
+    return items;
 });
 
 const appearanceClass = computed(() => appearanceModifier(props.appearance));
@@ -42,7 +54,12 @@ const variantClass = computed(() => variantModifier(props.variant));
         ]"
         :style="props.style">
         <div class="ev-button-group--container">
-            <slot />
+            <slot>
+                <ev-button
+                    v-for="item in parsedItems"
+                    :key="item.id"
+                    v-bind="item.props" />
+            </slot>
         </div>
     </component>
 </template>
