@@ -22,6 +22,18 @@ const meta: Meta<typeof EvButtonGroup> = {
             control: "select",
             options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
         },
+        gap: {
+            control: "select",
+            options: [
+                "none",
+                "auto",
+                "x-small",
+                "small",
+                "medium",
+                "large",
+                "x-large",
+            ],
+        },
         size: {
             control: "select",
             options: ["x-small", "small", "medium", "large", "x-large"],
@@ -29,10 +41,16 @@ const meta: Meta<typeof EvButtonGroup> = {
         rounded: {
             control: "boolean",
         },
+        items: {
+            control: "object",
+            description:
+                "Accepts and array of `EvButtonProps` (see 'Items Prop' example below)",
+        },
     },
     args: {
         appearance: "default",
         variant: "default",
+        gap: "auto",
         size: "medium",
         rounded: false,
     },
@@ -65,23 +83,23 @@ export const Primary: Story = {
  * ```html
  * <script>
  * const items = [
- *  {
+ *   {
  *      text: "Button 1"
- *  },
- *  {
+ *   },
+ *   {
  *      text: "Button 2"
- *  },
- *  {
+ *   },
+ *   {
  *      text: "Button 3"
- *  }
+ *   }
  * ];
  * </script>
  * <template>
- *     <ev-button-group :items="items">
+ *     <ev-button-group :items="items" />
  * </template>
  * ```
  */
-export const TheItemsProp: Story = {
+export const ItemsProp: Story = {
     render: (args: any) => ({
         components: { EvButtonGroup },
         setup() {

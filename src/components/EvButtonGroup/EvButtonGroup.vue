@@ -6,7 +6,7 @@ import "./EvButtonGroup.scss";
 import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
 import { provideDefaults } from "@/composables/defaults.ts";
 import { computed, toRef } from "vue";
-import { appearanceModifier, getNextId, variantModifier } from "@/util";
+import { appearanceModifier, getNextId, makeClassName, variantModifier } from "@/util";
 import { EvButton } from "../EvButton";
 
 const props = defineProps({
@@ -38,6 +38,13 @@ const parsedItems = computed(() => {
 
 const appearanceClass = computed(() => appearanceModifier(props.appearance));
 const variantClass = computed(() => variantModifier(props.variant));
+const gapClass = computed(() => {
+    const buttonSize = props.size ?? "medium";
+    if (props.gap === "auto") {
+        return makeClassName(buttonSize, "is-gap");
+    }
+    return makeClassName(props.gap, "is-gap");
+});
 </script>
 
 <template>
@@ -47,6 +54,7 @@ const variantClass = computed(() => variantModifier(props.variant));
             'ev-button-group',
             appearanceClass,
             variantClass,
+            gapClass,
             {
                 'is-rounded': props.rounded,
             },

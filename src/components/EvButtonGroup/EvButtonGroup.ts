@@ -8,6 +8,15 @@ import {
     EvButtonProps,
 } from "@/components/EvButton/EvButton.ts";
 
+export type ButtonGroupGap =
+    | "none"
+    | "auto"
+    | "x-small"
+    | "small"
+    | "medium"
+    | "large"
+    | "x-large";
+
 export const makeEvButtonGroupProps = propsFactory(
     {
         items: {
@@ -17,6 +26,10 @@ export const makeEvButtonGroupProps = propsFactory(
         appearance: {
             type: String as PropType<ButtonAppearanceProp>,
             default: Appearance.default,
+        },
+        gap: {
+            type: String as PropType<ButtonGroupGap>,
+            default: "auto",
         },
         rounded: Boolean,
         size: String as PropType<InputSizeProp>,
