@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { EvButton, EvToolbar} from "@/components";
+import { EvToolbar } from "@/components";
 import {
     SalesOrderFillIcon,
     InboxFillIcon,
     SalesEnquiryFillIcon,
-    SalesQuotationFillIcon, HeartIcon,
+    SalesQuotationFillIcon,
+    HeartIcon,
 } from "@/icons";
 
 /**
@@ -48,24 +49,29 @@ const meta: Meta<typeof EvToolbar> = {
                 "Use `v-model:tab` to ensure the value updates in both directions.",
         },
         tabs: {
-            description: "Tabs may be supplied as an array of `EvTab` props.",
+            description:
+                "Tabs may be supplied as an array of `EvTab` props. " +
+                "If you would like more control you can use the `start` slot.",
         },
         actions: {
             description:
-                "Actions may be supplied as an array of `EvButton` props",
+                "Actions may be supplied as an array of `EvButton` props. " +
+                "If you would like more control you can use the `end` slot.",
         },
         "click:back": {
             description:
-                "The back button will appear when adding an event listener to the `click:back` event.",
+                "<p>The back button will appear when adding an event listener to the `click:back` event.</p>" +
+                "<p>In this example we have added an event listener for completion - check the console.</p>",
         },
         "click:close": {
             description:
-                "The close button will appear when adding an event listener to the `click:close` event.",
+                "<p>The close button will appear when adding an event listener to the `click:close` event.</p>" +
+                "<p>In this example we have added an event listener for completion - check the console.</p>",
         },
         "update:tab": {
             description:
                 "Fired when the current tab changes, supplying the value of the current tab to the listener.",
-        }
+        },
     },
     args: {
         icon: "none",
@@ -81,9 +87,8 @@ type Story = StoryObj<typeof EvToolbar>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvToolbar, EvButton },
+        components: { EvToolbar },
         setup() {
-
             const tabs = [
                 {
                     text: "Tab 1",
@@ -105,8 +110,21 @@ export const Primary: Story = {
                 },
             ];
 
-            return { args, tabs, actions };
+            const onClickBack = () => {
+                console.log("Back button was clicked");
+            };
+
+            const onClickClose = () => {
+                console.log("Close button was clicked");
+            };
+
+            return { args, tabs, actions, onClickBack, onClickClose };
         },
-        template: `<ev-toolbar v-bind="args" :tabs="tabs" :actions="actions" />`,
+        template: `<ev-toolbar 
+            v-bind="args" 
+            :tabs="tabs" 
+            :actions="actions" 
+            @click:back="onClickBack" 
+            @click:close="onClickClose" />`,
     }),
 };
