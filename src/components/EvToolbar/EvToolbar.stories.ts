@@ -32,6 +32,14 @@ const meta: Meta<typeof EvToolbar> = {
         title: {
             control: "text",
         },
+        "click:back": {
+            description:
+                "The back button will appear when adding an event listener to the `click:back` event.",
+        },
+        "click:close": {
+            description:
+                "The close button will appear when adding an event listener to the `click:close` event.",
+        },
     },
     args: {
         icon: "none",
@@ -48,7 +56,12 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvToolbar },
         setup() {
-            return { args };
+
+            const onClickBack = () => {
+                console.log("Back was clicked");
+            };
+
+            return { args, onClickBack };
         },
         template: `<ev-toolbar v-bind="args" />`,
     }),

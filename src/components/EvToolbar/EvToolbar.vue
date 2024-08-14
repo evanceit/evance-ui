@@ -6,7 +6,7 @@ import { EvIcon } from "@/components/EvIcon";
 import { EvTabs } from "@/components/EvTabs";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { ArrowBackIcon, CancelIcon } from "@/icons";
-import { computed } from "vue";
+import { computed, getCurrentInstance } from "vue";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
@@ -17,17 +17,16 @@ const slots = defineSlots<{
     end(): never;
 }>();
 
-const emit = defineEmits([
-    "click:back",
-    "click:close",
-]);
+const instance = getCurrentInstance();
+
+const emit = defineEmits(["click:back", "click:close"]);
 
 const hasBackButton = computed(() => {
-    return true;
+    return !!instance?.vnode.props["onClick:back"];
 });
 
 const hasCloseButton = computed(() => {
-    return true;
+    return !!instance?.vnode.props["onClick:close"];
 });
 
 function onBackClick($event: MouseEvent) {
