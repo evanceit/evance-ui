@@ -64,13 +64,15 @@ export const makeEvButtonProps = propsFactory(
         rounded: Boolean,
         size: String as PropType<InputSizeProp>,
         fullWidth: Boolean,
+        selectedIcon: IconProp,
+        selectedIconStart: IconProp,
+        selectedIconEnd: IconProp,
         text: String,
         loading: Boolean,
         variant: {
             type: String as PropType<ButtonVariantProp>,
             default: "default",
         },
-
         ...makeComponentProps(),
         ...makeRouterLinkOrHrefProps(),
         ...makeGroupItemProps(),

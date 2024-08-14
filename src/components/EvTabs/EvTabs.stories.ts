@@ -70,29 +70,29 @@ export const Primary: Story = {
                 <ev-tab 
                     text="Orders" 
                     :value="1" 
-                    :icon-start="selection == 1 ? SalesOrderFillIcon : SalesOrderIcon" />
+                    :icon-start="SalesOrderIcon"
+                    :selected-icon-start="SalesOrderFillIcon"
+                />
                 <ev-tab 
                     text="Enquiries" 
                     :value="2" 
-                    :icon-start="selection == 2 ? SalesEnquiryFillIcon : SalesEnquiryIcon"  />
+                    :icon-start="SalesEnquiryIcon"
+                    :selected-icon-start="SalesEnquiryFillIcon"  
+                />
                 <ev-tab 
                     text="Quotes" 
                     :value="3" 
-                    :icon-start="selection == 3 ? SalesQuotationFillIcon : SalesQuotationIcon"  />
+                    :icon-start="SalesQuotationIcon"
+                    :selected-icon-start="SalesQuotationFillIcon"
+                />
             </ev-tabs>
             
             <p>&nbsp;</p>
             <p>Example of tags with icon only</p>
             <ev-tabs v-bind="args" v-model="selection">
-                <ev-tab :value="1" :icon="true">
-                    <ev-icon :glyph="selection == 1 ? SalesOrderFillIcon : SalesOrderIcon" />
-                </ev-tab>
-                <ev-tab :value="2" :icon="true">
-                    <ev-icon :glyph="selection == 2 ? SalesEnquiryFillIcon : SalesEnquiryIcon" />
-                </ev-tab>
-                <ev-tab :value="3" :icon="true">
-                    <ev-icon :glyph="selection == 3 ? SalesQuotationFillIcon : SalesQuotationIcon" />
-                </ev-tab>
+                <ev-tab :value="1" :icon="SalesOrderIcon" :selected-icon="SalesOrderFillIcon" />
+                <ev-tab :value="2" :icon="SalesEnquiryIcon" :selected-icon="SalesEnquiryFillIcon" />
+                <ev-tab :value="3" :icon="SalesQuotationIcon" :selected-icon="SalesQuotationFillIcon" />
             </ev-tabs>
         `,
     }),

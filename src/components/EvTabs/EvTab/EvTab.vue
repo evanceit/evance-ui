@@ -13,7 +13,7 @@ import { useDefaults } from "@/composables";
 const definedProps = defineProps({
     ...makeEvTabProps(),
 });
-defineSlots<{
+const slots = defineSlots<{
     default(): never;
 }>();
 const props = useDefaults(definedProps);
@@ -93,6 +93,7 @@ function updateSlider({ value }: { value: boolean }) {
         },
     );
 }
+
 </script>
 
 <template>
@@ -107,8 +108,11 @@ function updateSlider({ value }: { value: boolean }) {
         :style="props.style"
         v-bind="buttonProps"
         @group:selected="updateSlider">
-        <slot name="default">{{ props.text }}</slot>
-
-        <div ref="sliderEl" :class="['ev-tab--slider']"></div>
+        <template v-if="props.text || slots.default" #default>
+            <slot name="default">{{ props.text }}</slot>
+        </template>
+        <template #additional>
+            <div ref="sliderEl" :class="['ev-tab--slider']"></div>
+        </template>
     </ev-button>
 </template>

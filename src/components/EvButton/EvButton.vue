@@ -31,6 +31,7 @@ defineSlots<{
     "icon-start"(): never;
     prefix(): never;
     suffix(): never;
+    additional(): never;
 }>();
 
 const definedProps = defineProps({
@@ -146,6 +147,24 @@ const valueAttr = computed(() => {
 defineExpose({
     group,
 });
+
+const icon = computed(() => {
+    return group?.isSelected.value
+        ? props.selectedIcon ?? props.icon
+        : props.icon;
+});
+
+const iconStart = computed(() => {
+    return group?.isSelected.value
+        ? props.selectedIconStart ?? props.iconStart
+        : props.iconStart;
+});
+
+const iconEnd = computed(() => {
+    return group?.isSelected.value
+        ? props.selectedIconEnd ?? props.iconEnd
+        : props.iconEnd;
+});
 </script>
 
 <template>
@@ -175,20 +194,20 @@ defineExpose({
         :value="valueAttr"
         @click="onClick">
         <span
-            v-if="props.iconStart || slots['icon-start']"
+            v-if="iconStart || slots['icon-start']"
             class="ev-button--icon-start">
             <slot name="icon-start">
-                <ev-icon :glyph="props.iconStart" />
+                <ev-icon :glyph="iconStart" />
             </slot>
         </span>
         <span v-if="slots.prefix" class="ev-button--prefix">
             <slot name="prefix" />
         </span>
         <span
-            v-if="(props.icon || slots.icon) && !isBoolean(props.icon)"
+            v-if="(icon || slots.icon) && !isBoolean(icon)"
             class="ev-button--icon">
             <slot name="icon">
-                <ev-icon :glyph="props.icon" />
+                <ev-icon :glyph="icon" />
             </slot>
         </span>
         <span
@@ -201,14 +220,15 @@ defineExpose({
             <slot name="suffix" />
         </span>
         <span
-            v-if="props.iconEnd || slots['icon-end']"
+            v-if="iconEnd || slots['icon-end']"
             class="ev-button--icon-end">
             <slot name="icon-end">
-                <ev-icon :glyph="props.iconEnd" />
+                <ev-icon :glyph="iconEnd" />
             </slot>
         </span>
         <span v-if="props.loading" class="ev-button--loading">
             <ev-progress-circular indeterminate />
         </span>
+        <slot name="additional" />
     </component>
 </template>
