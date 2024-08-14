@@ -32,7 +32,7 @@ const meta: Meta<typeof EvButtonGroup> = {
     },
     args: {
         appearance: "default",
-        variant: "outlined",
+        variant: "default",
         size: "medium",
         rounded: false,
     },

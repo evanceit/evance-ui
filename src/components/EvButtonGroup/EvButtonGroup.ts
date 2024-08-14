@@ -22,7 +22,7 @@ export const makeEvButtonGroupProps = propsFactory(
         size: String as PropType<InputSizeProp>,
         variant: {
             type: String as PropType<ButtonVariantProp>,
-            default: "outlined",
+            default: "default",
         },
 
         ...makeComponentProps(),
