@@ -17,6 +17,11 @@ const slots = defineSlots<{
     end(): never;
 }>();
 
+const emit = defineEmits([
+    "click:back",
+    "click:close",
+]);
+
 const hasBackButton = computed(() => {
     return true;
 });
@@ -24,6 +29,16 @@ const hasBackButton = computed(() => {
 const hasCloseButton = computed(() => {
     return true;
 });
+
+function onBackClick($event: MouseEvent) {
+    $event.stopPropagation();
+    emit("click:back", $event);
+}
+
+function onCloseClick($event: MouseEvent) {
+    $event.stopPropagation();
+    emit("click:close", $event);
+}
 </script>
 
 <template>
@@ -35,7 +50,8 @@ const hasCloseButton = computed(() => {
                         rounded
                         size="small"
                         variant="subtle"
-                        :icon="ArrowBackIcon" />
+                        :icon="ArrowBackIcon"
+                        @click="onBackClick" />
                 </div>
 
                 <div v-if="props.icon" class="ev-toolbar--icon">
@@ -65,7 +81,8 @@ const hasCloseButton = computed(() => {
                     rounded
                     size="small"
                     :icon="CancelIcon"
-                    variant="subtle" />
+                    variant="subtle"
+                    @click="onCloseClick" />
             </div>
         </div>
     </div>
