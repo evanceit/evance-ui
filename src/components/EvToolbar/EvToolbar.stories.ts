@@ -5,7 +5,10 @@ import {
     InboxFillIcon,
     SalesEnquiryFillIcon,
     SalesQuotationFillIcon,
-    HeartIcon,
+    PlusIcon,
+    SalesOrderIcon,
+    SalesQuotationIcon,
+    SalesEnquiryIcon,
 } from "@/icons";
 
 /**
@@ -74,8 +77,8 @@ const meta: Meta<typeof EvToolbar> = {
         },
     },
     args: {
-        icon: "none",
-        title: "This is a very long title that will overflow",
+        icon: "InboxFillIcon",
+        title: "Sales Desk",
         size: "medium",
     },
     tags: ["autodocs"],
@@ -91,22 +94,30 @@ export const Primary: Story = {
         setup() {
             const tabs = [
                 {
-                    text: "Tab 1",
+                    text: "All",
                 },
                 {
-                    text: "Tab 2",
+                    icon: SalesOrderIcon,
+                    selectedIcon: SalesOrderFillIcon,
+                    text: "Orders",
+                },
+                {
+                    icon: SalesQuotationIcon,
+                    selectedIcon: SalesQuotationFillIcon,
+                    text: "Quotes",
+                },
+                {
+                    icon: SalesEnquiryIcon,
+                    selectedIcon: SalesEnquiryFillIcon,
+                    text: "Enquiries",
                 },
             ];
 
             const actions = [
                 {
-                    rounded: true,
-                    icon: HeartIcon,
+                    text: "Create",
+                    icon: PlusIcon,
                     variant: "subtle",
-                },
-                {
-                    text: "Save",
-                    appearance: "primary",
                 },
             ];
 

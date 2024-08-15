@@ -75,5 +75,7 @@
     --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
     --easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
+
+    --content-spacing: scalable(1.5rem, 3rem, settings.$scale-from, settings.$scale-to);
 }
 

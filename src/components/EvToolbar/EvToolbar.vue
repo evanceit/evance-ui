@@ -31,6 +31,10 @@ const hasCloseButton = computed(() => {
     return !!instance?.vnode.props["onClick:close"];
 });
 
+const hasPrefix = computed(() => {
+    return hasBackButton.value || props.icon || props.title;
+});
+
 function onBackClick($event: MouseEvent) {
     $event.stopPropagation();
     emit("click:back", $event);
@@ -74,7 +78,7 @@ const actionSize = computed(() => {
 <template>
     <div :class="['ev-toolbar', sizeClass]">
         <div class="ev-toolbar--section-start">
-            <div class="ev-toolbar--prefix">
+            <div v-if="hasPrefix" class="ev-toolbar--prefix">
                 <div v-if="hasBackButton" class="ev-toolbar--back">
                     <ev-button
                         rounded

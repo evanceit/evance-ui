@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 2rem;
 }
 
 .ev-toolbar--section-start,
@@ -15,10 +16,14 @@
 }
 
 .ev-toolbar--section-start {
-    gap: 3rem;
+    min-width: 0;
+    gap: 2rem;
 }
 .ev-toolbar--section-end {
     gap: 0.5rem;
+}
+.ev-toolbar--start {
+    min-width: 0;
 }
 
 .ev-toolbar--title {
@@ -41,6 +46,10 @@
     height: var(--input-height-small);
     align-items: center;
     justify-content: center;
+}
+
+.ev-toolbar--close {
+    min-width: 0;
 }
 
 .ev-toolbar--actions {
