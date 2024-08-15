@@ -40,6 +40,7 @@ export * from "./EvSwitch";
 export * from "./EvTabs";
 export * from "./EvTag";
 export * from "./EvTagGroup";
+export * from "./EvText";
 export * from "./EvTextarea";
 export * from "./EvTextfield";
 export * from "./EvToolbar";

@@ -22,7 +22,7 @@ const tag = computed(() => {
     return EvHeadingTag[props.size] ?? EvHeadingTag[EvHeadingSize.default];
 });
 
-const headingClass = computed(() => {
+const sizeClass = computed(() => {
     if (!props.tag) {
         return undefined;
     }
@@ -47,7 +47,7 @@ const maxLines = computed(() => {
 <template>
     <component
         :is="tag"
-        :class="['ev-heading', headingClass, truncateClass, props.class]"
+        :class="['ev-heading', sizeClass, truncateClass, props.class]"
         :style="props.style">
         <slot>{{ props.text }}</slot>
     </component>

@@ -1,20 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import { EvHeading } from "../EvHeading";
+import { EvText } from "../EvText";
 
-const meta: Meta<typeof EvHeading> = {
-    component: EvHeading,
+const meta: Meta<typeof EvText> = {
+    component: EvText,
     argTypes: {
         size: {
             control: "select",
-            options: [
-                "xx-large",
-                "x-large",
-                "large",
-                "medium",
-                "small",
-                "x-small",
-            ],
+            options: [undefined, "x-large", "large", "medium", "small"],
         },
         tag: {
             control: "text",
@@ -31,26 +24,31 @@ const meta: Meta<typeof EvHeading> = {
                 "Supplying `true` is standard behaviour resulting in a single line truncated by overflow. " +
                 "Supplying a `number` is experimental and sets a maximum number of lines.",
         },
+        weight: {
+            control: "select",
+            options: [undefined, "regular", "medium", "semibold", "bold"],
+        },
     },
     args: {
-        size: "medium",
+        size: undefined,
         tag: undefined,
-        text: "This is a very long heading which I am hoping I can get to wrap onto another line",
+        text: "This is a very long text which I am hoping I can get to wrap onto another line",
         truncate: false,
+        weight: undefined,
     },
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof EvHeading>;
+type Story = StoryObj<typeof EvText>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvHeading },
+        components: { EvText },
         setup() {
             return { args };
         },
-        template: `<ev-heading v-bind="args" />`,
+        template: `<ev-text v-bind="args" />`,
     }),
 };
