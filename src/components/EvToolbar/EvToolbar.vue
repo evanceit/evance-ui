@@ -76,7 +76,7 @@ const actionSize = computed(() => {
 </script>
 
 <template>
-    <div :class="['ev-toolbar', sizeClass]">
+    <div :class="['ev-toolbar', sizeClass, props.class]" :style="props.style">
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
                 <div v-if="hasBackButton" class="ev-toolbar--back">
