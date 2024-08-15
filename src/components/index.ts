@@ -13,6 +13,7 @@ export * from "./EvDrawer";
 export * from "./EvErrors";
 export * from "./EvForm";
 export * from "./EvGrid";
+export * from "./EvHeading";
 export * from "./EvIcon";
 export * from "./EvImg";
 export * from "./EvKbd";

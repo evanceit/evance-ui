@@ -1,0 +1,18 @@
+.ev-heading {
+    --max-lines: 1;
+
+    &.is-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    &.is-truncate-lines {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--max-lines, 1);
+        line-clamp: var(--max-lines, 1);
+        -webkit-box-orient: vertical;
+    }
+}
