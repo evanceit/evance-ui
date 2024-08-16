@@ -16,6 +16,7 @@ import { makeEvMessageProps } from "./EvMessage.ts";
 import { useLocaleFunctions } from "@/composables/locale.ts";
 import { EvButtonProps } from "@/components/EvButton";
 import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
+import { EvButtonGroup, EvHeading } from "@/components";
 
 const props = defineProps({
     ...makeEvMessageProps(),
@@ -159,7 +160,10 @@ function onLeave(el: Element) {
             </slot>
         </div>
         <div class="ev-message--content">
-            <h2 class="ev-message--title">{{ props.title }}</h2>
+            <ev-heading
+                class="ev-message--title"
+                size="small"
+                :text="props.title" />
             <transition
                 name="transition-message"
                 @before-enter="onEnter"
@@ -177,10 +181,7 @@ function onLeave(el: Element) {
                         v-if="hasActionSlot || actions.length"
                         class="ev-message--actions">
                         <slot name="actions">
-                            <ev-button
-                                v-for="(action, index) in actions"
-                                :key="index"
-                                v-bind="action" />
+                            <ev-button-group :items="actions" />
                         </slot>
                     </div>
                 </div>

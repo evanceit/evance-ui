@@ -14,7 +14,6 @@
 }
 
 .ev-message--title {
-    font-size: var(--heading-size-5);
     margin-bottom: 0;
     color: var(--message-title, var(--heading-default));
 }
@@ -32,7 +31,12 @@
             --message-background: var(--background-neutral);
             --message-title: var(--heading-on-muted);
         }
-
+        &.is-appearance-primary {
+            --message-icon: var(--text-brand);
+            --message-background: var(--background-brand);
+            --message-text: var(--text-on-brand);
+            --message-title: var(--heading-on-brand);
+        }
         &.is-appearance-danger {
             --message-icon: var(--text-danger);
             --message-background: var(--background-danger);
@@ -76,6 +80,12 @@
             --message-title: var(--heading-on-muted-bold);
             --message-icon: var(--heading-on-muted-bold);
         }
+        &.is-appearance-primary {
+            --message-background: var(--background-brand-bold);
+            --message-text: var(--text-on-brand-bold);
+            --message-title: var(--heading-on-brand-bold);
+            --message-icon: var(--heading-on-brand-bold);
+        }
         &.is-appearance-danger {
             --message-background: var(--background-danger-bold);
             --message-text: var(--text-on-danger-bold);
@@ -116,6 +126,9 @@
 
         &.is-appearance-default {
             --message-icon: var(--icon-color);
+        }
+        &.is-appearance-primary {
+            --message-icon: var(--text-brand);
         }
         &.is-appearance-danger {
             --message-icon: var(--text-danger);
