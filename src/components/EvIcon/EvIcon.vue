@@ -20,6 +20,9 @@ const iconColor = computed(() => {
     if (!props.appearance || props.appearance === "default") {
         return null;
     }
+    if (props.appearance === "primary") {
+        return `var(--text-brand)`;
+    }
     return `var(--text-${props.appearance})`;
 });
 

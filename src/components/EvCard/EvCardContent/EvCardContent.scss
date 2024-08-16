@@ -1,0 +1,45 @@
+@use "@/css/tools/functions" as *;
+@use "@/css/settings";
+
+.ev-card-content {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--spacer-150);
+}
+.ev-card-content--icon {
+    flex: 0 0 auto;
+}
+.ev-card-content--detail {
+    flex: 1 0 auto;
+    min-width: 0;
+}
+
+.ev-card-content {
+    &.is-size-small {
+        padding: var(--padding-small);
+    }
+
+    &.is-size-medium {
+        padding: var(--padding-medium);
+
+        .ev-card-content--icon {
+            padding-top: scalable(0rem, 0.125rem, settings.$scale-from, settings.$scale-to);
+        }
+    }
+
+    &.is-size-large {
+        padding: var(--padding-large);
+
+        .ev-card-content--icon {
+            padding-top: scalable(0rem, 0.25rem, settings.$scale-from, settings.$scale-to);
+        }
+    }
+
+    &.is-size-x-large {
+        padding: var(--padding-x-large);
+
+        .ev-card-content--icon {
+            padding-top: scalable(0.125rem, 0.5rem, settings.$scale-from, settings.$scale-to);
+        }
+    }
+}

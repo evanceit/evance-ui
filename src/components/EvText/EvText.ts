@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { ComponentProps, makeComponentProps} from "@/composables/component.ts";
+import {makeTagProps, TagProps} from "@/composables/tag.ts";
 
 export const EvTextSize = {
     small: "small",
@@ -21,7 +21,12 @@ export const EvTextSizeClass = {
 
 export type FontWeight = "regular" | "medium" | "semibold" | "bold";
 
-
+export interface EvTextProps extends ComponentProps, TagProps {
+    size?: EvTextSizeProp;
+    text?: string;
+    truncate?: number | boolean;
+    weight?: FontWeight;
+}
 
 export const makeEvTextProps = propsFactory(
     {

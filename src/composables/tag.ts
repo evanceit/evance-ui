@@ -3,7 +3,7 @@ import { propsFactory } from "@/util";
 
 // Types
 export interface TagProps {
-    tag: string;
+    tag?: string;
 }
 
 // Tag Props

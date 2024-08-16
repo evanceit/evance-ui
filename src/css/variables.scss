@@ -1,6 +1,6 @@
 
-@use "settings";
-@use "tools/functions" as *;
+@use "@/css/settings";
+@use "@/css/tools/functions" as *;
 
 :root {
 
@@ -76,6 +76,10 @@
     --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
     --easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
 
-    --content-spacing: scalable(1.5rem, 3rem, settings.$scale-from, settings.$scale-to);
+
+    --padding-x-large: #{scalable(1.5rem, 3rem, settings.$scale-from, settings.$scale-to)};
+    --padding-large: #{scalable(1.5rem, 2rem, settings.$scale-from, settings.$scale-to)};
+    --padding-medium: #{scalable(1rem, 1.5rem, settings.$scale-from, settings.$scale-to)};
+    --padding-small: 1rem;
 }
 

@@ -6,7 +6,7 @@ export type ClassValue = any;
 
 export interface ComponentProps {
     class?: ClassValue;
-    style: StyleValue | undefined;
+    style?: StyleValue | undefined;
 }
 
 export const makeComponentProps = propsFactory(
