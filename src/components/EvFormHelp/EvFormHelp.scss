@@ -1,0 +1,16 @@
+.ev-form-help {
+    --help-width: 388px;
+
+    margin-right: var(--help-width);
+    position: relative;
+}
+
+.ev-form-help {
+    .ev-field-help {
+
+    }
+    .ev-field-help--content {
+        position: absolute;
+        right: calc(0px - var(--help-width));
+    }
+}

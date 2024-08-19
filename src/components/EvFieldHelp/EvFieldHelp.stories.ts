@@ -5,6 +5,7 @@ import { DiscountIcon } from "@/icons";
 import {
     EvBlock,
     EvButton,
+    EvCardContent,
     EvLabel,
     EvLayout,
     EvLink,
@@ -16,31 +17,15 @@ const meta: Meta<typeof EvFieldHelp> = {
     component: EvFieldHelp,
     title: "Forms/EvFieldHelp",
     argTypes: {
-        appearance: {
-            control: "select",
-            options: [
-                "default",
-                "primary",
-                "success",
-                "danger",
-                "information",
-                "warning",
-            ],
+        field: {
+            description: "The `field` slot can have any content.",
         },
-        icon: {
-            control: "select",
-            options: [undefined, "DiscountIcon"],
-            mapping: {
-                DiscountIcon: DiscountIcon,
-            },
-        },
-        title: {
-            control: "text",
+        help: {
+            description:
+                "The `help` slot is intended to be used with the `<ev-card-content>` components and provides size defaults.",
         },
     },
     args: {
-        icon: "DiscountIcon",
-        title: "Discounts on subtotals",
     },
     tags: ["autodocs"],
 };
@@ -50,7 +35,9 @@ export default meta;
 type Story = StoryObj<typeof EvFieldHelp>;
 
 /**
- * The `<ev-form-help>` component is intended to provide helpful information to form fields.
+ * The `<ev-field-help>` component is intended to provide helpful information to form fields.
+ * The help content appears to the side of the form. Whilst it may be used independently
+ * it is intended to be used in conjunction with `<ev-field-helpers>`, which wraps a form.
  */
 export const Primary: Story = {
     render: (args: any) => ({
@@ -63,10 +50,10 @@ export const Primary: Story = {
             EvButton,
             EvLayout,
             EvBlock,
+            EvCardContent,
         },
         setup() {
-
-            return { args };
+            return { args, DiscountIcon };
         },
         template: `<ev-field-help v-bind="args">
             <template #field>
@@ -81,11 +68,13 @@ export const Primary: Story = {
                 </ev-layout>
             </template>
             <template #help>
-                <ev-text>
-                    When selecting a fixed discount on subtotal all products are eligible and the discount
-                    amount will be split across the customer’s cart.
-                </ev-text>
-                <ev-link target="_blank">Learn about split discounts</ev-link>
+                <ev-card-content :icon="DiscountIcon" title="Discounts on subtotals">
+                    <ev-text>
+                        When selecting a fixed discount on subtotal all products are eligible and the discount
+                        amount will be split across the customer’s cart.
+                    </ev-text>
+                    <ev-link target="_blank">Learn about split discounts</ev-link>
+                </ev-card-content>
             </template>
         </ev-field-help>
         `,

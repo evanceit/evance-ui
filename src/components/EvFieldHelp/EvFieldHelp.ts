@@ -1,11 +1,9 @@
 import { propsFactory } from "@/util";
-import { makeEvCardContentProps } from "@/components/EvCard";
+import { makeComponentProps } from "@/composables/component.ts";
 
 export const makeEvFieldHelpProps = propsFactory(
     {
-        ...makeEvCardContentProps({
-            size: "small",
-        }),
+        ...makeComponentProps(),
     },
     "EvFieldHelp",
-)
+);

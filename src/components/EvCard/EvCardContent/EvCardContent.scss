@@ -7,12 +7,11 @@
     gap: var(--spacer-150);
 }
 .ev-card-content--icon {
-    flex: 0 0 auto;
+    flex: 0;
 }
 .ev-card-content--detail {
-    flex: 1 0 auto;
+    flex: 1;
     min-width: 0;
-    max-width: 100%;
 }
 
 .ev-card-content {

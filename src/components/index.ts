@@ -14,6 +14,7 @@ export * from "./EvDrawer";
 export * from "./EvErrors";
 export * from "./EvFieldHelp";
 export * from "./EvForm";
+export * from "./EvFormHelp";
 export * from "./EvGrid";
 export * from "./EvHeading";
 export * from "./EvIcon";

@@ -5,9 +5,11 @@ import { EvHeading } from "@/components/EvHeading";
 import { EvText, EvTextProps } from "@/components/EvText";
 import { EvIcon } from "@/components/EvIcon";
 import { computed, ComputedRef } from "vue";
-import {getNextId, isString, sizeModifier} from "@/util";
+import { getNextId, isString, sizeModifier } from "@/util";
+import { useDefaults } from "@/composables";
 
-const props = defineProps({ ...makeEvCardContentProps() });
+const definedProps = defineProps({ ...makeEvCardContentProps() });
+const props = useDefaults(definedProps);
 
 const slots = defineSlots<{
     default(): never;
