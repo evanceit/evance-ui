@@ -1,0 +1,40 @@
+.ev-form-help {
+    --pointer-distance: 48px;
+
+    position: relative;
+    padding-left: var(--pointer-distance);
+}
+
+.ev-form-help--pointer {
+    position: absolute;
+    width: var(--pointer-distance);
+    left: 0;
+    top: 26px;
+}
+
+.ev-form-help--pointer-circle {
+    width: 5px;
+    height: 5px;
+    background: var(--background-brand-bold);
+    border-radius: 50%;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 11px;
+        height: 11px;
+        background: var(--background-brand);
+        border-radius: 50%;
+        top: -3px;
+        left: -3px;
+    }
+}
+
+.ev-form-help--pointer-line {
+    height: 1px;
+    width: 100%;
+    border-top: 1px solid var(--background-brand-bold);
+}
