@@ -6,9 +6,9 @@ const meta: Meta<typeof EvLabel> = {
     component: EvLabel,
     title: "Forms/EvLabel",
     argTypes: {
-        text: {
+        title: {
             control: "text",
-            description: "The text to display as a label",
+            description: "The text to display as a the label title.",
         },
         clickable: {
             control: "boolean",
@@ -17,7 +17,7 @@ const meta: Meta<typeof EvLabel> = {
         },
     },
     args: {
-        text: "Example label",
+        title: "Example label",
         clickable: false,
     },
     tags: ["autodocs"],

@@ -1,8 +1,18 @@
 .ev-form-help {
+    display: flex;
+    align-items: flex-start;
+}
+
+.ev-form-help--field {
+    flex: 1 0 auto;
+}
+
+.ev-form-help--content {
     --pointer-distance: 48px;
 
     position: relative;
     padding-left: var(--pointer-distance);
+    max-width: 388px;
 }
 
 .ev-form-help--pointer {

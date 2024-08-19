@@ -30,6 +30,10 @@ const meta: Meta<typeof EvTextfield> = {
             description:
                 "The ID associated with the form field and the component wrapper",
         },
+        hint: {
+            control: "text",
+            description: "Add a description to the label in smaller/lighter text",
+        },
         modelValue: {
             control: "text",
             description:
@@ -164,6 +168,7 @@ const meta: Meta<typeof EvTextfield> = {
         iconStart: "none",
         iconEnd: "none",
         label: undefined,
+        hint: undefined,
         loading: false,
         placeholder: "",
         prefix: "",

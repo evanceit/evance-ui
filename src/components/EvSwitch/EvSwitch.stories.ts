@@ -58,6 +58,11 @@ const meta: Meta<typeof EvSwitch> = {
             description:
                 "Optional label - may be supplied as a prop or within a slot.",
         },
+        hint: {
+            control: "text",
+            description:
+                "Optional hint, usually appears below the label smaller/lighter.",
+        },
         focused: {
             control: "boolean",
         },

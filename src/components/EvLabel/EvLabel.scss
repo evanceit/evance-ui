@@ -7,3 +7,12 @@
         cursor: pointer;
     }
 }
+
+.ev-label--title {
+    font-weight: var(--font-weight-semibold);
+}
+
+.ev-label--hint {
+    font-size: var(--text-size-small);
+    color: var(--text-subtle);
+}

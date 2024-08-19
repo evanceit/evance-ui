@@ -26,6 +26,11 @@ const meta: Meta<typeof EvTextarea> = {
             description:
                 "Optional label - may be supplied as a prop or within a slot.",
         },
+        hint: {
+            control: "text",
+            description:
+                "Optional hint appears below the label title smaller/lighter.",
+        },
         modelValue: {
             control: "text",
             description:

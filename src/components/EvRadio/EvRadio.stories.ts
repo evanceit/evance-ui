@@ -59,6 +59,10 @@ const meta: Meta<typeof EvRadio> = {
             description:
                 "Optional label - may be supplied as a prop or within a slot.",
         },
+        hint: {
+            control: "text",
+            description: "Optional hint, appears below the lable title small/lighter",
+        },
         clearable: {
             control: "boolean",
             description:

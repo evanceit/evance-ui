@@ -144,8 +144,12 @@ defineExpose({
                 @keyup.space="onSpace" />
         </div>
         <div v-if="props.label || slots.label" class="ev-radio--label">
-            <ev-label :for="formField.id" clickable>
-                <slot name="label">{{ props.label }}</slot>
+            <ev-label
+                clickable
+                :for="formField.id"
+                :title="props.label"
+                :hint="props.hint">
+                <slot name="label" />
             </ev-label>
         </div>
     </div>

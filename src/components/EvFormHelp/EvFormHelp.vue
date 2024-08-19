@@ -7,7 +7,8 @@ import { filterComponentProps } from "@/util";
 
 const props = defineProps({ ...makeEvFormHelpProps() });
 const slots = defineSlots<{
-    default(): never;
+    field(): never;
+    help(): never;
 }>();
 
 const evCardContentProps = computed(() => {
@@ -17,12 +18,17 @@ const evCardContentProps = computed(() => {
 
 <template>
     <div :class="['ev-form-help', props.class]" :style="props.style">
-        <div class="ev-form-help--pointer">
-            <div class="ev-form-help--pointer-circle"></div>
-            <div class="ev-form-help--pointer-line"></div>
+        <div class="ev-form-help--field">
+            <slot name="field" />
         </div>
-        <ev-card-content v-bind="evCardContentProps">
-            <template v-if="slots.default" #default><slot /></template>
-        </ev-card-content>
+        <div class="ev-form-help--content">
+            <div class="ev-form-help--pointer">
+                <div class="ev-form-help--pointer-circle"></div>
+                <div class="ev-form-help--pointer-line"></div>
+            </div>
+            <ev-card-content v-bind="evCardContentProps">
+                <template v-if="slots.help" #default><slot name="help" /></template>
+            </ev-card-content>
+        </div>
     </div>
 </template>

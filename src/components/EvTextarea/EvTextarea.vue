@@ -215,9 +215,12 @@ defineExpose({
         :style="props.style"
         role="textbox"
         v-bind="containerAttrs">
-        <div v-if="props.label || slots.label" class="ev-textarea--label">
-            <ev-label :for="formField.id">
-                <slot name="label">{{ props.label }}</slot>
+        <div v-if="props.label || props.hint || slots.label" class="ev-textarea--label">
+            <ev-label
+                :for="formField.id"
+                :title="props.label"
+                :hint="props.hint">
+                <slot name="label" />
             </ev-label>
         </div>
 

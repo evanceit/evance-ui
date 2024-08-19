@@ -8,6 +8,10 @@ import { makeEvLabelProps } from "./EvLabel.ts";
 const props = defineProps({
     ...makeEvLabelProps(),
 });
+
+const slots = defineSlots<{
+    default(): never;
+}>();
 </script>
 
 <template>
@@ -20,6 +24,13 @@ const props = defineProps({
             props.class,
         ]"
         :style="props.style">
-        <slot>{{ props.text }}</slot>
+        <slot name="default">
+            <div v-if="props.title" class="ev-label--title">
+                {{ props.title }}
+            </div>
+            <div v-if="props.hint" class="ev-label--hint">
+                {{ props.hint }}
+            </div>
+        </slot>
     </label>
 </template>

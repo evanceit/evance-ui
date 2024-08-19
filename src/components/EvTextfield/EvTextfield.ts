@@ -7,6 +7,7 @@ import {
 import { IconProp } from "@/composables/icons.ts";
 import { makeFormFieldProps } from "@/composables/validation.ts";
 import { makeComponentProps } from "@/composables/component.ts";
+import { makeLabelProps } from "@/components/EvLabel";
 
 /**
  * # Make EvTextfield Props
@@ -18,7 +19,6 @@ export const makeEvTextfieldProps = propsFactory(
         clearable: Boolean,
         iconStart: IconProp,
         iconEnd: IconProp,
-        label: String,
         loading: Boolean,
         placeholder: String,
         prefix: String,
@@ -31,6 +31,7 @@ export const makeEvTextfieldProps = propsFactory(
         },
         monospace: Boolean,
 
+        ...makeLabelProps(),
         ...makeTextAlignProps(),
         ...makeFormFieldProps(),
         ...makeInputAppearanceProps(),

@@ -2,13 +2,13 @@ import { isDeepEqual, propsFactory } from "@/util";
 import { makeFormFieldProps } from "@/composables/validation.ts";
 import { makeComponentProps } from "@/composables/component.ts";
 import { computed, ExtractPropTypes, PropType, Ref } from "vue";
+import { makeLabelProps } from "@/components/EvLabel";
 
 /**
  * # Make EvCheckbox Props
  */
 export const makeEvCheckboxProps = propsFactory(
     {
-        label: String,
         trueValue: null,
         falseValue: null,
         value: null,
@@ -17,6 +17,7 @@ export const makeEvCheckboxProps = propsFactory(
             default: isDeepEqual,
         },
 
+        ...makeLabelProps(),
         ...makeFormFieldProps(),
         ...makeComponentProps(),
     },
