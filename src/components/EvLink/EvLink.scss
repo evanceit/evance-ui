@@ -1,0 +1,20 @@
+@use "@/css/mixins";
+
+.ev-link {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--spacer-50);
+}
+
+.ev-link {
+    &[disabled],
+    &.is-disabled {
+        @include mixins.is-disabled;
+    }
+}
+
+.ev-link {
+    &.is-appearance-subtle {
+        color: inherit;
+    }
+}

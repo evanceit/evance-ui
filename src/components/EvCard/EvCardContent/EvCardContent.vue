@@ -69,7 +69,9 @@ const descriptionSize = computed(() => {
                 v-if="slots.title || props.title"
                 class="ev-card-content--title">
                 <slot name="title">
-                    <ev-heading :size="props.size">{{ props.title }}</ev-heading>
+                    <ev-heading :size="props.size">
+                        {{ props.title }}
+                    </ev-heading>
                 </slot>
             </div>
             <div class="ev-card-content--description">
@@ -79,9 +81,6 @@ const descriptionSize = computed(() => {
                         :key="description.id"
                         v-bind="description.props" />
                 </slot>
-            </div>
-            <div class="ev-card-content--links">
-                Links : TODO
             </div>
         </div>
     </div>
