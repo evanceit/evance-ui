@@ -1,13 +1,13 @@
-.ev-form-help {
+.ev-field-help {
     display: flex;
     align-items: flex-start;
 }
 
-.ev-form-help--field {
+.ev-field-help--field {
     flex: 1 0 auto;
 }
 
-.ev-form-help--content {
+.ev-field-help--content {
     --pointer-distance: 48px;
 
     position: relative;
@@ -15,14 +15,14 @@
     max-width: 388px;
 }
 
-.ev-form-help--pointer {
+.ev-field-help--pointer {
     position: absolute;
     width: var(--pointer-distance);
     left: 0;
     top: 26px;
 }
 
-.ev-form-help--pointer-circle {
+.ev-field-help--pointer-circle {
     width: 5px;
     height: 5px;
     background: var(--background-brand-bold);
@@ -43,7 +43,7 @@
     }
 }
 
-.ev-form-help--pointer-line {
+.ev-field-help--pointer-line {
     height: 1px;
     width: 100%;
     border-top: 1px solid var(--background-brand-bold);

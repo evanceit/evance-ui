@@ -1,12 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import { EvFormHelp } from "../EvFormHelp";
+import { EvFieldHelp } from "../EvFieldHelp";
 import { DiscountIcon } from "@/icons";
-import {EvLink, EvText, EvTextfield} from "@/components";
+import {
+    EvBlock,
+    EvButton,
+    EvLabel,
+    EvLayout,
+    EvLink,
+    EvText,
+    EvTextfield,
+} from "@/components";
 
-const meta: Meta<typeof EvFormHelp> = {
-    component: EvFormHelp,
-    title: "Forms/EvFormHelp",
+const meta: Meta<typeof EvFieldHelp> = {
+    component: EvFieldHelp,
+    title: "Forms/EvFieldHelp",
     argTypes: {
         appearance: {
             control: "select",
@@ -39,21 +47,38 @@ const meta: Meta<typeof EvFormHelp> = {
 
 export default meta;
 
-type Story = StoryObj<typeof EvFormHelp>;
+type Story = StoryObj<typeof EvFieldHelp>;
 
 /**
  * The `<ev-form-help>` component is intended to provide helpful information to form fields.
  */
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvFormHelp, EvText, EvLink, EvTextfield },
+        components: {
+            EvFieldHelp,
+            EvText,
+            EvLink,
+            EvTextfield,
+            EvLabel,
+            EvButton,
+            EvLayout,
+            EvBlock,
+        },
         setup() {
 
             return { args };
         },
-        template: `<ev-form-help v-bind="args">
+        template: `<ev-field-help v-bind="args">
             <template #field>
-                <ev-textfield label="My field" hint="Hello this is a description for the field" />
+                <ev-label class="mb-100" for="my-field" title="Discount code" hint="Customers must enter this code at checkout" />
+                <ev-layout gutter="200">
+                    <ev-block>
+                        <ev-textfield id="my-field" />
+                    </ev-block>
+                    <ev-block width="auto">
+                        <ev-button>Generate code</ev-button>
+                    </ev-block>
+                </ev-layout>
             </template>
             <template #help>
                 <ev-text>
@@ -62,7 +87,7 @@ export const Primary: Story = {
                 </ev-text>
                 <ev-link target="_blank">Learn about split discounts</ev-link>
             </template>
-        </ev-form-help>
+        </ev-field-help>
         `,
     }),
 };
