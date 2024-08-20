@@ -1,0 +1,12 @@
+.ev-code {
+    background: var(--background-neutral);
+    font-family: var(--monospace-font), monospace;
+    font-size: 0.875em;
+    border-radius: var(--rounded-small);
+    padding: 0.25em 0.75ch;
+    overflow: auto;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    -webkit-box-decoration-break: clone;
+    font-weight: normal;
+}

@@ -3,6 +3,10 @@ import "./EvEyebrow.scss";
 import { makeEvEyebrowProps } from "./EvEyebrow.ts";
 
 const props = defineProps({ ...makeEvEyebrowProps() });
+
+const slots = defineSlots<{
+    default(): never;
+}>();
 </script>
 
 <template>
