@@ -12,6 +12,7 @@ export * from "./EvDialog";
 export * from "./EvDivider";
 export * from "./EvDrawer";
 export * from "./EvErrors";
+export * from "./EvEyebrow";
 export * from "./EvFieldHelp";
 export * from "./EvForm";
 export * from "./EvFormHelp";

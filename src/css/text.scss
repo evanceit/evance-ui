@@ -123,12 +123,12 @@ h6, .heading-6 {
 .text-eyebrow {
     color: var(--eyebrow-default);
     font-family: var(--text-eyebrow-typeface);
-    font-size: var(--text-eyebrow-size);
+    font-size: var(--text-size-eyebrow);
     font-style: normal;
     font-weight: var(--text-eyebrow-weight);
     text-transform: var(--text-eyebrow-transform);
     margin-bottom: 0.5em;
-    letter-spacing: 0.0625rem;
+    letter-spacing: 0.1em;
 }
 
 

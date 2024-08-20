@@ -1,19 +1,20 @@
 .ev-kbd {
-    background: var(--background-neutral);
-    border: 1px solid var(--border-muted);
     border-radius: var(--input-radius);
     display: inline-flex;
-    font-family: var(--monospace-font);
+    font-family: var(--monospace-font), monospace;
     font-weight: var(--font-weight-regular);
-    padding: 0.125em 0.425em;
+    padding: 0.2em 0.425em;
+    font-size: 85%;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
 }
 
 .ev-kbd {
     &.is-size-small {
-        font-size: 0.85em;
+        font-size: 0.75em;
     }
 
     &.is-size-large {
-        font-size: 1.15em;
+        font-size: 1em;
     }
 }
