@@ -17,6 +17,12 @@ const meta: Meta<typeof EvFieldHelp> = {
     component: EvFieldHelp,
     title: "Forms/EvFieldHelp",
     argTypes: {
+        breakpoint: {
+            control: "select",
+            options: ["sm", "md", "lg", "xl", "xxl"],
+            description:
+                "When to show the help to the aside. The default breakpoint is `md`.",
+        },
         field: {
             description: "The `field` slot can have any content.",
         },
@@ -26,6 +32,7 @@ const meta: Meta<typeof EvFieldHelp> = {
         },
     },
     args: {
+        breakpoint: undefined,
     },
     tags: ["autodocs"],
 };
@@ -37,7 +44,7 @@ type Story = StoryObj<typeof EvFieldHelp>;
 /**
  * The `<ev-field-help>` component is intended to provide helpful information to form fields.
  * The help content appears to the side of the form. Whilst it may be used independently
- * it is intended to be used in conjunction with `<ev-field-helpers>`, which wraps a form.
+ * it is intended to be used in conjunction with `<ev-form-help>`, which wraps a form.
  */
 export const Primary: Story = {
     render: (args: any) => ({

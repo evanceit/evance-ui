@@ -12,7 +12,7 @@
 
     position: relative;
     padding-left: var(--pointer-distance);
-    max-width: 388px;
+    max-width: var(--form-help-width, 388px);
 }
 
 .ev-field-help--pointer {

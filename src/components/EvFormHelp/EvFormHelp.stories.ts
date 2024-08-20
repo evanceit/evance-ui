@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvFormHelp } from "../EvFormHelp";
 import {
     EvBlock,
-    EvButton, EvCardContent,
+    EvButton,
+    EvCardContent,
     EvFieldHelp,
     EvLabel,
     EvLayout,
@@ -12,13 +13,17 @@ import {
     EvText,
     EvTextfield,
 } from "@/components";
-import {DiscountIcon} from "../../icons";
 
 const meta: Meta<typeof EvFormHelp> = {
     component: EvFormHelp,
     title: "Forms/EvFormHelp",
     argTypes: {
-
+        breakpoint: {
+            control: "select",
+            options: ["sm", "md", "lg", "xl", "xxl"],
+            description:
+                "When to show the help to the aside. The default breakpoint is `md`.",
+        },
     },
     args: {
 
@@ -46,25 +51,25 @@ export const Primary: Story = {
             EvCardContent,
         },
         setup() {
-            return { args, DiscountIcon };
+            return { args };
         },
         template: `<ev-form-help v-bind="args">
             <ev-surface elevation="panel" rounded="small" class="pa-400">
                 
-                <ev-field-help title="Test">
+                <ev-field-help>
                     <template #field>
                         <ev-label class="mb-100" for="my-field" title="Discount code" hint="Customers must enter this code at checkout" />
                         <ev-layout gutter="200">
                             <ev-block>
                                 <ev-textfield id="my-field" />
                             </ev-block>
-                            <ev-block width="auto">
+                            <ev-block size="auto">
                                 <ev-button>Generate code</ev-button>
                             </ev-block>
                         </ev-layout>
                     </template>
                     <template #help>
-                        <ev-card-content :icon="DiscountIcon" title="Discounts on subtotals">
+                        <ev-card-content title="Discounts on subtotals">
                             <ev-text>
                                 When selecting a fixed discount on subtotal all products are eligible and the discount
                                 amount will be split across the customer’s cart.
@@ -73,6 +78,7 @@ export const Primary: Story = {
                         </ev-card-content>
                     </template>
                 </ev-field-help>
+                
             </ev-surface>
         </ev-form-help>`,
     }),
