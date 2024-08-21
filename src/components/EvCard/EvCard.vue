@@ -20,6 +20,7 @@ const contentProps = computed(() => {
         size: props.size,
         text: props.text,
         title: props.title,
+        appearance: props.appearance,
     };
 });
 

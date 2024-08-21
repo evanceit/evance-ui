@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvCard } from "../EvCard";
 import { EvButtonProps } from "@/components";
-import {ArrowContinueIcon, HelpIcon, ShieldIcon} from "@/icons";
+import { ArrowContinueIcon, HelpIcon, ShieldIcon } from "@/icons";
 
 const meta: Meta<typeof EvCard> = {
     component: EvCard,

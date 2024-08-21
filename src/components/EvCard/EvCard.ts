@@ -5,7 +5,7 @@ import { EvButtonProps } from "@/components/EvButton";
 import { PropType } from "vue";
 import { EvCardContentSize } from "@/components/EvCard/EvCardContent";
 import { SurfaceElevation } from "@/components/EvSurface";
-import { IconValue } from "@/composables/icons.ts";
+import { IconProp } from "@/composables/icons.ts";
 
 export const makeEvCardProps = propsFactory(
     {
@@ -21,9 +21,7 @@ export const makeEvCardProps = propsFactory(
             type: [String, Number, Boolean],
             default: true,
         },
-        icon: [Boolean, String, Function, Object] as PropType<
-            boolean | IconValue
-        >,
+        icon: IconProp,
         actions: {
             type: Array as PropType<readonly EvButtonProps[]>,
             default: () => [],
