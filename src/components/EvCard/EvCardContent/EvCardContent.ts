@@ -9,6 +9,7 @@ export const makeEvCardContentProps = propsFactory(
     {
         appearance: String as PropType<AppearanceProp>,
         description: [String, Array],
+        eyebrow: String,
         icon: IconProp,
         size: {
             type: String as PropType<EvCardContentSize>,

@@ -4,6 +4,7 @@ import { makeEvCardContentProps } from "./EvCardContent.ts";
 import { EvHeading } from "@/components/EvHeading";
 import { EvText, EvTextProps } from "@/components/EvText";
 import { EvIcon } from "@/components/EvIcon";
+import { EvEyebrow } from "@/components/EvEyebrow";
 import { computed, ComputedRef } from "vue";
 import { getNextId, isString, sizeModifier } from "@/util";
 import { useDefaults } from "@/composables";
@@ -67,23 +68,24 @@ const descriptionSize = computed(() => {
             </slot>
         </div>
         <div class="ev-card-content--detail">
-            <div
-                v-if="slots.title || props.title"
-                class="ev-card-content--title">
+            <ev-eyebrow v-if="props.eyebrow" class="ev-card-content--eyebrow">
+                {{ props.eyebrow }}
+            </ev-eyebrow>
+            <template v-if="slots.title || props.title">
                 <slot name="title">
-                    <ev-heading :size="props.size">
+                    <ev-heading
+                        :size="props.size"
+                        class="ev-card-content--title">
                         {{ props.title }}
                     </ev-heading>
                 </slot>
-            </div>
-            <div class="ev-card-content--description">
-                <slot>
-                    <ev-text
-                        v-for="description in descriptions"
-                        :key="description.id"
-                        v-bind="description.props" />
-                </slot>
-            </div>
+            </template>
+            <slot>
+                <ev-text
+                    v-for="description in descriptions"
+                    :key="description.id"
+                    v-bind="description.props" />
+            </slot>
         </div>
     </div>
 </template>

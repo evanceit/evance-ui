@@ -25,6 +25,9 @@ const meta: Meta<typeof EvCardContent> = {
                 "You can supply a string, an array of strings, or an array of `EvTextProps`. " +
                 "For full control use the `default` slot.",
         },
+        eyebrow: {
+            control: "text",
+        },
         icon: {
             control: "select",
             options: [undefined, "HelpIcon", "ShieldIcon"],
@@ -46,6 +49,7 @@ const meta: Meta<typeof EvCardContent> = {
         appearance: "default",
         description:
             "The main content/description may be supplied as a prop or using the default slot. ",
+        eyebrow: undefined,
         icon: undefined,
         title: "Example card title",
         size: "medium",
