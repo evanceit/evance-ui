@@ -6,12 +6,15 @@
     vertical-align: middle;
     border-radius: var(--input-radius);
     --gap: var(--spacer-0, 0);
+    justify-content: flex-start;
 }
 
 .ev-button-group--container {
     border-radius: inherit;
-    display: inline-flex;
+    display: inherit;
+    justify-content: inherit;
     gap: var(--gap);
+    flex: 1;
 }
 
 /**

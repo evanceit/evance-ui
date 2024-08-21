@@ -1,0 +1,29 @@
+.ev-card-actions {
+    display: flex;
+}
+
+.ev-card-actions {
+    .ev-button-group {
+        display: inherit;
+        flex: 1;
+        justify-content: inherit;
+    }
+}
+
+.ev-card-actions {
+    &.is-size-small {
+        padding: var(--padding-small);
+    }
+
+    &.is-size-medium {
+        padding: var(--padding-medium);
+    }
+
+    &.is-size-large {
+        padding: var(--padding-large);
+    }
+
+    &.is-size-x-large {
+        padding: var(--padding-x-large);
+    }
+}

@@ -6,7 +6,12 @@ import "./EvButtonGroup.scss";
 import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
 import { provideDefaults } from "@/composables/defaults.ts";
 import { computed, toRef } from "vue";
-import { appearanceModifier, getNextId, makeClassName, variantModifier } from "@/util";
+import {
+    appearanceModifier,
+    getNextId,
+    makeClassName,
+    variantModifier,
+} from "@/util";
 import { EvButton } from "../EvButton";
 
 const props = defineProps({
