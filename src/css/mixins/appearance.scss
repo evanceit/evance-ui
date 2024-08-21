@@ -10,55 +10,55 @@ $appearances: (
 $outline: 1px;
 
 /* Default */
-@mixin appearance-default($maybeClickable: false) {
+@mixin appearance-default($prefix, $maybeClickable: false) {
     &.is-appearance-default {
-        background: var(--background-neutral);
+        --#{$prefix}-appearance-background: var(--background-neutral);
 
         @if $maybeClickable {
             &.is-clickable {
                 &:hover {
-                    background-color: var(--background-neutral-hovered);
+                    --#{$prefix}-appearance-background: var(--background-neutral-hovered);
                 }
                 &:active {
-                    background-color: var(--background-neutral-pressed);
+                    --#{$prefix}-appearance-background: var(--background-neutral-pressed);
                 }
             }
         }
 
         &.is-variant-bold {
-            background-color: var(--background-neutral-bold);
-            color: var(--text-inverse);
+            --#{$prefix}-appearance-background: var(--background-neutral-bold);
+            --#{$prefix}-appearnce-color: var(--text-inverse);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        background-color: var(--background-neutral-bold-hovered);
+                        --#{$prefix}-appearance-background: var(--background-neutral-bold-hovered);
                     }
 
                     &:active {
-                        background-color: var(--background-neutral-bold-pressed);
+                        --#{$prefix}-appearance-background: var(--background-neutral-bold-pressed);
                     }
                 }
             }
         }
 
         &.is-variant-outlined {
-            background: transparent;
-            border-color: var(--background-neutral-bold);
+            --#{$prefix}-appearance-background: transparent;
+            --#{$prefix}-appearance-border: #{$outline} solid var(--background-neutral-bold);
 
             &.is-active {
-                background-color: var(--background-neutral);
+                --#{$prefix}-appearance-background: var(--background-neutral);
             }
         }
 
         &.is-variant-subtle {
-            background-color: var(--background-neutral-subtle);
+            --#{$prefix}-appearance-background: var(--background-neutral-subtle);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        background-color: var(--background-neutral-subtle-hovered);
+                        --#{$prefix}-appearance-background: var(--background-neutral-subtle-hovered);
                     }
                     &:active {
-                        background-color: var(--background-neutral-subtle-pressed);
+                        --#{$prefix}-appearance-background: var(--background-neutral-subtle-pressed);
                     }
                 }
             }
@@ -66,65 +66,61 @@ $outline: 1px;
     }
 }
 
-@mixin generate-appearance($name, $cssName, $maybeClickable: false) {
+@mixin generate-appearance($prefix, $name, $cssName, $maybeClickable: false) {
     &.is-appearance-#{$name} {
-        background-color: var(--background-#{$cssName});
-        color: var(--text-#{$cssName});
+        --#{$prefix}-appearance-background: var(--background-#{$cssName});
+        --#{$prefix}-appearance-color: var(--text-#{$cssName});
 
         @if $maybeClickable {
             &.is-clickable {
                 &:hover {
-                    background-color: var(--background-#{$cssName}-hovered);
+                    --#{$prefix}-appearance-background: var(--background-#{$cssName}-hovered);
                 }
                 &:active {
-                    background-color: var(--background-#{$cssName}-pressed);
+                    --#{$prefix}-appearance-background: var(--background-#{$cssName}-pressed);
                 }
             }
         }
 
         &.is-variant-bold {
-            background-color: var(--background-#{$cssName}-bold);
-            color: var(--text-inverse);
+            --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold);
+            --#{$prefix}-appearance-color: var(--text-inverse);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        background-color: var(--background-#{$cssName}-bold-hovered);
+                        --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold-hovered);
                     }
                     &:active {
-                        background-color: var(--background-#{$cssName}-bold-pressed);
+                        --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold-pressed);
                     }
                 }
             }
         }
 
         &.is-variant-outlined {
-            background: transparent;
-            border-color: var(--background-#{$cssName}-bold);
+            --#{$prefix}-appearance-background: transparent;
+            --#{$prefix}-appearance-border: #{$outline} solid var(--background-#{$cssName}-bold);
 
             &.is-active {
-                background-color: var(--background-#{$cssName});
+                --#{$prefix}-appearance-background: var(--background-#{$cssName});
             }
         }
 
         &.is-variant-subtle {
-            background-color: transparent;
+            --#{$prefix}-appearance-background: transparent;
         }
     }
 }
 
-@mixin generate-appearances($maybeClickable: false) {
+@mixin generate-appearances($prefix, $maybeClickable: false) {
 
     & {
-        border: $outline solid transparent;
-
-        &.is-clickable {
-            cursor: pointer;
-        }
+        --#{$prefix}-appearance-border: #{$outline} solid transparent;
     }
 
-    @include appearance-default($maybeClickable);
+    @include appearance-default($prefix, $maybeClickable);
 
     @each $name, $cssName in $appearances {
-        @include generate-appearance($name, $cssName, $maybeClickable);
+        @include generate-appearance($prefix, $name, $cssName, $maybeClickable);
     }
 }

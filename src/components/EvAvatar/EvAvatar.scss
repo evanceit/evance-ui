@@ -1,4 +1,4 @@
-@use "../../css/mixins";
+@use "@/css/mixins";
 
 .ev-avatar {
     flex: none;
@@ -50,5 +50,9 @@
 
 /** Appearance */
 .ev-avatar {
-    @include mixins.generate-appearances;
+    background: var(--avatar-appearance-background);
+    border: var(--avatar-appearance-border);
+    color: var(--avatar-appearance-color);
+
+    @include mixins.generate-appearances(avatar);
 }

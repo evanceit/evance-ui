@@ -7,7 +7,6 @@
     --current-size: var(--input-height-medium);
 
     align-items: center;
-    border: 1px solid transparent;
     border-radius: var(--input-radius);
     display: inline-flex;
     font-size: var(--text-size-medium);
@@ -18,7 +17,7 @@
     padding-inline: calc((var(--current-size) - var(--icon-size-medium)) / 2);
     position: relative;
     text-decoration: none !important;
-    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out, border 0.15s ease-in-out;
     user-select: none;
 
     &:focus-visible {
@@ -93,37 +92,39 @@
     - subtle
  */
 .ev-button {
-    color: currentColor;
+    background: var(--button-appearance-background);
+    border: var(--button-appearance-border);
+    color: var(--button-appearance-color, currentColor);
 
-    @include mixins.generate-appearances(true);
+    @include mixins.generate-appearances(button, true);
 
 
     /* Inverse */
     &.is-appearance-inverse {
-        background: var(--background-inverse);
+        --appearance-background: var(--background-inverse);
         &:hover {
-            background: var(--background-inverse-hovered);
+            --appearance-background: var(--background-inverse-hovered);
         }
         &:active {
-            background: var(--background-inverse-pressed);
+            --appearance-background: var(--background-inverse-pressed);
         }
 
         &.is-variant-bold {
             color: var(--text-on-inverse);
-            background: var(--background-inverse-bold);
+            --appearance-background: var(--background-inverse-bold);
 
             &:hover {
-                background: var(--background-inverse-bold-hovered);
+                --appearance-background: var(--background-inverse-bold-hovered);
             }
             &:active {
-                background: var(--background-inverse-bold-pressed);
+                --appearance-background: var(--background-inverse-bold-pressed);
             }
         }
     }
 
     /** Link Variant */
     &.is-variant-link {
-        background: transparent !important;
+        --appearance-background: transparent !important;
 
         &:hover,
         &:active {

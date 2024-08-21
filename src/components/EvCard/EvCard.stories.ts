@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvCard } from "../EvCard";
 import { EvButtonProps } from "@/components";
-import { ArrowContinueIcon } from "@/icons";
+import {ArrowContinueIcon, HelpIcon, ShieldIcon} from "@/icons";
 
 const meta: Meta<typeof EvCard> = {
     component: EvCard,
@@ -10,6 +10,19 @@ const meta: Meta<typeof EvCard> = {
         actions: {
             description:
                 "Accepts an array of `EvButtonProps` to the `actions` prop.",
+        },
+        appearance: {
+            control: "select",
+            options: [
+                "default",
+                "danger",
+                "information",
+                "notice",
+                "primary",
+                "success",
+                "warning",
+            ],
+            description: "Changes the appearance of the card.",
         },
         elevation: {
             control: "select",
@@ -19,6 +32,14 @@ const meta: Meta<typeof EvCard> = {
         eyebrow: {
             control: "text",
             description: "Appears above the title",
+        },
+        icon: {
+            control: "select",
+            options: [undefined, "HelpIcon", "ShieldIcon"],
+            mapping: {
+                HelpIcon: HelpIcon,
+                ShieldIcon: ShieldIcon,
+            },
         },
         rounded: {
             control: "select",
@@ -42,11 +63,18 @@ const meta: Meta<typeof EvCard> = {
             control: "text",
             description: "The heading/title for the card",
         },
+        variant: {
+            control: "select",
+            options: ["default", "bold", "outlined", "subtle", "tonal"],
+            description: "Changes the appearance of the card.",
+        },
     },
     args: {
         actions: undefined,
+        appearance: "default",
         elevation: "panel",
         eyebrow: "Example",
+        icon: undefined,
         rounded: true,
         size: "medium",
         tag: undefined,

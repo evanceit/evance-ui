@@ -4,7 +4,7 @@
  */
 import "./EvButtonGroup.scss";
 import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
-import { provideDefaults } from "@/composables/defaults.ts";
+import { provideDefaults, useDefaults } from "@/composables/defaults.ts";
 import { computed, toRef } from "vue";
 import {
     appearanceModifier,
@@ -14,9 +14,10 @@ import {
 } from "@/util";
 import { EvButton } from "../EvButton";
 
-const props = defineProps({
+const definedProps = defineProps({
     ...makeEvButtonGroupProps(),
 });
+const props = useDefaults(definedProps);
 
 defineSlots<{
     default(): never;

@@ -41,6 +41,12 @@ body ::-webkit-scrollbar:hover{
     box-shadow: none;
 }
 
+/**
+    # Is Clickable
+ */
+.is-clickable {
+    cursor: pointer;
+}
 
 /**
     # Is Scrollable

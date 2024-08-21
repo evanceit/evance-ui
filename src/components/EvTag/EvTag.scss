@@ -1,4 +1,4 @@
-@use "../../css/mixins";
+@use "@/css/mixins";
 
 .ev-tag {
     --current-size: 36px;
@@ -79,7 +79,11 @@
     ## Appearance
  */
 .ev-tag {
-    @include mixins.generate-appearances(true);
+    background: var(--tag-appearance-background);
+    border: var(--tag-appearance-border);
+    color: var(--tag-appearance-color, currentColor);
+
+    @include mixins.generate-appearances(tag, true);
 }
 
 

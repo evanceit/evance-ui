@@ -1,4 +1,4 @@
-@use "../../css/mixins";
+@use "@/css/mixins";
 
 .ev-badge {
     position: relative;
@@ -29,7 +29,11 @@
     ## Appearance
  */
 .ev-badge--content {
-    @include mixins.generate-appearances;
+    background: var(--badge-appearance-background);
+    border: var(--badge-appearance-border);
+    color: var(--badge-appearance-color);
+
+    @include mixins.generate-appearances(badge);
 }
 
 /* Inline */

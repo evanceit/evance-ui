@@ -1,4 +1,4 @@
-@use "../../css/mixins";
+@use "@/css/mixins";
 
 .ev-lozenge {
     align-items: center;
@@ -24,5 +24,9 @@
     ## Appearance
  */
 .ev-lozenge {
-    @include mixins.generate-appearances(false);
+    background: var(--lozenge-appearance-background);
+    border: var(--lozenge-appearance-border);
+    color: var(--lozenge-appearance-color, currentColor);
+
+    @include mixins.generate-appearances(lozenge, false);
 }

@@ -5,6 +5,7 @@ import { EvCardContent } from "@/components/EvCard/EvCardContent";
 import { EvCardActions } from "@/components/EvCard/EvCardActions";
 import { computed } from "vue";
 import { EvSurface } from "@/components/EvSurface";
+import { useAppearance } from "@/util";
 
 const props = defineProps({ ...makeEvCardProps() });
 const slots = defineSlots<{
@@ -15,17 +16,20 @@ const slots = defineSlots<{
 const contentProps = computed(() => {
     return {
         eyebrow: props.eyebrow,
-        title: props.title,
-        text: props.text,
+        icon: props.icon,
         size: props.size,
+        text: props.text,
+        title: props.title,
     };
 });
+
+const { appearanceClass, variantClass } = useAppearance(props);
 </script>
 
 <template>
     <ev-surface
         :tag="props.tag"
-        :class="['ev-card', props.class]"
+        :class="['ev-card', appearanceClass, variantClass, props.class]"
         :elevation="props.elevation"
         :rounded="props.rounded"
         :style="props.style">
@@ -38,5 +42,6 @@ const contentProps = computed(() => {
             :items="props.actions">
             <slot name="actions" />
         </ev-card-actions>
+        <span class="ev-card--underlay"></span>
     </ev-surface>
 </template>
