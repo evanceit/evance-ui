@@ -18,13 +18,6 @@ const meta: Meta<typeof EvCardContent> = {
                 "warning",
             ],
         },
-        description: {
-            control: "text",
-            description:
-                "The main content/description may be supplied as a prop. " +
-                "You can supply a string, an array of strings, or an array of `EvTextProps`. " +
-                "For full control use the `default` slot.",
-        },
         eyebrow: {
             control: "text",
         },
@@ -40,6 +33,13 @@ const meta: Meta<typeof EvCardContent> = {
             control: "select",
             options: ["small", "medium", "large", "x-large"],
         },
+        text: {
+            control: "text",
+            description:
+                "The main content/description may be supplied as a prop. " +
+                "You can supply a string, an array of strings, or an array of `EvTextProps`. " +
+                "For full control use the `default` slot.",
+        },
         title: {
             control: "text",
             description: "Example card title",
@@ -47,10 +47,10 @@ const meta: Meta<typeof EvCardContent> = {
     },
     args: {
         appearance: "default",
-        description:
-            "The main content/description may be supplied as a prop or using the default slot. ",
         eyebrow: undefined,
         icon: undefined,
+        text:
+            "The main content/description may be supplied as a prop or using the default slot. ",
         title: "Example card title",
         size: "medium",
     },

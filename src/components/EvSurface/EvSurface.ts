@@ -1,6 +1,8 @@
 import { makeClassName, propsFactory } from "@/util";
 import { makeDimensionsProps } from "@/composables/dimensions.ts";
 import { PropType } from "vue";
+import {makeTagProps} from "@/composables/tag.ts";
+import {makeComponentProps} from "@/composables/component.ts";
 
 /**
  * # Surface Elevation
@@ -38,7 +40,9 @@ export const makeEvSurfaceProps = propsFactory(
             type: [String, Boolean],
             default: undefined,
         },
+        ...makeComponentProps(),
         ...makeDimensionsProps(),
+        ...makeTagProps(),
     },
     "EvSurface",
 );

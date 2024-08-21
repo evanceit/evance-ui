@@ -8,13 +8,13 @@ export type EvCardContentSize = "small" | "medium" | "large" | "x-large";
 export const makeEvCardContentProps = propsFactory(
     {
         appearance: String as PropType<AppearanceProp>,
-        description: [String, Array],
         eyebrow: String,
         icon: IconProp,
         size: {
             type: String as PropType<EvCardContentSize>,
             default: "medium",
         },
+        text: [String, Array],
         title: String,
         ...makeComponentProps(),
     },

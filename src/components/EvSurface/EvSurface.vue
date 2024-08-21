@@ -50,14 +50,16 @@ function makeScrollableClass(scrollable?: string | boolean) {
 </script>
 
 <template>
-    <div
-        class="ev-surface"
+    <component
+        :is="props.tag"
         :class="[
+            'ev-surface',
             makeElevationClass(props.elevation),
             makeRoundedClass(props.rounded),
             makeScrollableClass(props.scrollable),
+            props.class,
         ]"
-        :style="[dimensions]">
+        :style="[dimensions, props.style]">
         <slot />
-    </div>
+    </component>
 </template>

@@ -23,13 +23,11 @@ interface TextItem {
     props: EvTextProps;
 }
 
-const descriptions: ComputedRef<TextItem[]> = computed(() => {
-    if (!props.description) {
+const textItems: ComputedRef<TextItem[]> = computed(() => {
+    if (!props.text) {
         return [];
     }
-    const values = isString(props.description)
-        ? [props.description]
-        : [...props.description];
+    const values = isString(props.text) ? [props.text] : [...props.text];
 
     for (const [index, value] of values.entries()) {
         const textProps = isString(value) ? { text: value } : value;
@@ -82,9 +80,9 @@ const descriptionSize = computed(() => {
             </template>
             <slot>
                 <ev-text
-                    v-for="description in descriptions"
-                    :key="description.id"
-                    v-bind="description.props" />
+                    v-for="textItem in textItems"
+                    :key="textItem.id"
+                    v-bind="textItem.props" />
             </slot>
         </div>
     </div>

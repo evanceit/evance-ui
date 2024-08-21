@@ -10,7 +10,6 @@ const props = useDefaults(definedProps);
 const display = useDisplay();
 
 const breakpoint = computed(() => {
-    console.log(props.breakpoint);
     return props.breakpoint ?? "md";
 });
 
