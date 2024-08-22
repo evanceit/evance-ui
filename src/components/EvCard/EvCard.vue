@@ -16,8 +16,11 @@ const attrs = useAttrs();
 const slots = defineSlots<{
     actions(): never;
     default(): never;
+    header(): never;
     icon(): never;
     image(): never;
+    prefix(): never;
+    suffix(): never;
     text(): never;
 }>();
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
@@ -74,16 +77,27 @@ const hasContent = computed(() => {
         :rounded="props.rounded"
         :style="props.style"
         :tabindex="isClickable ? 0 : undefined">
-        <ev-card-content v-if="hasContent" v-bind="contentProps">
-            <template v-if="slots.icon" #icon>
-                <slot name="icon" />
-            </template>
-            <slot name="text" />
-        </ev-card-content>
-        <slot name="default" />
-        <ev-card-actions v-if="hasActions" v-bind="actionProps">
-            <slot name="actions" />
-        </ev-card-actions>
+        <div v-if="slots.header" class="ev-card--header">
+            <slot name="header" />
+        </div>
+        <div v-if="slots.prefix" class="ev-card--prefix">
+            <slot name="prefix" />
+        </div>
+        <div class="ev-card--body">
+            <ev-card-content v-if="hasContent" v-bind="contentProps">
+                <template v-if="slots.icon" #icon>
+                    <slot name="icon" />
+                </template>
+                <slot name="text" />
+            </ev-card-content>
+            <slot name="default" />
+            <ev-card-actions v-if="hasActions" v-bind="actionProps">
+                <slot name="actions" />
+            </ev-card-actions>
+        </div>
+        <div v-if="slots.suffix" class="ev-card--suffix">
+            <slot name="suffix" />
+        </div>
         <span class="ev-card--underlay"></span>
     </ev-surface>
 </template>
