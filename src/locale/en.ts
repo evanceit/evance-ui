@@ -7,6 +7,10 @@ export default {
     dismiss: "Dismiss",
     expand: "Expand",
     greeting: "Hello { name }",
+    infiniteScroll: {
+        loadMore: "Load more",
+        empty: "No more",
+    },
     placement: {
         one: "{ value }st",
         two: "{ value }nd",

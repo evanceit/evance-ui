@@ -69,3 +69,7 @@
 .ev-card--suffix {
     grid-area: suffix;
 }
+
+.ev-card-content + .ev-card-actions {
+    padding-top: 0;
+}
