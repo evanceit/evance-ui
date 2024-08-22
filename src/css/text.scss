@@ -36,6 +36,15 @@ body {
     font-family: var(--system-font);
     font-size: var(--text-size-medium);
     line-height: 1.5;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    tab-size: 4;
+    text-rendering: geometricPrecision;
 }
 
 .ev-theme, body {

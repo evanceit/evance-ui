@@ -6,6 +6,8 @@ import { PropType } from "vue";
 import { EvCardContentSize } from "@/components/EvCard/EvCardContent";
 import { SurfaceElevation } from "@/components/EvSurface";
 import { IconProp } from "@/composables/icons.ts";
+import { makeRouterLinkOrHrefProps } from "@/composables/router.ts";
+import { JustifyContentValue } from "@/components/EvGrid/EvLayout";
 
 export const makeEvCardProps = propsFactory(
     {
@@ -13,6 +15,7 @@ export const makeEvCardProps = propsFactory(
             type: String as PropType<AppearanceProp>,
             default: Appearance.default,
         },
+        disabled: Boolean,
         elevation: {
             type: String as PropType<SurfaceElevation>,
             default: "panel",
@@ -22,9 +25,17 @@ export const makeEvCardProps = propsFactory(
             default: true,
         },
         icon: IconProp,
+        iconAppearance: {
+            type: String as PropType<AppearanceProp>,
+            default: undefined,
+        },
         actions: {
             type: Array as PropType<readonly EvButtonProps[]>,
             default: () => [],
+        },
+        justifyActions: {
+            type: String as PropType<JustifyContentValue>,
+            default: "end",
         },
         eyebrow: String,
         size: {
@@ -38,6 +49,7 @@ export const makeEvCardProps = propsFactory(
             default: "subtle",
         },
         ...makeComponentProps(),
+        ...makeRouterLinkOrHrefProps(),
         ...makeTagProps(),
     },
     "EvCard",

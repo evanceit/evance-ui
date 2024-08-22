@@ -19,6 +19,25 @@ const meta: Meta<typeof EvButton> = {
                 "Renders as an `<a>` link when an `href` is supplied and is not an empty string, " +
                 "otherwise is rendered as a `<button>`.",
         },
+        to: {
+            control: "text",
+            description:
+                "Denotes the target route of the link. You can find more information about the \n" +
+                "`to` prop on the <a href='https://router.vuejs.org/api/interfaces/RouterLinkProps.html#to' target='_blank'>vue-router documentation</a>.",
+        },
+        replace: {
+            control: "boolean",
+            description:
+                "Setting replace prop will call `router.replace()` instead of `router.push()` when clicked, " +
+                "so the navigation will not leave a history record. You can find more information about the `replace`\n" +
+                " prop on the <a href='https://router.vuejs.org/api/interfaces/RouterLinkProps.html#replace' target='_blank'>vue-router documentation</a>.",
+        },
+        exact: {
+            control: "boolean",
+            description:
+                "Exactly match the link. Without this, `/` will match every route. You can find more information about the \n" +
+                "`exact` prop on the <a href='https://router.vuejs.org/api/interfaces/UseLinkReturn.html#isExactActive'>vue-router documentation</a>.",
+        },
         appearance: {
             control: "select",
             options: [

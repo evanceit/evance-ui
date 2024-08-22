@@ -101,30 +101,30 @@
 
     /* Inverse */
     &.is-appearance-inverse {
-        --appearance-background: var(--background-inverse);
+        --button-appearance-background: var(--background-inverse);
         &:hover {
-            --appearance-background: var(--background-inverse-hovered);
+            --button-appearance-background: var(--background-inverse-hovered);
         }
         &:active {
-            --appearance-background: var(--background-inverse-pressed);
+            --button-appearance-background: var(--background-inverse-pressed);
         }
 
         &.is-variant-bold {
             color: var(--text-on-inverse);
-            --appearance-background: var(--background-inverse-bold);
+            --button-appearance-background: var(--background-inverse-bold);
 
             &:hover {
-                --appearance-background: var(--background-inverse-bold-hovered);
+                --button-appearance-background: var(--background-inverse-bold-hovered);
             }
             &:active {
-                --appearance-background: var(--background-inverse-bold-pressed);
+                --button-appearance-background: var(--background-inverse-bold-pressed);
             }
         }
     }
 
     /** Link Variant */
     &.is-variant-link {
-        --appearance-background: transparent !important;
+        --button-appearance-background: transparent !important;
 
         &:hover,
         &:active {
