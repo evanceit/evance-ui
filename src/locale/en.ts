@@ -8,8 +8,8 @@ export default {
     expand: "Expand",
     greeting: "Hello { name }",
     infiniteScroll: {
-        loadMore: "Load more",
-        empty: "No more",
+        more: "Load more",
+        finished: "No more",
     },
     placement: {
         one: "{ value }st",

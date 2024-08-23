@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvInfiniteScroll } from "../EvInfiniteScroll";
 import { ref } from "vue";
-import {EvListItem, EvVirtualScroll} from "@/components";
+import { EvListItem, EvVirtualScroll } from "@/components";
 
 const meta: Meta<typeof EvInfiniteScroll> = {
     component: EvInfiniteScroll,
@@ -56,7 +56,7 @@ export const Primary: Story = {
                 const res = await api();
                 items.value.push(...res);
                 if (!res.length) {
-                    state("empty");
+                    state("finished");
                 } else {
                     state("ok");
                 }

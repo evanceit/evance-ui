@@ -22,11 +22,11 @@ const props = defineProps({
         type: String as PropType<InfiniteScrollStatus>,
         default: undefined,
     },
-    emptyText: {
+    textFinished: {
         type: String,
         default: undefined,
     },
-    loadMoreText: {
+    textMore: {
         type: String,
         default: undefined,
     },
@@ -37,7 +37,7 @@ const slots = defineSlots<{
         side: InfiniteScrollSide;
         props: { onClick: () => void };
     }): never;
-    empty(props: {
+    finished(props: {
         side: InfiniteScrollSide;
         props: { onClick: () => void };
     }): never;
@@ -67,7 +67,7 @@ const slotProps = {
 const { t } = useLocaleFunctions();
 
 const isError = computed(() => props.status === "error");
-const isEmpty = computed(() => props.status === "empty");
+const isFinished = computed(() => props.status === "finished");
 const isManual = computed(() => props.mode === "manual");
 const isLoading = computed(() => props.status === "loading");
 </script>
@@ -77,22 +77,22 @@ const isLoading = computed(() => props.status === "loading");
         <template v-if="isError">
             <slot name="error" v-bind="slotProps" />
         </template>
-        <template v-else-if="isEmpty">
-            <slot name="empty" v-bind="slotProps">
-                <div class="ev-infinite-scroll-empty">
-                    {{ t(props.emptyText) }}
+        <template v-else-if="isFinished">
+            <slot name="finished" v-bind="slotProps">
+                <div class="ev-infinite-scroll-finished">
+                    {{ t(props.textFinished) }}
                 </div>
             </slot>
         </template>
         <template v-else-if="isManual">
             <slot v-if="!isLoading" name="more" v-bind="slotProps">
                 <ev-button @click="onClick">
-                    {{ t(props.loadMoreText) }}
+                    {{ t(props.textMore) }}
                 </ev-button>
             </slot>
             <slot v-else name="loading" v-bind="slotProps">
                 <ev-button loading>
-                    {{ t(props.loadMoreText) }}
+                    {{ t(props.textMore) }}
                 </ev-button>
             </slot>
         </template>

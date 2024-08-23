@@ -16,7 +16,7 @@ const props = defineProps({ ...makeEvInfiniteScrollProps() });
 const slots = defineSlots<{
     default(): never;
     error(): never;
-    empty(): never;
+    finished(): never;
     loading(): never;
     more(): never;
 }>();
@@ -106,7 +106,7 @@ function intersecting(side: InfiniteScrollSide) {
         rootEl.value.dispatchEvent(new Event("scroll"));
 
         nextTick(() => {
-            if (status === "empty" || status === "error") {
+            if (status === "finished" || status === "error") {
                 return;
             }
             if (status === "ok" && side === "start") {
@@ -161,8 +161,8 @@ onMounted(() => {
 
 const sideProps = computed(() => ({
     mode: props.mode,
-    emptyText: props.emptyText,
-    loadMoreText: props.loadMoreText,
+    textFinished: props.textFinished,
+    textMore: props.textMore,
 }));
 </script>
 
@@ -185,8 +185,8 @@ const sideProps = computed(() => ({
             v-bind="sideProps"
             :status="startStatus"
             @click:more="intersecting('start')">
-            <template v-if="slots.empty" #empty="{ side, props }">
-                <slot name="empty" :side="side" :props="props" />
+            <template v-if="slots.finished" #finished="{ side, props }">
+                <slot name="finished" :side="side" :props="props" />
             </template>
             <template v-if="slots.error" #error="{ side, props }">
                 <slot name="error" :side="side" :props="props" />
@@ -223,8 +223,8 @@ const sideProps = computed(() => ({
             v-bind="sideProps"
             :status="endStatus"
             @click:more="intersecting('end')">
-            <template v-if="slots.empty" #empty="{ side, props }">
-                <slot name="empty" :side="side" :props="props" />
+            <template v-if="slots.finished" #finished="{ side, props }">
+                <slot name="finished" :side="side" :props="props" />
             </template>
             <template v-if="slots.error" #error="{ side, props }">
                 <slot name="error" :side="side" :props="props" />

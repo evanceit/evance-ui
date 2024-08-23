@@ -6,7 +6,7 @@ import { PropType } from "vue";
 export type InfiniteScrollSide = "start" | "end" | "both";
 export type InfiniteScrollMode = "intersect" | "manual";
 export type InfiniteScrollDirection = "vertical" | "horizontal";
-export type InfiniteScrollStatus = "ok" | "empty" | "loading" | "error";
+export type InfiniteScrollStatus = "ok" | "finished" | "loading" | "error";
 
 export const makeEvInfiniteScrollProps = propsFactory(
     {
@@ -26,13 +26,13 @@ export const makeEvInfiniteScrollProps = propsFactory(
             default: "end",
             validator: (v: any) => ["start", "end", "both"].includes(v),
         },
-        loadMoreText: {
+        textMore: {
             type: String,
-            default: "infiniteScroll.loadMore",
+            default: "infiniteScroll.more",
         },
-        emptyText: {
+        textFinished: {
             type: String,
-            default: "infiniteScroll.empty",
+            default: "infiniteScroll.finished",
         },
         ...makeTagProps(),
         ...makeDimensionsProps(),
