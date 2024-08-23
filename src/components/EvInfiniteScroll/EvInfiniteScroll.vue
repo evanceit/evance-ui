@@ -35,7 +35,6 @@ const startStatus = shallowRef<InfiniteScrollStatus>("ok");
 const endStatus = shallowRef<InfiniteScrollStatus>("ok");
 const margin = computed(() => toWebUnit(props.margin));
 const isIntersecting = shallowRef(false);
-const { t } = useLocaleFunctions();
 let previousScrollSize = 0;
 
 const hasStartIntersect = computed(() => {
