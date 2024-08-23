@@ -4,12 +4,13 @@
  */
 import "./EvCheckbox.scss";
 import { makeEvCheckboxProps, useToggleControl } from "./EvCheckbox.ts";
-import { ref, useAttrs } from "vue";
+import {ref, useAttrs, watch} from "vue";
 import { splitInputAttrs } from "@/util";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
 import { useFormField } from "@/composables/validation.ts";
 import { useDefaults } from "@/composables";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -29,7 +30,7 @@ const slots = defineSlots<{
 }>();
 
 // Emit
-defineEmits(["update:focused", "update:modelValue"]);
+defineEmits(["update:focused", "update:modelValue", "update:indeterminate"]);
 
 const attrs = useAttrs();
 const containerRef = ref<HTMLElement | null>(null);
@@ -37,6 +38,7 @@ const inputRef = ref<HTMLInputElement | null>(null);
 const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const formField = useFormField(props);
 const { trueValue, isChecked } = useToggleControl(formField.model, props);
+const indeterminate = useModelProxy(props, "indeterminate");
 
 /**
  * ## Get Input Element
@@ -63,6 +65,12 @@ defineExpose({
     },
     ...formField.expose(),
 });
+
+watch(formField.model, () => {
+    if (indeterminate.value) {
+        indeterminate.value = false;
+    }
+});
 </script>
 
 <template>
@@ -73,6 +81,7 @@ defineExpose({
             {
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label,
+                'is-indeterminate': indeterminate,
             },
             formField.classes,
             props.class,
@@ -110,7 +119,7 @@ defineExpose({
                 :checked="isChecked"
                 :value="trueValue"
                 :aria-disabled="formField.isDisabled"
-                :aria-checked="isChecked"
+                :aria-checked="indeterminate ? 'mixed' : isChecked"
                 v-bind="inputAttrs"
                 @input="onInput"
                 @focus="formField.focus"

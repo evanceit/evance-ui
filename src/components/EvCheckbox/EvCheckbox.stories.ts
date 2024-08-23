@@ -25,6 +25,10 @@ const meta: Meta<typeof EvCheckbox> = {
             description:
                 "The `model-value` is the `v-model` value of the component.",
         },
+        indeterminate: {
+            control: "boolean",
+            description: "Sets an indeterminate state for the checkbox.",
+        },
         name: {
             control: "text",
             description: "Sets the name attribute of the internal input.",

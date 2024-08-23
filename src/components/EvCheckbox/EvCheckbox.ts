@@ -9,6 +9,7 @@ import { makeLabelProps } from "@/components/EvLabel";
  */
 export const makeEvCheckboxProps = propsFactory(
     {
+        indeterminate: Boolean,
         trueValue: null,
         falseValue: null,
         value: null,
