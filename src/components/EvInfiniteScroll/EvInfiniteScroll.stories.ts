@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvInfiniteScroll } from "../EvInfiniteScroll";
 import { ref } from "vue";
+import {EvListItem, EvVirtualScroll} from "@/components";
 
 const meta: Meta<typeof EvInfiniteScroll> = {
     component: EvInfiniteScroll,
@@ -19,7 +20,7 @@ const meta: Meta<typeof EvInfiniteScroll> = {
     },
     args: {
         mode: "intersect",
-        height: 300,
+        height: "300",
     },
     tags: ["autodocs"],
 };
@@ -30,38 +31,47 @@ type Story = StoryObj<typeof EvInfiniteScroll>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvInfiniteScroll },
+        components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
         setup() {
 
             const items = ref(Array.from({ length: 30 }, (k, v) => v + 1));
+            const limit = 50;
 
             async function api() {
                 return new Promise((resolve) => {
                     setTimeout(() => {
-                        resolve(
-                            Array.from(
-                                { length: 10 },
-                                (k, v) => v + items.value.at(-1) + 1,
-                            ),
-                        );
+                        const additional =
+                            items.value.length < limit
+                                ? Array.from(
+                                      { length: 10 },
+                                      (k, v) => v + items.value.at(-1) + 1,
+                                  )
+                                : [];
+                        resolve(additional);
                     }, 1000);
                 });
             }
-            async function load({ done }) {
+            async function load({ state }) {
                 // Perform API call
                 const res = await api();
                 items.value.push(...res);
-                done("ok");
+                if (!res.length) {
+                    state("empty");
+                } else {
+                    state("ok");
+                }
             }
 
             return { args, items, load };
         },
         template: `<ev-infinite-scroll v-bind="args" @load="load">
-            <template v-for="(item, index) in items" :key="item">
-                <div :class="['pa-2', index % 2 === 0 ? 'bg-grey-lighten-2' : '']">
-                    Item number #{{ item }}
-                </div>
-            </template>
+            <ev-virtual-scroll renderless :items="items">
+                <template #default="{ item, index, itemRef }">
+                    <ev-list-item :link="true">
+                        Item number #{{ item }}
+                    </ev-list-item>
+                </template>
+            </ev-virtual-scroll>
         </ev-infinite-scroll>`,
     }),
 };
