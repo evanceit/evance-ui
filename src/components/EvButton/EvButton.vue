@@ -4,7 +4,7 @@
  */
 import "./EvButton.scss";
 import { makeEvButtonProps } from "./EvButton.ts";
-import { computed, useAttrs, useSlots } from "vue";
+import { computed, useAttrs } from "vue";
 import { EvIcon } from "@/components/EvIcon";
 import { EvProgressCircular } from "@/components/EvProgressCircular";
 import {
@@ -24,16 +24,6 @@ import { useDefaults } from "@/composables/defaults.ts";
 import { useGroupItem } from "@/composables/groupItem.ts";
 import { useSelectLink } from "@/composables/selectLink.ts";
 
-defineSlots<{
-    default(): never;
-    icon(): never;
-    "icon-end"(): never;
-    "icon-start"(): never;
-    prefix(): never;
-    suffix(): never;
-    additional(): never;
-}>();
-
 const definedProps = defineProps({
     ...makeEvButtonProps(),
 });
@@ -42,8 +32,15 @@ const props = useDefaults(definedProps);
 defineEmits(["group:selected"]);
 
 const attrs = useAttrs();
-const slots = useSlots();
-const hasDefaultSlot = hasSlotWithContent(slots, "default");
+const slots = defineSlots<{
+    default(): never;
+    icon(): never;
+    "icon-end"(): never;
+    "icon-start"(): never;
+    prefix(): never;
+    suffix(): never;
+    additional(): never;
+}>();
 const group = useGroupItem(props, props.symbol, false);
 const link = useRouterLinkOrHref(props as RouterLinkOrHrefProps, attrs);
 
@@ -81,7 +78,7 @@ const isIconLike = computed(() => {
         (icon) => !!icon,
     );
     return (
-        ((icons.length === 1 && !hasDefaultSlot.value && !props.text) ||
+        ((icons.length === 1 && !slots.default && !props.text) ||
             props.icon === true) &&
         !props.fullWidth
     );
@@ -211,7 +208,7 @@ const iconEnd = computed(() => {
             </slot>
         </span>
         <span
-            v-if="props.text || hasDefaultSlot"
+            v-if="props.text || slots.default"
             class="ev-button--text"
             data-no-activator>
             <slot>{{ props.text }}</slot>

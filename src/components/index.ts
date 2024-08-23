@@ -21,6 +21,7 @@ export * from "./EvGrid";
 export * from "./EvHeading";
 export * from "./EvIcon";
 export * from "./EvImg";
+export * from "./EvInfiniteScroll";
 export * from "./EvKbd";
 export * from "./EvLabel";
 export * from "./EvLink";

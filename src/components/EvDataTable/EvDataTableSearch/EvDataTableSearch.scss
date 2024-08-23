@@ -1,0 +1,16 @@
+.ev-data-table-search {
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    gap: 1rem;
+    padding-inline: var(--spacer-100);
+}
+
+.ev-data-table-search--checkbox {
+    margin-right: -8px;
+}
+
+.ev-data-table-search--field {
+    flex: 1;
+}
