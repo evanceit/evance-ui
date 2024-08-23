@@ -1,3 +1,30 @@
 .ev-infinite-scroll {
+    display: flex;
 
+    &--horizontal {
+        flex-direction: row;
+        overflow-x: auto;
+
+        .ev-infinite-scroll-intersect {
+            height: 100%;
+            width: 1px;
+        }
+    }
+
+    &--vertical {
+        flex-direction: column;
+        overflow-y: auto;
+
+        .ev-infinite-scroll-intersect {
+            height: 1px;
+            width: 100%;
+        }
+    }
+}
+
+.ev-infinite-scroll-side {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: var(--padding-medium);
 }
