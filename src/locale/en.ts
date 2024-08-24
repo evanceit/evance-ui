@@ -20,6 +20,7 @@ export default {
     },
     search: {
         filter: "Filter",
+        placeholder: "Search...",
     },
     sort: {
         label: "Sort",

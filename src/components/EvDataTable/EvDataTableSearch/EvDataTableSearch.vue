@@ -11,19 +11,23 @@ import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
 import { FilterIcon, SearchIcon } from "@/icons";
-import { ref } from "vue";
+import {computed, ref} from "vue";
 import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
     useSortOptions,
 } from "@/components/EvDataTable/composables/sort.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
+const emit = defineEmits(["update:sort", "click:filter", "update:search"]);
 const sortButtonRef = ref<HTMLElement>();
 const filterButtonRef = ref<HTMLElement>();
 const { t } = useLocaleFunctions();
+const searchModel = useModelProxy(props, "search");
 
 const {
+    hasSort,
     sortSelected,
     sortTitle,
     sortTitleOptions,
@@ -33,6 +37,13 @@ const {
     sortIcon,
 } = useSortOptions(props as SortProps);
 
+function onClickFilter(e: MouseEvent) {
+    emit("click:filter", e);
+}
+
+const placeholder = computed(() =>
+    !!props.placeholder?.length ? props.placeholder : t("search.placeholder"),
+);
 </script>
 
 <template>
@@ -42,11 +53,12 @@ const {
         </div>
         <div class="ev-data-table-search--field">
             <ev-textfield
+                v-model="searchModel"
                 rounded
                 clearable
                 appearance="subtle"
                 size="small"
-                placeholder="Search by reference or title"
+                :placeholder="placeholder"
                 :icon-start="SearchIcon" />
         </div>
         <div class="ev-data-table-search--filter">
@@ -55,12 +67,13 @@ const {
                 rounded
                 size="small"
                 variant="subtle"
-                :icon="FilterIcon" />
+                :icon="FilterIcon"
+                @click="onClickFilter" />
             <ev-tooltip
                 :activator="filterButtonRef"
                 :text="t('search.filter')" />
         </div>
-        <div class="ev-data-table-search--sort">
+        <div v-if="hasSort" class="ev-data-table-search--sort">
             <ev-button
                 ref="sortButtonRef"
                 rounded

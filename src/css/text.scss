@@ -227,3 +227,9 @@ a {
 .color-warning {
     color: var(--text-warning) !important;
 }
+
+input, textarea {
+    &::placeholder {
+        color: var(--text-subtle);
+    }
+}

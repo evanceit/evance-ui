@@ -12,21 +12,25 @@ export interface SortOption {
 }
 
 export interface SortProps {
+    sort: string[];
     sortOptions: SortOption[];
-    sortSelected: string[];
 }
 
 export const makeSortProps = propsFactory(
     {
+        sort: {
+            type: Array as PropType<string[]>,
+            default: () => [],
+        },
         sortOptions: Array as PropType<SortOption[]>,
-        sortSelected: Array as PropType<string[]>,
     },
     "data-table-sort",
 );
 
 export function useSortOptions(props: SortProps) {
-    const sortSelected = useModelProxy(props, "sortSelected");
+    const sortSelected = useModelProxy(props, "sort");
     const { t } = useLocaleFunctions();
+    const hasSort = computed(() => props.sortOptions?.length);
 
     function isTitleDisabled(title: string) {
         return getItemsByTitle(title).every((option) => option.disabled);
@@ -44,7 +48,7 @@ export function useSortOptions(props: SortProps) {
     }
 
     function isAscending(value: string) {
-        return value.endsWith("asc");
+        return value?.endsWith("asc");
     }
 
     /**
@@ -130,6 +134,7 @@ export function useSortOptions(props: SortProps) {
     });
 
     return {
+        hasSort,
         sortOptions,
         sortSelected,
         sortTitle,
