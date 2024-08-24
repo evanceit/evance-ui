@@ -40,6 +40,7 @@ export * from "./EvQuickfind";
 export * from "./EvRadio";
 export * from "./EvRadioGroup";
 export * from "./EvResponsive";
+export * from "./EvSection";
 export * from "./EvSelect";
 export * from "./EvSlideGroup";
 export * from "./EvSurface";

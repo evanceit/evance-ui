@@ -1,0 +1,21 @@
+.ev-section {
+    flex-shrink: 0;
+
+    &:after,
+    &:before {
+        display: block;
+        height: 6px;
+        content: "";
+    }
+}
+
+.ev-section {
+    .ev-section--heading {
+        margin-block: var(--spacer-250) var(--spacer-75);
+        margin-inline: var(--spacer-200);
+
+        &:first-of-type {
+            margin-block-start: var(--spacer-150);
+        }
+    }
+}
