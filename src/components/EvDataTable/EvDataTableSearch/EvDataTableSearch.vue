@@ -1,12 +1,38 @@
 <script setup lang="ts">
 import "./EvDataTableSearch.scss";
+import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
 import { EvButton } from "@/components/EvButton";
 import { EvCheckbox } from "@/components/EvCheckbox";
+import { EvDivider } from "@/components/EvDivider";
+import { EvEyebrow } from "@/components/EvEyebrow";
+import { EvList } from "@/components/EvList";
+import { EvMenu } from "@/components/EvMenu";
+import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
-import { ArrowUpIcon, FilterIcon, SearchIcon } from "@/icons";
-import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
+import { EvTooltip } from "@/components/EvTooltip";
+import { FilterIcon, SearchIcon } from "@/icons";
+import { ref } from "vue";
+import { useLocaleFunctions } from "@/composables";
+import {
+    SortProps,
+    useSortOptions,
+} from "@/components/EvDataTable/composables/sort.ts";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
+const sortButtonRef = ref<HTMLElement>();
+const filterButtonRef = ref<HTMLElement>();
+const { t } = useLocaleFunctions();
+
+const {
+    sortSelected,
+    sortTitle,
+    sortTitleOptions,
+    sortTitleSelected,
+    sortDirectionOptions,
+    onSortTitleSelected,
+    sortIcon,
+} = useSortOptions(props as SortProps);
+
 </script>
 
 <template>
@@ -25,18 +51,44 @@ const props = defineProps({ ...makeEvDataTableSearchProps() });
         </div>
         <div class="ev-data-table-search--filter">
             <ev-button
+                ref="filterButtonRef"
                 rounded
                 size="small"
                 variant="subtle"
                 :icon="FilterIcon" />
+            <ev-tooltip
+                :activator="filterButtonRef"
+                :text="t('search.filter')" />
         </div>
         <div class="ev-data-table-search--sort">
             <ev-button
+                ref="sortButtonRef"
                 rounded
                 size="small"
                 variant="subtle"
-                text="Recent"
-                :icon-end="ArrowUpIcon" />
+                :text="sortTitle"
+                :icon-end="sortIcon" />
+            <ev-tooltip :activator="sortButtonRef" :text="t('sort.label')" />
+            <ev-menu :activator="sortButtonRef" :close-on-content-click="false" :width="200" position="bottom-end">
+                <ev-surface elevation="overlay" class="w-100 h-100">
+                    <div class="pa-100">
+                        <ev-eyebrow :text="t('sort.heading')" />
+                    </div>
+                    <ev-list
+                        required
+                        select-strategy="single-any"
+                        :items="sortTitleOptions"
+                        :selected="sortTitleSelected"
+                        @update:selected="onSortTitleSelected" />
+                    <ev-divider />
+                    <ev-list
+                        v-model:selected="sortSelected"
+                        required
+                        select-strategy="single-any"
+                        item-title="direction"
+                        :items="sortDirectionOptions" />
+                </ev-surface>
+            </ev-menu>
         </div>
     </div>
 </template>

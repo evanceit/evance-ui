@@ -18,7 +18,7 @@ const id = computed(() => {
 });
 
 const overlayRef = ref<typeof EvOverlay>();
-const overlayProps = filterComponentProps(EvOverlay, props);
+const overlayProps = computed(() => filterComponentProps(EvOverlay, props));
 
 const position = computed(() => {
     return props.position.split(" ").length > 1

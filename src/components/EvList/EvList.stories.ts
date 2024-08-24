@@ -14,7 +14,7 @@ const meta: Meta<typeof EvList> = {
         },
         selectStrategy: {
             control: "select",
-            options: ["single-any", "multi-any"],
+            options: [undefined, "single-any", "multi-any"],
         },
     },
     args: {

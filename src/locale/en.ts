@@ -18,6 +18,15 @@ export default {
         other: "{ value }th",
         ordinal: true,
     },
+    search: {
+        filter: "Filter",
+    },
+    sort: {
+        label: "Sort",
+        heading: "Sort by",
+        ascending: "Ascending",
+        descending: "Descending",
+    },
     select: {
         noItemsText: "No items available",
     },
