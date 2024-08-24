@@ -4,9 +4,9 @@ import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
 import { EvButton } from "@/components/EvButton";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { EvDivider } from "@/components/EvDivider";
-import { EvEyebrow } from "@/components/EvEyebrow";
 import { EvList } from "@/components/EvList";
 import { EvMenu } from "@/components/EvMenu";
+import { EvSection } from "@/components/EvSection";
 import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
@@ -69,24 +69,29 @@ const {
                 :text="sortTitle"
                 :icon-end="sortIcon" />
             <ev-tooltip :activator="sortButtonRef" :text="t('sort.label')" />
-            <ev-menu :activator="sortButtonRef" :close-on-content-click="false" :width="200" position="bottom-end">
+            <ev-menu
+                :activator="sortButtonRef"
+                :close-on-content-click="false"
+                :width="200"
+                position="bottom-end">
                 <ev-surface elevation="overlay" class="w-100 h-100">
-                    <div class="pa-100">
-                        <ev-eyebrow :text="t('sort.heading')" />
-                    </div>
-                    <ev-list
-                        required
-                        select-strategy="single-any"
-                        :items="sortTitleOptions"
-                        :selected="sortTitleSelected"
-                        @update:selected="onSortTitleSelected" />
+                    <ev-section :title="t('sort.heading')">
+                        <ev-list
+                            required
+                            select-strategy="single-any"
+                            :items="sortTitleOptions"
+                            :selected="sortTitleSelected"
+                            @update:selected="onSortTitleSelected" />
+                    </ev-section>
                     <ev-divider />
-                    <ev-list
-                        v-model:selected="sortSelected"
-                        required
-                        select-strategy="single-any"
-                        item-title="direction"
-                        :items="sortDirectionOptions" />
+                    <ev-section :title="t('sort.direction')">
+                        <ev-list
+                            v-model:selected="sortSelected"
+                            required
+                            select-strategy="single-any"
+                            item-title="direction"
+                            :items="sortDirectionOptions" />
+                    </ev-section>
                 </ev-surface>
             </ev-menu>
         </div>

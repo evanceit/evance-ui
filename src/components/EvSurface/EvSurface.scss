@@ -4,6 +4,7 @@
     transition: background-color 0.25s ease-in-out,
                 box-shadow 0.25s ease-in-out;
     will-change: background-color, box-shadow;
+    border-radius: inherit;
 
     &.elevation-default {
         background-color: var(--surface-default);

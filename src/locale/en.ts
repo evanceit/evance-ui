@@ -24,6 +24,7 @@ export default {
     sort: {
         label: "Sort",
         heading: "Sort by",
+        direction: "Direction",
         ascending: "Ascending",
         descending: "Descending",
     },
