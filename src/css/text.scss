@@ -203,6 +203,9 @@ a {
 .color-default {
     color: var(--text-default) !important;
 }
+.color-primary {
+    color: var(--text-brand) !important;
+}
 .color-danger {
     color: var(--text-danger) !important;
 }

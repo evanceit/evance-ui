@@ -5,6 +5,19 @@ const meta: Meta<typeof EvEyebrow> = {
     title: "Typography/EvEyebrow",
     component: EvEyebrow,
     argTypes: {
+        appearance: {
+            control: "select",
+            options: [
+                "default",
+                "subtle",
+                "primary",
+                "danger",
+                "notice",
+                "success",
+                "warning",
+                "information",
+            ],
+        },
         text: {
             control: "text",
             description:
@@ -12,6 +25,7 @@ const meta: Meta<typeof EvEyebrow> = {
         },
     },
     args: {
+        appearance: "default",
         text: "Example eyebrow",
     },
     tags: ["autodocs"],

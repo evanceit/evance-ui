@@ -1,6 +1,6 @@
 import { propsFactory } from "./props.ts";
 import { computed, MaybeRef, PropType, Ref, unref } from "vue";
-import { appearanceModifier, variantModifier } from "@/util/modifiers.ts";
+import {appearanceModifier, makeClassName, variantModifier} from "@/util/modifiers.ts";
 import { GroupItemProvide } from "@/composables/groupItem.ts";
 
 /**
@@ -169,3 +169,39 @@ export const makeTextAlignProps = propsFactory(
     },
     "TextAlign",
 );
+
+/**
+ * Text Appearance
+ */
+export const TextAppearance = {
+    ...Appearance,
+    subtle: "subtle",
+} as const;
+
+export type TextAppearanceProp =
+    (typeof TextAppearance)[keyof typeof TextAppearance];
+
+export const makeTextAppearanceProps = propsFactory(
+    {
+        appearance: {
+            type: String as PropType<TextAppearanceProp>,
+            default: TextAppearance.default,
+        },
+    },
+    "TextAppearance",
+);
+
+export interface TextAppearanceProps {
+    appearance: TextAppearanceProp;
+}
+
+export function useTextAppearance(
+    props: TextAppearanceProps,
+) {
+    const appearanceClass = computed(() => {
+        return makeClassName(props.appearance, "color", ["default"]);
+    });
+    return {
+        appearanceClass,
+    };
+}
