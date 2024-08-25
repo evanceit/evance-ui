@@ -141,9 +141,8 @@
     --text-inverse: #{settings.token('neutral.100')};
     --text-on-inverse: #535A74;
     --link-default: #{settings.token('purple.600')};
-    --link-default-hover: #{settings.token('purple.500')};
-    --link-default-pressed: #{settings.token('purple.700')};
-    --link-default-visited: #{settings.token('purple.800')};
+    --link-hovered: #{settings.token('purple.500')};
+    --link-visited: #{settings.token('purple.800')};
 
     /* Borders */
     --border: #{settings.token('neutral.300A')};
@@ -295,8 +294,9 @@
     --text-warning: #{settings.token('orange.400')};
     --text-on-warning: #baa991;
     --text-on-warning-bold: #181724;
-    --link-default: #{settings.token('purple.500')};
-    --link-default-hover: #{settings.token('purple.400')};
+    --link-default: #{settings.token('purple.400')};
+    --link-hovered: #{settings.token('purple.500')};
+    --link-visited: #{settings.token('purple.600')};
     --text-inverse: #{settings.token('dark-neutral.100')};
     --text-on-inverse: #A0A6BC;
 
@@ -324,7 +324,7 @@
 
     /* Tooltips */
     --tooltip-color: #bec6d4;
-    --tooltip-background: #3c4054;
+    --tooltip-background: #{settings.token('dark-neutral.400')};
     --tooltip-shadow: none;
 }
 
