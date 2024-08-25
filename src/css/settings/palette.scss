@@ -123,7 +123,7 @@ $colors: map-deep-merge(
             '600': #656D88,
             '700': #848DAA,
             '800': #A3AECC,
-            '900': #BCC4DB,
+            '900': #AFB9D4,
             '1000': #D5DBEA,
             '1100': #EFF2F9,
             '100A': '#A3A7CC0A',
@@ -141,8 +141,8 @@ $colors: map-deep-merge(
     # token
  */
 @function token($color-name) {
-    $prefix: str-slice($color-name, 1, str-index($color-name, '-') - 1);
-    $variant: str-slice($color-name, str-index($color-name, '-') + 1);
+    $prefix: str-slice($color-name, 1, str-index($color-name, '.') - 1);
+    $variant: str-slice($color-name, str-index($color-name, '.') + 1);
     $color-map: map-get($colors, $prefix);
 
     @if $color-map != null {

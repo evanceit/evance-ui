@@ -34,8 +34,8 @@ const lightTheme = {
     barTextColor: '#535A74',
     colorPrimary: '#814EFA',
     colorSecondary: '#814EFA',
-    textColor: '#535A74',
-    textMutedColor: '#747794'
+    textColor: '#353B4E',
+    textMutedColor: '#696F87'
 };
 
 /**
@@ -55,8 +55,8 @@ const darkTheme = {
     barTextColor: '#A0A6BC',
     colorPrimary: '#9772FF',
     colorSecondary: '#9772FF',
-    textColor: '#A0A6BC',
-    textMutedColor: '#8386A5',
+    textColor: '#BCC4DB',
+    textMutedColor: '#848DAA',
 };
 
 const channel = addons.getChannel();
