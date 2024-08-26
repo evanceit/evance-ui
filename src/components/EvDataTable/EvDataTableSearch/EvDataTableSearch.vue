@@ -11,7 +11,7 @@ import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
 import { FilterIcon, SearchIcon } from "@/icons";
-import {computed, ref} from "vue";
+import { computed, ref } from "vue";
 import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
@@ -42,7 +42,7 @@ function onClickFilter(e: MouseEvent) {
 }
 
 const placeholder = computed(() =>
-    !!props.placeholder?.length ? props.placeholder : t("search.placeholder"),
+    props.placeholder?.length ? props.placeholder : t("search.placeholder"),
 );
 </script>
 
