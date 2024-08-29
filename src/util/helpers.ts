@@ -44,15 +44,18 @@ getNextId.reset = () => {
  * For example: an object might have a `title` property.
  * So a property key may represent either an array index, or an object property.
  *
- * - `boolean` - Ignored
+ * - `boolean`, `null`, `undefined` - Ignored
  * - `string` - Property name, or use Object path notation.
  * - `array` of strings or numbers represent nested lookup - each array element represents a key in the hierarchy
+ * - A callback function accepting `item` and `fallback` arguments.
  */
-export type GetterPropertyKey =
+export type GetterPropertyKey<T = Record<string, any>> =
     | boolean
+    | null
+    | undefined
     | string
     | (string | number)[]
-    | ((item: Record<string, any>, fallback?: any) => any);
+    | ((item: T, fallback?: any) => any);
 
 /**
  * # Get Property
@@ -66,8 +69,11 @@ export function getPropertyValue(
     property: GetterPropertyKey,
     fallback?: any,
 ): any {
-    if (property == null) {
+    if (property === true) {
         return subject === undefined ? fallback : subject;
+    }
+    if (property == null || typeof property === "boolean") {
+        return fallback;
     }
     if (subject !== Object(subject)) {
         if (typeof property !== "function") {

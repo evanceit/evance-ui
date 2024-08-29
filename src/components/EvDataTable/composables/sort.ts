@@ -16,7 +16,7 @@ export interface SortProps {
     sortOptions: SortOption[];
 }
 
-export const makeSortProps = propsFactory(
+export const makeDataTableSortProps = propsFactory(
     {
         sort: {
             type: Array as PropType<string[]>,

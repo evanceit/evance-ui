@@ -45,6 +45,12 @@ type Story = StoryObj<typeof EvDataTableCell>;
 export const Primary: Story = {
     render: (args: any) => ({
         components: { EvDataTableCell, EvDataTable, EvDataTableRow },
+        data() {
+            const items = [];
+            return {
+                items,
+            };
+        },
         setup() {
             return { args };
         },

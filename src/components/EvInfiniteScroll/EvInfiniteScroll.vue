@@ -8,7 +8,6 @@ import {
 import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, nextTick, onMounted, ref, shallowRef } from "vue";
 import { toWebUnit } from "@/util";
-import { useLocaleFunctions } from "@/composables";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";
 import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteScrollIntersect.vue";
 
