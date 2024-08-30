@@ -13,8 +13,11 @@ const props = defineProps({
 const component = getCurrentComponent("EvVirtualScroll");
 const dimensionStyles = useDimensions(props);
 const {
+    calculateVisibleItems,
     containerRef,
+    markerRef,
     handleScroll,
+    handleScrollend,
     handleItemResize,
     scrollToIndex,
     paddingTop,
@@ -25,21 +28,31 @@ const {
 useToggleScope(
     () => props.renderless,
     () => {
+        function toggleEventListeners(add = false) {
+            const method = add ? "addEventListener" : "removeEventListener";
+            if (containerRef.value === document.documentElement) {
+                document[method]("scroll", handleScroll, { passive: true });
+                document[method]("scrollend", handleScrollend);
+            } else {
+                containerRef.value?.[method]("scroll", handleScroll, {
+                    passive: true,
+                });
+                containerRef.value?.[method]("scrollend", handleScrollend);
+            }
+        }
         onMounted(() => {
             containerRef.value = getScrollParent(
                 component.vnode.el as HTMLElement,
                 true,
             );
-            containerRef.value?.addEventListener("scroll", handleScroll);
+            toggleEventListeners(true);
         });
-
-        onScopeDispose(() => {
-            containerRef.value?.removeEventListener("scroll", handleScroll);
-        });
+        onScopeDispose(toggleEventListeners);
     },
 );
 
 defineExpose({
+    calculateVisibleItems,
     scrollToIndex,
 });
 
@@ -55,13 +68,14 @@ defineSlots<{
 <template>
     <template v-if="props.renderless">
         <div
+            ref="markerRef"
             class="ev-virtual-scroll--spacer"
             :style="{ paddingTop: toWebUnit(paddingTop) }"></div>
         <ev-virtual-scroll-item
             v-for="item in computedItems"
             :key="item.index"
             :renderless="props.renderless"
-            @update:height="(height) => handleItemResize(item.index, height)">
+            @update:height="(h) => handleItemResize(item.index, h)">
             <template #default="{ itemRef }">
                 <slot v-bind="{ item: item.raw, index: item.index, itemRef }" />
             </template>
@@ -76,8 +90,10 @@ defineSlots<{
         ref="containerRef"
         :class="['ev-virtual-scroll', props.class]"
         :style="[dimensionStyles, props.style]"
-        @scroll="handleScroll">
+        @scroll.passive="handleScroll"
+        @scrollend="handleScrollend">
         <div
+            ref="markerRef"
             class="ev-virtual-scroll--container"
             :style="[
                 {
@@ -89,9 +105,7 @@ defineSlots<{
                 v-for="item in computedItems"
                 :key="item.index"
                 :renderless="props.renderless"
-                @update:height="
-                    (height) => handleItemResize(item.index, height)
-                ">
+                @update:height="(h) => handleItemResize(item.index, h)">
                 <template #default="{ itemRef }">
                     <slot
                         name="default"

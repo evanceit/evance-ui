@@ -34,8 +34,8 @@ export const Primary: Story = {
         components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
         setup() {
 
-            const items = ref(Array.from({ length: 30 }, (k, v) => v + 1));
-            const limit = 50;
+            const items = ref(Array.from({ length: 100 }, (k, v) => v + 1));
+            const limit = 500;
 
             async function api() {
                 return new Promise((resolve) => {
@@ -43,7 +43,7 @@ export const Primary: Story = {
                         const additional =
                             items.value.length < limit
                                 ? Array.from(
-                                      { length: 10 },
+                                      { length: 25 },
                                       (k, v) => v + items.value.at(-1) + 1,
                                   )
                                 : [];
@@ -67,7 +67,7 @@ export const Primary: Story = {
         template: `<ev-infinite-scroll v-bind="args" @load="load">
             <ev-virtual-scroll renderless :items="items">
                 <template #default="{ item, index, itemRef }">
-                    <ev-list-item :link="true">
+                    <ev-list-item :ref="itemRef" :link="true">
                         Item number #{{ item }}
                     </ev-list-item>
                 </template>

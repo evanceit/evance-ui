@@ -1,4 +1,15 @@
-.ev-data-table--table {
-    width: 100%;
-    border-collapse: 0;
+.ev-data-table {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ev-data-table--wrapper {
+    overflow: auto;
+    flex: 1;
+
+    > table {
+        width: 100%;
+        border-collapse: 0;
+    }
 }

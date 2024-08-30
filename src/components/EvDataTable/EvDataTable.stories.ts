@@ -5,14 +5,19 @@ import {
     EvDataTable,
     EvDataTableRow,
 } from "@/components/EvDataTable";
+import { EvSurface } from "@/components";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
     argTypes: {
-
+        height: {
+            control: "select",
+            options: [null, 400, 500, "100%"],
+            description: "Optional height of the overall table",
+        },
     },
     args: {
-
+        height: undefined,
     },
     tags: ["autodocs"],
 };
@@ -23,7 +28,7 @@ type Story = StoryObj<typeof EvDataTableCell>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvDataTableCell, EvDataTable, EvDataTableRow },
+        components: { EvSurface, EvDataTableCell, EvDataTable, EvDataTableRow },
         data() {
             const boats = [
                 {
@@ -98,7 +103,7 @@ export const Primary: Story = {
                 },
             ];
 
-            const items = [...Array(10000).keys()].map((i) => {
+            const items = [...Array(500).keys()].map((i) => {
                 const boat = { ...boats[i % boats.length] };
                 boat.name = `${boat.name} #${i}`;
                 return boat;
@@ -112,9 +117,11 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-            <ev-data-table v-bind="args" :items="items">
-                
-            </ev-data-table>
+            <ev-surface scrollable height="600" elevation="panel" rounded="small">
+                <ev-data-table v-bind="args" :items="items">
+
+                </ev-data-table>
+            </ev-surface>
         `,
     }),
 };

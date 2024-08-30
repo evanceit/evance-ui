@@ -3,10 +3,10 @@ import {
     ComponentOptions,
     ComponentPublicInstance,
     computed,
-    ComputedGetter,
+    ComputedGetter, MaybeRef,
     reactive,
     toRefs,
-    ToRefs,
+    ToRefs, unref,
     watchEffect,
 } from "vue";
 import {
@@ -422,4 +422,33 @@ export function matchesSelector(
 
 export function keys<O extends {}>(o: O) {
     return Object.keys(o) as (keyof O)[];
+}
+
+type DebouncedFunction<T extends (...args: any[]) => any> = {
+    (...args: Parameters<T>): void;
+    clear: () => void;
+    immediate: T;
+};
+
+/**
+ * ## debounce
+ *
+ * @param fn The function to debounce
+ * @param delay The debounce delay (either a number or a ref of a number)
+ * @returns A debounced version of the function with `clear` and `immediate` methods
+ */
+export function debounce<T extends (...args: any[]) => any>(
+    fn: T,
+    delay: MaybeRef<number>,
+): DebouncedFunction<T> {
+    let timeoutId = 0 as any;
+    const wrap = (...args: any[]) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn(...args), unref(delay));
+    };
+    wrap.clear = () => {
+        clearTimeout(timeoutId);
+    };
+    wrap.immediate = fn;
+    return wrap;
 }

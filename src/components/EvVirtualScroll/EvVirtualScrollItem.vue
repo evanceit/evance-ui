@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, toRef, useAttrs, watch } from "vue";
+import {computed, onMounted, Ref, toRef, useAttrs, watch} from "vue";
 import { useResizeObserver } from "../../composables/resizeObserver.ts";
 import { makeEvVirtualScrollItemProps } from "./EvVirtualScroll.ts";
 
@@ -28,11 +28,17 @@ watch(
         }
     },
 );
+
+const slotProps = computed(() => {
+    return {
+        itemRef: resizeRef,
+    };
+});
 </script>
 
 <template>
     <template v-if="props.renderless">
-        <slot name="default" v-bind="{ itemRef: toRef(resizeRef) }" />
+        <slot name="default" v-bind="slotProps" />
     </template>
     <div
         v-else
@@ -40,6 +46,6 @@ watch(
         :class="['ev-virtual-scroll--item', props.class]"
         :style="props.style"
         v-bind="attrs">
-        <slot name="default" v-bind="{ itemRef: toRef(resizeRef) }" />
+        <slot name="default" v-bind="slotProps" />
     </div>
 </template>
