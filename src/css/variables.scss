@@ -53,8 +53,8 @@
     --heading-lineheight: 1.25em;
     --heading-style: normal;
     --heading-typeface: var(--system-font);
-    --heading-weight: 600;
-    --heading-weight-bold: 900;
+    --heading-weight: 500;
+    --heading-weight-bold: 800;
     @each $key, $value in settings.$headings {
         $min: map-get($value, min);
         $max: map-get($value, max);
