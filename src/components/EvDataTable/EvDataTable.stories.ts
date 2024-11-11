@@ -114,11 +114,40 @@ export const Primary: Story = {
             };
         },
         setup() {
-            return { args };
+
+            const headers = [
+                {
+                    title: "Name",
+                    value: "name"
+                },
+                {
+                    title: "Data",
+                    children: [
+                        {
+                            title: "Speed (km/h)",
+                            value: "speed",
+                        },
+                        {
+                            title: "Length (m)",
+                            value: "length",
+                        },
+                        {
+                            title: "Year of Reg.",
+                            value: "year",
+                        },
+                    ],
+                },
+                {
+                    title: "Price",
+                    value: "price",
+                },
+            ];
+
+            return { args, headers };
         },
         template: `
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
-                <ev-data-table v-bind="args" :items="items">
+                <ev-data-table v-bind="args" :items="items" :headers="headers">
 
                 </ev-data-table>
             </ev-surface>

@@ -4,6 +4,11 @@ import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useLocaleFunctions } from "@/composables";
 import { ArrowDownIcon, ArrowUpIcon } from "@/icons";
 
+export type SortItem = {
+    key: string;
+    order?: boolean | "asc" | "desc";
+};
+
 export interface SortOption {
     title: string;
     value: string;

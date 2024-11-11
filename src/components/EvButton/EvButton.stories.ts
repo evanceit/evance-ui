@@ -48,6 +48,7 @@ const meta: Meta<typeof EvButton> = {
                 "primary",
                 "success",
                 "warning",
+                "inverse",
             ],
             description: "Changes the appearance of the button.",
         },

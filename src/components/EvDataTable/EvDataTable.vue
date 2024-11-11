@@ -2,10 +2,13 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
+import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
+import { createGroupBy } from "@/components/EvDataTable/composables/group.ts";
+import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -13,8 +16,14 @@ const slots = defineSlots<{
 }>();
 
 const dimensions = useDimensions(props);
+const { groupBy } = createGroupBy(props);
+const { columns, headers } = createHeaders(props, {
+    groupBy,
+    showSelect: toRef(props, "showSelect"),
+    showExpand: toRef(props, "showExpand"),
+});
 
-// @todo this will be replaced later
+const { items } = useDataTableItems(props, columns);
 const flatItems = computed(() => props.items);
 
 const {
@@ -33,8 +42,7 @@ const displayItems = computed(() => {
 });
 
 const totalColumns = computed(() => {
-    // @todo: get the total number of columns
-    return 1;
+    return columns.value.length;
 });
 </script>
 
@@ -52,6 +60,7 @@ const totalColumns = computed(() => {
                 <tbody role="rowgroup">
                     <tr
                         ref="markerRef"
+                        class="ev-data-table--spacer-above"
                         :style="{ height: toWebUnit(paddingTop), border: 0 }">
                         <td
                             :colspan="totalColumns"
@@ -69,6 +78,7 @@ const totalColumns = computed(() => {
                         </template>
                     </ev-virtual-scroll-item>
                     <tr
+                        class="ev-data-table--spacer-below"
                         :style="{
                             height: toWebUnit(paddingBottom),
                             border: 0,

@@ -1,7 +1,8 @@
 import { getPropertyValue, GetterPropertyKey, propsFactory } from "@/util";
 import { computed, PropType, Ref } from "vue";
-import { SelectableItem } from "@/components/EvDataTable/composables/select.ts";
-import { InternalDataTableHeader } from "@/components/EvDataTable/composables/types.ts";
+import { provideSelection, SelectableItem } from "./select.ts";
+import { InternalDataTableHeader } from "./headers.ts";
+import { provideExpanded } from "./expand.ts";
 
 export interface InternalItem<T = any> {
     value: any;
@@ -21,9 +22,28 @@ export interface DataTableItem<T = any>
 export interface DataTableItemProps {
     items: any[];
     itemValue: GetterPropertyKey;
-    itemSelectable: GetterPropertyKey;
+    itemSelectable?: GetterPropertyKey;
     returnObject: boolean;
 }
+
+type ItemSlotBase<T> = {
+    index: number;
+    item: T;
+    internalItem: DataTableItem<T>;
+    isExpanded: ReturnType<typeof provideExpanded>["isExpanded"];
+    toggleExpand: ReturnType<typeof provideExpanded>["toggleExpand"];
+    isSelected: ReturnType<typeof provideSelection>["isSelected"];
+    toggleSelect: ReturnType<typeof provideSelection>["toggleSelect"];
+};
+
+export type ItemSlot<T> = ItemSlotBase<T> & {
+    columns: InternalDataTableHeader[];
+};
+
+export type ItemKeySlot<T> = ItemSlotBase<T> & {
+    value: any;
+    column: InternalDataTableHeader;
+};
 
 export const makeDataTableItemsProps = propsFactory(
     {
@@ -92,7 +112,5 @@ export function useDataTableItems(
     const items = computed(() =>
         transformItems(props, props.items, columns.value),
     );
-    return {
-        items,
-    };
+    return { items };
 }
