@@ -6,6 +6,7 @@ import { makeDataTableItemsProps } from "./composables/items.ts";
 import { makeDataTableExpandProps } from "./composables/expand.ts";
 import { makeDataTableGroupProps } from "./composables/group.ts";
 import { makeDataTableHeaderProps } from "./composables/headers.ts";
+import { makeDataTableSelectProps } from "./composables/select.ts";
 
 export const makeEvDataTableProps = propsFactory(
     {
@@ -13,6 +14,7 @@ export const makeEvDataTableProps = propsFactory(
         ...makeDataTableGroupProps(),
         ...makeDataTableHeaderProps(),
         ...makeDataTableItemsProps(),
+        ...makeDataTableSelectProps(),
         ...makeDimensionsProps(),
         ...makeVirtualProps(),
         ...makeComponentProps(),

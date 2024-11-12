@@ -10,59 +10,17 @@ import {
     watchEffect,
 } from "vue";
 import { GetterPropertyKey, propsFactory } from "@/util";
-import { FilterFunction, FilterKeyFunctions } from "@/composables/filter.ts";
-import { ItemKeySlot } from "./items.ts";
+import { FilterKeyFunctions } from "@/composables/filter.ts";
 import { SortOption } from "./sort.ts";
-
-export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
-
-export type HeaderCellProps =
-    | Record<string, any>
-    | ((
-          data: Pick<
-              ItemKeySlot<any>,
-              "index" | "item" | "internalItem" | "value"
-          >,
-      ) => Record<string, any>);
+import {
+    DataTableCompareFunction,
+    DataTableHeader,
+    InternalDataTableHeader,
+} from "@/components/EvDataTable/composables/types.ts";
 
 type HeaderProps = {
     headers: DeepReadonly<DataTableHeader[]> | undefined;
     items: any[];
-};
-
-export type DataTableHeader = {
-    key?:
-        | "data-table-group"
-        | "data-table-select"
-        | "data-table-expand"
-        | (string & {});
-    value?: GetterPropertyKey;
-    title?: string;
-    fixed?: boolean;
-    align?: "start" | "end" | "center";
-    width?: number | string;
-    minWidth?: number | string;
-    maxWidth?: number | string;
-    headerProps?: Record<string, any>;
-    cellProps?: HeaderCellProps;
-    sortable?: boolean;
-    sort?: DataTableCompareFunction;
-    filter?: FilterFunction;
-    children?: DataTableHeader[];
-};
-
-export type InternalDataTableHeader = Omit<
-    DataTableHeader,
-    "key" | "value" | "children"
-> & {
-    key: string | null;
-    value: GetterPropertyKey | null;
-    sortable: boolean;
-    fixedOffset?: number;
-    lastFixed?: boolean;
-    colspan?: number;
-    rowspan?: number;
-    children?: InternalDataTableHeader[];
 };
 
 export const makeDataTableHeaderProps = propsFactory(

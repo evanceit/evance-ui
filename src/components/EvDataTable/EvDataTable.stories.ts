@@ -6,6 +6,7 @@ import {
     EvDataTableRow,
 } from "@/components/EvDataTable";
 import { EvSurface } from "@/components";
+import {ref, shallowRef} from "vue";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
@@ -17,7 +18,7 @@ const meta: Meta<typeof EvDataTable> = {
         },
     },
     args: {
-        height: undefined,
+        height: "100%",
     },
     tags: ["autodocs"],
 };
@@ -105,6 +106,7 @@ export const Primary: Story = {
 
             const items = [...Array(500).keys()].map((i) => {
                 const boat = { ...boats[i % boats.length] };
+                boat.id = i + 1;
                 boat.name = `${boat.name} #${i}`;
                 return boat;
             });
@@ -118,7 +120,7 @@ export const Primary: Story = {
             const headers = [
                 {
                     title: "Name",
-                    value: "name"
+                    value: "name",
                 },
                 {
                     title: "Data",
@@ -143,11 +145,14 @@ export const Primary: Story = {
                 },
             ];
 
-            return { args, headers };
+            const selected = ref([]);
+
+            return { args, headers, selected };
         },
         template: `
+            {{ selected }}
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
-                <ev-data-table v-bind="args" :items="items" :headers="headers">
+                <ev-data-table v-bind="args" :items="items" :headers="headers" v-model="selected">
 
                 </ev-data-table>
             </ev-surface>

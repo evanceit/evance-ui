@@ -126,8 +126,8 @@ export function useSortOptions(props: SortProps) {
         const options = getItemsByTitle(selection[0]);
         const availableValues = options.filter((option) => {
             return (
-                isAscending(option.value) === isAscending(sortSelected.value[0]) &&
-                !option.disabled
+                isAscending(option.value) ===
+                    isAscending(sortSelected.value[0]) && !option.disabled
             );
         });
         const newOption = availableValues[0] ?? options[0];

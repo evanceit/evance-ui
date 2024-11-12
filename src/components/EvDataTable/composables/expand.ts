@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { InjectionKey, PropType, Ref, toRef, provide, inject } from "vue";
-import { DataTableItem } from "./items.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
+import { DataTableItem } from "@/components/EvDataTable/composables/types.ts";
 
 export const makeDataTableExpandProps = propsFactory(
     {
@@ -9,7 +9,7 @@ export const makeDataTableExpandProps = propsFactory(
         showExpand: Boolean,
         expanded: {
             type: Array as PropType<readonly string[]>,
-            default: () => ([]),
+            default: () => [],
         },
     },
     "EvDataTable-expand",
@@ -62,7 +62,7 @@ export function provideExpanded(props: ExpandProps) {
     return data;
 }
 
-export function useExpand() {
+export function useExpanded() {
     const data = inject(DataTableExpandedKey);
     if (!data) {
         throw new Error("Unable to `useExpand()`.");

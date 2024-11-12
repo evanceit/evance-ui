@@ -7,24 +7,42 @@ import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
-import { createGroupBy } from "@/components/EvDataTable/composables/group.ts";
+import {createGroupBy, provideGroupBy} from "@/components/EvDataTable/composables/group.ts";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
+import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
+import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
     default(): never;
+    colgroup(): never;
 }>();
 
 const dimensions = useDimensions(props);
 const { groupBy } = createGroupBy(props);
-const { columns, headers } = createHeaders(props, {
+const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props, {
     groupBy,
     showSelect: toRef(props, "showSelect"),
     showExpand: toRef(props, "showExpand"),
 });
 
 const { items } = useDataTableItems(props, columns);
-const flatItems = computed(() => props.items);
+
+// const { sortByWithGroups, opened, extractRows, isGroupOpen, toggleGroup } = provideGroupBy({ groupBy, sortBy });
+// const paginatedItemsWithoutGroups = computed(() => extractRows(paginatedItems.value))
+const paginatedItemsWithoutGroups = computed(() => items);
+
+const {
+    selected,
+    isSelected,
+    select,
+    selectAll,
+    toggleSelect,
+    someSelected,
+    allSelected,
+} = provideSelection(props, { allItems: items, currentPage: paginatedItemsWithoutGroups });
+
+const flatItems = computed(() => items);
 
 const {
     containerRef,
@@ -35,18 +53,20 @@ const {
     handleItemResize,
     handleScroll,
     handleScrollend,
-} = useVirtual(props, flatItems);
+} = useVirtual(props, toRef(flatItems.value));
 
 const displayItems = computed(() => {
     return computedItems.value;
 });
 
 const totalColumns = computed(() => {
-    return columns.value.length;
+    return columns.value.length + (props.showSelect ? 1 : 0);
 });
+
 </script>
 
 <template>
+    {{ selected }}
     <div
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
@@ -57,7 +77,8 @@ const totalColumns = computed(() => {
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
             <table>
-                <tbody role="rowgroup">
+                <slot name="colgroup" />
+                <tbody class="ev-data-table--tbody" role="rowgroup">
                     <tr
                         ref="markerRef"
                         class="ev-data-table--spacer-above"
@@ -72,9 +93,9 @@ const totalColumns = computed(() => {
                         renderless
                         @update:height="(h) => handleItemResize(item.index, h)">
                         <template #default="{ itemRef }">
-                            <tr v-bind="{ ref: itemRef }">
-                                <td>{{ item.raw.name }}</td>
-                            </tr>
+                            <ev-data-table-row v-bind="{ ref: itemRef, item: item.raw, index: item.index }">
+
+                            </ev-data-table-row>
                         </template>
                     </ev-virtual-scroll-item>
                     <tr

@@ -1,6 +1,6 @@
 import { DataTableItemProps } from "./items.ts";
-import { EventProp, isDeepEqual, wrapInArray } from "@/util";
-import { computed, inject, InjectionKey, provide, Ref } from "vue";
+import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
+import { computed, inject, InjectionKey, PropType, provide, Ref } from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 
 export interface SelectableItem {
@@ -68,6 +68,25 @@ const allSelectStrategy: DataTableSelectStrategy = {
     selectAll: ({ value, allItems, selected }) =>
         allSelectStrategy.select({ items: allItems, value, selected }),
 };
+
+export const makeDataTableSelectProps = propsFactory(
+    {
+        showSelect: Boolean,
+        selectStrategy: {
+            type: [String, Object] as PropType<"single" | "page" | "all">,
+            default: "page",
+        },
+        modelValue: {
+            type: Array as PropType<readonly any[]>,
+            default: () => [],
+        },
+        valueComparator: {
+            type: Function as PropType<typeof isDeepEqual>,
+            default: isDeepEqual,
+        },
+    },
+    "DataTable-select",
+);
 
 export const EvDataTableSelectionSymbol: InjectionKey<
     ReturnType<typeof provideSelection>
@@ -165,6 +184,7 @@ export function provideSelection(
     });
 
     const data = {
+        selected,
         toggleSelect,
         select,
         selectAll,

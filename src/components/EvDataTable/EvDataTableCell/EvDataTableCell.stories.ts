@@ -55,16 +55,16 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-            <ev-data-table>
-                <ev-data-table-row>
+            <table>
+                <tr>
                     <ev-data-table-cell v-bind="args">
                         Content here
                     </ev-data-table-cell>
                     <ev-data-table-cell>
                         Default no mods.
                     </ev-data-table-cell>
-                </ev-data-table-row>
-            </ev-data-table>
+                </tr>
+            </table>
         `,
     }),
 };

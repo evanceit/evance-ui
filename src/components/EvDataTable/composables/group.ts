@@ -9,8 +9,8 @@ import {
     Ref,
 } from "vue";
 import { SortItem } from "./sort.ts";
-import { DataTableItem } from "@/components/EvDataTable/composables/items.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
+import { DataTableItem } from "@/components/EvDataTable/composables/types.ts";
 
 export interface GroupableItem<T = any> {
     type: "item";
