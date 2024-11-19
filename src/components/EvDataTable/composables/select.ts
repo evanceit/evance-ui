@@ -1,6 +1,6 @@
 import { DataTableItemProps } from "./items.ts";
 import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
-import { computed, inject, InjectionKey, PropType, provide, Ref } from "vue";
+import {computed, inject, InjectionKey, nextTick, PropType, provide, ref, Ref} from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 
 export interface SelectableItem {
@@ -99,6 +99,8 @@ export function provideSelection(
         currentPage,
     }: { allItems: Ref<SelectableItem[]>; currentPage: Ref<SelectableItem[]> },
 ) {
+    const lastToggledItem = ref<SelectableItem | null>(null);
+
     const selected = useModelProxy(
         props,
         "modelValue",
@@ -122,6 +124,7 @@ export function provideSelection(
     const allSelectable = computed(() =>
         allItems.value.filter((item) => item.selectable),
     );
+
     const currentPageSelectable = computed(() =>
         currentPage.value.filter((item) => item.selectable),
     );
@@ -161,11 +164,41 @@ export function provideSelection(
         });
     }
 
-    function toggleSelect(item: SelectableItem) {
-        select([item], !isSelected([item]));
+    function toggleSelect(item: SelectableItem, shiftPressed: boolean = false) {
+        const isItemSelected = isSelected([item]);
+        if (lastToggledItem.value && shiftPressed) {
+            const lastIndex = allSelectable.value.findIndex((v) => {
+                return props.valueComparator(v, lastToggledItem.value);
+            });
+            const currentIndex = allSelectable.value.findIndex((v) => {
+                return props.valueComparator(v, item);
+            });
+            if (lastIndex === -1 || currentIndex === -1) {
+                select([item], !isSelected([item]));
+                lastToggledItem.value = selected.value.size > 0 ? item : null;
+                return;
+            }
+            const [start, end] =
+                lastIndex < currentIndex
+                    ? [lastIndex, currentIndex]
+                    : [currentIndex, lastIndex];
+            const rangeItems = allSelectable.value.slice(start, end + 1);
+            const isLastSelected = isSelected([lastToggledItem.value]);
+            const allOpposite = rangeItems.filter(
+                (i) => isSelected([i]) !== isLastSelected,
+            );
+            select(allOpposite, isLastSelected);
+            if (isLastSelected === isItemSelected) {
+                select([item], !isItemSelected);
+            }
+        } else {
+            select([item], !isSelected([item]));
+        }
+        lastToggledItem.value = selected.value.size > 0 ? item : null;
     }
 
     function selectAll(value: boolean) {
+        lastToggledItem.value = null;
         selected.value = selectStrategy.value.selectAll({
             value,
             allItems: allSelectable.value,

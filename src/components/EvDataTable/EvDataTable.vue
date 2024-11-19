@@ -66,7 +66,6 @@ const totalColumns = computed(() => {
 </script>
 
 <template>
-    {{ selected }}
     <div
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
