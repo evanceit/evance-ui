@@ -53,6 +53,9 @@ function getInputElement(): HTMLInputElement | null {
  */
 function onInput(e: Event) {
     isChecked.value = (e.target as HTMLInputElement).checked;
+    if (indeterminate.value) {
+        indeterminate.value = false;
+    }
 }
 
 /**
@@ -66,11 +69,6 @@ defineExpose({
     ...formField.expose(),
 });
 
-watch(formField.model, () => {
-    if (indeterminate.value) {
-        indeterminate.value = false;
-    }
-});
 </script>
 
 <template>

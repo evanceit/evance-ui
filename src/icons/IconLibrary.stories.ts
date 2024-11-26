@@ -4,7 +4,7 @@ import * as BrandIcons from "@/icons/brand";
 import * as EditorIcons from "@/icons/editor";
 import { computed, shallowRef } from "vue";
 import "./IconLibrary.scss";
-import { EvTextfield, EvIcon } from "@/components";
+import { EvTextfield, EvIcon, EvCode } from "@/components";
 
 const getIcons = (iconList: {}) => {
     return Object.entries(iconList).map(([name, glyph]) => ({ name, glyph }));
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof EvIcon>;
 export const GenericIconLibrary: Story = {
     name: "Generic Icons",
     render: () => ({
-        components: { EvIcon, EvTextfield },
+        components: { EvIcon, EvTextfield, EvCode },
         setup() {
             const icons = getIcons(GenericIcons);
             const iconName = shallowRef("");
@@ -45,7 +45,7 @@ export const GenericIconLibrary: Story = {
                         <ev-icon :glyph="icon.glyph" />
                     </div>
                     <div class="icon-item--label">
-                        {{ icon.name }}
+                        <ev-code :text="icon.name" />
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@ export const GenericIconLibrary: Story = {
 export const EditorIconLibrary: Story = {
     name: "Editor Icons",
     render: () => ({
-        components: { EvIcon, EvTextfield },
+        components: { EvIcon, EvTextfield, EvCode },
         setup() {
             const icons = getIcons(EditorIcons);
             const iconName = shallowRef("");
@@ -80,7 +80,7 @@ export const EditorIconLibrary: Story = {
                         <ev-icon :glyph="icon.glyph" />
                     </div>
                     <div class="icon-item--label">
-                        {{ icon.name }}
+                        <ev-code :text="icon.name" />
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ export const EditorIconLibrary: Story = {
 export const BrandIconLibrary: Story = {
     name: "Brand Icons",
     render: () => ({
-        components: { EvIcon, EvTextfield },
+        components: { EvIcon, EvTextfield, EvCode },
         setup() {
             const icons = getIcons(BrandIcons);
             const iconName = shallowRef("");
@@ -115,7 +115,7 @@ export const BrandIconLibrary: Story = {
                         <ev-icon :glyph="icon.glyph" />
                     </div>
                     <div class="icon-item--label">
-                        {{ icon.name }}
+                        <ev-code :text="icon.name" />
                     </div>
                 </div>
             </div>

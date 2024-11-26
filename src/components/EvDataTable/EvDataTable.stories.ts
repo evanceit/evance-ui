@@ -150,7 +150,6 @@ export const Primary: Story = {
             return { args, headers, selected };
         },
         template: `
-            {{ selected }}
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-data-table v-bind="args" :items="items" :headers="headers" v-model="selected">
 

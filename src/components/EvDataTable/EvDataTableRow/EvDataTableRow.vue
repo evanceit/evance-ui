@@ -23,28 +23,35 @@ const { columns } = useHeaders();
 
 const item = props.item;
 
+const isItemSelected = computed(() => isSelected(item));
+
 function onCheckboxClick(e: PointerEvent) {
     toggleSelect(item, e.shiftKey);
 }
-
-const isItemSelected = computed(() => isSelected(item));
-
 </script>
 
 <template>
-
     <tr
-        :class="['ev-data-table-row', { 'is-clickable': isClickable }]"
+        :class="[
+            'ev-data-table-row',
+            {
+                'is-clickable': isClickable,
+                'is-selected': isItemSelected,
+            },
+        ]"
         @click="props.onClick"
         @contextmenu="props.onContextmenu"
         @dblclick="props.onClick">
-
         <ev-data-table-cell>
-            <ev-checkbox :model-value="isItemSelected" @click.stop="onCheckboxClick" />
+            <ev-checkbox
+                :model-value="isItemSelected"
+                @click.stop="onCheckboxClick" />
         </ev-data-table-cell>
 
         <slot name="default" v-bind="{ item }">
-            <ev-data-table-cell v-for="column in columns" :key="`item-${index}-${column.key}`">
+            <ev-data-table-cell
+                v-for="column in columns"
+                :key="`item-${index}-${column.key}`">
                 {{ item.raw[column.key] }}
             </ev-data-table-cell>
         </slot>

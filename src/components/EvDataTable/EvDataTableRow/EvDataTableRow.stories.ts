@@ -27,8 +27,8 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-            <table>
+            <ev-data-table>
                 <ev-data-table-row v-bind="args" />
-            </table>`,
+            </ev-data-table>`,
     }),
 };

@@ -11,6 +11,7 @@ import {createGroupBy, provideGroupBy} from "@/components/EvDataTable/composable
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
 import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
 import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
+import {EvDataTableSearch} from "@/components/EvDataTable/EvDataTableSearch";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -30,7 +31,7 @@ const { items } = useDataTableItems(props, columns);
 
 // const { sortByWithGroups, opened, extractRows, isGroupOpen, toggleGroup } = provideGroupBy({ groupBy, sortBy });
 // const paginatedItemsWithoutGroups = computed(() => extractRows(paginatedItems.value))
-const paginatedItemsWithoutGroups = computed(() => items);
+const paginatedItemsWithoutGroups = computed(() => items.value);
 
 const {
     selected,
@@ -69,7 +70,9 @@ const totalColumns = computed(() => {
     <div
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
-        <div>This is above the scrollable area</div>
+        <div>
+            <ev-data-table-search />
+        </div>
         <div
             ref="containerRef"
             class="ev-data-table--wrapper"

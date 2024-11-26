@@ -1,3 +1,13 @@
 .ev-data-table-row {
 
+    &.is-selected {
+        background: var(--background-selected);
+    }
+
+    &.is-clickable {
+        &:hover {
+            background: var(--background-neutral-subtle-hovered);
+        }
+    }
+
 }

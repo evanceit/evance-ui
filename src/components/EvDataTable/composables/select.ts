@@ -1,6 +1,6 @@
 import { DataTableItemProps } from "./items.ts";
 import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
-import {computed, inject, InjectionKey, nextTick, PropType, provide, ref, Ref} from "vue";
+import { computed, inject, InjectionKey, PropType, provide, ref, Ref} from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 
 export interface SelectableItem {

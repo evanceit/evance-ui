@@ -18,6 +18,7 @@ import {
     useSortOptions,
 } from "@/components/EvDataTable/composables/sort.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useSelection } from "@/components/EvDataTable/composables/select.ts";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
 const emit = defineEmits(["update:sort", "click:filter", "update:search"]);
@@ -37,6 +38,13 @@ const {
     sortIcon,
 } = useSortOptions(props as SortProps);
 
+const {
+    allSelected,
+    someSelected,
+    selectAll,
+    showSelectAll,
+} = useSelection();
+
 function onClickFilter(e: MouseEvent) {
     emit("click:filter", e);
 }
@@ -48,8 +56,11 @@ const placeholder = computed(() =>
 
 <template>
     <div class="ev-data-table-search">
-        <div v-if="props.selectable" class="ev-data-table-search--checkbox">
-            <ev-checkbox />
+        <div v-if="showSelectAll" class="ev-data-table-search--checkbox">
+            <ev-checkbox
+                :model-value="allSelected"
+                :indeterminate="someSelected && !allSelected"
+                @update:model-value="selectAll" />
         </div>
         <div class="ev-data-table-search--field">
             <ev-textfield
