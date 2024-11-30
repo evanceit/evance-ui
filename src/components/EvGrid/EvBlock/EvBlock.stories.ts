@@ -186,7 +186,7 @@ export const WithinADefaultLayout: Story = {
         },
         template: `
             <ev-layout style="height: 300px;">
-                <ev-block v-bind="args" style="background: var(--background-neutral)">
+                <ev-block v-bind="args" style="background: var(--fill-neutral)">
                     <h3>Try me</h3>
                     <p>This block has a muted background colour to help visualise changes to the settings below.</p>
                     <p>Responsive settings will require you to resize your browser window to see their effect.</p>

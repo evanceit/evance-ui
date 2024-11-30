@@ -40,11 +40,11 @@ $indicator-width: 3px;
         &:focus-visible,
         &:hover {
             color: inherit;
-            background: var(--background-neutral);
+            background: var(--fill-neutral);
         }
 
         &:focus-visible {
-            outline: 2px solid var(--border-focused);
+            outline: 2px solid var(--stroke-focused);
             outline-offset: 2px;
         }
     }
@@ -80,7 +80,7 @@ $indicator-width: 3px;
 
 .ev-list-item {
     &.is-active {
-        background: var(--background-selected);
+        background: var(--fill-selected);
         color: var(--text-selected);
 
         .ev-list-item--indicator {

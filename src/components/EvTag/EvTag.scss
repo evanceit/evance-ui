@@ -6,7 +6,7 @@
     display: inline-flex;
     height: var(--current-size);
     align-items: center;
-    background: var(--background-neutral);
+    background: var(--fill-neutral);
     padding-inline: calc((var(--current-size) - var(--icon-size-medium)) / 2);
     border-radius: 2px;
     gap: 2px;

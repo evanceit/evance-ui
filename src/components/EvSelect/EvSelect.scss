@@ -44,9 +44,9 @@
 
             &.is-selected {
                 .ev-tag {
-                    background: var(--background-selected);
+                    background: var(--fill-selected);
                     color: var(--text-selected);
-                    border-color: var(--border-selected);
+                    border-color: var(--stroke-selected);
                 }
             }
         }

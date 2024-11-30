@@ -111,14 +111,14 @@
 
     &.is-appearance-button {
         border-color: transparent;
-        background-color: var(--background-neutral);
+        background-color: var(--fill-neutral);
 
         &:hover {
-            background-color: var(--background-neutral-hovered);
+            background-color: var(--fill-neutral-hovered);
         }
 
         &.is-focused {
-            background-color: var(--background-neutral-hovered);
+            background-color: var(--fill-neutral-hovered);
         }
     }
 

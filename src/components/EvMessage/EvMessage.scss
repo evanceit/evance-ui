@@ -28,42 +28,42 @@
 
         &.is-appearance-default {
             --message-icon: var(--icon-color);
-            --message-background: var(--background-neutral);
+            --message-background: var(--fill-neutral);
             --message-title: var(--heading-on-muted);
         }
         &.is-appearance-primary {
             --message-icon: var(--text-brand);
-            --message-background: var(--background-brand);
+            --message-background: var(--fill-brand);
             --message-text: var(--text-on-brand);
             --message-title: var(--heading-on-brand);
         }
         &.is-appearance-danger {
             --message-icon: var(--text-danger);
-            --message-background: var(--background-danger);
+            --message-background: var(--fill-danger);
             --message-text: var(--text-on-danger);
             --message-title: var(--heading-on-danger);
         }
         &.is-appearance-information {
             --message-icon: var(--text-information);
-            --message-background: var(--background-information);
+            --message-background: var(--fill-information);
             --message-text: var(--text-on-information);
             --message-title: var(--heading-on-information);
         }
         &.is-appearance-notice {
             --message-icon: var(--text-notice);
-            --message-background: var(--background-notice);
+            --message-background: var(--fill-notice);
             --message-text: var(--text-on-notice);
             --message-title: var(--heading-on-notice);
         }
         &.is-appearance-success {
             --message-icon: var(--text-success);
-            --message-background: var(--background-success);
+            --message-background: var(--fill-success);
             --message-text: var(--text-on-success);
             --message-title: var(--heading-on-success);
         }
         &.is-appearance-warning {
             --message-icon: var(--text-warning);
-            --message-background: var(--background-warning);
+            --message-background: var(--fill-warning);
             --message-text: var(--text-on-warning);
             --message-title: var(--heading-on-warning);
         }
@@ -75,43 +75,43 @@
     &.is-variant-bold {
 
         &.is-appearance-default {
-            --message-background: var(--background-neutral-bold);
+            --message-background: var(--fill-neutral-bold);
             --message-text: var(--text-on-muted-bold);
             --message-title: var(--heading-on-muted-bold);
             --message-icon: var(--heading-on-muted-bold);
         }
         &.is-appearance-primary {
-            --message-background: var(--background-brand-bold);
+            --message-background: var(--fill-brand-bold);
             --message-text: var(--text-on-brand-bold);
             --message-title: var(--heading-on-brand-bold);
             --message-icon: var(--heading-on-brand-bold);
         }
         &.is-appearance-danger {
-            --message-background: var(--background-danger-bold);
+            --message-background: var(--fill-danger-bold);
             --message-text: var(--text-on-danger-bold);
             --message-title: var(--heading-on-danger-bold);
             --message-icon: var(--heading-on-danger-bold);
         }
         &.is-appearance-information {
-            --message-background: var(--background-information-bold);
+            --message-background: var(--fill-information-bold);
             --message-text: var(--text-on-information-bold);
             --message-title: var(--heading-on-information-bold);
             --message-icon: var(--heading-on-information-bold);
         }
         &.is-appearance-notice {
-            --message-background: var(--background-notice-bold);
+            --message-background: var(--fill-notice-bold);
             --message-text: var(--text-on-notice-bold);
             --message-title: var(--heading-on-notice-bold);
             --message-icon: var(--heading-on-notice-bold);
         }
         &.is-appearance-success {
-            --message-background: var(--background-success-bold);
+            --message-background: var(--fill-success-bold);
             --message-text: var(--text-on-success-bold);
             --message-title: var(--heading-on-success-bold);
             --message-icon: var(--heading-on-success-bold);
         }
         &.is-appearance-warning {
-            --message-background: var(--background-warning-bold);
+            --message-background: var(--fill-warning-bold);
             --message-text: var(--text-on-warning-bold);
             --message-title: var(--heading-on-warning-bold);
             --message-icon: var(--heading-on-warning-bold);

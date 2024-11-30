@@ -11,7 +11,7 @@
 
     &.is-clickable {
         &:focus-visible {
-            outline: 2px solid var(--border-focused);
+            outline: 2px solid var(--stroke-focused);
             outline-offset: 2px;
         }
     }

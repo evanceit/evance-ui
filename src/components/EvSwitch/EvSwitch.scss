@@ -139,7 +139,7 @@
 .ev-switch {
     &.is-focused-visible {
         .ev-switch--track {
-            outline: 2px solid var(--border-focused);
+            outline: 2px solid var(--stroke-focused);
             outline-offset: 2px;
         }
     }

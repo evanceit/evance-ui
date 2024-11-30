@@ -24,35 +24,35 @@
     &.is-appearance-danger {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-danger-bold);
+            color: var(--fill-danger-bold);
         }
     }
     /* information */
     &.is-appearance-information {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-information-bold);
+            color: var(--fill-information-bold);
         }
     }
     /* notice */
     &.is-appearance-notice {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-notice-bold);
+            color: var(--fill-notice-bold);
         }
     }
     /* success */
     &.is-appearance-success {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-success-bold);
+            color: var(--fill-success-bold);
         }
     }
     /* warning */
     &.is-appearance-warning {
         .ev-progress-circular--track,
         .ev-progress-circular--bar {
-            color: var(--background-warning-bold);
+            color: var(--fill-warning-bold);
         }
     }
 }

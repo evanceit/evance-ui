@@ -21,7 +21,7 @@
     user-select: none;
 
     &:focus-visible {
-        outline: 2px solid var(--border-focused);
+        outline: 2px solid var(--stroke-focused);
         outline-offset: 2px;
     }
 
@@ -101,23 +101,23 @@
 
     /* Inverse */
     &.is-appearance-inverse {
-        --button-appearance-background: var(--background-inverse);
+        --button-appearance-background: var(--fill-inverse);
         &:hover {
-            --button-appearance-background: var(--background-inverse-hovered);
+            --button-appearance-background: var(--fill-inverse-hovered);
         }
         &:active {
-            --button-appearance-background: var(--background-inverse-pressed);
+            --button-appearance-background: var(--fill-inverse-pressed);
         }
 
         &.is-variant-bold {
             color: var(--text-on-inverse);
-            --button-appearance-background: var(--background-inverse-bold);
+            --button-appearance-background: var(--fill-inverse-bold);
 
             &:hover {
-                --button-appearance-background: var(--background-inverse-bold-hovered);
+                --button-appearance-background: var(--fill-inverse-bold-hovered);
             }
             &:active {
-                --button-appearance-background: var(--background-inverse-bold-pressed);
+                --button-appearance-background: var(--fill-inverse-bold-pressed);
             }
         }
     }

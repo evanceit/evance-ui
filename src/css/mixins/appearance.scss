@@ -12,30 +12,30 @@ $outline: 1px;
 /* Default */
 @mixin appearance-default($prefix, $maybeClickable: false) {
     &.is-appearance-default {
-        --#{$prefix}-appearance-background: var(--background-neutral);
+        --#{$prefix}-appearance-background: var(--fill-neutral);
 
         @if $maybeClickable {
             &.is-clickable {
                 &:hover {
-                    --#{$prefix}-appearance-background: var(--background-neutral-hovered);
+                    --#{$prefix}-appearance-background: var(--fill-neutral-hovered);
                 }
                 &:active {
-                    --#{$prefix}-appearance-background: var(--background-neutral-pressed);
+                    --#{$prefix}-appearance-background: var(--fill-neutral-pressed);
                 }
             }
         }
 
         &.is-variant-bold {
-            --#{$prefix}-appearance-background: var(--background-neutral-bold);
+            --#{$prefix}-appearance-background: var(--fill-neutral-bold);
             --#{$prefix}-appearnce-color: var(--text-inverse);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        --#{$prefix}-appearance-background: var(--background-neutral-bold-hovered);
+                        --#{$prefix}-appearance-background: var(--fill-neutral-bold-hovered);
                     }
 
                     &:active {
-                        --#{$prefix}-appearance-background: var(--background-neutral-bold-pressed);
+                        --#{$prefix}-appearance-background: var(--fill-neutral-bold-pressed);
                     }
                 }
             }
@@ -43,22 +43,22 @@ $outline: 1px;
 
         &.is-variant-outlined {
             --#{$prefix}-appearance-background: transparent;
-            --#{$prefix}-appearance-border: #{$outline} solid var(--background-neutral-bold);
+            --#{$prefix}-appearance-border: #{$outline} solid var(--fill-neutral-bold);
 
             &.is-active {
-                --#{$prefix}-appearance-background: var(--background-neutral);
+                --#{$prefix}-appearance-background: var(--fill-neutral);
             }
         }
 
         &.is-variant-subtle {
-            --#{$prefix}-appearance-background: var(--background-neutral-subtle);
+            --#{$prefix}-appearance-background: var(--fill-neutral-subtle);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        --#{$prefix}-appearance-background: var(--background-neutral-subtle-hovered);
+                        --#{$prefix}-appearance-background: var(--fill-neutral-subtle-hovered);
                     }
                     &:active {
-                        --#{$prefix}-appearance-background: var(--background-neutral-subtle-pressed);
+                        --#{$prefix}-appearance-background: var(--fill-neutral-subtle-pressed);
                     }
                 }
             }

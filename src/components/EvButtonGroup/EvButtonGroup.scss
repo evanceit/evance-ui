@@ -44,25 +44,25 @@
 .ev-button-group {
     &.is-variant-outlined {
         &.is-appearance-default {
-            border: 1px solid var(--border-input);
+            border: 1px solid var(--stroke-input);
         }
         &.is-appearance-danger {
-            border: 1px solid var(--background-danger-bold);
+            border: 1px solid var(--fill-danger-bold);
         }
         &.is-appearance-information {
-            border: 1px solid var(--background-information-bold);
+            border: 1px solid var(--fill-information-bold);
         }
         &.is-appearance-notice {
-            border: 1px solid var(--background-notice-bold);
+            border: 1px solid var(--fill-notice-bold);
         }
         &.is-appearance-primary {
-            border: 1px solid var(--background-brand-bold);
+            border: 1px solid var(--fill-brand-bold);
         }
         &.is-appearance-success {
-            border: 1px solid var(--background-success-bold);
+            border: 1px solid var(--fill-success-bold);
         }
         &.is-appearance-warning {
-            border: 1px solid var(--background-warning-bold);
+            border: 1px solid var(--fill-warning-bold);
         }
         .ev-button-group--container {
             margin: -1px;
