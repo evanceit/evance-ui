@@ -155,9 +155,6 @@
 
     /* Input */
     --input-background: transparent;
-    --input-border-color: #{settings.token('neutral.300A')};
-    --input-border-color-error: #{settings.token('red.600')};
-    --input-border-color-focus: #{settings.token('purple.600')};
     --input-shadow-error: 0 0 0 5px rgba(240,65,65,0.1), 0 0 0 1px rgba(240,65,65,0.75);
     --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
     --input-focus-background: var(--fill-brand);
@@ -311,9 +308,6 @@
 
     /* Input */
     --input-background: transparent;
-    --input-border-color: #{settings.token('dark-neutral.400A')};
-    --input-border-color-error: #{settings.token('red.500')};
-    --input-border-color-focus: #{settings.token('purple.500')};
     --input-shadow-error: 0 0 0 5px rgba(255,97,97,0.1), 0 0 0 1px rgba(255,97,97,0.75);
     --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
     --input-focus-background: var(--fill-brand);

@@ -158,11 +158,11 @@
         border-color: transparent;
 
         &:hover {
-            border-color: var(--input-border-color);
+            border-color: var(--stroke-input);
         }
 
         &.is-focused {
-            border-color: var(--input-border-color-focus);
+            border-color: var(--stroke-focused);
         }
     }
 
@@ -177,7 +177,7 @@
 .ev-textfield {
     &.is-focused {
         .ev-textfield--control {
-            border-color: var(--input-border-color-focus);
+            border-color: var(--stroke-focused);
             box-shadow: var(--input-shadow-focus);
         }
     }
@@ -196,7 +196,7 @@
 .ev-textfield {
     &.is-error {
         .ev-textfield--control {
-            border-color: var(--input-border-color-error);
+            border-color: var(--stroke-danger);
         }
 
         &.is-focused {

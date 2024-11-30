@@ -77,7 +77,7 @@
 }
 
 .ev-radio--outer-circle {
-    border: 2px solid var(--input-border-color);
+    border: 2px solid var(--stroke-input);
     transition: transform 0.25s cubic-bezier(.5,.32,.38,1.22),
                 border-color 0.25s ease-in-out;
     width: 22px;
@@ -142,10 +142,10 @@
 .ev-radio {
     &.is-error {
         .ev-radio--outer-circle {
-            border-color: var(--input-border-color-error);
+            border-color: var(--stroke-danger);
         }
         .ev-radio--inner-circle {
-            background-color: var(--input-border-color-error);
+            background-color: var(--fill-danger-bold);
         }
     }
 }

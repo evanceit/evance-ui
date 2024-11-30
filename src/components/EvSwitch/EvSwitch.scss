@@ -27,7 +27,7 @@
 
 /** Track */
 .ev-switch--track {
-    background: var(--input-border-color);
+    background: var(--stroke-input);
     border-radius: 999px;
     display: inline-flex;
     height: 1.5em;
@@ -159,11 +159,11 @@
     &.is-error {
 
         .ev-switch--track {
-            outline: 2px solid var(--input-border-color-error);
+            outline: 2px solid var(--stroke-danger);
             outline-offset: 2px;
 
             &:after {
-                background: var(--input-border-color-error);
+                background: var(--fill-danger-bold);
             }
         }
     }
