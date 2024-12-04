@@ -7,11 +7,12 @@ import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
-import {createGroupBy, provideGroupBy} from "@/components/EvDataTable/composables/group.ts";
+import { createGroupBy, provideGroupBy } from "@/components/EvDataTable/composables/group.ts";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
 import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
 import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
-import {EvDataTableSearch} from "@/components/EvDataTable/EvDataTableSearch";
+import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -64,6 +65,7 @@ const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
 });
 
+const sort = useModelProxy(props, "sort");
 </script>
 
 <template>
@@ -71,7 +73,9 @@ const totalColumns = computed(() => {
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
         <div>
-            <ev-data-table-search />
+            <ev-data-table-search
+                v-model:sort="sort"
+                :sort-options="props.sortOptions" />
         </div>
         <div
             ref="containerRef"

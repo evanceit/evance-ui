@@ -7,9 +7,11 @@ import { makeDataTableExpandProps } from "./composables/expand.ts";
 import { makeDataTableGroupProps } from "./composables/group.ts";
 import { makeDataTableHeaderProps } from "./composables/headers.ts";
 import { makeDataTableSelectProps } from "./composables/select.ts";
+import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 
 export const makeEvDataTableProps = propsFactory(
     {
+        ...makeEvDataTableSearchProps(),
         ...makeDataTableExpandProps(),
         ...makeDataTableGroupProps(),
         ...makeDataTableHeaderProps(),

@@ -11,3 +11,16 @@
     }
 
 }
+
+/**
+    # Checkbox
+
+    The width of the checkbox should be the width of the checkbox control
+    plus twice the padding-inline of `.ev-data-table-search`.
+    The resulting value should match the height of `.ev-data-table-search`.
+ */
+.ev-data-table-row--checkbox {
+    padding-block: 0 !important;
+    padding-inline: var(--spacer-100) !important;
+    width: 56px;
+}

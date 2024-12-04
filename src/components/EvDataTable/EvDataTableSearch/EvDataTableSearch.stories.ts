@@ -36,7 +36,6 @@ const meta: Meta<typeof EvDataTableSearch> = {
         },
     },
     args: {
-        selectable: true,
         sort: undefined,
         placeholder: undefined,
     },

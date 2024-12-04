@@ -7,6 +7,7 @@ import {
 } from "@/components/EvDataTable";
 import { EvSurface } from "@/components";
 import {ref, shallowRef} from "vue";
+import {SortOption} from "@/components/EvDataTable/composables/sort.ts";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
@@ -16,9 +17,37 @@ const meta: Meta<typeof EvDataTable> = {
             options: [null, 400, 500, "100%"],
             description: "Optional height of the overall table",
         },
+        selectStrategy: {
+            control: "select",
+            options: ["single", "page", "all"],
+            description: `Selection strategy:
+                <ul>
+                    <li>\`single\`</li>
+                    <li>\`page\`</li>
+                    <li>\`all\`</li>
+                </ul>
+            `,
+        },
+        sort: {
+            description:
+                "The currently selected sort choice. Required if using sorting. " +
+                "Accepts a `string[]` with a single value, which must be an available `value` in `sort-options`.",
+        },
+        sortOptions: {
+            description: `An array of \`SortOption\` items with the following properties:
+                <ul>
+                    <li>\`title\` - the text title to display to the user.</li>
+                    <li>\`value\` - a string value to use in your API (must end with either \`asc\` or \`desc\`).</li>
+                    <li>\`direction\` (optional) - the text to display in direction selection (defaults to Ascending or Descending).</li>
+                    <li>\`disabled\` (optional) - a boolean when set to true disabled option selection</li>
+                </ul>
+                If no options are supplied sorting will not be shown.
+            `,
+        },
     },
     args: {
         height: "100%",
+        selectStrategy: "page",
     },
     tags: ["autodocs"],
 };
@@ -111,8 +140,49 @@ export const Primary: Story = {
                 return boat;
             });
 
+            const sort = ref(["quickfind:desc"]);
+            const sortOptions: SortOption[] = [
+                {
+                    title: "Quickfind",
+                    direction: "Ascending",
+                    value: "quickfind:asc",
+                },
+                {
+                    title: "Quickfind",
+                    direction: "Descending",
+                    value: "quickfind:desc",
+                },
+                {
+                    title: "Order Date",
+                    direction: "Oldest to Newest",
+                    value: "ordered:asc",
+                },
+                {
+                    title: "Order Date",
+                    direction: "Newest to Oldest",
+                    value: "ordered:desc",
+                },
+                {
+                    title: "Dispatch Date",
+                    direction: "A-Z",
+                    value: "dispatch:asc"
+                },
+                {
+                    title: "Dispatch Date",
+                    direction: "Z-A",
+                    value: "dispatch:desc",
+                    disabled: true,
+                },
+                {
+                    title: "Relevance",
+                    value: "relevance:desc",
+                },
+            ];
+
             return {
                 items,
+                sort,
+                sortOptions,
             };
         },
         setup() {
@@ -147,11 +217,23 @@ export const Primary: Story = {
 
             const selected = ref([]);
 
-            return { args, headers, selected };
+            function onSort(e) {
+                console.log(e);
+            }
+
+            return { args, headers, selected, onSort };
         },
         template: `
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
-                <ev-data-table v-bind="args" :items="items" :headers="headers" v-model="selected">
+                <ev-data-table 
+                    v-bind="args" 
+                    :items="items" 
+                    :headers="headers"
+                    v-model:sort="sort"
+                    :sort-options="sortOptions"
+                    v-model="selected"
+                    @update:sort="onSort"
+                >
 
                 </ev-data-table>
             </ev-surface>

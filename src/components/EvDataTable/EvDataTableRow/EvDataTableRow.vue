@@ -42,7 +42,7 @@ function onCheckboxClick(e: PointerEvent) {
         @click="props.onClick"
         @contextmenu="props.onContextmenu"
         @dblclick="props.onClick">
-        <ev-data-table-cell>
+        <ev-data-table-cell class="ev-data-table-row--checkbox">
             <ev-checkbox
                 :model-value="isItemSelected"
                 @click.stop="onCheckboxClick" />

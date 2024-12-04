@@ -5,8 +5,8 @@
 :root {
 
     /* Font Stacks */
-    --system-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
-    --monospace-font: ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace;
+    --typeface: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+    --typeface-monospace: ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace;
 
     /* Font weights */
     --font-weight-regular: 400;
@@ -52,7 +52,7 @@
     /* Text */
     --heading-lineheight: 1.25em;
     --heading-style: normal;
-    --heading-typeface: var(--system-font);
+    --heading-typeface: var(--typeface);
     --heading-weight: 500;
     --heading-weight-bold: 800;
     @each $key, $value in settings.$headings {
@@ -66,7 +66,7 @@
         --text-size-#{$key}: #{scalable($min, $max, settings.$scale-from, settings.$scale-to)};
     }
     --text-eyebrow-transform: uppercase;
-    --text-eyebrow-typeface: var(--system-font);
+    --text-eyebrow-typeface: var(--typeface);
     --text-eyebrow-weight: 700;
     --text-weight: 400;
     --text-weight-bold: 700;

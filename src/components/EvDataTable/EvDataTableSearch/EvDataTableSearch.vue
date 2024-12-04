@@ -38,12 +38,7 @@ const {
     sortIcon,
 } = useSortOptions(props as SortProps);
 
-const {
-    allSelected,
-    someSelected,
-    selectAll,
-    showSelectAll,
-} = useSelection();
+const { allSelected, someSelected, selectAll, showSelectAll } = useSelection();
 
 function onClickFilter(e: MouseEvent) {
     emit("click:filter", e);
