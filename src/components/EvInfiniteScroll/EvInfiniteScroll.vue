@@ -6,7 +6,7 @@ import {
     makeEvInfiniteScrollProps,
 } from "./EvInfiniteScroll.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
-import { computed, nextTick, onMounted, ref, shallowRef } from "vue";
+import {computed, nextTick, onMounted, ref, shallowRef, toRef} from "vue";
 import { toWebUnit } from "@/util";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";
 import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteScrollIntersect.vue";
@@ -35,6 +35,8 @@ const endStatus = shallowRef<InfiniteScrollStatus>("ok");
 const margin = computed(() => toWebUnit(props.margin));
 const isIntersecting = shallowRef(false);
 let previousScrollSize = 0;
+
+const isDisabled = toRef(props, "disabled");
 
 const hasStartIntersect = computed(() => {
     return props.side === "start" || props.side === "both";
@@ -81,7 +83,7 @@ function getStatus(side: string) {
 
 function handleIntersect(side: InfiniteScrollSide, _isIntersecting: boolean) {
     isIntersecting.value = _isIntersecting;
-    if (isIntersecting.value) {
+    if (isIntersecting.value && !isDisabled.value) {
         intersecting(side);
     }
 }
@@ -178,7 +180,7 @@ const sideProps = computed(() => ({
         ]"
         :style="[dimensions]">
         <ev-infinite-scroll-side
-            v-if="['start', 'both'].includes(props.side)"
+            v-if="['start', 'both'].includes(props.side) && !isDisabled"
             side="start"
             v-bind="sideProps"
             :status="startStatus"
@@ -198,7 +200,7 @@ const sideProps = computed(() => ({
         </ev-infinite-scroll-side>
 
         <ev-infinite-scroll-intersect
-            v-if="rootEl && hasStartIntersect && intersectMode"
+            v-if="rootEl && hasStartIntersect && intersectMode && !isDisabled"
             key="start"
             side="start"
             :root-ref="rootEl"
@@ -208,7 +210,7 @@ const sideProps = computed(() => ({
         <slot name="default" />
 
         <ev-infinite-scroll-intersect
-            v-if="rootEl && hasEndIntersect && intersectMode"
+            v-if="rootEl && hasEndIntersect && intersectMode && !isDisabled"
             key="end"
             side="end"
             :root-ref="rootEl"
@@ -216,7 +218,7 @@ const sideProps = computed(() => ({
             @intersect="handleIntersect" />
 
         <ev-infinite-scroll-side
-            v-if="['end', 'both'].includes(props.side)"
+            v-if="['end', 'both'].includes(props.side) && !isDisabled"
             side="end"
             v-bind="sideProps"
             :status="endStatus"

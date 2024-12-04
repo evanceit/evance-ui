@@ -173,7 +173,7 @@ export const Primary: Story = {
                 },
             ];
 
-            const items = [...Array(500).keys()].map((i) => {
+            const items = [...Array(50).keys()].map((i) => {
                 const boat = { ...boats[i % boats.length] };
                 boat.id = i + 1;
                 boat.name = `${boat.name} #${i}`;

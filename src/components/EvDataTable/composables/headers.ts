@@ -87,21 +87,6 @@ function extractLeaves(
     return columns;
 }
 
-function extractKeys(
-    headers: DeepReadonly<DataTableHeader[]>,
-    keys = new Set<string>(),
-) {
-    for (const item of headers) {
-        if (item.key) {
-            keys.add(item.key);
-        }
-        if (item.children) {
-            extractKeys(item.children, keys);
-        }
-    }
-    return keys;
-}
-
 function getDepth(item: InternalDataTableHeader, depth = 0): number {
     if (!item.children) {
         return depth;

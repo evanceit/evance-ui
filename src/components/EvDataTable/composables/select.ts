@@ -1,6 +1,15 @@
 import { DataTableItemProps } from "./items.ts";
 import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
-import {computed, inject, InjectionKey, PropType, provide, ref, Ref, toRef} from "vue";
+import {
+    computed,
+    inject,
+    InjectionKey,
+    PropType,
+    provide,
+    ref,
+    Ref,
+    toRef,
+} from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 
 export interface SelectableItem {
@@ -30,7 +39,7 @@ export interface DataTableSelectStrategy {
 type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
     modelValue: readonly any[];
     selectStrategy: "single" | "page" | "all";
-    showSelect: boolean,
+    showSelect: boolean;
     valueComparator: typeof isDeepEqual;
     "onUpdate:modelValue": EventProp<[any[]]> | undefined;
 };

@@ -7,6 +7,10 @@ import { EvListItem, EvVirtualScroll } from "@/components";
 const meta: Meta<typeof EvInfiniteScroll> = {
     component: EvInfiniteScroll,
     argTypes: {
+        disabled: {
+            control: "boolean",
+            description: "Disable infinite scroll.",
+        },
         mode: {
             control: "select",
             options: ["intersect", "manual"],
@@ -19,6 +23,7 @@ const meta: Meta<typeof EvInfiniteScroll> = {
         },
     },
     args: {
+        disabled: false,
         mode: "intersect",
         height: "300",
     },
@@ -34,7 +39,7 @@ export const Primary: Story = {
         components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
         setup() {
 
-            const items = ref(Array.from({ length: 100 }, (k, v) => v + 1));
+            const items = ref(Array.from({ length: 50 }, (k, v) => v + 1));
             const limit = 500;
 
             async function api() {

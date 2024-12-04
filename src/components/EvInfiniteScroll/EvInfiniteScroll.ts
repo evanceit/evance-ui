@@ -10,6 +10,7 @@ export type InfiniteScrollStatus = "ok" | "finished" | "loading" | "error";
 
 export const makeEvInfiniteScrollProps = propsFactory(
     {
+        disabled: Boolean,
         direction: {
             type: String as PropType<InfiniteScrollDirection>,
             default: "vertical",

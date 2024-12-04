@@ -37,8 +37,6 @@ const {
     allSelected,
 } = provideSelection(props, { allItems: items, currentPage: items });
 
-const flatItems = computed(() => items);
-
 const {
     containerRef,
     markerRef,
@@ -48,11 +46,7 @@ const {
     handleItemResize,
     handleScroll,
     handleScrollend,
-} = useVirtual(props, toRef(flatItems.value));
-
-const displayItems = computed(() => {
-    return computedItems.value;
-});
+} = useVirtual(props, toRef(items.value));
 
 const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
@@ -60,7 +54,6 @@ const totalColumns = computed(() => {
 
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
-
 </script>
 
 <template>
@@ -91,7 +84,7 @@ const search = useModelProxy(props, "search");
                             :style="{ height: 0, border: 0 }"></td>
                     </tr>
                     <ev-virtual-scroll-item
-                        v-for="displayItem of displayItems"
+                        v-for="displayItem of computedItems"
                         :key="displayItem.index"
                         renderless
                         @update:height="
