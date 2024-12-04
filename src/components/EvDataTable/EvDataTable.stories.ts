@@ -6,8 +6,8 @@ import {
     EvDataTableRow,
 } from "@/components/EvDataTable";
 import { EvSurface } from "@/components";
-import {ref, shallowRef} from "vue";
-import {SortOption} from "@/components/EvDataTable/composables/sort.ts";
+import { ref } from "vue";
+import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
@@ -16,6 +16,15 @@ const meta: Meta<typeof EvDataTable> = {
             control: "select",
             options: [null, 400, 500, "100%"],
             description: "Optional height of the overall table",
+        },
+        search: {
+            control: "text",
+            description: "A search string can be applied",
+        },
+        searchPlaceholder: {
+            control: "text",
+            description:
+                "The placeholder to show in the search field when empty",
         },
         selectStrategy: {
             control: "select",
@@ -47,6 +56,8 @@ const meta: Meta<typeof EvDataTable> = {
     },
     args: {
         height: "100%",
+        search: "",
+        searchPlaceholder: undefined,
         selectStrategy: "page",
     },
     tags: ["autodocs"],
@@ -165,7 +176,7 @@ export const Primary: Story = {
                 {
                     title: "Dispatch Date",
                     direction: "A-Z",
-                    value: "dispatch:asc"
+                    value: "dispatch:asc",
                 },
                 {
                     title: "Dispatch Date",
@@ -217,11 +228,15 @@ export const Primary: Story = {
 
             const selected = ref([]);
 
-            function onSort(e) {
-                console.log(e);
+            function onSearch(value) {
+                console.log(value);
             }
 
-            return { args, headers, selected, onSort };
+            function onSort(selectedSort) {
+                console.log(selectedSort);
+            }
+
+            return { args, headers, selected, onSearch, onSort };
         },
         template: `
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
@@ -229,12 +244,16 @@ export const Primary: Story = {
                     v-bind="args" 
                     :items="items" 
                     :headers="headers"
-                    v-model:sort="sort"
                     :sort-options="sortOptions"
                     v-model="selected"
+                    v-model:sort="sort"
+                    v-model:search="args.search"
+                    @update:search="onSearch"
                     @update:sort="onSort"
                 >
-
+                    <template #item="{ ref, item, index }">
+                        Price: {{ item.raw.price }}
+                    </template>
                 </ev-data-table>
             </ev-surface>
         `,

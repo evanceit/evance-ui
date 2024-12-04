@@ -45,7 +45,9 @@ function onClickFilter(e: MouseEvent) {
 }
 
 const placeholder = computed(() =>
-    props.placeholder?.length ? props.placeholder : t("search.placeholder"),
+    props.searchPlaceholder?.length
+        ? props.searchPlaceholder
+        : t("search.placeholder"),
 );
 </script>
 

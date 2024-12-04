@@ -11,7 +11,6 @@ import {
 } from "vue";
 import { GetterPropertyKey, propsFactory } from "@/util";
 import { FilterKeyFunctions } from "@/composables/filter.ts";
-import { SortOption } from "./sort.ts";
 import {
     DataTableCompareFunction,
     DataTableHeader,
@@ -19,7 +18,7 @@ import {
 } from "@/components/EvDataTable/composables/types.ts";
 
 type HeaderProps = {
-    headers: DeepReadonly<DataTableHeader[]> | undefined;
+    headers?: DeepReadonly<DataTableHeader[]> | undefined;
     items: any[];
 };
 
@@ -110,10 +109,7 @@ function getDefaultItem(item: DeepReadonly<DataTableHeader>) {
     if (!item.key) {
         return undefined;
     }
-    if (item.key === "data-table-group") {
-        return defaultHeader;
-    }
-    if (["data-table-expand", "data-table-select"].includes(item.key)) {
+    if (["data-table-select"].includes(item.key)) {
         return defaultActionHeader;
     }
     return undefined;
@@ -258,9 +254,7 @@ function convertToInternalHeaders(items: DeepReadonly<DataTableHeader[]>) {
 export function createHeaders(
     props: HeaderProps,
     options?: {
-        groupBy?: Ref<readonly SortOption[]>;
         showSelect?: Ref<boolean>;
-        showExpand?: Ref<boolean>;
     },
 ) {
     const headers = ref<InternalDataTableHeader[][]>([]);
@@ -279,16 +273,8 @@ export function createHeaders(
         const items = _headers.slice();
         const keys = extractKeys(items);
 
-        if (options?.groupBy?.value.length && !keys.has("data-table-group")) {
-            items.unshift({ key: "data-table-group", title: "Group" });
-        }
-
         if (options?.showSelect?.value && !keys.has("data-table-select")) {
             items.unshift({ key: "data-table-select" });
-        }
-
-        if (options?.showExpand?.value && !keys.has("data-table-expand")) {
-            items.push({ key: "data-table-expand" });
         }
 
         const internalHeaders = convertToInternalHeaders(items);

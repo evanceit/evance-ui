@@ -7,12 +7,11 @@ import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
-import { createGroupBy, provideGroupBy } from "@/components/EvDataTable/composables/group.ts";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
 import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
 import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
-import {useModelProxy} from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -20,19 +19,16 @@ const slots = defineSlots<{
     colgroup(): never;
 }>();
 
+defineEmits(["update:search", "update:sort"]);
+
 const dimensions = useDimensions(props);
-const { groupBy } = createGroupBy(props);
-const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props, {
-    groupBy,
-    showSelect: toRef(props, "showSelect"),
-    showExpand: toRef(props, "showExpand"),
+const { columns, headers, sortFunctions, filterFunctions } = createHeaders(
+    props,
+    {
+        showSelect: toRef(props, "showSelect"),
 });
 
 const { items } = useDataTableItems(props, columns);
-
-// const { sortByWithGroups, opened, extractRows, isGroupOpen, toggleGroup } = provideGroupBy({ groupBy, sortBy });
-// const paginatedItemsWithoutGroups = computed(() => extractRows(paginatedItems.value))
-const paginatedItemsWithoutGroups = computed(() => items.value);
 
 const {
     selected,
@@ -42,7 +38,7 @@ const {
     toggleSelect,
     someSelected,
     allSelected,
-} = provideSelection(props, { allItems: items, currentPage: paginatedItemsWithoutGroups });
+} = provideSelection(props, { allItems: items, currentPage: items });
 
 const flatItems = computed(() => items);
 
@@ -66,6 +62,7 @@ const totalColumns = computed(() => {
 });
 
 const sort = useModelProxy(props, "sort");
+const search = useModelProxy(props, "search");
 </script>
 
 <template>
@@ -74,7 +71,9 @@ const sort = useModelProxy(props, "sort");
         :style="[dimensions, props.style]">
         <div>
             <ev-data-table-search
+                v-model:search="search"
                 v-model:sort="sort"
+                :search-placeholder="props.searchPlaceholder"
                 :sort-options="props.sortOptions" />
         </div>
         <div
@@ -100,7 +99,6 @@ const sort = useModelProxy(props, "sort");
                         @update:height="(h) => handleItemResize(item.index, h)">
                         <template #default="{ itemRef }">
                             <ev-data-table-row v-bind="{ ref: itemRef, item: item.raw, index: item.index }">
-
                             </ev-data-table-row>
                         </template>
                     </ev-virtual-scroll-item>
