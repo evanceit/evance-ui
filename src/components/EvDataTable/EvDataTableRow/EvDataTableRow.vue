@@ -18,7 +18,7 @@ const isClickable = computed(() => {
     return props.onClick || props.onContextmenu || props.onDblclick;
 });
 
-const { selected, isSelected, toggleSelect } = useSelection();
+const { selected, isSelected, toggleSelect, showSelect } = useSelection();
 // const { isExpanded, toggleExpand } = useExpanded();
 const { columns } = useHeaders();
 
@@ -43,7 +43,9 @@ function onCheckboxClick(e: PointerEvent) {
         @click="props.onClick"
         @contextmenu="props.onContextmenu"
         @dblclick="props.onClick">
-        <ev-data-table-cell class="ev-data-table-row--checkbox">
+        <ev-data-table-cell
+            v-if="showSelect"
+            class="ev-data-table-row--checkbox">
             <ev-checkbox
                 :model-value="isItemSelected"
                 @click.stop="onCheckboxClick" />

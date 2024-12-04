@@ -5,7 +5,6 @@ export const makeEvDataTableSearchProps = propsFactory(
     {
         search: String,
         searchPlaceholder: String,
-
         ...makeDataTableSortProps(),
     },
     "EvDataTableSearch",

@@ -34,9 +34,6 @@ export const EvDataTableHeadersSymbol: InjectionKey<{
     columns: Ref<InternalDataTableHeader[]>;
 }> = Symbol.for("ev:data-table-headers");
 
-const defaultHeader = { title: "", sortable: false };
-const defaultActionHeader = { ...defaultHeader, width: 48 };
-
 function priorityQueue<T>(arr: T[] = []) {
     const queue: { element: T; priority: number }[] = arr.map((element) => ({
         element,
@@ -103,16 +100,6 @@ function extractKeys(
         }
     }
     return keys;
-}
-
-function getDefaultItem(item: DeepReadonly<DataTableHeader>) {
-    if (!item.key) {
-        return undefined;
-    }
-    if (["data-table-select"].includes(item.key)) {
-        return defaultActionHeader;
-    }
-    return undefined;
 }
 
 function getDepth(item: InternalDataTableHeader, depth = 0): number {
@@ -230,7 +217,7 @@ function parse(items: InternalDataTableHeader[], maxDepth: number) {
 function convertToInternalHeaders(items: DeepReadonly<DataTableHeader[]>) {
     const internalHeaders: InternalDataTableHeader[] = [];
     for (const item of items) {
-        const defaultItem = { ...getDefaultItem(item), ...item };
+        const defaultItem = { ...item };
         const key =
             defaultItem.key ??
             (typeof defaultItem.value === "string" ? defaultItem.value : null);
@@ -251,12 +238,7 @@ function convertToInternalHeaders(items: DeepReadonly<DataTableHeader[]>) {
     return internalHeaders;
 }
 
-export function createHeaders(
-    props: HeaderProps,
-    options?: {
-        showSelect?: Ref<boolean>;
-    },
-) {
+export function createHeaders(props: HeaderProps) {
     const headers = ref<InternalDataTableHeader[][]>([]);
     const columns = ref<InternalDataTableHeader[]>([]);
     const sortFunctions = ref<Record<string, DataTableCompareFunction>>();
@@ -271,11 +253,6 @@ export function createHeaders(
             })) as never);
 
         const items = _headers.slice();
-        const keys = extractKeys(items);
-
-        if (options?.showSelect?.value && !keys.has("data-table-select")) {
-            items.unshift({ key: "data-table-select" });
-        }
 
         const internalHeaders = convertToInternalHeaders(items);
 

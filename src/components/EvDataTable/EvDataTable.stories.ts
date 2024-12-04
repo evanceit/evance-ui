@@ -53,6 +53,11 @@ const meta: Meta<typeof EvDataTable> = {
                 </ul>
             `,
         },
+        showSelect: {
+            control: "boolean",
+            description:
+                "Shows the select checkboxes in both the header and rows",
+        },
         sort: {
             description:
                 "The currently selected sort choice. Required if using sorting. " +
@@ -75,6 +80,7 @@ const meta: Meta<typeof EvDataTable> = {
         itemValue: "id",
         search: "",
         searchPlaceholder: undefined,
+        showSelect: false,
         selectStrategy: "page",
     },
     tags: ["autodocs"],
@@ -86,7 +92,13 @@ type Story = StoryObj<typeof EvDataTableCell>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvSurface, EvDataTableCell, EvDataTable, EvDataTableRow, EvButton },
+        components: {
+            EvSurface,
+            EvDataTableCell,
+            EvDataTable,
+            EvDataTableRow,
+            EvButton,
+        },
         data() {
             const boats = [
                 {
@@ -257,7 +269,6 @@ export const Primary: Story = {
             return { args, headers, selected, onSearch, onSort };
         },
         template: `
-            {{ selected }}
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-data-table
                     v-bind="args" 

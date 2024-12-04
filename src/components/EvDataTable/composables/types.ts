@@ -8,9 +8,7 @@ import { GetterPropertyKey } from "@/util";
 export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
 
 export type DataTableHeader = {
-    key?:
-        | "data-table-select"
-        | (string & {});
+    key?: string;
     value?: GetterPropertyKey;
     title?: string;
     fixed?: boolean;

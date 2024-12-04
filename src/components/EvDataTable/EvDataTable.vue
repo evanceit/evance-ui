@@ -24,12 +24,7 @@ const slots = defineSlots<{
 defineEmits(["update:search", "update:sort"]);
 
 const dimensions = useDimensions(props);
-const { columns, headers, sortFunctions, filterFunctions } = createHeaders(
-    props,
-    {
-        showSelect: toRef(props, "showSelect"),
-});
-
+const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
 const { items } = useDataTableItems(props, columns);
 
 const {

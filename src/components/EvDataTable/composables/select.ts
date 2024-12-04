@@ -1,6 +1,6 @@
 import { DataTableItemProps } from "./items.ts";
 import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
-import { computed, inject, InjectionKey, PropType, provide, ref, Ref} from "vue";
+import {computed, inject, InjectionKey, PropType, provide, ref, Ref, toRef} from "vue";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 
 export interface SelectableItem {
@@ -30,6 +30,7 @@ export interface DataTableSelectStrategy {
 type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
     modelValue: readonly any[];
     selectStrategy: "single" | "page" | "all";
+    showSelect: boolean,
     valueComparator: typeof isDeepEqual;
     "onUpdate:modelValue": EventProp<[any[]]> | undefined;
 };
@@ -99,6 +100,7 @@ export function provideSelection(
         currentPage,
     }: { allItems: Ref<SelectableItem[]>; currentPage: Ref<SelectableItem[]> },
 ) {
+    const showSelect = toRef(props, "showSelect");
     const lastToggledItem = ref<SelectableItem | null>(null);
 
     const selected = useModelProxy(
@@ -216,7 +218,9 @@ export function provideSelection(
         return !!items.length && isSelected(items);
     });
 
-    const showSelectAll = computed(() => selectStrategy.value.showSelectAll);
+    const showSelectAll = computed(
+        () => showSelect.value && selectStrategy.value.showSelectAll,
+    );
 
     const data = {
         selected,
@@ -227,6 +231,7 @@ export function provideSelection(
         isSomeSelected,
         someSelected,
         allSelected,
+        showSelect,
         showSelectAll: showSelectAll,
     };
     provide(EvDataTableSelectionSymbol, data);
