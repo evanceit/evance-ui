@@ -251,6 +251,7 @@ export const Primary: Story = {
                     @update:search="onSearch"
                     @update:sort="onSort"
                 >
+                    <template #item.price="{ value }">£{{ value }}</template>
                 </ev-data-table>
             </ev-surface>
         `,

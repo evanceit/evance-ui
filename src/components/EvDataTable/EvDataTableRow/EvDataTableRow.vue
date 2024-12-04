@@ -7,6 +7,7 @@ import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select.ts";
 import { useHeaders } from "@/components/EvDataTable/composables/headers.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
+import { getPropertyValue } from "@/util";
 
 const props = defineProps({ ...makeEvDataTableRowProps() });
 const slots = defineSlots<{
@@ -58,11 +59,25 @@ function onCheckboxClick(e: PointerEvent) {
                 isSelected,
                 toggleSelect,
             }">
-            <ev-data-table-cell
+            <template
                 v-for="column in columns"
                 :key="`item-${index}-${column.key}`">
-                {{ item.raw[column.key] }}
-            </ev-data-table-cell>
+                <ev-data-table-cell>
+                    <slot
+                        :name="`item.${column.key}`"
+                        v-bind="{
+                            index,
+                            item: item.raw,
+                            internalItem: item,
+                            value: getPropertyValue(item.columns, column.key),
+                            column: column,
+                            isSelected,
+                            toggleSelect,
+                        }">
+                        {{ getPropertyValue(item.columns, column.key) }}
+                    </slot>
+                </ev-data-table-cell>
+            </template>
         </slot>
     </tr>
 </template>

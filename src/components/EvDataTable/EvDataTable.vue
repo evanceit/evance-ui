@@ -102,14 +102,24 @@ const search = useModelProxy(props, "search");
                         @update:height="
                             (h) => handleItemResize(displayItem.index, h)
                         ">
-                        <template #default>
+                        <template #default="{ itemRef }">
                             <ev-data-table-row
                                 v-bind="{
+                                    ref: itemRef,
                                     item: displayItem.raw,
                                     index: displayItem.index,
                                 }">
-                                <template #default="slotProps">
-                                    <slot name="item" v-bind="slotProps" />
+                                <template #default="itemProps">
+                                    <slot name="item" v-bind="itemProps" />
+                                </template>
+                                <template
+                                    v-for="column in columns"
+                                    :key="`item-${displayItem.index}-${column.key}`"
+                                    #[`item.${column.key}`]="cellProps">
+                                    <slot
+                                        v-if="!slots.default"
+                                        :name="`item.${column.key}`"
+                                        v-bind="cellProps" />
                                 </template>
                             </ev-data-table-row>
                         </template>
