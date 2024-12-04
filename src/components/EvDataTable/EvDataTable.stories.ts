@@ -100,6 +100,7 @@ export const Primary: Story = {
             EvButton,
         },
         data() {
+
             const boats = [
                 {
                     name: "Speedster",
@@ -172,15 +173,7 @@ export const Primary: Story = {
                     year: 2022,
                 },
             ];
-
-            const items = [...Array(50).keys()].map((i) => {
-                const boat = { ...boats[i % boats.length] };
-                boat.id = i + 1;
-                boat.name = `${boat.name} #${i}`;
-                boat.value = `boat-${i + 1}`;
-                return boat;
-            });
-
+            const boatsMax = 500;
             const sort = ref(["quickfind:desc"]);
             const sortOptions: SortOption[] = [
                 {
@@ -220,10 +213,45 @@ export const Primary: Story = {
                 },
             ];
 
+            function generateItems(limit) {
+                return [...Array(limit).keys()].map((i) => {
+                    const boat = { ...boats[i % boats.length] };
+                    boat.id = i + 1;
+                    boat.name = `${boat.name} #${i}`;
+                    boat.value = `boat-${i + 1}`;
+                    return boat;
+                });
+            }
+
+            const items = ref(generateItems(50));
+
+            async function api(currentItems) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const additional =
+                            currentItems.length < boatsMax
+                                ? generateItems(50)
+                                : [];
+                        resolve(additional);
+                    }, 1000);
+                });
+            }
+
+            async function load({ state }) {
+                const res = await api(items);
+                items.value.push(...res);
+                if (!res.length) {
+                    state("finished");
+                } else {
+                    state("ok");
+                }
+            }
+
             return {
                 items,
                 sort,
                 sortOptions,
+                load,
             };
         },
         setup() {
