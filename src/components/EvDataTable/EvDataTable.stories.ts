@@ -17,6 +17,22 @@ const meta: Meta<typeof EvDataTable> = {
             options: [null, 400, 500, "100%"],
             description: "Optional height of the overall table",
         },
+        items: {
+            control: false,
+            description:
+                "An array of strings or objects used for automatically generating table rows and cells.",
+        },
+        itemValue: {
+            control: "select",
+            options: ["id", "value"],
+            description:
+                "Property on supplied `items` that contains its value.",
+        },
+        returnObject: {
+            control: "boolean",
+            description:
+                "Changes the selection behavior to return the object directly rather than the value specified with `item-value`.",
+        },
         search: {
             control: "text",
             description: "A search string can be applied",
@@ -56,6 +72,7 @@ const meta: Meta<typeof EvDataTable> = {
     },
     args: {
         height: "100%",
+        itemValue: "id",
         search: "",
         searchPlaceholder: undefined,
         selectStrategy: "page",
@@ -148,6 +165,7 @@ export const Primary: Story = {
                 const boat = { ...boats[i % boats.length] };
                 boat.id = i + 1;
                 boat.name = `${boat.name} #${i}`;
+                boat.value = `boat-${i + 1}`;
                 return boat;
             });
 
@@ -239,8 +257,9 @@ export const Primary: Story = {
             return { args, headers, selected, onSearch, onSort };
         },
         template: `
+            {{ selected }}
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
-                <ev-data-table 
+                <ev-data-table
                     v-bind="args" 
                     :items="items" 
                     :headers="headers"
