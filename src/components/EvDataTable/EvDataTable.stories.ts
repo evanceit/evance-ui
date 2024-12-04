@@ -5,7 +5,7 @@ import {
     EvDataTable,
     EvDataTableRow,
 } from "@/components/EvDataTable";
-import { EvSurface } from "@/components";
+import { EvButton, EvSurface } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 
@@ -69,7 +69,7 @@ type Story = StoryObj<typeof EvDataTableCell>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvSurface, EvDataTableCell, EvDataTable, EvDataTableRow },
+        components: { EvSurface, EvDataTableCell, EvDataTable, EvDataTableRow, EvButton },
         data() {
             const boats = [
                 {
@@ -251,9 +251,6 @@ export const Primary: Story = {
                     @update:search="onSearch"
                     @update:sort="onSort"
                 >
-                    <template #item="{ ref, item, index }">
-                        Price: {{ item.raw.price }}
-                    </template>
                 </ev-data-table>
             </ev-surface>
         `,

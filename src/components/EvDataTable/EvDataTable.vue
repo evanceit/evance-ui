@@ -12,11 +12,13 @@ import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
 import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
+import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
     default(): never;
     colgroup(): never;
+    item(props: ItemSlot): never;
 }>();
 
 defineEmits(["update:search", "update:sort"]);
@@ -63,6 +65,7 @@ const totalColumns = computed(() => {
 
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
+
 </script>
 
 <template>
@@ -93,12 +96,21 @@ const search = useModelProxy(props, "search");
                             :style="{ height: 0, border: 0 }"></td>
                     </tr>
                     <ev-virtual-scroll-item
-                        v-for="item of displayItems"
-                        :key="item.index"
+                        v-for="displayItem of displayItems"
+                        :key="displayItem.index"
                         renderless
-                        @update:height="(h) => handleItemResize(item.index, h)">
-                        <template #default="{ itemRef }">
-                            <ev-data-table-row v-bind="{ ref: itemRef, item: item.raw, index: item.index }">
+                        @update:height="
+                            (h) => handleItemResize(displayItem.index, h)
+                        ">
+                        <template #default>
+                            <ev-data-table-row
+                                v-bind="{
+                                    item: displayItem.raw,
+                                    index: displayItem.index,
+                                }">
+                                <template #default="slotProps">
+                                    <slot name="item" v-bind="slotProps" />
+                                </template>
                             </ev-data-table-row>
                         </template>
                     </ev-virtual-scroll-item>

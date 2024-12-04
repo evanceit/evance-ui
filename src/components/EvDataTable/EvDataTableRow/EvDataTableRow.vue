@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import "./EvDataTableRow.scss";
 import { makeEvDataTableRowProps } from "./EvDataTableRow.ts";
-import {computed} from "vue";
+import { computed } from "vue";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select.ts";
-import { useExpanded } from "@/components/EvDataTable/composables/expand.ts";
 import { useHeaders } from "@/components/EvDataTable/composables/headers.ts";
+import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
 
 const props = defineProps({ ...makeEvDataTableRowProps() });
 const slots = defineSlots<{
-    default(): never;
+    default(props: ItemSlot): never;
 }>();
 
 const isClickable = computed(() => {
@@ -48,7 +48,16 @@ function onCheckboxClick(e: PointerEvent) {
                 @click.stop="onCheckboxClick" />
         </ev-data-table-cell>
 
-        <slot name="default" v-bind="{ item }">
+        <slot
+            name="default"
+            v-bind="{
+                index,
+                columns,
+                item: item.raw,
+                internalItem: item,
+                isSelected,
+                toggleSelect,
+            }">
             <ev-data-table-cell
                 v-for="column in columns"
                 :key="`item-${index}-${column.key}`">

@@ -1,6 +1,7 @@
-import { Browser, clamp, debounce, propsFactory } from "../util";
+import { Browser, clamp, debounce, isNumber, propsFactory } from "../util";
 import {
     computed,
+    ComputedRef,
     nextTick,
     onScopeDispose,
     ref,
@@ -52,7 +53,8 @@ export function useVirtual<T>(props: VirtualProps, items: Ref<readonly T[]>) {
     const display = useDisplay();
     const itemHeight = shallowRef(0);
     watchEffect(() => {
-        itemHeight.value = parseFloat(props.itemHeight || 0);
+        const h = props.itemHeight || 0;
+        itemHeight.value = isNumber(h) ? h : parseFloat(h);
     });
     const first = shallowRef(0);
     const last = shallowRef(
@@ -78,9 +80,12 @@ export function useVirtual<T>(props: VirtualProps, items: Ref<readonly T[]>) {
         resizeRef.value = containerRef.value;
     });
     const viewportHeight = computed(() => {
+        const h = isNumber(props.height)
+            ? props.height
+            : parseInt(props.height);
         return containerRef.value === document.documentElement
             ? display.height.value
-            : contentRect.value?.height || parseInt(props.height!) || 0;
+            : contentRect.value?.height || h || 0;
     });
     /** All static elements have been rendered, and we have an assumed item height */
     const hasInitialRender = computed(() => {
@@ -264,7 +269,7 @@ export function useVirtual<T>(props: VirtualProps, items: Ref<readonly T[]>) {
         }
     }
 
-    const computedItems = computed(() => {
+    const computedItems: ComputedRef<VirtualItem[]> = computed(() => {
         return items.value
             .slice(first.value, last.value)
             .map((item, index) => ({

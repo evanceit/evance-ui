@@ -2,21 +2,14 @@ import {
     provideSelection,
     SelectableItem,
 } from "@/components/EvDataTable/composables/select.ts";
-import { provideExpanded } from "@/components/EvDataTable/composables/expand.ts";
 import { FilterFunction, InternalItem } from "@/composables/filter.ts";
 import { GetterPropertyKey } from "@/util";
-import {
-    Group,
-    provideGroupBy,
-} from "@/components/EvDataTable/composables/group.ts";
 
 export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
 
 export type DataTableHeader = {
     key?:
-        | "data-table-group"
         | "data-table-select"
-        | "data-table-expand"
         | (string & {});
     value?: GetterPropertyKey;
     title?: string;
@@ -57,29 +50,15 @@ export interface DataTableItem<T = any>
     };
 }
 
-export type GroupHeaderSlot = {
-    index: number;
-    item: Group;
-    columns: InternalDataTableHeader[];
-    isExpanded: ReturnType<typeof provideExpanded>["isExpanded"];
-    toggleExpand: ReturnType<typeof provideExpanded>["toggleExpand"];
-    isSelected: ReturnType<typeof provideSelection>["isSelected"];
-    toggleSelect: ReturnType<typeof provideSelection>["toggleSelect"];
-    toggleGroup: ReturnType<typeof provideGroupBy>["toggleGroup"];
-    isGroupOpen: ReturnType<typeof provideGroupBy>["isGroupOpen"];
-};
-
-type ItemSlotBase<T> = {
+type ItemSlotBase<T = any> = {
     index: number;
     item: T;
     internalItem: DataTableItem<T>;
-    isExpanded: ReturnType<typeof provideExpanded>["isExpanded"];
-    toggleExpand: ReturnType<typeof provideExpanded>["toggleExpand"];
     isSelected: ReturnType<typeof provideSelection>["isSelected"];
     toggleSelect: ReturnType<typeof provideSelection>["toggleSelect"];
 };
 
-export type ItemSlot<T> = ItemSlotBase<T> & {
+export type ItemSlot<T = any> = ItemSlotBase<T> & {
     columns: InternalDataTableHeader[];
 };
 
