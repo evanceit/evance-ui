@@ -28,6 +28,10 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "Property on supplied `items` that contains its value.",
         },
+        loading: {
+            control: "boolean",
+            description: "Sets the table into a loading state.",
+        },
         returnObject: {
             control: "boolean",
             description:
@@ -59,11 +63,13 @@ const meta: Meta<typeof EvDataTable> = {
                 "Shows the select checkboxes in both the header and rows",
         },
         sort: {
+            control: false,
             description:
                 "The currently selected sort choice. Required if using sorting. " +
                 "Accepts a `string[]` with a single value, which must be an available `value` in `sort-options`.",
         },
         sortOptions: {
+            control: false,
             description: `An array of \`SortOption\` items with the following properties:
                 <ul>
                     <li>\`title\` - the text title to display to the user.</li>

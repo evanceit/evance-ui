@@ -9,6 +9,7 @@ import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 
 export const makeEvDataTableProps = propsFactory(
     {
+        loading: Boolean,
         ...makeEvDataTableSearchProps(),
         ...makeDataTableHeaderProps(),
         ...makeDataTableItemsProps(),

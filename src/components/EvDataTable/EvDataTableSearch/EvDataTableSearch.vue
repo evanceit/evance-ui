@@ -66,6 +66,7 @@ const placeholder = computed(() =>
                 clearable
                 appearance="subtle"
                 size="small"
+                :loading="props.loading"
                 :placeholder="placeholder"
                 :icon-start="SearchIcon" />
         </div>

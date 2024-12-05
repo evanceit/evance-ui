@@ -2,7 +2,7 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
-import { computed, ref, toRef, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
@@ -70,6 +70,7 @@ const totalColumns = computed(() => {
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
 const infiniteScrollRef = ref();
+const infiniteScrollDisabled = computed(() => props.loading);
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
@@ -78,8 +79,8 @@ watch(
     },
 );
 
-function loadItems(e) {
-    emit("load", e);
+function onInfiniteScrollLoad(options) {
+    emit("load", options);
 }
 </script>
 
@@ -87,17 +88,17 @@ function loadItems(e) {
     <div
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
-        <div>
-            <ev-data-table-search
-                v-model:search="search"
-                v-model:sort="sort"
-                :search-placeholder="props.searchPlaceholder"
-                :sort-options="props.sortOptions" />
-        </div>
+        <ev-data-table-search
+            v-model:search="search"
+            v-model:sort="sort"
+            :loading="props.loading"
+            :search-placeholder="props.searchPlaceholder"
+            :sort-options="props.sortOptions" />
         <ev-infinite-scroll
             ref="infiniteScrollRef"
             class="ev-data-table--wrapper"
-            @load="loadItems"
+            :disabled="infiniteScrollDisabled"
+            @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
             <table>
@@ -153,6 +154,5 @@ function loadItems(e) {
                 </tbody>
             </table>
         </ev-infinite-scroll>
-        <div>This is below the scrollable area</div>
     </div>
 </template>
