@@ -13,3 +13,11 @@
         border-collapse: 0;
     }
 }
+
+.ev-data-table--empty {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    overflow: auto;
+}

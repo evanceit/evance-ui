@@ -12,9 +12,21 @@ export function useIntersectionObserver(
         const observer = new IntersectionObserver(
             (entries: IntersectionObserverEntry[]) => {
                 callback?.(entries, observer);
-                isIntersecting.value = !!entries.find(
-                    (entry) => entry.isIntersecting,
-                );
+                isIntersecting.value = !!entries.find((entry) => {
+                    /**
+                     * There is a bug somewhere resulting in stale entries.
+                     * Make sure we're checking `entry.isIntersecting` on the correct entry
+                     * based on current position within a tolerance.
+                     */
+                    const tolerance = 1e-4;
+                    const currentRect = entry.target.getBoundingClientRect();
+                    const entryRect = entry.boundingClientRect;
+                    return (
+                        entry.isIntersecting &&
+                        Math.abs(currentRect.top - entryRect.top) < tolerance &&
+                        Math.abs(currentRect.left - entryRect.left) < tolerance
+                    );
+                });
             },
             options,
         );

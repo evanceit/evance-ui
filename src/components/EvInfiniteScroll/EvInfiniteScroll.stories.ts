@@ -39,7 +39,7 @@ export const Primary: Story = {
         components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
         setup() {
 
-            const items = ref(Array.from({ length: 50 }, (k, v) => v + 1));
+            const items = ref(Array.from({ length: 25 }, (k, v) => v + 1));
             const limit = 500;
 
             async function api() {
@@ -56,14 +56,14 @@ export const Primary: Story = {
                     }, 1000);
                 });
             }
-            async function load({ state }) {
+            async function load({ done }) {
                 // Perform API call
                 const res = await api();
                 items.value.push(...res);
                 if (!res.length) {
-                    state("finished");
+                    done("finished");
                 } else {
-                    state("ok");
+                    done("ok");
                 }
             }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@/composables/intersectionObserver.ts";
 import { InfiniteScrollSide } from "@/components/EvInfiniteScroll";
-import { PropType, watch } from "vue";
+import { PropType, watch} from "vue";
 
 const props = defineProps({
     side: {
@@ -22,9 +22,14 @@ const emit = defineEmits<{
     (e: "intersect", side: InfiniteScrollSide, isIntersecting: boolean): true;
 }>();
 
+const options = {
+    ...(props.rootMargin ? { rootMargin: props.rootMargin } : {}),
+    ...(props.rootRef ? { root: props.rootRef } : {}),
+};
+
 const { intersectionRef, isIntersecting } = useIntersectionObserver(
     () => {},
-    props.rootMargin ? { rootMargin: props.rootMargin } : undefined,
+    options,
 );
 
 watch(isIntersecting, async (val) => {

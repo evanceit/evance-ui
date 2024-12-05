@@ -24,7 +24,7 @@ const emit = defineEmits<{
         e: "load",
         options: {
             side: InfiniteScrollSide;
-            state: (status: InfiniteScrollStatus) => void;
+            done: (status: InfiniteScrollStatus) => void;
         },
     ): true;
 }>();
@@ -93,17 +93,16 @@ function intersecting(side: InfiniteScrollSide) {
         return;
     }
     const status = getStatus(side);
-    if (!rootEl.value || status === "loading") {
+    if (!rootEl.value || ["finished", "loading"].includes(status)) {
         return;
     }
     previousScrollSize = getScrollSize();
     setStatus(side, "loading");
 
-    function state(status: InfiniteScrollStatus) {
+    function done(status: InfiniteScrollStatus) {
         setStatus(side, status);
         // Triggering a scroll event here allows InfiniteScroll to work with VirtualScroll
         // without any additional listeners
-        rootEl.value.dispatchEvent(new Event("scroll"));
 
         nextTick(() => {
             if (status === "finished" || status === "error") {
@@ -127,8 +126,7 @@ function intersecting(side: InfiniteScrollSide) {
             }
         });
     }
-
-    emit("load", { side, state });
+    emit("load", { side, done });
 }
 
 function setScrollAmount(amount: number) {

@@ -32,6 +32,9 @@ export default {
     select: {
         noItemsText: "No items available",
     },
+    table: {
+        empty: "No results",
+    },
     months: {
         one: "{ value } month",
         other: "{ value } months",

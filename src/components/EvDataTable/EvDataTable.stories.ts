@@ -243,13 +243,14 @@ export const Primary: Story = {
                 });
             }
 
-            async function load({ state }) {
+            async function load({ done }) {
                 const res = await api(items.value);
                 items.value.push(...res);
                 if (!res.length) {
-                    state("finished");
+                    done("finished");
                 } else {
-                    state("ok");
+                    console.log('foo');
+                    done("ok");
                 }
             }
 

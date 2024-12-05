@@ -4,7 +4,7 @@ import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
-import { toWebUnit } from "@/util";
+import { toWebUnit} from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
@@ -13,6 +13,7 @@ import { provideSelection } from "@/components/EvDataTable/composables/select.ts
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
+import { useLocaleFunctions } from "@/composables";
 import {
     EvInfiniteScroll,
     InfiniteScrollSide,
@@ -21,8 +22,9 @@ import {
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
-    default(): never;
     colgroup(): never;
+    default(): never;
+    empty(): never;
     item(props: ItemSlot): never;
 }>();
 
@@ -33,7 +35,7 @@ const emit = defineEmits<{
         e: "load",
         options: {
             side: InfiniteScrollSide;
-            state: (status: InfiniteScrollStatus) => void;
+            done: (status: InfiniteScrollStatus) => void;
         },
     ): true;
 }>();
@@ -67,15 +69,20 @@ const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
 });
 
+const isLoading = useModelProxy(props, "loading");
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
 const infiniteScrollRef = ref();
-const infiniteScrollDisabled = computed(() => props.loading);
+const infiniteScrollDisabled = computed(() => isLoading.value);
+const isEmpty = computed(() => !computedItems.value?.length);
+const { t } = useLocaleFunctions();
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
-    (newValue) => {
-        containerRef.value = newValue;
+    (newValue, oldValue) => {
+        if (newValue != oldValue) {
+            containerRef.value = newValue;
+        }
     },
 );
 
@@ -94,7 +101,11 @@ function onInfiniteScrollLoad(options) {
             :loading="props.loading"
             :search-placeholder="props.searchPlaceholder"
             :sort-options="props.sortOptions" />
+        <div v-if="isEmpty" class="ev-data-table--empty">
+            <slot name="empty">{{ t("table.empty") }}</slot>
+        </div>
         <ev-infinite-scroll
+            v-else
             ref="infiniteScrollRef"
             class="ev-data-table--wrapper"
             :disabled="infiniteScrollDisabled"
