@@ -6,7 +6,7 @@ import {
     makeEvInfiniteScrollProps,
 } from "./EvInfiniteScroll.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
-import {computed, nextTick, onMounted, ref, shallowRef, toRef} from "vue";
+import { computed, nextTick, onMounted, ref, shallowRef, toRef } from "vue";
 import { toWebUnit } from "@/util";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";
 import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteScrollIntersect.vue";
@@ -164,6 +164,10 @@ const sideProps = computed(() => ({
     textFinished: props.textFinished,
     textMore: props.textMore,
 }));
+
+defineExpose({
+    rootElement: rootEl,
+});
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
-import { computed, toRef } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
 import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
@@ -13,6 +13,11 @@ import { provideSelection } from "@/components/EvDataTable/composables/select.ts
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
+import {
+    EvInfiniteScroll,
+    InfiniteScrollSide,
+    InfiniteScrollStatus,
+} from "@/components/EvInfiniteScroll";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -21,7 +26,17 @@ const slots = defineSlots<{
     item(props: ItemSlot): never;
 }>();
 
-defineEmits(["update:search", "update:sort"]);
+const emit = defineEmits<{
+    (e: "update:search", value: string): void;
+    (e: "update:sort", value: string[]): void;
+    (
+        e: "load",
+        options: {
+            side: InfiniteScrollSide;
+            state: (status: InfiniteScrollStatus) => void;
+        },
+    ): true;
+}>();
 
 const dimensions = useDimensions(props);
 const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
@@ -46,7 +61,7 @@ const {
     handleItemResize,
     handleScroll,
     handleScrollend,
-} = useVirtual(props, toRef(items.value));
+} = useVirtual(props, items);
 
 const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
@@ -54,6 +69,18 @@ const totalColumns = computed(() => {
 
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
+const infiniteScrollRef = ref();
+
+watch(
+    () => infiniteScrollRef.value?.rootElement,
+    (newValue) => {
+        containerRef.value = newValue;
+    },
+);
+
+function loadItems(e) {
+    emit("load", e);
+}
 </script>
 
 <template>
@@ -67,9 +94,10 @@ const search = useModelProxy(props, "search");
                 :search-placeholder="props.searchPlaceholder"
                 :sort-options="props.sortOptions" />
         </div>
-        <div
-            ref="containerRef"
+        <ev-infinite-scroll
+            ref="infiniteScrollRef"
             class="ev-data-table--wrapper"
+            @load="loadItems"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
             <table>
@@ -124,7 +152,7 @@ const search = useModelProxy(props, "search");
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </ev-infinite-scroll>
         <div>This is below the scrollable area</div>
     </div>
 </template>

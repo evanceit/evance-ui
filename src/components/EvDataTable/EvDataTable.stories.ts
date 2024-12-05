@@ -238,7 +238,7 @@ export const Primary: Story = {
             }
 
             async function load({ state }) {
-                const res = await api(items);
+                const res = await api(items.value);
                 items.value.push(...res);
                 if (!res.length) {
                     state("finished");
@@ -306,6 +306,7 @@ export const Primary: Story = {
                     v-model="selected"
                     v-model:sort="sort"
                     v-model:search="args.search"
+                    @load="load"
                     @update:search="onSearch"
                     @update:sort="onSort"
                 >
