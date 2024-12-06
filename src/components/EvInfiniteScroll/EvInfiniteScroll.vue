@@ -7,7 +7,7 @@ import {
 } from "./EvInfiniteScroll.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, nextTick, onMounted, ref, shallowRef, toRef } from "vue";
-import { toWebUnit } from "@/util";
+import { debounce, toWebUnit } from "@/util";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";
 import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteScrollIntersect.vue";
 
@@ -81,11 +81,22 @@ function getStatus(side: string) {
     return side === "start" ? startStatus.value : endStatus.value;
 }
 
-function handleIntersect(side: InfiniteScrollSide, _isIntersecting: boolean) {
-    isIntersecting.value = _isIntersecting;
+/**
+ * There's a redraw bug somewhere!
+ * The `intersect-delay` helps address issues with rapid changes to intersection
+ * values from the `IntersectionObserver` - you cannot see them. Using `debounce`
+ * effectively keeps the last state, cancelling former states in rapid succession.
+ * This was a particular issue in `EvDataTable`.
+ */
+const handleIntersectDelayed = debounce((side: InfiniteScrollSide) => {
     if (isIntersecting.value && !isDisabled.value) {
         intersecting(side);
     }
+}, props.intersectDelay);
+
+function handleIntersect(side: InfiniteScrollSide, _isIntersecting: boolean) {
+    isIntersecting.value = _isIntersecting;
+    handleIntersectDelayed(side);
 }
 
 function intersecting(side: InfiniteScrollSide) {
@@ -101,8 +112,6 @@ function intersecting(side: InfiniteScrollSide) {
 
     function done(status: InfiniteScrollStatus) {
         setStatus(side, status);
-        // Triggering a scroll event here allows InfiniteScroll to work with VirtualScroll
-        // without any additional listeners
 
         nextTick(() => {
             if (status === "finished" || status === "error") {

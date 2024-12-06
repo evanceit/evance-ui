@@ -249,7 +249,6 @@ export const Primary: Story = {
                 if (!res.length) {
                     done("finished");
                 } else {
-                    console.log('foo');
                     done("ok");
                 }
             }

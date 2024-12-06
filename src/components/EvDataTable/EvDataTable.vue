@@ -69,11 +69,10 @@ const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
 });
 
-const isLoading = useModelProxy(props, "loading");
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
 const infiniteScrollRef = ref();
-const infiniteScrollDisabled = computed(() => isLoading.value);
+const infiniteScrollDisabled = computed(() => props.loading);
 const isEmpty = computed(() => !computedItems.value?.length);
 const { t } = useLocaleFunctions();
 

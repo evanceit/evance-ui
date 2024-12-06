@@ -16,6 +16,10 @@ export const makeEvInfiniteScrollProps = propsFactory(
             default: "vertical",
             validator: (v: any) => ["vertical", "horizontal"].includes(v),
         },
+        intersectDelay: {
+            type: Number,
+            default: 50,
+        },
         margin: [Number, String],
         mode: {
             type: String as PropType<InfiniteScrollMode>,
