@@ -32,6 +32,15 @@ const meta: Meta<typeof EvInfiniteScroll> = {
                 </ul>
                 `,
         },
+        reset: {
+            control: false,
+            description:
+                "Exposed `reset()` method allows you to reset the state of the infinite scroll.",
+        },
+        rootElement: {
+            control: false,
+            description: "Exposed `rootElement` provide access to the HTML root element of the infinite scroll.",
+        },
     },
     args: {
         disabled: false,

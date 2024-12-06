@@ -18,6 +18,7 @@ import {
     EvInfiniteScroll,
     InfiniteScrollSide,
 } from "@/components/EvInfiniteScroll";
+import { ComponentExposed } from "vue-component-type-helpers";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -75,7 +76,7 @@ const totalColumns = computed(() => {
 
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
-const infiniteScrollRef = ref();
+const infiniteScrollRef = ref<ComponentExposed<typeof EvInfiniteScroll>>();
 const infiniteScrollDisabled = computed(() => props.loading);
 const isEmpty = computed(() => !computedItems.value?.length);
 const { t } = useLocaleFunctions();
@@ -83,6 +84,7 @@ const { t } = useLocaleFunctions();
 watch(
     () => infiniteScrollRef.value?.rootElement,
     (value) => {
+        console.log(infiniteScrollRef);
         containerRef.value = value;
     },
 );
@@ -98,7 +100,7 @@ function onInfiniteScrollLoad(options) {
 
 watch(page, (newValue, oldValue) => {
     if (newValue < oldValue) {
-        console.log('reset infinite scroll');
+        infiniteScrollRef.value?.reset();
     }
 });
 </script>

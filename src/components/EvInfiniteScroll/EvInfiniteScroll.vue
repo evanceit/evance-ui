@@ -163,6 +163,10 @@ function setStatus(side: InfiniteScrollSide, status: InfiniteScrollStatus) {
 }
 
 onMounted(() => {
+    reset();
+});
+
+function reset() {
     if (!rootEl.value) {
         return;
     }
@@ -171,7 +175,9 @@ onMounted(() => {
     } else if (props.side === "both") {
         setScrollAmount(getScrollSize() / 2 - getContainerSize() / 2);
     }
-});
+    setStatus("start", "ok");
+    setStatus("end", "ok");
+}
 
 const sideProps = computed(() => ({
     mode: props.mode,
@@ -180,6 +186,7 @@ const sideProps = computed(() => ({
 }));
 
 defineExpose({
+    reset,
     rootElement: rootEl,
 });
 </script>
