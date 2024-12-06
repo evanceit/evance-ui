@@ -4,7 +4,7 @@ import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
-import { toWebUnit} from "@/util";
+import { toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
@@ -17,7 +17,6 @@ import { useLocaleFunctions } from "@/composables";
 import {
     EvInfiniteScroll,
     InfiniteScrollSide,
-    InfiniteScrollStatus,
 } from "@/components/EvInfiniteScroll";
 
 const props = defineProps({ ...makeEvDataTableProps() });
@@ -31,6 +30,7 @@ const slots = defineSlots<{
 const emit = defineEmits<{
     (e: "update:search", value: string): void;
     (e: "update:sort", value: string[]): void;
+    (e: "update:page", value: number): void;
     (
         e: "load",
         options: {
@@ -38,10 +38,12 @@ const emit = defineEmits<{
             done: () => void;
             error: () => void;
             next: () => void;
+            page: number;
         },
     ): true;
 }>();
 
+const page = useModelProxy(props, "page");
 const dimensions = useDimensions(props);
 const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
 const { items } = useDataTableItems(props, columns);
@@ -80,16 +82,25 @@ const { t } = useLocaleFunctions();
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
-    (newValue, oldValue) => {
-        if (newValue != oldValue) {
-            containerRef.value = newValue;
-        }
+    (value) => {
+        containerRef.value = value;
     },
 );
 
 function onInfiniteScrollLoad(options) {
-    emit("load", options);
+    const nextPage = page.value + 1;
+    function next() {
+        page.value = nextPage;
+        options.next();
+    }
+    emit("load", { ...options, next, page: nextPage });
 }
+
+watch(page, (newValue, oldValue) => {
+    if (newValue < oldValue) {
+        console.log('reset infinite scroll');
+    }
+});
 </script>
 
 <template>

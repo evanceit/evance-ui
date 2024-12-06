@@ -6,7 +6,7 @@ import {
     EvDataTableRow,
 } from "@/components/EvDataTable";
 import { EvButton, EvSurface } from "@/components";
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 
 const meta: Meta<typeof EvDataTable> = {
@@ -217,6 +217,8 @@ export const Primary: Story = {
                     value: "relevance:desc",
                 },
             ];
+            const itemsPerPage = 50;
+            const currentPage = shallowRef(1);
 
             function generateItems(limit: number) {
                 return [...Array(limit).keys()].map((i) => {
@@ -230,21 +232,23 @@ export const Primary: Story = {
                 });
             }
 
-            const items = ref(generateItems(50));
+            const items = ref(generateItems(itemsPerPage));
 
             async function api(currentItems): Promise<any[]> {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const additional =
                             currentItems.length < boatsMax
-                                ? generateItems(50)
+                                ? generateItems(itemsPerPage)
                                 : [];
                         resolve(additional);
                     }, 1000);
                 });
             }
 
-            async function load({ done, next }) {
+            async function load({ done, next, page }) {
+                console.log("current page", currentPage.value);
+                console.log("load page:", page);
                 const res = await api(items.value);
                 items.value.push(...res);
                 res.length ? next() : done();
@@ -255,6 +259,7 @@ export const Primary: Story = {
                 sort,
                 sortOptions,
                 load,
+                currentPage,
             };
         },
         setup() {
@@ -285,7 +290,6 @@ export const Primary: Story = {
                     value: "price",
                 },
             ];
-
             const selected = ref([]);
 
             function onSearch(value) {
@@ -305,6 +309,7 @@ export const Primary: Story = {
                     :items="items" 
                     :headers="headers"
                     :sort-options="sortOptions"
+                    v-model:page="currentPage"
                     v-model="selected"
                     v-model:sort="sort"
                     v-model:search="args.search"
