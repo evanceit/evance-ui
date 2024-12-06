@@ -170,10 +170,13 @@ function reset() {
     if (!rootEl.value) {
         return;
     }
+    isIntersecting.value = false;
     if (props.side === "start") {
         setScrollAmount(getScrollSize());
     } else if (props.side === "both") {
         setScrollAmount(getScrollSize() / 2 - getContainerSize() / 2);
+    } else {
+        setScrollAmount(0);
     }
     setStatus("start", "ok");
     setStatus("end", "ok");

@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvInfiniteScroll } from "../EvInfiniteScroll";
 import { ref } from "vue";
-import { EvListItem, EvVirtualScroll } from "@/components";
+import { EvButton, EvListItem, EvVirtualScroll } from "@/components";
+import { ComponentExposed } from "vue-component-type-helpers";
 
 const meta: Meta<typeof EvInfiniteScroll> = {
     component: EvInfiniteScroll,
@@ -39,7 +40,8 @@ const meta: Meta<typeof EvInfiniteScroll> = {
         },
         rootElement: {
             control: false,
-            description: "Exposed `rootElement` provide access to the HTML root element of the infinite scroll.",
+            description:
+                "Exposed `rootElement` provide access to the HTML root element of the infinite scroll.",
         },
     },
     args: {
@@ -56,10 +58,10 @@ type Story = StoryObj<typeof EvInfiniteScroll>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
+        components: { EvInfiniteScroll, EvListItem, EvVirtualScroll, EvButton },
         setup() {
             const items = ref(Array.from({ length: 25 }, (k, v) => v + 1));
-            const limit = 500;
+            const limit = 100;
 
             async function api(): Promise<any[]> {
                 return new Promise((resolve) => {
@@ -68,7 +70,7 @@ export const Primary: Story = {
                             items.value.length < limit
                                 ? Array.from(
                                       { length: 25 },
-                                      (k, v) => v + items.value.at(-1) + 1,
+                                      (k, v) => v + items.value.length + 1,
                                   )
                                 : [];
                         resolve(additional);
@@ -82,9 +84,21 @@ export const Primary: Story = {
                 res.length ? next() : done();
             }
 
-            return { args, items, load };
+            const infiniteScrollRef =
+                ref<ComponentExposed<typeof EvInfiniteScroll>>();
+
+            function onClickReset() {
+                items.value = [];
+                infiniteScrollRef.value?.reset();
+            }
+
+            return { args, items, load, infiniteScrollRef, onClickReset };
         },
-        template: `<ev-infinite-scroll v-bind="args" @load="load">
+        template: `
+            <p>
+                <ev-button @click="onClickReset">Reset</ev-button>
+            </p>
+            <ev-infinite-scroll ref="infiniteScrollRef" v-bind="args" @load="load">
             <ev-virtual-scroll renderless :items="items">
                 <template #default="{ item, index, itemRef }">
                     <ev-list-item :ref="itemRef" :link="true">
