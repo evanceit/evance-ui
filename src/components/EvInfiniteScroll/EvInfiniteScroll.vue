@@ -24,7 +24,9 @@ const emit = defineEmits<{
         e: "load",
         options: {
             side: InfiniteScrollSide;
-            done: (status: InfiniteScrollStatus) => void;
+            done: () => void;
+            error: () => void;
+            next: () => void;
         },
     ): true;
 }>();
@@ -110,7 +112,7 @@ function intersecting(side: InfiniteScrollSide) {
     previousScrollSize = getScrollSize();
     setStatus(side, "loading");
 
-    function done(status: InfiniteScrollStatus) {
+    function state(status: InfiniteScrollStatus) {
         setStatus(side, status);
 
         nextTick(() => {
@@ -135,7 +137,12 @@ function intersecting(side: InfiniteScrollSide) {
             }
         });
     }
-    emit("load", { side, done });
+    emit("load", {
+        side,
+        error: () => state("error"),
+        done: () => state("finished"),
+        next: () => state("ok"),
+    });
 }
 
 function setScrollAmount(amount: number) {

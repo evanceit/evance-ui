@@ -21,6 +21,17 @@ const meta: Meta<typeof EvInfiniteScroll> = {
         tag: {
             description: "Specify a custom tag used on the root element.",
         },
+        load: {
+            control: false,
+            description: `The \`load\` event is issues upon intersection and offers the following parameters to listeners:
+                <ul>
+                    <li>\`side\` - a string representing the side which issued the intersection event is either \`start\` or \`end\`.</li>
+                    <li>\`done\` - a function to tell infinite scroll you have reached the end of your results.</li>
+                    <li>\`error\` - a function to tell infinite scroll there was an error during loading.</li>
+                    <li>\`next\` - a function to tell infinite scroll there is more to come and to continue issuing intersect events.</li>
+                </ul>
+                `,
+        },
     },
     args: {
         disabled: false,
@@ -38,11 +49,10 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvInfiniteScroll, EvListItem, EvVirtualScroll },
         setup() {
-
             const items = ref(Array.from({ length: 25 }, (k, v) => v + 1));
             const limit = 500;
 
-            async function api() {
+            async function api(): Promise<any[]> {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const additional =
@@ -56,15 +66,11 @@ export const Primary: Story = {
                     }, 1000);
                 });
             }
-            async function load({ done }) {
+            async function load({ done, next }) {
                 // Perform API call
                 const res = await api();
                 items.value.push(...res);
-                if (!res.length) {
-                    done("finished");
-                } else {
-                    done("ok");
-                }
+                res.length ? next() : done();
             }
 
             return { args, items, load };

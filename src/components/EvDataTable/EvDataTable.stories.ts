@@ -106,7 +106,6 @@ export const Primary: Story = {
             EvButton,
         },
         data() {
-
             const boats = [
                 {
                     name: "Speedster",
@@ -219,19 +218,21 @@ export const Primary: Story = {
                 },
             ];
 
-            function generateItems(limit) {
+            function generateItems(limit: number) {
                 return [...Array(limit).keys()].map((i) => {
-                    const boat = { ...boats[i % boats.length] };
-                    boat.id = i + 1;
+                    const boat = {
+                        id: i + 1,
+                        value: `boat-${i + 1}`,
+                        ...boats[i % boats.length],
+                    };
                     boat.name = `${boat.name} #${i}`;
-                    boat.value = `boat-${i + 1}`;
                     return boat;
                 });
             }
 
             const items = ref(generateItems(50));
 
-            async function api(currentItems) {
+            async function api(currentItems): Promise<any[]> {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const additional =
@@ -243,14 +244,10 @@ export const Primary: Story = {
                 });
             }
 
-            async function load({ done }) {
+            async function load({ done, next }) {
                 const res = await api(items.value);
                 items.value.push(...res);
-                if (!res.length) {
-                    done("finished");
-                } else {
-                    done("ok");
-                }
+                res.length ? next() : done();
             }
 
             return {
@@ -261,7 +258,6 @@ export const Primary: Story = {
             };
         },
         setup() {
-
             const headers = [
                 {
                     title: "Name",

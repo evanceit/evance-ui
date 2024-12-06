@@ -35,7 +35,9 @@ const emit = defineEmits<{
         e: "load",
         options: {
             side: InfiniteScrollSide;
-            done: (status: InfiniteScrollStatus) => void;
+            done: () => void;
+            error: () => void;
+            next: () => void;
         },
     ): true;
 }>();
