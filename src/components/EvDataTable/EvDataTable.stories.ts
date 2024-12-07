@@ -39,7 +39,14 @@ const meta: Meta<typeof EvDataTable> = {
         },
         search: {
             control: "text",
-            description: "A search string can be applied",
+            description:
+                "A search string value used to filter results available as a `v-model:search` and/or `@update:search`.",
+        },
+        searchDelay: {
+            control: "number",
+            description:
+                "Adds a delay in ms between search input and `search` model updates. Defaults to `300`. " +
+                "The delay helps reduce the number of search requests.",
         },
         searchPlaceholder: {
             control: "text",
@@ -85,6 +92,7 @@ const meta: Meta<typeof EvDataTable> = {
         height: "100%",
         itemValue: "id",
         search: "",
+        searchDelay: undefined,
         searchPlaceholder: undefined,
         showSelect: false,
         selectStrategy: "page",
@@ -105,7 +113,35 @@ export const Primary: Story = {
             EvDataTableRow,
             EvButton,
         },
-        data() {
+        setup() {
+            const headers = [
+                {
+                    title: "Name",
+                    value: "name",
+                },
+                {
+                    title: "Data",
+                    children: [
+                        {
+                            title: "Speed (km/h)",
+                            value: "speed",
+                        },
+                        {
+                            title: "Length (m)",
+                            value: "length",
+                        },
+                        {
+                            title: "Year of Reg.",
+                            value: "year",
+                        },
+                    ],
+                },
+                {
+                    title: "Price",
+                    value: "price",
+                },
+            ];
+            const selected = ref([]);
             const boats = [
                 {
                     name: "Speedster",
@@ -247,50 +283,10 @@ export const Primary: Story = {
             }
 
             async function load({ done, next, page }) {
-                console.log("current page", currentPage.value);
-                console.log("load page:", page);
                 const res = await api(items.value);
                 items.value.push(...res);
                 res.length ? next() : done();
             }
-
-            return {
-                items,
-                sort,
-                sortOptions,
-                load,
-                currentPage,
-            };
-        },
-        setup() {
-            const headers = [
-                {
-                    title: "Name",
-                    value: "name",
-                },
-                {
-                    title: "Data",
-                    children: [
-                        {
-                            title: "Speed (km/h)",
-                            value: "speed",
-                        },
-                        {
-                            title: "Length (m)",
-                            value: "length",
-                        },
-                        {
-                            title: "Year of Reg.",
-                            value: "year",
-                        },
-                    ],
-                },
-                {
-                    title: "Price",
-                    value: "price",
-                },
-            ];
-            const selected = ref([]);
 
             function onSearch(value) {
                 console.log(value);
@@ -300,7 +296,18 @@ export const Primary: Story = {
                 console.log(selectedSort);
             }
 
-            return { args, headers, selected, onSearch, onSort };
+            return {
+                args,
+                headers,
+                selected,
+                onSearch,
+                onSort,
+                items,
+                sort,
+                sortOptions,
+                load,
+                currentPage,
+            };
         },
         template: `
             <ev-surface scrollable height="600" elevation="panel" rounded="small">

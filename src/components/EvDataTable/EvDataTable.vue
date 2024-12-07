@@ -4,7 +4,7 @@ import { makeEvDataTableProps } from "./EvDataTable.ts";
 import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
-import { toWebUnit } from "@/util";
+import { filterComponentProps, omit, toWebUnit } from "@/util";
 import { useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
@@ -74,20 +74,31 @@ const totalColumns = computed(() => {
     return columns.value.length + (props.showSelect ? 1 : 0);
 });
 
+const { t } = useLocaleFunctions();
 const sort = useModelProxy(props, "sort");
 const search = useModelProxy(props, "search");
 const infiniteScrollRef = ref<ComponentExposed<typeof EvInfiniteScroll>>();
 const infiniteScrollDisabled = computed(() => props.loading);
 const isEmpty = computed(() => !computedItems.value?.length);
-const { t } = useLocaleFunctions();
+const searchProps = computed(() => {
+    return omit(filterComponentProps(EvDataTableSearch, props), [
+        "search",
+        "sort",
+    ]);
+});
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
     (value) => {
-        console.log(infiniteScrollRef);
         containerRef.value = value;
     },
 );
+
+watch(page, (newValue, oldValue) => {
+    if (newValue < oldValue) {
+        infiniteScrollRef.value?.reset();
+    }
+});
 
 function onInfiniteScrollLoad(options) {
     const nextPage = page.value + 1;
@@ -97,12 +108,6 @@ function onInfiniteScrollLoad(options) {
     }
     emit("load", { ...options, next, page: nextPage });
 }
-
-watch(page, (newValue, oldValue) => {
-    if (newValue < oldValue) {
-        infiniteScrollRef.value?.reset();
-    }
-});
 </script>
 
 <template>
@@ -110,11 +115,9 @@ watch(page, (newValue, oldValue) => {
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
         <ev-data-table-search
+            v-bind="searchProps"
             v-model:search="search"
-            v-model:sort="sort"
-            :loading="props.loading"
-            :search-placeholder="props.searchPlaceholder"
-            :sort-options="props.sortOptions" />
+            v-model:sort="sort" />
         <div v-if="isEmpty" class="ev-data-table--empty">
             <slot name="empty">{{ t("table.empty") }}</slot>
         </div>

@@ -11,7 +11,7 @@ import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
 import { FilterIcon, SearchIcon } from "@/icons";
-import { computed, ref } from "vue";
+import { computed, ref, shallowRef } from "vue";
 import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
@@ -19,14 +19,15 @@ import {
 } from "@/components/EvDataTable/composables/sort.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useSelection } from "@/components/EvDataTable/composables/select.ts";
+import { debounce } from "@/util";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
 const emit = defineEmits(["update:sort", "click:filter", "update:search"]);
 const sortButtonRef = ref<HTMLElement>();
 const filterButtonRef = ref<HTMLElement>();
 const { t } = useLocaleFunctions();
-const searchModel = useModelProxy(props, "search");
-
+const search = useModelProxy(props, "search");
+const searchInternal = shallowRef("");
 const {
     hasSort,
     sortSelected,
@@ -49,6 +50,14 @@ const placeholder = computed(() =>
         ? props.searchPlaceholder
         : t("search.placeholder"),
 );
+
+const updateSearch = debounce((value) => {
+    search.value = value;
+}, props.searchDelay);
+
+function onSearchInternal(value: string) {
+    updateSearch(value);
+}
 </script>
 
 <template>
@@ -61,14 +70,15 @@ const placeholder = computed(() =>
         </div>
         <div class="ev-data-table-search--field">
             <ev-textfield
-                v-model="searchModel"
+                v-model="searchInternal"
                 rounded
                 clearable
                 appearance="subtle"
                 size="small"
                 :loading="props.loading"
                 :placeholder="placeholder"
-                :icon-start="SearchIcon" />
+                :icon-start="SearchIcon"
+                @update:model-value="onSearchInternal" />
         </div>
         <div class="ev-data-table-search--filter">
             <ev-button

@@ -5,6 +5,10 @@ export const makeEvDataTableSearchProps = propsFactory(
     {
         loading: Boolean,
         search: String,
+        searchDelay: {
+            type: Number,
+            default: 300,
+        },
         searchPlaceholder: String,
         ...makeDataTableSortProps(),
     },
