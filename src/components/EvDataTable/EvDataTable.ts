@@ -11,6 +11,7 @@ export const makeEvDataTableProps = propsFactory(
     {
         loading: Boolean,
         page: { type: Number, default: 1 },
+        itemsPerPage: { type: Number, default: 50 },
 
         ...makeEvDataTableSearchProps(),
         ...makeDataTableHeaderProps(),

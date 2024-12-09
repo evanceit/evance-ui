@@ -254,7 +254,6 @@ export const Primary: Story = {
                 },
             ];
             const itemsPerPage = 50;
-            const currentPage = shallowRef(1);
 
             function generateItems(from: number, limit: number) {
                 return [...Array(limit).keys()].map((i) => {
@@ -286,9 +285,9 @@ export const Primary: Story = {
                 });
             }
 
-            async function load({ done, next, page }) {
+            async function load({ next }) {
                 const results = await api(items.value);
-                results.length ? next(results) : done();
+                next(results);
             }
 
             async function change({ next }) {
@@ -305,7 +304,7 @@ export const Primary: Story = {
                 sort,
                 sortOptions,
                 load,
-                currentPage,
+                itemsPerPage,
             };
         },
         template: `
@@ -313,12 +312,12 @@ export const Primary: Story = {
                 <ev-data-table
                     v-bind="args" 
                     v-model:items="items"
-                    v-model:page="currentPage"
                     v-model="selected"
                     v-model:sort="sort"
                     v-model:search="args.search"
                     :headers="headers"
                     :sort-options="sortOptions"
+                    :items-per-page="itemsPerPage"
                     @load="load"
                     @change="change"
                 >

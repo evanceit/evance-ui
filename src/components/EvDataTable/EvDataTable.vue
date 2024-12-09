@@ -14,7 +14,7 @@ import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
 import { useLocaleFunctions } from "@/composables";
-import { EvInfiniteScroll } from "@/components/EvInfiniteScroll";
+import { EvInfiniteScroll, InfiniteScrollStatus } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 
 const props = defineProps({ ...makeEvDataTableProps() });
@@ -32,8 +32,6 @@ const emit = defineEmits<{
     (
         e: "load",
         options: {
-            done: () => void;
-            error: () => void;
             next: (nextItems: DataTableItemProps["items"]) => void;
             page: number;
         },
@@ -98,27 +96,27 @@ watch(
 function onChange() {
     isLoading.value = true;
     const nextPage = 1;
-    function next(results) {
+    function next(results: DataTableItemProps["items"]) {
         itemsModel.value = results;
         pageModel.value = nextPage;
         isLoading.value = false;
-        resetScroll();
+        resetScroll(results.length < props.itemsPerPage ? "finished" : "ok");
     }
     emit("change", { next, page: nextPage });
 }
 
 function onInfiniteScrollLoad(options) {
     const nextPage = pageModel.value + 1;
-    function next(results) {
+    function next(results: DataTableItemProps["items"]) {
         itemsModel.value.push(...results);
         pageModel.value = nextPage;
-        options.next();
+        results.length < props.itemsPerPage ? options.done() : options.next();
     }
-    emit("load", { ...options, next, page: nextPage });
+    emit("load", { next, page: nextPage });
 }
 
-function resetScroll() {
-    infiniteScrollRef.value?.reset();
+function resetScroll(status: InfiniteScrollStatus = "ok") {
+    infiniteScrollRef.value?.reset(status);
 }
 
 defineExpose({

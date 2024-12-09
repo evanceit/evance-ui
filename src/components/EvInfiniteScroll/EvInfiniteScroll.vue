@@ -166,7 +166,7 @@ onMounted(() => {
     reset();
 });
 
-function reset() {
+function reset(status: InfiniteScrollStatus = "ok") {
     if (!rootEl.value) {
         return;
     }
@@ -178,8 +178,8 @@ function reset() {
     } else {
         setScrollAmount(0);
     }
-    setStatus("start", "ok");
-    setStatus("end", "ok");
+    setStatus("start", status);
+    setStatus("end", status);
 }
 
 const sideProps = computed(() => ({
