@@ -73,11 +73,12 @@ export function transformItems(
 }
 
 export function useDataTableItems(
+    items,
     props: DataTableItemProps,
     columns: Ref<InternalDataTableHeader[]>,
 ) {
-    const items = computed(() =>
-        transformItems(props, props.items, columns.value),
+    const internalItems = computed(() =>
+        transformItems(props, items.value, columns.value),
     );
-    return { items };
+    return { items: internalItems };
 }

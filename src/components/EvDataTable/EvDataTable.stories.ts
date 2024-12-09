@@ -214,7 +214,7 @@ export const Primary: Story = {
                     year: 2022,
                 },
             ];
-            const boatsMax = 500;
+            const boatsMax = 200;
             const sort = ref(["quickfind:desc"]);
             const sortOptions: SortOption[] = [
                 {
@@ -256,26 +256,30 @@ export const Primary: Story = {
             const itemsPerPage = 50;
             const currentPage = shallowRef(1);
 
-            function generateItems(limit: number) {
+            function generateItems(from: number, limit: number) {
                 return [...Array(limit).keys()].map((i) => {
+                    const id = ++from;
                     const boat = {
-                        id: i + 1,
-                        value: `boat-${i + 1}`,
+                        id: id,
+                        value: `boat-${id + 1}`,
                         ...boats[i % boats.length],
                     };
-                    boat.name = `${boat.name} #${i}`;
+                    boat.name = `${boat.name} #${id}`;
                     return boat;
                 });
             }
 
-            const items = ref(generateItems(itemsPerPage));
+            const items = ref(generateItems(0, itemsPerPage));
 
             async function api(currentItems): Promise<any[]> {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const additional =
                             currentItems.length < boatsMax
-                                ? generateItems(itemsPerPage)
+                                ? generateItems(
+                                      currentItems.length,
+                                      itemsPerPage,
+                                  )
                                 : [];
                         resolve(additional);
                     }, 1000);
@@ -283,25 +287,20 @@ export const Primary: Story = {
             }
 
             async function load({ done, next, page }) {
-                const res = await api(items.value);
-                items.value.push(...res);
-                res.length ? next() : done();
+                const results = await api(items.value);
+                results.length ? next(results) : done();
             }
 
-            function onSearch(value) {
-                console.log(value);
-            }
-
-            function onSort(selectedSort) {
-                console.log(selectedSort);
+            async function change({ next }) {
+                const results = await api([]);
+                next(results);
             }
 
             return {
                 args,
                 headers,
                 selected,
-                onSearch,
-                onSort,
+                change,
                 items,
                 sort,
                 sortOptions,
@@ -313,16 +312,15 @@ export const Primary: Story = {
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-data-table
                     v-bind="args" 
-                    :items="items" 
-                    :headers="headers"
-                    :sort-options="sortOptions"
+                    v-model:items="items"
                     v-model:page="currentPage"
                     v-model="selected"
                     v-model:sort="sort"
                     v-model:search="args.search"
+                    :headers="headers"
+                    :sort-options="sortOptions"
                     @load="load"
-                    @update:search="onSearch"
-                    @update:sort="onSort"
+                    @change="change"
                 >
                     <template #item.price="{ value }">£{{ value }}</template>
                 </ev-data-table>

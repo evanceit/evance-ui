@@ -5,7 +5,7 @@ import { useDimensions } from "@/composables/dimensions.ts";
 import { computed, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual.ts";
 import { filterComponentProps, omit, toWebUnit } from "@/util";
-import { useDataTableItems } from "./composables/items.ts";
+import { DataTableItemProps, useDataTableItems } from "./composables/items.ts";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
 import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
 import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
@@ -14,10 +14,7 @@ import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
 import { useLocaleFunctions } from "@/composables";
-import {
-    EvInfiniteScroll,
-    InfiniteScrollSide,
-} from "@/components/EvInfiniteScroll";
+import { EvInfiniteScroll } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 
 const props = defineProps({ ...makeEvDataTableProps() });
@@ -35,29 +32,32 @@ const emit = defineEmits<{
     (
         e: "load",
         options: {
-            side: InfiniteScrollSide;
             done: () => void;
             error: () => void;
-            next: () => void;
+            next: (nextItems: DataTableItemProps["items"]) => void;
             page: number;
         },
-    ): true;
+    ): void;
+    (
+        e: "change",
+        options: {
+            next: (nextItems: DataTableItemProps["items"]) => void;
+            page: number;
+        },
+    ): void;
 }>();
 
-const page = useModelProxy(props, "page");
+const isLoading = useModelProxy(props, "loading");
+const itemsModel = useModelProxy(props, "items");
+const pageModel = useModelProxy(props, "page");
 const dimensions = useDimensions(props);
 const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
-const { items } = useDataTableItems(props, columns);
+const { items } = useDataTableItems(itemsModel, props, columns);
 
-const {
-    selected,
-    isSelected,
-    select,
-    selectAll,
-    toggleSelect,
-    someSelected,
-    allSelected,
-} = provideSelection(props, { allItems: items, currentPage: items });
+const { selected, isSelected, select } = provideSelection(props, {
+    allItems: items,
+    currentPage: items,
+});
 
 const {
     containerRef,
@@ -75,13 +75,14 @@ const totalColumns = computed(() => {
 });
 
 const { t } = useLocaleFunctions();
-const sort = useModelProxy(props, "sort");
-const search = useModelProxy(props, "search");
+const sortModel = useModelProxy(props, "sort");
+const searchModel = useModelProxy(props, "search");
 const infiniteScrollRef = ref<ComponentExposed<typeof EvInfiniteScroll>>();
-const infiniteScrollDisabled = computed(() => props.loading);
-const isEmpty = computed(() => !computedItems.value?.length);
+const infiniteScrollDisabled = computed(() => isLoading.value);
+const isEmpty = computed(() => !itemsModel.value?.length);
 const searchProps = computed(() => {
     return omit(filterComponentProps(EvDataTableSearch, props), [
+        "loading",
         "search",
         "sort",
     ]);
@@ -94,20 +95,35 @@ watch(
     },
 );
 
-watch(page, (newValue, oldValue) => {
-    if (newValue < oldValue) {
-        infiniteScrollRef.value?.reset();
+function onChange() {
+    isLoading.value = true;
+    const nextPage = 1;
+    function next(results) {
+        itemsModel.value = results;
+        pageModel.value = nextPage;
+        isLoading.value = false;
+        resetScroll();
     }
-});
+    emit("change", { next, page: nextPage });
+}
 
 function onInfiniteScrollLoad(options) {
-    const nextPage = page.value + 1;
-    function next() {
-        page.value = nextPage;
+    const nextPage = pageModel.value + 1;
+    function next(results) {
+        itemsModel.value.push(...results);
+        pageModel.value = nextPage;
         options.next();
     }
     emit("load", { ...options, next, page: nextPage });
 }
+
+function resetScroll() {
+    infiniteScrollRef.value?.reset();
+}
+
+defineExpose({
+    resetScroll,
+});
 </script>
 
 <template>
@@ -116,8 +132,11 @@ function onInfiniteScrollLoad(options) {
         :style="[dimensions, props.style]">
         <ev-data-table-search
             v-bind="searchProps"
-            v-model:search="search"
-            v-model:sort="sort" />
+            v-model:search="searchModel"
+            v-model:sort="sortModel"
+            :loading="isLoading"
+            @update:sort="onChange"
+            @update:search="onChange" />
         <div v-if="isEmpty" class="ev-data-table--empty">
             <slot name="empty">{{ t("table.empty") }}</slot>
         </div>
