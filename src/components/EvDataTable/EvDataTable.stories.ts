@@ -285,13 +285,8 @@ export const Primary: Story = {
                 });
             }
 
-            async function load({ next }) {
-                const results = await api(items.value);
-                next(results);
-            }
-
-            async function change({ next }) {
-                const results = await api([]);
+            async function load({ next, page }) {
+                const results = await api(page > 1 ? items.value : []);
                 next(results);
             }
 
@@ -299,7 +294,6 @@ export const Primary: Story = {
                 args,
                 headers,
                 selected,
-                change,
                 items,
                 sort,
                 sortOptions,
@@ -319,7 +313,6 @@ export const Primary: Story = {
                     :sort-options="sortOptions"
                     :items-per-page="itemsPerPage"
                     @load="load"
-                    @change="change"
                 >
                     <template #item.price="{ value }">£{{ value }}</template>
                 </ev-data-table>

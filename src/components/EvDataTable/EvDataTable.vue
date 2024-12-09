@@ -14,7 +14,10 @@ import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
 import { useLocaleFunctions } from "@/composables";
-import { EvInfiniteScroll, InfiniteScrollStatus } from "@/components/EvInfiniteScroll";
+import {
+    EvInfiniteScroll,
+    InfiniteScrollStatus,
+} from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 
 const props = defineProps({ ...makeEvDataTableProps() });
@@ -31,13 +34,6 @@ const emit = defineEmits<{
     (e: "update:page", value: number): void;
     (
         e: "load",
-        options: {
-            next: (nextItems: DataTableItemProps["items"]) => void;
-            page: number;
-        },
-    ): void;
-    (
-        e: "change",
         options: {
             next: (nextItems: DataTableItemProps["items"]) => void;
             page: number;
@@ -102,7 +98,7 @@ function onChange() {
         isLoading.value = false;
         resetScroll(results.length < props.itemsPerPage ? "finished" : "ok");
     }
-    emit("change", { next, page: nextPage });
+    emit("load", { next, page: nextPage });
 }
 
 function onInfiniteScrollLoad(options) {
