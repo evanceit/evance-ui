@@ -145,14 +145,17 @@ defineExpose({
             @scrollend="handleScrollend">
             <table class="ev-data-table--native">
                 <slot name="colgroup" />
-                <thead class="ev-data-table--thead" role="rowgroup">
+                <thead
+                    v-if="props.showHeaders"
+                    class="ev-data-table--thead"
+                    role="rowgroup">
                     <tr v-for="(row, rowIndex) of headers" :key="rowIndex">
                         <ev-data-table-cell
                             v-if="props.showSelect && rowIndex === 0"
                             tag="th"
                             :colspan="1"
                             :rowspan="headers.length">
-                            []
+                            &nbsp;
                         </ev-data-table-cell>
                         <ev-data-table-cell
                             v-for="(header, headerIndex) of row"

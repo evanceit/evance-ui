@@ -5,22 +5,23 @@
                 box-shadow 0.25s ease-in-out;
     will-change: background-color, box-shadow;
     border-radius: inherit;
+    background-color: var(--current-surface-fill);
 
     &.elevation-default {
-        background-color: var(--surface-default);
+        --current-surface-fill: var(--surface-default);
     }
 
     &.elevation-overlay {
-        background-color: var(--surface-overlay);
+        --current-surface-fill: var(--surface-overlay);
         box-shadow: var(--surface-overlay-shadow);
     }
 
     &.elevation-panel {
-        background-color: var(--surface-panel);
+        --current-surface-fill: var(--surface-panel);
     }
 
     &.elevation-sunken  {
-        background-color: var(--surface-sunken);
+        --current-surface-fill: var(--surface-sunken);
     }
 }
 

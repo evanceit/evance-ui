@@ -64,6 +64,11 @@ const meta: Meta<typeof EvDataTable> = {
                 </ul>
             `,
         },
+        showHeaders: {
+            control: "boolean",
+            description:
+                "Whether to show the `thead` headers for the table. Defaults to `false`.",
+        },
         showSelect: {
             control: "boolean",
             description:
@@ -94,6 +99,7 @@ const meta: Meta<typeof EvDataTable> = {
         search: "",
         searchDelay: undefined,
         searchPlaceholder: undefined,
+        showHeaders: false,
         showSelect: false,
         selectStrategy: "page",
     },
@@ -121,25 +127,19 @@ export const Primary: Story = {
                     align: "start",
                 },
                 {
-                    title: "Data",
-                    hidden: { lg: "down" },
-                    children: [
-                        {
-                            title: "Speed (km/h)",
-                            value: "speed",
-                            align: "center",
-                        },
-                        {
-                            title: "Length (m)",
-                            value: "length",
-                            align: "center",
-                        },
-                        {
-                            title: "Year of Reg.",
-                            value: "year",
-                            align: "center",
-                        },
-                    ],
+                    title: "Speed (km/h)",
+                    value: "speed",
+                    align: "center",
+                },
+                {
+                    title: "Length (m)",
+                    value: "length",
+                    align: "center",
+                },
+                {
+                    title: "Year of Reg.",
+                    value: "year",
+                    align: "center",
                 },
                 {
                     title: "Price",
