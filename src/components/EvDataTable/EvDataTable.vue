@@ -164,7 +164,11 @@ defineExpose({
                             :align="header.align"
                             :colspan="header.colspan"
                             :rowspan="header.rowspan">
-                            {{ header.title }}
+                            <slot
+                                :name="`header.${header.key}`"
+                                v-bind="{ header }">
+                                {{ header.title }}
+                            </slot>
                         </ev-data-table-cell>
                     </tr>
                 </thead>
@@ -199,7 +203,7 @@ defineExpose({
                                     :key="`item-${displayItem.index}-${column.key}`"
                                     #[`item.${column.key}`]="cellProps">
                                     <slot
-                                        v-if="!slots.default"
+                                        v-if="!slots.item"
                                         :name="`item.${column.key}`"
                                         v-bind="cellProps" />
                                 </template>

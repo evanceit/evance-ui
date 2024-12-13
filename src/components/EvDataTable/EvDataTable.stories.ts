@@ -5,7 +5,7 @@ import {
     EvDataTable,
     EvDataTableRow,
 } from "@/components/EvDataTable";
-import { EvButton, EvSurface } from "@/components";
+import { EvButton, EvSurface, EvCode } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 
@@ -118,6 +118,7 @@ export const Primary: Story = {
             EvDataTable,
             EvDataTableRow,
             EvButton,
+            EvCode
         },
         setup() {
             const headers = [
@@ -130,16 +131,19 @@ export const Primary: Story = {
                     title: "Speed (km/h)",
                     value: "speed",
                     align: "center",
+                    hidden: { xs: "only" },
                 },
                 {
                     title: "Length (m)",
                     value: "length",
                     align: "center",
+                    hidden: { sm: "down" },
                 },
                 {
                     title: "Year of Reg.",
                     value: "year",
                     align: "center",
+                    hidden: { md: "down" },
                 },
                 {
                     title: "Price",
@@ -320,6 +324,8 @@ export const Primary: Story = {
                     :items-per-page="itemsPerPage"
                     @load="load"
                 >
+                    <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
+                    <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
                     <template #item.price="{ value }">£{{ value }}</template>
                 </ev-data-table>
             </ev-surface>
