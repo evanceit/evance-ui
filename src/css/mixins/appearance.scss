@@ -68,30 +68,30 @@ $outline: 1px;
 
 @mixin generate-appearance($prefix, $name, $cssName, $maybeClickable: false) {
     &.is-appearance-#{$name} {
-        --#{$prefix}-appearance-background: var(--background-#{$cssName});
+        --#{$prefix}-appearance-background: var(--fill-#{$cssName});
         --#{$prefix}-appearance-color: var(--text-#{$cssName});
 
         @if $maybeClickable {
             &.is-clickable {
                 &:hover {
-                    --#{$prefix}-appearance-background: var(--background-#{$cssName}-hovered);
+                    --#{$prefix}-appearance-background: var(--fill-#{$cssName}-hovered);
                 }
                 &:active {
-                    --#{$prefix}-appearance-background: var(--background-#{$cssName}-pressed);
+                    --#{$prefix}-appearance-background: var(--fill-#{$cssName}-pressed);
                 }
             }
         }
 
         &.is-variant-bold {
-            --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold);
+            --#{$prefix}-appearance-background: var(--fill-#{$cssName}-bold);
             --#{$prefix}-appearance-color: var(--text-inverse);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
-                        --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold-hovered);
+                        --#{$prefix}-appearance-background: var(--fill-#{$cssName}-bold-hovered);
                     }
                     &:active {
-                        --#{$prefix}-appearance-background: var(--background-#{$cssName}-bold-pressed);
+                        --#{$prefix}-appearance-background: var(--fill-#{$cssName}-bold-pressed);
                     }
                 }
             }
@@ -99,10 +99,10 @@ $outline: 1px;
 
         &.is-variant-outlined {
             --#{$prefix}-appearance-background: transparent;
-            --#{$prefix}-appearance-border: #{$outline} solid var(--background-#{$cssName}-bold);
+            --#{$prefix}-appearance-border: #{$outline} solid var(--fill-#{$cssName}-bold);
 
             &.is-active {
-                --#{$prefix}-appearance-background: var(--background-#{$cssName});
+                --#{$prefix}-appearance-background: var(--fill-#{$cssName});
             }
         }
 
