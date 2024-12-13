@@ -64,7 +64,7 @@ function onCheckboxClick(e: PointerEvent) {
             <template
                 v-for="column in columns"
                 :key="`item-${index}-${column.key}`">
-                <ev-data-table-cell>
+                <ev-data-table-cell :align="column.align">
                     <slot
                         :name="`item.${column.key}`"
                         v-bind="{

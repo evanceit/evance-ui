@@ -99,6 +99,8 @@ export interface DisplayInstance {
     /** @internal */
     ssr: boolean;
 
+    hasActiveRule(rules: DisplayRuleListProp): boolean;
+
     update(): void;
 }
 
@@ -186,6 +188,28 @@ export function createDisplay(
         platform.value = getPlatform();
     }
 
+    function hasActiveRule(rules: DisplayRuleListProp): boolean
+    {
+        const rulesInternal = toDisplayRuleArray(rules);
+        for (const rule of rulesInternal) {
+            if (!isString(rule)) {
+                continue;
+            }
+            if (!isDisplayRule(rule)) {
+                consoleWarn(
+                    `The display rule '${rule}' is not valid and will be ignored.`,
+                );
+                continue;
+            }
+            const displayKey = toDisplayStateKey(rule);
+            const displayState = state[displayKey as keyof DisplayInstance];
+            if (displayState) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // eslint-disable-next-line max-statements
     watchEffect(() => {
         const xs = width.value < thresholds.sm;
@@ -243,6 +267,7 @@ export function createDisplay(
     return {
         ...toRefs(state),
         update,
+        hasActiveRule,
         ssr: !!ssr,
     };
 }
@@ -320,7 +345,8 @@ export type DisplayRuleListProp =
     | DisplayRuleKey
     | DisplayRuleKey[]
     | DisplayRuleKebab
-    | DisplayRuleKebab[];
+    | DisplayRuleKebab[]
+    | { [key in DisplayRuleKey]?: DisplayRuleSuffix };
 
 /** Visibility props */
 export type VisibilityRuleProp = DisplayRuleListProp | boolean;

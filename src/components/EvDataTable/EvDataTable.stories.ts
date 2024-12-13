@@ -6,7 +6,7 @@ import {
     EvDataTableRow,
 } from "@/components/EvDataTable";
 import { EvButton, EvSurface } from "@/components";
-import { ref, shallowRef } from "vue";
+import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 
 const meta: Meta<typeof EvDataTable> = {
@@ -118,27 +118,33 @@ export const Primary: Story = {
                 {
                     title: "Name",
                     value: "name",
+                    align: "start",
                 },
                 {
                     title: "Data",
+                    hidden: { lg: "down" },
                     children: [
                         {
                             title: "Speed (km/h)",
                             value: "speed",
+                            align: "center",
                         },
                         {
                             title: "Length (m)",
                             value: "length",
+                            align: "center",
                         },
                         {
                             title: "Year of Reg.",
                             value: "year",
+                            align: "center",
                         },
                     ],
                 },
                 {
                     title: "Price",
                     value: "price",
+                    align: "end",
                 },
             ];
             const selected = ref([]);

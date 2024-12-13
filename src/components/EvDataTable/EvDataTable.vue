@@ -19,6 +19,7 @@ import {
     InfiniteScrollStatus,
 } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
+import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -142,8 +143,28 @@ defineExpose({
             @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
-            <table>
+            <table class="ev-data-table--native">
                 <slot name="colgroup" />
+                <thead class="ev-data-table--thead" role="rowgroup">
+                    <tr v-for="(row, rowIndex) of headers" :key="rowIndex">
+                        <ev-data-table-cell
+                            v-if="props.showSelect && rowIndex === 0"
+                            tag="th"
+                            :colspan="1"
+                            :rowspan="headers.length">
+                            []
+                        </ev-data-table-cell>
+                        <ev-data-table-cell
+                            v-for="(header, headerIndex) of row"
+                            :key="headerIndex"
+                            tag="th"
+                            :align="header.align"
+                            :colspan="header.colspan"
+                            :rowspan="header.rowspan">
+                            {{ header.title }}
+                        </ev-data-table-cell>
+                    </tr>
+                </thead>
                 <tbody class="ev-data-table--tbody" role="rowgroup">
                     <tr
                         ref="markerRef"

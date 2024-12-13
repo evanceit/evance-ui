@@ -25,7 +25,7 @@ const dimensions = useDimensions(props);
             alignClass,
             props.class,
         ]"
-        :colspan="colspan"
+        :colspan="props.colspan"
         :style="[dimensions, props.style]">
         <slot name="default" />
     </component>

@@ -9,13 +9,18 @@ import {
     Ref,
     watchEffect,
 } from "vue";
-import { GetterPropertyKey, propsFactory } from "@/util";
+import { GetterPropertyKey, isBoolean, isEmpty, propsFactory } from "@/util";
 import { FilterKeyFunctions } from "@/composables/filter.ts";
 import {
     DataTableCompareFunction,
     DataTableHeader,
     InternalDataTableHeader,
 } from "@/components/EvDataTable/composables/types.ts";
+import {
+    DisplayInstance,
+    DisplayRuleListProp,
+    useDisplay,
+} from "@/composables/display.ts";
 
 type HeaderProps = {
     headers?: DeepReadonly<DataTableHeader[]> | undefined;
@@ -199,9 +204,32 @@ function parse(items: InternalDataTableHeader[], maxDepth: number) {
     return { columns, headers };
 }
 
-function convertToInternalHeaders(items: DeepReadonly<DataTableHeader[]>) {
+/**
+ * # `convertToInternalHeaders`
+ *
+ * Convert the header items supplied to the table to items we
+ * can use internally.
+ *
+ * @param items
+ * @param display
+ */
+function convertToInternalHeaders(
+    items: DeepReadonly<DataTableHeader[]>,
+    display: DisplayInstance,
+) {
     const internalHeaders: InternalDataTableHeader[] = [];
     for (const item of items) {
+        if (!isEmpty(item.hidden)) {
+            if (isBoolean(item.hidden) && !!item.hidden) {
+                continue;
+            }
+            if (
+                !isBoolean(item.hidden) &&
+                display.hasActiveRule(item.hidden as DisplayRuleListProp)
+            ) {
+                continue;
+            }
+        }
         const defaultItem = { ...item };
         const key =
             defaultItem.key ??
@@ -228,6 +256,7 @@ export function createHeaders(props: HeaderProps) {
     const columns = ref<InternalDataTableHeader[]>([]);
     const sortFunctions = ref<Record<string, DataTableCompareFunction>>();
     const filterFunctions = ref<FilterKeyFunctions>();
+    const display = useDisplay();
 
     watchEffect(() => {
         const _headers =
@@ -238,11 +267,8 @@ export function createHeaders(props: HeaderProps) {
             })) as never);
 
         const items = _headers.slice();
-
-        const internalHeaders = convertToInternalHeaders(items);
-
+        const internalHeaders = convertToInternalHeaders(items, display);
         parseFixedColumns(internalHeaders);
-
         const maxDepth =
             Math.max(...internalHeaders.map((item) => getDepth(item))) + 1;
         const parsed = parse(internalHeaders, maxDepth);
