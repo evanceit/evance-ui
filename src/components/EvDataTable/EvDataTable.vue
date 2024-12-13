@@ -34,9 +34,6 @@ const slots = defineSlots<{
 }>();
 
 const emit = defineEmits<{
-    (e: "update:search", value: string): void;
-    (e: "update:sort", value: string[]): void;
-    (e: "update:page", value: number): void;
     (
         e: "load",
         options: {
@@ -44,6 +41,10 @@ const emit = defineEmits<{
             page: number;
         },
     ): void;
+    (e: "update:modelValue", value: unknown[]): void;
+    (e: "update:page", value: number): void;
+    (e: "update:search", value: string): void;
+    (e: "update:sort", value: string[]): void;
 }>();
 
 const isLoading = useModelProxy(props, "loading");
