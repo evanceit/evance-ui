@@ -8,6 +8,7 @@ import {
 import { EvButton, EvSurface, EvCode } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
+import { EllipsisIcon } from "@/icons";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
@@ -118,7 +119,7 @@ export const Primary: Story = {
             EvDataTable,
             EvDataTableRow,
             EvButton,
-            EvCode
+            EvCode,
         },
         setup() {
             const headers = [
@@ -132,23 +133,36 @@ export const Primary: Story = {
                     value: "speed",
                     align: "center",
                     hidden: { xs: "only" },
+                    width: 120,
                 },
                 {
                     title: "Length (m)",
                     value: "length",
                     align: "center",
                     hidden: { sm: "down" },
+                    width: 120,
                 },
                 {
                     title: "Year of Reg.",
                     value: "year",
                     align: "center",
                     hidden: { md: "down" },
+                    width: 120,
                 },
                 {
                     title: "Price",
                     value: "price",
                     align: "end",
+                    width: 120,
+                },
+                {
+                    title: "",
+                    value: "actions",
+                    align: "end",
+                    width: 52,
+                    cellProps: {
+                        class: "py-0",
+                    },
                 },
             ];
             const selected = ref([]);
@@ -309,6 +323,7 @@ export const Primary: Story = {
                 sortOptions,
                 load,
                 itemsPerPage,
+                EllipsisIcon,
             };
         },
         template: `
@@ -327,6 +342,9 @@ export const Primary: Story = {
                     <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
                     <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
                     <template #item.price="{ value }">£{{ value }}</template>
+                    <template #item.actions="props">
+                        <ev-button size="small" :icon="EllipsisIcon" variant="subtle" rounded  />
+                    </template>
                 </ev-data-table>
             </ev-surface>
         `,

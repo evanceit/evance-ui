@@ -12,7 +12,10 @@ import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
 import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy.ts";
-import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
+import {
+    DataTableHeader,
+    ItemSlot,
+} from "@/components/EvDataTable/composables/types.ts";
 import { useLocaleFunctions } from "@/composables";
 import {
     EvInfiniteScroll,
@@ -20,6 +23,7 @@ import {
 } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
+import { calculateDisplayRuleValue } from "@/composables/display.ts";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -116,6 +120,14 @@ function resetScroll(status: InfiniteScrollStatus = "ok") {
     infiniteScrollRef.value?.reset(status);
 }
 
+function colStyle(column: DataTableHeader) {
+    return {
+        width: calculateDisplayRuleValue(column.width),
+        minWidth: calculateDisplayRuleValue(column.minWidth),
+        maxWidth: calculateDisplayRuleValue(column.maxWidth),
+    };
+}
+
 defineExpose({
     resetScroll,
 });
@@ -144,7 +156,15 @@ defineExpose({
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
             <table class="ev-data-table--native">
-                <slot name="colgroup" />
+                <slot name="colgroup">
+                    <colgroup>
+                        <col v-if="props.showSelect" />
+                        <col
+                            v-for="(column, colIndex) of columns"
+                            :key="colIndex"
+                            :style="colStyle(column)" />
+                    </colgroup>
+                </slot>
                 <thead
                     v-if="props.showHeaders"
                     class="ev-data-table--thead"
@@ -161,6 +181,7 @@ defineExpose({
                             v-for="(header, headerIndex) of row"
                             :key="headerIndex"
                             tag="th"
+                            v-bind="header.headerProps"
                             :align="header.align"
                             :colspan="header.colspan"
                             :rowspan="header.rowspan">
