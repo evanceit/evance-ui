@@ -72,6 +72,19 @@
     }
 }
 
+.transition-slide-up {
+    @include transition-default();
+    @include fade-out();
+
+    &-enter-from {
+        transform: translateY(30px);
+    }
+
+    &-leave-to {
+        transform: translateY(-30px);
+    }
+}
+
 
 /**
     EvMenu Transition

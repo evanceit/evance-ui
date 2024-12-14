@@ -14,3 +14,20 @@
 .ev-data-table-search--field {
     flex: 1;
 }
+
+.ev-data-table-search--modifiers {
+    flex: 1;
+
+    &.is-transitioning {
+        overflow: hidden;
+    }
+}
+
+.ev-data-table-search--actions,
+.ev-data-table-search--options {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 1rem;
+    min-height: 56px;
+}

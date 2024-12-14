@@ -95,6 +95,12 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "The placeholder to show in the search field when empty",
         },
+        selectActions: {
+            control: false,
+            description:
+                "Actions available when one or more items are selected. Accepts an array of `EvButtonProps`. " +
+                "For greater flexibility use the `select-actions` slot.",
+        },
         selectStrategy: {
             control: "select",
             options: ["single", "page", "all"],
@@ -149,6 +155,7 @@ const meta: Meta<typeof EvDataTable> = {
         search: "",
         searchDelay: undefined,
         searchPlaceholder: undefined,
+        selectActions: undefined,
         selectStrategy: "page",
         showHeaders: false,
         showSelect: false,
@@ -364,6 +371,15 @@ export const Primary: Story = {
                 next(results);
             }
 
+            const selectActions = [
+                {
+                    text: "Action 1",
+                    onClick: () => {
+                        console.log("action 1");
+                    },
+                },
+            ];
+
             return {
                 args,
                 headers,
@@ -374,6 +390,7 @@ export const Primary: Story = {
                 load,
                 itemsPerPage,
                 EllipsisIcon,
+                selectActions,
             };
         },
         template: `
@@ -385,6 +402,7 @@ export const Primary: Story = {
                     v-model:sort="sort"
                     v-model:search="args.search"
                     :headers="headers"
+                    :select-actions="selectActions"
                     :sort-options="sortOptions"
                     :items-per-page="itemsPerPage"
                     @load="load"

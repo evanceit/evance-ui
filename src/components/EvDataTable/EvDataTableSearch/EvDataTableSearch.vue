@@ -2,6 +2,7 @@
 import "./EvDataTableSearch.scss";
 import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
 import { EvButton } from "@/components/EvButton";
+import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { EvDivider } from "@/components/EvDivider";
 import { EvList } from "@/components/EvList";
@@ -39,7 +40,12 @@ const {
     sortIcon,
 } = useSortOptions(props as SortProps);
 
+const slots = defineSlots<{
+    "select-actions"(): never;
+}>();
+
 const { allSelected, someSelected, selectAll, showSelectAll } = useSelection();
+const isTransitioning = shallowRef(false);
 
 function onClickFilter(e: MouseEvent) {
     emit("click:filter", e);
@@ -55,9 +61,23 @@ const updateSearch = debounce((value) => {
     search.value = value;
 }, props.searchDelay);
 
+const showActions = computed(() => {
+    const hasSelectActions = slots["select-actions"] || props.selectActions;
+    return someSelected.value && hasSelectActions;
+});
+
 function onSearchInternal(value: string) {
     updateSearch(value);
 }
+
+function onBeforeLeave() {
+    isTransitioning.value = true;
+}
+
+function onAfterEnter() {
+    isTransitioning.value = false;
+}
+
 </script>
 
 <template>
@@ -70,64 +90,92 @@ function onSearchInternal(value: string) {
                 :indeterminate="someSelected && !allSelected"
                 @update:model-value="selectAll" />
         </div>
-        <div class="ev-data-table-search--field">
-            <ev-textfield
-                v-model="searchInternal"
-                rounded
-                clearable
-                appearance="subtle"
-                size="small"
-                :loading="props.loading"
-                :placeholder="placeholder"
-                :icon-start="SearchIcon"
-                @update:model-value="onSearchInternal" />
-        </div>
-        <div class="ev-data-table-search--filter">
-            <ev-button
-                ref="filterButtonRef"
-                rounded
-                size="small"
-                variant="subtle"
-                :icon="FilterIcon"
-                @click="onClickFilter" />
-            <ev-tooltip
-                :activator="filterButtonRef"
-                :text="t('search.filter')" />
-        </div>
-        <div v-if="hasSort" class="ev-data-table-search--sort">
-            <ev-button
-                ref="sortButtonRef"
-                rounded
-                size="small"
-                variant="subtle"
-                :text="sortTitle"
-                :icon-end="sortIcon" />
-            <ev-tooltip :activator="sortButtonRef" :text="t('sort.label')" />
-            <ev-menu
-                :activator="sortButtonRef"
-                :close-on-content-click="false"
-                :width="200"
-                position="bottom-end">
-                <ev-surface elevation="overlay" class="w-100 h-100">
-                    <ev-section :title="t('sort.heading')">
-                        <ev-list
-                            required
-                            select-strategy="single-any"
-                            :items="sortTitleOptions"
-                            :selected="sortTitleSelected"
-                            @update:selected="onSortTitleSelected" />
-                    </ev-section>
-                    <ev-divider />
-                    <ev-section :title="t('sort.direction')">
-                        <ev-list
-                            v-model:selected="sortSelected"
-                            required
-                            select-strategy="single-any"
-                            item-title="direction"
-                            :items="sortDirectionOptions" />
-                    </ev-section>
-                </ev-surface>
-            </ev-menu>
+        <div
+            :class="[
+                'ev-data-table-search--modifiers',
+                {
+                    'is-transitioning': isTransitioning,
+                },
+            ]">
+            <transition
+                name="transition-slide-up"
+                mode="out-in"
+                @before-leave="onBeforeLeave"
+                @after-enter="onAfterEnter">
+                <div v-if="!showActions" class="ev-data-table-search--options">
+                    <div class="ev-data-table-search--field">
+                        <ev-textfield
+                            v-model="searchInternal"
+                            rounded
+                            clearable
+                            appearance="subtle"
+                            size="small"
+                            :loading="props.loading"
+                            :placeholder="placeholder"
+                            :icon-start="SearchIcon"
+                            @update:model-value="onSearchInternal" />
+                    </div>
+                    <div class="ev-data-table-search--filter">
+                        <ev-button
+                            ref="filterButtonRef"
+                            rounded
+                            size="small"
+                            variant="subtle"
+                            :icon="FilterIcon"
+                            @click="onClickFilter" />
+                        <ev-tooltip
+                            :activator="filterButtonRef"
+                            :text="t('search.filter')" />
+                    </div>
+                    <div v-if="hasSort" class="ev-data-table-search--sort">
+                        <ev-button
+                            ref="sortButtonRef"
+                            rounded
+                            size="small"
+                            variant="subtle"
+                            :text="sortTitle"
+                            :icon-end="sortIcon" />
+                        <ev-tooltip
+                            :activator="sortButtonRef"
+                            :text="t('sort.label')" />
+                        <ev-menu
+                            :activator="sortButtonRef"
+                            :close-on-content-click="false"
+                            :width="200"
+                            position="bottom-end">
+                            <ev-surface elevation="overlay" class="w-100 h-100">
+                                <ev-section :title="t('sort.heading')">
+                                    <ev-list
+                                        required
+                                        select-strategy="single-any"
+                                        :items="sortTitleOptions"
+                                        :selected="sortTitleSelected"
+                                        @update:selected="
+                                            onSortTitleSelected
+                                        " />
+                                </ev-section>
+                                <ev-divider />
+                                <ev-section :title="t('sort.direction')">
+                                    <ev-list
+                                        v-model:selected="sortSelected"
+                                        required
+                                        select-strategy="single-any"
+                                        item-title="direction"
+                                        :items="sortDirectionOptions" />
+                                </ev-section>
+                            </ev-surface>
+                        </ev-menu>
+                    </div>
+                </div>
+                <div v-else class="ev-data-table-search--actions">
+                    <slot name="select-actions">
+                        <ev-button-group
+                            size="small"
+                            variant="subtle"
+                            :items="props.selectActions" />
+                    </slot>
+                </div>
+            </transition>
         </div>
     </div>
 </template>

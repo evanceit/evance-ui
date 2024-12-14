@@ -32,6 +32,7 @@ const slots = defineSlots<{
     default(): never;
     empty(): never;
     item(props: ItemSlot): never;
+    "select-actions"(): never;
 }>();
 
 const emit = defineEmits<{
@@ -147,7 +148,11 @@ defineExpose({
             :loading="isLoading"
             :hide-select-all="props.showHeaders"
             @update:sort="onChange"
-            @update:search="onChange" />
+            @update:search="onChange">
+            <template v-if="slots['select-actions']" #select-actions>
+                <slot name="select-actions" />
+            </template>
+        </ev-data-table-search>
         <div v-if="isEmpty" class="ev-data-table--empty">
             <slot name="empty">{{ t("table.empty") }}</slot>
         </div>
