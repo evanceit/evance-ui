@@ -13,6 +13,11 @@ import { EllipsisIcon } from "@/icons";
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
     argTypes: {
+        headers: {
+            control: false,
+            description:
+                "An array of objects that each describe a column (see below)",
+        },
         height: {
             control: "select",
             options: [null, 400, 500, "100%"],
@@ -27,11 +32,41 @@ const meta: Meta<typeof EvDataTable> = {
             control: "select",
             options: ["id", "value"],
             description:
-                "Property on supplied `items` that contains its value.",
+                "Property on supplied `items` that contains its value. Defaults to `id`.",
+        },
+        load: {
+            control: false,
+            description: `The \`load\` event is triggered when:
+            <ul>
+                <li>Loading the next page of results on scroll.</li>
+                <li>\`search\` string changes (after \`search-delay\`)</li>
+                <li>The \`sort\` value changes</li>
+            </ul>
+            The load event provides the following parameters:
+            <ul>
+                <li>\`page\` - the pagination page expected to load.</li>
+                <li>\`next\` - a function to provide the next array of \`items\`. 
+                This automatically handles loading state, current page updates, 
+                scroll position, end of list state and empty state.</li>
+            </ul>
+            `,
         },
         loading: {
             control: "boolean",
-            description: "Sets the table into a loading state.",
+            description:
+                "Sets the table into a loading state. This disabled infinite scroll events.",
+        },
+        modelValue: {
+            control: false,
+            description:
+                "Maintains a list of selected item values (see `item-value`), or the item objects when `return-object` is `true`.",
+        },
+        page: {
+            control: false,
+            description:
+                "The current page of data used in pagination. This should be applied with `v-model:page` or tracked with `@update:page`. " +
+                "For simple tables, it may not be necessary to apply the page prop when using the native functions provided by the `@load` event. " +
+                "Defaults to `1`.",
         },
         returnObject: {
             control: "boolean",
@@ -95,16 +130,24 @@ const meta: Meta<typeof EvDataTable> = {
         },
     },
     args: {
+        headers: undefined,
         height: "100%",
+        items: undefined,
         itemValue: "id",
+        load: undefined,
+        loading: undefined,
+        modelValue: undefined,
+        page: undefined,
+        returnObject: undefined,
         search: "",
         searchDelay: undefined,
         searchPlaceholder: undefined,
+        selectStrategy: "page",
         showHeaders: false,
         showSelect: false,
-        selectStrategy: "page",
+        sort: undefined,
+        sortOptions: undefined,
     },
-    tags: ["autodocs"],
 };
 
 export default meta;
@@ -125,39 +168,39 @@ export const Primary: Story = {
             const headers = [
                 {
                     title: "Name",
-                    value: "name",
+                    key: "name",
                     align: "start",
                 },
                 {
                     title: "Speed (km/h)",
-                    value: "speed",
+                    key: "speed",
                     align: "center",
                     hidden: { xs: "only" },
                     width: 120,
                 },
                 {
                     title: "Length (m)",
-                    value: "length",
+                    key: "length",
                     align: "center",
                     hidden: { sm: "down" },
                     width: 120,
                 },
                 {
                     title: "Year of Reg.",
-                    value: "year",
+                    key: "year",
                     align: "center",
                     hidden: { md: "down" },
-                    width: 120,
+                    width: { xs: 120, lg: 150 },
                 },
                 {
                     title: "Price",
-                    value: "price",
+                    key: "price",
                     align: "end",
                     width: 120,
                 },
                 {
                     title: "",
-                    value: "actions",
+                    key: "actions",
                     align: "end",
                     width: 52,
                     cellProps: {

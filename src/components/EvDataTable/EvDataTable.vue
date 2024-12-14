@@ -55,10 +55,11 @@ const dimensions = useDimensions(props);
 const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
 const { items } = useDataTableItems(itemsModel, props, columns);
 
-const { allSelected, selectAll, showSelectAll, someSelected } = provideSelection(props, {
-    allItems: items,
-    currentPage: items,
-});
+const { allSelected, selectAll, showSelectAll, someSelected } =
+    provideSelection(props, {
+        allItems: items,
+        currentPage: items,
+    });
 
 const {
     containerRef,

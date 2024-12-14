@@ -1,0 +1,97 @@
+import {Canvas, Meta, Controls, Markdown} from '@storybook/blocks';
+import * as EvDataTableStories from "./EvDataTable.stories";
+
+<Meta of={EvDataTableStories} />
+
+# EvDataTable
+The `ev-data-table` component.
+
+<Canvas of={EvDataTableStories.Primary} />
+<Controls />
+
+## headers prop
+The `headers` prop is used to describe what's displayed as columns.
+
+```typescript
+{
+    readonly key?: string | undefined,
+    readonly value?: SelectItemKey<Record<string, any>>,
+    readonly title?: string | undefined,
+    readonly align?: 'end' | 'start' | 'center' | undefined,
+    readonly hidden?: VisibilityRuleProp | undefined,
+    readonly width?: string | number | DisplayRuleObject | undefined,
+    readonly minWidth?: string | number | DisplayRuleObject | undefined,
+    readonly maxWidth?: string | number | DisplayRuleObject | undefined,
+    readonly headerProps?: { readonly [prop: string]: any } | undefined,
+    readonly cellProps?: { readonly [prop: string]: any } | undefined,
+}
+```
+
+<table class="docblock-argstable sb-unstyled css-1hb1d68">
+    <tbody>
+        <tr>
+            <td>`key`</td>
+            <td>
+                Represents an item property or item slot (`item.${column.key}`).
+                If the `key` is not supplied, the `value` may be used (if a string).
+            </td>
+        </tr>
+        <tr>
+            <td>`value`</td>
+            <td>See `key` above.</td>
+        </tr>
+        <tr>
+            <td>`title`</td>
+            <td>The title to be used in the header.</td>
+        </tr>
+        <tr>
+            <td>`align`</td>
+            <td>
+                Sets the alignment of the text within the column, this may be one of:
+                <ul>
+                    <li>`start`</li>
+                    <li>`center`</li>
+                    <li>`end`</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>`hidden`</td>
+            <td>
+                Optional display rule allows the graceful degradation of tables at different viewport sizes.
+                This may be supplied as a space separated string, an array or an object.
+
+                For example: `{ sm: "down" }` or `sm-down`
+            </td>
+        </tr>
+        <tr>
+            <td>`width`</td>
+            <td>
+                To reduce table layout shift it is recommended to design your tables with one column that flexes
+                and add widths to other columns. The `width` property accepts either an integer, a string with units
+                or a display rule object - allowing you to adapt column width for different viewport sizes.
+
+                Example: `100` or `"100px"` or `{ xs: 100, md: 150 }`
+
+                The resulting value is applied to the respective col in the colgroup instead of each cell.
+                This reduces the number of dom updates.
+            </td>
+        </tr>
+        <tr>
+            <td>`minWidth`</td>
+            <td>Applies a minimum width to the column in the same manner as `width`</td>
+        </tr>
+        <tr>
+            <td>`maxWidth`</td>
+            <td>Applies a maximum width to the column in the same manner as `width`</td>
+        </tr>
+        <tr>
+            <td>`headerProps`</td>
+            <td>TODO</td>
+        </tr>
+        <tr>
+            <td>`cellProps`</td>
+            <td>TODO</td>
+        </tr>
+    </tbody>
+</table>

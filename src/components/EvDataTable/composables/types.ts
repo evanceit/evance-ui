@@ -4,7 +4,7 @@ import {
 } from "@/components/EvDataTable/composables/select.ts";
 import { FilterFunction, InternalItem } from "@/composables/filter.ts";
 import { GetterPropertyKey } from "@/util";
-import { VisibilityRuleProp } from "@/composables/display.ts";
+import { DisplayRuleObject, DisplayRuleValue, VisibilityRuleProp } from "@/composables/display.ts";
 
 export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
 
@@ -15,9 +15,9 @@ export type DataTableHeader = {
     fixed?: boolean;
     align?: "start" | "end" | "center";
     hidden?: VisibilityRuleProp;
-    width?: number | string;
-    minWidth?: number | string;
-    maxWidth?: number | string;
+    width?: DisplayRuleObject | DisplayRuleValue;
+    minWidth?: DisplayRuleObject | DisplayRuleValue;
+    maxWidth?: DisplayRuleObject | DisplayRuleValue;
     headerProps?: Record<string, any>;
     cellProps?: HeaderCellProps;
     sortable?: boolean;
