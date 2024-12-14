@@ -10,6 +10,7 @@ export const makeEvDataTableSearchProps = propsFactory(
             default: 300,
         },
         searchPlaceholder: String,
+        hideSelectAll: Boolean,
         ...makeDataTableSortProps(),
     },
     "EvDataTableSearch",

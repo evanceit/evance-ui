@@ -62,7 +62,9 @@ function onSearchInternal(value: string) {
 
 <template>
     <div class="ev-data-table-search">
-        <div v-if="showSelectAll" class="ev-data-table-search--checkbox">
+        <div
+            v-if="showSelectAll && !props.hideSelectAll"
+            class="ev-data-table-search--checkbox">
             <ev-checkbox
                 :model-value="allSelected"
                 :indeterminate="someSelected && !allSelected"

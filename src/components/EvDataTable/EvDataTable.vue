@@ -24,6 +24,7 @@ import {
 import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { calculateDisplayRuleValue } from "@/composables/display.ts";
+import { EvCheckbox } from "@/components/EvCheckbox";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -54,7 +55,7 @@ const dimensions = useDimensions(props);
 const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
 const { items } = useDataTableItems(itemsModel, props, columns);
 
-const { selected, isSelected, select } = provideSelection(props, {
+const { allSelected, selectAll, showSelectAll, someSelected } = provideSelection(props, {
     allItems: items,
     currentPage: items,
 });
@@ -143,6 +144,7 @@ defineExpose({
             v-model:search="searchModel"
             v-model:sort="sortModel"
             :loading="isLoading"
+            :hide-select-all="props.showHeaders"
             @update:sort="onChange"
             @update:search="onChange" />
         <div v-if="isEmpty" class="ev-data-table--empty">
@@ -172,11 +174,15 @@ defineExpose({
                     role="rowgroup">
                     <tr v-for="(row, rowIndex) of headers" :key="rowIndex">
                         <ev-data-table-cell
-                            v-if="props.showSelect && rowIndex === 0"
+                            v-if="showSelectAll && rowIndex === 0"
                             tag="th"
                             :colspan="1"
-                            :rowspan="headers.length">
-                            &nbsp;
+                            :rowspan="headers.length"
+                            class="ev-data-table-cell--checkbox">
+                            <ev-checkbox
+                                :model-value="allSelected"
+                                :indeterminate="someSelected && !allSelected"
+                                @update:model-value="selectAll" />
                         </ev-data-table-cell>
                         <ev-data-table-cell
                             v-for="(header, headerIndex) of row"

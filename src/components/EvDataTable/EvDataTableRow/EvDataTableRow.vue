@@ -45,7 +45,7 @@ function onCheckboxClick(e: PointerEvent) {
         @dblclick="props.onClick">
         <ev-data-table-cell
             v-if="showSelect"
-            class="ev-data-table-row--checkbox">
+            class="ev-data-table-cell--checkbox">
             <ev-checkbox
                 :model-value="isItemSelected"
                 @click.stop="onCheckboxClick" />
