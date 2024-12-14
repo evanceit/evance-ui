@@ -28,6 +28,12 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "An array of strings or objects used for automatically generating table rows and cells.",
         },
+        itemsPerPage: {
+            control: false,
+            description:
+                "The number of items you are displaying per page - used internally to determine when a `load` event " +
+                "reaches the end of the list. Defaults to `50`.",
+        },
         itemValue: {
             control: "select",
             options: ["id", "value"],
@@ -133,6 +139,7 @@ const meta: Meta<typeof EvDataTable> = {
         headers: undefined,
         height: "100%",
         items: undefined,
+        itemsPerPage: undefined,
         itemValue: "id",
         load: undefined,
         loading: undefined,
