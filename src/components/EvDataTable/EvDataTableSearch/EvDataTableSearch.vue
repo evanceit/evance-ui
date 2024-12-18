@@ -11,8 +11,10 @@ import { EvSection } from "@/components/EvSection";
 import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
+import { EvDefaultsProvider } from "@/components/EvDefaultsProvider";
+import { EvSlideGroup } from "@/components/EvSlideGroup";
 import { FilterIcon, SearchIcon } from "@/icons";
-import { computed, ref, shallowRef } from "vue";
+import { computed, onMounted, onUnmounted, ref, shallowRef } from "vue";
 import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
@@ -21,6 +23,7 @@ import {
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useSelection } from "@/components/EvDataTable/composables/select.ts";
 import { debounce } from "@/util";
+import { EvTransitionExpand } from "@/components/EvTransition/transitions";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
 const emit = defineEmits(["update:sort", "click:filter", "update:search"]);
@@ -41,13 +44,19 @@ const {
 } = useSortOptions(props as SortProps);
 
 const slots = defineSlots<{
+    filters(): never;
     "select-actions"(): never;
 }>();
 
 const { allSelected, someSelected, selectAll, showSelectAll } = useSelection();
 const isTransitioning = shallowRef(false);
+const containerRef = ref<HTMLElement | null>(null);
+const containerWidth = shallowRef<number | null>(null);
+const showFilters = shallowRef(false);
+const filtersBreakpoint = 900;
 
 function onClickFilter(e: MouseEvent) {
+    showFilters.value = !showFilters.value;
     emit("click:filter", e);
 }
 
@@ -66,6 +75,15 @@ const showActions = computed(() => {
     return someSelected.value && hasSelectActions;
 });
 
+const isFiltersMobile = computed(() => {
+    return containerWidth.value < filtersBreakpoint;
+});
+
+const filterDefaults = {
+    EvFilterButton: { size: "small", rounded: true },
+    EvButton: { size: "small", rounded: true },
+};
+
 function onSearchInternal(value: string) {
     updateSearch(value);
 }
@@ -78,10 +96,22 @@ function onAfterEnter() {
     isTransitioning.value = false;
 }
 
+function onResize() {
+    containerWidth.value = containerRef.value.getBoundingClientRect().width;
+}
+
+onMounted(() => {
+    window.addEventListener("resize", onResize, { passive: true });
+    onResize();
+});
+
+onUnmounted(() => {
+    window.removeEventListener("resize", onResize);
+});
 </script>
 
 <template>
-    <div class="ev-data-table-search">
+    <div ref="containerRef" class="ev-data-table-search">
         <div
             v-if="showSelectAll && !props.hideSelectAll"
             class="ev-data-table-search--checkbox">
@@ -115,7 +145,9 @@ function onAfterEnter() {
                             :icon-start="SearchIcon"
                             @update:model-value="onSearchInternal" />
                     </div>
-                    <div class="ev-data-table-search--filter">
+                    <div
+                        v-if="isFiltersMobile"
+                        class="ev-data-table-search--filter">
                         <ev-button
                             ref="filterButtonRef"
                             rounded
@@ -126,6 +158,15 @@ function onAfterEnter() {
                         <ev-tooltip
                             :activator="filterButtonRef"
                             :text="t('search.filter')" />
+                    </div>
+                    <div
+                        v-if="!isFiltersMobile"
+                        class="ev-data-table-search--filters">
+                        <ev-defaults-provider :defaults="filterDefaults">
+                            <ev-slide-group>
+                                <slot name="filters" />
+                            </ev-slide-group>
+                        </ev-defaults-provider>
                     </div>
                     <div v-if="hasSort" class="ev-data-table-search--sort">
                         <ev-button
@@ -178,4 +219,16 @@ function onAfterEnter() {
             </transition>
         </div>
     </div>
+    <ev-transition-expand>
+        <div
+            v-if="isFiltersMobile && showFilters"
+            key="filter"
+            class="ev-data-table-filters">
+            <ev-defaults-provider :defaults="filterDefaults">
+                <ev-slide-group>
+                    <slot name="filters" />
+                </ev-slide-group>
+            </ev-defaults-provider>
+        </div>
+    </ev-transition-expand>
 </template>

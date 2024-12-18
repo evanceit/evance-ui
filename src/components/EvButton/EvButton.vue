@@ -15,7 +15,6 @@ import {
     useAppearance,
     Variant,
 } from "@/util";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
 import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,

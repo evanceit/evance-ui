@@ -86,7 +86,7 @@ export const Primary: Story = {
             >
                 <ev-button
                     :appearance="isSelected ? 'primary' : 'default'"
-                    :variant="isSelected ? 'tonal' : 'subtle'"
+                    :variant="isSelected ? 'tonal' : 'tonal'"
                     @click="toggle"
                 >My button {{ n }}</ev-button>
             </ev-slide-group-item>

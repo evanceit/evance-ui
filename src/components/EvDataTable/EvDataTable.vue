@@ -31,6 +31,7 @@ const slots = defineSlots<{
     colgroup(): never;
     default(): never;
     empty(): never;
+    filters(): never;
     item(props: ItemSlot): never;
     "select-actions"(): never;
 }>();
@@ -151,6 +152,9 @@ defineExpose({
             @update:search="onChange">
             <template v-if="slots['select-actions']" #select-actions>
                 <slot name="select-actions" />
+            </template>
+            <template v-if="slots.filters" #filters>
+                <slot name="filters" />
             </template>
         </ev-data-table-search>
         <div v-if="isEmpty" class="ev-data-table--empty">

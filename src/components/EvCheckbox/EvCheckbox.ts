@@ -1,4 +1,4 @@
-import { isDeepEqual, propsFactory } from "@/util";
+import {isDeepEqual, propsFactory, wrapInArray} from "@/util";
 import { makeFormFieldProps } from "@/composables/validation.ts";
 import { makeComponentProps } from "@/composables/component.ts";
 import { computed, ExtractPropTypes, PropType, Ref } from "vue";
@@ -52,19 +52,33 @@ export function useToggleControl(
         return props.falseValue !== undefined ? props.falseValue : false;
     });
 
+    const isMultiple = computed(() => {
+        return Array.isArray(modelProxy.value);
+    });
+
     /**
      * ## Is Checked
      */
     const isChecked = computed({
         get() {
-            return props.valueComparator(modelProxy.value, trueValue.value);
+            const value = modelProxy.value;
+            return isMultiple.value
+                ? wrapInArray(value).some((v: any) =>
+                      props.valueComparator(v, trueValue.value),
+                  )
+                : props.valueComparator(value, trueValue.value);
         },
         set(value: boolean) {
             if (props.readonly) {
                 return;
             }
             const currentValue = value ? trueValue.value : falseValue.value;
-            const newValue = currentValue;
+            let newValue = currentValue;
+            if (isMultiple.value) {
+                newValue = value
+                    ? [...wrapInArray(modelProxy.value), currentValue]
+                    : wrapInArray(modelProxy.value).filter((item: any) => !props.valueComparator(item, trueValue.value));
+            }
             // I might do some funky stuff here later for multi-selection and groups
             modelProxy.value = newValue;
         },

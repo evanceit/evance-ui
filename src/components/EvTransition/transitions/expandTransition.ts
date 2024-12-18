@@ -1,13 +1,13 @@
 // Utilities
-import { camelize } from 'vue'
+import { camelize } from "vue";
 
 interface HTMLExpandElement extends HTMLElement {
     _parent?: (Node & ParentNode & HTMLElement) | null;
     _initialStyle?: {
-        transition: string,
-        overflow: string,
-        height?: string | null,
-        width?: string | null
+        transition: string;
+        overflow: string;
+        height?: string | null;
+        width?: string | null;
     };
 }
 
@@ -15,9 +15,9 @@ interface HTMLExpandElement extends HTMLElement {
  * @param expandedParentClass
  * @param x
  */
-export default function (expandedParentClass = '', x = false) {
-    const sizeProperty = x ? 'width' : 'height' as 'width' | 'height';
-    const offsetProperty = camelize(`offset-${sizeProperty}`) as 'offsetHeight' | 'offsetWidth';
+export default function (expandedParentClass = "", x = false) {
+    const sizeProperty = x ? "width" : "height";
+    const offsetProperty = camelize(`offset-${sizeProperty}`);
 
     /**
      * ## onAfterLeave
@@ -42,7 +42,6 @@ export default function (expandedParentClass = '', x = false) {
     }
 
     return {
-
         /**
          * ## onBeforeEnter
          * @param el
@@ -52,7 +51,7 @@ export default function (expandedParentClass = '', x = false) {
             el._initialStyle = {
                 transition: el.style.transition,
                 overflow: el.style.overflow,
-                [sizeProperty]: el.style[sizeProperty]
+                [sizeProperty]: el.style[sizeProperty],
             };
         },
 
@@ -61,14 +60,15 @@ export default function (expandedParentClass = '', x = false) {
          * @param el
          */
         onEnter(el: HTMLExpandElement) {
+            console.log('onenter');
             const initialStyle = el._initialStyle!;
 
-            el.style.setProperty('transition', 'none', 'important');
+            el.style.setProperty("transition", "none", "important");
             // Hide overflow to account for collapsed margins in the calculated height
-            el.style.overflow = 'hidden';
+            el.style.overflow = "hidden";
             const offset = `${el[offsetProperty]}px`;
 
-            el.style[sizeProperty] = '0';
+            el.style[sizeProperty] = "0";
 
             void el.offsetHeight; // force reflow
             el.style.transition = initialStyle.transition;
@@ -79,7 +79,7 @@ export default function (expandedParentClass = '', x = false) {
 
             requestAnimationFrame(() => {
                 el.style[sizeProperty] = offset;
-            })
+            });
         },
 
         /**
@@ -98,16 +98,16 @@ export default function (expandedParentClass = '', x = false) {
          */
         onLeave(el: HTMLExpandElement) {
             el._initialStyle = {
-                transition: '',
+                transition: "",
                 overflow: el.style.overflow,
-                [sizeProperty]: el.style[sizeProperty]
+                [sizeProperty]: el.style[sizeProperty],
             };
 
-            el.style.overflow = 'hidden';
+            el.style.overflow = "hidden";
             el.style[sizeProperty] = `${el[offsetProperty]}px`;
             void el.offsetHeight; // force reflow
 
-            requestAnimationFrame(() => (el.style[sizeProperty] = '0'));
+            requestAnimationFrame(() => (el.style[sizeProperty] = "0"));
         },
 
         /**
@@ -118,6 +118,6 @@ export default function (expandedParentClass = '', x = false) {
         /**
          * ## onAfterLeave
          */
-        onLeaveCancelled: onAfterLeave
-    }
+        onLeaveCancelled: onAfterLeave,
+    };
 }

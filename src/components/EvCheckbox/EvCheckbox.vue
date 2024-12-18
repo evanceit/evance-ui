@@ -4,13 +4,13 @@
  */
 import "./EvCheckbox.scss";
 import { makeEvCheckboxProps, useToggleControl } from "./EvCheckbox.ts";
-import {ref, useAttrs, watch} from "vue";
+import { ref, useAttrs } from "vue";
 import { splitInputAttrs } from "@/util";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
 import { useFormField } from "@/composables/validation.ts";
 import { useDefaults } from "@/composables";
-import {useModelProxy} from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 
 /**
  * We want to pass attributes not defined as 'props'

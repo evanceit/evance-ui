@@ -31,3 +31,21 @@
     gap: 1rem;
     min-height: 56px;
 }
+
+.ev-data-table-search--filters {
+    .ev-slide-group {
+        gap: 0.5rem;
+    }
+    .ev-slide-group--content {
+        gap: 0.5rem;
+    }
+}
+
+.ev-data-table-filters {
+    transition: 0.25s var(--easing-standard);
+    border-bottom: 1px solid var(--stroke);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: var(--spacer-100);
+ }

@@ -243,7 +243,7 @@ function convertToInternalHeaders(
                 defaultItem.sortable ??
                 (defaultItem.key != null || !!defaultItem.sort),
             children: defaultItem.children
-                ? convertToInternalHeaders(defaultItem.children)
+                ? convertToInternalHeaders(defaultItem.children, display)
                 : undefined,
         };
         internalHeaders.push(internalItem);

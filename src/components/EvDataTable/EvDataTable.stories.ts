@@ -5,7 +5,13 @@ import {
     EvDataTable,
     EvDataTableRow,
 } from "@/components/EvDataTable";
-import { EvButton, EvSurface, EvCode } from "@/components";
+import {
+    EvButton,
+    EvSurface,
+    EvCode,
+    EvFilterButton,
+    EvMenu, EvCheckbox, EvLozenge,
+} from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
 import { EllipsisIcon } from "@/icons";
@@ -177,6 +183,10 @@ export const Primary: Story = {
             EvDataTableRow,
             EvButton,
             EvCode,
+            EvFilterButton,
+            EvMenu,
+            EvCheckbox,
+            EvLozenge,
         },
         setup() {
             const headers = [
@@ -378,7 +388,15 @@ export const Primary: Story = {
                         console.log("action 1");
                     },
                 },
+                {
+                    text: "Action 2",
+                    onClick: () => {
+                        console.log("action 2");
+                    },
+                },
             ];
+
+            const status = ref([]);
 
             return {
                 args,
@@ -391,6 +409,7 @@ export const Primary: Story = {
                 itemsPerPage,
                 EllipsisIcon,
                 selectActions,
+                status,
             };
         },
         template: `
@@ -407,6 +426,23 @@ export const Primary: Story = {
                     :items-per-page="itemsPerPage"
                     @load="load"
                 >
+                    <template #filters>
+                        <ev-filter-button id="statusMenu" title="Status" v-model="status" />
+                        <ev-menu activator="#statusMenu" :close-on-content-click="false" position="bottom-end">
+                            <ev-surface elevation="overlay" width="250">
+                                <ev-checkbox value="Pending" v-model="status">
+                                    <template #label>
+                                        <ev-lozenge>Pending</ev-lozenge>
+                                    </template>
+                                </ev-checkbox>
+                                <ev-checkbox value="Active" v-model="status">
+                                    <template #label>
+                                        <ev-lozenge appearance="success">Active</ev-lozenge>
+                                    </template>
+                                </ev-checkbox>
+                            </ev-surface>
+                        </ev-menu>
+                    </template>
                     <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
                     <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
                     <template #item.price="{ value }">£{{ value }}</template>
