@@ -419,9 +419,8 @@ export const Primary: Story = {
 
             const filters = ref({
                 status: [],
+                assignee: [],
             });
-
-            const status = ref([]);
 
             return {
                 args,
@@ -434,7 +433,6 @@ export const Primary: Story = {
                 itemsPerPage,
                 EllipsisIcon,
                 selectActions,
-                status,
                 filters,
             };
         },
@@ -474,6 +472,18 @@ export const Primary: Story = {
                                 <div v-if="filters.status.length" class="pa-50">
                                     <ev-button variant="subtle" full-width @click="filters.status = []">Clear all</ev-button>
                                 </div>
+                            </ev-surface>
+                        </ev-menu>
+                        
+                        <ev-filter-button id="assigneeMenu" title="Assignee" v-model="filters.assignee" filter-title="name" />
+                        <ev-menu activator="#assigneeMenu" :close-on-content-click="false" position="bottom-end">
+                            <ev-surface elevation="overlay" width="250">
+                                <ev-section title="Users">
+                                    <div class="px-100">
+                                        <ev-checkbox :value="{ name: 'Current user', id: 123 }" v-model="filters.assignee" label="Current user" />
+                                        <ev-checkbox :value="{ name: 'Locale manager', id: 124 }" v-model="filters.assignee" label="Locale manager">
+                                    </div>
+                                </ev-section>
                             </ev-surface>
                         </ev-menu>
                     </template>

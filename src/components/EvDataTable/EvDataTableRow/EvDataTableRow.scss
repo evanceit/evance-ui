@@ -1,13 +1,15 @@
 .ev-data-table-row {
+    transition: background 0.25s var(--easing-standard);
+
+    &:hover {
+        background: var(--fill-neutral-subtle-hovered);
+    }
 
     &.is-selected {
         background: var(--fill-selected);
-    }
 
-    &.is-clickable {
         &:hover {
-            background: var(--fill-neutral-subtle-hovered);
+            background: var(--fill-selected-hovered);
         }
     }
-
 }
