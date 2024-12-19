@@ -253,12 +253,14 @@ onUnmounted(() => {
         <div
             v-if="isFiltersMobile && showFilters && slots.filters && !showActions"
             key="filter"
-            class="ev-data-table-filters">
-            <ev-defaults-provider :defaults="filterDefaults">
-                <ev-slide-group>
-                    <slot name="filters" />
-                </ev-slide-group>
-            </ev-defaults-provider>
+            class="ev-data-table-filters-mask">
+            <div class="ev-data-table-filters">
+                <ev-defaults-provider :defaults="filterDefaults">
+                    <ev-slide-group>
+                        <slot name="filters" />
+                    </ev-slide-group>
+                </ev-defaults-provider>
+            </div>
         </div>
     </ev-transition-expand>
 </template>

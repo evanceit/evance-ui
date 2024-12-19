@@ -44,10 +44,11 @@
         gap: 0.5rem;
     }
 }
-
-.ev-data-table-filters {
+.ev-data-table-filters-mask {
     transition: 0.25s var(--easing-standard);
     border-bottom: 1px solid var(--stroke);
+}
+.ev-data-table-filters {
     display: flex;
     align-items: center;
     gap: 1rem;
