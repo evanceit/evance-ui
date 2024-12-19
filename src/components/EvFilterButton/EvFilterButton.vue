@@ -44,7 +44,7 @@ const isFiltered = computed(() => !!modelValue.value.length);
         :icon-end="ChevronDownIcon"
         :text="title"
         :appearance="isFiltered ? 'primary' : 'default'"
-        :variant="isFiltered ? 'tonal' : 'default'">
+        :variant="isFiltered ? 'tonal' : 'subtle'">
         <template v-if="count" #suffix>
             <ev-badge bold inline :content="`+${count}`" appearance="primary" />
         </template>
