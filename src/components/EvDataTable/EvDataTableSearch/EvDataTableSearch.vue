@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import "./EvDataTableSearch.scss";
 import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
+import { EvBadge } from "@/components/EvBadge";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvCheckbox } from "@/components/EvCheckbox";
+import { EvDefaultsProvider } from "@/components/EvDefaultsProvider";
 import { EvDivider } from "@/components/EvDivider";
 import { EvList } from "@/components/EvList";
 import { EvMenu } from "@/components/EvMenu";
 import { EvSection } from "@/components/EvSection";
+import { EvSlideGroup } from "@/components/EvSlideGroup";
 import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
-import { EvDefaultsProvider } from "@/components/EvDefaultsProvider";
-import { EvSlideGroup } from "@/components/EvSlideGroup";
 import { FilterIcon, SearchIcon } from "@/icons";
 import { computed, onMounted, onUnmounted, ref, shallowRef } from "vue";
 import { useLocaleFunctions } from "@/composables";
@@ -22,7 +23,7 @@ import {
 } from "@/components/EvDataTable/composables/sort.ts";
 import { useModelProxy } from "@/composables/modelProxy.ts";
 import { useSelection } from "@/components/EvDataTable/composables/select.ts";
-import { debounce } from "@/util";
+import { debounce, isArray, isBoolean, isEmpty } from "@/util";
 import { EvTransitionExpand } from "@/components/EvTransition/transitions";
 
 const props = defineProps({ ...makeEvDataTableSearchProps() });
@@ -91,6 +92,20 @@ const sortButtonTitle = computed(() => {
         : undefined;
 });
 
+const isFiltered = computed(() => {
+    for (const key in props.filters) {
+        const value = props.filters[key];
+        if (isBoolean(value) && value) {
+            return true;
+        } else if (Array.isArray(value) && value.length > 0) {
+            return true;
+        } else if (!isBoolean(value) && !isArray(value) && !isEmpty(value)) {
+            return true;
+        }
+    }
+    return false;
+});
+
 function onSearchInternal(value: string) {
     updateSearch(value);
 }
@@ -153,21 +168,29 @@ onUnmounted(() => {
                             @update:model-value="onSearchInternal" />
                     </div>
                     <div
-                        v-if="isFiltersMobile"
+                        v-if="isFiltersMobile && slots.filters"
                         class="ev-data-table-search--filter">
-                        <ev-button
-                            ref="filterButtonRef"
-                            rounded
-                            size="small"
-                            variant="subtle"
-                            :icon="FilterIcon"
-                            @click="onClickFilter" />
+                        <ev-badge
+                            dot
+                            bold
+                            pulsate
+                            appearance="primary"
+                            :model-value="isFiltered && !showFilters">
+                            <ev-button
+                                ref="filterButtonRef"
+                                rounded
+                                size="small"
+                                :appearance="isFiltered ? 'primary' : 'default'"
+                                :variant="isFiltered ? 'tonal' : 'subtle'"
+                                :icon="FilterIcon"
+                                @click="onClickFilter" />
+                        </ev-badge>
                         <ev-tooltip
                             :activator="filterButtonRef"
                             :text="t('search.filter')" />
                     </div>
                     <div
-                        v-if="!isFiltersMobile"
+                        v-if="!isFiltersMobile && slots.filters"
                         class="ev-data-table-search--filters">
                         <ev-defaults-provider :defaults="filterDefaults">
                             <ev-slide-group>
@@ -228,7 +251,7 @@ onUnmounted(() => {
     </div>
     <ev-transition-expand>
         <div
-            v-if="isFiltersMobile && showFilters"
+            v-if="isFiltersMobile && showFilters && slots.filters && !showActions"
             key="filter"
             class="ev-data-table-filters">
             <ev-defaults-provider :defaults="filterDefaults">

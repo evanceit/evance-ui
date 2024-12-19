@@ -213,7 +213,7 @@ function onClickOutside(e: MouseEvent) {
                 <slot name="prefix">{{ props.prefix }}</slot>
             </div>
             <div class="ev-textfield--input" data-no-activator>
-                <slot />
+                <slot name="default" />
                 <input
                     :id="formField.id"
                     ref="inputRef"

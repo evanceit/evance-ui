@@ -13,6 +13,10 @@
 
 .ev-data-table-search--field {
     flex: 1;
+
+    .ev-textfield--input > input {
+        width: 100%;
+    }
 }
 
 .ev-data-table-search--modifiers {

@@ -143,6 +143,7 @@ function colStyle(column: DataTableHeader) {
 
 defineExpose({
     resetScroll,
+    reload: onChange,
 });
 </script>
 
@@ -156,6 +157,7 @@ defineExpose({
             v-model:sort="sortModel"
             :loading="isLoading"
             :hide-select-all="props.showHeaders"
+            :filters="props.filters"
             @update:sort="onChange"
             @update:search="onChange">
             <template v-if="slots['select-actions']" #select-actions>

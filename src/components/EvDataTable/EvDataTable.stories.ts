@@ -22,6 +22,14 @@ import { EllipsisIcon } from "@/icons";
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
     argTypes: {
+        filters: {
+            control: false,
+            description:
+                "The `filters` prop is matched with a `filters` slot. The prop should be an object whose properties represent filtered values as either an array, string, boolean or number. " +
+                "Changes in filters will automatically trigger a `load` event. " +
+                "The data table does not directly manipulate filters, nor render them (use the `filters` slot to render filters). " +
+                "However, it will use the `filters` prop to determine if any filters have been applied.",
+        },
         headers: {
             control: false,
             description:
@@ -82,6 +90,12 @@ const meta: Meta<typeof EvDataTable> = {
                 "The current page of data used in pagination. This should be applied with `v-model:page` or tracked with `@update:page`. " +
                 "For simple tables, it may not be necessary to apply the page prop when using the native functions provided by the `@load` event. " +
                 "Defaults to `1`.",
+        },
+        reload: {
+            control: false,
+            description:
+                "An exposed method allowing you to manually trigger the `load` event - forcing load to page `1`. " +
+                "This is useful if you have additional external parameters affecting table data.",
         },
         returnObject: {
             control: "boolean",
@@ -151,6 +165,7 @@ const meta: Meta<typeof EvDataTable> = {
         },
     },
     args: {
+        filters: undefined,
         headers: undefined,
         height: "100%",
         items: undefined,
@@ -160,6 +175,7 @@ const meta: Meta<typeof EvDataTable> = {
         loading: undefined,
         modelValue: undefined,
         page: undefined,
+        reload: undefined,
         returnObject: undefined,
         search: "",
         searchDelay: undefined,

@@ -5,6 +5,10 @@ import { EvButtonProps } from "@/components";
 
 export const makeEvDataTableSearchProps = propsFactory(
     {
+        filters: {
+            type: Object as PropType<Record<string, any>>,
+            default: () => ({}),
+        },
         hideSelectAll: Boolean,
         loading: Boolean,
         search: String,
