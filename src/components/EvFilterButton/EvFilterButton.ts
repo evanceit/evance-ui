@@ -9,6 +9,10 @@ export const makeEvFilterButtonProps = propsFactory(
             type: Array as PropType<readonly string[]>,
             default: () => [],
         },
+        filterTitle: {
+            type: String,
+            default: "title",
+        },
         ...omit(makeEvButtonProps(), ["text", "value"]),
     },
     "EvFilterButton",

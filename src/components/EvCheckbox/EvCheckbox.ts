@@ -1,4 +1,4 @@
-import {isDeepEqual, propsFactory, wrapInArray} from "@/util";
+import { isDeepEqual, propsFactory, wrapInArray } from "@/util";
 import { makeFormFieldProps } from "@/composables/validation.ts";
 import { makeComponentProps } from "@/composables/component.ts";
 import { computed, ExtractPropTypes, PropType, Ref } from "vue";

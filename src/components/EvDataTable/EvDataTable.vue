@@ -99,6 +99,14 @@ watch(
     },
 );
 
+watch(
+    () => props.filters,
+    () => {
+        onChange();
+    },
+    { deep: true },
+);
+
 function onChange() {
     isLoading.value = true;
     const nextPage = 1;

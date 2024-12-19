@@ -10,7 +10,9 @@ import {
     EvSurface,
     EvCode,
     EvFilterButton,
-    EvMenu, EvCheckbox, EvLozenge,
+    EvMenu,
+    EvCheckbox,
+    EvLozenge,
 } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
@@ -396,6 +398,10 @@ export const Primary: Story = {
                 },
             ];
 
+            const filters = ref({
+                status: [],
+            });
+
             const status = ref([]);
 
             return {
@@ -410,6 +416,7 @@ export const Primary: Story = {
                 EllipsisIcon,
                 selectActions,
                 status,
+                filters,
             };
         },
         template: `
@@ -424,18 +431,18 @@ export const Primary: Story = {
                     :select-actions="selectActions"
                     :sort-options="sortOptions"
                     :items-per-page="itemsPerPage"
-                    @load="load"
-                >
+                    :filters="filters"
+                    @load="load">
                     <template #filters>
-                        <ev-filter-button id="statusMenu" title="Status" v-model="status" />
+                        <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />
                         <ev-menu activator="#statusMenu" :close-on-content-click="false" position="bottom-end">
                             <ev-surface elevation="overlay" width="250">
-                                <ev-checkbox value="Pending" v-model="status">
+                                <ev-checkbox :value="{ title: 'Pending', value: 'pending', id: 1 }" v-model="filters.status">
                                     <template #label>
                                         <ev-lozenge>Pending</ev-lozenge>
                                     </template>
                                 </ev-checkbox>
-                                <ev-checkbox value="Active" v-model="status">
+                                <ev-checkbox :value="{ title: 'Active', value: 'active', id: 2 }" v-model="filters.status">
                                     <template #label>
                                         <ev-lozenge appearance="success">Active</ev-lozenge>
                                     </template>

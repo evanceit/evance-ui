@@ -54,6 +54,7 @@ const containerRef = ref<HTMLElement | null>(null);
 const containerWidth = shallowRef<number | null>(null);
 const showFilters = shallowRef(false);
 const filtersBreakpoint = 900;
+const sortBreakpoint = 480;
 
 function onClickFilter(e: MouseEvent) {
     showFilters.value = !showFilters.value;
@@ -83,6 +84,12 @@ const filterDefaults = {
     EvFilterButton: { size: "small", rounded: true },
     EvButton: { size: "small", rounded: true },
 };
+
+const sortButtonTitle = computed(() => {
+    return containerWidth.value > sortBreakpoint
+        ? sortTitle.value
+        : undefined;
+});
 
 function onSearchInternal(value: string) {
     updateSearch(value);
@@ -174,7 +181,7 @@ onUnmounted(() => {
                             rounded
                             size="small"
                             variant="subtle"
-                            :text="sortTitle"
+                            :text="sortButtonTitle"
                             :icon-end="sortIcon" />
                         <ev-tooltip
                             :activator="sortButtonRef"

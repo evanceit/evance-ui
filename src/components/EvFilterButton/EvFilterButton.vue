@@ -2,7 +2,7 @@
 import { makeEvFilterButtonProps } from "./EvFilterButton.ts";
 import { useDefaults } from "@/composables";
 import { computed } from "vue";
-import { filterComponentProps } from "@/util";
+import { filterComponentProps, getPropertyValue, isObject } from "@/util";
 import { EvButton } from "@/components/EvButton";
 import { EvBadge } from "@/components/EvBadge";
 import { ChevronDownIcon } from "@/icons";
@@ -15,9 +15,17 @@ const props = useDefaults(definedProps);
 const buttonProps = computed(() => filterComponentProps(EvButton, props));
 const modelValue = useModelProxy(props, "modelValue");
 
+const filterTitles = computed(() => {
+    return modelValue.value.map((item: unknown) => {
+        return isObject(item)
+            ? getPropertyValue(item, props.filterTitle)
+            : item;
+    });
+});
+
 const title = computed(() => {
-    return modelValue.value.length
-        ? `${props.title}: ${modelValue.value[0]}`
+    return filterTitles.value.length
+        ? `${props.title}: ${filterTitles.value[0]}`
         : props.title;
 });
 
