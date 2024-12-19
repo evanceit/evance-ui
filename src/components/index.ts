@@ -6,6 +6,7 @@ export * from "./EvButtonToggle";
 export * from "./EvCard";
 export * from "./EvCheckbox";
 export * from "./EvCode";
+export * from "./EvDataTable";
 export * from "./EvDateField";
 export * from "./EvDatePicker";
 export * from "./EvDefaultsProvider";
