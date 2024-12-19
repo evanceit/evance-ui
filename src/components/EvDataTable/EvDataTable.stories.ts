@@ -13,6 +13,7 @@ import {
     EvMenu,
     EvCheckbox,
     EvLozenge,
+    EvDivider, EvSection,
 } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
@@ -189,6 +190,8 @@ export const Primary: Story = {
             EvMenu,
             EvCheckbox,
             EvLozenge,
+            EvDivider,
+            EvSection,
         },
         setup() {
             const headers = [
@@ -437,16 +440,24 @@ export const Primary: Story = {
                         <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />
                         <ev-menu activator="#statusMenu" :close-on-content-click="false" position="bottom-end">
                             <ev-surface elevation="overlay" width="250">
-                                <ev-checkbox :value="{ title: 'Pending', value: 'pending', id: 1 }" v-model="filters.status">
-                                    <template #label>
-                                        <ev-lozenge>Pending</ev-lozenge>
-                                    </template>
-                                </ev-checkbox>
-                                <ev-checkbox :value="{ title: 'Active', value: 'active', id: 2 }" v-model="filters.status">
-                                    <template #label>
-                                        <ev-lozenge appearance="success">Active</ev-lozenge>
-                                    </template>
-                                </ev-checkbox>
+                                <ev-section title="Status">
+                                    <div class="px-100">
+                                        <ev-checkbox :value="{ title: 'Pending', value: 'pending', id: 1 }" v-model="filters.status">
+                                            <template #label>
+                                                <ev-lozenge>Pending</ev-lozenge>
+                                            </template>
+                                        </ev-checkbox>
+                                        <ev-checkbox :value="{ title: 'Active', value: 'active', id: 2 }" v-model="filters.status">
+                                            <template #label>
+                                                <ev-lozenge appearance="success">Active</ev-lozenge>
+                                            </template>
+                                        </ev-checkbox>
+                                    </div>
+                                </ev-section>
+                                <ev-divider />
+                                <div v-if="filters.status.length" class="pa-50">
+                                    <ev-button variant="subtle" full-width @click="filters.status = []">Clear all</ev-button>
+                                </div>
                             </ev-surface>
                         </ev-menu>
                     </template>

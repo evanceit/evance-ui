@@ -6,6 +6,7 @@ import { makeDataTableItemsProps } from "./composables/items.ts";
 import { makeDataTableHeaderProps } from "./composables/headers.ts";
 import { makeDataTableSelectProps } from "./composables/select.ts";
 import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
+import {PropType} from "vue";
 
 export const makeEvDataTableProps = propsFactory(
     {
@@ -13,7 +14,10 @@ export const makeEvDataTableProps = propsFactory(
         page: { type: Number, default: 1 },
         itemsPerPage: { type: Number, default: 50 },
         showHeaders: Boolean,
-        filters: Array,
+        filters: {
+            type: Object as PropType<Record<string, any>>,
+            default: () => ({}),
+        },
 
         ...makeEvDataTableSearchProps(),
         ...makeDataTableHeaderProps(),

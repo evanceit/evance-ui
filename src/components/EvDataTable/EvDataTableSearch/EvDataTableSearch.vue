@@ -82,7 +82,7 @@ const isFiltersMobile = computed(() => {
 
 const filterDefaults = {
     EvFilterButton: { size: "small", rounded: true },
-    EvButton: { size: "small", rounded: true },
+    EvButton: { size: "small" },
 };
 
 const sortButtonTitle = computed(() => {
