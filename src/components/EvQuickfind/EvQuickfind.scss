@@ -1,8 +1,8 @@
 .ev-quickfind {
     align-items: center;
-    background-color: var(--fill-notice);
+    background-color: var(--fill-brand);
     border-radius: 999px;
-    color: var(--text-notice);
+    color: var(--text-brand);
     display: inline-flex;
     font-weight: var(--font-weight-medium);
     height: var(--icon-size-medium);
@@ -14,16 +14,14 @@
 
 .ev-quickfind {
     &.is-variant-bold {
-        background-color: var(--color-primary);
-        color: var(--surface-default);
-        font-weight: var(--font-weight-bold);
+        background-color: var(--fill-brand-bold);
+        color: var(--current-surface-fill);
     }
 }
 
 .ev-quickfind {
     &.is-size-small {
         font-size: var(--text-size-small);
-        font-weight: var(--font-weight-bold);
         height: 22px;
     }
     &.is-size-large {

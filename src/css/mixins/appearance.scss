@@ -27,7 +27,7 @@ $outline: 1px;
 
         &.is-variant-bold {
             --#{$prefix}-appearance-background: var(--fill-neutral-bold);
-            --#{$prefix}-appearnce-color: var(--text-inverse);
+            --#{$prefix}-appearance-color: var(--text-inverse);
             @if $maybeClickable {
                 &.is-clickable {
                     &:hover {
