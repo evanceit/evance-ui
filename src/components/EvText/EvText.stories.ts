@@ -6,6 +6,21 @@ const meta: Meta<typeof EvText> = {
     title: "Typography/EvText",
     component: EvText,
     argTypes: {
+        appearance: {
+            control: "select",
+            options: [
+                undefined,
+                "default",
+                "danger",
+                "information",
+                "inverse",
+                "notice",
+                "primary",
+                "subtle",
+                "success",
+                "warning"
+            ]
+        },
         size: {
             control: "select",
             options: [undefined, "x-large", "large", "medium", "small"],
@@ -31,6 +46,7 @@ const meta: Meta<typeof EvText> = {
         },
     },
     args: {
+        appearance: undefined,
         size: undefined,
         tag: undefined,
         text: "This is a very long text which I am hoping I can get to wrap onto another line",
