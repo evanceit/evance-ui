@@ -1,0 +1,16 @@
+.ev-edit-on-click--clickable {
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: var(--input-radius);
+    padding-inline: var(--spacer-100);
+    min-height: var(--input-height-medium);
+    gap: var(--spacer-50);
+    display: flex;
+    flex-wrap: nowrap;
+    cursor: text;
+
+    &:hover {
+        background: var(--current-surface-fill);
+        border: var(--input-border);
+    }
+}

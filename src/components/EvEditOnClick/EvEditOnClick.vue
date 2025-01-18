@@ -21,6 +21,8 @@ const emit = defineEmits<{
 const isEditing = useModelProxy(props, "editing");
 const modelValue = useModelProxy(props, "modelValue");
 const editValue = ref(props.modelValue);
+const clickable = ref<HTMLElement | null>(null);
+const editable = ref<HTMLElement | null>(null);
 
 watch(modelValue, () => {
     editValue.value = modelValue.value;
@@ -41,6 +43,12 @@ function cancel() {
 
 function onClick() {
     isEditing.value = true;
+    requestAnimationFrame(() => {
+        const input = editable.value.querySelector(
+            "input, select, textarea",
+        ) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+        input?.focus();
+    });
 }
 
 function confirm() {
@@ -56,15 +64,11 @@ const clickOutsideDirectiveArgs = {
 </script>
 
 <template>
-    <div :class="[
-            'ev-edit-on-click',
-            { 'is-editing': isEditing },
-            props.class
-        ]"
-         :style="props.style"
-         v-click-outside="clickOutsideDirectiveArgs">
-        <div v-if="isEditing"
-             class="ev-edit-on-click--editable">
+    <div
+        :class="['ev-edit-on-click', { 'is-editing': isEditing }, props.class]"
+        :style="props.style"
+        v-click-outside="clickOutsideDirectiveArgs">
+        <div v-if="isEditing" ref="editable" class="ev-edit-on-click--editable">
             <slot name="editable">
                 <ev-textfield
                     v-model="editValue"
@@ -76,9 +80,12 @@ const clickOutsideDirectiveArgs = {
                 <ev-button :icon="CheckIcon" @click="confirm" />
             </ev-button-group>
         </div>
-        <div v-else
-             role="button"
-             class="ev-edit-on-click--clickable" @click="onClick">
+        <div
+            v-else
+            ref="clickable"
+            role="button"
+            class="ev-edit-on-click--clickable"
+            @click="onClick">
             <slot name="clickable">{{ modelValue }}</slot>
         </div>
     </div>
