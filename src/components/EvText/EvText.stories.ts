@@ -18,8 +18,11 @@ const meta: Meta<typeof EvText> = {
                 "primary",
                 "subtle",
                 "success",
-                "warning"
-            ]
+                "warning",
+            ],
+        },
+        monospace: {
+            control: "boolean",
         },
         size: {
             control: "select",
@@ -47,6 +50,7 @@ const meta: Meta<typeof EvText> = {
     },
     args: {
         appearance: undefined,
+        monospace: false,
         size: undefined,
         tag: undefined,
         text: "This is a very long text which I am hoping I can get to wrap onto another line",

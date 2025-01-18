@@ -15,7 +15,31 @@
 }
 
 .ev-text {
-    .is-appearance-subtle {
+    &.is-appearance-default {
+        color: var(--text-default);
+    }
+    &.is-appearance-danger {
+        color: var(--text-danger);
+    }
+    &.is-appearance-information {
+        color: var(--text-information);
+    }
+    &.is-appearance-inverse {
+        color: var(--text-inverse);
+    }
+    &.is-appearance-notice {
+        color: var(--text-notice);
+    }
+    &.is-appearance-primary {
+        color: var(--text-brand);
+    }
+    &.is-appearance-subtle {
         color: var(--text-subtle);
+    }
+    &.is-appearance-success {
+        color: var(--text-success);
+    }
+    &.is-appearance-warning {
+        color: var(--text-warning);
     }
 }

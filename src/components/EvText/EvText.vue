@@ -39,7 +39,17 @@ const { appearanceClass } = useAppearance(props as AppearanceProps);
 <template>
     <component
         :is="props.tag"
-        :class="['ev-text', sizeClass, weightClass, truncateClass, props.class]"
+        :class="[
+            'ev-text',
+            {
+                'typeface-monospace': props.monospace,
+            },
+            sizeClass,
+            weightClass,
+            truncateClass,
+            appearanceClass,
+            props.class,
+        ]"
         :style="props.style">
         <slot>{{ props.text }}</slot>
     </component>

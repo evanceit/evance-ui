@@ -200,6 +200,9 @@ a {
 .color-information {
     color: var(--text-information) !important;
 }
+.color-inverse {
+    color: var(--text-inverse) !important;
+}
 .color-subtle {
     color: var(--text-subtle) !important;
 }
@@ -220,4 +223,8 @@ input, textarea {
     &::placeholder {
         color: var(--text-subtle);
     }
+}
+
+.typeface-monospace {
+    font-family: var(--typeface-monospace), monospace !important;
 }

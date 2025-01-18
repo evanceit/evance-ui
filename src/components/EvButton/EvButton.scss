@@ -102,15 +102,18 @@
     /* Inverse */
     &.is-appearance-inverse {
         --button-appearance-background: var(--fill-inverse);
-        &:hover {
-            --button-appearance-background: var(--fill-inverse-hovered);
-        }
-        &:active {
-            --button-appearance-background: var(--fill-inverse-pressed);
+        --button-appearance-color: var(--text-inverse);
+        &.is-clickable {
+            &:hover {
+                --button-appearance-background: var(--fill-inverse-hovered);
+            }
+
+            &:active {
+                --button-appearance-background: var(--fill-inverse-pressed);
+            }
         }
 
         &.is-variant-bold {
-            color: var(--text-on-inverse);
             --button-appearance-background: var(--fill-inverse-bold);
 
             &:hover {
@@ -119,6 +122,26 @@
             &:active {
                 --button-appearance-background: var(--fill-inverse-bold-pressed);
             }
+        }
+
+        &.is-variant-outlined {
+            --button-appearance-background: transparent;
+            --button-appearance-border: 1px solid var(--fill-inverse-bold);
+            --button-appearance-color: var(--fill-inverse-bold);
+
+            &.is-clickable {
+                &:hover {
+                    --button-appearance-color: var(--text-inverse);
+                    --button-appearance-background: var(--fill-inverse-bold-hovered);
+                }
+                &:active {
+                    --button-appearance-color: var(--text-inverse);
+                    --button-appearance-background: var(--fill-inverse-bold-pressed);
+                }
+            }
+        }
+        &.is-variant-subtle {
+            --button-appearance-background: transparent;
         }
     }
 

@@ -24,7 +24,8 @@ export type FontWeight = "regular" | "medium" | "semibold" | "bold";
 export type TextAppearanceProp = AppearanceProp | "inverse" | "subtle";
 
 export interface EvTextProps extends ComponentProps, TagProps {
-    appearance: TextAppearanceProp;
+    appearance?: TextAppearanceProp;
+    monospace?: boolean;
     size?: EvTextSizeProp;
     text?: string;
     truncate?: number | boolean;
@@ -34,6 +35,7 @@ export interface EvTextProps extends ComponentProps, TagProps {
 export const makeEvTextProps = propsFactory(
     {
         appearance: String as PropType<TextAppearanceProp>,
+        monospace: Boolean,
         size: String as PropType<EvTextSizeProp>,
         text: String,
         truncate: [Number, Boolean],

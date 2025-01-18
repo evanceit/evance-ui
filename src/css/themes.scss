@@ -88,12 +88,12 @@
     --fill-warning-bold-hovered: #{settings.token('orange.700')};
     --fill-warning-bold-pressed: #{settings.token('orange.800')};
     --fill-veil: #{settings.token('neutral.500A')};
-    --fill-inverse: #EFF2F926;
-    --fill-inverse-hovered: #EFF2F940;
-    --fill-inverse-pressed: #EFF2F966;
-    --fill-inverse-bold: #EFF2F9CC;
-    --fill-inverse-bold-hovered: #EFF2F9E6;
-    --fill-inverse-bold-pressed: #EFF2F9;
+    --fill-inverse: #{settings.token('neutral.500A')};
+    --fill-inverse-hovered: #{settings.token('dark-neutral.100')};
+    --fill-inverse-pressed: #{settings.token('dark-neutral.200')};
+    --fill-inverse-bold: #{settings.token('dark-neutral.0')};
+    --fill-inverse-bold-hovered: #{settings.token('dark-neutral.100')};
+    --fill-inverse-bold-pressed: #{settings.token('dark-neutral.200')};
 
     /* Text */
     --eyebrow-default: #{settings.token('neutral.700')};
@@ -139,7 +139,6 @@
     --text-on-warning: #5D6788;
     --text-on-warning-bold: #F3F5F9;
     --text-inverse: #{settings.token('neutral.100')};
-    --text-on-inverse: #535A74;
     --link-default: #{settings.token('purple.600')};
     --link-hovered: #{settings.token('purple.500')};
     --link-visited: #{settings.token('purple.800')};
@@ -242,12 +241,12 @@
     --fill-warning-bold-hovered: #{settings.token('orange.300')};
     --fill-warning-bold-pressed: #{settings.token('orange.200')};
     --fill-veil: #0B0B1499;
-    --fill-inverse: #0B0B1426;
-    --fill-inverse-hovered: #0B0B1440;
-    --fill-inverse-pressed: #0B0B1466;
-    --fill-inverse-bold: #131321CC;
-    --fill-inverse-bold-hovered: #131321E6;
-    --fill-inverse-bold-pressed: #131321;
+    --fill-inverse: #{settings.token('dark-neutral.500A')};
+    --fill-inverse-hovered: #{settings.token('neutral.100')};
+    --fill-inverse-pressed: #{settings.token('neutral.200')};
+    --fill-inverse-bold: #{settings.token('neutral.0')};
+    --fill-inverse-bold-hovered: #{settings.token('neutral.100')};
+    --fill-inverse-bold-pressed: #{settings.token('neutral.200')};
 
     /* Text */
     --eyebrow-default: #{settings.token('dark-neutral.700')};
@@ -295,7 +294,6 @@
     --link-hovered: #{settings.token('purple.500')};
     --link-visited: #{settings.token('purple.600')};
     --text-inverse: #{settings.token('dark-neutral.100')};
-    --text-on-inverse: #A0A6BC;
 
     /* Borders */
     --stroke: #{settings.token('dark-neutral.300A')};
