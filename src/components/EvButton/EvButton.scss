@@ -171,6 +171,7 @@
 
     /** X Small */
     &.is-size-x-small {
+        font-size: var(--text-size-small);
         --current-size: var(--input-height-x-small);
     }
 

@@ -33,7 +33,7 @@ export type VariantProp = (typeof Variant)[keyof typeof Variant];
 
 export interface AppearanceProps {
     appearance: AppearanceProp;
-    variant: VariantProp;
+    variant?: VariantProp;
 }
 
 export const makeAppearanceProps = propsFactory(

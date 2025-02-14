@@ -2,7 +2,7 @@
 import "./EvText.scss";
 import { EvTextSizeClass, makeEvTextProps } from "./EvText.ts";
 import { computed } from "vue";
-import {AppearanceProps, isBoolean, isNumber, makeClassName, useAppearance, Variant} from "@/util";
+import { AppearanceProps, isBoolean, isNumber, makeClassName, useAppearance } from "@/util";
 import { useDefaults } from "@/composables";
 
 const definedProps = defineProps({ ...makeEvTextProps() });
