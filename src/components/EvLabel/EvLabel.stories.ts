@@ -10,6 +10,10 @@ const meta: Meta<typeof EvLabel> = {
             control: "text",
             description: "The text to display as a the label title.",
         },
+        hint: {
+            control: "text",
+            description: "Optional hint/description text."
+        },
         clickable: {
             control: "boolean",
             description:
