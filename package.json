@@ -1,6 +1,6 @@
 {
   "name": "@evance/evance-ui",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Evance UI Component Library based on Vuetify",
   "private": false,
   "author": "Geoff Willings <geoff@evance.io>",
@@ -18,17 +18,17 @@
       "require": "./dist/cjs/index.cjs"
     },
     "./icons": {
-      "types": "./dist/types/icons/index.d.ts",
+      "types": "./dist/types/icons.d.ts",
       "import": "./dist/esm/icons.mjs",
       "require": "./dist/cjs/icons.cjs"
     },
     "./icons/editor": {
-      "types": "./dist/types/icons/editor/index.d.ts",
+      "types": "./dist/types/icons/editor.d.ts",
       "import": "./dist/esm/icons/editor.mjs",
       "require": "./dist/cjs/icons/editor.cjs"
     },
     "./icons/brand": {
-      "types": "./dist/types/icons/brand/index.d.ts",
+      "types": "./dist/types/icons/brand.d.ts",
       "import": "./dist/esm/icons/brand.mjs",
       "require": "./dist/cjs/icons/brand.cjs"
     },
