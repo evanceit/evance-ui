@@ -3,7 +3,7 @@
  * # EvButton
  */
 import "./EvButton.scss";
-import { makeEvButtonProps } from "./EvButton.ts";
+import { makeEvButtonProps } from "./EvButton";
 import { computed, useAttrs } from "vue";
 import { EvIcon } from "@/components/EvIcon";
 import { EvProgressCircular } from "@/components/EvProgressCircular";
@@ -19,9 +19,9 @@ import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
 } from "@/composables/router.ts";
-import { useDefaults } from "@/composables/defaults.ts";
-import { useGroupItem } from "@/composables/groupItem.ts";
-import { useSelectLink } from "@/composables/selectLink.ts";
+import { useDefaults } from "@/composables/defaults";
+import { useGroupItem } from "@/composables/groupItem";
+import { useSelectLink } from "@/composables/selectLink";
 
 const definedProps = defineProps({
     ...makeEvButtonProps(),

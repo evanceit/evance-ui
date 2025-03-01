@@ -54,7 +54,7 @@ const isLoading = useModelProxy(props, "loading");
 const itemsModel = useModelProxy(props, "items");
 const pageModel = useModelProxy(props, "page");
 const dimensions = useDimensions(props);
-const { columns, headers, sortFunctions, filterFunctions } = createHeaders(props);
+const { columns, headers } = createHeaders(props);
 const { items } = useDataTableItems(itemsModel, props, columns);
 
 const { allSelected, selectAll, showSelectAll, someSelected } =

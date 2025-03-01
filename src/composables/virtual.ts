@@ -62,7 +62,7 @@ export function useVirtual<T>(props: VirtualProps, items: Ref<readonly T[]>) {
             // Assume 16px items filling the entire screen height if not provided.
             // This is probably incorrect, but it minimises the chance of ending up with empty space at the bottom.
             // The default value is set here to avoid poisoning getSize()
-            (parseInt(props.height!) || display.height.value) /
+            (parseInt(`${props.height}`) || display.height.value) /
                 (itemHeight.value || 16),
         ) || 1,
     );

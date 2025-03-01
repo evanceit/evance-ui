@@ -141,7 +141,7 @@ function handleCallback(el: HTMLElement, callback: Function): void {
  * This helps us get over an issue we had previously, where mouse dragging during a click
  * caused dialogs to close unwantedly.
  */
-export const clickOutside = {
+export const vClickOutside = {
     /**
      * Add event listeners when the component is mounted.
      * @param el
@@ -192,4 +192,4 @@ export const clickOutside = {
     },
 };
 
-export default clickOutside;
+export default vClickOutside;

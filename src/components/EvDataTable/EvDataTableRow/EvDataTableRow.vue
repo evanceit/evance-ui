@@ -18,7 +18,7 @@ const isClickable = computed(() => {
     return props.onClick || props.onContextmenu || props.onDblclick;
 });
 
-const { selected, isSelected, toggleSelect, showSelect } = useSelection();
+const { isSelected, toggleSelect, showSelect } = useSelection();
 // const { isExpanded, toggleExpand } = useExpanded();
 const { columns } = useHeaders();
 

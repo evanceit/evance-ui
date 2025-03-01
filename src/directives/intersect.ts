@@ -1,4 +1,4 @@
-import { DirectiveBinding } from "vue/dist/vue";
+import { DirectiveBinding } from "vue";
 import { Browser } from "@/util";
 
 type ObserverHandler = (

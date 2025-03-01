@@ -1,4 +1,4 @@
-import { Ref } from "vue/dist/vue";
+import { Ref } from "vue";
 import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
 
 /**

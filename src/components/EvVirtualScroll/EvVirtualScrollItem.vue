@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, Ref, toRef, useAttrs, watch} from "vue";
+import { computed, Ref, useAttrs, watch } from "vue";
 import { useResizeObserver } from "../../composables/resizeObserver.ts";
 import { makeEvVirtualScrollItemProps } from "./EvVirtualScroll.ts";
 

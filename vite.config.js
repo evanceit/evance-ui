@@ -99,6 +99,9 @@ export default defineConfig(({ mode }) => ({
         tsconfigPaths(),
         vue(),
         dts({
+            insertTypesEntry: true,
+            rollupTypes: true,
+            respectExternal: true, // Ensures module imports are resolved correctly
             outDir: "./dist/types",
             exclude: ["**/*.stories.ts", "**/*.test.ts"],
         }),
