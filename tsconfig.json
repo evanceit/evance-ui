@@ -60,6 +60,14 @@
     "src/**/*.vue",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    ".storybook",
+    "stories",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.mdx"
   ]
 }

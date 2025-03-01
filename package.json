@@ -1,16 +1,16 @@
 {
   "name": "@evance/evance-ui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Evance UI Component Library based on Vuetify",
   "private": false,
   "author": "Geoff Willings <geoff@evance.io>",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/evanceit/evance-ui#readme",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.mjs",
-  "unpkg": "dist/evance-ui.js",
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "unpkg": "./dist/evance-ui.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -34,12 +34,11 @@
     },
     "./styles": {
       "default": "./dist/style.css"
-    },
-    "./*": "./*"
+    }
   },
   "files": [
     "dist",
-    "./components.d.ts"
+    "components.d.ts"
   ],
   "sideEffects": [
     "*.css",

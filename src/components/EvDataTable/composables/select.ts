@@ -41,7 +41,7 @@ type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
     selectStrategy: "single" | "page" | "all";
     showSelect: boolean;
     valueComparator: typeof isDeepEqual;
-    "onUpdate:modelValue": EventProp<[any[]]> | undefined;
+    "onUpdate:modelValue"?: EventProp<[any[]]> | undefined;
 };
 
 const singleSelectStrategy: DataTableSelectStrategy = {
