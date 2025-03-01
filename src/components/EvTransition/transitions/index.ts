@@ -1,5 +1,5 @@
 // Javascript transitions
-import { createJavaScriptTransition } from "@/components/EvTransition/transitions/createTransition.ts";
+import { createJavaScriptTransition } from "@/components/EvTransition/transitions/createTransition";
 import ExpandTransitionGenerator from "./expandTransition";
 import { FunctionalComponent } from "vue";
 

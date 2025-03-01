@@ -1,7 +1,7 @@
 import { AppearanceProp, propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons.ts";
+import { IconProp } from "@/composables/icons";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeComponentProps } from "@/composables/component";
 
 export type EvCardContentSize = "small" | "medium" | "large" | "x-large";
 

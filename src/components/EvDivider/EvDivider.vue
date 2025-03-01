@@ -6,7 +6,7 @@
  */
 import "./EvDivider.scss";
 import { computed, useSlots } from "vue";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
+import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
 import {
     Appearance,
     appearanceModifier,

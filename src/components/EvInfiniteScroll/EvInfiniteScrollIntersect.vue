@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useIntersectionObserver } from "@/composables/intersectionObserver.ts";
+import { useIntersectionObserver } from "@/composables/intersectionObserver";
 import { InfiniteScrollSide } from "@/components/EvInfiniteScroll";
-import { PropType, watch} from "vue";
+import { PropType, watch } from "vue";
 
 const props = defineProps({
     side: {

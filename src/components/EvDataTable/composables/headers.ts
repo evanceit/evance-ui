@@ -10,17 +10,17 @@ import {
     watchEffect,
 } from "vue";
 import { GetterPropertyKey, isBoolean, isEmpty, propsFactory } from "@/util";
-import { FilterKeyFunctions } from "@/composables/filter.ts";
+import { FilterKeyFunctions } from "@/composables/filter";
 import {
     DataTableCompareFunction,
     DataTableHeader,
     InternalDataTableHeader,
-} from "@/components/EvDataTable/composables/types.ts";
+} from "@/components/EvDataTable/composables/types";
 import {
     DisplayInstance,
     DisplayRuleListProp,
     useDisplay,
-} from "@/composables/display.ts";
+} from "@/composables/display";
 
 type HeaderProps = {
     headers?: DeepReadonly<DataTableHeader[]> | undefined;

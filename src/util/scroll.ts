@@ -1,5 +1,5 @@
-import { isElement } from "./is-functions.ts";
-import { Axis } from "./dimensions.ts";
+import { isElement } from "./is-functions";
+import { Axis } from "./dimensions";
 
 /**
  * # Get Scroll Parent

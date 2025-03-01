@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNumberField } from "../EvNumberField";
 import { omit } from "@/util";
 
-import EvTextfieldStories from "../EvTextfield/EvTextfield.stories.ts";
+import EvTextfieldStories from "../EvTextfield/EvTextfield.stories";
 
 const meta: Meta<typeof EvNumberField> = {
     component: EvNumberField,

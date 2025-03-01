@@ -5,7 +5,7 @@
  * `<ev-lozenge />`
  */
 import "./EvLozenge.scss";
-import { makeEvLozengeProps } from "./EvLozenge.ts";
+import { makeEvLozengeProps } from "./EvLozenge";
 import { isIntegerish, useAppearance } from "@/util";
 import { computed } from "vue";
 import { EvIcon } from "../EvIcon";

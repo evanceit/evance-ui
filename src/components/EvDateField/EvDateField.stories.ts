@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDateField } from "../EvDateField";
 import { ref } from "vue";
-import { omit } from "../../util";
+import { omit } from "@/util";
 
-import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
-import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories.ts";
+import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories";
+import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories";
 
 const meta: Meta<typeof EvDateField> = {
     component: EvDateField,

@@ -4,7 +4,7 @@ import { EvSelect } from "@/components/EvSelect";
 import { EvListItem } from "@/components/EvListItem";
 import { EvDivider } from "@/components/EvDivider";
 import { EvLozenge } from "@/components/EvLozenge";
-import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories.ts";
+import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories";
 import { omit } from "@/util";
 import { PlusIcon, ProductsIcon } from "@/icons";
 import {

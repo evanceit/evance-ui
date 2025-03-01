@@ -1,8 +1,8 @@
 import { makeAppearanceProps, propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { IconProp } from "@/composables/icons.ts";
-import { makeSizeProps } from "@/composables/size.ts";
-import { makeRoundedProps } from "@/composables/rounded.ts";
+import { makeComponentProps } from "@/composables/component";
+import { IconProp } from "@/composables/icons";
+import { makeSizeProps } from "@/composables/size";
+import { makeRoundedProps } from "@/composables/rounded";
 
 export const makeEvAvatarProps = propsFactory(
     {

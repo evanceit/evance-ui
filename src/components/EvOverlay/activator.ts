@@ -28,7 +28,7 @@ import {
     refElement,
     unbindProps,
 } from "@/util";
-import { EvMenuSymbol } from "../EvMenu/shared.ts";
+import { EvMenuSymbol } from "../EvMenu/shared";
 
 type ActivatorSelector = "parent" | string | Element | ComponentPublicInstance;
 

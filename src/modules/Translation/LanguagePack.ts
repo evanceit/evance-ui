@@ -1,6 +1,6 @@
 import { getPropertyValueByPath } from "@/util";
-import { Translatable } from "@/modules/Translation/Translatable.ts";
-import { PluralizationRules } from "@/modules/Translation/Pluralization.ts";
+import { Translatable } from "@/modules/Translation/Translatable";
+import { PluralizationRules } from "@/modules/Translation/Pluralization";
 
 /**
  * # Language Pack

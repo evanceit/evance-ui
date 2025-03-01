@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import "./EvDrawer.scss";
 import { EvDialog } from "@/components/EvDialog";
-import { makeEvDrawerProps } from "@/components/EvDrawer/EvDrawer.ts";
+import { makeEvDrawerProps } from "@/components/EvDrawer/EvDrawer";
 import { computed, ref } from "vue";
 import { filterComponentProps, omit } from "@/util";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { provideDrawer } from "@/composables/drawer.ts";
+import { useModelProxy } from "@/composables/modelProxy";
+import { provideDrawer } from "@/composables/drawer";
 
 const props = defineProps({
     ...makeEvDrawerProps(),

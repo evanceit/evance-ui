@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeDimensionsProps } from "@/composables/dimensions";
 
 export const makeEvDataTableCellProps = propsFactory(
     {

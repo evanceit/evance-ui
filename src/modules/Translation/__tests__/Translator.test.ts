@@ -1,5 +1,5 @@
 import { expect, test } from "@jest/globals";
-import { Translator } from "@/modules/Translation/Translator.ts";
+import { Translator } from "@/modules/Translation/Translator";
 import { shallowRef } from "vue";
 
 const dictionary = {

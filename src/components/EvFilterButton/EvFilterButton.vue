@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { makeEvFilterButtonProps } from "./EvFilterButton.ts";
+import { makeEvFilterButtonProps } from "./EvFilterButton";
 import { useDefaults } from "@/composables";
 import { computed } from "vue";
 import { filterComponentProps, getPropertyValue, isObject } from "@/util";
 import { EvButton } from "@/components/EvButton";
 import { EvBadge } from "@/components/EvBadge";
 import { ChevronDownIcon } from "@/icons";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 
 const definedProps = defineProps({
     ...makeEvFilterButtonProps(),

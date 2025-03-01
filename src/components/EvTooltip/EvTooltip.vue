@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvTooltip.scss";
-import { makeEvTooltipProps } from "./EvTooltip.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { makeEvTooltipProps } from "./EvTooltip";
+import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, getNextId } from "@/util";
 import { EvOverlay, PositionStrategyProps } from "@/components/EvOverlay";
 import { computed, mergeProps, ref } from "vue";

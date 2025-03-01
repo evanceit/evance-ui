@@ -9,11 +9,11 @@ import {
     VNodeProps,
 } from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
-import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance.ts";
+import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance";
 import {
     EvDialogServiceOptions,
     EvDialogServiceSlots,
-} from "@/components/EvDialog/EvDialogServiceOpener.ts";
+} from "@/components/EvDialog/EvDialogServiceOpener";
 
 /**
  * # EvDialogInstance

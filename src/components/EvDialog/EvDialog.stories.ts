@@ -5,7 +5,7 @@ import { shallowRef } from "vue";
 import { CollapseIcon, ExpandIcon, ArrowContinueIcon } from "@/icons";
 import DialogHeaderExample from "@/stories/assets/dialog-header-example.png?url";
 import { EvSurface, EvButton } from "@/components";
-import EvOverlayStories from "../EvOverlay/EvOverlay.stories.ts";
+import EvOverlayStories from "../EvOverlay/EvOverlay.stories";
 import { omit } from "@/util";
 
 const meta: Meta<typeof EvDialog> = {

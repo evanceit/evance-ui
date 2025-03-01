@@ -2,8 +2,8 @@ import {
     isPluralizationRules,
     PluralizationRuleKey,
     PluralizationRules,
-} from "@/modules/Translation/Pluralization.ts";
-import { TranslationVariables } from "@/modules/Translation/Translator.ts";
+} from "@/modules/Translation/Pluralization";
+import { TranslationVariables } from "@/modules/Translation/Translator";
 import {
     createStringTemplate,
     isNumber,

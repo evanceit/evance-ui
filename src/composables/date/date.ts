@@ -1,8 +1,8 @@
 import { inject, InjectionKey, reactive, watch } from "vue";
-import { DateAdapter } from "@/composables/date/DateAdapter.ts";
-import { LocaleManager } from "@/modules/Locale/LocaleManager.ts";
+import { DateAdapter } from "@/composables/date/DateAdapter";
+import { LocaleManager } from "@/modules/Locale/LocaleManager";
 import { isFunction, mergeDeep } from "@/util";
-import { DefaultDateAdapter } from "@/composables/date/DefaultDateAdapter.ts";
+import { DefaultDateAdapter } from "@/composables/date/DefaultDateAdapter";
 
 /**
  * # Date Adapter Instance

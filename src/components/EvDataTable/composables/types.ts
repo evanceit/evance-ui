@@ -1,10 +1,10 @@
 import {
     provideSelection,
     SelectableItem,
-} from "@/components/EvDataTable/composables/select.ts";
-import { FilterFunction, InternalItem } from "@/composables/filter.ts";
+} from "@/components/EvDataTable/composables/select";
+import { FilterFunction, InternalItem } from "@/composables/filter";
 import { GetterPropertyKey } from "@/util";
-import { DisplayRuleObject, DisplayRuleValue, VisibilityRuleProp } from "@/composables/display.ts";
+import { DisplayRuleObject, DisplayRuleValue, VisibilityRuleProp } from "@/composables/display";
 
 export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
 

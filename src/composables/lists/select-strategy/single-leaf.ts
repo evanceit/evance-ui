@@ -1,5 +1,5 @@
 import { SelectStrategy } from "@/composables/lists";
-import { singleAny } from "./single-any.ts";
+import { singleAny } from "./single-any";
 import { toRaw } from "vue";
 
 /**

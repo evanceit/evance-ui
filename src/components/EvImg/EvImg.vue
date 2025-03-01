@@ -3,7 +3,7 @@
  * `<ev-img>`
  */
 import "./EvImg.scss";
-import { makeEvImgProps, EvImgSrcObject } from "./EvImg.ts";
+import { makeEvImgProps, EvImgSrcObject } from "./EvImg";
 import { EvResponsive } from "@/components/EvResponsive";
 import { EvTransition, useEvTransition } from "@/components/EvTransition";
 import {

@@ -2,7 +2,7 @@
 import "./EvQuickfind.scss";
 import EvIcon from "../EvIcon/EvIcon.vue";
 import { QuickfindIcon } from "@/icons";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { sizeModifier } from "@/util";
 import { computed } from "vue";
 

@@ -1,8 +1,8 @@
 import { computed, inject, InjectionKey, PropType, provide, toRef } from "vue";
-import { ValidationError, FormFieldProps } from "@/composables/validation.ts";
+import { ValidationError, FormFieldProps } from "@/composables/validation";
 import { propsFactory } from "@/util";
-import { Form } from "@/modules/Form/Form.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { Form } from "@/modules/Form/Form";
+import { useModelProxy } from "@/composables/modelProxy";
 
 /**
  * # Form Key

@@ -4,9 +4,9 @@ import {
     makeTextAlignProps,
     propsFactory,
 } from "@/util";
-import { IconProp } from "@/composables/icons.ts";
-import { makeFormFieldProps } from "@/composables/validation.ts";
-import { makeComponentProps } from "@/composables/component.ts";
+import { IconProp } from "@/composables/icons";
+import { makeFormFieldProps } from "@/composables/validation";
+import { makeComponentProps } from "@/composables/component";
 import { makeLabelProps } from "@/components/EvLabel";
 
 /**

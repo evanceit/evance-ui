@@ -1,4 +1,4 @@
-import { Localized } from "@/modules/Locale/Localized.ts";
+import { Localized } from "@/modules/Locale/Localized";
 
 /**
  * # Number Formatter

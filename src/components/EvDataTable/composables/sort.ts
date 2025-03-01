@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
 import { computed, ComputedRef, PropType } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { useLocaleFunctions } from "@/composables";
 import { ArrowDownIcon, ArrowUpIcon } from "@/icons";
 

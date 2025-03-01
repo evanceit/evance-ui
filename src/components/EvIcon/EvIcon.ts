@@ -1,6 +1,6 @@
 import { computed, PropType, toRaw } from "vue";
 import { Appearance, propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons.ts";
+import { IconProp } from "@/composables/icons";
 
 /**
  * ## Icon Size

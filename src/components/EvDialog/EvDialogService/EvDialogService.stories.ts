@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import ExampleDialog from "./ExampleDialog.vue";
 import { EvButton } from "@/components";
-import { useDialog } from "@/composables/dialog.ts";
+import { useDialog } from "@/composables/dialog";
 
 const meta: Meta = {
     title: "Services/EvDialogService",

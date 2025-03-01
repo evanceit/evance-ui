@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvSection.scss";
-import { makeEvSectionProps } from "./EvSection.ts";
+import { makeEvSectionProps } from "./EvSection";
 import { EvEyebrow } from "@/components/EvEyebrow";
 
 const props = defineProps({ ...makeEvSectionProps() });

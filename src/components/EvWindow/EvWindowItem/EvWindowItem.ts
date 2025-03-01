@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeGroupItemProps } from "@/composables/groupItem.ts";
-import { makeLazyProps } from "@/composables/lazy.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeGroupItemProps } from "@/composables/groupItem";
+import { makeLazyProps } from "@/composables/lazy";
 
 export const makeEvWindowItemProps = propsFactory(
     {

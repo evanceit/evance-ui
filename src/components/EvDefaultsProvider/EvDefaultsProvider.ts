@@ -1,5 +1,5 @@
 import { propsFactory } from "@/util";
-import { DefaultsOptions } from "@/composables/defaults.ts";
+import { DefaultsOptions } from "@/composables/defaults";
 import { PropType } from "vue";
 
 export const makeEvDefaultsProviderProps = propsFactory(

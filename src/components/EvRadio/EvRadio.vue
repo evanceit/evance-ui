@@ -7,8 +7,8 @@ import { computed, inject, ref, useAttrs } from "vue";
 import { isDeepEqual, splitInputAttrs } from "@/util";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
 import { EvRadioGroupSymbol } from "@/components/EvRadioGroup";
-import { makeEvRadioProps } from "./EvRadio.ts";
-import { useFormField } from "@/composables/validation.ts";
+import { makeEvRadioProps } from "./EvRadio";
+import { useFormField } from "@/composables/validation";
 
 /**
  * We want to pass attributes not defined as 'props'

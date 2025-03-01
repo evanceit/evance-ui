@@ -1,10 +1,10 @@
 import { InjectionKey, PropType } from "vue";
-import { GroupProvide, makeGroupProps } from "@/composables/group.ts";
+import { GroupProvide, makeGroupProps } from "@/composables/group";
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
-import { IconProp } from "@/composables/icons.ts";
-import { VisibilityRuleProp } from "@/composables/display.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
+import { IconProp } from "@/composables/icons";
+import { VisibilityRuleProp } from "@/composables/display";
 
 export const EvSlideGroupSymbol: InjectionKey<GroupProvide> =
     Symbol.for("ev:slide-group");

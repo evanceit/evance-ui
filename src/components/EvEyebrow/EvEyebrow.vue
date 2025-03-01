@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvEyebrow.scss";
-import { makeEvEyebrowProps } from "./EvEyebrow.ts";
+import { makeEvEyebrowProps } from "./EvEyebrow";
 import { useTextAppearance } from "@/util";
 
 const props = defineProps({ ...makeEvEyebrowProps() });

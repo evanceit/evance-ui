@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeComponentProps } from "@/composables/component";
 import { PropType } from "vue";
-import { Breakpoint } from "@/composables/display.ts";
+import { Breakpoint } from "@/composables/display";
 
 export const makeEvFieldHelpProps = propsFactory(
     {

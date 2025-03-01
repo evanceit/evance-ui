@@ -3,20 +3,16 @@
  * `<ev-dialog>`
  */
 import "./EvDialog.scss";
-import {
-    DialogSize,
-    DialogSizeToWidth,
-    makeEvDialogProps,
-} from "./EvDialog.ts";
+import { DialogSize, DialogSizeToWidth, makeEvDialogProps } from "./EvDialog";
 import { computed, mergeProps, nextTick, ref, watch } from "vue";
 import { EvOverlay } from "@/components/EvOverlay";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
 import { Browser, filterComponentProps, getFocusableChildren } from "@/util";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
 import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
 import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
-import { provideDialog } from "@/composables/dialog.ts";
+import { provideDialog } from "@/composables/dialog";
 
 const props = defineProps({
     ...makeEvDialogProps(),

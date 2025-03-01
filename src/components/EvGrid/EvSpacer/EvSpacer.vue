@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvSpacer.scss";
-import { makeEvSpacerProps } from "./EvSpacer.ts";
+import { makeEvSpacerProps } from "./EvSpacer";
 
 const props = defineProps({
     ...makeEvSpacerProps(),

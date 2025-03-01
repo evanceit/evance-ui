@@ -1,9 +1,9 @@
 import {
     LanguagePack,
     LanguagePackData,
-} from "@/modules/Translation/LanguagePack.ts";
-import { Translatable } from "@/modules/Translation/Translatable.ts";
-import { Localized } from "@/modules/Locale/Localized.ts";
+} from "@/modules/Translation/LanguagePack";
+import { Translatable } from "@/modules/Translation/Translatable";
+import { Localized } from "@/modules/Locale/Localized";
 
 /**
  * # Translation Options

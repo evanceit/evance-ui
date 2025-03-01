@@ -1,6 +1,6 @@
-import { ScrollStrategyData, ScrollStrategyProps } from "../scroll.ts";
+import { ScrollStrategyData, ScrollStrategyProps } from "../scroll";
 import { EffectScope, onScopeDispose } from "vue";
-import { addScrollEventListener, requestNewFrame } from "../../../util";
+import { addScrollEventListener, requestNewFrame } from "@/util";
 
 /**
  * # Reposition Scroll Strategy

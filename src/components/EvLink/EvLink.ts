@@ -1,8 +1,8 @@
 import { propsFactory } from "@/util";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
-import { IconProp } from "@/composables/icons.ts";
-import { makeRouterLinkOrHrefProps } from "@/composables/router.ts";
+import { makeComponentProps } from "@/composables/component";
+import { IconProp } from "@/composables/icons";
+import { makeRouterLinkOrHrefProps } from "@/composables/router";
 
 export type LinkAppearance = "default" | "subtle";
 

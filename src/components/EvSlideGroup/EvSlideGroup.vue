@@ -8,23 +8,23 @@ import {
     EvSlideGroupSlot,
     makeEvSlideGroupProps,
 } from "@/components";
-import { useDisplayRuleClasses } from "@/composables/display.ts";
+import { useDisplayRuleClasses } from "@/composables/display";
 import { computed, shallowRef, watch } from "vue";
 import { Browser, clamp, focusableChildren, isBoolean } from "@/util";
-import { GroupProps, useGroup } from "@/composables/group.ts";
-import { useResizeObserver } from "@/composables/resizeObserver.ts";
+import { GroupProps, useGroup } from "@/composables/group";
+import { useResizeObserver } from "@/composables/resizeObserver";
 import {
     bias,
     calculateCenteredOffset,
     calculateUpdatedOffset,
-} from "@/components/EvSlideGroup/helpers.ts";
+} from "@/components/EvSlideGroup/helpers";
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
     ChevronUpIcon,
 } from "@/icons";
-import { useRtl } from "@/composables/locale.ts";
+import { useRtl } from "@/composables/locale";
 
 defineSlots<EvSlideGroupSlot>();
 

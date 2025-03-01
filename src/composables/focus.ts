@@ -1,6 +1,6 @@
-import { useModelProxy } from "./modelProxy.ts";
+import { useModelProxy } from "./modelProxy";
 import { computed, ref } from "vue";
-import { Browser, propsFactory } from "../util";
+import { Browser, propsFactory } from "@/util";
 
 /**
  * # Focus Props Type

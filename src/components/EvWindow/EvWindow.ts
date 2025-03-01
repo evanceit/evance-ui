@@ -1,10 +1,10 @@
-import { GroupProvide } from "@/composables/group.ts";
+import { GroupProvide } from "@/composables/group";
 import { ComputedRef, Ref, InjectionKey, PropType } from "vue";
-import { GroupItemProvide } from "@/composables/groupItem.ts";
+import { GroupItemProvide } from "@/composables/groupItem";
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
-import { IconProp } from "@/composables/icons.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
+import { IconProp } from "@/composables/icons";
 import { ArrowBackIcon, ArrowContinueIcon } from "@/icons";
 import { TouchHandlers } from "@/directives";
 

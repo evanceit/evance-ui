@@ -3,7 +3,7 @@
  * # `<ev-label>`
  */
 import "./EvLabel.scss";
-import { makeEvLabelProps } from "./EvLabel.ts";
+import { makeEvLabelProps } from "./EvLabel";
 
 const props = defineProps({
     ...makeEvLabelProps(),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvFieldHelp.scss";
-import { makeEvFieldHelpProps } from "./EvFieldHelp.ts";
-import { provideDefaults, useDefaults } from "@/composables/defaults.ts";
+import { makeEvFieldHelpProps } from "./EvFieldHelp";
+import { provideDefaults, useDefaults } from "@/composables/defaults";
 import { useDisplay } from "@/composables";
 import { computed } from "vue";
 

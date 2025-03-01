@@ -1,8 +1,8 @@
 import { propsFactory } from "@/util";
 import { PropType } from "vue";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeVirtualProps } from "@/composables/virtual.ts";
+import { makeDimensionsProps } from "@/composables/dimensions";
+import { makeComponentProps } from "@/composables/component";
+import { makeVirtualProps } from "@/composables/virtual";
 
 export interface EvVirtualScrollSlot<T> {
     item: T;

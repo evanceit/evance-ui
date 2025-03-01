@@ -2,8 +2,8 @@
 import "./EvNotifications.scss";
 import { EvNotification } from "../EvNotification";
 import { computed, shallowRef } from "vue";
-import { useTeleport } from "@/composables/teleport.ts";
-import { injectNotifications } from "@/composables/notification.ts";
+import { useTeleport } from "@/composables/teleport";
+import { injectNotifications } from "@/composables/notification";
 import { getLastZIndex } from "@/composables/stack";
 
 const teleportTarget = useTeleport(shallowRef(false));

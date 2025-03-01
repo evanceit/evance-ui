@@ -2,7 +2,7 @@
  * # Language Pack Tests
  */
 import { expect, test } from "@jest/globals";
-import { LanguagePack } from "@/modules/Translation/LanguagePack.ts";
+import { LanguagePack } from "@/modules/Translation/LanguagePack";
 
 const dictionary = {
     greeting: "Hello { name }",

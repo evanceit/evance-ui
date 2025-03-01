@@ -1,5 +1,5 @@
-import { isOn } from "./is-functions.ts";
-import { eventName } from "./events.ts";
+import { isOn } from "./is-functions";
+import { eventName } from "./events";
 
 /**
  * @todo: Move into events at some point

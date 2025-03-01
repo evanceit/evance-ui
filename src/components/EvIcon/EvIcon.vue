@@ -5,7 +5,7 @@
  *  Uses `glyph` to render an SVG-based icon.
  */
 import "./EvIcon.scss";
-import { makeEvIconProps } from "./EvIcon.ts";
+import { makeEvIconProps } from "./EvIcon";
 import { computed, toRaw, useAttrs } from "vue";
 import { Appearance, appearanceModifier, sizeModifier } from "@/util";
 import { useDefaults } from "@/composables";

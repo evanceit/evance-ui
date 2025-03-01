@@ -6,8 +6,8 @@ import {
 } from "./composables/display.ts";
 import { Browser, getNextId, mergeDeep } from "./util";
 import { App, nextTick } from "vue";
-import { createLocaleManager, LocaleSymbol } from "@/composables/locale.ts";
-import { LocaleOptions } from "@/modules/Locale/LocaleManager.ts";
+import { createLocaleManager, LocaleSymbol } from "@/composables/locale";
+import { LocaleOptions } from "@/modules/Locale/LocaleManager";
 import {
     createDate,
     DateAdapterSymbol,

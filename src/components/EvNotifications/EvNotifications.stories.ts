@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNotifications } from "../EvNotifications";
 import { EvNotificationProps } from "@/components/EvNotification";
 import { EvButton } from "@/components";
-import { ArrowContinueIcon, MinusIcon, PlusIcon } from "../../icons";
+import { ArrowContinueIcon, MinusIcon, PlusIcon } from "@/icons";
 import { randomArrayItem } from "@/util";
-import { useNotification } from "@/composables/notification.ts";
+import { useNotification } from "@/composables/notification";
 
 const meta: Meta<typeof EvNotifications> = {
     component: EvNotifications,

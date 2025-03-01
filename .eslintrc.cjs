@@ -38,5 +38,6 @@ module.exports = {
                 bracketSameLine: true,
             },
         ],
+        'import/extensions': ['error', 'never', { ts: 'never', tsx: 'never' }],
     },
 };

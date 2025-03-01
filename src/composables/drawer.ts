@@ -1,6 +1,6 @@
 import { inject, InjectionKey, provide } from "vue";
-import { EvDrawerInstance } from "@/components/EvDrawer/EvDrawerInstance.ts";
-import { EvDrawerServiceOpener } from "@/components/EvDrawer/EvDrawerServiceOpener.ts";
+import { EvDrawerInstance } from "@/components/EvDrawer/EvDrawerInstance";
+import { EvDrawerServiceOpener } from "@/components/EvDrawer/EvDrawerServiceOpener";
 
 export const EvDrawerServiceSymbol: InjectionKey<EvDrawerServiceOpener> =
     Symbol.for("ev:drawer-service");

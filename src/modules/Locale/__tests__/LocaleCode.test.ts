@@ -1,5 +1,5 @@
 import { expect, test } from "@jest/globals";
-import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
+import { LocaleCode } from "@/modules/Locale/LocaleCode";
 
 test("LocaleCode.toTranslationCodes()", () => {
     const localeCode = new LocaleCode("en", "GB");

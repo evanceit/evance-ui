@@ -1,4 +1,4 @@
-import { Selected } from "@/composables/lists/select-strategies.ts";
+import { Selected } from "@/composables/lists/select-strategies";
 import { EventProp, isObject, propsFactory } from "@/util";
 import { computed, ComputedRef, PropType } from "vue";
 import {

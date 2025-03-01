@@ -1,6 +1,6 @@
 import { App } from "vue";
-import { EvNotificationsManager } from "@/components/EvNotifications/EvNotificationsManager.ts";
-import { EvNotificationServiceSymbol } from "@/composables/notification.ts";
+import { EvNotificationsManager } from "@/components/EvNotifications/EvNotificationsManager";
+import { EvNotificationServiceSymbol } from "@/composables/notification";
 
 /**
  * # EvNotificationService

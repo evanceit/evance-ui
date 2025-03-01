@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import "./EvContainer.scss";
-import { makeEvContainerProps } from "./EvContainer.ts";
+import { makeEvContainerProps } from "./EvContainer";
 import {
     calculateDisplayRuleValue,
     useDisplayRuleClasses,
-} from "@/composables/display.ts";
+} from "@/composables/display";
 import { computed } from "vue";
 import { isBoolean, isEmpty } from "@/util";
 

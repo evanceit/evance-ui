@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import ExampleDrawer from "./ExampleDrawer.vue";
 import { EvButton } from "@/components";
-import { useDrawer } from "@/composables/drawer.ts";
+import { useDrawer } from "@/composables/drawer";
 
 const meta: Meta = {
     title: "Services/EvDrawerService",

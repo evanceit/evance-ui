@@ -4,10 +4,10 @@
  * `<ev-date-picker>`
  */
 import "./EvDatePicker.scss";
-import { makeEvDatePickerProps } from "./EvDatePicker.ts";
-import { useDate } from "@/composables/date/date.ts";
+import { makeEvDatePickerProps } from "./EvDatePicker";
+import { useDate } from "@/composables/date/date";
 import { computed, ref, shallowRef, watch } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { EvDatePickerMonth } from "./EvDatePickerMonth";
 import { EvDatePickerMonths } from "./EvDatePickerMonths";

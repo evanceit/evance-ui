@@ -6,8 +6,8 @@ import {
     makeNestedProps,
 } from "@/composables/lists";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeDimensionsProps } from "@/composables/dimensions";
 
 /**
  * # List Item Types

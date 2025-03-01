@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import "./EvEditOnClick.scss";
-import { makeEvEditOnClickProps } from "./EvEditOnClick.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { makeEvEditOnClickProps } from "./EvEditOnClick";
+import { useModelProxy } from "@/composables/modelProxy";
 import { ref, watch } from "vue";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvTextfield } from "@/components/EvTextfield";
-import {CancelIcon, CheckIcon} from "@/icons";
+import { CancelIcon, CheckIcon } from "@/icons";
 
 const props = defineProps({ ...makeEvEditOnClickProps() });
 const slots = defineSlots<{

@@ -1,12 +1,12 @@
 import { Appearance, InputSizeProp, propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 import { PropType } from "vue";
 import {
     ButtonAppearanceProp,
     ButtonVariantProp,
     EvButtonProps,
-} from "@/components/EvButton/EvButton.ts";
+} from "@/components/EvButton";
 
 export type ButtonGroupGap =
     | "none"

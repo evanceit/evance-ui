@@ -1,7 +1,7 @@
 import { makeAppearanceProps, propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons.ts";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makePositionProps } from "@/composables/position.ts";
+import { IconProp } from "@/composables/icons";
+import { makeComponentProps } from "@/composables/component";
+import { makePositionProps } from "@/composables/position";
 import { makeEvTransitionProps } from "@/components/EvTransition";
 
 export const makeEvBadgeProps = propsFactory(

@@ -1,4 +1,4 @@
-import { PositionStrategyData, PositionStrategyProps } from "../position.ts";
+import { PositionStrategyData, PositionStrategyProps } from "../position";
 import {
     computed,
     ComputedRef,

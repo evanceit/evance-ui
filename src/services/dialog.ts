@@ -1,6 +1,6 @@
 import { App } from "vue";
-import { EvDialogServiceSymbol } from "@/composables/dialog.ts";
-import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener.ts";
+import { EvDialogServiceSymbol } from "@/composables/dialog";
+import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener";
 
 /**
  * # EvDialogService

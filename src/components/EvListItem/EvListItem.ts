@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
-import { makeRouterLinkOrHrefProps } from "@/composables/router.ts";
-import { IconProp } from "@/composables/icons.ts";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeRouterLinkOrHrefProps } from "@/composables/router";
+import { IconProp } from "@/composables/icons";
+import { makeComponentProps } from "@/composables/component";
 
 export const makeEvListItemProps = propsFactory(
     {

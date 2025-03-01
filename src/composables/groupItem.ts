@@ -15,7 +15,7 @@ import {
     toRef,
     watch,
 } from "vue";
-import { GroupProvide } from "@/composables/group.ts";
+import { GroupProvide } from "@/composables/group";
 
 /**
  * # GroupItem

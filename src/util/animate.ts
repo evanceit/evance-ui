@@ -1,4 +1,4 @@
-import { isEmpty } from "./is-functions.ts";
+import { isEmpty } from "./is-functions";
 
 /**
  * # Animate

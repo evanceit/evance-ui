@@ -5,9 +5,9 @@ import {
     EvTagGroupSymbol,
     makeEvTagGroupProps,
 } from "./EvTagGroup.ts";
-import { GroupProps, useGroup } from "@/composables/group.ts";
+import { GroupProps, useGroup } from "@/composables/group";
 import { computed, toRef } from "vue";
-import { provideDefaults } from "@/composables/defaults.ts";
+import { provideDefaults } from "@/composables/defaults";
 import { filterComponentProps } from "@/util";
 import { EvSlideGroup } from "@/components/EvSlideGroup";
 

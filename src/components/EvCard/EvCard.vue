@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvCard.scss";
-import { makeEvCardProps } from "./EvCard.ts";
+import { makeEvCardProps } from "./EvCard";
 import { EvCardContent } from "@/components/EvCard/EvCardContent";
 import { EvCardActions } from "@/components/EvCard/EvCardActions";
 import { EvSurface } from "@/components/EvSurface";

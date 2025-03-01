@@ -1,6 +1,6 @@
 import { inject, InjectionKey, provide } from "vue";
-import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance.ts";
-import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener.ts";
+import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance";
+import { EvDialogServiceOpener } from "@/components/EvDialog/EvDialogServiceOpener";
 
 export const EvDialogServiceSymbol: InjectionKey<EvDialogServiceOpener> =
     Symbol.for("ev:dialog-service");

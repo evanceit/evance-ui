@@ -3,7 +3,7 @@
  * # `<ev-textarea>`
  */
 import "./EvTextarea.scss";
-import { makeEvTextareaProps } from "./EvTextarea.ts";
+import { makeEvTextareaProps } from "./EvTextarea";
 import { computed, nextTick, ref, useAttrs, onUpdated, onMounted } from "vue";
 import {
     Appearance,
@@ -11,13 +11,13 @@ import {
     InputAppearance,
     splitInputAttrs,
 } from "@/util";
-import { useAutofocus } from "@/composables/focus.ts";
+import { useAutofocus } from "@/composables/focus";
 import { CancelIcon } from "@/icons";
 import { EvProgress } from "@/components/EvProgress";
 import { EvIcon } from "@/components/EvIcon";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
-import { useFormField } from "@/composables/validation.ts";
+import { useFormField } from "@/composables/validation";
 
 /**
  * We want to pass attributes not defined as 'props'

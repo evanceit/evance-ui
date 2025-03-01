@@ -1,4 +1,4 @@
-import { EvDrawerRenderer } from "@/components/EvDrawer/EvDrawerRenderer.ts";
+import { EvDrawerRenderer } from "@/components/EvDrawer/EvDrawerRenderer";
 
 /**
  * # EvDrawerInstance

@@ -1,6 +1,6 @@
-import { DateAdapter } from "@/composables/date/DateAdapter.ts";
+import { DateAdapter } from "@/composables/date/DateAdapter";
 import { createRange, isFunction, isString, padStart } from "@/util";
-import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
+import { LocaleCode } from "@/modules/Locale/LocaleCode";
 
 type CustomDateFormat =
     | Intl.DateTimeFormatOptions

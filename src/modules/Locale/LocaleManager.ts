@@ -1,10 +1,10 @@
-import { Localized } from "@/modules/Locale/Localized.ts";
-import { NumberFormatter } from "@/modules/NumberFormatter.ts";
-import { Translator } from "@/modules/Translation/Translator.ts";
+import { Localized } from "@/modules/Locale/Localized";
+import { NumberFormatter } from "@/modules/NumberFormatter";
+import { Translator } from "@/modules/Translation/Translator";
 
 import en from "@/locale/en";
 import { shallowRef } from "vue";
-import { LanguagePackData } from "@/modules/Translation/LanguagePack.ts";
+import { LanguagePackData } from "@/modules/Translation/LanguagePack";
 
 /**
  * # Locale Manager

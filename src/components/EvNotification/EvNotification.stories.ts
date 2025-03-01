@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvNotification } from "../EvNotification";
 import { ReloadIcon } from "../../icons";
 import { EvButton } from "@/components/EvButton";
-import EvMessageStories from "../EvMessage/EvMessage.stories.ts";
+import EvMessageStories from "../EvMessage/EvMessage.stories";
 
 const meta: Meta<typeof EvNotification> = {
     component: EvNotification,

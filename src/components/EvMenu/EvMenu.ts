@@ -1,5 +1,5 @@
 import { AnchorSelector, propsFactory } from "@/util";
-import { makeEvOverlayProps } from "@/components/EvOverlay/EvOverlay.ts";
+import { makeEvOverlayProps } from "@/components/EvOverlay/EvOverlay";
 import EvMenuTransition from "./EvMenuTransition.vue";
 
 export const makeEvMenuProps = propsFactory(

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs } from "vue";
-import { provideDefaults } from "@/composables/defaults.ts";
-import { makeEvDefaultsProviderProps } from "./EvDefaultsProvider.ts";
+import { provideDefaults } from "@/composables/defaults";
+import { makeEvDefaultsProviderProps } from "./EvDefaultsProvider";
 
 const props = defineProps({
     ...makeEvDefaultsProviderProps(),

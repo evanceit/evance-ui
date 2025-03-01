@@ -1,6 +1,6 @@
 import { Anchor, AnchorSelector, propsFactory } from "@/util";
 import { computed, CSSProperties, PropType } from "vue";
-import { useRtl } from "@/composables/locale.ts";
+import { useRtl } from "@/composables/locale";
 
 export interface PositionProps {
     position?: AnchorSelector;

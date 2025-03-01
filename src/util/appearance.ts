@@ -1,7 +1,11 @@
-import { propsFactory } from "./props.ts";
+import { propsFactory } from "./props";
 import { computed, MaybeRef, PropType, Ref, unref } from "vue";
-import {appearanceModifier, makeClassName, variantModifier} from "@/util/modifiers.ts";
-import { GroupItemProvide } from "@/composables/groupItem.ts";
+import {
+    appearanceModifier,
+    makeClassName,
+    variantModifier,
+} from "@/util/modifiers";
+import { GroupItemProvide } from "@/composables/groupItem";
 
 /**
  * # Appearance

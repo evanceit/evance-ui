@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import "./EvDataTableCell.scss";
-import { makeEvDataTableCellProps } from "./EvDataTableCell.ts";
+import { makeEvDataTableCellProps } from "./EvDataTableCell";
 import { computed } from "vue";
-import { useDimensions } from "@/composables/dimensions.ts";
+import { useDimensions } from "@/composables/dimensions";
 
 const props = defineProps({ ...makeEvDataTableCellProps() });
 const slots = defineSlots<{

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import "./EvRadioGroup.scss";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
-import { EvRadioGroupSymbol, makeEvRadioGroupProps } from "./EvRadioGroup.ts";
+import { EvRadioGroupSymbol, makeEvRadioGroupProps } from "./EvRadioGroup";
 import { computed, provide } from "vue";
 import { getNextId } from "@/util";
-import { useFormField } from "@/composables/validation.ts";
+import { useFormField } from "@/composables/validation";
 import EvErrors from "@/components/EvErrors/EvErrors.vue";
 
 defineOptions({

@@ -1,9 +1,9 @@
 import { isDeepEqual, propsFactory } from "@/util";
-import { makeTagProps } from "@/composables/tag.ts";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeTagProps } from "@/composables/tag";
+import { makeComponentProps } from "@/composables/component";
 import { PropType } from "vue";
-import { makeGroupProps } from "@/composables/group.ts";
-import { makeEvSlideGroupProps } from "@/components/EvSlideGroup/EvSlideGroup.ts";
+import { makeGroupProps } from "@/composables/group";
+import { makeEvSlideGroupProps } from "@/components/EvSlideGroup/EvSlideGroup";
 
 export const EvTagGroupSymbol = Symbol.for("ev:tag-group");
 

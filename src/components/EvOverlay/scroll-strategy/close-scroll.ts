@@ -1,5 +1,5 @@
-import { ScrollStrategyData } from "../scroll.ts";
-import { addScrollEventListener } from "../../../util";
+import { ScrollStrategyData } from "../scroll";
+import { addScrollEventListener } from "@/util";
 
 /**
  * # Close Scroll Strategy

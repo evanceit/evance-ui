@@ -1,5 +1,5 @@
 import { expect, test } from "@jest/globals";
-import { isPluralizationRules } from "@/modules/Translation/Pluralization.ts";
+import { isPluralizationRules } from "@/modules/Translation/Pluralization";
 
 const dictionary = {
     greeting: "Hello { name }",

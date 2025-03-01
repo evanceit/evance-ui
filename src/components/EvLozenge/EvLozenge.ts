@@ -1,7 +1,7 @@
 import { makeAppearanceProps, propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons.ts";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { IconProp } from "@/composables/icons";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 
 export const makeEvLozengeProps = propsFactory(
     {

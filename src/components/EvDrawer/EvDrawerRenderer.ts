@@ -9,11 +9,11 @@ import {
     VNodeProps,
 } from "vue";
 import EvDrawer from "@/components/EvDrawer/EvDrawer.vue";
-import { EvDrawerInstance } from "@/components/EvDrawer/EvDrawerInstance.ts";
+import { EvDrawerInstance } from "@/components/EvDrawer/EvDrawerInstance";
 import {
     EvDrawerServiceOptions,
     EvDrawerServiceSlots,
-} from "@/components/EvDrawer/EvDrawerServiceOpener.ts";
+} from "@/components/EvDrawer/EvDrawerServiceOpener";
 
 /**
  * # EvDrawerInstance

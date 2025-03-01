@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeDimensionsProps } from "@/composables/dimensions";
 
 export type EvResponsiveSlots = {
     default: never;

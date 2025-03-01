@@ -13,10 +13,11 @@ import {
     EvMenu,
     EvCheckbox,
     EvLozenge,
-    EvDivider, EvSection,
+    EvDivider,
+    EvSection,
 } from "@/components";
 import { ref } from "vue";
-import { SortOption } from "@/components/EvDataTable/composables/sort.ts";
+import { SortOption } from "@/components/EvDataTable/composables/sort";
 import { EllipsisIcon } from "@/icons";
 
 const meta: Meta<typeof EvDataTable> = {

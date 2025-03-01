@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 
 export const makeEvSectionProps = propsFactory(
     {

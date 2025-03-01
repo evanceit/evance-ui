@@ -1,4 +1,4 @@
-import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer.ts";
+import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer";
 
 /**
  * # EvDialogInstance

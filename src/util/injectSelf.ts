@@ -2,7 +2,7 @@
 
 // Types
 import type { ComponentInternalInstance, InjectionKey } from "vue";
-import { getCurrentComponent } from "@/util/components.ts";
+import { getCurrentComponent } from "@/util/components";
 
 export function injectSelf<T>(
     key: InjectionKey<T> | string,

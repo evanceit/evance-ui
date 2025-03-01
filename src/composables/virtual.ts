@@ -1,4 +1,4 @@
-import { Browser, clamp, debounce, isNumber, propsFactory } from "../util";
+import { Browser, clamp, debounce, isNumber, propsFactory } from "@/util";
 import {
     computed,
     ComputedRef,
@@ -10,8 +10,8 @@ import {
     watch,
     watchEffect,
 } from "vue";
-import { useResizeObserver } from "./resizeObserver.ts";
-import { useDisplay } from "./display.ts";
+import { useResizeObserver } from "./resizeObserver";
+import { useDisplay } from "./display";
 
 const UP = -1;
 const DOWN = 1;

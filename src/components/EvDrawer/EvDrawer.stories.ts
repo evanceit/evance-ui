@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvDrawer } from "../EvDrawer";
 import { EvButton } from "@/components";
 import { omit } from "@/util";
-import EvDialogStories from "@/components/EvDialog/EvDialog.stories.ts";
+import EvDialogStories from "@/components/EvDialog/EvDialog.stories";
 
 const meta: Meta<typeof EvDrawer> = {
     component: EvDrawer,

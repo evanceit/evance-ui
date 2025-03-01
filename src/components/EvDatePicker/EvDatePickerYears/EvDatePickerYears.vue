@@ -3,12 +3,12 @@
  * `<ev-date-picker-years>`
  */
 import "./EvDatePickerYears.scss";
-import { makeEvDatePickerYearsProps } from "./EvDatePickerYears.ts";
+import { makeEvDatePickerYearsProps } from "./EvDatePickerYears";
 import { EvList } from "@/components/EvList";
 import { EvListItem } from "@/components/EvListItem";
 import { computed, nextTick, onMounted, ref } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { useDate } from "@/composables/date/date.ts";
+import { useModelProxy } from "@/composables/modelProxy";
+import { useDate } from "@/composables/date/date";
 import { wrapInArray } from "@/util";
 
 const dateAdapter = useDate();

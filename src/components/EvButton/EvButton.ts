@@ -5,15 +5,15 @@ import {
     propsFactory,
     VariantProp,
 } from "@/util";
-import { IconProp, IconValue } from "@/composables/icons.ts";
+import { IconProp, IconValue } from "@/composables/icons";
 import {
     makeRouterLinkOrHrefProps,
     RouterLinkOrHrefProps,
-} from "@/composables/router.ts";
+} from "@/composables/router";
 import { PropType } from "vue";
-import { makeComponentProps } from "@/composables/component.ts";
-import { EvButtonToggleSymbol } from "@/components/EvButtonToggle/EvButtonToggle.ts";
-import { makeGroupItemProps } from "@/composables/groupItem.ts";
+import { makeComponentProps } from "@/composables/component";
+import { EvButtonToggleSymbol } from "@/components/EvButtonToggle/EvButtonToggle";
+import { makeGroupItemProps } from "@/composables/groupItem";
 
 /**
  * ## Button Appearance

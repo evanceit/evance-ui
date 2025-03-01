@@ -1,6 +1,6 @@
-import { makeTextAppearanceProps, propsFactory} from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeTextAppearanceProps, propsFactory } from "@/util";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 
 export const makeEvEyebrowProps = propsFactory(
     {

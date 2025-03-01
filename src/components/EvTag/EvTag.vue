@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import "./EvTag.scss";
-import { EvTagSlots, makeEvTagProps } from "./EvTag.ts";
+import { EvTagSlots, makeEvTagProps } from "./EvTag";
 import { EvIcon } from "@/components/EvIcon";
 import { EvDefaultsProvider } from "@/components/EvDefaultsProvider";
 import { CancelIcon } from "@/icons";
-import { useLocaleFunctions } from "@/composables/locale.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useLocaleFunctions } from "@/composables/locale";
+import { useModelProxy } from "@/composables/modelProxy";
 import { computed, useAttrs } from "vue";
 import { KeyboardEvent } from "react";
 import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
 } from "@/composables/router.ts";
-import { GroupItemProps, useGroupItem } from "@/composables/groupItem.ts";
-import { EvAvatar, EvTagGroupSymbol } from "@/components";
+import { GroupItemProps, useGroupItem } from "@/composables/groupItem";
+import { EvAvatar } from "@/components/EvAvatar";
+import { EvTagGroupSymbol } from "@/components/EvTagGroup";
 import { EvTransitionExpandX } from "@/components/EvTransition/transitions";
 import { useDefaults } from "@/composables";
 import { AppearanceProps, useAppearance } from "@/util";

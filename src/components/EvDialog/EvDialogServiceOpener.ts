@@ -1,5 +1,5 @@
 import { App } from "vue";
-import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer.ts";
+import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer";
 
 export interface EvDialogServiceOptions {
     props?: EvDialogServiceProps;

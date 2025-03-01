@@ -1,12 +1,12 @@
 import { Appearance, AppearanceProp, propsFactory, VariantProp } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 import { EvButtonProps } from "@/components/EvButton";
 import { PropType } from "vue";
 import { EvCardContentSize } from "@/components/EvCard/EvCardContent";
 import { SurfaceElevation } from "@/components/EvSurface";
-import { IconProp } from "@/composables/icons.ts";
-import { makeRouterLinkOrHrefProps } from "@/composables/router.ts";
+import { IconProp } from "@/composables/icons";
+import { makeRouterLinkOrHrefProps } from "@/composables/router";
 import { JustifyContentValue } from "@/components/EvGrid/EvLayout";
 
 export const makeEvCardProps = propsFactory(

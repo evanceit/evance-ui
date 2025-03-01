@@ -4,7 +4,7 @@ import {
     staticPositionStrategy,
 } from "./position-strategy";
 import { AnchorSelector, Browser, isFunction, propsFactory } from "@/util";
-import { useToggleScope } from "@/composables/toggleScope.ts";
+import { useToggleScope } from "@/composables/toggleScope";
 
 export interface PositionStrategyData {
     contentEl: Ref<HTMLElement | undefined>;

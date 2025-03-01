@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { injectDrawer, useDrawer } from "@/composables/drawer.ts";
+import { injectDrawer, useDrawer } from "@/composables/drawer";
 import { EvButton } from "@/components";
 import { defineAsyncComponent, reactive } from "vue";
 import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";

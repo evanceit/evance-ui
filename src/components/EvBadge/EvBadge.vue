@@ -3,13 +3,13 @@
  * `<ev-badge>`
  */
 import "./EvBadge.scss";
-import { makeEvBadgeProps } from "./EvBadge.ts";
+import { makeEvBadgeProps } from "./EvBadge";
 import { computed } from "vue";
 import { appearanceModifier } from "@/util";
 import { EvTransition } from "@/components/EvTransition";
 import { EvIcon } from "@/components/EvIcon";
-import { usePosition } from "@/composables/position.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { usePosition } from "@/composables/position";
+import { useModelProxy } from "@/composables/modelProxy";
 import { useDefaults } from "@/composables";
 
 const definedProps = defineProps({

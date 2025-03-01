@@ -10,12 +10,12 @@ import EvIcon from "../EvIcon/EvIcon.vue";
 import { CancelIcon, ChevronDownIcon } from "@/icons";
 import { computed, nextTick, shallowRef } from "vue";
 import EvButton from "@/components/EvButton/EvButton.vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { appearanceIcon } from "@/composables/icons.ts";
-import { makeEvMessageProps } from "./EvMessage.ts";
-import { useLocaleFunctions } from "@/composables/locale.ts";
+import { useModelProxy } from "@/composables/modelProxy";
+import { appearanceIcon } from "@/composables/icons";
+import { makeEvMessageProps } from "./EvMessage";
+import { useLocaleFunctions } from "@/composables/locale";
 import { EvButtonProps } from "@/components/EvButton";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
+import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
 import { EvButtonGroup, EvHeading } from "@/components";
 
 const props = defineProps({

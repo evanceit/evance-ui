@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import "./EvDataTableRow.scss";
-import { makeEvDataTableRowProps } from "./EvDataTableRow.ts";
+import { makeEvDataTableRowProps } from "./EvDataTableRow";
 import { computed } from "vue";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { EvCheckbox } from "@/components/EvCheckbox";
-import { useSelection } from "@/components/EvDataTable/composables/select.ts";
-import { useHeaders } from "@/components/EvDataTable/composables/headers.ts";
-import { ItemSlot } from "@/components/EvDataTable/composables/types.ts";
+import { useSelection } from "@/components/EvDataTable/composables/select";
+import { useHeaders } from "@/components/EvDataTable/composables/headers";
+import { ItemSlot } from "@/components/EvDataTable/composables/types";
 import { getPropertyValue } from "@/util";
 
 const props = defineProps({ ...makeEvDataTableRowProps() });

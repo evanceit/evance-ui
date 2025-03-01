@@ -3,13 +3,13 @@
  * EvWindowItem
  */
 import { computed, inject, nextTick, shallowRef } from "vue";
-import { makeEvWindowItemProps } from "./EvWindowItem.ts";
-import { EvWindowGroupSymbol, EvWindowSymbol } from "../EvWindow.ts";
+import { makeEvWindowItemProps } from "./EvWindowItem";
+import { EvWindowGroupSymbol, EvWindowSymbol } from "../EvWindow";
 import { EvTransition } from "@/components/EvTransition";
-import { GroupItemProps, useGroupItem } from "@/composables/groupItem.ts";
-import { useSsrBoot } from "@/composables/ssrBoot.ts";
+import { GroupItemProps, useGroupItem } from "@/composables/groupItem";
+import { useSsrBoot } from "@/composables/ssrBoot";
 import { isString, toWebUnit } from "@/util";
-import { useLazy } from "@/composables/lazy.ts";
+import { useLazy } from "@/composables/lazy";
 
 const props = defineProps({
     ...makeEvWindowItemProps(),

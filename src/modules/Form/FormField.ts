@@ -9,7 +9,7 @@ import {
     shallowRef,
     watch,
 } from "vue";
-import { FormFieldProps, Validator } from "@/composables/validation.ts";
+import { FormFieldProps, Validator } from "@/composables/validation";
 import {
     Browser,
     consoleWarn,
@@ -18,9 +18,9 @@ import {
     isString,
     wrapInArray,
 } from "@/util";
-import { Form } from "@/modules/Form/Form.ts";
-import { useToggleScope } from "@/composables/toggleScope.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { Form } from "@/modules/Form/Form";
+import { useToggleScope } from "@/composables/toggleScope";
+import { useModelProxy } from "@/composables/modelProxy";
 
 /**
  * # Form Field

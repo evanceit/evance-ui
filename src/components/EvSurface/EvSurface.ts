@@ -1,8 +1,8 @@
 import { makeClassName, propsFactory } from "@/util";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
+import { makeDimensionsProps } from "@/composables/dimensions";
 import { PropType } from "vue";
-import {makeTagProps} from "@/composables/tag.ts";
-import {makeComponentProps} from "@/composables/component.ts";
+import { makeTagProps } from "@/composables/tag";
+import { makeComponentProps } from "@/composables/component";
 
 /**
  * # Surface Elevation

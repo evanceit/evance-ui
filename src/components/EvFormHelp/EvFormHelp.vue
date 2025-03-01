@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvFormHelp.scss";
-import { makeEvFormHelpProps } from "./EvFormHelp.ts";
-import { provideDefaults } from "@/composables/defaults.ts";
+import { makeEvFormHelpProps } from "./EvFormHelp";
+import { provideDefaults } from "@/composables/defaults";
 import { computed, toRef } from "vue";
 import { useDisplay } from "@/composables";
 

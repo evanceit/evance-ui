@@ -1,7 +1,7 @@
-import { GroupProvide, makeGroupProps } from "@/composables/group.ts";
+import { GroupProvide, makeGroupProps } from "@/composables/group";
 import { InjectionKey } from "vue";
 import { propsFactory } from "@/util";
-import { makeEvButtonGroupProps } from "@/components/EvButtonGroup/EvButtonGroup.ts";
+import { makeEvButtonGroupProps } from "@/components/EvButtonGroup/EvButtonGroup";
 
 export type ButtonToggleSlotProps =
     | "isSelected"

@@ -8,7 +8,7 @@
  *        v-for="{ children, props: itemProps, type, raw: item } in props.items"
  */
 import EvListItem from "../EvListItem/EvListItem.vue";
-import { ListItem, makeEvListChildrenProps } from "./EvList.ts";
+import { ListItem, makeEvListChildrenProps } from "./EvList";
 import { createList } from "@/composables/lists";
 
 const props = defineProps({

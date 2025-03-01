@@ -1,6 +1,6 @@
 import { isEmpty, omit, propsFactory } from "@/util";
-import { makeEvTextfieldProps } from "@/components/EvTextfield/EvTextfield.ts";
-import { LocaleManager } from "@/modules/Locale/LocaleManager.ts";
+import { makeEvTextfieldProps } from "@/components/EvTextfield/EvTextfield";
+import { LocaleManager } from "@/modules/Locale/LocaleManager";
 import { PropType, watch } from "vue";
 
 export type NumberFieldModeProp = "decimal" | "currency";

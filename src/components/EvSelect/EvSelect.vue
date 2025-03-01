@@ -4,8 +4,8 @@
  *
  */
 import "./EvSelect.scss";
-import { makeEvSelectProps } from "./EvSelect.ts";
-import { useScrolling } from "./useScrolling.ts";
+import { makeEvSelectProps } from "./EvSelect";
+import { useScrolling } from "./useScrolling";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvMenu } from "@/components/EvMenu";
 import { EvList, ListItem } from "@/components/EvList";
@@ -14,9 +14,9 @@ import { EvVirtualScroll } from "@/components/EvVirtualScroll";
 import { EvSurface } from "@/components/EvSurface";
 import { EvTag } from "@/components/EvTag";
 import { transformItem, useItems } from "@/composables/lists";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { useLocaleFunctions } from "@/composables/locale.ts";
-import { useForm } from "@/composables/form.ts";
+import { useModelProxy } from "@/composables/modelProxy";
+import { useLocaleFunctions } from "@/composables/locale";
+import { useForm } from "@/composables/form";
 import {
     computed,
     mergeProps,
@@ -36,7 +36,7 @@ import {
     wrapInArray,
 } from "@/util";
 import { FocusEvent, MouseEvent } from "react";
-import { useFilter } from "@/composables/filter.ts";
+import { useFilter } from "@/composables/filter";
 
 // Props
 const props = defineProps({

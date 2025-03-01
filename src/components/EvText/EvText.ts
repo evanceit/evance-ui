@@ -1,7 +1,7 @@
 import { AppearanceProp, propsFactory } from "@/util";
 import { PropType } from "vue";
-import { ComponentProps, makeComponentProps} from "@/composables/component.ts";
-import { makeTagProps, TagProps } from "@/composables/tag.ts";
+import { ComponentProps, makeComponentProps} from "@/composables/component";
+import { makeTagProps, TagProps } from "@/composables/tag";
 
 export const EvTextSize = {
     small: "small",

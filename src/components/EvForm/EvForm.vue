@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { makeEvFormProps } from "./EvForm.ts";
-import { createForm, SubmitEventPromise } from "@/composables/form.ts";
+import { makeEvFormProps } from "./EvForm";
+import { createForm, SubmitEventPromise } from "@/composables/form";
 
 const formRef = ref<HTMLFormElement>();
 const props = defineProps({

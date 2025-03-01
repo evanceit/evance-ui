@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, Ref, useAttrs, watch } from "vue";
-import { useResizeObserver } from "../../composables/resizeObserver.ts";
-import { makeEvVirtualScrollItemProps } from "./EvVirtualScroll.ts";
+import { useResizeObserver } from "../../composables/resizeObserver";
+import { makeEvVirtualScrollItemProps } from "./EvVirtualScroll";
 
 defineOptions({
     inheritAttrs: false,

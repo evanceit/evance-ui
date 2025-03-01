@@ -1,11 +1,11 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 import {
     DisplayBreakpoint,
     DisplayRuleProp,
     VisibilityRuleProp,
-} from "@/composables/display.ts";
+} from "@/composables/display";
 import { PropType } from "vue";
 
 /** Align Items **/

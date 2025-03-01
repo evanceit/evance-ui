@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvCode.scss";
-import { makeEvCodeProps } from "./EvCode.ts";
+import { makeEvCodeProps } from "./EvCode";
 
 const props = defineProps({ ...makeEvCodeProps() });
 

@@ -4,8 +4,8 @@ import {
     InfiniteScrollSide,
     InfiniteScrollStatus,
     makeEvInfiniteScrollProps,
-} from "./EvInfiniteScroll.ts";
-import { useDimensions } from "@/composables/dimensions.ts";
+} from "./EvInfiniteScroll";
+import { useDimensions } from "@/composables/dimensions";
 import { computed, nextTick, onMounted, ref, shallowRef, toRef } from "vue";
 import { debounce, toWebUnit } from "@/util";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";

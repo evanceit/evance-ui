@@ -1,6 +1,6 @@
 import { makeInputAppearanceProps, propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeFormFieldProps } from "@/composables/validation.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeFormFieldProps } from "@/composables/validation";
 import { makeLabelProps } from "@/components/EvLabel";
 
 export const makeEvTextareaProps = propsFactory(

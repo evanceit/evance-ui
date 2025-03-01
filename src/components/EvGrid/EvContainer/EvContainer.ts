@@ -1,8 +1,8 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeTagProps } from "@/composables/tag.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeTagProps } from "@/composables/tag";
 import { PropType } from "vue";
-import { DisplayRuleProp, VisibilityRuleProp } from "@/composables/display.ts";
+import { DisplayRuleProp, VisibilityRuleProp } from "@/composables/display";
 
 /**
  * # makeEvContainerProps

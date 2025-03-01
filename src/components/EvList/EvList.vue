@@ -12,7 +12,7 @@
  * @see EvListItem
  */
 import "./EvList.scss";
-import { makeEvListProps } from "./EvList.ts";
+import { makeEvListProps } from "./EvList";
 import { computed, ref, shallowRef } from "vue";
 import { focusChild, FocusPosition } from "@/util";
 import {
@@ -21,7 +21,7 @@ import {
     useItems,
     useNestedList,
 } from "@/composables/lists";
-import { useDimensions } from "@/composables/dimensions.ts";
+import { useDimensions } from "@/composables/dimensions";
 import EvListChildren from "./EvListChildren.vue";
 
 defineEmits(["update:selected", "click:select"]);

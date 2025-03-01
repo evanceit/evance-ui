@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeTagProps } from "@/composables/tag.ts";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeTagProps } from "@/composables/tag";
+import { makeComponentProps } from "@/composables/component";
 import { PropType } from "vue";
 
 export const EvHeadingSize = {

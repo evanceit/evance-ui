@@ -5,8 +5,8 @@ import { EvMessage } from "../EvMessage";
 import { EvSurface } from "../EvSurface";
 import { filterComponentProps, omit } from "@/util";
 import { computed, onMounted, toRef, watch } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { useStack } from "@/composables/stack.ts";
+import { useModelProxy } from "@/composables/modelProxy";
+import { useStack } from "@/composables/stack";
 
 const props = defineProps({
     ...makeEvNotificationProps(),

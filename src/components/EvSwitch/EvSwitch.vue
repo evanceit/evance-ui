@@ -8,8 +8,8 @@ import { splitInputAttrs } from "@/util";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
 import { useToggleControl } from "@/components/EvCheckbox";
-import { makeEvSwitchProps } from "./EvSwitch.ts";
-import { useFormField } from "@/composables/validation.ts";
+import { makeEvSwitchProps } from "./EvSwitch";
+import { useFormField } from "@/composables/validation";
 
 /**
  * We want to pass attributes not defined as 'props'

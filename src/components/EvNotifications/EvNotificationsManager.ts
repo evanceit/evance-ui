@@ -1,6 +1,9 @@
 import { h, isRef, ref, shallowRef, VNode, VNodeProps, watch } from "vue";
-import { Notification } from "./EvNotifications.ts";
-import { EvNotificationProps, EvNotificationSlots } from "@/components";
+import { Notification } from "./EvNotifications";
+import {
+    EvNotificationProps,
+    EvNotificationSlots,
+} from "@/components/EvNotification";
 
 /**
  * # EvNotificationsManager

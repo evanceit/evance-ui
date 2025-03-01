@@ -1,4 +1,4 @@
-import { TranslationCode } from "@/modules/Translation/TranslationCode.ts";
+import { TranslationCode } from "@/modules/Translation/TranslationCode";
 
 /**
  * # Locale Code

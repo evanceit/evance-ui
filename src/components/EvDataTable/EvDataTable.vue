@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import "./EvDataTable.scss";
-import { makeEvDataTableProps } from "./EvDataTable.ts";
-import { useDimensions } from "@/composables/dimensions.ts";
+import { makeEvDataTableProps } from "./EvDataTable";
+import { useDimensions } from "@/composables/dimensions";
 import { computed, ref, watch } from "vue";
-import { useVirtual } from "@/composables/virtual.ts";
+import { useVirtual } from "@/composables/virtual";
 import { filterComponentProps, omit, toWebUnit } from "@/util";
-import { DataTableItemProps, useDataTableItems } from "./composables/items.ts";
+import { DataTableItemProps, useDataTableItems } from "./composables/items";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
-import { createHeaders } from "@/components/EvDataTable/composables/headers.ts";
+import { createHeaders } from "@/components/EvDataTable/composables/headers";
 import { EvDataTableRow } from "@/components/EvDataTable/EvDataTableRow";
-import { provideSelection } from "@/components/EvDataTable/composables/select.ts";
+import { provideSelection } from "@/components/EvDataTable/composables/select";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import {
     DataTableHeader,
     ItemSlot,
-} from "@/components/EvDataTable/composables/types.ts";
+} from "@/components/EvDataTable/composables/types";
 import { useLocaleFunctions } from "@/composables";
 import {
     EvInfiniteScroll,
@@ -23,7 +23,7 @@ import {
 } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
-import { calculateDisplayRuleValue } from "@/composables/display.ts";
+import { calculateDisplayRuleValue } from "@/composables/display";
 import { EvCheckbox } from "@/components/EvCheckbox";
 
 const props = defineProps({ ...makeEvDataTableProps() });

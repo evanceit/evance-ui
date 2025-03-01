@@ -3,8 +3,8 @@
  * # EvButtonGroup
  */
 import "./EvButtonGroup.scss";
-import { makeEvButtonGroupProps } from "./EvButtonGroup.ts";
-import { provideDefaults, useDefaults } from "@/composables/defaults.ts";
+import { makeEvButtonGroupProps } from "./EvButtonGroup";
+import { provideDefaults, useDefaults } from "@/composables/defaults";
 import { computed, toRef } from "vue";
 import {
     appearanceModifier,

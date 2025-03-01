@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvSwatch.scss";
-import { makeEvSwatchProps } from "./EvSwatch.ts";
+import { makeEvSwatchProps } from "./EvSwatch";
 
 const props = defineProps({
     ...makeEvSwatchProps(),

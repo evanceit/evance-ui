@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeEvResponsiveProps } from "@/components/EvResponsive/EvResponsive.ts";
+import { makeComponentProps } from "@/composables/component";
+import { makeEvResponsiveProps } from "@/components/EvResponsive/EvResponsive";
 import { makeEvTransitionProps } from "@/components/EvTransition";
 import { PropType } from "vue";
 

@@ -3,7 +3,7 @@
  * # EvMenu
  */
 import "./EvMenu.scss";
-import { makeEvMenuProps } from "./EvMenu.ts";
+import { makeEvMenuProps } from "./EvMenu";
 import { EvOverlay } from "@/components/EvOverlay";
 import {
     computed,
@@ -14,9 +14,9 @@ import {
     shallowRef,
     watch,
 } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, focusChild, getNextId } from "@/util";
-import { EvMenuSymbol } from "./shared.ts";
+import { EvMenuSymbol } from "./shared";
 
 const props = defineProps({
     ...makeEvMenuProps(),

@@ -1,4 +1,4 @@
-import { ScrollStrategyData, ScrollStrategyProps } from "../scroll.ts";
+import { ScrollStrategyData, ScrollStrategyProps } from "../scroll";
 import { getScrollParents, hasScrollbar, toWebUnit } from "@/util";
 import { onScopeDispose } from "vue";
 

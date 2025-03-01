@@ -1,4 +1,4 @@
-import { UseRouterLinkOrHref } from "@/composables/router.ts";
+import { UseRouterLinkOrHref } from "@/composables/router";
 import { nextTick, watch } from "vue";
 
 /**

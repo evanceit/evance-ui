@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import "./EvLayout.scss";
-import { makeEvLayoutProps } from "./EvLayout.ts";
+import { makeEvLayoutProps } from "./EvLayout";
 import {
     calculateDisplayRuleValue,
     useBreakpointClasses,
     useDisplayRuleClasses,
-} from "@/composables/display.ts";
+} from "@/composables/display";
 import { computed } from "vue";
 import { isBoolean, isEmpty } from "@/util";
 

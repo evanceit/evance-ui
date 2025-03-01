@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvDataTableSearch.scss";
-import { makeEvDataTableSearchProps } from "./EvDataTableSearch.ts";
+import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 import { EvBadge } from "@/components/EvBadge";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
@@ -20,9 +20,9 @@ import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
     useSortOptions,
-} from "@/components/EvDataTable/composables/sort.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
-import { useSelection } from "@/components/EvDataTable/composables/select.ts";
+} from "@/components/EvDataTable/composables/sort";
+import { useModelProxy } from "@/composables/modelProxy";
+import { useSelection } from "@/components/EvDataTable/composables/select";
 import { debounce, isArray, isBoolean, isEmpty } from "@/util";
 import { EvTransitionExpand } from "@/components/EvTransition/transitions";
 

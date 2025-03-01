@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import "./EvToolbar.scss";
-import { makeEvToolbarProps } from "./EvToolbar.ts";
+import { makeEvToolbarProps } from "./EvToolbar";
 import { EvButton } from "@/components/EvButton";
 import { EvIcon } from "@/components/EvIcon";
 import { EvTabs } from "@/components/EvTabs";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { ArrowBackIcon, CancelIcon } from "@/icons";
 import { computed, getCurrentInstance } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { sizeModifier } from "@/util";
 
 const props = defineProps({

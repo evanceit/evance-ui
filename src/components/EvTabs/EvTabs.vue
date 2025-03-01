@@ -4,12 +4,12 @@
  * ---
  */
 import "./EvTabs.scss";
-import { EvTabsSymbol, makeEvTabsProps, TabItem } from "./EvTabs.ts";
+import { EvTabsSymbol, makeEvTabsProps, TabItem } from "./EvTabs";
 import { EvSlideGroup } from "@/components/EvSlideGroup";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 import { computed, toRef } from "vue";
 import { filterComponentProps, isObject } from "@/util";
-import { provideDefaults } from "@/composables/defaults.ts";
+import { provideDefaults } from "@/composables/defaults";
 import { EvTab } from "@/components";
 
 /**

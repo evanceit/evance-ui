@@ -9,12 +9,12 @@ import {
     EvWindowSymbol,
     makeEvWindowProps,
 } from "./EvWindow.ts";
-import { useLocaleFunctions, useRtl } from "@/composables/locale.ts";
-import { GroupProps, useGroup } from "@/composables/group.ts";
+import { useLocaleFunctions, useRtl } from "@/composables/locale";
+import { GroupProps, useGroup } from "@/composables/group";
 import { computed, provide, ref, shallowRef, watch } from "vue";
 import { TouchHandlers, Touch } from "@/directives";
 import { EvButton } from "@/components";
-import { IconValue } from "@/composables/icons.ts";
+import { IconValue } from "@/composables/icons";
 
 const props = defineProps({
     ...makeEvWindowProps(),

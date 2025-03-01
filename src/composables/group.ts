@@ -21,8 +21,8 @@ import {
     toRef,
     UnwrapRef,
 } from "vue";
-import { GroupItem } from "@/composables/groupItem.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { GroupItem } from "@/composables/groupItem";
+import { useModelProxy } from "@/composables/modelProxy";
 
 /**
  * # GroupProps

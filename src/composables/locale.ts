@@ -3,7 +3,7 @@ import {
     LocaleManager,
     LocaleOptions,
 } from "@/modules/Locale/LocaleManager.ts";
-import { TranslationVariables } from "@/modules/Translation/Translator.ts";
+import { TranslationVariables } from "@/modules/Translation/Translator";
 
 /**
  * # Locale Symbol

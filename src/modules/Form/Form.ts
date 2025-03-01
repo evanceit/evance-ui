@@ -1,8 +1,8 @@
-import { FormField } from "@/modules/Form/FormField.ts";
+import { FormField } from "@/modules/Form/FormField";
 import { Ref, ref, shallowRef, toRaw } from "vue";
 import { consoleWarn } from "@/util";
-import { FormProps } from "@/composables/form.ts";
-import { ValidationError } from "@/composables/validation.ts";
+import { FormProps } from "@/composables/form";
+import { ValidationError } from "@/composables/validation";
 
 /**
  * # Form

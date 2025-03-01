@@ -1,12 +1,12 @@
 import { Appearance, EventProp, propsFactory } from "@/util";
-import { makeTagProps } from "@/composables/tag.ts";
-import { makeComponentProps } from "@/composables/component.ts";
-import { makeGroupItemProps } from "@/composables/groupItem.ts";
-import { makeRoundedProps } from "@/composables/rounded.ts";
-import { IconProp } from "@/composables/icons.ts";
+import { makeTagProps } from "@/composables/tag";
+import { makeComponentProps } from "@/composables/component";
+import { makeGroupItemProps } from "@/composables/groupItem";
+import { makeRoundedProps } from "@/composables/rounded";
+import { IconProp } from "@/composables/icons";
 import { CheckIcon } from "@/icons";
 import { PropType } from "vue";
-import { ButtonAppearanceProp, ButtonVariantProp } from "@/components";
+import { ButtonAppearanceProp, ButtonVariantProp } from "@/components/EvButton";
 
 export type EvTagSlots = {
     default: {

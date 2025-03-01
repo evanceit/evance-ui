@@ -1,4 +1,4 @@
-import { PositionStrategyData, PositionStrategyProps } from "../position.ts";
+import { PositionStrategyData, PositionStrategyProps } from "../position";
 import { Ref } from "vue";
 import { StyleProp } from "@/util";
 

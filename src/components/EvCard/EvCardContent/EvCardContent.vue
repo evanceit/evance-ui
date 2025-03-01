@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvCardContent.scss";
-import { makeEvCardContentProps } from "./EvCardContent.ts";
+import { makeEvCardContentProps } from "./EvCardContent";
 import { EvHeading } from "@/components/EvHeading";
 import { EvText, EvTextProps } from "@/components/EvText";
 import { EvIcon } from "@/components/EvIcon";

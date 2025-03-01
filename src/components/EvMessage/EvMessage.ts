@@ -1,9 +1,9 @@
 import { AppearanceProp, makeAppearanceProps, propsFactory } from "@/util";
 import { PropType, Ref } from "vue";
-import { IconProp, IconValue } from "@/composables/icons.ts";
-import { makeTagProps } from "@/composables/tag.ts";
-import { makeComponentProps } from "@/composables/component.ts";
-import { EvButtonProps } from "@/components";
+import { IconProp, IconValue } from "@/composables/icons";
+import { makeTagProps } from "@/composables/tag";
+import { makeComponentProps } from "@/composables/component";
+import { EvButtonProps } from "@/components/EvButton";
 
 type ModelValueProp = boolean | Ref<boolean>;
 type EvMessageVariant = "subtle" | "tonal" | "bold";

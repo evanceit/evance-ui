@@ -1,5 +1,5 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
+import { makeComponentProps } from "@/composables/component";
 
 export const makeEvCodeProps = propsFactory(
     {

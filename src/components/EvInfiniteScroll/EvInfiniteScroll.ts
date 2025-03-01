@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeTagProps } from "@/composables/tag.ts";
-import { makeDimensionsProps } from "@/composables/dimensions.ts";
+import { makeTagProps } from "@/composables/tag";
+import { makeDimensionsProps } from "@/composables/dimensions";
 import { PropType } from "vue";
 
 export type InfiniteScrollSide = "start" | "end" | "both";

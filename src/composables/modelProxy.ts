@@ -1,7 +1,7 @@
 import { ComponentInternalInstance, computed, ref, toRaw, watch } from "vue";
 import type { Ref } from "vue";
 import { EventProp, getCurrentComponent, toKebabCase } from "@/util";
-import { useToggleScope } from "./toggleScope.ts";
+import { useToggleScope } from "./toggleScope";
 
 type InnerVal<T> = T extends any[] ? Readonly<T> : T;
 

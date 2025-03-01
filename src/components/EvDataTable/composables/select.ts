@@ -1,4 +1,4 @@
-import { DataTableItemProps } from "./items.ts";
+import { DataTableItemProps } from "./items";
 import { EventProp, isDeepEqual, propsFactory, wrapInArray } from "@/util";
 import {
     computed,
@@ -10,7 +10,7 @@ import {
     Ref,
     toRef,
 } from "vue";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy";
 
 export interface SelectableItem {
     value: any;

@@ -3,7 +3,7 @@
  * # `<ev-textfield>`
  */
 import "./EvTextfield.scss";
-import { makeEvTextfieldProps } from "./EvTextfield.ts";
+import { makeEvTextfieldProps } from "./EvTextfield";
 import { computed, nextTick, ref, useAttrs } from "vue";
 import { EvIcon, useIcon } from "@/components/EvIcon";
 import { CancelIcon } from "@/icons";
@@ -17,12 +17,12 @@ import {
     splitInputAttrs,
     TextAlign,
 } from "@/util";
-import { useAutofocus } from "@/composables/focus.ts";
+import { useAutofocus } from "@/composables/focus";
 import { EvLabel } from "@/components/EvLabel";
 import { EvErrors } from "@/components/EvErrors";
 import { EvProgress } from "@/components/EvProgress";
 import { EvProgressCircular } from "@/components/EvProgressCircular";
-import { useFormField } from "@/composables/validation.ts";
+import { useFormField } from "@/composables/validation";
 
 /**
  * We want to pass attributes not defined as 'props'

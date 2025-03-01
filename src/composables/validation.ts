@@ -1,8 +1,8 @@
 import { propsFactory } from "@/util";
 import { PropType } from "vue";
-import { makeFocusProps } from "@/composables/focus.ts";
-import { useForm } from "@/composables/form.ts";
-import { FormField } from "@/modules/Form/FormField.ts";
+import { makeFocusProps } from "@/composables/focus";
+import { useForm } from "@/composables/form";
+import { FormField } from "@/modules/Form/FormField";
 
 /**
  * # Validation Error

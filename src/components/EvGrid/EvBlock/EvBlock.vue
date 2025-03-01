@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvBlock.scss";
-import { makeEvBlockProps } from "./EvBlock.ts";
+import { makeEvBlockProps } from "./EvBlock";
 import { computed } from "vue";
 import {
     calculateDisplayRuleValue,

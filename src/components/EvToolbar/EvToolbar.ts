@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component.ts";
-import { IconProp } from "@/composables/icons.ts";
+import { makeComponentProps } from "@/composables/component";
+import { IconProp } from "@/composables/icons";
 import { PropType } from "vue";
 import { EvTabProps } from "@/components/EvTabs";
 import { EvButtonProps } from "@/components/EvButton";

@@ -3,8 +3,8 @@
  * # EvOverlay
  */
 import "./EvOverlay.scss";
-import { makeEvOverlayProps } from "./EvOverlay.ts";
-import { useModelProxy } from "@/composables/modelProxy.ts";
+import { makeEvOverlayProps } from "./EvOverlay";
+import { useModelProxy } from "@/composables/modelProxy";
 import {
     computed,
     mergeProps,
@@ -14,19 +14,19 @@ import {
     useAttrs,
     watch,
 } from "vue";
-import { useTeleport } from "@/composables/teleport.ts";
+import { useTeleport } from "@/composables/teleport";
 import { useEvTransition, EvTransition } from "@/components/EvTransition";
-import { useDimensions } from "@/composables/dimensions.ts";
+import { useDimensions } from "@/composables/dimensions";
 import { clickBlockedAnimation, getScrollParent, toWebUnit } from "@/util";
-import { useStack } from "@/composables/stack.ts";
+import { useStack } from "@/composables/stack";
 import { useRouter } from "vue-router";
-import { useToggleScope } from "@/composables/toggleScope.ts";
-import { useBackButton } from "@/composables/router.ts";
-import { ActivatorProps, useActivator } from "./activator.ts";
-import { useScopeId } from "@/composables/scopeId.ts";
-import { usePositionStrategies } from "./position.ts";
-import { useScrollStrategies } from "./scroll.ts";
-import { useRtl } from "@/composables/locale.ts";
+import { useToggleScope } from "@/composables/toggleScope";
+import { useBackButton } from "@/composables/router";
+import { ActivatorProps, useActivator } from "./activator";
+import { useScopeId } from "@/composables/scopeId";
+import { usePositionStrategies } from "./position";
+import { useScrollStrategies } from "./scroll";
+import { useRtl } from "@/composables/locale";
 
 defineOptions({
     inheritAttrs: false,

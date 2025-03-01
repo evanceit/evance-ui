@@ -6,7 +6,7 @@ import {
     multiLeaf,
     singleLeaf,
 } from "./select-strategy";
-import { singleAny } from "./select-strategy/single-any.ts";
+import { singleAny } from "./select-strategy/single-any";
 
 /**
  * # Select Strategy

@@ -1,5 +1,5 @@
 import { Ref } from "vue";
-import { LocaleCode } from "@/modules/Locale/LocaleCode.ts";
+import { LocaleCode } from "@/modules/Locale/LocaleCode";
 
 /**
  * # Localized

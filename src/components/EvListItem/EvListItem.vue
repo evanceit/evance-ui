@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import "./EvListItem.scss";
-import { makeEvListItemProps } from "./EvListItem.ts";
+import { makeEvListItemProps } from "./EvListItem";
 import { computed, useAttrs } from "vue";
 import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
-} from "@/composables/router.ts";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent.ts";
+} from "@/composables/router";
+import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
 import { useList, useNestedListItem } from "@/composables/lists";
 import { useIcon, EvIcon } from "@/components/EvIcon";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvCardActions.scss";
-import { makeEvCardActionsProps } from "./EvCardActions.ts";
+import { makeEvCardActionsProps } from "./EvCardActions";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { computed } from "vue";
 import { makeClassName, sizeModifier } from "@/util";

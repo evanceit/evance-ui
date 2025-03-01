@@ -3,9 +3,9 @@
  * # EvTab
  */
 import "./EvTab.scss";
-import { makeEvTabProps } from "./EvTab.ts";
+import { makeEvTabProps } from "./EvTab";
 import { EvButton } from "@/components/EvButton";
-import { EvTabsSymbol } from "@/components/EvTabs/EvTabs.ts";
+import { EvTabsSymbol } from "@/components/EvTabs/EvTabs";
 import { computed, ref } from "vue";
 import { animate, easingStandard, filterComponentProps } from "@/util";
 import { useDefaults } from "@/composables";

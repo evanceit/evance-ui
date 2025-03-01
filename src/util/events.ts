@@ -1,5 +1,5 @@
 import { capitalize, onScopeDispose, PropType } from "vue";
-import { getScrollParents } from "./scroll.ts";
+import { getScrollParents } from "./scroll";
 
 /**
  * # Click Event Listeners

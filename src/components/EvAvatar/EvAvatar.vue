@@ -3,12 +3,12 @@
  * `<ev-avatar>`
  */
 import "./EvAvatar.scss";
-import { makeEvAvatarProps } from "./EvAvatar.ts";
+import { makeEvAvatarProps } from "./EvAvatar";
 import { useAppearance } from "@/util";
 import { EvIcon } from "@/components/EvIcon";
 import { EvImg } from "@/components/EvImg";
-import { useSize } from "@/composables/size.ts";
-import { useRounded } from "@/composables/rounded.ts";
+import { useSize } from "@/composables/size";
+import { useRounded } from "@/composables/rounded";
 import { useDefaults } from "@/composables";
 
 const definedProps = defineProps({

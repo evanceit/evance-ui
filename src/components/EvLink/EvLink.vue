@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvLink.scss";
-import { makeEvLinkProps } from "./EvLink.ts";
+import { makeEvLinkProps } from "./EvLink";
 import { computed, useAttrs } from "vue";
 import {
     RouterLinkOrHrefProps,

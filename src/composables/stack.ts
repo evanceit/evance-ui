@@ -12,8 +12,8 @@ import {
     toRaw,
     watchEffect,
 } from "vue";
-import { getCurrentComponent } from "../util";
-import { useToggleScope } from "./toggleScope.ts";
+import { getCurrentComponent } from "@/util";
+import { useToggleScope } from "./toggleScope";
 
 interface StackProvide {
     activeChildren: Set<number>;

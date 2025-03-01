@@ -1,5 +1,5 @@
 import { propsFactory } from "@/util";
-import { makeDataTableSortProps } from "../composables/sort.ts";
+import { makeDataTableSortProps } from "../composables/sort";
 import { PropType } from "vue";
 import { EvButtonProps } from "@/components";
 

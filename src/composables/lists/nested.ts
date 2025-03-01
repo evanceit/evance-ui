@@ -1,11 +1,11 @@
-import { SequencedPosition } from "./sequenced.ts";
+import { SequencedPosition } from "./sequenced";
 import {
     makeSelectedProps,
     Selected,
     SelectStrategyProps,
     useSelectedValues,
     useSelectStrategy,
-} from "./select-strategies.ts";
+} from "./select-strategies";
 import {
     computed,
     inject,
@@ -19,12 +19,12 @@ import {
     toRaw,
 } from "vue";
 import { getCurrentComponent, getNextId, propsFactory } from "@/util";
-import { useModelProxy } from "../modelProxy.ts";
+import { useModelProxy } from "../modelProxy";
 import {
     makeOpenStrategyProps,
     OpenStrategyProps,
     useOpenStrategy,
-} from "@/composables/lists/open-strategies.ts";
+} from "@/composables/lists/open-strategies";
 
 /**
  * # Nested Position

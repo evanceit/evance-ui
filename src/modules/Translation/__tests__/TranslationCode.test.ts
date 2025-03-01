@@ -1,5 +1,5 @@
 import { expect, test } from "@jest/globals";
-import { TranslationCode } from "@/modules/Translation/TranslationCode.ts";
+import { TranslationCode } from "@/modules/Translation/TranslationCode";
 
 test("TranslationCode.fromString()", () => {
     const enGb = TranslationCode.fromString("en-gb");

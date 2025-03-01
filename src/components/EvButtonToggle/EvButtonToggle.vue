@@ -7,9 +7,9 @@ import {
     EvButtonToggleSlots,
     EvButtonToggleSymbol,
     makeEvButtonToggleProps,
-} from "./EvButtonToggle.ts";
+} from "./EvButtonToggle";
 import { EvButtonGroup } from "../EvButtonGroup";
-import { GroupProps, useGroup } from "@/composables/group.ts";
+import { GroupProps, useGroup } from "@/composables/group";
 import { filterComponentProps } from "@/util";
 import { computed } from "vue";
 

@@ -3,7 +3,7 @@ import { makeListItemsProps } from "@/composables/lists";
 import { makeEvTextfieldProps } from "@/components/EvTextfield";
 import { ChevronDownIcon } from "@/icons";
 import { PropType } from "vue";
-import { makeFilterProps } from "@/composables/filter.ts";
+import { makeFilterProps } from "@/composables/filter";
 
 /**
  * # Selectable Behavior
