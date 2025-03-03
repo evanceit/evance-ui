@@ -26,10 +26,13 @@ module.exports = {
         "vue/no-multiple-template-root": "off",
         "vue/no-template-shadow": "off",
         "vue/multi-word-component-names": ["off"],
-        "vue/block-order": ["error", { order: ["script", "template", "style"] }],
+        "vue/block-order": [
+            "error",
+            { order: ["script", "template", "style"] },
+        ],
         "vue/block-lang": ["error", { script: { lang: "ts" } }],
         "comma-dangle": ["error", "always-multiline"],
-        'multiline-ternary': ['error', 'always-multiline'],
+        "multiline-ternary": ["error", "always-multiline"],
         "prettier/prettier": [
             "error",
             {
@@ -38,6 +41,5 @@ module.exports = {
                 bracketSameLine: true,
             },
         ],
-        'import/extensions': ['error', 'never', { ts: 'never', tsx: 'never' }],
     },
 };

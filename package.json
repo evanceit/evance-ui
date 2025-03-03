@@ -1,136 +1,136 @@
 {
-  "name": "@evance/evance-ui",
-  "version": "1.0.10",
-  "description": "Evance UI Component Library based on Vuetify",
-  "private": false,
-  "author": "Geoff Willings <geoff@evance.io>",
-  "license": "MIT",
-  "type": "module",
-  "homepage": "https://github.com/evanceit/evance-ui#readme",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "unpkg": "./dist/evance-ui.js",
-  "types": "./dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs"
+    "name": "@evance/evance-ui",
+    "version": "1.0.10",
+    "description": "Evance UI Component Library based on Vuetify",
+    "private": false,
+    "author": "Geoff Willings <geoff@evance.io>",
+    "license": "MIT",
+    "type": "module",
+    "homepage": "https://github.com/evanceit/evance-ui#readme",
+    "main": "./dist/cjs/index.cjs",
+    "module": "./dist/esm/index.mjs",
+    "unpkg": "./dist/evance-ui.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.mjs",
+            "require": "./dist/cjs/index.cjs"
+        },
+        "./icons": {
+            "types": "./dist/types/icons.d.ts",
+            "import": "./dist/esm/icons.mjs",
+            "require": "./dist/cjs/icons.cjs"
+        },
+        "./icons/editor": {
+            "types": "./dist/types/icons/editor.d.ts",
+            "import": "./dist/esm/icons/editor.mjs",
+            "require": "./dist/cjs/icons/editor.cjs"
+        },
+        "./icons/brand": {
+            "types": "./dist/types/icons/brand.d.ts",
+            "import": "./dist/esm/icons/brand.mjs",
+            "require": "./dist/cjs/icons/brand.cjs"
+        },
+        "./styles": {
+            "default": "./dist/style.css"
+        }
     },
-    "./icons": {
-      "types": "./dist/types/icons.d.ts",
-      "import": "./dist/esm/icons.mjs",
-      "require": "./dist/cjs/icons.cjs"
+    "files": [
+        "dist",
+        "dist/types",
+        "dist/types/**/*.d.ts",
+        "components.d.ts"
+    ],
+    "sideEffects": [
+        "*.css",
+        "*.scss"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/evanceit/evance-ui.git"
     },
-    "./icons/editor": {
-      "types": "./dist/types/icons/editor.d.ts",
-      "import": "./dist/esm/icons/editor.mjs",
-      "require": "./dist/cjs/icons/editor.cjs"
+    "bugs": {
+        "url": "https://github.com/evanceit/evance-ui/issues"
     },
-    "./icons/brand": {
-      "types": "./dist/types/icons/brand.d.ts",
-      "import": "./dist/esm/icons/brand.mjs",
-      "require": "./dist/cjs/icons/brand.cjs"
+    "keywords": [
+        "evance",
+        "vue",
+        "vuejs",
+        "components",
+        "ux",
+        "ui",
+        "css",
+        "framework"
+    ],
+    "scripts": {
+        "dev": "vite",
+        "build": "rimraf dist && npm run test:ts && npm run build:vue",
+        "build:watch": "npm link && npm run build:vue:watch",
+        "build:vue-uncompressed": "rimraf dist && vite build && npm run gen:dts",
+        "build:vue": "rimraf dist && vite build && vite build --mode minify && npm run gen:dts",
+        "build:vue:watch": "vite build --mode minify --watch",
+        "build:icons": "",
+        "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
+        "gen:dts": "node .scripts/transform-dts.mjs --bundle --platform=node",
+        "gen:web-types": "node .scripts/web-types.mjs --bundle --platform=node",
+        "preview": "vite preview",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build",
+        "test": "jest",
+        "test:ts": "vue-tsc --noEmit --skipLibCheck",
+        "types": "vue-tsc"
     },
-    "./styles": {
-      "default": "./dist/style.css"
+    "peerDependencies": {
+        "vue": "^3.3.4"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.24.4",
+        "@babel/preset-env": "^7.24.4",
+        "@babel/preset-typescript": "^7.22.5",
+        "@chromatic-com/storybook": "^1.6.1",
+        "@jest/globals": "^29.6.2",
+        "@rollup/plugin-babel": "^6.0.4",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^11.1.6",
+        "@storybook/addon-essentials": "^8.2.7",
+        "@storybook/addon-interactions": "^8.2.7",
+        "@storybook/addon-links": "^8.2.7",
+        "@storybook/addon-mdx-gfm": "^8.2.7",
+        "@storybook/blocks": "^8.2.7",
+        "@storybook/preview-api": "^8.2.7",
+        "@storybook/test": "^8.2.7",
+        "@storybook/theming": "^8.2.7",
+        "@storybook/vue3": "^8.2.7",
+        "@storybook/vue3-vite": "^8.2.7",
+        "@vitejs/plugin-vue": "^4.1.0",
+        "@vue/eslint-config-prettier": "^9.0.0",
+        "@vue/eslint-config-standard": "^8.0.1",
+        "@vue/eslint-config-typescript": "^13.0.0",
+        "@vue/test-utils": "^2.4.5",
+        "@vue/tsconfig": "^0.5.1",
+        "babel-jest": "^29.7.0",
+        "concurrently": "^8.2.2",
+        "eslint-plugin-vuejs-accessibility": "^2.3.0",
+        "jest": "^29.6.2",
+        "react": "^18.3.1",
+        "rollup": "4.22.4",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-sass": "^1.12.22",
+        "rollup-plugin-vue": "^6.0.0",
+        "sass": "^1.62.1",
+        "storybook": "^8.2.7",
+        "storybook-dark-mode": "^4.0.2",
+        "typescript": "^5.0.2",
+        "unplugin-vue-components": "^0.26.0",
+        "vite": "6.0.9",
+        "vite-plugin-dts": "^3.9.0",
+        "vite-svg-loader": "^4.0.0",
+        "vite-tsconfig-paths": "^4.3.2",
+        "vue-component-meta": "^2.0.16",
+        "vue-component-type-helpers": "^2.0.16",
+        "vue-router": "^4.2.4",
+        "vue-tsc": "^1.4.2"
     }
-  },
-  "files": [
-    "dist",
-    "dist/types",
-    "dist/types/**/*.d.ts",
-    "components.d.ts"
-  ],
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/evanceit/evance-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/evanceit/evance-ui/issues"
-  },
-  "keywords": [
-    "evance",
-    "vue",
-    "vuejs",
-    "components",
-    "ux",
-    "ui",
-    "css",
-    "framework"
-  ],
-  "scripts": {
-    "dev": "vite",
-    "build": "rimraf dist && npm run test:ts && npm run build:vue",
-    "build:watch": "npm link && npm run build:vue:watch",
-    "build:vue-uncompressed": "rimraf dist && vite build && npm run gen:dts",
-    "build:vue": "rimraf dist && vite build && vite build --mode minify && npm run gen:dts",
-    "build:vue:watch": "vite build --mode minify --watch",
-    "build:icons": "",
-    "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
-    "gen:dts": "node .scripts/transform-dts.mjs --bundle --platform=node",
-    "gen:web-types": "node .scripts/web-types.mjs --bundle --platform=node",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test": "jest",
-    "test:ts": "vue-tsc --noEmit --skipLibCheck",
-    "types": "vue-tsc"
-  },
-  "peerDependencies": {
-    "vue": "^3.3.4"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/preset-env": "^7.24.4",
-    "@babel/preset-typescript": "^7.22.5",
-    "@chromatic-com/storybook": "^1.6.1",
-    "@jest/globals": "^29.6.2",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@storybook/addon-essentials": "^8.2.7",
-    "@storybook/addon-interactions": "^8.2.7",
-    "@storybook/addon-links": "^8.2.7",
-    "@storybook/addon-mdx-gfm": "^8.2.7",
-    "@storybook/blocks": "^8.2.7",
-    "@storybook/preview-api": "^8.2.7",
-    "@storybook/test": "^8.2.7",
-    "@storybook/theming": "^8.2.7",
-    "@storybook/vue3": "^8.2.7",
-    "@storybook/vue3-vite": "^8.2.7",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "@vue/eslint-config-prettier": "^9.0.0",
-    "@vue/eslint-config-standard": "^8.0.1",
-    "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/test-utils": "^2.4.5",
-    "@vue/tsconfig": "^0.5.1",
-    "babel-jest": "^29.7.0",
-    "concurrently": "^8.2.2",
-    "eslint-plugin-vuejs-accessibility": "^2.3.0",
-    "jest": "^29.6.2",
-    "react": "^18.3.1",
-    "rollup": "^4.17.2",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-sass": "^1.12.22",
-    "rollup-plugin-vue": "^6.0.0",
-    "sass": "^1.62.1",
-    "storybook": "^8.2.7",
-    "storybook-dark-mode": "^4.0.2",
-    "typescript": "^5.0.2",
-    "unplugin-vue-components": "^0.26.0",
-    "vite": "5.2.6",
-    "vite-plugin-dts": "^3.9.0",
-    "vite-svg-loader": "^4.0.0",
-    "vite-tsconfig-paths": "^4.3.2",
-    "vue-component-meta": "^2.0.16",
-    "vue-component-type-helpers": "^2.0.16",
-    "vue-router": "^4.2.4",
-    "vue-tsc": "^1.4.2"
-  }
 }
