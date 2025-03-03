@@ -179,6 +179,7 @@ export const makeTextAlignProps = propsFactory(
  */
 export const TextAppearance = {
     ...Appearance,
+    inverse: "inverse",
     subtle: "subtle",
 } as const;
 

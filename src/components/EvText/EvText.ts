@@ -1,6 +1,6 @@
-import { AppearanceProp, propsFactory } from "@/util";
+import { propsFactory, TextAppearanceProp } from "@/util";
 import { PropType } from "vue";
-import { ComponentProps, makeComponentProps} from "@/composables/component";
+import { ComponentProps, makeComponentProps } from "@/composables/component";
 import { makeTagProps, TagProps } from "@/composables/tag";
 
 export const EvTextSize = {
@@ -20,8 +20,6 @@ export const EvTextSizeClass = {
 } as const;
 
 export type FontWeight = "regular" | "medium" | "semibold" | "bold";
-
-export type TextAppearanceProp = AppearanceProp | "inverse" | "subtle";
 
 export interface EvTextProps extends ComponentProps, TagProps {
     appearance?: TextAppearanceProp;

@@ -14,7 +14,7 @@ export const createEvanceUi = (options: EvanceUiOptions = {}) => {
 export { components, directives, services };
 
 export * from "./composables";
-
 export * from "./components";
 export * from "./directives";
 export * from "./services";
+export * from "./util";

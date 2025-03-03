@@ -4,6 +4,13 @@
 
 :root {
 
+    --pattern-checkered: linear-gradient(45deg, var(--stroke) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--stroke) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--stroke) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--stroke) 75%);
+    --pattern-checkered-size: 10px 10px;
+    --pattern-checkered-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+
     --current-surface-fill: var(--surface-default);
 
     /* Font Stacks */
