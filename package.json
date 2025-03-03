@@ -1,6 +1,6 @@
 {
     "name": "@evance/evance-ui",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "Evance UI Component Library based on Vuetify",
     "private": false,
     "author": "Geoff Willings <geoff@evance.io>",
@@ -33,7 +33,7 @@
             "require": "./dist/cjs/icons/brand.cjs"
         },
         "./styles": {
-            "default": "./dist/style.css"
+            "default": "./dist/evance-ui.css"
         }
     },
     "files": [
