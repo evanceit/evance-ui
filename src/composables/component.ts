@@ -1,5 +1,5 @@
 // Composables
-import { propsFactory } from "../util";
+import { propsFactory } from "@/util";
 import { PropType, StyleValue } from "vue";
 
 export type ClassValue = any;

@@ -15,6 +15,10 @@ export type {
     DisplayThresholds,
 } from "./display";
 
+// Components
+export { makeComponentProps } from "./component";
+export { makeTagProps } from "./tag";
+
 // Service related composables
 export { useDialog, injectDialog } from "./dialog";
 export { useDrawer, injectDrawer } from "./drawer";
