@@ -26,8 +26,9 @@ defineSlots<{
 provideDefaults({
     EvButton: {
         appearance: toRef(props, "appearance"),
-        variant: toRef(props, "variant"),
+        rounded: toRef(props, "rounded"),
         size: toRef(props, "size"),
+        variant: toRef(props, "variant"),
     },
 });
 
