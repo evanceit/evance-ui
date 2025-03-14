@@ -21,6 +21,7 @@ const slots = defineSlots<{
         ]"
         :style="props.style">
         <ev-eyebrow
+            v-if="props.title || slots.heading"
             tag="div"
             appearance="subtle"
             role="heading"
