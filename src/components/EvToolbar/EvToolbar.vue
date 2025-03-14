@@ -24,11 +24,11 @@ const instance = getCurrentInstance();
 const emit = defineEmits(["click:back", "click:close", "update:tab"]);
 
 const hasBackButton = computed(() => {
-    return !!instance?.vnode?.props["onClick:back"];
+    return !!instance?.vnode.props?.["onClick:back"];
 });
 
 const hasCloseButton = computed(() => {
-    return !!instance?.vnode?.props["onClick:close"];
+    return !!instance?.vnode.props?.["onClick:close"];
 });
 
 const hasPrefix = computed(() => {
