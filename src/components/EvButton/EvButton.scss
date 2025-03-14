@@ -32,7 +32,7 @@
     }
 }
 
-.ev-button--text {
+.ev-button--content {
     padding-inline: calc(0.2 * var(--current-size));
 }
 
@@ -151,7 +151,7 @@
 
         &:hover,
         &:active {
-            .ev-button--text {
+            .ev-button--content {
                 text-decoration: underline;
             }
         }
@@ -214,5 +214,9 @@
     &.is-icon {
         padding: 0 !important;
         aspect-ratio: 1;
+
+        > .ev-button--content {
+            padding-inline: 0;
+        }
     }
 }

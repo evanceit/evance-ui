@@ -208,7 +208,7 @@ const iconEnd = computed(() => {
         </span>
         <span
             v-if="props.text || slots.default"
-            class="ev-button--text"
+            class="ev-button--content"
             data-no-activator>
             <slot>{{ props.text }}</slot>
         </span>
