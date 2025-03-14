@@ -1,3 +1,4 @@
+export * from "./EvApp";
 export * from "./EvAvatar";
 export * from "./EvBadge";
 export * from "./EvButton";

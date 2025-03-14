@@ -1,3 +1,3 @@
-export * from "./EvNotifications.ts";
-export * from "./EvNotificationsManager.ts";
+export * from "./EvNotifications";
+export * from "./EvNotificationsManager";
 export { default as EvNotifications } from "./EvNotifications.vue";

@@ -1,2 +1,2 @@
-export * from "./EvSwatch.ts";
+export * from "./EvSwatch";
 export { default as EvSwatch } from "./EvSwatch.vue";

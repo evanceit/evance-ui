@@ -1,4 +1,4 @@
-import { propsFactory } from "@/util";
+import { EventProp, propsFactory } from "@/util";
 import { makeRouterLinkOrHrefProps } from "@/composables/router";
 import { IconProp } from "@/composables/icons";
 import { makeComponentProps } from "@/composables/component";
@@ -26,6 +26,7 @@ export const makeEvListItemProps = propsFactory(
         },
         title: [String, Number, Boolean],
         value: null,
+        onClick: EventProp<[MouseEvent]>(),
 
         ...makeRouterLinkOrHrefProps(),
         ...makeComponentProps(),

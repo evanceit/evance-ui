@@ -84,6 +84,10 @@ function onKeyDown(e: KeyboardEvent): void {
     e.preventDefault();
     onClick(e as any as MouseEvent);
 }
+
+const hasClickListener = computed(
+    () => !!link.isClickable.value || !!props.onClick,
+);
 </script>
 
 <template>
@@ -94,7 +98,7 @@ function onKeyDown(e: KeyboardEvent): void {
             {
                 'is-active': isActive,
                 'is-active--exact': isActiveExact,
-                'is-clickable': isClickable,
+                'is-clickable': isClickable || hasClickListener,
                 'is-disabled': props.disabled,
             },
             props.class,

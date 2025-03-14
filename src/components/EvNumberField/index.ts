@@ -1,2 +1,2 @@
-export * from "./EvNumberField.ts";
+export * from "./EvNumberField";
 export { default as EvNumberField } from "./EvNumberField.vue";

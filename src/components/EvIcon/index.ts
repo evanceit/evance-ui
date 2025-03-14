@@ -1,2 +1,2 @@
-export * from "./EvIcon.ts";
+export * from "./EvIcon";
 export { default as EvIcon } from "./EvIcon.vue";

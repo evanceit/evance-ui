@@ -1,2 +1,2 @@
-export * from "./EvSpacer.ts";
+export * from "./EvSpacer";
 export { default as EvSpacer } from "./EvSpacer.vue";

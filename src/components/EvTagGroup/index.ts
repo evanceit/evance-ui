@@ -1,2 +1,2 @@
-export * from "./EvTagGroup.ts";
+export * from "./EvTagGroup";
 export { default as EvTagGroup } from "./EvTagGroup.vue";

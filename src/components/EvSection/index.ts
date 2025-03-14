@@ -1,2 +1,2 @@
-export * from "./EvSection.ts";
+export * from "./EvSection";
 export { default as EvSection } from "./EvSection.vue";

@@ -1,2 +1,2 @@
-export * from "./EvDataTableRow.ts";
+export * from "./EvDataTableRow";
 export { default as EvDataTableRow } from "./EvDataTableRow.vue";

@@ -1,2 +1,2 @@
-export * from "./EvTextarea.ts";
+export * from "./EvTextarea";
 export { default as EvTextarea } from "./EvTextarea.vue";

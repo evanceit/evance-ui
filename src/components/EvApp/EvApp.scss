@@ -1,0 +1,16 @@
+.ev-application {
+    display: flex;
+    background: var(--surface-default);
+    color: var(--text-default);
+}
+
+.ev-application--container {
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-height: 100vh;
+    min-height: 110dvh;
+    position: relative;
+}

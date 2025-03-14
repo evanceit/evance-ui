@@ -79,6 +79,10 @@ export const Primary: Story = {
         setup() {
             return { args, DotIcon, ChevronRightIcon };
         },
-        template: '<ev-list-item v-bind="args">{{ args.title }}</ev-list-item>',
+        template: `
+            <ev-list-item v-bind="args">
+                {{ args.title }}
+            </ev-list-item>
+        `,
     }),
 };

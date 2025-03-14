@@ -3,7 +3,7 @@ import {
     DisplayOptions,
     DisplaySymbol,
     SSROptions,
-} from "./composables/display.ts";
+} from "./composables/display";
 import { Browser, getNextId, mergeDeep } from "./util";
 import { App, nextTick } from "vue";
 import { createLocaleManager, LocaleSymbol } from "@/composables/locale";
@@ -12,12 +12,13 @@ import {
     createDate,
     DateAdapterSymbol,
     DateOptions,
-} from "@/composables/date/date.ts";
+} from "@/composables/date/date";
 import {
     createDefaults,
     DefaultsOptions,
     DefaultsSymbol,
-} from "@/composables/defaults.ts";
+} from "@/composables/defaults";
+import { ThemeOptions, createTheme, ThemeSymbol } from "@/composables/theme";
 
 export * from "./composables";
 export type { DateOptions, DateAdapterInstance } from "@/composables/date";
@@ -32,6 +33,7 @@ export interface EvanceUiOptions {
     locale?: LocaleOptions; // & RtlOptions,  // @todo: <--- YOU ARE HERE
     ssr?: SSROptions;
     services?: Record<string, any>;
+    theme?: ThemeOptions;
 }
 
 export interface Blueprint extends Omit<EvanceUiOptions, "blueprint"> {}
@@ -55,6 +57,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
     const display = createDisplay(options.display, options.ssr);
     const locale = createLocaleManager(options.locale ?? {}); // @todo: <--- YOU ARE HERE!
     const date = createDate(options.date, locale);
+    const theme = createTheme(options.theme);
 
     const install = (app: App) => {
         // Install Directives
@@ -77,6 +80,7 @@ export function createEvanceUi(evanceUi: EvanceUiOptions = {}) {
         app.provide(DisplaySymbol, display);
         app.provide(LocaleSymbol, locale);
         app.provide(DateAdapterSymbol, date);
+        app.provide(ThemeSymbol, theme);
 
         if (Browser.hasWindow && options.ssr) {
             if ("$nuxt" in app) {

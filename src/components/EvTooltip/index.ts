@@ -1,2 +1,2 @@
-export * from "./EvTooltip.ts";
+export * from "./EvTooltip";
 export { default as EvTooltip } from "./EvTooltip.vue";

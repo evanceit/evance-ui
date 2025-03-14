@@ -1,2 +1,2 @@
-export * from "./EvFormHelp.ts";
+export * from "./EvFormHelp";
 export { default as EvFormHelp } from "./EvFormHelp.vue";

@@ -1,2 +1,2 @@
-export * from "./EvFilterButton.ts";
+export * from "./EvFilterButton";
 export { default as EvFilterButton } from "./EvFilterButton.vue";

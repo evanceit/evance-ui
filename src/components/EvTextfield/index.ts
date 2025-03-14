@@ -1,2 +1,2 @@
-export * from "./EvTextfield.ts";
+export * from "./EvTextfield";
 export { default as EvTextfield } from "./EvTextfield.vue";

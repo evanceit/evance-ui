@@ -1,2 +1,2 @@
-export * from "./EvMessage.ts";
+export * from "./EvMessage";
 export { default as EvMessage } from "./EvMessage.vue";

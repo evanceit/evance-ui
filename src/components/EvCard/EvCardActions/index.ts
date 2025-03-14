@@ -1,2 +1,2 @@
-export * from "./EvCardActions.ts";
+export * from "./EvCardActions";
 export { default as EvCardActions } from "./EvCardActions.vue";
