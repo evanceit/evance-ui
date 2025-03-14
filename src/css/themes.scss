@@ -340,11 +340,14 @@
     }
 }
 
-:root,
 .ev-theme-light {
     @include light-theme;
+
+    color: var(--text-default);
 }
 
 .ev-theme-dark {
     @include dark-theme;
+
+    color: var(--text-default);
 }
