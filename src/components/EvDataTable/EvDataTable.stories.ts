@@ -60,16 +60,16 @@ const meta: Meta<typeof EvDataTable> = {
         },
         load: {
             control: false,
-            description: `The \`load\` event is triggered when:
+            description: `<p>The <code>load</code> event is triggered when:</p>
             <ul>
                 <li>Loading the next page of results on scroll.</li>
-                <li>\`search\` string changes (after \`search-delay\`)</li>
-                <li>The \`sort\` value changes</li>
+                <li><code>search</code> string changes (after <code>search-delay</code>)</li>
+                <li>The <code>sort</code> value changes</li>
             </ul>
-            The load event provides the following parameters:
+            <p>The load event provides the following parameters:</p>
             <ul>
-                <li>\`page\` - the pagination page expected to load.</li>
-                <li>\`next\` - a function to provide the next array of \`items\`. 
+                <li><code>page</code> - the pagination page expected to load.</li>
+                <li><code>next</code> - a function to provide the next array of <code>items</code>. 
                 This automatically handles loading state, current page updates, 
                 scroll position, end of list state and empty state.</li>
             </ul>
@@ -128,11 +128,11 @@ const meta: Meta<typeof EvDataTable> = {
         selectStrategy: {
             control: "select",
             options: ["single", "page", "all"],
-            description: `Selection strategy:
+            description: `<p>Selection strategy:</p>
                 <ul>
-                    <li>\`single\`</li>
-                    <li>\`page\`</li>
-                    <li>\`all\`</li>
+                    <li><code>single</code></li>
+                    <li><code>page</code></li>
+                    <li><code>all</code></li>
                 </ul>
             `,
         },
@@ -154,14 +154,14 @@ const meta: Meta<typeof EvDataTable> = {
         },
         sortOptions: {
             control: false,
-            description: `An array of \`SortOption\` items with the following properties:
+            description: `<p>An array of <code>SortOption</code> items with the following properties:</p>
                 <ul>
-                    <li>\`title\` - the text title to display to the user.</li>
-                    <li>\`value\` - a string value to use in your API (must end with either \`asc\` or \`desc\`).</li>
-                    <li>\`direction\` (optional) - the text to display in direction selection (defaults to Ascending or Descending).</li>
-                    <li>\`disabled\` (optional) - a boolean when set to true disabled option selection</li>
+                    <li><code>title</code> - the text title to display to the user.</li>
+                    <li><code>value</code> - a string value to use in your API (must end with either <code>asc</code> or <code>desc</code>).</li>
+                    <li><code>direction</code> (optional) - the text to display in direction selection (defaults to Ascending or Descending).</li>
+                    <li><code>disabled</code> (optional) - a boolean when set to true disabled option selection</li>
                 </ul>
-                If no options are supplied sorting will not be shown.
+                <p>If no options are supplied sorting will not be shown.</p>
             `,
         },
     },
@@ -482,7 +482,7 @@ export const Primary: Story = {
                                 <ev-section title="Users">
                                     <div class="px-100">
                                         <ev-checkbox :value="{ name: 'Current user', id: 123 }" v-model="filters.assignee" label="Current user" />
-                                        <ev-checkbox :value="{ name: 'Locale manager', id: 124 }" v-model="filters.assignee" label="Locale manager">
+                                        <ev-checkbox :value="{ name: 'Locale manager', id: 124 }" v-model="filters.assignee" label="Locale manager" />
                                     </div>
                                 </ev-section>
                             </ev-surface>

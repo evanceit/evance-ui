@@ -92,6 +92,9 @@ const searchProps = computed(() => {
     ]);
 });
 
+const spaceAbove = computed(() => toWebUnit(paddingTop.value));
+const spaceBelow = computed(() => toWebUnit(paddingBottom.value));
+
 watch(
     () => infiniteScrollRef.value?.rootElement,
     (value) => {
@@ -224,7 +227,7 @@ defineExpose({
                     <tr
                         ref="markerRef"
                         class="ev-data-table--spacer-above"
-                        :style="{ height: toWebUnit(paddingTop), border: 0 }">
+                        :style="{ height: spaceAbove, border: 0 }">
                         <td
                             :colspan="totalColumns"
                             :style="{ height: 0, border: 0 }"></td>
@@ -260,10 +263,7 @@ defineExpose({
                     </ev-virtual-scroll-item>
                     <tr
                         class="ev-data-table--spacer-below"
-                        :style="{
-                            height: toWebUnit(paddingBottom),
-                            border: 0,
-                        }">
+                        :style="{ height: spaceBelow, border: 0 }">
                         <td
                             :colspan="totalColumns"
                             :style="{ height: 0, border: 0 }"></td>
