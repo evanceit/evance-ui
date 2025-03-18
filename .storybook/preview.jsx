@@ -12,7 +12,7 @@ import '../src/css/core.scss';
 
 const brandTheme = {
     brandTitle: 'Evance UI',
-    brandImage: 'src/stories/assets/evance-ui-logo.svg',
+    brandImage: '/assets/evance-ui-logo.svg',
     fontBase: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif',
     fontCode: 'ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace',
 }
