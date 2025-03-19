@@ -97,7 +97,7 @@ const actions = computed(() => {
         const actionDefaults: EvButtonProps = {
             appearance: props.variant === "bold" ? "inverse" : props.appearance,
             variant: "link",
-            size: "x-small",
+            size: "small",
         };
         values.push(Object.assign(actionDefaults, action));
     }
