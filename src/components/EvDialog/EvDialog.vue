@@ -4,10 +4,24 @@
  */
 import "./EvDialog.scss";
 import { DialogSize, DialogSizeToWidth, makeEvDialogProps } from "./EvDialog";
-import { computed, mergeProps, nextTick, ref, watch } from "vue";
+import {
+    computed,
+    mergeProps,
+    nextTick,
+    onBeforeUnmount,
+    ref,
+    watch,
+} from "vue";
 import { EvOverlay } from "@/components/EvOverlay";
 import EvSurface from "@/components/EvSurface/EvSurface.vue";
-import { Browser, filterComponentProps, getFocusableChildren } from "@/util";
+import {
+    Browser,
+    filterComponentProps,
+    getFocusableChildren,
+    getOuterHeight,
+    getOuterWidth,
+    getViewport,
+} from "@/util";
 import { useModelProxy } from "@/composables/modelProxy";
 import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
 import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
@@ -40,6 +54,25 @@ const activatorProps = computed(() => {
         props.activatorProps,
     );
 });
+
+const headerProps = computed(() => {
+    return {
+        actions: props.headerActions,
+        closeable: props.closeable,
+        icon: props.icon,
+        title: props.title,
+    };
+});
+
+const emit = defineEmits<{
+    (e: "update:modelValue", value: boolean): void;
+    (e: "update:fullscreen", value: boolean): void;
+    (e: "dragstart", value: MouseEvent): void;
+    (e: "dragend", value: MouseEvent): void;
+    (e: "open"): void;
+    (e: "close"): void;
+    (e: "after-close"): void;
+}>();
 
 /**
  * ## Width
@@ -143,6 +176,130 @@ provideDialog(props.__instance);
 defineExpose({
     close,
 });
+
+/**
+ * Dragging
+ * @todo: Still implementing draggable dialogs
+ **/
+let dragging = false;
+let lastPageX = null;
+let lastPageY = null;
+let documentDragListener = null;
+let documentDragEndListener = null;
+
+function initDrag(e: MouseEvent) {
+    if (!props.draggable || e.target.closest("[data-no-drag]")) {
+        return;
+    }
+    dragging = true;
+    lastPageX = e.pageX;
+    lastPageY = e.pageY;
+    document.body.style.userSelect = "none";
+    emit("dragstart", e);
+}
+
+function onEnter() {
+    emit("open");
+    bindGlobalListeners();
+}
+function onBeforeLeave() {
+    if (dragging && documentDragEndListener) {
+        documentDragEndListener();
+    }
+}
+function onLeave() {
+    emit("close");
+}
+function onAfterLeave() {
+    unbindGlobalListeners();
+    emit("after-close");
+}
+
+function bindGlobalListeners() {
+    if (props.draggable) {
+        bindDocumentDragListener();
+        bindDocumentDragEndListener();
+    }
+}
+
+function bindDocumentDragListener() {
+    documentDragListener = (event) => {
+        const container = overlayRef.value?.contentEl;
+        if (dragging && container) {
+            const width = getOuterWidth(container);
+            const height = getOuterHeight(container);
+            const deltaX = event.pageX - lastPageX;
+            const deltaY = event.pageY - lastPageY;
+            const offset = container.getBoundingClientRect();
+            const leftPos = offset.left + deltaX;
+            const topPos = offset.top + deltaY;
+            const viewport = getViewport();
+            const containerComputedStyle = getComputedStyle(container);
+            const marginLeft = parseFloat(containerComputedStyle.marginLeft);
+            const marginTop = parseFloat(containerComputedStyle.marginTop);
+            container.style.position = "fixed";
+
+            if (props.dragWithinViewport) {
+                if (
+                    leftPos >= props.dragMinX &&
+                    leftPos + width < viewport.width
+                ) {
+                    lastPageX = event.pageX;
+                    container.style.left = leftPos - marginLeft + "px";
+                }
+
+                if (
+                    topPos >= props.dragMinY &&
+                    topPos + height < viewport.height
+                ) {
+                    lastPageY = event.pageY;
+                    container.style.top = topPos - marginTop + "px";
+                }
+            } else {
+                lastPageX = event.pageX;
+                container.style.left = leftPos - marginLeft + "px";
+                lastPageY = event.pageY;
+                container.style.top = topPos - marginTop + "px";
+            }
+        }
+    };
+    window.document.addEventListener("mousemove", documentDragListener);
+}
+
+function bindDocumentDragEndListener() {
+    documentDragEndListener = (event: MouseEvent) => {
+        if (dragging) {
+            dragging = false;
+            document.body.style.userSelect = "";
+            emit("dragend", event);
+        }
+    };
+    window.document.addEventListener("mouseup", documentDragEndListener);
+}
+
+function unbindGlobalListeners() {
+    unbindDocumentDragListener();
+    unbindDocumentDragEndListener();
+}
+
+function unbindDocumentDragListener() {
+    if (documentDragListener) {
+        window.document.removeEventListener("mousemove", documentDragListener);
+        documentDragListener = null;
+    }
+}
+
+function unbindDocumentDragEndListener() {
+    if (documentDragEndListener) {
+        window.document.removeEventListener("mouseup", documentDragEndListener);
+        documentDragEndListener = null;
+    }
+}
+
+onBeforeUnmount(() => {
+    unbindGlobalListeners();
+});
+
 </script>
 
 <template>
@@ -162,7 +319,11 @@ defineExpose({
         ]"
         :style="props.style"
         :activator-props="activatorProps"
-        :width="width">
+        :width="width"
+        @enter="onEnter"
+        @before-leave="onBeforeLeave"
+        @leave="onLeave"
+        @after-leave="onAfterLeave">
         <template v-if="slots.activator" #activator="{ isActive, props }">
             <slot name="activator" :is-active="isActive" :props="props" />
         </template>
@@ -173,8 +334,14 @@ defineExpose({
             class="ev-dialog--surface"
             elevation="overlay"
             rounded="small">
-            <ev-dialog-header v-if="props.showHeader" v-model="isActive">
-                <slot name="header" />
+            <ev-dialog-header
+                v-if="!props.hideHeader"
+                v-model="isActive"
+                v-bind="headerProps"
+                @mousedown="initDrag">
+                <template v-if="slots.header" #default>
+                    <slot name="header" />
+                </template>
             </ev-dialog-header>
             <ev-dialog-body>
                 <slot />

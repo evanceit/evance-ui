@@ -79,7 +79,7 @@ const actionSize = computed(() => {
     <div :class="['ev-toolbar', sizeClass, props.class]" :style="props.style">
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
-                <div v-if="hasBackButton" class="ev-toolbar--back">
+                <div v-if="hasBackButton" class="ev-toolbar--back" data-no-drag>
                     <ev-button
                         rounded
                         size="small"
@@ -96,7 +96,10 @@ const actionSize = computed(() => {
                     {{ props.title }}
                 </div>
             </div>
-            <div v-if="slots.start || props.tabs" class="ev-toolbar--start">
+            <div
+                v-if="slots.start || props.tabs"
+                class="ev-toolbar--start"
+                data-no-drag>
                 <slot name="start">
                     <ev-tabs
                         v-model="tab"
@@ -105,7 +108,7 @@ const actionSize = computed(() => {
                 </slot>
             </div>
         </div>
-        <div class="ev-toolbar--section-end">
+        <div class="ev-toolbar--section-end" data-no-drag>
             <div v-if="slots.end || props.actions" class="ev-toolbar--end">
                 <slot name="end">
                     <div class="ev-toolbar--actions">

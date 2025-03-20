@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDialog } from "../EvDialog";
 import { shallowRef } from "vue";
-import { CollapseIcon, ExpandIcon, ArrowContinueIcon } from "@/icons";
+import { CollapseIcon, ExpandIcon, ArrowContinueIcon, CartIcon } from "@/icons";
 import DialogHeaderExample from "@/stories/assets/dialog-header-example.png?url";
 import { EvSurface, EvButton } from "@/components";
 import EvOverlayStories from "../EvOverlay/EvOverlay.stories";
@@ -12,18 +12,58 @@ const meta: Meta<typeof EvDialog> = {
     component: EvDialog,
     title: "Overlays/EvDialog",
     argTypes: {
+        closeable: {
+            control: "boolean",
+            description:
+                "Whether the dialog should show the close button. " +
+                "Alternatively, if you do not require the header, use `hide-header`.",
+        },
+        draggable: {
+            control: "boolean",
+            description:
+                "Whether the dialog is draggable. Defaults to `false`.",
+        },
+        dragWithinViewport: {
+            control: "boolean",
+            description:
+                "Keeps the dialog within the viewport's bounding area when dragging. Defaults to `true`.",
+        },
+        dragMinX: {
+            control: "number",
+            description:
+                "The minimum value for the left coordinate of the dialog when dragging. Defaults to `0`.",
+        },
+        dragMinY: {
+            control: "number",
+            description:
+                "The minimum valye of the top coordinate of the dialog when dragging. Defaults to `0`.",
+        },
         fullscreen: {
             control: "boolean",
             description:
                 "Forces a dialog to enter fullscreen mode. This does not use the fullscreen API, " +
                 "it maximizes the dialog to the full window size. Defaults to `false`.",
         },
-        showHeader: {
+        hideHeader: {
             control: "boolean",
             description:
-                "The default `EvDialogHeader` includes a Close icon. " +
-                "However, you can add further tools/icons to the header using the `header` slot." +
-                "In most scenarios we want to show a close icon, so this defaults to `true`.",
+                "Hides the header component including the default close icon. Defaults to `false`. " +
+                "Hiding the header also disables the ability to drag.",
+        },
+        icon: {
+            control: "select",
+            description:
+                "An icon may be added to the dialog's header. If you would like a custom header use the `header` slot.",
+            options: ["none", "CartIcon"],
+            mapping: {
+                none: undefined,
+                CartIcon: CartIcon,
+            },
+        },
+        title: {
+            control: "text",
+            description:
+                "Optional, a title may be applied to the dialog's header. If you would like a custom header use the `header` slot.",
         },
         width: {
             control: "select",
@@ -72,8 +112,17 @@ const meta: Meta<typeof EvDialog> = {
         ]),
     },
     args: {
+        closeable: true,
+        draggable: false,
+        dragMinX: 0,
+        dragMinY: 0,
+        dragWithinViewport: true,
         fullscreen: undefined,
+        hideHeader: false,
+        icon: undefined,
+        title: undefined,
         width: undefined,
+
 
         ...omit(EvOverlayStories.args as any, [
             "offset",
@@ -104,6 +153,10 @@ export const Primary: Story = {
                 args.fullscreen = !args.fullscreen;
             }
 
+            function onOpen() {
+                console.log("onOpen");
+            }
+
             return {
                 args,
                 close,
@@ -111,10 +164,11 @@ export const Primary: Story = {
                 CollapseIcon,
                 ExpandIcon,
                 fullscreen,
+                onOpen,
             };
         },
         template: `
-            <ev-dialog v-bind="args" v-model="modelValue">
+            <ev-dialog v-bind="args" v-model="modelValue" @open="onOpen">
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>
@@ -141,18 +195,23 @@ export const Primary: Story = {
 
 export const ScrollingBody: Story = {
     render: () => ({
-        components: { EvDialog, EvButton },
+        components: { EvDialog, EvButton, ExpandIcon },
         setup() {
             const modelValue = shallowRef(false);
+            const fullscreen = shallowRef(false);
 
             function close() {
                 modelValue.value = false;
             }
 
-            return { close, modelValue };
+            function expand() {
+                fullscreen.value = !fullscreen.value;
+            }
+
+            return { close, modelValue, ExpandIcon, expand, fullscreen };
         },
         template: `
-            <ev-dialog v-model="modelValue">
+            <ev-dialog v-model="modelValue" :fullscreen="fullscreen" :header-actions="[{ icon: ExpandIcon, variant: 'subtle', onClick: expand }]">
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>

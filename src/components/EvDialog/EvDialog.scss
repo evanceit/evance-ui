@@ -24,26 +24,31 @@
     }
 }
 
-.ev-dialog---header {
+.ev-dialog--header {
     flex: 0;
     padding: 0.5rem;
     display: flex;
-    justify-content: end;
     align-items: center;
 
-    + .ev-dialog--body {
-        padding-top: 0;
+    &.is-untitled {
+        border: 0;
+
+        + .ev-dialog--body {
+            padding-top: 0;
+        }
     }
 }
 
 .ev-dialog--body {
     flex: 1;
-    padding: var(--spacer-400, 2rem);
+    padding: var(--spacer-300, 1.5rem);
+    display: flex;
+    flex-direction: column;
 }
 
 .ev-dialog--footer {
     flex: 0;
-    padding: var(--spacer-200, 1rem);
+    padding: var(--spacer-300, 1.5rem);
     display: flex;
     align-items: center;
     position: relative;

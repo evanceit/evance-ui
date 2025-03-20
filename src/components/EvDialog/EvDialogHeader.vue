@@ -1,9 +1,19 @@
 <script lang="ts">
 import { propsFactory } from "@/util";
+import { IconProp } from "@/composables/icons";
+import { PropType } from "vue";
+import { EvButtonProps } from "@/components/EvButton";
 
 export const makeEvDialogHeaderProps = propsFactory(
     {
         modelValue: Boolean,
+        actions: Array as PropType<readonly EvButtonProps[]>,
+        closeable: {
+            type: Boolean,
+            default: true,
+        },
+        icon: IconProp,
+        title: String,
     },
     "EvDialogHeader",
 );
@@ -11,12 +21,15 @@ export const makeEvDialogHeaderProps = propsFactory(
 
 <script setup lang="ts">
 import { useModelProxy } from "@/composables/modelProxy";
-import { CancelIcon } from "@/icons";
-import { EvButton } from "@/components/EvButton";
+import { EvToolbar } from "@/components/EvToolbar";
+import { computed } from "vue";
 
 const props = defineProps({
     ...makeEvDialogHeaderProps(),
 });
+const slots = defineSlots<{
+    default(): never;
+}>();
 const isActive = useModelProxy(props, "modelValue");
 
 /**
@@ -25,16 +38,20 @@ const isActive = useModelProxy(props, "modelValue");
 function close() {
     isActive.value = false;
 }
+
+const closeable = computed(() => (props.closeable ? close : undefined));
 </script>
 
 <template>
-    <div class="ev-dialog---header">
+    <div v-if="slots.default" class="ev-dialog--header">
         <slot />
-
-        <ev-button
-            rounded
-            variant="subtle"
-            :icon="CancelIcon"
-            @click="close()" />
     </div>
+    <ev-toolbar
+        v-else
+        :class="['ev-dialog--header', { 'is-untitled': !props.title }]"
+        :actions="props.actions"
+        :icon="props.icon"
+        :title="props.title"
+        size="large"
+        @click:close="closeable" />
 </template>

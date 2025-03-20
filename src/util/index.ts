@@ -8,6 +8,7 @@ export * from "./children";
 export * from "./components";
 export * from "./console";
 export * from "./dimensions";
+export * from "./dom";
 export * from "./events";
 export * from "./helpers";
 export * from "./injectSelf";

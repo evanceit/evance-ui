@@ -33,7 +33,15 @@ defineOptions({
 });
 
 // Emit
-const emit = defineEmits(["click:outside", "update:modelValue", "afterLeave"]);
+const emit = defineEmits([
+    "click:outside",
+    "update:modelValue",
+    "enter",
+    "afterEnter",
+    "beforeLeave",
+    "leave",
+    "afterLeave",
+]);
 
 const props = defineProps({
     disableGlobalStack: Boolean,
@@ -164,6 +172,18 @@ function dismiss(focusActivator: boolean = false) {
 /**
  * Event Listeners
  */
+function onEnter() {
+    emit("enter");
+}
+function onAfterEnter() {
+    emit("afterEnter");
+}
+function onBeforeLeave() {
+    emit("beforeLeave");
+}
+function onLeave() {
+    emit("leave");
+}
 function onAfterLeave() {
     isActiveTeleport.value = false;
     emit("afterLeave");
@@ -292,6 +312,10 @@ const overlayAttributes = {
                 appear
                 :transition="contentTransition"
                 :target="activatorEl"
+                @enter="onEnter"
+                @after-enter="onAfterEnter"
+                @before-leave="onBeforeLeave"
+                @leave="onLeave"
                 @after-leave="onAfterLeave">
                 <div
                     v-show="isActiveContent"
