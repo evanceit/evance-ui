@@ -70,6 +70,7 @@ const emit = defineEmits<{
     (e: "dragstart", value: MouseEvent): void;
     (e: "dragend", value: MouseEvent): void;
     (e: "open"): void;
+    (e: "after-open"): void;
     (e: "close"): void;
     (e: "after-close"): void;
 }>();
@@ -202,6 +203,9 @@ function onEnter() {
     emit("open");
     bindGlobalListeners();
 }
+function onAfterEnter() {
+    emit("after-open");
+}
 function onBeforeLeave() {
     if (dragging && documentDragEndListener) {
         documentDragEndListener();
@@ -321,6 +325,7 @@ onBeforeUnmount(() => {
         :activator-props="activatorProps"
         :width="width"
         @enter="onEnter"
+        @after-enter="onAfterEnter"
         @before-leave="onBeforeLeave"
         @leave="onLeave"
         @after-leave="onAfterLeave">

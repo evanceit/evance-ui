@@ -172,10 +172,20 @@ function dismiss(focusActivator: boolean = false) {
 /**
  * Event Listeners
  */
-function onEnter() {
+function onEnter(el: HTMLElement) {
+    // Attempts to resolve double triggering possibly caused by `appear`.
+    if (!el.dataset.enter) {
+        el.dataset.enter = "true";
+        return;
+    }
     emit("enter");
 }
-function onAfterEnter() {
+function onAfterEnter(el: HTMLElement) {
+    // Attempts to resolve double triggering possibly caused by `appear`.
+    if (!el.dataset.afterEnter) {
+        el.dataset.afterEnter = "true";
+        return;
+    }
     emit("afterEnter");
 }
 function onBeforeLeave() {

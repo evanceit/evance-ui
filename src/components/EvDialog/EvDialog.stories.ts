@@ -153,10 +153,6 @@ export const Primary: Story = {
                 args.fullscreen = !args.fullscreen;
             }
 
-            function onOpen() {
-                console.log("onOpen");
-            }
-
             return {
                 args,
                 close,
@@ -164,11 +160,10 @@ export const Primary: Story = {
                 CollapseIcon,
                 ExpandIcon,
                 fullscreen,
-                onOpen,
             };
         },
         template: `
-            <ev-dialog v-bind="args" v-model="modelValue" @open="onOpen">
+            <ev-dialog v-bind="args" v-model="modelValue">
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>
