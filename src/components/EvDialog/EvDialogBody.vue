@@ -3,11 +3,14 @@ import { propsFactory } from "@/util";
 
 export interface EvDialogBodyProps {
     padding?: boolean;
-};
+}
 
 export const makeEvDialogBodyProps = propsFactory(
     {
-        padding: Boolean,
+        padding: {
+            type: Boolean,
+            default: true,
+        },
     },
     "EvDialogBody",
 );
