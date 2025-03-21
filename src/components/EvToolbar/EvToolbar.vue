@@ -73,18 +73,37 @@ const actionSize = computed(() => {
     }
 });
 
+const isAdjustStart = computed(() => {
+    return hasBackButton.value;
+});
+
+const isAdjustEnd = computed(() => {
+    const hasActions = !!props.actions?.length;
+    const variant = props.actions?.at(-1)?.variant ?? "subtle";
+    return hasCloseButton.value || (hasActions && variant === "subtle");
+});
+
 </script>
 
 <template>
-    <div :class="['ev-toolbar', sizeClass, props.class]" :style="props.style">
+    <div
+        :class="[
+            'ev-toolbar',
+            {
+                'is-adjust-start': isAdjustStart,
+                'is-adjust-end': isAdjustEnd,
+            },
+            sizeClass,
+            props.class,
+        ]"
+        :style="props.style">
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
                 <div v-if="hasBackButton" class="ev-toolbar--back" data-no-drag>
                     <ev-button
-                        rounded
-                        size="small"
                         variant="subtle"
                         :icon="ArrowBackIcon"
+                        :size="actionSize"
                         @click="onBackClick" />
                 </div>
 
@@ -103,6 +122,7 @@ const actionSize = computed(() => {
                 <slot name="start">
                     <ev-tabs
                         v-model="tab"
+                        class="ev-toolbar--tabs"
                         :size="tabSize"
                         :items="props.tabs" />
                 </slot>
@@ -114,15 +134,15 @@ const actionSize = computed(() => {
                     <div class="ev-toolbar--actions">
                         <ev-button-group
                             gap="medium"
-                            :items="props.actions"
-                            :size="actionSize" />
+                            variant="subtle"
+                            :size="actionSize"
+                            :items="props.actions" />
                     </div>
                 </slot>
             </div>
             <div v-if="hasCloseButton" class="ev-toolbar--close">
                 <ev-button
-                    rounded
-                    size="small"
+                    :size="actionSize"
                     :icon="CancelIcon"
                     variant="subtle"
                     @click="onCloseClick" />

@@ -10,6 +10,7 @@ import {
     SalesQuotationIcon,
     SalesEnquiryIcon,
 } from "@/icons";
+import { computed } from "vue";
 
 /**
  * `EvToolbar` is designed for most use-cases in Evance screens, which follow a similar pattern.
@@ -113,13 +114,23 @@ export const Primary: Story = {
                 },
             ];
 
-            const actions = [
-                {
-                    text: "Create",
-                    icon: PlusIcon,
-                    variant: "subtle",
-                },
-            ];
+            const actions = computed(() => {
+                if (args.size === "small") {
+                    return [
+                        {
+                            icon: PlusIcon,
+                        },
+                    ];
+                }
+                return [
+                    {
+                        text: "Create",
+                        icon: PlusIcon,
+                        appearance: "primary",
+                        variant: "bold",
+                    },
+                ];
+            });
 
             const onClickBack = () => {
                 console.log("Back button was clicked");
@@ -134,8 +145,6 @@ export const Primary: Story = {
         template: `<ev-toolbar 
             v-bind="args" 
             :tabs="tabs" 
-            :actions="actions" 
-            @click:back="onClickBack" 
-            @click:close="onClickClose" />`,
+            :actions="actions" />`,
     }),
 };

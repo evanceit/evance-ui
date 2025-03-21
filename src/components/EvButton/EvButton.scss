@@ -4,17 +4,17 @@
     # EvButton
  */
 .ev-button {
-    --current-size: var(--input-height-medium);
+    --button-size: var(--input-height-medium);
 
     align-items: center;
     border-radius: var(--input-radius);
     display: inline-flex;
     font-size: var(--text-size-medium);
     font-weight: var(--font-weight-semibold);
-    height: var(--current-size);
+    height: var(--button-size);
     line-height: 1.15;
     justify-content: center;
-    padding-inline: calc((var(--current-size) - var(--icon-size-medium)) / 2);
+    padding-inline: calc((var(--button-size) - var(--icon-size-medium)) / 2);
     position: relative;
     text-decoration: none !important;
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out, border 0.15s ease-in-out;
@@ -33,7 +33,7 @@
 }
 
 .ev-button--content {
-    padding-inline: calc(0.2 * var(--current-size));
+    padding-inline: calc(0.2 * var(--button-size));
 }
 
 /**
@@ -171,25 +171,27 @@
 
     /** X Small */
     &.is-size-x-small {
+        --button-size: var(--input-height-x-small);
         font-size: var(--text-size-small);
-        --current-size: var(--input-height-x-small);
+        font-weight: var(--font-weight-medium);
     }
 
     /* Small */
     &.is-size-small {
-        --current-size: var(--input-height-small);
+        --button-size: var(--input-height-small);
+        font-weight: var(--font-weight-medium);
     }
 
     /* Large */
     &.is-size-large {
         font-size: var(--text-size-large);
-        --current-size: var(--input-height-large);
+        --button-size: var(--input-height-large);
     }
 
     /* X Large */
     &.is-size-x-large {
         font-size: var(--text-size-large);
-        --current-size: var(--input-height-x-large);
+        --button-size: var(--input-height-x-large);
     }
 }
 

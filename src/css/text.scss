@@ -153,16 +153,16 @@ h6, .heading-6 {
 
 
 .text-weight-regular {
-    font-weight: 400;
+    font-weight: var(--text-weight);
 }
 .text-weight-medium {
-    font-weight: 500;
+    font-weight: var(--text-weight-medium);
 }
 .text-weight-semibold {
-    font-weight: 600;
+    font-weight: var(--text-weight-semibold);
 }
 .text-weight-bold {
-    font-weight: 700;
+    font-weight: var(--text-weight-bold);
 }
 
 /**
