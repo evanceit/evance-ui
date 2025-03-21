@@ -56,12 +56,22 @@ const activatorProps = computed(() => {
 });
 
 const headerProps = computed(() => {
-    return {
+    const separatedProps = {
         actions: props.headerActions,
         closeable: props.closeable,
         icon: props.icon,
         title: props.title,
     };
+    const suppliedProps = props.headerProps ?? {};
+    return Object.assign(separatedProps, suppliedProps);
+});
+
+const bodyProps = computed(() => {
+    const separatedProps = {
+        padding: !props.noPadding,
+    };
+    const suppliedProps = props.bodyProps ?? {};
+    return Object.assign(separatedProps, suppliedProps);
 });
 
 const emit = defineEmits<{
@@ -348,7 +358,7 @@ onBeforeUnmount(() => {
                     <slot name="header" />
                 </template>
             </ev-dialog-header>
-            <ev-dialog-body>
+            <ev-dialog-body v-bind="bodyProps">
                 <slot />
             </ev-dialog-body>
             <ev-dialog-footer v-if="slots.footer">

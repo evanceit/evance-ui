@@ -4,7 +4,11 @@ import {
 } from "@/components/EvDataTable/composables/select";
 import { FilterFunction, InternalItem } from "@/composables/filter";
 import { GetterPropertyKey } from "@/util";
-import { DisplayRuleObject, DisplayRuleValue, VisibilityRuleProp } from "@/composables/display";
+import {
+    DisplayRuleObject,
+    DisplayRuleValue,
+    VisibilityRuleProp,
+} from "@/composables/display";
 
 export type DataTableCompareFunction<T = any> = (a: T, b: T) => number;
 

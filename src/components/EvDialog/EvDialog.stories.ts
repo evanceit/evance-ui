@@ -18,6 +18,11 @@ const meta: Meta<typeof EvDialog> = {
                 "Whether the dialog should show the close button. " +
                 "Alternatively, if you do not require the header, use `hide-header`.",
         },
+        default: {
+            description:
+                "The `default` slot is rendered within the standard `EvDialogBody` which offers padding " +
+                "appropriate for most content and forms. `EvDialogBody` comes scrollable by default.",
+        },
         draggable: {
             control: "boolean",
             description:
@@ -38,11 +43,34 @@ const meta: Meta<typeof EvDialog> = {
             description:
                 "The minimum valye of the top coordinate of the dialog when dragging. Defaults to `0`.",
         },
+        footer: {
+            description:
+                "The default `EvDialogFooter` is intended for adding action buttons to a dialog. " +
+                "By default it will align buttons to the right and standardises the spacing between buttons. " +
+                "If you do not add any buttons to the `footer` slot, it will not render - allowing the `body` " +
+                "slot to extend to the full height of the dialog.",
+        },
         fullscreen: {
             control: "boolean",
             description:
                 "Forces a dialog to enter fullscreen mode. This does not use the fullscreen API, " +
                 "it maximizes the dialog to the full window size. Defaults to `false`.",
+        },
+        header: {
+            description:
+                "The default `EvDialogHeader` is intended to accommodate most scenarios in Evance where" +
+                "a cancel icon is available to close a dialog. You can add additional icons/buttons to the header " +
+                "using the `header` slot.",
+        },
+        headerActions: {
+            control: false,
+            description:
+                "Add actions to the header bar as an array of `EvButton` props. " +
+                "May also be supplied via `header-props.actions`.",
+        },
+        headerProps: {
+            control: false,
+            description: "Accepts any `EvToolbar` props.",
         },
         hideHeader: {
             control: "boolean",
@@ -53,17 +81,28 @@ const meta: Meta<typeof EvDialog> = {
         icon: {
             control: "select",
             description:
-                "An icon may be added to the dialog's header. If you would like a custom header use the `header` slot.",
+                "An icon may be added to the dialog's header. " +
+                "May also be supplied via `header-props.icon`. " +
+                "If you would like a custom header use the `header` slot.",
             options: ["none", "CartIcon"],
             mapping: {
                 none: undefined,
                 CartIcon: CartIcon,
             },
         },
+        noPadding: {
+            control: "boolean",
+            description:
+                "Removes padding from the body, which is useful if you'd like a custom body layout without needing to " +
+                "construct a complete dialog layout using the `container` slot. " +
+                "May also be set via the `body-props.padding` setting.",
+        },
         title: {
             control: "text",
             description:
-                "Optional, a title may be applied to the dialog's header. If you would like a custom header use the `header` slot.",
+                "Optional, a title may be applied to the dialog's header. " +
+                "May also be supplied via `header-props.title`." +
+                "If you would like a custom header use the `header` slot. ",
         },
         width: {
             control: "select",
@@ -80,24 +119,6 @@ const meta: Meta<typeof EvDialog> = {
                 "Evance UI attempts to standardise dialog widths using named sizes:" +
                 "`small`, `medium` (default), `large`, and `x-large`. This is the recommended usage." +
                 "However, the `width` may also be set to a number in pixels, or as a percentage.",
-        },
-        header: {
-            description:
-                "The default `EvDialogHeader` is intended to accommodate most scenarios in Evance where" +
-                "a cancel icon is available to close a dialog. You can add additional icons/buttons to the header " +
-                "using the `header` slot.",
-        },
-        default: {
-            description:
-                "The `default` slot is rendered within the standard `EvDialogBody` which offers padding " +
-                "appropriate for most content and forms. `EvDialogBody` comes scrollable by default.",
-        },
-        footer: {
-            description:
-                "The default `EvDialogFooter` is intended for adding action buttons to a dialog. " +
-                "By default it will align buttons to the right and standardises the spacing between buttons. " +
-                "If you do not add any buttons to the `footer` slot, it will not render - allowing the `body` " +
-                "slot to extend to the full height of the dialog.",
         },
 
         // EvOverlayProps
@@ -120,6 +141,7 @@ const meta: Meta<typeof EvDialog> = {
         fullscreen: undefined,
         hideHeader: false,
         icon: undefined,
+        noPadding: false,
         title: undefined,
         width: undefined,
 
@@ -203,10 +225,15 @@ export const ScrollingBody: Story = {
                 fullscreen.value = !fullscreen.value;
             }
 
-            return { close, modelValue, ExpandIcon, expand, fullscreen };
+            const headerProps = {
+                actions: [{ icon: ExpandIcon, onClick: expand }],
+                size: "small",
+            };
+
+            return { close, modelValue, expand, fullscreen, headerProps };
         },
         template: `
-            <ev-dialog v-model="modelValue" :fullscreen="fullscreen" :header-actions="[{ icon: ExpandIcon, variant: 'subtle', onClick: expand }]">
+            <ev-dialog v-model="modelValue" :fullscreen="fullscreen" :header-props="headerProps">
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>

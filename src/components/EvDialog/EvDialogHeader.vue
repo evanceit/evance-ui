@@ -1,19 +1,17 @@
 <script lang="ts">
 import { propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons";
-import { PropType } from "vue";
-import { EvButtonProps } from "@/components/EvButton";
+import { makeEvToolbarProps } from "@/components/EvToolbar";
 
 export const makeEvDialogHeaderProps = propsFactory(
     {
         modelValue: Boolean,
-        actions: Array as PropType<readonly EvButtonProps[]>,
         closeable: {
             type: Boolean,
             default: true,
         },
-        icon: IconProp,
-        title: String,
+        ...makeEvToolbarProps({
+            size: "large",
+        }),
     },
     "EvDialogHeader",
 );
@@ -23,12 +21,17 @@ export const makeEvDialogHeaderProps = propsFactory(
 import { useModelProxy } from "@/composables/modelProxy";
 import { EvToolbar } from "@/components/EvToolbar";
 import { computed } from "vue";
+import { filterComponentProps } from "@/util";
 
 const props = defineProps({
     ...makeEvDialogHeaderProps(),
 });
 const slots = defineSlots<{
     default(): never;
+}>();
+const emit = defineEmits<{
+    (e: "update:modelValue", value: boolean): void;
+    (e: "close"): void;
 }>();
 const isActive = useModelProxy(props, "modelValue");
 
@@ -37,21 +40,26 @@ const isActive = useModelProxy(props, "modelValue");
  */
 function close() {
     isActive.value = false;
+    emit("close");
 }
 
 const closeable = computed(() => (props.closeable ? close : undefined));
+
+const toolbarProps = computed(() => {
+    return filterComponentProps(EvToolbar, props);
+});
 </script>
 
 <template>
-    <div v-if="slots.default" class="ev-dialog--header">
+    <div
+        v-if="slots.default"
+        :class="['ev-dialog--header', props.class]"
+        :style="props.style">
         <slot />
     </div>
     <ev-toolbar
         v-else
         :class="['ev-dialog--header', { 'is-untitled': !props.title }]"
-        :actions="props.actions"
-        :icon="props.icon"
-        :title="props.title"
-        size="large"
+        v-bind="toolbarProps"
         @click:close="closeable" />
 </template>
