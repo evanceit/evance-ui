@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import ExampleDrawer from "./ExampleDrawer.vue";
 import { EvButton } from "@/components";
 import { useDrawer } from "@/composables/drawer";
+import { defineAsyncComponent } from "vue";
 
 const meta: Meta = {
     title: "Services/EvDrawerService",
@@ -14,14 +14,17 @@ type Story = StoryObj;
 
 export const Primary: Story = {
     render: (args) => ({
-        components: { EvButton, ExampleDrawer },
+        components: { EvButton },
         setup() {
             const drawer = useDrawer();
+            const drawerComponent = defineAsyncComponent(
+                () => import("./ExampleDrawer.vue"),
+            );
 
             function open() {
                 drawer.open({
                     slots: {
-                        default: ExampleDrawer,
+                        default: drawerComponent,
                     },
                 });
             }

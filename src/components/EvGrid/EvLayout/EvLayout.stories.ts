@@ -51,6 +51,49 @@ const meta: Meta<typeof EvLayout> = {
                 "The direction of a layout is 'row' by default. Making each `ev-block` within the layout " +
                 "a column. However, setting the layout to a column means each `ev-block` could be considered a row.",
         },
+        gap: {
+            control: "select",
+            options: [
+                "",
+                0,
+                25,
+                50,
+                75,
+                100,
+                150,
+                200,
+                250,
+                300,
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1200,
+                1600,
+                "{ xs: 100, md: 200, xl: 300 }",
+            ],
+            mapping: {
+                "": undefined,
+                0: 0,
+                25: 25,
+                50: 50,
+                75: 75,
+                100: 100,
+                150: 150,
+                200: 200,
+                300: 300,
+                400: 400,
+                600: 600,
+                800: 800,
+                "{ xs: 100, md: 200, xl: 300 }": { xs: 100, md: 200, xl: 300 },
+            },
+            description:
+                "Control the horizontal and vertical space between children using the `gap` prop. " +
+                "Accepts a numeric spacer value e.g. `100`, or breakpoint rules. " +
+                "If your layout consists of blocks that need to wrap with consistent widths " +
+                "(e.g. rows of 4 blocks), you should use `gutter` instead.",
+        },
         gutter: {
             control: "select",
             options: [
@@ -153,6 +196,7 @@ const meta: Meta<typeof EvLayout> = {
         align: undefined,
         alignContent: undefined,
         column: false,
+        gap: undefined,
         gutter: undefined,
         justify: undefined,
     },

@@ -21,6 +21,7 @@ const alignContentClasses = useBreakpointClasses(
 );
 const justifyContentClasses = useBreakpointClasses(props, "justify", "justify");
 const gutterClasses = useBreakpointClasses(props, "gutter", "gutter");
+const gapClasses = useBreakpointClasses(props, "gap", "ga");
 
 /**
  * Hidden
@@ -67,6 +68,7 @@ const widthStyles = computed(() => {
             ...alignItemsClasses,
             ...alignContentClasses,
             ...justifyContentClasses,
+            ...gapClasses,
             ...gutterClasses,
             ...hiddenClasses,
             props.class,

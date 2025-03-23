@@ -68,6 +68,7 @@ export const makeEvLayoutProps = propsFactory(
         align: [String, Object] as PropType<AlignItemsProp>,
         alignContent: [String, Object] as PropType<AlignContentProp>,
         column: Boolean,
+        gap: [String, Number, Object] as PropType<SpacerProp>,
         gutter: [String, Number, Object] as PropType<SpacerProp>,
         justify: [String, Object] as PropType<JustifyContentProp>,
         nowrap: Boolean,
