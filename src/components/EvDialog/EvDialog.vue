@@ -199,7 +199,10 @@ let documentDragListener = null;
 let documentDragEndListener = null;
 
 function initDrag(e: MouseEvent) {
-    if (!props.draggable || e.target.closest("[data-no-drag]")) {
+    if (
+        !props.draggable ||
+        (e.target instanceof Element && e.target.closest("[data-no-drag]"))
+    ) {
         return;
     }
     dragging = true;
