@@ -2,7 +2,7 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable";
 import { useDimensions } from "@/composables/dimensions";
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import { useVirtual } from "@/composables/virtual";
 import { filterComponentProps, omit, toWebUnit } from "@/util";
 import { DataTableItemProps, useDataTableItems } from "./composables/items";
@@ -48,6 +48,8 @@ const emit = defineEmits<{
             page: number;
         },
     ): void;
+    (e: "update:items", value: unknown[]): void;
+    (e: "update:loading", value: boolean): void;
     (e: "update:modelValue", value: unknown[]): void;
     (e: "update:page", value: number): void;
     (e: "update:search", value: string): void;
@@ -123,12 +125,18 @@ function loadFirstPage() {
     ) {
         itemsModel.value = results;
         pageModel.value = nextPage;
-        isLoading.value = false;
-        resetScroll(
-            results.length < props.itemsPerPage || isLastPage
-                ? "finished"
-                : "ok",
-        );
+        /**
+         * We have to wait for DOM to update before resetScroll to cater for
+         * show/hiding infinite scroll from an empty state.
+         */
+        nextTick(() => {
+            resetScroll(
+                results.length < props.itemsPerPage || isLastPage
+                    ? "finished"
+                    : "ok",
+            );
+            isLoading.value = false;
+        });
     }
     emit("load", { setPageItems, page: nextPage });
 }
