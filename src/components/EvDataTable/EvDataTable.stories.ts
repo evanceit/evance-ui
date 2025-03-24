@@ -135,6 +135,12 @@ const meta: Meta<typeof EvDataTable> = {
                 </ul>
             `,
         },
+        showFinished: {
+            control: "boolean",
+            description:
+                "Whether to show the `finished` slot, or finished message when reaching the end of the data. " +
+                "Defaults to `false`.",
+        },
         showHeaders: {
             control: "boolean",
             description:
@@ -182,6 +188,7 @@ const meta: Meta<typeof EvDataTable> = {
         searchPlaceholder: undefined,
         selectActions: undefined,
         selectStrategy: "page",
+        showFinished: false,
         showHeaders: false,
         showSelect: false,
         sort: undefined,

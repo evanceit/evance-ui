@@ -14,10 +14,13 @@ import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteS
 const props = defineProps({ ...makeEvInfiniteScrollProps() });
 const slots = defineSlots<{
     default(): never;
-    error(): never;
-    finished(): never;
-    loading(): never;
-    more(): never;
+    error(props: { side: InfiniteScrollSide }): never;
+    finished(props: { side: InfiniteScrollSide }): never;
+    loading(props: { side: InfiniteScrollSide }): never;
+    more(props: {
+        side: InfiniteScrollSide;
+        props: { onClick: () => void };
+    }): never;
 }>();
 const emit = defineEmits<{
     (
@@ -212,15 +215,16 @@ defineExpose({
             side="start"
             v-bind="sideProps"
             :status="startStatus"
+            :show-finished="props.showFinished"
             @click:more="intersecting('start')">
-            <template v-if="slots.finished" #finished="{ side, props }">
-                <slot name="finished" :side="side" :props="props" />
+            <template v-if="slots.finished" #finished="{ side }">
+                <slot name="finished" :side="side" />
             </template>
-            <template v-if="slots.error" #error="{ side, props }">
-                <slot name="error" :side="side" :props="props" />
+            <template v-if="slots.error" #error="{ side }">
+                <slot name="error" :side="side" />
             </template>
-            <template v-if="slots.loading" #loading="{ side, props }">
-                <slot name="loading" :side="side" :props="props" />
+            <template v-if="slots.loading" #loading="{ side }">
+                <slot name="loading" :side="side" />
             </template>
             <template v-if="slots.more" #more="{ side, props }">
                 <slot name="more" :side="side" :props="props" />
@@ -250,15 +254,16 @@ defineExpose({
             side="end"
             v-bind="sideProps"
             :status="endStatus"
+            :show-finished="props.showFinished"
             @click:more="intersecting('end')">
-            <template v-if="slots.finished" #finished="{ side, props }">
-                <slot name="finished" :side="side" :props="props" />
+            <template v-if="slots.finished" #finished="{ side }">
+                <slot name="finished" :side="side" />
             </template>
-            <template v-if="slots.error" #error="{ side, props }">
-                <slot name="error" :side="side" :props="props" />
+            <template v-if="slots.error" #error="{ side }">
+                <slot name="error" :side="side" />
             </template>
-            <template v-if="slots.loading" #loading="{ side, props }">
-                <slot name="loading" :side="side" :props="props" />
+            <template v-if="slots.loading" #loading="{ side }">
+                <slot name="loading" :side="side" />
             </template>
             <template v-if="slots.more" #more="{ side, props }">
                 <slot name="more" :side="side" :props="props" />

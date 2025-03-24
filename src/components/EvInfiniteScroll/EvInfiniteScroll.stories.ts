@@ -12,12 +12,27 @@ const meta: Meta<typeof EvInfiniteScroll> = {
             control: "boolean",
             description: "Disable infinite scroll.",
         },
-        mode: {
+        direction: {
             control: "select",
-            options: ["intersect", "manual"],
+            options: ["vertical", "horizontal"],
+            description: "Defaults to `vertical`.",
         },
         height: {
             control: "text",
+        },
+        mode: {
+            control: "select",
+            options: ["intersect", "manual"],
+            description:
+                "Specifies if content should load automatically when scrolling (`intersect`) or manually (`manual`). " +
+                "Defaults to `intersect`.",
+        },
+        side: {
+            control: "select",
+            options: ["start", "end", "both"],
+            description:
+                "Specifies the side where new content should appear. Either the `start`, `end`, or `both` sides. " +
+                "Defaults to `end`.",
         },
         tag: {
             description: "Specify a custom tag used on the root element.",
@@ -33,6 +48,12 @@ const meta: Meta<typeof EvInfiniteScroll> = {
                 </ul>
                 `,
         },
+        showFinished: {
+            control: "boolean",
+            description:
+                "Whether to show the `finished` message or slot when the data has come to an end. " +
+                "Defaults to `true`.",
+        },
         reset: {
             control: false,
             description:
@@ -46,8 +67,11 @@ const meta: Meta<typeof EvInfiniteScroll> = {
     },
     args: {
         disabled: false,
-        mode: "intersect",
+        direction: "vertical",
         height: "300",
+        mode: "intersect",
+        side: "end",
+        showFinished: true,
     },
     tags: ["autodocs"],
 };
@@ -99,13 +123,13 @@ export const Primary: Story = {
                 <ev-button @click="onClickReset">Reset</ev-button>
             </p>
             <ev-infinite-scroll ref="infiniteScrollRef" v-bind="args" @load="load">
-            <ev-virtual-scroll renderless :items="items">
-                <template #default="{ item, index, itemRef }">
-                    <ev-list-item :ref="itemRef" :link="true">
-                        Item number #{{ item }}
-                    </ev-list-item>
-                </template>
-            </ev-virtual-scroll>
-        </ev-infinite-scroll>`,
+                <ev-virtual-scroll renderless :items="items">
+                    <template #default="{ item, index, itemRef }">
+                        <ev-list-item :ref="itemRef" :link="true">
+                            Item number #{{ item }}
+                        </ev-list-item>
+                    </template>
+                </ev-virtual-scroll>
+            </ev-infinite-scroll>`,
     }),
 };

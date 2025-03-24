@@ -26,6 +26,10 @@ export const makeEvInfiniteScrollProps = propsFactory(
             default: "intersect",
             validator: (v: any) => ["intersect", "manual"].includes(v),
         },
+        showFinished: {
+            type: Boolean,
+            default: true,
+        },
         side: {
             type: String as PropType<InfiniteScrollSide>,
             default: "end",

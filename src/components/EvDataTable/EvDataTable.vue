@@ -200,6 +200,7 @@ onMounted(() => {
             ref="infiniteScrollRef"
             class="ev-data-table--wrapper"
             :disabled="infiniteScrollDisabled"
+            :show-finished="props.showFinished"
             @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">

@@ -14,6 +14,10 @@ const props = defineProps({
         type: String as PropType<InfiniteScrollMode>,
         default: undefined,
     },
+    showFinished: {
+        type: Boolean,
+        default: true,
+    },
     side: {
         type: String as PropType<InfiniteScrollSide>,
         default: undefined,
@@ -33,18 +37,9 @@ const props = defineProps({
 });
 
 const slots = defineSlots<{
-    error(props: {
-        side: InfiniteScrollSide;
-        props: { onClick: () => void };
-    }): never;
-    finished(props: {
-        side: InfiniteScrollSide;
-        props: { onClick: () => void };
-    }): never;
-    loading(props: {
-        side: InfiniteScrollSide;
-        props: { onClick: () => void };
-    }): never;
+    error(props: { side: InfiniteScrollSide }): never;
+    finished(props: { side: InfiniteScrollSide }): never;
+    loading(props: { side: InfiniteScrollSide }): never;
     more(props: {
         side: InfiniteScrollSide;
         props: { onClick: () => void };
@@ -78,11 +73,13 @@ const isLoading = computed(() => props.status === "loading");
             <slot name="error" v-bind="slotProps" />
         </template>
         <template v-else-if="isFinished">
-            <slot name="finished" v-bind="slotProps">
-                <div class="ev-infinite-scroll-finished">
-                    {{ t(props.textFinished) }}
-                </div>
-            </slot>
+            <template v-if="showFinished">
+                <slot name="finished" v-bind="slotProps">
+                    <div class="ev-infinite-scroll-finished">
+                        {{ t(props.textFinished) }}
+                    </div>
+                </slot>
+            </template>
         </template>
         <template v-else-if="isManual">
             <slot v-if="!isLoading" name="more" v-bind="slotProps">
