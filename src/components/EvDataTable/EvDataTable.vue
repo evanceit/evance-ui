@@ -40,7 +40,10 @@ const emit = defineEmits<{
     (
         e: "load",
         options: {
-            next: (nextItems: DataTableItemProps["items"]) => void;
+            setPageItems: (
+                items: DataTableItemProps["items"],
+                isLastPage?: boolean,
+            ) => void;
             page: number;
         },
     ): void;
@@ -113,23 +116,35 @@ watch(
 function onChange() {
     isLoading.value = true;
     const nextPage = 1;
-    function next(results: DataTableItemProps["items"]) {
+    function setPageItems(
+        results: DataTableItemProps["items"],
+        isLastPage: boolean = false,
+    ) {
         itemsModel.value = results;
         pageModel.value = nextPage;
         isLoading.value = false;
-        resetScroll(results.length < props.itemsPerPage ? "finished" : "ok");
+        resetScroll(
+            results.length < props.itemsPerPage || isLastPage
+                ? "finished"
+                : "ok",
+        );
     }
-    emit("load", { next, page: nextPage });
+    emit("load", { setPageItems, page: nextPage });
 }
 
 function onInfiniteScrollLoad(options) {
     const nextPage = pageModel.value + 1;
-    function next(results: DataTableItemProps["items"]) {
+    function setPageItems(
+        results: DataTableItemProps["items"],
+        isLastPage: boolean = false,
+    ) {
         itemsModel.value.push(...results);
         pageModel.value = nextPage;
-        results.length < props.itemsPerPage ? options.done() : options.next();
+        results.length < props.itemsPerPage || isLastPage
+            ? options.done()
+            : options.next();
     }
-    emit("load", { next, page: nextPage });
+    emit("load", { setPageItems, page: nextPage });
 }
 
 function resetScroll(status: InfiniteScrollStatus = "ok") {

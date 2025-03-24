@@ -69,11 +69,10 @@ const meta: Meta<typeof EvDataTable> = {
             <p>The load event provides the following parameters:</p>
             <ul>
                 <li><code>page</code> - the pagination page expected to load.</li>
-                <li><code>next</code> - a function to provide the next array of <code>items</code>. 
+                <li><code>setPageItems</code> - a function to provide the next array of <code>items</code>. 
                 This automatically handles loading state, current page updates, 
                 scroll position, end of list state and empty state.</li>
-            </ul>
-            `,
+            </ul>`,
         },
         loading: {
             control: "boolean",
