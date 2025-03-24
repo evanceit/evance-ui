@@ -397,9 +397,9 @@ export const Primary: Story = {
                 });
             }
 
-            async function load({ next, page }) {
+            async function load({ setPageItems, page }) {
                 const results = await api(page > 1 ? items.value : []);
-                next(results);
+                setPageItems(results);
             }
 
             const selectActions = [

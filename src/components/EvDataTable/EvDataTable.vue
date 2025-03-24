@@ -2,7 +2,7 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable";
 import { useDimensions } from "@/composables/dimensions";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual";
 import { filterComponentProps, omit, toWebUnit } from "@/util";
 import { DataTableItemProps, useDataTableItems } from "./composables/items";
@@ -32,6 +32,7 @@ const slots = defineSlots<{
     default(): never;
     empty(): never;
     filters(): never;
+    finished(): never;
     item(props: ItemSlot): never;
     "select-actions"(): never;
 }>();
@@ -53,7 +54,7 @@ const emit = defineEmits<{
     (e: "update:sort", value: string[]): void;
 }>();
 
-const isLoading = useModelProxy(props, "loading");
+const isLoading = useModelProxy(props, "loading", false);
 const itemsModel = useModelProxy(props, "items");
 const pageModel = useModelProxy(props, "page");
 const dimensions = useDimensions(props);
@@ -108,12 +109,12 @@ watch(
 watch(
     () => props.filters,
     () => {
-        onChange();
+        loadFirstPage();
     },
     { deep: true },
 );
 
-function onChange() {
+function loadFirstPage() {
     isLoading.value = true;
     const nextPage = 1;
     function setPageItems(
@@ -161,7 +162,13 @@ function colStyle(column: DataTableHeader) {
 
 defineExpose({
     resetScroll,
-    reload: onChange,
+    reload: loadFirstPage,
+});
+
+onMounted(() => {
+    if (!itemsModel.value?.length) {
+        loadFirstPage();
+    }
 });
 </script>
 
@@ -176,8 +183,8 @@ defineExpose({
             :loading="isLoading"
             :hide-select-all="props.showHeaders"
             :filters="props.filters"
-            @update:sort="onChange"
-            @update:search="onChange">
+            @update:sort="loadFirstPage"
+            @update:search="loadFirstPage">
             <template v-if="slots['select-actions']" #select-actions>
                 <slot name="select-actions" />
             </template>
@@ -196,6 +203,9 @@ defineExpose({
             @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
+            <template #finished>
+                <slot name="finished" />
+            </template>
             <table class="ev-data-table--native">
                 <slot name="colgroup">
                     <colgroup>
