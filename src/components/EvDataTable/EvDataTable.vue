@@ -2,7 +2,7 @@
 import "./EvDataTable.scss";
 import { makeEvDataTableProps } from "./EvDataTable";
 import { useDimensions } from "@/composables/dimensions";
-import {computed, nextTick, onMounted, ref, watch} from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual";
 import { filterComponentProps, omit, toWebUnit } from "@/util";
 import { DataTableItemProps, useDataTableItems } from "./composables/items";
@@ -13,7 +13,7 @@ import { provideSelection } from "@/components/EvDataTable/composables/select";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy";
 import {
-    DataTableHeader,
+    DataTableHeader, DataTableItem,
     ItemSlot,
 } from "@/components/EvDataTable/composables/types";
 import { useLocaleFunctions } from "@/composables";
@@ -29,15 +29,17 @@ import { EvCheckbox } from "@/components/EvCheckbox";
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
     colgroup(): never;
-    default(): never;
+    default(props: ItemSlot): never;
     empty(): never;
     filters(): never;
     finished(): never;
-    item(props: ItemSlot): never;
     "select-actions"(): never;
 }>();
 
 const emit = defineEmits<{
+    (e: "click:row", event: PointerEvent, item: DataTableItem): void;
+    (e: "contextmenu:row", event: PointerEvent, item: DataTableItem): void;
+    (e: "dblclick:row", event: PointerEvent, item: DataTableItem): void;
     (
         e: "load",
         options: {
@@ -64,10 +66,7 @@ const { columns, headers } = createHeaders(props);
 const { items } = useDataTableItems(itemsModel, props, columns);
 
 const { allSelected, selectAll, showSelectAll, someSelected } =
-    provideSelection(props, {
-        allItems: items,
-        currentPage: items,
-    });
+    provideSelection(props, items);
 
 const {
     containerRef,
@@ -212,7 +211,7 @@ onMounted(() => {
             @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"
             @scrollend="handleScrollend">
-            <template #finished>
+            <template v-if="slots.finished" #finished>
                 <slot name="finished" />
             </template>
             <table class="ev-data-table--native">
@@ -279,16 +278,19 @@ onMounted(() => {
                                     ref: itemRef,
                                     item: displayItem.raw,
                                     index: displayItem.index,
-                                }">
+                                }"
+                                @click="props['onClick:row']"
+                                @dblclick="props['onDblclick:row']"
+                                @contextmenu="props['onContextmenu:row']">
                                 <template #default="itemProps">
-                                    <slot name="item" v-bind="itemProps" />
+                                    <slot name="default" v-bind="itemProps" />
                                 </template>
                                 <template
                                     v-for="column in columns"
                                     :key="`item-${displayItem.index}-${column.key}`"
                                     #[`item.${column.key}`]="cellProps">
                                     <slot
-                                        v-if="!slots.item"
+                                        v-if="!slots.default"
                                         :name="`item.${column.key}`"
                                         v-bind="cellProps" />
                                 </template>

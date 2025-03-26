@@ -18,10 +18,10 @@ export interface SelectableItem {
 }
 
 export interface DataTableSelectStrategy {
+    selectable: boolean;
     showSelectAll: boolean;
     allSelected: (data: {
         allItems: SelectableItem[];
-        currentPage: SelectableItem[];
     }) => SelectableItem[];
     select: (data: {
         items: SelectableItem[];
@@ -31,20 +31,20 @@ export interface DataTableSelectStrategy {
     selectAll: (data: {
         value: boolean;
         allItems: SelectableItem[];
-        currentPage: SelectableItem[];
         selected: Set<unknown>;
     }) => Set<unknown>;
 }
 
 type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
     modelValue: readonly any[];
-    selectStrategy: "single" | "page" | "all";
+    selectStrategy: "single" | "multiple";
     showSelect: boolean;
     valueComparator: typeof isDeepEqual;
     "onUpdate:modelValue"?: EventProp<[any[]]> | undefined;
 };
 
 const singleSelectStrategy: DataTableSelectStrategy = {
+    selectable: true,
     showSelectAll: false,
     allSelected: () => [],
     select: ({ items, value }) => {
@@ -53,20 +53,8 @@ const singleSelectStrategy: DataTableSelectStrategy = {
     selectAll: ({ selected }) => selected,
 };
 
-const pageSelectStrategy: DataTableSelectStrategy = {
-    showSelectAll: true,
-    allSelected: ({ currentPage }) => currentPage,
-    select: ({ items, value, selected }) => {
-        for (const item of items) {
-            value ? selected.add(item.value) : selected.delete(item.value);
-        }
-        return selected;
-    },
-    selectAll: ({ value, currentPage, selected }) =>
-        pageSelectStrategy.select({ items: currentPage, value, selected }),
-};
-
-const allSelectStrategy: DataTableSelectStrategy = {
+const multiSelectStrategy: DataTableSelectStrategy = {
+    selectable: true,
     showSelectAll: true,
     allSelected: ({ allItems }) => allItems,
     select: ({ items, value, selected }) => {
@@ -76,15 +64,23 @@ const allSelectStrategy: DataTableSelectStrategy = {
         return selected;
     },
     selectAll: ({ value, allItems, selected }) =>
-        allSelectStrategy.select({ items: allItems, value, selected }),
+        multiSelectStrategy.select({ items: allItems, value, selected }),
+};
+
+const nullSelectStrategy: DataTableSelectStrategy = {
+    selectable: false,
+    showSelectAll: false,
+    allSelected: () => [],
+    select: () => new Set(),
+    selectAll: () => new Set(),
 };
 
 export const makeDataTableSelectProps = propsFactory(
     {
         showSelect: Boolean,
         selectStrategy: {
-            type: [String, Object] as PropType<"single" | "page" | "all">,
-            default: "page",
+            type: [String, Object] as PropType<"single" | "multiple">,
+            default: undefined,
         },
         modelValue: {
             type: Array as PropType<readonly any[]>,
@@ -104,10 +100,7 @@ export const EvDataTableSelectionSymbol: InjectionKey<
 
 export function provideSelection(
     props: SelectionProps,
-    {
-        allItems,
-        currentPage,
-    }: { allItems: Ref<SelectableItem[]>; currentPage: Ref<SelectableItem[]> },
+    allItems: Ref<SelectableItem[]>,
 ) {
     const showSelect = toRef(props, "showSelect");
     const lastToggledItem = ref<SelectableItem | null>(null);
@@ -136,10 +129,6 @@ export function provideSelection(
         allItems.value.filter((item) => item.selectable),
     );
 
-    const currentPageSelectable = computed(() =>
-        currentPage.value.filter((item) => item.selectable),
-    );
-
     const selectStrategy = computed(() => {
         if (typeof props.selectStrategy === "object") {
             return props.selectStrategy;
@@ -147,11 +136,10 @@ export function provideSelection(
         switch (props.selectStrategy) {
             case "single":
                 return singleSelectStrategy;
-            case "all":
-                return allSelectStrategy;
-            case "page":
+            case "multiple":
+                return multiSelectStrategy;
             default:
-                return pageSelectStrategy;
+                return nullSelectStrategy;
         }
     });
 
@@ -213,7 +201,6 @@ export function provideSelection(
         selected.value = selectStrategy.value.selectAll({
             value,
             allItems: allSelectable.value,
-            currentPage: currentPageSelectable.value,
             selected: new Set(selected.value),
         });
     }
@@ -222,7 +209,6 @@ export function provideSelection(
     const allSelected = computed(() => {
         const items = selectStrategy.value.allSelected({
             allItems: allSelectable.value,
-            currentPage: currentPageSelectable.value,
         });
         return !!items.length && isSelected(items);
     });
@@ -233,6 +219,7 @@ export function provideSelection(
 
     const data = {
         selected,
+        selectStrategy,
         toggleSelect,
         select,
         selectAll,
@@ -241,7 +228,7 @@ export function provideSelection(
         someSelected,
         allSelected,
         showSelect,
-        showSelectAll: showSelectAll,
+        showSelectAll,
     };
     provide(EvDataTableSelectionSymbol, data);
     return data;

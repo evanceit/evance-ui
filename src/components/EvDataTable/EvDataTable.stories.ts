@@ -52,6 +52,12 @@ const meta: Meta<typeof EvDataTable> = {
                 "The number of items you are displaying per page - used internally to determine when a `load` event " +
                 "reaches the end of the list. Defaults to `50`.",
         },
+        itemSelectable: {
+            control: false,
+            description:
+                "Can be a string representing a boolean property per item indicating whether the item is selectable, " +
+                "or a function which receives the item in the argument.",
+        },
         itemValue: {
             control: "select",
             options: ["id", "value"],
@@ -126,12 +132,11 @@ const meta: Meta<typeof EvDataTable> = {
         },
         selectStrategy: {
             control: "select",
-            options: ["single", "page", "all"],
-            description: `<p>Selection strategy:</p>
+            options: [undefined, "single", "multiple"],
+            description: `Selection strategy:
                 <ul>
-                    <li><code>single</code></li>
-                    <li><code>page</code></li>
-                    <li><code>all</code></li>
+                    <li>\`single\`</li>
+                    <li>\`multiple\`</li>
                 </ul>
             `,
         },
@@ -429,6 +434,11 @@ export const Primary: Story = {
                 assignee: [],
             });
 
+            function onClickRow(e, item) {
+                console.log(e);
+                console.log(item);
+            }
+
             return {
                 args,
                 headers,
@@ -441,6 +451,7 @@ export const Primary: Story = {
                 EllipsisIcon,
                 selectActions,
                 filters,
+                onClickRow
             };
         },
         template: `
@@ -456,6 +467,7 @@ export const Primary: Story = {
                     :sort-options="sortOptions"
                     :items-per-page="itemsPerPage"
                     :filters="filters"
+                    data-foo="bar"
                     @load="load">
                     <template #filters>
                         <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />
@@ -498,7 +510,7 @@ export const Primary: Story = {
                     <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
                     <template #item.price="{ value }">£{{ value }}</template>
                     <template #item.actions="props">
-                        <ev-button size="small" :icon="EllipsisIcon" variant="subtle" rounded  />
+                        <ev-button size="small" :icon="EllipsisIcon" variant="subtle" rounded @click.stop="console.log(props)"  />
                     </template>
                 </ev-data-table>
             </ev-surface>

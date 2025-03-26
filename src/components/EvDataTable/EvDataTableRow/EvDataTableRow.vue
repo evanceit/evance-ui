@@ -14,20 +14,43 @@ const slots = defineSlots<{
     default(props: ItemSlot): never;
 }>();
 
-const isClickable = computed(() => {
-    return props.onClick || props.onContextmenu || props.onDblclick;
-});
-
-const { isSelected, toggleSelect, showSelect } = useSelection();
+const { isSelected, toggleSelect, showSelect, selectStrategy } = useSelection();
 // const { isExpanded, toggleExpand } = useExpanded();
 const { columns } = useHeaders();
-
 const item = props.item;
-
 const isItemSelected = computed(() => isSelected(item));
+const isItemSelectable = computed(() => {
+    return (
+        (props.selectable || item.selectable) && selectStrategy.value.selectable
+    );
+});
 
-function onCheckboxClick(e: PointerEvent) {
+const isClickable = computed(() => {
+    return (
+        props.onClick ||
+        props.onContextmenu ||
+        props.onDblclick ||
+        (!showSelect.value && isItemSelectable.value)
+    );
+});
+
+function onCheckboxClick(e: MouseEvent) {
     toggleSelect(item, e.shiftKey);
+}
+
+function onClick(e: PointerEvent) {
+    if (!showSelect.value && isItemSelectable.value) {
+        toggleSelect(item, e.shiftKey);
+    }
+    props.onClick?.(e, item);
+}
+
+function onContextmenu(e: PointerEvent) {
+    props.onContextmenu?.(e, item);
+}
+
+function onDblclick(e: PointerEvent) {
+    props.onDblclick?.(e, item);
 }
 </script>
 
@@ -40,14 +63,15 @@ function onCheckboxClick(e: PointerEvent) {
                 'is-selected': isItemSelected,
             },
         ]"
-        @click="props.onClick"
-        @contextmenu="props.onContextmenu"
-        @dblclick="props.onClick">
+        @click="onClick"
+        @contextmenu="onContextmenu"
+        @dblclick="onDblclick">
         <ev-data-table-cell
             v-if="showSelect"
             class="ev-data-table-cell--checkbox">
             <ev-checkbox
                 :model-value="isItemSelected"
+                :disabled="!isItemSelectable"
                 @click.stop="onCheckboxClick" />
         </ev-data-table-cell>
 
