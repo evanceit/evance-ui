@@ -1,4 +1,4 @@
-import { EventProp, propsFactory } from "@/util";
+import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component";
 import { makeVirtualProps } from "@/composables/virtual";
 import { makeDimensionsProps } from "@/composables/dimensions";
@@ -7,6 +7,7 @@ import { makeDataTableHeaderProps } from "./composables/headers";
 import { makeDataTableSelectProps } from "./composables/select";
 import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 import { DataTableItem } from "@/components/EvDataTable/composables/types";
+import { PropType } from "vue";
 
 export const makeEvDataTableProps = propsFactory(
     {
@@ -19,9 +20,15 @@ export const makeEvDataTableProps = propsFactory(
             default: false,
         },
 
-        "onClick:row": EventProp<[PointerEvent, DataTableItem]>(),
-        "onContextmenu:row": EventProp<[PointerEvent, DataTableItem]>(),
-        "onDblclick:row": EventProp<[PointerEvent, DataTableItem]>(),
+        "onClick:row": Function as PropType<
+            (event: PointerEvent, item: DataTableItem) => void
+        >,
+        "onContextmenu:row": Function as PropType<
+            (event: PointerEvent, item: DataTableItem) => void
+        >,
+        "onDblclick:row": Function as PropType<
+            (event: PointerEvent, item: DataTableItem) => void
+        >,
 
         ...makeEvDataTableSearchProps(),
         ...makeDataTableHeaderProps(),

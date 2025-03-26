@@ -4,7 +4,12 @@ import { makeEvDataTableProps } from "./EvDataTable";
 import { useDimensions } from "@/composables/dimensions";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual";
-import { filterComponentProps, omit, toWebUnit } from "@/util";
+import {
+    filterComponentProps,
+    getPrefixedEventHandlers,
+    omit,
+    toWebUnit,
+} from "@/util";
 import { DataTableItemProps, useDataTableItems } from "./composables/items";
 import EvVirtualScrollItem from "@/components/EvVirtualScroll/EvVirtualScrollItem.vue";
 import { createHeaders } from "@/components/EvDataTable/composables/headers";
@@ -13,7 +18,8 @@ import { provideSelection } from "@/components/EvDataTable/composables/select";
 import { EvDataTableSearch } from "@/components/EvDataTable/EvDataTableSearch";
 import { useModelProxy } from "@/composables/modelProxy";
 import {
-    DataTableHeader, DataTableItem,
+    DataTableHeader,
+    DataTableItem,
     ItemSlot,
 } from "@/components/EvDataTable/composables/types";
 import { useLocaleFunctions } from "@/composables";
@@ -278,10 +284,12 @@ onMounted(() => {
                                     ref: itemRef,
                                     item: displayItem.raw,
                                     index: displayItem.index,
-                                }"
-                                @click="props['onClick:row']"
-                                @dblclick="props['onDblclick:row']"
-                                @contextmenu="props['onContextmenu:row']">
+                                    ...getPrefixedEventHandlers(
+                                        props,
+                                        ':row',
+                                        () => ({ ...itemRef.value }),
+                                    ),
+                                }">
                                 <template #default="itemProps">
                                     <slot name="default" v-bind="itemProps" />
                                 </template>

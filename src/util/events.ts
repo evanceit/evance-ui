@@ -1,5 +1,6 @@
 import { capitalize, onScopeDispose, PropType } from "vue";
 import { getScrollParents } from "./scroll";
+import { isFunction, isOn } from "@/util/is-functions";
 
 /**
  * # Click Event Listeners
@@ -180,4 +181,26 @@ export function addScrollEventListener(
             el.removeEventListener("scroll", onScroll);
         });
     });
+}
+
+type EventHandler = (event: Event) => any;
+
+export function getPrefixedEventHandlers<T extends `:${string}`>(
+    attrs: Record<string, any>,
+    suffix: T,
+    getData: EventHandler,
+): Record<`${string}${T}`, EventHandler> {
+    return Object.keys(attrs)
+        .filter(
+            (key: string) =>
+                isOn(key) && key.endsWith(suffix) && isFunction(attrs[key]),
+        )
+        .reduce(
+            (acc: any, key) => {
+                acc[key.slice(0, -suffix.length)] = (event: Event) =>
+                    attrs[key](event, getData(event));
+                return acc;
+            },
+            {} as Record<`${string}${T}`, EventHandler>,
+        );
 }

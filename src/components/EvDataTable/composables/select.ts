@@ -37,7 +37,7 @@ export interface DataTableSelectStrategy {
 
 type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
     modelValue: readonly any[];
-    selectStrategy: "single" | "multiple";
+    selectStrategy?: "single" | "multiple" | undefined;
     showSelect: boolean;
     valueComparator: typeof isDeepEqual;
     "onUpdate:modelValue"?: EventProp<[any[]]> | undefined;

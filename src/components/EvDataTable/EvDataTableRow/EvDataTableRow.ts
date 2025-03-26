@@ -11,9 +11,9 @@ export const makeEvDataTableRowProps = propsFactory(
         selectable: Boolean,
         item: Object as PropType<DataTableItem>,
         cellProps: [Object, Function] as PropType<CellProps<any>>,
-        onClick: EventProp<[PointerEvent, DataTableItem]>(),
-        onContextmenu: EventProp<[PointerEvent, DataTableItem]>(),
-        onDblclick: EventProp<[PointerEvent, DataTableItem]>(),
+        onClick: EventProp<[MouseEvent]>(),
+        onContextmenu: EventProp<[MouseEvent]>(),
+        onDblclick: EventProp<[MouseEvent]>(),
     },
     "EvDataTableRow",
 );
