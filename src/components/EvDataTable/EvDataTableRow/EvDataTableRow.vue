@@ -62,6 +62,7 @@ defineExpose({
             {
                 'is-clickable': isClickable,
                 'is-selected': isItemSelected,
+                'is-indicated': !showSelect && selectStrategy.selectable,
             },
         ]"
         @click="onClick"

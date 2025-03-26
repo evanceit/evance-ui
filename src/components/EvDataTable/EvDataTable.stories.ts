@@ -468,7 +468,6 @@ export const Primary: Story = {
                     :items-per-page="itemsPerPage"
                     :filters="filters"
                     data-foo="bar"
-                    @click:row="onClickRow"
                     @load="load">
                     <template #filters>
                         <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />

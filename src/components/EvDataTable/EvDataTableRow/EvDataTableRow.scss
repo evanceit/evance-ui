@@ -1,15 +1,63 @@
 .ev-data-table-row {
-    transition: background 0.25s var(--easing-standard);
+
+    > td {
+        transition: background 0.25s var(--easing-standard);
+        background: transparent;
+
+        &:first-child {
+            border-top-left-radius: var(--input-radius);
+            border-bottom-left-radius: var(--input-radius);
+        }
+        &:last-child {
+            border-top-right-radius: var(--input-radius);
+            border-bottom-right-radius: var(--input-radius);
+        }
+    }
 
     &:hover {
-        background: var(--fill-neutral-subtle-hovered);
+        > td {
+            background: var(--fill-neutral-subtle-hovered);
+        }
     }
 
     &.is-selected {
-        background: var(--fill-selected);
+        > td {
+            background: var(--fill-selected);
+        }
 
         &:hover {
-            background: var(--fill-selected-hovered);
+            > td {
+                background: var(--fill-selected-hovered);
+            }
+        }
+    }
+}
+
+.ev-data-table-row {
+    &.is-indicated {
+        > td:first-child {
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 3px;
+                transition: opacity 0.25s ease-in-out;
+                opacity: 0;
+                will-change: opacity;
+                background: var(--text-selected);
+                border-top-left-radius: var(--input-radius);
+                border-bottom-left-radius: var(--input-radius);
+            }
+        }
+
+        &.is-selected {
+            > td:first-child:before {
+                opacity: 1;
+            }
         }
     }
 }
