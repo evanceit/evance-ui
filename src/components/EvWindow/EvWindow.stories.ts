@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvWindow, EvWindowItem } from "../EvWindow";
 import { shallowRef } from "vue";
-import { EvButton } from "@/components";
+import { EvButton, EvButtonGroup } from "@/components";
 import { ArrowBackIcon, ArrowContinueIcon } from "@/icons";
 
 const meta: Meta<typeof EvWindow> = {
@@ -51,7 +51,7 @@ type Story = StoryObj<typeof EvWindow>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvWindow, EvWindowItem, EvButton },
+        components: { EvWindow, EvWindowItem, EvButton, EvButtonGroup },
         setup() {
             const step = shallowRef(1);
             const reverse = shallowRef(false);
@@ -75,18 +75,27 @@ export const Primary: Story = {
                 <ev-window-item :value="1">
                     <h3>Step 1</h3>
                     <p>A step with only one line</p>
-                    <ev-button @click="goto(2)" :icon-end="ArrowContinueIcon">Go to step 2</ev-button>
+                    <ev-button-group>
+                        <ev-button @click="goto(2)" :icon-end="ArrowContinueIcon">Go to step 2</ev-button>
+                        <ev-button @click="goto(3)" :icon-end="ArrowContinueIcon">Go to step 3</ev-button>
+                    </ev-button-group>
                 </ev-window-item>
                 <ev-window-item :value="2">
                     <h3>Step 2</h3>
                     <p>A step with this line</p>
                     <p>And, with this line</p>
-                    <ev-button @click="goto(3)" :icon-end="ArrowContinueIcon">Go to step 3</ev-button>
+                    <ev-button-group>
+                        <ev-button @click="goto(1)" :icon-start="ArrowBackIcon">Go to step 1</ev-button>
+                        <ev-button @click="goto(3)" :icon-end="ArrowContinueIcon">Go to step 3</ev-button>
+                    </ev-button-group>
                 </ev-window-item>
                 <ev-window-item :value="3">
                     <h3>Step 3</h3>
                     <p>A step with only one line</p>
-                    <ev-button @click="goto(1)" :icon-start="ArrowBackIcon">Start over</ev-button>
+                    <ev-button-group>
+                        <ev-button @click="goto(1)" :icon-start="ArrowBackIcon">Go to step 1</ev-button>
+                        <ev-button @click="goto(2)" :icon-start="ArrowBackIcon">Go to step 2</ev-button>
+                    </ev-button-group>
                 </ev-window-item>
             </ev-window>
         `,

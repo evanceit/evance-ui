@@ -63,28 +63,6 @@ const activeIndex = computed(() => {
     );
 });
 
-watch(activeIndex, (newVal, oldVal) => {
-    const itemsLength = group.items.value.length;
-    const lastIndex = itemsLength - 1;
-    if (itemsLength <= 2) {
-        isReversed.value = newVal < oldVal;
-    } else if (newVal === lastIndex && oldVal === 0) {
-        isReversed.value = true;
-    } else if (newVal === 0 && oldVal === lastIndex) {
-        isReversed.value = false;
-    } else {
-        isReversed.value = newVal < oldVal;
-    }
-});
-
-provide(EvWindowSymbol, {
-    transition,
-    isReversed,
-    transitionCount,
-    transitionHeight,
-    rootRef,
-});
-
 const canMoveBack = computed(() => props.continuous || activeIndex.value !== 0);
 const canMoveForward = computed(
     () =>
@@ -92,10 +70,12 @@ const canMoveForward = computed(
 );
 
 function previous() {
+    lastAction = "previous";
     canMoveBack.value && group.previous();
 }
 
 function next() {
+    lastAction = "next";
     canMoveForward.value && group.next();
 }
 
@@ -124,7 +104,7 @@ const previousProps = computed(() => {
     return {
         icon: isRtl.value ? props.iconNext : props.iconPrevious,
         class: `ev-window--${isRtlReverse.value ? "right" : "left"}`,
-        onClick: group.previous,
+        onClick: previous,
         ariaLabel: t("carousel.previous"),
     };
 });
@@ -133,13 +113,38 @@ const nextProps = computed(() => {
     return {
         icon: isRtl.value ? props.iconPrevious : props.iconNext,
         class: `ev-window--${isRtlReverse.value ? "left" : "right"}`,
-        onClick: group.next,
+        onClick: next,
         ariaLabel: t("carousel.next"),
     };
 });
 
 // explicit directive declaration
 const vTouch = Touch;
+
+let lastAction: "next" | "previous" | undefined;
+watch(activeIndex, (newVal, oldVal) => {
+    isReversed.value = isRtlReverse.value
+        ? lastAction === "next" ||
+          (lastAction !== "previous" && newVal > oldVal)
+        : lastAction === "previous" ||
+          (lastAction !== "next" && newVal < oldVal);
+    lastAction = undefined;
+});
+
+provide(EvWindowSymbol, {
+    transition,
+    isReversed,
+    transitionCount,
+    transitionHeight,
+    rootRef,
+});
+
+defineExpose({
+    canMoveBack,
+    canMoveForward,
+    previous,
+    next,
+});
 </script>
 
 <template>
