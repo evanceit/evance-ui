@@ -70,7 +70,12 @@ const multiSelectStrategy: DataTableSelectStrategy = {
         return selected;
     },
     selectAll: ({ value, allItems, selected }) =>
-        multiSelectStrategy.select({ items: allItems, value, selected }),
+        multiSelectStrategy.select({
+            items: allItems,
+            value,
+            selected,
+            isRequired: false,
+        }),
 };
 
 const nullSelectStrategy: DataTableSelectStrategy = {
