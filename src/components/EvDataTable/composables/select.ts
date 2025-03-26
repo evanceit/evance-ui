@@ -27,6 +27,7 @@ export interface DataTableSelectStrategy {
         items: SelectableItem[];
         value: boolean;
         selected: Set<unknown>;
+        isRequired: boolean;
     }) => Set<unknown>;
     selectAll: (data: {
         value: boolean;
@@ -36,19 +37,20 @@ export interface DataTableSelectStrategy {
 }
 
 type SelectionProps = Pick<DataTableItemProps, "itemValue"> & {
-    modelValue: readonly any[];
+    selected: readonly any[];
     selectStrategy?: "single" | "multiple" | undefined;
     showSelect: boolean;
     valueComparator: typeof isDeepEqual;
-    "onUpdate:modelValue"?: EventProp<[any[]]> | undefined;
+    required: boolean;
+    "onUpdate:selected"?: EventProp<[any[]]> | undefined;
 };
 
 const singleSelectStrategy: DataTableSelectStrategy = {
     selectable: true,
     showSelectAll: false,
     allSelected: () => [],
-    select: ({ items, value }) => {
-        return new Set(value ? [items[0]?.value] : []);
+    select: ({ items, value, selected, isRequired }) => {
+        return new Set(value || isRequired ? [items[0]?.value] : []);
     },
     selectAll: ({ selected }) => selected,
 };
@@ -57,9 +59,13 @@ const multiSelectStrategy: DataTableSelectStrategy = {
     selectable: true,
     showSelectAll: true,
     allSelected: ({ allItems }) => allItems,
-    select: ({ items, value, selected }) => {
+    select: ({ items, value, selected, isRequired }) => {
         for (const item of items) {
-            value ? selected.add(item.value) : selected.delete(item.value);
+            value
+                ? selected.add(item.value)
+                : !isRequired || selected.size > 1
+                  ? selected.delete(item.value)
+                  : null;
         }
         return selected;
     },
@@ -77,12 +83,13 @@ const nullSelectStrategy: DataTableSelectStrategy = {
 
 export const makeDataTableSelectProps = propsFactory(
     {
+        required: Boolean,
         showSelect: Boolean,
         selectStrategy: {
             type: [String, Object] as PropType<"single" | "multiple">,
             default: undefined,
         },
-        modelValue: {
+        selected: {
             type: Array as PropType<readonly any[]>,
             default: () => [],
         },
@@ -103,12 +110,13 @@ export function provideSelection(
     allItems: Ref<SelectableItem[]>,
 ) {
     const showSelect = toRef(props, "showSelect");
+    const isRequired = toRef(props, "required");
     const lastToggledItem = ref<SelectableItem | null>(null);
 
     const selected = useModelProxy(
         props,
-        "modelValue",
-        props.modelValue,
+        "selected",
+        props.selected,
         (v) => {
             return new Set(
                 wrapInArray(v).map((v) => {
@@ -160,6 +168,7 @@ export function provideSelection(
             items,
             value,
             selected: new Set(selected.value),
+            isRequired: isRequired.value,
         });
     }
 
@@ -223,6 +232,7 @@ export function provideSelection(
         toggleSelect,
         select,
         selectAll,
+        isRequired,
         isSelected,
         isSomeSelected,
         someSelected,

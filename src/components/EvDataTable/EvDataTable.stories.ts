@@ -85,7 +85,12 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "Sets the table into a loading state. This disabled infinite scroll events.",
         },
-        modelValue: {
+        required: {
+            control: "boolean",
+            description:
+                "If set to `true`, there must be at least one selected item - emulating the `required` prop in `EvList`.",
+        },
+        selected: {
             control: false,
             description:
                 "Maintains a list of selected item values (see `item-value`), or the item objects when `return-object` is `true`.",
@@ -188,6 +193,7 @@ const meta: Meta<typeof EvDataTable> = {
         page: undefined,
         reload: undefined,
         returnObject: undefined,
+        required: false,
         search: "",
         searchDelay: undefined,
         searchPlaceholder: undefined,
@@ -459,7 +465,7 @@ export const Primary: Story = {
                 <ev-data-table
                     v-bind="args" 
                     v-model:items="items"
-                    v-model="selected"
+                    v-model:selected="selected"
                     v-model:sort="sort"
                     v-model:search="args.search"
                     :headers="headers"
@@ -468,6 +474,7 @@ export const Primary: Story = {
                     :items-per-page="itemsPerPage"
                     :filters="filters"
                     data-foo="bar"
+                    @update:selected="console.log('selection change')"
                     @load="load">
                     <template #filters>
                         <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />

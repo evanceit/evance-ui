@@ -58,7 +58,7 @@ const emit = defineEmits<{
     ): void;
     (e: "update:items", value: unknown[]): void;
     (e: "update:loading", value: boolean): void;
-    (e: "update:modelValue", value: unknown[]): void;
+    (e: "update:selected", value: unknown[]): void;
     (e: "update:page", value: number): void;
     (e: "update:search", value: string): void;
     (e: "update:sort", value: string[]): void;

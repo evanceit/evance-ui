@@ -45,6 +45,18 @@ function onClick(e: MouseEvent) {
     props.onClick?.(e);
 }
 
+function onMouseDown(e: MouseEvent) {
+    if (e.shiftKey) {
+        document.body.style.userSelect = "none";
+    }
+}
+
+function onMouseUp(e: MouseEvent) {
+    if (e.shiftKey) {
+        document.body.style.userSelect = "";
+    }
+}
+
 defineExpose({
     index: props.index,
     columns,
@@ -65,6 +77,8 @@ defineExpose({
                 'is-indicated': !showSelect && selectStrategy.selectable,
             },
         ]"
+        @mousedown="onMouseDown"
+        @mouseup="onMouseUp"
         @click="onClick"
         @contextmenu="props.onContextmenu"
         @dblclick="props.onDblclick">
