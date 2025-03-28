@@ -8,6 +8,7 @@ import { EvIcon } from "@/components/EvIcon";
 import { computed, mergeProps } from "vue";
 import { EvImg } from "@/components/EvImg";
 import { sizeModifier } from "@/util";
+import { EvButtonProps } from "@/components/EvButton";
 
 const props = defineProps({ ...makeEvEmptyStateProps() });
 const slots = defineSlots<{
@@ -110,7 +111,7 @@ const hasHeading = computed(() => !!props.title || !!props.subtitle);
         <ev-button-group
             v-else-if="props.actions?.length"
             class="ev-empty-state--actions"
-            v-bind="actionProps"
+            v-bind="actionProps as EvButtonProps"
             :items="props.actions" />
     </div>
 </template>
