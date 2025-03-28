@@ -26,6 +26,55 @@ function checkMissingIconSuffix(svgFiles) {
 }
 
 /**
+ * # removeXmlns
+ *
+ * @param {string} svg
+ * @return {string}
+ */
+function removeXmlns(svg) {
+    return svg.replace(/\s*xmlns="[^"]+"/g, '');
+}
+
+function correctSvgFill(svg) {
+    return svg.replace(/<svg([^>]*)>/, (match, attributes) => {
+        attributes = attributes.replace(/\s*fill="none"/g, '');
+        if (!/fill="currentColor"/.test(attributes)) {
+            attributes += ' fill="currentColor"';
+        }
+        return `<svg${attributes}>`;
+    });
+}
+
+function correctPathFill(svg) {
+    svg = svg.replace(/<(?!svg\b)([^>]*)>/g, (match, attributes) => {
+        return match.replace(/\s*fill="[^"]*"/g, '');
+    });
+    return svg;
+}
+
+/**
+ * # cleanSvgFiles
+ *
+ * - Remove `xmlns` attributes from SVGs (they're unnecessary).
+ *
+ * @param {string} directory Directory containing SVGs
+ * @param {string[]} svgFiles List of SVG file names
+ */
+function cleanSvgFiles(directory, svgFiles) {
+    svgFiles.forEach(file => {
+        const filePath = path.join(directory, file);
+        let svgContent = fs.readFileSync(filePath, 'utf-8');
+        let cleanedSvg = removeXmlns(svgContent);
+        cleanedSvg = correctSvgFill(cleanedSvg);
+        cleanedSvg = correctPathFill(cleanedSvg);
+        if (svgContent !== cleanedSvg) {
+            fs.writeFileSync(filePath, cleanedSvg, 'utf-8');
+            console.log(`Cleaned: ${filePath} - removed xmlns or corrected fill`);
+        }
+    });
+}
+
+/**
  * # generateIndex
  *
  * @param {string} directory
@@ -56,6 +105,7 @@ for (let glyphDirectory of glyphDirectories) {
     const directory = path.resolve(__dirname, glyphDirectory);
     fs.readdir(directory, (err, files) => {
         const svgFiles = files.filter(file => path.extname(file).toLowerCase() === '.svg');
+        cleanSvgFiles(directory, svgFiles);
         checkMissingIconSuffix(svgFiles);
         generateIndexFromGlyphs(directory, svgFiles);
     });
