@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component";
-import { makeDimensionsProps } from "@/composables/dimensions";
+import {ComponentProps, makeComponentProps} from "@/composables/component";
+import { DimensionsProps, makeDimensionsProps } from "@/composables/dimensions";
 
 export type EvResponsiveSlots = {
     default: never;
@@ -33,6 +33,14 @@ export function useAspectStyles(props: AspectRatioProps) {
             };
         }),
     };
+}
+
+export interface EvResponsiveProps
+    extends AspectRatioProps,
+        DimensionsProps,
+        ComponentProps {
+    contentClass?: string;
+    inline?: boolean;
 }
 
 export const makeEvResponsiveProps = propsFactory(

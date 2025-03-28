@@ -1,6 +1,6 @@
 import { propsFactory } from "@/util";
-import { makeTagProps } from "@/composables/tag";
-import { makeComponentProps } from "@/composables/component";
+import { makeTagProps, TagProps } from "@/composables/tag";
+import { ComponentProps, makeComponentProps } from "@/composables/component";
 import { PropType } from "vue";
 
 export const EvHeadingSize = {
@@ -33,6 +33,13 @@ export const EvHeadingClass = {
     small: "heading-5",
     "x-small": "heading-6",
 } as const;
+
+export interface EvHeadingProps extends ComponentProps, TagProps {
+    size?: EvHeadingSizeProp;
+    text?: string;
+    truncate?: number | boolean;
+    tag?: string;
+}
 
 export const makeEvHeadingProps = propsFactory(
     {

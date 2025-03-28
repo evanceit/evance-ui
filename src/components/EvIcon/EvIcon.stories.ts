@@ -18,7 +18,7 @@ const meta: Meta<typeof EvIcon> = {
         },
         size: {
             control: "select",
-            options: ["small", "medium", "large"],
+            options: ["small", "medium", "large", "x-large"],
             description:
                 "There are three icon sizes: `small` (16px), `medium` (24px), and `large` (32px). This pixel size refers to the canvas the icon sits on, not the size of the icon shape itself.",
         },

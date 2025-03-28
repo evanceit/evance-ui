@@ -1,0 +1,19 @@
+.ev-empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--padding-medium);
+    gap: var(--spacer-400);
+    flex: 1;
+}
+
+.ev-empty-state {
+    &.is-size-small {
+        padding: var(--padding-small);
+    }
+    &.is-size-large {
+        padding: var(--padding-large);
+    }
+}

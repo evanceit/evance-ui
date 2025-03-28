@@ -228,3 +228,8 @@ input, textarea {
 .typeface-monospace {
     font-family: var(--typeface-monospace), monospace !important;
 }
+
+.text-width-readable {
+    max-width: 65ch;
+    max-width: min(65ch, 80%);
+}

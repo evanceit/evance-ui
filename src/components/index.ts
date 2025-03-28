@@ -14,6 +14,7 @@ export * from "./EvDefaultsProvider";
 export * from "./EvDialog";
 export * from "./EvDivider";
 export * from "./EvDrawer";
+export * from "./EvEmptyState";
 export * from "./EvErrors";
 export * from "./EvEyebrow";
 export * from "./EvFieldHelp";
