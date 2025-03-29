@@ -14,6 +14,19 @@ const meta: Meta<typeof EvTextfield> = {
             options: ["left", "center", "right"],
             description: "The text alignment of the input field",
         },
+        autocomplete: {
+            control: "text",
+            description:
+                "Evance UI is designed to be used within Evance's admin panel. Hence, autocomplete is `off` by default. " +
+                "This is complemented by `data-form-type`, which is used by some autocompletion browser plugins such as Dashlane. " +
+                "[See autocomplete attribute documentation](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofilling-form-controls:-the-autocomplete-attribute)",
+        },
+        dataFormType: {
+            control: "text",
+            description:
+                "Compliments `autocomplete` and is used by some autocompletion plugins such as Dashlane. " +
+                "[Dashlane documentation](https://dashlane.github.io/SAWF/)",
+        },
         disabled: {
             control: "boolean",
             description: "Removes the ability to click or target the input.",
@@ -24,6 +37,7 @@ const meta: Meta<typeof EvTextfield> = {
         },
         focused: {
             control: "boolean",
+            description: "Shows a focused state on the field.",
         },
         id: {
             control: "text",
@@ -149,6 +163,8 @@ const meta: Meta<typeof EvTextfield> = {
     args: {
         // Form Field Args
         align: undefined,
+        autocomplete: undefined,
+        dataFormType: undefined,
         disabled: false,
         focused: false,
         error: false,
@@ -167,7 +183,7 @@ const meta: Meta<typeof EvTextfield> = {
         clearable: false,
         iconStart: "none",
         iconEnd: "none",
-        label: undefined,
+        label: "Phone",
         hint: undefined,
         loading: false,
         placeholder: "",

@@ -153,6 +153,16 @@ defineExpose({
 function onClickOutside(e: MouseEvent) {
     emit("click:outside");
 }
+
+const autocompleteProp = computed(() => {
+    return props.autocomplete || "off";
+});
+
+const dataFormTypeProp = computed(() => {
+    return props.dataFormType || autocompleteProp.value?.toLowerCase() === "off"
+        ? "other"
+        : undefined;
+});
 </script>
 
 <template>
@@ -226,6 +236,8 @@ function onClickOutside(e: MouseEvent) {
                     :readonly="formField.isReadonly"
                     :autofocus="props.autofocus"
                     :placeholder="props.placeholder"
+                    :autocomplete="autocompleteProp"
+                    :data-form-type="dataFormTypeProp"
                     v-bind="inputAttrs"
                     @focus="onFocus"
                     @blur="formField.blur" />
