@@ -14,9 +14,12 @@ export type {
     DisplayInstance,
     DisplayThresholds,
 } from "./display";
+export type { IconValue } from "./icons";
 
 // Components
+export { IconProp } from "./icons";
 export { makeComponentProps } from "./component";
+export { makeDimensionsProps } from "./dimensions";
 export { makeTagProps } from "./tag";
 
 // Service related composables

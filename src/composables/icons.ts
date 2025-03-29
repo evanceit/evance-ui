@@ -1,4 +1,4 @@
-import { PropType } from "vue";
+import { ComponentPublicInstance, FunctionalComponent, PropType } from "vue";
 import { Appearance } from "@/util";
 import {
     CheckCircleIcon,
@@ -9,7 +9,14 @@ import {
     WarningIcon,
 } from "@/icons";
 
-export type IconValue = string | (string | [path: string, opacity: number])[];
+export type JsxComponent<Props = any> =
+    | { new (): ComponentPublicInstance<Props> }
+    | FunctionalComponent<Props>;
+
+export type IconValue =
+    | string
+    | (string | [path: string, opacity: number])[]
+    | JsxComponent;
 
 export const IconProp = [
     String,

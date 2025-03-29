@@ -115,7 +115,7 @@
 
 
     --text-default: #{settings.token('neutral.900')};
-    --text-brand: #{settings.token('purple.600')};
+    --text-brand: #{settings.token('purple.700')};
     --text-on-brand: #5D6788;
     --text-on-brand-bold: #F3F5F9;
     --text-subtle: #{settings.token('neutral.700')};
@@ -250,7 +250,7 @@
 
     /* Text */
     --eyebrow-default: #{settings.token('dark-neutral.700')};
-    --heading-default: #{settings.token('dark-neutral.1000')};
+    --heading-default: #{settings.token('dark-neutral.1100')};
     --heading-on-brand: #d2cce5;
     --heading-on-brand-bold: #181724;
     --heading-on-danger: #ead7df;
