@@ -28,6 +28,16 @@ export class Form {
         this.validateOn = toRef(props, "validateOn");
     }
 
+    public addErrorMessage(name: string, message: string) {
+        this.getField(name)?.addErrorMessage(message);
+    }
+
+    public addErrorMessages(errors: ValidationError[]) {
+        errors.forEach(({ name, message }) => {
+            this.addErrorMessage(name as string, message);
+        })
+    }
+
     /**
      * ## Add Field
      * @param field
@@ -44,10 +54,12 @@ export class Form {
      */
     public expose() {
         return {
+            addErrorMessage: this.addErrorMessage.bind(this),
+            addErrorMessages: this.addErrorMessages.bind(this),
+            getField: this.getField.bind(this),
             reset: this.reset.bind(this),
             resetValidation: this.resetValidation.bind(this),
             validate: this.validate.bind(this),
-            getField: this.getField.bind(this),
         };
     }
 

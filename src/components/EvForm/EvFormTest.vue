@@ -1,13 +1,14 @@
 <script setup lang="ts">
 
 import {reactive, ref} from "vue";
-import { EvButton, EvButtonGroup, EvForm, EvHeading, EvTextfield } from "@/components";
+import {EvButton, EvButtonGroup, EvForm, EvHeading, EvRadio, EvRadioGroup, EvTextfield} from "@/components";
 import {PlusIcon} from "@/icons";
 
 const form = ref();
 const data = reactive({
     user: {
-        name: null
+        name: null,
+        gender: "male",
     },
     attributes: []
 });
@@ -27,11 +28,16 @@ function onSubmit(e) {
     e.then((response) => {
         console.log(response);
 
-        const field = form.value.getField("user[name]");
-        if (field) {
-            field.addErrorMessage("Foo");
-            console.log(field.isValid);
-        }
+        form.value.addErrorMessages([
+            {
+                name: "user[name]",
+                message: "Required",
+            },
+            {
+                name: "user[gender]",
+                message: "Oops, wrong one",
+            }
+        ]);
 
         // @todo: <---- YOU ARE HERE
         // Need to figure out how to supply errors to fields from here.
@@ -55,8 +61,13 @@ function onSubmit(e) {
                 :name="`attributes[${attributeIndex}][title]`"
                 @click:clear="removeAttribute(attributeIndex)" />
 
+            <ev-radio-group name="user[gender]" label="Gender" class="mb-300">
+                <ev-radio value="male" label="Male" />
+                <ev-radio value="female" label="Female" />
+            </ev-radio-group>
+
             <ev-button-group class="mb-300">
-                <ev-button @click="addAttribute" :icon="PlusIcon">Add attribute</ev-button>
+                <ev-button type="button" @click="addAttribute" :icon="PlusIcon">Add attribute</ev-button>
                 <ev-button type="submit" appearance="primary">Submit</ev-button>
             </ev-button-group>
         </ev-form>
