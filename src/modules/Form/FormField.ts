@@ -12,10 +12,11 @@ import {
 import { FormFieldProps, Validator } from "@/composables/validation";
 import {
     Browser,
-    consoleWarn,
-    getNextId,
+    consoleWarn, getCurrentComponent,
+    getNextId, getPropertyValueByPath,
     isFunction,
     isString,
+    setPropertyValueByPath,
     wrapInArray,
 } from "@/util";
 import { Form } from "@/modules/Form/Form";
@@ -47,9 +48,38 @@ export class FormField {
         private props: FormFieldProps,
         private group: FormField | undefined = undefined,
     ) {
-        this.model = this.group
-            ? this.group.model
-            : useModelProxy(this.props, "modelValue");
+        const component = getCurrentComponent("FormField");
+        const internalModel = ref(props.modelValue);
+
+        watch(
+            () => props.modelValue,
+            (value) => {
+                internalModel.value = value;
+            },
+        );
+
+        this.model = computed({
+            get() {
+                if (group) {
+                    return group.model.value;
+                }
+                if (form?.data.value && props.name) {
+                    return getPropertyValueByPath(form.data.value, props.name);
+                }
+                return internalModel.value;
+            },
+            set(value) {
+                if (group) {
+                    group.model.value = value;
+                } else if (form?.data.value && props.name) {
+                    setPropertyValueByPath(form.data.value, props.name, value);
+                } else {
+                    internalModel.value = value;
+                }
+                component.emit("update:modelValue", value);
+            }
+        });
+
         this.focused = useModelProxy(this.props, "focused");
         this.focusedVisible = ref(false);
 
@@ -181,7 +211,9 @@ export class FormField {
             return false;
         }
         if (!this.props.validators.length) {
-            return true;
+            // @todo: determine if this is needed
+            // I commented it out since it prevents server-side errors from being added
+            // return true;
         }
         if (this.isPristine) {
             return this.messages.value.length || this.validateOn.lazy

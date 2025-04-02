@@ -1,8 +1,7 @@
-import { computed, inject, InjectionKey, PropType, provide, toRef } from "vue";
+import { inject, InjectionKey, PropType, provide } from "vue";
 import { ValidationError, FormFieldProps } from "@/composables/validation";
 import { propsFactory } from "@/util";
 import { Form } from "@/modules/Form/Form";
-import { useModelProxy } from "@/composables/modelProxy";
 
 /**
  * # Form Key
@@ -21,6 +20,7 @@ export interface SubmitEventPromise
  * # Form Props
  */
 export interface FormProps {
+    data?: object;
     disabled?: boolean;
     readonly?: boolean;
     modelValue?: boolean | null;
@@ -41,6 +41,7 @@ export interface FormValidationResult {
  */
 export const makeFormProps = propsFactory(
     {
+        data: Object,
         disabled: Boolean,
         readonly: Boolean,
         modelValue: {
@@ -60,15 +61,8 @@ export const makeFormProps = propsFactory(
  * @param props
  */
 export function createForm(props: FormProps) {
-    const isValid = useModelProxy(props, "modelValue");
-    const isDisabled = computed(() => props.disabled);
-    const isReadonly = computed(() => props.readonly);
-    const validateOn = toRef(props, "validateOn");
-
-    const form = new Form(isValid, isDisabled, isReadonly, validateOn);
-
+    const form = new Form(props);
     provide(FormKey, form);
-
     return form;
 }
 

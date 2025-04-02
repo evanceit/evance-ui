@@ -117,6 +117,28 @@ export function getPropertyValueByPath(
 }
 
 /**
+ *
+ * @param subject
+ * @param objectPath
+ * @param value
+ */
+export function setPropertyValueByPath(
+    subject: any,
+    objectPath: string,
+    value: any,
+) {
+    if (subject == null || !objectPath) {
+        return;
+    }
+    const propertyKeys = objectPathToPropertyKeys(objectPath);
+    let obj = subject;
+    while (propertyKeys.length > 1) {
+        obj = obj[propertyKeys.shift()];
+    }
+    obj[propertyKeys[0]] = value;
+}
+
+/**
  * # Get Nested Property Value
  *
  * @param subject
@@ -146,13 +168,7 @@ export function getNestedPropertyValue(
  * @param path
  */
 export function objectPathToPropertyKeys(path: string): PropertyKey[] {
-    const pattern = /^([\da-z_-]+)(?:[\/.]([\da-z_-]+)|\[(\d+)\])*$/i;
-    const matches = path.match(pattern);
-    if (!matches) {
-        throw new Error(`Evance UI: Invalid Object Path '${path}'.`);
-    }
-    path = path.replace("]", "").replace("[", ".").replace("/", ".");
-    return path.split(".");
+    return path.split(/[.\[\]\/]+/).filter(Boolean);
 }
 
 /**

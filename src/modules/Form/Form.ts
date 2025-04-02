@@ -1,8 +1,9 @@
 import { FormField } from "@/modules/Form/FormField";
-import { Ref, ref, shallowRef, toRaw } from "vue";
+import {computed, Ref, ref, shallowRef, toRaw, toRef} from "vue";
 import { consoleWarn } from "@/util";
 import { FormProps } from "@/composables/form";
 import { ValidationError } from "@/composables/validation";
+import {useModelProxy} from "@/composables/modelProxy.ts";
 
 /**
  * # Form
@@ -10,6 +11,7 @@ import { ValidationError } from "@/composables/validation";
 export class Form {
     public readonly errors: Ref<ValidationError[]> = ref([]);
     private fields: FormField[] = [];
+    public readonly data: Ref<object>;
     public readonly isDisabled: Ref<boolean>;
     public readonly isReadonly: Ref<boolean>;
     public readonly isValid: Ref<boolean | null>;
@@ -17,15 +19,13 @@ export class Form {
     public readonly validateOn: Ref<FormProps["validateOn"]>;
 
     constructor(
-        isValid: Ref<boolean | null> | undefined,
-        isDisabled: Ref<boolean> | undefined,
-        isReadonly: Ref<boolean> | undefined,
-        validateOn: Ref<FormProps["validateOn"]> | undefined,
+        private props: FormProps,
     ) {
-        this.isDisabled = isDisabled ?? shallowRef(false);
-        this.isReadonly = isReadonly ?? shallowRef(false);
-        this.isValid = isValid ?? shallowRef(null);
-        this.validateOn = validateOn ?? shallowRef("input");
+        this.data = useModelProxy(this.props, "data");
+        this.isValid = useModelProxy(this.props, "modelValue");
+        this.isDisabled = computed(() => this.props.disabled);
+        this.isReadonly = computed(() => this.props.readonly);
+        this.validateOn = toRef(props, "validateOn");
     }
 
     /**
@@ -47,16 +47,17 @@ export class Form {
             reset: this.reset.bind(this),
             resetValidation: this.resetValidation.bind(this),
             validate: this.validate.bind(this),
+            getField: this.getField.bind(this),
         };
     }
 
     /**
      * ## Get Field
-     * @param id
+     * @param name
      */
-    public getField(id: string): FormField | undefined {
+    public getField(name: string): FormField | undefined {
         return this.fields.find((field) => {
-            return field.id === id;
+            return field.name === name;
         });
     }
 

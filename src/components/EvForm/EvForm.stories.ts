@@ -3,13 +3,13 @@ import { EvForm } from "../EvForm";
 import { ref, shallowRef } from "vue";
 import EvTextfield from "../EvTextfield/EvTextfield.vue";
 import EvButton from "../EvButton/EvButton.vue";
+import EvFormTest from "./EvFormTest.vue";
 
 const meta: Meta<typeof EvForm> = {
     component: EvForm,
     title: "Forms/EvForm",
     argTypes: {},
     args: {},
-    tags: ["autodocs"],
 };
 
 export default meta;
@@ -47,22 +47,30 @@ export const Primary: Story = {
                 console.log(results);
             },
         },
-        template: `<ev-form 
-            validate-on="submit lazy" 
+        template: `<ev-form
+            validate-on="submit lazy"
             @submit.prevent="submit">
-            <ev-textfield 
-                v-model="username" 
-                :validators="[requiredValidator]" 
+            <ev-textfield
+                v-model="username"
+                :validators="[requiredValidator]"
                 label="Username" />
-            <ev-button 
-                :loading="loading" 
+            <ev-button
+                :loading="loading"
                 full-width>
                 Submit</ev-button>
-            <ev-button 
-                type="reset" 
-                variant="subtle" 
+            <ev-button
+                type="reset"
+                variant="subtle"
                 full-width>
                 Reset</ev-button>
         </ev-form>`,
+    }),
+};
+
+
+export const TestArea: Story = {
+    render: (args) => ({
+        components: { EvFormTest },
+        template: `<ev-form-test />`,
     }),
 };
