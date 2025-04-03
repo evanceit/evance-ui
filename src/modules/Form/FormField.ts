@@ -28,19 +28,12 @@ import { useModelProxy } from "@/composables/modelProxy";
  */
 export class FormField {
     public readonly focused: Ref<boolean>;
-
     public readonly focusedVisible: Ref<boolean>;
-
     private readonly messages: Ref<string[]> = ref([]);
-
     public readonly model: Ref<any>;
-
     public readonly pristine = shallowRef(true);
-
     public readonly uid = getNextId();
-
     public readonly validating = shallowRef(false);
-
     private readonly validationModel: Ref<any>;
 
     constructor(
@@ -262,7 +255,7 @@ export class FormField {
      *
      * @param message
      */
-    public addErrorMessage(...message: string[]) {
+    public addError(...message: string[]) {
         this.messages.value.push(...message);
     }
 

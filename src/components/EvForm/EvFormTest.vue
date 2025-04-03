@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import {reactive, ref} from "vue";
+import {reactive, ref } from "vue";
 import {EvButton, EvButtonGroup, EvForm, EvHeading, EvRadio, EvRadioGroup, EvTextfield} from "@/components";
-import {PlusIcon} from "@/icons";
+import {PlusIcon, ReloadIcon} from "@/icons";
 
 const form = ref();
 const data = reactive({
@@ -24,32 +24,44 @@ function removeAttribute(index) {
     data.attributes.splice(index, 1);
 }
 
-function onSubmit(e) {
-    e.then((response) => {
-        console.log(response);
-
-        form.value.addErrorMessages([
+async function onSubmit($event) {
+    const validation = await $event;
+    if (validation.valid) {
+        validation.addErrors([
             {
                 name: "user[name]",
-                message: "Required",
+                message: "Error from server",
             },
             {
                 name: "user[gender]",
-                message: "Oops, wrong one",
+                message: "Error from server",
             }
         ]);
-
-        // @todo: <---- YOU ARE HERE
-        // Need to figure out how to supply errors to fields from here.
-    });
+    }
 }
+
+
+const required = (value) => {
+    return value ? true : "Required";
+};
+
+const isValid = ref(null);
 
 </script>
 
 <template>
+    '{{ isValid }}'
     <div class="pa-300">
-        <ev-form ref="form" :data="data" @submit.prevent="onSubmit">
-            <ev-textfield class="mb-300" label="Username" name="user[name]" />
+        <ev-form
+            ref="form"
+            v-model="isValid"
+            :data="data"
+            @submit.prevent="onSubmit">
+            <ev-textfield
+                class="mb-300"
+                label="Username"
+                name="user[name]"
+                :validators="[required]" />
 
             <ev-textfield
                 v-for="(attribute, attributeIndex) in data.attributes"
@@ -58,6 +70,7 @@ function onSubmit(e) {
                 class="mb-300"
                 :key="attributeIndex"
                 label="Attribute title"
+                :validators="[required]"
                 :name="`attributes[${attributeIndex}][title]`"
                 @click:clear="removeAttribute(attributeIndex)" />
 
@@ -67,8 +80,27 @@ function onSubmit(e) {
             </ev-radio-group>
 
             <ev-button-group class="mb-300">
-                <ev-button type="button" @click="addAttribute" :icon="PlusIcon">Add attribute</ev-button>
-                <ev-button type="submit" appearance="primary">Submit</ev-button>
+                <ev-button
+                    type="button"
+                    :icon="PlusIcon"
+                    text="Add attribute"
+                    @click="addAttribute" />
+
+                <ev-button
+                    type="reset"
+                    text="Reset"
+                    :icon="ReloadIcon" />
+
+                <ev-button
+                    type="button"
+                    text="Reset validation"
+                    :icon="ReloadIcon"
+                    @click="() => form.resetValidation()"/>
+
+                <ev-button
+                    type="submit"
+                    text="Submit"
+                    appearance="primary" />
             </ev-button-group>
         </ev-form>
 

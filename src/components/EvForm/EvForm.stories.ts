@@ -41,14 +41,14 @@ export const Primary: Story = {
         },
         methods: {
             async submit(event: any) {
+                console.log(event);
                 this.loading = true;
                 const results = await event;
                 this.loading = false;
-                console.log(results);
+                console.log(results, 'Results');
             },
         },
         template: `<ev-form
-            validate-on="submit lazy"
             @submit.prevent="submit">
             <ev-textfield
                 v-model="username"

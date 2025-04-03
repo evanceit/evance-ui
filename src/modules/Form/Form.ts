@@ -28,14 +28,12 @@ export class Form {
         this.validateOn = toRef(props, "validateOn");
     }
 
-    public addErrorMessage(name: string, message: string) {
-        this.getField(name)?.addErrorMessage(message);
-    }
-
-    public addErrorMessages(errors: ValidationError[]) {
+    public addErrors(errors: ValidationError[]) {
         errors.forEach(({ name, message }) => {
-            this.addErrorMessage(name as string, message);
-        })
+            this.getField(name)?.addError(message);
+        });
+        this.isValid.value = false;
+        this.errors.value.push(...errors);
     }
 
     /**
@@ -54,8 +52,7 @@ export class Form {
      */
     public expose() {
         return {
-            addErrorMessage: this.addErrorMessage.bind(this),
-            addErrorMessages: this.addErrorMessages.bind(this),
+            addErrors: this.addErrors.bind(this),
             getField: this.getField.bind(this),
             reset: this.reset.bind(this),
             resetValidation: this.resetValidation.bind(this),
@@ -99,6 +96,8 @@ export class Form {
      */
     public reset() {
         this.fields.forEach((field) => field.reset());
+        this.isValid.value = null;
+        this.errors.value = [];
     }
 
     /**
@@ -106,6 +105,8 @@ export class Form {
      */
     public resetValidation() {
         this.fields.forEach((field) => field.resetValidation());
+        this.isValid.value = null;
+        this.errors.value = [];
     }
 
     /**
@@ -130,9 +131,13 @@ export class Form {
 
         this.errors.value = results;
         this.isValidating.value = false;
+        this.isValid.value = valid;
         return {
             valid,
-            errors: toRaw(this.errors.value),
+            errors: [...toRaw(this.errors.value)],
+            addErrors: (errors: ValidationError[]) => {
+                this.addErrors(errors)
+            },
         };
     }
 }

@@ -34,6 +34,7 @@ export interface FormProps {
 export interface FormValidationResult {
     valid: boolean;
     errors: ValidationError[];
+    addErrors: (errors: ValidationError[]) => void;
 }
 
 /**

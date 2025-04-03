@@ -8,7 +8,10 @@ const props = defineProps({
     ...makeEvFormProps(),
 });
 const form = createForm(props);
-const emit = defineEmits(["update:modelValue", "submit"]);
+const emit = defineEmits<{
+    (e: "update:modelValue", value: boolean): void;
+    (e: "submit", event: SubmitEventPromise): void;
+}>();
 
 /**
  * ## On Reset
