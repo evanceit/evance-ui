@@ -8,8 +8,44 @@ import EvFormTest from "./EvFormTest.vue";
 const meta: Meta<typeof EvForm> = {
     component: EvForm,
     title: "Forms/EvForm",
-    argTypes: {},
-    args: {},
+    argTypes: {
+        data: {
+            control: false,
+            description:
+                "An object representation of your FormData provides the values to the form fields mapped by their `name` attribute. " +
+                "It is recommended that the structure also maps to any server-side validation responses. See 'Reactive form data` below.",
+        },
+        disabled: {
+            control: "boolean",
+            description:
+                "Disables the form and all field components within it. Does NOT disable buttons encapsulated within the form. " +
+                'Use the `form.isDisabled` property from `v-slot="{ form }"` on your buttons to disable them.',
+        },
+        readonly: {
+            control: "boolean",
+            description: "Puts all children inputs into a readonly state.",
+        },
+        submit: {
+            control: false,
+            description:
+                "The `submit` event issues a `SubmitEventPromise` (a hijacked version of the original `SubmitEvent`)." +
+                "This means the form is compatible with `@submit.prevent`. " +
+                "The event supports `async` promises using `.then`, `.catch`, and `.finally` methods, " +
+                "and allows you to `await` asynchronous validators. An example is shown below in 'Handling server-side validation'.",
+        },
+        validateOn: {
+            control: false,
+            description:
+                "Accepts `blur`, `input`, `submit`. Defaults to `input`.",
+        },
+    },
+    args: {
+        data: undefined,
+        disabled: false,
+        readonly: false,
+        submit: undefined,
+        validateOn: undefined,
+    },
 };
 
 export default meta;
@@ -45,28 +81,29 @@ export const Primary: Story = {
                 this.loading = true;
                 const results = await event;
                 this.loading = false;
-                console.log(results, 'Results');
+                console.log(results, "Results");
             },
         },
-        template: `<ev-form
-            @submit.prevent="submit">
+        template: `<ev-form v-bind="args"
+            @submit.prevent="submit" v-slot="{ form }">
             <ev-textfield
                 v-model="username"
                 :validators="[requiredValidator]"
                 label="Username" />
             <ev-button
                 :loading="loading"
+                :disabled="form.isDisabled"
                 full-width>
                 Submit</ev-button>
             <ev-button
                 type="reset"
                 variant="subtle"
+                :disabled="form.isDisabled"
                 full-width>
                 Reset</ev-button>
         </ev-form>`,
     }),
 };
-
 
 export const TestArea: Story = {
     render: (args) => ({

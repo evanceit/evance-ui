@@ -1,22 +1,28 @@
 <script setup lang="ts">
+import { reactive, ref } from "vue";
+import {
+    EvButton,
+    EvButtonGroup,
+    EvForm,
+    EvHeading,
+    EvRadio,
+    EvRadioGroup,
+    EvTextfield,
+} from "@/components";
+import { PlusIcon, ReloadIcon } from "@/icons";
 
-import {reactive, ref } from "vue";
-import {EvButton, EvButtonGroup, EvForm, EvHeading, EvRadio, EvRadioGroup, EvTextfield} from "@/components";
-import {PlusIcon, ReloadIcon} from "@/icons";
-
-const form = ref();
 const data = reactive({
     user: {
         name: null,
         gender: "male",
     },
-    attributes: []
+    attributes: [],
 });
 
 function addAttribute() {
     console.log("addAttribute");
     data.attributes.push({
-        title: ""
+        title: "",
     });
 }
 
@@ -35,27 +41,25 @@ async function onSubmit($event) {
             {
                 name: "user[gender]",
                 message: "Error from server",
-            }
+            },
         ]);
     }
 }
-
 
 const required = (value) => {
     return value ? true : "Required";
 };
 
 const isValid = ref(null);
-
 </script>
 
 <template>
     '{{ isValid }}'
     <div class="pa-300">
         <ev-form
-            ref="form"
+            v-slot="{ form }"
             v-model="isValid"
-            :data="data"
+            v-model:data="data"
             @submit.prevent="onSubmit">
             <ev-textfield
                 class="mb-300"
@@ -64,11 +68,11 @@ const isValid = ref(null);
                 :validators="[required]" />
 
             <ev-textfield
-                v-for="(attribute, attributeIndex) in data.attributes"
+                v-for="(_, attributeIndex) in data.attributes"
+                :key="attributeIndex"
                 autofocus
                 clearable
                 class="mb-300"
-                :key="attributeIndex"
                 label="Attribute title"
                 :validators="[required]"
                 :name="`attributes[${attributeIndex}][title]`"
@@ -86,21 +90,15 @@ const isValid = ref(null);
                     text="Add attribute"
                     @click="addAttribute" />
 
-                <ev-button
-                    type="reset"
-                    text="Reset"
-                    :icon="ReloadIcon" />
+                <ev-button type="reset" text="Reset" :icon="ReloadIcon" />
 
                 <ev-button
                     type="button"
                     text="Reset validation"
                     :icon="ReloadIcon"
-                    @click="() => form.resetValidation()"/>
+                    @click="() => form.resetValidation()" />
 
-                <ev-button
-                    type="submit"
-                    text="Submit"
-                    appearance="primary" />
+                <ev-button type="submit" text="Submit" appearance="primary" />
             </ev-button-group>
         </ev-form>
 

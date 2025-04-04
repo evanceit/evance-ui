@@ -12,8 +12,10 @@ import {
 import { FormFieldProps, Validator } from "@/composables/validation";
 import {
     Browser,
-    consoleWarn, getCurrentComponent,
-    getNextId, getPropertyValueByPath,
+    consoleWarn,
+    getCurrentComponent,
+    getNextId,
+    getPropertyValueByPath,
     isFunction,
     isString,
     setPropertyValueByPath,
@@ -70,7 +72,7 @@ export class FormField {
                     internalModel.value = value;
                 }
                 component.emit("update:modelValue", value);
-            }
+            },
         });
 
         this.focused = useModelProxy(this.props, "focused");
@@ -166,9 +168,9 @@ export class FormField {
 
     get isDisabled(): boolean {
         return !!(
-            this.props.disabled ??
-            this.group?.isDisabled ??
-            this.form?.isDisabled.value
+            this.props.disabled ||
+            this.group?.isDisabled ||
+            this.form?.isDisabled
         );
     }
 
@@ -182,9 +184,9 @@ export class FormField {
 
     get isReadonly(): boolean {
         return !!(
-            this.props.readonly ??
-            this.group?.isReadonly ??
-            this.form?.isReadonly.value
+            this.props.readonly ||
+            this.group?.isReadonly ||
+            this.form?.isReadonly
         );
     }
 

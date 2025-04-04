@@ -13,14 +13,48 @@ All Evance UI form components are designed to integrate with `<ev-form>`. Instea
 <Canvas of={EvFormStories.Primary} />
 <Controls />
 
+## Reactive form data
+
+In the example below the `<ev-textfield>` maps `user[email]` to `data.user.email`.
+
+The following `name` attributes are compatible, however we recommend keeping your naming convention consistent with
+server-side validation responses for easier implementations.
+
+- `user[email]` - FormData-style
+- `user.email` - JSON-style
+
+This syncs modifications made in the textfield with your data object.
+
+```html
+<script setup lang="ts">
+
+const data = reactive({
+    user: {
+        email: null
+    }
+});
+
+</script>
+
+<template>
+    <ev-form :data="data">
+
+        <ev-textfield label="Email" name="user[email]" />
+
+    </ev-form>
+</template>
+```
 
 ## Handling server-side validation
 
 Whilst client-side validation offers an immediate response,
-it's always important to be able to handle validation errors from server responses.
+it's always important to be able to handle validation errors from server responses. To help facilitate this the
+validation response from the `SubmitEventPromise` includes an `addErrors` method, which allows you to feed errors
+from your server response into the form and its fields. Again, this is mapped based on the `name` attribute of your fields.
 
-```ts
- async function onSubmit($event) {
+```html
+<script setup lang="ts">
+async function onSubmit($event) {
      const validation = await $event;
      if (validation.valid) {
 
@@ -43,4 +77,12 @@ it's always important to be able to handle validation errors from server respons
          })
      }
  }
+</script>
+<template>
+    <ev-form @submit.prevent="onSubmit">
+
+        <ev-textfield label="Email" name="user[email]" />
+
+    </ev-form>
+</template>
 ```

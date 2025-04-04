@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { makeEvFormProps } from "./EvForm";
 import { createForm, SubmitEventPromise } from "@/composables/form";
+import type { Form } from "@/modules/Form/Form";
 
 const formRef = ref<HTMLFormElement>();
 const props = defineProps({
@@ -12,6 +13,14 @@ const emit = defineEmits<{
     (e: "update:modelValue", value: boolean): void;
     (e: "submit", event: SubmitEventPromise): void;
 }>();
+
+defineSlots<{
+    default(props: { form: Form }): never;
+}>();
+
+defineExpose({
+    form,
+});
 
 /**
  * ## On Reset
@@ -46,10 +55,6 @@ function onSubmit($event: Event) {
 
     e.preventDefault();
 }
-
-defineExpose({
-    ...form.expose(),
-});
 </script>
 
 <template>
@@ -60,6 +65,6 @@ defineExpose({
         :style="[props.style]"
         @reset="onReset"
         @submit="onSubmit">
-        <slot />
+        <slot v-bind="{ form }" />
     </form>
 </template>

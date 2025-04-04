@@ -1,38 +1,49 @@
 import { FormField } from "@/modules/Form/FormField";
-import {computed, Ref, ref, shallowRef, toRaw, toRef} from "vue";
+import { Ref, ref, shallowRef, toRaw, toRef } from "vue";
 import { consoleWarn } from "@/util";
 import { FormProps } from "@/composables/form";
 import { ValidationError } from "@/composables/validation";
-import {useModelProxy} from "@/composables/modelProxy.ts";
+import { useModelProxy } from "@/composables/modelProxy.ts";
 
 /**
  * # Form
  */
 export class Form {
-    public readonly errors: Ref<ValidationError[]> = ref([]);
     private fields: FormField[] = [];
+    private valid: Ref<boolean | null>;
+    private validating = shallowRef(false);
+
+    public readonly errors: Ref<ValidationError[]> = ref([]);
     public readonly data: Ref<object>;
-    public readonly isDisabled: Ref<boolean>;
-    public readonly isReadonly: Ref<boolean>;
-    public readonly isValid: Ref<boolean | null>;
-    public readonly isValidating = shallowRef(false);
     public readonly validateOn: Ref<FormProps["validateOn"]>;
 
-    constructor(
-        private props: FormProps,
-    ) {
+    constructor(private props: FormProps) {
         this.data = useModelProxy(this.props, "data");
-        this.isValid = useModelProxy(this.props, "modelValue");
-        this.isDisabled = computed(() => this.props.disabled);
-        this.isReadonly = computed(() => this.props.readonly);
+        this.valid = useModelProxy(this.props, "modelValue");
         this.validateOn = toRef(props, "validateOn");
+    }
+
+    get isDisabled(): boolean {
+        return this.props.disabled;
+    }
+
+    get isReadonly(): boolean {
+        return this.props.readonly;
+    }
+
+    get isValid(): boolean | null {
+        return this.valid.value;
+    }
+
+    get isValidating(): boolean {
+        return this.validating.value;
     }
 
     public addErrors(errors: ValidationError[]) {
         errors.forEach(({ name, message }) => {
-            this.getField(name)?.addError(message);
+            this.getField(name as string)?.addError(message);
         });
-        this.isValid.value = false;
+        this.valid.value = false;
         this.errors.value.push(...errors);
     }
 
@@ -96,7 +107,7 @@ export class Form {
      */
     public reset() {
         this.fields.forEach((field) => field.reset());
-        this.isValid.value = null;
+        this.valid.value = null;
         this.errors.value = [];
     }
 
@@ -105,7 +116,7 @@ export class Form {
      */
     public resetValidation() {
         this.fields.forEach((field) => field.resetValidation());
-        this.isValid.value = null;
+        this.valid.value = null;
         this.errors.value = [];
     }
 
@@ -115,7 +126,7 @@ export class Form {
     public async validate() {
         let valid = true;
         this.errors.value = [];
-        this.isValidating.value = true;
+        this.validating.value = true;
 
         const results = [];
         for (const field of this.fields) {
@@ -130,13 +141,13 @@ export class Form {
         }
 
         this.errors.value = results;
-        this.isValidating.value = false;
-        this.isValid.value = valid;
+        this.validating.value = false;
+        this.valid.value = valid;
         return {
             valid,
             errors: [...toRaw(this.errors.value)],
             addErrors: (errors: ValidationError[]) => {
-                this.addErrors(errors)
+                this.addErrors(errors);
             },
         };
     }
