@@ -5,7 +5,42 @@ import * as EvFormStories from './EvForm.stories';
 <Meta of={EvFormStories} />
 
 # EvForm
-The `ev-form` component...
+The `ev-form` component is responsible for managing form state and must encapsulate your form fields.
+
+All Evance UI form components are designed to integrate with `<ev-form>`. Instead of using the standard
+`v-model`, each field's `name` property is used to link the field with the form `data`.
 
 <Canvas of={EvFormStories.Primary} />
 <Controls />
+
+
+## Handling server-side validation
+
+Whilst client-side validation offers an immediate response,
+it's always important to be able to handle validation errors from server responses.
+
+```ts
+ async function onSubmit($event) {
+     const validation = await $event;
+     if (validation.valid) {
+
+         // Perform a server request if client-side validation is unsuccessful
+
+         fetch(url, { method: 'POST' })
+         .then(response => {
+
+            // If the response is unsuccessful add appropriate errors
+            // to the validation response
+
+            validation.addErrors([
+                 {
+                     name: "user[name]",
+                     message: "Error from server",
+                 }
+             ]);
+
+
+         })
+     }
+ }
+```
