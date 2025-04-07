@@ -56,11 +56,11 @@ function onInput(e: Event) {
  * ## Expose stuff
  */
 defineExpose({
+    field: formField,
     input: inputRef,
     focus: () => {
         getInputElement()?.focus();
     },
-    ...formField.expose(),
 });
 </script>
 

@@ -27,6 +27,10 @@ import { useModelProxy } from "@/composables/modelProxy";
 
 /**
  * # Form Field
+ *
+ * @todo: change expose to return the field itself, or all usages of field to do so.
+ * @todo: decide on terminology for shapers/validators/resolvers/rules (it would be good to have shapers)
+ *
  */
 export class FormField {
     public readonly focused: Ref<boolean>;
@@ -279,17 +283,6 @@ export class FormField {
     public blur(): void {
         this.focused.value = false;
         this.focusedVisible.value = false;
-    }
-
-    /**
-     * ## Expose
-     */
-    public expose() {
-        return {
-            reset: this.reset.bind(this),
-            resetValidation: this.resetValidation.bind(this),
-            validate: this.validate.bind(this),
-        };
     }
 
     /**

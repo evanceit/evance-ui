@@ -101,11 +101,11 @@ function getInputElement(): HTMLInputElement | null {
  * ## Expose stuff
  */
 defineExpose({
+    field: formField,
     input: inputRef,
     focus: () => {
         getInputElement()?.focus();
     },
-    ...formField.expose(),
 });
 </script>
 

@@ -7,6 +7,10 @@ import { useModelProxy } from "@/composables/modelProxy.ts";
 
 /**
  * # Form
+ *
+ * @todo: decide whether to implement validators/shapers/resolvers and their terminology.
+ * @todo: decide whether and how to support declarative schemas like Zod (https://zod.dev/?id=introduction)
+ *
  */
 export class Form {
     private fields: FormField[] = [];
@@ -56,19 +60,6 @@ export class Form {
             consoleWarn(`Duplicate form field with name "${field.id}"`);
         }
         this.fields.push(field);
-    }
-
-    /**
-     * ## Expose
-     */
-    public expose() {
-        return {
-            addErrors: this.addErrors.bind(this),
-            getField: this.getField.bind(this),
-            reset: this.reset.bind(this),
-            resetValidation: this.resetValidation.bind(this),
-            validate: this.validate.bind(this),
-        };
     }
 
     /**
