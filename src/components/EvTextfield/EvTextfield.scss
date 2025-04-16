@@ -12,7 +12,7 @@
     flex-wrap: nowrap;
     gap: var(--spacer-50);
     min-height: var(--input-height-medium);
-    padding-inline: var(--spacer-100);
+    padding-inline: 9px;
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
     will-change: border-color, box-shadow, background;
@@ -32,11 +32,11 @@
 .ev-textfield--control {
     &.is-size-small {
         min-height: var(--input-height-small);
-        padding-inline: var(--spacer-100);
+        padding-inline: 6px;
     }
     &.is-size-large {
         min-height: var(--input-height-large);
-        padding-inline: var(--spacer-150);
+        padding-inline: 12px;
     }
 }
 

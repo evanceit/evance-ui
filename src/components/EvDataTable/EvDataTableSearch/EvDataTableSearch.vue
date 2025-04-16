@@ -82,7 +82,7 @@ const isFiltersMobile = computed(() => {
 });
 
 const filterDefaults = {
-    EvFilterButton: { size: "small", rounded: true },
+    EvFilterButton: { size: "small" },
     EvButton: { size: "small" },
 };
 
@@ -158,7 +158,6 @@ onUnmounted(() => {
                     <div class="ev-data-table-search--field">
                         <ev-textfield
                             v-model="searchInternal"
-                            rounded
                             clearable
                             appearance="subtle"
                             size="small"
@@ -178,7 +177,6 @@ onUnmounted(() => {
                             :model-value="isFiltered && !showFilters">
                             <ev-button
                                 ref="filterButtonRef"
-                                rounded
                                 size="small"
                                 :appearance="isFiltered ? 'primary' : 'default'"
                                 :variant="isFiltered ? 'tonal' : 'subtle'"
@@ -201,7 +199,6 @@ onUnmounted(() => {
                     <div v-if="hasSort" class="ev-data-table-search--sort">
                         <ev-button
                             ref="sortButtonRef"
-                            rounded
                             size="small"
                             variant="subtle"
                             :text="sortButtonTitle"

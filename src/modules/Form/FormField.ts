@@ -28,7 +28,6 @@ import { useModelProxy } from "@/composables/modelProxy";
 /**
  * # Form Field
  *
- * @todo: change expose to return the field itself, or all usages of field to do so.
  * @todo: decide on terminology for shapers/validators/resolvers/rules (it would be good to have shapers)
  *
  */
