@@ -70,7 +70,7 @@ export default defineConfig(({ mode }) => ({
                               format: "esm",
                               dir: "dist/esm",
                               entryFileNames: "[name].mjs",
-                              chunkFileNames: "[name]-[hash].mjs",
+                              chunkFileNames: "chunks/[name]-[hash].mjs",
                               banner: bannerTxt,
                               globals: {
                                   vue: "Vue",
@@ -81,6 +81,8 @@ export default defineConfig(({ mode }) => ({
                               format: "cjs",
                               dir: "dist/cjs",
                               exports: "named",
+                              entryFileNames: "[name].cjs",
+                              chunkFileNames: "chunks/[name]-[hash].cjs",
                               banner: bannerTxt,
                               globals: {
                                   vue: "Vue",
