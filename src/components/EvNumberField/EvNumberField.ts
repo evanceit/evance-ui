@@ -1,4 +1,4 @@
-import { isEmpty, omit, propsFactory } from "@/util";
+import { isEmpty, mathEval, omit, propsFactory } from "@/util";
 import { makeEvTextfieldProps } from "@/components/EvTextfield/EvTextfield";
 import { LocaleManager } from "@/modules/Locale/LocaleManager";
 import { PropType, watch } from "vue";
@@ -351,7 +351,7 @@ export class NumberParser {
         const pattern = /^[-+*/.\d\s()]+$/;
         if (pattern.test(filteredText)) {
             try {
-                parsedValue = eval(`(${filteredText})`);
+                parsedValue = mathEval(`(${filteredText})`);
             } catch (error) {
                 parsedValue = +filteredText;
             }
