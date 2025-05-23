@@ -1,0 +1,5 @@
+<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M9 13a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4Zm-4 6h4v-4H5v4Z" />
+    <path d="M18 16h3v2h-3v3h-2v-3h-3v-2h3v-3h2v3Z"/>
+    <path d="M9 3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4ZM5 9h4V5H5v4Zm14-6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4Zm-4 6h4V5h-4v4Z" />
+</svg>
