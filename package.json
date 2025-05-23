@@ -16,7 +16,6 @@
         "build:vue:watch": "vite build --mode minify --watch",
         "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
         "gen:dts": "node .scripts/transform-dts.mjs --bundle --platform=node",
-        "gen:web-types": "node .scripts/web-types.mjs --bundle --platform=node",
         "preview": "vite preview",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
