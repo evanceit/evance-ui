@@ -18,7 +18,7 @@ import {
 } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort";
-import { EllipsisIcon } from "@/icons";
+import { EllipsisIcon, PlusIcon } from "@/icons";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
@@ -445,6 +445,12 @@ export const Primary: Story = {
                 console.log(item);
             }
 
+            function onClickCreate() {
+                const item = generateItems(items.value.length, 1)[0];
+                console.log(item);
+                items.value.splice(0, 0, item);
+            }
+
             return {
                 args,
                 headers,
@@ -458,10 +464,13 @@ export const Primary: Story = {
                 selectActions,
                 filters,
                 onClickRow,
+                PlusIcon,
+                onClickCreate,
             };
         },
         template: `
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
+                <ev-button :icon="PlusIcon" @click="onClickCreate">Create</ev-button>
                 <ev-data-table
                     v-bind="args" 
                     v-model:items="items"

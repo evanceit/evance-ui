@@ -273,7 +273,7 @@ onMounted(() => {
                     </tr>
                     <ev-virtual-scroll-item
                         v-for="displayItem of computedItems"
-                        :key="displayItem.index"
+                        :key="displayItem.raw.key ?? displayItem.index"
                         renderless
                         @update:height="
                             (h) => handleItemResize(displayItem.index, h)
