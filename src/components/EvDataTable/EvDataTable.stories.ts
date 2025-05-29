@@ -344,7 +344,7 @@ export const Primary: Story = {
                     year: 2022,
                 },
             ];
-            const boatsMax = 200;
+            const boatsMax = 5;
             const sort = ref(["quickfind:desc"]);
             const sortOptions: SortOption[] = [
                 {
@@ -383,7 +383,7 @@ export const Primary: Story = {
                     value: "relevance:desc",
                 },
             ];
-            const itemsPerPage = 50;
+            const itemsPerPage = 5;
 
             function generateItems(from: number, limit: number) {
                 return [...Array(limit).keys()].map((i) => {
