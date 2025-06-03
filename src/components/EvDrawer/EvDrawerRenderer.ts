@@ -10,10 +10,8 @@ import {
 } from "vue";
 import EvDrawer from "@/components/EvDrawer/EvDrawer.vue";
 import { EvDrawerInstance } from "@/components/EvDrawer/EvDrawerInstance";
-import {
-    EvDrawerServiceOptions,
-    EvDrawerServiceSlots,
-} from "@/components/EvDrawer/EvDrawerServiceOpener";
+import { EvDrawerServiceOptions } from "./EvDrawerServiceOpener";
+import { EvDrawerSlots } from "./EvDrawer";
 
 /**
  * # EvDrawerInstance
@@ -89,7 +87,7 @@ export class EvDrawerRenderer {
             [key: string]: (props: any, slots: any) => VNode;
         } = {};
         for (const key in internalSlots) {
-            const component = internalSlots[key as keyof EvDrawerServiceSlots];
+            const component = internalSlots[key as keyof EvDrawerSlots];
             renderedSlots[key] = (props, slots) => {
                 return h(component!, props, slots);
             };

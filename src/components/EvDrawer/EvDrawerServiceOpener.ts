@@ -1,14 +1,12 @@
 import { App } from "vue";
 import { EvDrawerRenderer } from "@/components/EvDrawer/EvDrawerRenderer";
-import {
-    EvDialogServiceOptions,
-    EvDialogServiceProps,
-    EvDialogServiceSlots,
-} from "@/components/EvDialog/EvDialogServiceOpener";
+import { EvDrawerProps, EvDrawerSlots } from "./EvDrawer";
 
-export interface EvDrawerServiceOptions extends EvDialogServiceOptions {}
-export interface EvDrawerServiceProps extends EvDialogServiceProps {}
-export interface EvDrawerServiceSlots extends EvDialogServiceSlots {}
+export interface EvDrawerServiceOptions {
+    props?: EvDrawerProps;
+    slots?: EvDrawerSlots;
+    data?: any;
+}
 
 /**
  * # EvDrawerServiceOpener

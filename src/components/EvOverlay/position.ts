@@ -25,9 +25,9 @@ const positionStrategies = {
 };
 
 export interface PositionStrategyProps {
-    positionStrategy: keyof typeof positionStrategies | PositionStrategyFn;
-    position: AnchorSelector;
-    origin: AnchorSelector | "overlap";
+    positionStrategy?: keyof typeof positionStrategies | PositionStrategyFn;
+    position?: AnchorSelector;
+    origin?: AnchorSelector | "overlap";
     offset?: number | string | number[];
     maxHeight?: number | string;
     maxWidth?: number | string;

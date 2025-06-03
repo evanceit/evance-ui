@@ -1,28 +1,11 @@
-import { App } from "vue";
 import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer";
+import { EvDialogProps, EvDialogSlots } from "./EvDialog";
+import { App } from "vue";
 
 export interface EvDialogServiceOptions {
-    props?: EvDialogServiceProps;
-    slots?: EvDialogServiceSlots;
+    props?: EvDialogProps;
+    slots?: EvDialogSlots;
     data?: any;
-}
-
-/**
- * # EvDialogProps
- */
-export interface EvDialogServiceProps {
-    width?: number | string;
-    veil?: boolean;
-    showHeader?: boolean;
-    retainFocus?: boolean;
-    persistent?: boolean;
-}
-
-export interface EvDialogServiceSlots {
-    container?: object;
-    default?: object;
-    header?: object;
-    footer?: object;
 }
 
 /**

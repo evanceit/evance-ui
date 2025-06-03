@@ -29,12 +29,7 @@ const paddingClass = computed(() => {
 </script>
 
 <template>
-    <div
-        :class="[
-            'ev-dialog--body',
-            'is-scrollable',
-            paddingClass,
-        ]">
+    <div :class="['ev-dialog--body', 'is-scrollable', paddingClass]">
         <slot />
     </div>
 </template>

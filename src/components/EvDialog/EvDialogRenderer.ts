@@ -10,10 +10,8 @@ import {
 } from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
 import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance";
-import {
-    EvDialogServiceOptions,
-    EvDialogServiceSlots,
-} from "@/components/EvDialog/EvDialogServiceOpener";
+import { EvDialogServiceOptions } from "./EvDialogServiceOpener";
+import { EvDialogSlots } from "./EvDialog";
 
 /**
  * # EvDialogInstance
@@ -89,7 +87,7 @@ export class EvDialogRenderer {
             [key: string]: (props: any, slots: any) => VNode;
         } = {};
         for (const key in internalSlots) {
-            const component = internalSlots[key as keyof EvDialogServiceSlots];
+            const component = internalSlots[key as keyof EvDialogSlots];
             renderedSlots[key] = (props, slots) => {
                 return h(component!, props, slots);
             };

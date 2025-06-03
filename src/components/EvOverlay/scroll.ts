@@ -36,8 +36,8 @@ const scrollStrategies = {
 };
 
 export interface ScrollStrategyProps {
-    scrollStrategy: keyof typeof scrollStrategies | ScrollStrategyFn;
-    contained: boolean | undefined;
+    scrollStrategy?: keyof typeof scrollStrategies | ScrollStrategyFn;
+    contained?: boolean;
 }
 
 /**

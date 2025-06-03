@@ -1,6 +1,13 @@
 import { omit, PhysicalSide, propsFactory } from "@/util";
-import { makeEvDialogProps } from "@/components";
+import {
+    EvDialogProps,
+    EvDialogSlots,
+    makeEvDialogProps,
+} from "@/components/EvDialog";
 import { PropType } from "vue";
+
+export interface EvDrawerProps extends EvDialogProps {}
+export interface EvDrawerSlots extends EvDialogSlots {}
 
 export const makeEvDrawerProps = propsFactory(
     {

@@ -1,12 +1,37 @@
 import { propsFactory } from "@/util";
 import { PropType, Ref } from "vue";
 import { TeleportTarget } from "@/composables/teleport";
-import { makeDimensionsProps } from "@/composables/dimensions";
-import { makeActivatorProps } from "./activator";
-import { makePositionStrategyProps } from "./position";
-import { makeScrollStrategyProps } from "./scroll";
-import { makeEvTransitionProps } from "@/components/EvTransition";
-import { makeComponentProps } from "@/composables/component";
+import { DimensionsProps, makeDimensionsProps } from "@/composables/dimensions";
+import { ActivatorProps, makeActivatorProps } from "./activator";
+import { makePositionStrategyProps, PositionStrategyProps } from "./position";
+import { makeScrollStrategyProps, ScrollStrategyProps } from "./scroll";
+import {
+    EvTransitionProps,
+    makeEvTransitionProps,
+} from "@/components/EvTransition";
+import { ComponentProps, makeComponentProps } from "@/composables/component";
+
+type ModelValueProp = boolean | Ref<boolean>;
+
+export interface EvOverlayProps
+    extends ActivatorProps,
+        DimensionsProps,
+        PositionStrategyProps,
+        ScrollStrategyProps,
+        EvTransitionProps,
+        ComponentProps {
+    absolute?: boolean;
+    attach?: TeleportTarget;
+    closeOnBack?: boolean;
+    contained?: boolean;
+    contentClass?: string;
+    contentProps?: Record<string, any>;
+    disabled?: boolean;
+    modelValue?: ModelValueProp;
+    persistent?: boolean;
+    veil?: boolean;
+    zIndex?: number | string;
+}
 
 /**
  * # Make EvOverlay Props
@@ -20,8 +45,8 @@ export const makeEvOverlayProps = propsFactory(
             default: true,
         },
         contained: Boolean,
-        contentClass: null,
-        contentProps: null,
+        contentClass: String,
+        contentProps: Object as PropType<EvOverlayProps["contentProps"]>,
         disabled: Boolean,
         modelValue: [Boolean, Object] as PropType<ModelValueProp>,
         persistent: Boolean,
@@ -44,4 +69,4 @@ export const makeEvOverlayProps = propsFactory(
     "EvOverlay",
 );
 
-type ModelValueProp = boolean | Ref<boolean>;
+

@@ -34,11 +34,11 @@ type ActivatorSelector = "parent" | string | Element | ComponentPublicInstance;
 
 export interface ActivatorProps extends DelayOpenCloseProps {
     activator?: ActivatorSelector;
-    activatorProps: Record<string, any>;
-    openOnClick: boolean | undefined;
-    openOnHover: boolean;
-    openOnFocus: boolean | undefined;
-    closeOnContentClick: boolean;
+    activatorProps?: Record<string, any>;
+    openOnClick?: boolean;
+    openOnHover?: boolean;
+    openOnFocus?: boolean;
+    closeOnContentClick?: boolean;
 }
 
 export const makeActivatorProps = propsFactory(

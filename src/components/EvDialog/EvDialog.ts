@@ -1,11 +1,36 @@
 import { propsFactory } from "@/util";
-import { makeEvOverlayProps } from "@/components/EvOverlay";
+import { EvOverlayProps, makeEvOverlayProps } from "@/components/EvOverlay";
 import EvDialogTransition from "@/components/EvDialog/EvDialogTransition.vue";
-import { IconProp } from "@/composables/icons";
-import { PropType } from "vue";
+import { IconProp, IconValue } from "@/composables/icons";
+import { PropType, Slot, Slots } from "vue";
 import { EvButtonProps } from "@/components/EvButton";
 import { EvToolbarProps } from "@/components/EvToolbar";
 import { EvDialogBodyProps } from "./EvDialogBody.vue";
+
+export interface EvDialogProps extends EvOverlayProps {
+    bodyProps?: EvDialogBodyProps;
+    closeable?: boolean;
+    draggable?: boolean;
+    dragWithinViewport?: boolean;
+    dragMinX?: number;
+    dragMinY?: number;
+    fullscreen?: boolean;
+    headerActions?: EvButtonProps[];
+    headerProps?: EvToolbarProps;
+    hideHeader?: boolean;
+    icon?: IconValue;
+    noPadding?: boolean;
+    retainFocus?: boolean;
+    scrollable?: boolean;
+    title?: string;
+}
+
+export interface EvDialogSlots extends Slots {
+    container?: Slot;
+    default?: Slot;
+    header?: Slot;
+    footer?: Slot;
+}
 
 /**
  * # makeEvDialogProps

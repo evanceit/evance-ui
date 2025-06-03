@@ -71,6 +71,7 @@ export default defineConfig(({ mode }) => ({
                               dir: "dist/esm",
                               entryFileNames: "[name].mjs",
                               chunkFileNames: "chunks/[name]-[hash].mjs",
+                              preserveModules: true,
                               banner: bannerTxt,
                               globals: {
                                   vue: "Vue",
@@ -83,6 +84,7 @@ export default defineConfig(({ mode }) => ({
                               exports: "named",
                               entryFileNames: "[name].cjs",
                               chunkFileNames: "chunks/[name]-[hash].cjs",
+                              preserveModules: true,
                               banner: bannerTxt,
                               globals: {
                                   vue: "Vue",
@@ -102,7 +104,6 @@ export default defineConfig(({ mode }) => ({
         vue(),
         dts({
             insertTypesEntry: true,
-            rollupTypes: true,
             respectExternal: true, // Ensures module imports are resolved correctly
             outDir: "./dist/types",
             exclude: ["**/*.stories.ts", "**/*.test.ts"],
