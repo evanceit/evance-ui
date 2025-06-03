@@ -25,7 +25,7 @@ export interface EvOverlayProps
     closeOnBack?: boolean;
     contained?: boolean;
     contentClass?: string;
-    contentProps?: Record<string, any>;
+    contentProps?: Record<string, unknown>;
     disabled?: boolean;
     modelValue?: ModelValueProp;
     persistent?: boolean;

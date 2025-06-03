@@ -1,10 +1,13 @@
-import { App } from "vue";
+import { App, Component } from "vue";
 import { EvDrawerRenderer } from "@/components/EvDrawer/EvDrawerRenderer";
 import { EvDrawerProps, EvDrawerSlots } from "./EvDrawer";
 
+export interface EvDrawerServiceSlots
+    extends Partial<Record<keyof EvDrawerSlots, Component>> {}
+
 export interface EvDrawerServiceOptions {
     props?: EvDrawerProps;
-    slots?: EvDrawerSlots;
+    slots?: EvDrawerServiceSlots;
     data?: any;
 }
 

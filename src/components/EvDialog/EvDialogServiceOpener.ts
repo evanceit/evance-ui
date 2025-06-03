@@ -1,10 +1,13 @@
 import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer";
 import { EvDialogProps, EvDialogSlots } from "./EvDialog";
-import { App } from "vue";
+import { App, Component } from "vue";
+
+export interface EvDialogServiceSlots
+    extends Partial<Record<keyof EvDialogSlots, Component>> {}
 
 export interface EvDialogServiceOptions {
     props?: EvDialogProps;
-    slots?: EvDialogSlots;
+    slots?: EvDialogServiceSlots;
     data?: any;
 }
 
