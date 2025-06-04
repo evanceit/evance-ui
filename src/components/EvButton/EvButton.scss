@@ -94,7 +94,7 @@
 .ev-button {
     background: var(--button-appearance-background);
     border: var(--button-appearance-border);
-    color: var(--button-appearance-color, currentColor);
+    color: var(--button-appearance-color, currentColor) !important;
 
     @include mixins.generate-appearances(button, true);
 
