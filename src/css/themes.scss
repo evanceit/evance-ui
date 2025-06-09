@@ -162,6 +162,10 @@
     --scrollbar-thumb: #5D678846;
     --scrollbar-thumb-hover: #5D6788;
 
+    /* Skeleton */
+    --skeleton-background: #{settings.token('neutral.300A')};
+    --skeleton-animation-background: rgba(255, 255, 255, 0.4);
+
     /* Tooltips */
     --tooltip-color: #F3F5F9;
     --tooltip-background: #696d88;
@@ -313,6 +317,10 @@
     /* Scrollbars */
     --scrollbar-thumb: #A0A6BC46;
     --scrollbar-thumb-hover: #A0A6BC;
+
+    /* Skeleton */
+    --skeleton-background: #{settings.token('dark-neutral.300A')};
+    --skeleton-animation-background: rgba(255, 255, 255, 0.075);
 
     /* Tooltips */
     --tooltip-color: #bec6d4;

@@ -14,7 +14,7 @@ const meta: Meta<typeof EvImg> = {
         },
         aspectRatio: {
             control: "select",
-            options: ["4:3", "16:9", "21/9", 0.5],
+            options: [undefined, "1:1", "4:3", "16:9", "21/9", 0.5],
             description:
                 "May be supplied as a string representing a ratio or division, or as a decimal. " +
                 "Will be calculated automatically if omitted.",
@@ -98,6 +98,7 @@ const meta: Meta<typeof EvImg> = {
         src: {
             control: "select",
             options: [
+                undefined,
                 "https://picsum.photos/id/11/1600/900",
                 "https://picsum.photos/id/12/1600/900",
                 "https://picsum.photos/id/13/600/400",

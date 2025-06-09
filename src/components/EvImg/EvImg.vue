@@ -17,7 +17,7 @@ import {
     shallowRef,
     watch,
 } from "vue";
-import { Browser, filterComponentProps, isObject, toWebUnit } from "@/util";
+import {Browser, filterComponentProps, isObject, makeClassName, toWebUnit} from "@/util";
 
 const props = defineProps({
     ...makeEvImgProps(),
@@ -25,6 +25,7 @@ const props = defineProps({
 const slots = defineSlots<{
     default(): never;
     error(): never;
+    loading(): never;
     placeholder(): never;
     sources(): never;
 }>();
@@ -236,6 +237,10 @@ const isLoaded = computed(() => {
     return state.value === "loaded";
 });
 
+const isEmpty = computed(() => {
+    return !normalisedSrc.value.src && !normalisedSrc.value.lazySrc;
+});
+
 const responsiveProps = computed(() =>
     filterComponentProps(EvResponsive, props),
 );
@@ -249,6 +254,8 @@ const imgProps = computed(() => ({
     draggable: props.draggable,
     sizes: props.sizes,
 }));
+
+const stateClass = computed(() => makeClassName(state.value, "is-state"));
 </script>
 
 <template>
@@ -262,6 +269,7 @@ const imgProps = computed(() => ({
             {
                 'is-booting': !isBooted,
             },
+            stateClass,
             props.class,
         ]"
         :style="[
@@ -305,9 +313,10 @@ const imgProps = computed(() => ({
                     @error="onError" />
             </ev-transition>
 
-            <ev-transition :transition="transition">
+            <ev-transition
+                v-if="normalisedSrc.lazySrc && state !== 'loaded'"
+                :transition="transition">
                 <img
-                    v-if="normalisedSrc.lazySrc && state !== 'loaded'"
                     :class="[
                         'ev-img--img',
                         'ev-img--preload',
@@ -329,26 +338,31 @@ const imgProps = computed(() => ({
                 }"></div>
 
             <ev-transition
-                v-if="slots.placeholder"
+                v-if="slots.placeholder && isEmpty"
                 :transition="transition"
                 appear>
-                <div
-                    v-if="
-                        state === 'loading' ||
-                        (state === 'error' && !slots.error)
-                    "
-                    class="ev-img--placeholder">
+                <div class="ev-img--placeholder">
                     <slot name="placeholder" />
                 </div>
             </ev-transition>
-
-            <ev-transition v-if="slots.error" :transition="transition" appear>
+            <ev-transition
+                v-else-if="slots.loading && state === 'loading'"
+                :transition="transition"
+                appear>
+                <div class="ev-img--loading">
+                    <slot name="loading" />
+                </div>
+            </ev-transition>
+            <ev-transition
+                v-else-if="slots.error && state === 'error'"
+                :transition="transition"
+                appear>
                 <div class="ev-img--error">
                     <slot name="error" />
                 </div>
             </ev-transition>
         </template>
-        <template #default>
+        <template v-if="slots.default" #default>
             <slot name="default" />
         </template>
     </ev-responsive>

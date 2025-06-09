@@ -15,6 +15,7 @@ const props = defineProps({
 });
 
 const slots = defineSlots<{
+    title(): never;
     start(): never;
     end(): never;
 }>();
@@ -111,8 +112,10 @@ const isAdjustEnd = computed(() => {
                     <ev-icon :glyph="props.icon" />
                 </div>
 
-                <div v-if="props.title" class="ev-toolbar--title">
-                    {{ props.title }}
+                <div
+                    v-if="slots.title || props.title"
+                    class="ev-toolbar--title">
+                    <slot name="title">{{ props.title }}</slot>
                 </div>
             </div>
             <div

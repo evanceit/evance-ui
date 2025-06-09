@@ -1,0 +1,27 @@
+.ev-skeleton {
+    background: var(--skeleton-background);
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+        content: '';
+        animation: ev-skeleton-animation 1.2s infinite;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translateX(-100%);
+        z-index: 1;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--skeleton-animation-background), rgba(255, 255, 255, 0));
+    }
+}
+
+@keyframes ev-skeleton-animation {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

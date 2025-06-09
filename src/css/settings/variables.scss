@@ -153,3 +153,21 @@ $rounded: map-deep-merge(
     ),
     $rounded
 );
+
+
+$border-color-root: var(--stroke) !default;
+$border-style-root: solid !default;
+$borders: () !default;
+$borders: map-deep-merge(
+    (
+        0: 0,
+        null: 1px,
+    ),
+    $borders
+);
+@each $key, $border in $borders {
+    $borders: map-deep-merge(
+        $borders,
+        ($key: $border $border-style-root $border-color-root)
+    )
+}

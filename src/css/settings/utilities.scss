@@ -408,18 +408,10 @@ $utilities: () !default;
             ),
 
             // Border
-            /*
-                @todo: I need to come back to borders because the way we think
-                       of borders may be different to Vuetify
             "border": (
                 property: border-width border-style border-color,
                 class: border,
                 values: variables.$borders
-            ),
-            "border-opacity": (
-                property: --ev-border-opacity,
-                class: border-opacity,
-                values: variables.$border-opacities
             ),
             "border-top": (
                 property: border-block-start-width border-block-start-style border-block-start-color,
@@ -441,13 +433,23 @@ $utilities: () !default;
                 class: border-s,
                 values: variables.$borders
             ),
+
+            /*
+                @todo: I need to come back to borders because the way we think
+                       of borders may be different to Vuetify
+
+            "border-opacity": (
+                property: --ev-border-opacity,
+                class: border-opacity,
+                values: variables.$border-opacities
+            ),
+
+             */
             "border-style": (
                 property: border-style,
                 class: border,
                 values: solid dashed dotted double none
             ),
-
-             */
 
             // Text
             "text-align": (

@@ -55,6 +55,7 @@ export * from "./EvTagGroup";
 export * from "./EvText";
 export * from "./EvTextarea";
 export * from "./EvTextfield";
+export * from "./EvThumbnail";
 export * from "./EvToolbar";
 export * from "./EvTooltip";
 export * from "./EvTransition";
