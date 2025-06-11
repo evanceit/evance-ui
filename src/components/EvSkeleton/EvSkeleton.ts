@@ -85,19 +85,6 @@ export const skeletonPresets = {
     },
 };
 
-export function mergeWithPreset<T extends Record<string, any>>(
-    props: T,
-    preset: Partial<T>,
-): T {
-    const result = { ...props };
-    for (const key in preset) {
-        if (result[key] === undefined) {
-            result[key] = preset[key];
-        }
-    }
-    return result as T;
-}
-
 export const makeEvSkeletonProps = propsFactory(
     {
         inline: {

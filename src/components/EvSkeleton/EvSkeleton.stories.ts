@@ -57,6 +57,22 @@ const meta: Meta<typeof EvSkeleton> = {
                 undefined: undefined,
             },
         },
+        rounded: {
+            control: "select",
+            options: [
+                "undefined",
+                "x-small",
+                "small",
+                "medium",
+                "large",
+                "x-large",
+                "circle",
+                "pill",
+            ],
+            mapping: {
+                undefined: undefined,
+            },
+        },
     },
     args: {
         inline: undefined,
@@ -76,6 +92,8 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-skeleton v-bind="args" />`,
+        template: `
+            <ev-skeleton v-bind="args" />
+        `,
     }),
 };

@@ -22,7 +22,11 @@ export interface EvResponsiveProps
 export const makeEvResponsiveProps = propsFactory(
     {
         contentClass: String,
-        inline: Boolean,
+        inline: {
+            type: Boolean,
+            default: undefined,
+            required: false,
+        },
 
         ...makeAspectRatioProps(),
         ...makeComponentProps(),

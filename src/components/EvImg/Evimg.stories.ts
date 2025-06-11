@@ -14,7 +14,7 @@ const meta: Meta<typeof EvImg> = {
         },
         aspectRatio: {
             control: "select",
-            options: [undefined, "1:1", "4:3", "16:9", "21/9", 0.5],
+            options: [undefined, "1:1", "4:3", "16:9", "21/9", 1.91, 0.5],
             description:
                 "May be supplied as a string representing a ratio or division, or as a decimal. " +
                 "Will be calculated automatically if omitted.",
@@ -142,7 +142,7 @@ const meta: Meta<typeof EvImg> = {
         draggable: undefined,
         eager: undefined,
         height: undefined,
-        inline: false,
+        inline: undefined,
         lazySrc: undefined,
         maxHeight: undefined,
         maxWidth: undefined,

@@ -2,13 +2,12 @@
 import "./EvSkeleton.scss";
 import {
     makeEvSkeletonProps,
-    mergeWithPreset,
     skeletonPresets,
 } from "./EvSkeleton";
 import { useRounded } from "@/composables/rounded";
 import { useDimensions } from "@/composables";
 import { computed } from "vue";
-import { makeClassName, sizeModifier } from "@/util";
+import { applyDefaults, makeClassName, sizeModifier } from "@/util";
 import { useAspectStyles } from "@/composables/aspectRatio";
 
 const props = defineProps({ ...makeEvSkeletonProps() });
@@ -24,7 +23,7 @@ const computedProps = computed(() => {
     const preset = skeletonPresets[props.type] ?? {};
     const presetDefaults = preset.defaults ?? {};
     const presetProps = preset[size.value] ?? {};
-    return mergeWithPreset(props, { ...presetDefaults, ...presetProps });
+    return applyDefaults(props, { ...presetDefaults, ...presetProps });
 });
 
 const roundedClasses = computed(

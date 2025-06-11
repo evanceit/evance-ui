@@ -23,10 +23,27 @@ const meta: Meta<typeof EvThumbnail> = {
             description:
                 "Designates the border-radius applied to the component.",
         },
+        size: {
+            control: "select",
+            options: [
+                "undefined",
+                "xx-small",
+                "x-small",
+                "small",
+                "medium",
+                "large",
+                "x-large",
+                "xx-large",
+            ],
+            mapping: {
+                undefined: undefined,
+            },
+        },
     },
     args: {
         ...EvImgStories.args,
-        rounded: "medium",
+        rounded: undefined,
+        size: undefined,
     },
     tags: ["autodocs"],
 };

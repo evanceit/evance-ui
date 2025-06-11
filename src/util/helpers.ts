@@ -468,3 +468,16 @@ export function debounce<T extends (...args: any[]) => any>(
     wrap.immediate = fn;
     return wrap;
 }
+
+export function applyDefaults<T extends Record<string, any>>(
+    props: T,
+    defaults: Partial<T>,
+): T {
+    const result = { ...props };
+    for (const key in defaults) {
+        if (result[key] === undefined) {
+            result[key] = defaults[key];
+        }
+    }
+    return result as T;
+}

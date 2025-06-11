@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import "./EvThumbnail.scss";
-import { makeEvThumbnailProps } from "./EvThumbnail";
+import { makeEvThumbnailProps, thumbnailPresets } from "./EvThumbnail";
 import { EvImg } from "@/components/EvImg";
 import { computed } from "vue";
-import { filterComponentProps } from "@/util";
+import { applyDefaults, filterComponentProps } from "@/util";
 import { useRounded } from "@/composables/rounded";
 import { DangerIcon, ImageIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
@@ -13,9 +13,22 @@ const props = defineProps({ ...makeEvThumbnailProps() });
 const slots = defineSlots<{
     default(): never;
 }>();
-const imgProps = computed(() => filterComponentProps(EvImg, props));
-const { roundedClasses } = useRounded(props);
 
+const computedProps = computed(() => {
+    if (!props.size) {
+        return props;
+    }
+    const presetProps = thumbnailPresets[props.size] ?? {};
+    const presetDefaults = thumbnailPresets.defaults;
+    return applyDefaults(props, { ...presetDefaults, ...presetProps });
+});
+
+const imgProps = computed(() =>
+    filterComponentProps(EvImg, computedProps.value),
+);
+const roundedClasses = computed(
+    () => useRounded(computedProps.value).roundedClasses.value,
+);
 </script>
 
 <template>
@@ -27,7 +40,7 @@ const { roundedClasses } = useRounded(props);
             <ev-icon :glyph="ImageIcon" appearance="subtle" />
         </template>
         <template #loading>
-            <ev-skeleton width="100%" height="100%" />
+            <ev-skeleton type="image" width="100%" height="100%" />
         </template>
         <template #error>
             <ev-icon :glyph="DangerIcon" appearance="danger" />
