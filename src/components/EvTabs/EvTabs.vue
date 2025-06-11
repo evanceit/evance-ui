@@ -10,7 +10,7 @@ import { useModelProxy } from "@/composables/modelProxy";
 import { computed, toRef } from "vue";
 import { filterComponentProps, isObject } from "@/util";
 import { provideDefaults } from "@/composables/defaults";
-import { EvTab } from "@/components";
+import { EvTab } from "./EvTab";
 
 /**
  * ## parseItems

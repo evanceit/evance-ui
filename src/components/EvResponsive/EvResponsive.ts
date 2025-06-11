@@ -1,39 +1,15 @@
-import { computed } from "vue";
 import { propsFactory } from "@/util";
-import {ComponentProps, makeComponentProps} from "@/composables/component";
+import { ComponentProps, makeComponentProps } from "@/composables/component";
 import { DimensionsProps, makeDimensionsProps } from "@/composables/dimensions";
+import {
+    AspectRatioProps,
+    makeAspectRatioProps,
+} from "@/composables/aspectRatio";
 
 export type EvResponsiveSlots = {
     default: never;
     content: never;
 };
-
-export type AspectRatioProps = {
-    aspectRatio?: string | number;
-};
-
-/**
- * # useAspectStyles
- *
- * Aspect ratio notation is permitted as a number or a string where aspects such as '16:9' is
- * converted to a division '16/9'.
- *
- * @link https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio
- * @param props
- */
-export function useAspectStyles(props: AspectRatioProps) {
-    return {
-        aspectStyles: computed(() => {
-            if (!props.aspectRatio) {
-                return undefined;
-            }
-            const ratio = String(props.aspectRatio);
-            return {
-                aspectRatio: ratio.replace(":", "/"),
-            };
-        }),
-    };
-}
 
 export interface EvResponsiveProps
     extends AspectRatioProps,
@@ -45,10 +21,10 @@ export interface EvResponsiveProps
 
 export const makeEvResponsiveProps = propsFactory(
     {
-        aspectRatio: [String, Number],
         contentClass: String,
         inline: Boolean,
 
+        ...makeAspectRatioProps(),
         ...makeComponentProps(),
         ...makeDimensionsProps(),
     },

@@ -5,7 +5,6 @@ type RoundedValue = boolean | string | number | null | undefined;
 
 export interface RoundedProps {
     rounded?: RoundedValue;
-    tile?: boolean;
 }
 
 type RoundedData = {

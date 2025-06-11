@@ -3,8 +3,9 @@
  * '<ev-responsive>`
  */
 import "./EvResponsive.scss";
-import { makeEvResponsiveProps, useAspectStyles } from "./EvResponsive";
+import { makeEvResponsiveProps } from "./EvResponsive";
 import { useDimensions } from "@/composables/dimensions";
+import { useAspectStyles } from "@/composables/aspectRatio";
 
 const props = defineProps({
     ...makeEvResponsiveProps(),

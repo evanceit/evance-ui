@@ -2,6 +2,7 @@
     background: var(--skeleton-background);
     overflow: hidden;
     position: relative;
+    cursor: wait;
 
     &:after {
         content: '';
@@ -15,6 +16,10 @@
         z-index: 1;
         background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--skeleton-animation-background), rgba(255, 255, 255, 0));
     }
+
+    &.is-inline {
+        display: inline-flex;
+    }
 }
 
 @keyframes ev-skeleton-animation {
@@ -23,5 +28,13 @@
     }
     100% {
         transform: translateX(100%);
+    }
+}
+
+/* Types */
+.ev-skeleton {
+    &.is-type-heading,
+    &.is-type-text {
+        margin-bottom: 0.25rem;
     }
 }
