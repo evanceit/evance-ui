@@ -25,7 +25,13 @@ export interface EvSkeletonProps
 export type SkeletonType = HintedString<"avatar" | "heading" | "text">;
 
 export type SkeletonSize = HintedString<
-    "x-small" | "small" | "medium" | "large" | "x-large" | "xx-large"
+    | "xx-small"
+    | "x-small"
+    | "small"
+    | "medium"
+    | "large"
+    | "x-large"
+    | "xx-large"
 >;
 
 export const skeletonPresets = {
@@ -82,6 +88,40 @@ export const skeletonPresets = {
         large: { height: "var(--text-size-large)" },
         "x-large": { height: "var(--text-size-subtitle)" },
         "xx-large": { height: "var(--text-size-subtitle)" },
+    },
+    thumbnail: {
+        defaults: {
+            inline: true,
+            aspectRatio: 1,
+        },
+        "xx-small": {
+            height: 24,
+            rounded: "x-small",
+        },
+        "x-small": {
+            height: 36,
+            rounded: "x-small",
+        },
+        small: {
+            height: 48,
+            rounded: "small",
+        },
+        medium: {
+            height: 64,
+            rounded: "small",
+        },
+        large: {
+            height: 96,
+            rounded: "medium",
+        },
+        "x-large": {
+            height: 128,
+            rounded: "large",
+        },
+        "xx-large": {
+            height: 256,
+            rounded: "large",
+        },
     },
 };
 

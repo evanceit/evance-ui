@@ -17,6 +17,7 @@ const meta: Meta<typeof EvSkeleton> = {
                 "heading",
                 "image",
                 "text",
+                "thumbnail",
             ],
             mapping: {
                 undefined: undefined,
@@ -26,6 +27,7 @@ const meta: Meta<typeof EvSkeleton> = {
             control: "select",
             options: [
                 "undefined",
+                "xx-small",
                 "x-small",
                 "small",
                 "medium",
