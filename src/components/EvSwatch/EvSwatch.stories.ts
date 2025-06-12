@@ -40,9 +40,52 @@ const meta: Meta<typeof EvSwatch> = {
                 "undefined",
                 "#FF0000",
                 "#FF000066",
+                "Linear Gradient 1",
+                "Linear Gradient 2",
+                "Radial Gradient 1",
             ],
             mapping: {
                 undefined: undefined,
+                "Linear Gradient 1": {
+                    type: "linear-gradient",
+                    stops: [
+                        { color: "#e66465", position: 0 },
+                        { color: "#9198e5", position: 100 },
+                    ],
+                },
+                "Linear Gradient 2": [
+                    {
+                        type: "linear-gradient",
+                        angle: 217,
+                        stops: [
+                            { color: "rgb(255 0 0 / 80%)", position: 0 },
+                            { color: "rgb(255 0 0 / 0%)", position: 70.71 },
+                        ],
+                    },
+                    {
+                        type: "linear-gradient",
+                        angle: 127,
+                        stops: [
+                            { color: "rgb(0 255 0 / 80%)", position: 0 },
+                            { color: "rgb(0 255 0 / 0%)", position: 70.71 },
+                        ],
+                    },
+                    {
+                        type: "linear-gradient",
+                        angle: 336,
+                        stops: [
+                            { color: "rgb(0 0 255 / 80%)", position: 0 },
+                            { color: "rgb(0 0 255 / 0%)", position: 70.71 },
+                        ],
+                    },
+                ],
+                "Radial Gradient 1": {
+                    type: "radial-gradient",
+                    stops: [
+                        { color: "#e66465", position: 0 },
+                        { color: "#9198e5", position: 100 },
+                    ],
+                },
             },
         },
     },

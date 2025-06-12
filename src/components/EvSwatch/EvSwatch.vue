@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvSwatch.scss";
-import { makeEvSwatchProps } from "./EvSwatch";
+import { makeBackground, makeEvSwatchProps } from "./EvSwatch";
 import { useRounded } from "@/composables/rounded";
 import { sizeModifier } from "@/util";
 import { computed } from "vue";
@@ -14,8 +14,9 @@ const sizeClass = computed(() => sizeModifier(props.size));
 
 function makeSampleStyles() {
     return computed(() => {
+        console.log(makeBackground(props.value));
         return {
-            background: props.value,
+            background: makeBackground(props.value),
         };
     });
 }
