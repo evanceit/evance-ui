@@ -15,7 +15,7 @@ export interface ColorStop {
 
 export interface SolidColor {
     type: "solid";
-    value: string;
+    color: string;
 }
 
 export interface LinearGradient {
@@ -44,7 +44,30 @@ export interface RadialGradient {
     stops: ColorStop[];
 }
 
-export type ColorValue = string | SolidColor | LinearGradient | RadialGradient;
+export interface ImagePosition {
+    x: HorizontalSide | number;
+    y: VerticalSide | number;
+}
+
+export interface ImageBackground {
+    type: "image";
+    url: string;
+    repeat?: "no-repeat" | "repeat" | "repeat-x" | "repeat-y";
+    size?: "cover" | "contain" | BackgroundSize;
+    position?: ImagePosition;
+}
+
+export interface BackgroundSize {
+    width: number;
+    height: number;
+}
+
+export type ColorValue =
+    | string
+    | SolidColor
+    | LinearGradient
+    | RadialGradient
+    | ImageBackground;
 export type ColorValueProp = ColorValue | ColorValue[];
 
 function makeStops(stops: ColorStop[]): string {
@@ -80,21 +103,34 @@ function makeRadialGradient(gradient: RadialGradient): string {
         : `radial-gradient(${stops})`;
 }
 
-export function makeBackground(color: ColorValueProp) {
-    if (Array.isArray(color)) {
-        return color.map(makeBackground).join(", ");
+function makeImage(image: ImageBackground): string {
+    const {
+        url,
+        repeat = "no-repeat",
+        size = "cover",
+        position = "center",
+    } = image;
+
+    return `url("${url}") ${position} / ${size} ${repeat}`;
+}
+
+export function makeBackground(value: ColorValueProp) {
+    if (Array.isArray(value)) {
+        return value.map(makeBackground).join(", ");
     }
-    if (typeof color === "string") {
-        return color;
+    if (typeof value === "string") {
+        return value;
     }
-    if (typeof color === "object") {
-        switch (color.type) {
+    if (typeof value === "object") {
+        switch (value.type) {
             case "solid":
-                return color.value;
+                return value.color;
             case "linear-gradient":
-                return makeLinearGradient(color);
+                return makeLinearGradient(value);
             case "radial-gradient":
-                return makeRadialGradient(color);
+                return makeRadialGradient(value);
+            case "image":
+                return makeImage(value);
         }
     }
     return "transparent";

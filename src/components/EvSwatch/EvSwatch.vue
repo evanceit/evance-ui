@@ -14,7 +14,6 @@ const sizeClass = computed(() => sizeModifier(props.size));
 
 function makeSampleStyles() {
     return computed(() => {
-        console.log(makeBackground(props.value));
         return {
             background: makeBackground(props.value),
         };

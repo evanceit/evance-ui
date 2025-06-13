@@ -43,6 +43,8 @@ const meta: Meta<typeof EvSwatch> = {
                 "Linear Gradient 1",
                 "Linear Gradient 2",
                 "Radial Gradient 1",
+                "Image Background 1",
+                "Image Background 2",
             ],
             mapping: {
                 undefined: undefined,
@@ -86,6 +88,40 @@ const meta: Meta<typeof EvSwatch> = {
                         { color: "#9198e5", position: 100 },
                     ],
                 },
+                "Image Background 1": {
+                    type: "image",
+                    url: "https://picsum.photos/id/11/1600/900",
+                },
+                "Image Background 2": [
+                    {
+                        type: "linear-gradient",
+                        angle: 217,
+                        stops: [
+                            { color: "rgb(255 0 0 / 80%)", position: 0 },
+                            { color: "rgb(255 0 0 / 0%)", position: 70.71 },
+                        ],
+                    },
+                    {
+                        type: "linear-gradient",
+                        angle: 127,
+                        stops: [
+                            { color: "rgb(0 255 0 / 80%)", position: 0 },
+                            { color: "rgb(0 255 0 / 0%)", position: 70.71 },
+                        ],
+                    },
+                    {
+                        type: "linear-gradient",
+                        angle: 336,
+                        stops: [
+                            { color: "rgb(0 0 255 / 80%)", position: 0 },
+                            { color: "rgb(0 0 255 / 0%)", position: 70.71 },
+                        ],
+                    },
+                    {
+                        type: "image",
+                        url: "https://picsum.photos/id/11/1600/900",
+                    },
+                ],
             },
         },
     },
