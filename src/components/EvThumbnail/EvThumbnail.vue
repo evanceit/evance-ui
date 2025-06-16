@@ -3,11 +3,12 @@ import "./EvThumbnail.scss";
 import { makeEvThumbnailProps, thumbnailPresets } from "./EvThumbnail";
 import { EvImg } from "@/components/EvImg";
 import { computed } from "vue";
-import { applyDefaults, filterComponentProps } from "@/util";
+import { applyDefaults, filterComponentProps, omit } from "@/util";
 import { useRounded } from "@/composables/rounded";
 import { DangerIcon, ImageIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
 import { EvSkeleton } from "@/components/EvSkeleton";
+import { parseAspectRatio } from "@/composables/aspectRatio";
 
 const props = defineProps({ ...makeEvThumbnailProps() });
 const slots = defineSlots<{
@@ -20,9 +21,8 @@ const computedProps = computed(() => {
     }
     const presets = thumbnailPresets[props.size] ?? {};
     const defaults = thumbnailPresets.defaults;
-    return applyDefaults(props, { ...defaults, ...presets });
+    const combined = applyDefaults(props, { ...defaults, ...presets });
 
-    /*
     if (!combined.width && combined.aspectRatio && combined.height) {
         const aspectRatio = parseAspectRatio(combined.aspectRatio);
         if (aspectRatio && isFinite(aspectRatio)) {
@@ -35,7 +35,6 @@ const computedProps = computed(() => {
         }
     }
     return combined;
-    */
 });
 
 const imgProps = computed(() =>
@@ -49,8 +48,6 @@ const roundedClasses = computed(
 </script>
 
 <template>
-    {{ computedProps }}
-
     <ev-img :class="['ev-thumbnail', roundedClasses]" v-bind="imgProps">
         <template v-if="slots.default" #default>
             <slot />
