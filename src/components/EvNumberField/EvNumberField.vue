@@ -373,8 +373,9 @@ const hasSuffix = computed(() => {
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(-1)"
                 @keyup="stopIncrementing()"
-                @mousedown="startIncrementing(-1)"
-                @mouseup="stopIncrementing()"
+                @click.prevent.stop="() => {}"
+                @mousedown.prevent.stop="startIncrementing(-1)"
+                @mouseup.prevent.stop="stopIncrementing()"
                 @mouseleave="stopIncrementing()" />
             <slot name="prefix">{{ props.prefix }}</slot>
         </template>
@@ -390,8 +391,9 @@ const hasSuffix = computed(() => {
                 :disabled="props.readonly || props.disabled"
                 @keydown.space.enter="startIncrementing(1)"
                 @keyup="stopIncrementing()"
-                @mousedown="startIncrementing(1)"
-                @mouseup="stopIncrementing()"
+                @click.prevent.stop="() => {}"
+                @mousedown.prevent.stop="startIncrementing(1)"
+                @mouseup.prevent.stop="stopIncrementing()"
                 @mouseleave="stopIncrementing()" />
         </template>
     </ev-textfield>
