@@ -31,7 +31,7 @@ const computedProps = computed(() => {
                     ? parseFloat(combined.height)
                     : combined.height;
             const width = Math.round(numericHeight * aspectRatio);
-            return omit({ ...combined, width }, ["height"]);
+            return { ...combined, width };
         }
     }
     return combined;
