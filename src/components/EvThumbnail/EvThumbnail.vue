@@ -18,9 +18,24 @@ const computedProps = computed(() => {
     if (!props.size) {
         return props;
     }
-    const presetProps = thumbnailPresets[props.size] ?? {};
-    const presetDefaults = thumbnailPresets.defaults;
-    return applyDefaults(props, { ...presetDefaults, ...presetProps });
+    const presets = thumbnailPresets[props.size] ?? {};
+    const defaults = thumbnailPresets.defaults;
+    return applyDefaults(props, { ...defaults, ...presets });
+
+    /*
+    if (!combined.width && combined.aspectRatio && combined.height) {
+        const aspectRatio = parseAspectRatio(combined.aspectRatio);
+        if (aspectRatio && isFinite(aspectRatio)) {
+            const numericHeight =
+                typeof combined.height === "string"
+                    ? parseFloat(combined.height)
+                    : combined.height;
+            const width = Math.round(numericHeight * aspectRatio);
+            return omit({ ...combined, width }, ["height"]);
+        }
+    }
+    return combined;
+    */
 });
 
 const imgProps = computed(() =>
@@ -29,9 +44,13 @@ const imgProps = computed(() =>
 const roundedClasses = computed(
     () => useRounded(computedProps.value).roundedClasses.value,
 );
+
+
 </script>
 
 <template>
+    {{ computedProps }}
+
     <ev-img :class="['ev-thumbnail', roundedClasses]" v-bind="imgProps">
         <template v-if="slots.default" #default>
             <slot />

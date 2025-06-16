@@ -34,3 +34,22 @@ export function useAspectStyles(props: AspectRatioProps) {
         }),
     };
 }
+
+export function parseAspectRatio(
+    value: string | number | undefined,
+): number | undefined {
+    if (typeof value === "number") {
+        return value;
+    }
+    if (typeof value === "string") {
+        const match = value.match(/^(\d+(?:\.\d+)?)[/:](\d+(?:\.\d+)?)$/);
+        if (match) {
+            const [, w, h] = match;
+            const ratio = parseFloat(w) / parseFloat(h);
+            return isFinite(ratio) && ratio > 0 ? ratio : undefined;
+        }
+        const num = parseFloat(value);
+        return isFinite(num) && num > 0 ? num : undefined;
+    }
+    return undefined;
+}

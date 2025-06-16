@@ -1,5 +1,7 @@
 .ev-thumbnail {
     background-color: var(--surface-panel);
+    width: auto;
+    height: auto;
 
     &:after {
         content: '';
