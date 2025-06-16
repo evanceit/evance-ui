@@ -40,6 +40,7 @@ export interface FormFieldProps {
     id?: string;
     disabled?: boolean;
     error?: boolean;
+    errorMessages?: string[];
     focused?: boolean;
     name?: string;
     readonly?: boolean;
@@ -61,6 +62,7 @@ export const makeFormFieldProps = propsFactory(
         id: String,
         disabled: Boolean,
         error: Boolean,
+        errorMessages: Array as PropType<FormFieldProps["errorMessages"]>,
         name: String,
         readonly: Boolean,
         validators: {
