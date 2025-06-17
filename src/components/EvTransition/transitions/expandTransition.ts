@@ -60,7 +60,6 @@ export default function (expandedParentClass = "", x = false) {
          * @param el
          */
         onEnter(el: HTMLExpandElement) {
-            console.log('onenter');
             const initialStyle = el._initialStyle!;
 
             el.style.setProperty("transition", "none", "important");
@@ -76,7 +75,6 @@ export default function (expandedParentClass = "", x = false) {
             if (expandedParentClass && el._parent) {
                 el._parent.classList.add(expandedParentClass);
             }
-
             requestAnimationFrame(() => {
                 el.style[sizeProperty] = offset;
             });

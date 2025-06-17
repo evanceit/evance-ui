@@ -36,6 +36,7 @@ export * from "./EvMenu";
 export * from "./EvMessage";
 export * from "./EvNotification";
 export * from "./EvNotifications";
+export * from "./EvNumber";
 export * from "./EvNumberField";
 export * from "./EvOverlay";
 export * from "./EvProgress";

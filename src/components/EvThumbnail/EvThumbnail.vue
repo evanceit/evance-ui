@@ -3,7 +3,7 @@ import "./EvThumbnail.scss";
 import { makeEvThumbnailProps, thumbnailPresets } from "./EvThumbnail";
 import { EvImg } from "@/components/EvImg";
 import { computed } from "vue";
-import { applyDefaults, filterComponentProps, omit } from "@/util";
+import { applyDefaults, filterComponentProps } from "@/util";
 import { useRounded } from "@/composables/rounded";
 import { DangerIcon, ImageIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";

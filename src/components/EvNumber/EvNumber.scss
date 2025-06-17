@@ -1,0 +1,54 @@
+@use '@/css/transitions';
+
+.ev-number {
+    display: inline-flex;
+}
+
+.ev-number-digit,
+.ev-number-symbol {
+    display: inline-block;
+    height: 1em;
+    position: relative;
+    line-height: 1;
+    transition: all 0.5s;
+    vertical-align: text-bottom;
+    isolation: isolate;
+}
+.ev-number-digit {
+    overflow: hidden;
+}
+
+.ev-number-digit--stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.ev-number-digit--num {
+    height: 1em;
+    line-height: 1;
+    text-align: center;
+}
+
+.ev-number-transition {
+    @include transitions.transition-default();
+    will-change: transform, opacity, width;
+
+    &-move,
+    &-enter-active,
+    &-leave-active {
+        transition-property: all !important;
+        transition-duration: 0.5s !important;
+    }
+
+    &-enter-to,
+    &-leave-from {
+        opacity: 1;
+        transform: scale(100%);
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
+        transform: scale(50%);
+    }
+}
