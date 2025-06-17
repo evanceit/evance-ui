@@ -34,6 +34,13 @@
 .ev-number-transition {
     @include transitions.transition-default();
 
+    &-move,
+    &-enter-active,
+    &-leave-active {
+        transition-property: all !important;
+        transition-duration: var(--ev-number-duration, 0.5s) !important;
+    }
+
     &-leave-active {
         .ev-number-digit--stack {
             transform: translateY(0) !important;

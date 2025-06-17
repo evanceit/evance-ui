@@ -47,7 +47,9 @@ export default function (expandedParentClass = "", x = false) {
          * @param el
          */
         onBeforeEnter(el: HTMLExpandElement) {
-            el._parent = el.parentNode as (Node & ParentNode & HTMLElement) | null;
+            el._parent = el.parentNode as
+                | (Node & ParentNode & HTMLElement)
+                | null;
             el._initialStyle = {
                 transition: el.style.transition,
                 overflow: el.style.overflow,

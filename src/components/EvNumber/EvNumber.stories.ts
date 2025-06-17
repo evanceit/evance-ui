@@ -9,6 +9,12 @@ const meta: Meta<typeof EvNumber> = {
     component: EvNumber,
     title: "Typography/EvNumber",
     argTypes: {
+        format: {
+            control: false,
+            description:
+                "Accepts [`Intl.NumberFormatOptions`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#options). " +
+                "Note, the locale is automatically assigned internally from the locale manager.",
+        },
         value: {
             control: "text",
             description: "The numeric value",

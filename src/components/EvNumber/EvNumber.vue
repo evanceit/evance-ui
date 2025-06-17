@@ -5,7 +5,6 @@ import { computed } from "vue";
 import { useLocaleManager } from "@/composables";
 import { splitNumberToParts } from "@/util";
 import EvNumberDigit from "@/components/EvNumber/EvNumberDigit.vue";
-import { EvTransitionExpandX } from "@/components/EvTransition/transitions";
 import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
 
 const props = defineProps({ ...makeEvNumberProps() });
@@ -19,7 +18,7 @@ const formatter = computed(() => {
 
 const parts = computed(() =>
     splitNumberToParts(
-        props.value,
+        parseFloat(props.value.toString()),
         formatter.value,
         props.prefix,
         props.suffix,
@@ -40,14 +39,16 @@ function isDigitPart(
 }
 
 const transition = ExpandTransitionGenerator("", true);
-const duration = computed(() => props.duration ?? 300);
+const duration = computed(() => props.duration ?? 500);
 </script>
 
 <template>
     <span
         :class="['ev-number', props.class]"
         :style="[props.style, { '--ev-number-duration': duration + 'ms' }]">
-        <transition-group v-bind="transition" name="ev-number-transition">
+        <transition-group
+            name="ev-number-transition"
+            v-bind="transition as any">
             <template v-for="part in allParts" :key="part.key">
                 <ev-number-digit
                     v-if="isDigitPart(part)"
