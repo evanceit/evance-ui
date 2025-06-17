@@ -365,7 +365,7 @@ const hasSuffix = computed(() => {
         <template v-if="hasPrefix" #prefix>
             <ev-button
                 v-if="props.showButtons"
-                rounded
+                :rounded="props.rounded"
                 size="x-small"
                 class="ev-number-field--minus"
                 variant="subtle"
@@ -383,7 +383,7 @@ const hasSuffix = computed(() => {
             <slot name="suffix">{{ props.suffix }}</slot>
             <ev-button
                 v-if="props.showButtons"
-                rounded
+                :rounded="props.rounded"
                 size="x-small"
                 class="ev-number-field--plus"
                 variant="subtle"
