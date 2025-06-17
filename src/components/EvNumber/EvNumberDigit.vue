@@ -4,7 +4,6 @@ import {computed, onMounted, ref, watch} from "vue";
 
 const props = defineProps<{
     value: number;
-    duration?: number;
 }>();
 
 const digits = Array.from({ length: 10 }, (_, i) => i);
@@ -23,7 +22,7 @@ const stackStyle = computed(() => {
     const offset = current.value * 1;
     return {
         transform: `translateY(-${offset}em)`,
-        transition: `transform ${props.duration ?? 500}ms var(--easing-standard)`,
+        transition: `transform var(--ev-number-duration, 0.5s) var(--easing-standard)`,
         willChange: "transform",
     };
 });

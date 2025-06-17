@@ -40,18 +40,19 @@ function isDigitPart(
 }
 
 const transition = ExpandTransitionGenerator("", true);
-
+const duration = computed(() => props.duration ?? 300);
 </script>
 
 <template>
-    <span :class="['ev-number', props.class]" :style="[props.style]">
+    <span
+        :class="['ev-number', props.class]"
+        :style="[props.style, { '--ev-number-duration': duration + 'ms' }]">
         <transition-group v-bind="transition" name="ev-number-transition">
             <template v-for="part in allParts" :key="part.key">
                 <ev-number-digit
                     v-if="isDigitPart(part)"
                     :value="part.value"
-                    :class="`is-${part.type}`"
-                    :duration="props.duration" />
+                    :class="`is-${part.type}`" />
                 <span v-else :class="['ev-number-symbol', `is-${part.type}`]">
                     {{ part.value }}
                 </span>

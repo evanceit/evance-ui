@@ -10,9 +10,11 @@
     height: 1em;
     position: relative;
     line-height: 1;
-    transition: all 0.5s;
+    transition: all var(--ev-number-duration, 0.3s);
     vertical-align: text-bottom;
     isolation: isolate;
+    text-align: center;
+    will-change: transform, opacity, width;
 }
 .ev-number-digit {
     overflow: hidden;
@@ -26,29 +28,27 @@
 .ev-number-digit--num {
     height: 1em;
     line-height: 1;
-    text-align: center;
+    min-width: 1ch;
 }
 
 .ev-number-transition {
     @include transitions.transition-default();
-    will-change: transform, opacity, width;
 
-    &-move,
-    &-enter-active,
     &-leave-active {
-        transition-property: all !important;
-        transition-duration: 0.5s !important;
+        .ev-number-digit--stack {
+            transform: translateY(0) !important;
+        }
     }
 
     &-enter-to,
     &-leave-from {
         opacity: 1;
-        transform: scale(100%);
+        transform: scale(1);
     }
 
     &-enter-from,
     &-leave-to {
         opacity: 0;
-        transform: scale(50%);
+        transform: scale(0.5);
     }
 }
