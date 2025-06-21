@@ -5,6 +5,7 @@ import { EvButton } from "@/components";
 
 const meta: Meta<typeof EvSlideGroup> = {
     component: EvSlideGroup,
+    title: "Components/Layout/EvSlideGroup",
     argTypes: {
         arrowsAlign: {
             control: "select",

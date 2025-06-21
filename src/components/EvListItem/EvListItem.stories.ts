@@ -5,6 +5,7 @@ import { ChevronRightIcon, DotIcon } from "@/icons";
 
 const meta: Meta<typeof EvListItem> = {
     component: EvListItem,
+    title: "Components/Data/EvListItem",
     argTypes: {
         active: {
             control: "boolean",

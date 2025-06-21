@@ -5,6 +5,7 @@ import { Appearance } from "@/util";
 
 const meta: Meta<typeof EvProgressCircular> = {
     component: EvProgressCircular,
+    title: "Components/Feedback/EvProgressCircular",
     argTypes: {
         default: {
             control: "text",

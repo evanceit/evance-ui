@@ -7,7 +7,7 @@ import { EvContainer } from "../EvContainer";
 
 const meta: Meta<typeof EvContainer> = {
     component: EvContainer,
-    title: "Components/EvGrid/EvContainer",
+    title: "Components/Layout/EvContainer",
     argTypes: {
         fluid: {
             control: "boolean",

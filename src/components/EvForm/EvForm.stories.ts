@@ -7,7 +7,7 @@ import EvFormTest from "./EvFormTest.vue";
 
 const meta: Meta<typeof EvForm> = {
     component: EvForm,
-    title: "Forms/EvForm",
+    title: "Components/Forms/EvForm",
     argTypes: {
         data: {
             control: false,

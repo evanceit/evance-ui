@@ -6,6 +6,7 @@ import { shallowRef } from "vue";
 
 const meta: Meta<typeof EvButtonToggle> = {
     component: EvButtonToggle,
+    title: "Components/Actions/EvButtonToggle",
     argTypes: {
         appearance: {
             control: "select",

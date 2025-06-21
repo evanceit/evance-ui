@@ -7,7 +7,7 @@ import { EvHeading } from "../EvHeading";
 
 const meta: Meta<typeof EvNumber> = {
     component: EvNumber,
-    title: "Typography/EvNumber",
+    title: "Components/Typography/EvNumber",
     argTypes: {
         format: {
             control: false,
@@ -46,14 +46,14 @@ export const Primary: Story = {
             return { args };
         },
         template: `
-            
+
             <ev-heading size="x-large">
-                Hello 
+                Hello
                 <ev-number v-bind="args" :format="{ style: 'currency',  currency: 'GBP' }" />
-                after 
+                after
             </ev-heading>
-            
-            
+
+
             <p>&nbsp;</p>
             <ev-button-group>
                 <ev-button @click="args.value++">Increment</ev-button>
@@ -68,7 +68,7 @@ export const Primary: Story = {
 
                 <ev-button @click="args.value = parseFloat(args.value) / 100">/100</ev-button>
             </ev-button-group>
-                
+
         `,
     }),
 };

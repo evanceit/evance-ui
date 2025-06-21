@@ -4,7 +4,7 @@ import { EvSwitch } from "../EvSwitch";
 
 const meta: Meta<typeof EvSwitch> = {
     component: EvSwitch,
-    title: "Forms/EvSwitch",
+    title: "Components/Forms/EvSwitch",
     argTypes: {
         // Form Field Attributes
         disabled: {

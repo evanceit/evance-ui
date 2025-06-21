@@ -7,7 +7,7 @@ import EvTextfieldStories from "../EvTextfield/EvTextfield.stories";
 
 const meta: Meta<typeof EvNumberField> = {
     component: EvNumberField,
-    title: "Forms/EvNumberField",
+    title: "Components/Forms/EvNumberField",
     argTypes: {
         min: {
             control: "number",

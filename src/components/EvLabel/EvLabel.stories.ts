@@ -4,7 +4,7 @@ import { EvLabel } from "../EvLabel";
 
 const meta: Meta<typeof EvLabel> = {
     component: EvLabel,
-    title: "Forms/EvLabel",
+    title: "Components/Forms/EvLabel",
     argTypes: {
         title: {
             control: "text",

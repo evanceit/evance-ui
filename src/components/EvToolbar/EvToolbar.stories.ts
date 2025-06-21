@@ -17,6 +17,7 @@ import { computed } from "vue";
  */
 const meta: Meta<typeof EvToolbar> = {
     component: EvToolbar,
+    title: "Components/Layout/EvToolbar",
     argTypes: {
         icon: {
             control: "select",
@@ -142,9 +143,9 @@ export const Primary: Story = {
 
             return { args, tabs, actions, onClickBack, onClickClose };
         },
-        template: `<ev-toolbar 
-            v-bind="args" 
-            :tabs="tabs" 
+        template: `<ev-toolbar
+            v-bind="args"
+            :tabs="tabs"
             :actions="actions" />`,
     }),
 };

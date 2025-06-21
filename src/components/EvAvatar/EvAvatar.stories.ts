@@ -7,6 +7,7 @@ import { Appearance, Variant } from "@/util";
 
 const meta: Meta<typeof EvAvatar> = {
     component: EvAvatar,
+    title: "Components/Content/EvAvatar",
     argTypes: {
         appearance: {
             control: "select",

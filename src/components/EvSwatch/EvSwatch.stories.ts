@@ -4,6 +4,7 @@ import { EvSwatch } from "../EvSwatch";
 
 const meta: Meta<typeof EvSwatch> = {
     component: EvSwatch,
+    title: "Components/Content/EvSwatch",
     argTypes: {
         size: {
             control: "select",

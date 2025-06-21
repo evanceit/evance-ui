@@ -4,6 +4,7 @@ import { EvSection } from "../EvSection";
 
 const meta: Meta<typeof EvSection> = {
     component: EvSection,
+    title: "Components/Layout/EvSection",
     argTypes: {
         title: {
             control: "text",

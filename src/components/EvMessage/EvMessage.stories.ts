@@ -8,6 +8,7 @@ import { EvAvatar } from "@/components";
 
 const meta: Meta<typeof EvMessage> = {
     component: EvMessage,
+    title: "Components/Feedback/EvMessage",
     argTypes: {
         appearance: {
             control: "select",
@@ -97,7 +98,7 @@ export const Primary: Story = {
             <ev-message v-bind="args" :actions="actions">
                 <p>{{ args.default }}</p>
             </ev-message>
-            
+
             <div v-if="!args.modelValue">
                 <ev-button :icon="ReloadIcon" @click="args.modelValue = true">Reset</ev-button>
             </div>`,

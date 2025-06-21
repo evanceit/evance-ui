@@ -14,6 +14,7 @@ import { EvIcon } from "@/components";
 
 const meta: Meta<typeof EvTabs> = {
     component: EvTabs,
+    title: "Components/Navigation/EvTabs",
     argTypes: {
         alignTabs: {
             control: "select",
@@ -67,26 +68,26 @@ export const Primary: Story = {
         template: `
             <p>Example of tags with labels and icons</p>
             <ev-tabs v-bind="args" v-model="selection">
-                <ev-tab 
-                    text="Orders" 
-                    :value="1" 
+                <ev-tab
+                    text="Orders"
+                    :value="1"
                     :icon-start="SalesOrderIcon"
                     :selected-icon-start="SalesOrderFillIcon"
                 />
-                <ev-tab 
-                    text="Enquiries" 
-                    :value="2" 
+                <ev-tab
+                    text="Enquiries"
+                    :value="2"
                     :icon-start="SalesEnquiryIcon"
-                    :selected-icon-start="SalesEnquiryFillIcon"  
+                    :selected-icon-start="SalesEnquiryFillIcon"
                 />
-                <ev-tab 
-                    text="Quotes" 
-                    :value="3" 
+                <ev-tab
+                    text="Quotes"
+                    :value="3"
                     :icon-start="SalesQuotationIcon"
                     :selected-icon-start="SalesQuotationFillIcon"
                 />
             </ev-tabs>
-            
+
             <p>&nbsp;</p>
             <p>Example of tags with icon only</p>
             <ev-tabs v-bind="args" v-model="selection">

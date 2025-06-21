@@ -5,6 +5,7 @@ import { LinkExternalIcon } from "@/icons/editor";
 
 const meta: Meta<typeof EvLink> = {
     component: EvLink,
+    title: "Components/Navigation/EvLink",
     argTypes: {
         appearance: {
             control: "select",

@@ -7,6 +7,7 @@ import { ArrowBackIcon, ArrowContinueIcon } from "@/icons";
 
 const meta: Meta<typeof EvWindow> = {
     component: EvWindow,
+    title: "Components/Layout/EvWindow",
     argTypes: {
         continuous: {
             control: "boolean",

@@ -5,6 +5,7 @@ import { EvButton } from "@/components";
 
 const meta: Meta<typeof EvButtonGroup> = {
     component: EvButtonGroup,
+    title: "Components/Actions/EvButtonGroup",
     argTypes: {
         appearance: {
             control: "select",

@@ -16,7 +16,7 @@ import {
 
 const meta: Meta<typeof EvFormHelp> = {
     component: EvFormHelp,
-    title: "Forms/EvFormHelp",
+    title: "Components/Forms/EvFormHelp",
     argTypes: {
         breakpoint: {
             control: "select",
@@ -55,7 +55,7 @@ export const Primary: Story = {
         },
         template: `<ev-form-help v-bind="args">
             <ev-surface elevation="panel" rounded="small" class="pa-400">
-                
+
                 <ev-field-help>
                     <template #field>
                         <ev-label class="mb-100" for="my-field" title="Discount code" hint="Customers must enter this code at checkout" />
@@ -78,7 +78,7 @@ export const Primary: Story = {
                         </ev-card-content>
                     </template>
                 </ev-field-help>
-                
+
             </ev-surface>
         </ev-form-help>`,
     }),

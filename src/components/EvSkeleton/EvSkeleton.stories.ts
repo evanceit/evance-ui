@@ -4,6 +4,7 @@ import { EvSkeleton } from "../EvSkeleton";
 
 const meta: Meta<typeof EvSkeleton> = {
     component: EvSkeleton,
+    title: "Components/Feedback/EvSkeleton",
     argTypes: {
         inline: {
             type: "boolean",

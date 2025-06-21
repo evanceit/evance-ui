@@ -4,6 +4,7 @@ import { EvSurface } from "../EvSurface";
 
 const meta: Meta<typeof EvSurface> = {
     component: EvSurface,
+    title: "Components/Layout/EvSurface",
     argTypes: {
         elevation: {
             control: "select",

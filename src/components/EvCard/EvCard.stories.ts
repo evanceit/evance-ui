@@ -6,6 +6,7 @@ import { ArrowContinueIcon, HelpIcon, ShieldIcon } from "@/icons";
 
 const meta: Meta<typeof EvCard> = {
     component: EvCard,
+    title: "Components/Layout/EvCard",
     argTypes: {
         actions: {
             control: "object",

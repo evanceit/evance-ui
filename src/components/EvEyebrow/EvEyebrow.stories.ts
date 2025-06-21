@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvEyebrow } from "@/components";
 
 const meta: Meta<typeof EvEyebrow> = {
-    title: "Typography/EvEyebrow",
+    title: "Components/Typography/EvEyebrow",
     component: EvEyebrow,
     argTypes: {
         appearance: {

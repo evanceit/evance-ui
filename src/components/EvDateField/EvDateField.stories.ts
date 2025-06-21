@@ -9,7 +9,7 @@ import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories"
 
 const meta: Meta<typeof EvDateField> = {
     component: EvDateField,
-    title: "Forms/EvDateField",
+    title: "Components/Forms/EvDateField",
     argTypes: {
         ...omit(EvTextfieldStories.argTypes as any, ["icon-start", "type"]),
         ...EvDatePickerStories.argTypes,

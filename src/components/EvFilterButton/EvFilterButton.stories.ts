@@ -6,6 +6,7 @@ import {ref} from "vue";
 
 const meta: Meta<typeof EvFilterButton> = {
     component: EvFilterButton,
+    title: "Components/Actions/EvFilterButton",
     argTypes: {
         title: {
             control: "text",
@@ -31,7 +32,7 @@ export const Primary: Story = {
         },
         template: `
             <ev-filter-button v-bind="args" v-model="selected" />
-            
+
             <ev-checkbox v-model="selected" label="New" value="New" />
 
             <ev-checkbox v-model="selected" label="Pending" value="Pending" />

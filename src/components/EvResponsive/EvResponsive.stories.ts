@@ -4,6 +4,7 @@ import { EvResponsive } from "../EvResponsive";
 
 const meta: Meta<typeof EvResponsive> = {
     component: EvResponsive,
+    title: "Components/Layout/EvResponsive",
     argTypes: {
         aspectRatio: {
             control: "select",

@@ -7,7 +7,7 @@ import EvDialogStories from "@/components/EvDialog/EvDialog.stories";
 
 const meta: Meta<typeof EvDrawer> = {
     component: EvDrawer,
-    title: "Overlays/EvDrawer",
+    title: "Components/Overlays/EvDrawer",
     argTypes: {
         position: {
             control: "select",

@@ -7,6 +7,7 @@ import { Appearance, Variant } from "@/util";
 
 const meta: Meta<typeof EvTag> = {
     component: EvTag,
+    title: "Components/Data/EvTag",
     argTypes: {
         appearance: {
             control: "select",
@@ -68,9 +69,9 @@ export const Primary: Story = {
             return { args, ReloadIcon, reset };
         },
         template: `
-<ev-tag v-bind="args">       
+<ev-tag v-bind="args">
 </ev-tag>
-            
+
             <ev-button v-if="!args.modelValue" text="Reset" :icon="ReloadIcon" @click="reset" />
         `,
     }),

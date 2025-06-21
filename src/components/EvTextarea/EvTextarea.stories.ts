@@ -5,7 +5,7 @@ import { InputAppearance } from "@/util";
 
 const meta: Meta<typeof EvTextarea> = {
     component: EvTextarea,
-    title: "Forms/EvTextarea",
+    title: "Components/Forms/EvTextarea",
     argTypes: {
         // Form Field Attributes
         disabled: {

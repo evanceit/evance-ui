@@ -18,7 +18,7 @@ import { ref, shallowRef } from "vue";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
-    title: "Forms/EvSelect",
+    title: "Components/Forms/EvSelect",
     argTypes: {
         behavior: {
             control: "select",
@@ -235,11 +235,11 @@ export const CustomItem: Story = {
             return { items, ProductsIcon };
         },
         template: `
-            <ev-select 
-                clearable 
+            <ev-select
+                clearable
                 open-on-clear
-                behavior="autocomplete" 
-                :items="items" 
+                behavior="autocomplete"
+                :items="items"
                 placeholder="Search for a product"
                 >
                 <template #placeholder>
@@ -363,14 +363,14 @@ export const AsyncItems: Story = {
             return { items, PlusIcon, onMenuOpen, isLoading, menuOpen };
         },
         template: `
-            <ev-select 
+            <ev-select
                 :hide-items-empty="true"
-                :items="items" 
+                :items="items"
                 item-title="API"
                 item-value="Link"
                 :loading="isLoading"
                 v-model:menuOpen="menuOpen"
-                @update:focused="onMenuOpen" 
+                @update:focused="onMenuOpen"
             ></ev-select>
             `,
     }),

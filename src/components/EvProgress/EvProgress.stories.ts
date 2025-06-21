@@ -5,6 +5,7 @@ import { Appearance } from "../../util";
 
 const meta: Meta<typeof EvProgress> = {
     component: EvProgress,
+    title: "Components/Feedback/EvProgress",
     argTypes: {
         appearance: {
             control: "select",

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvText } from "../EvText";
 
 const meta: Meta<typeof EvText> = {
-    title: "Typography/EvText",
+    title: "Components/Typography/EvText",
     component: EvText,
     argTypes: {
         appearance: {

@@ -4,7 +4,7 @@ import { EvErrors } from "../EvErrors";
 
 const meta: Meta<typeof EvErrors> = {
     component: EvErrors,
-    title: "Forms/EvErrors",
+    title: "Components/Forms/EvErrors",
     argTypes: {
         messages: {
             description:

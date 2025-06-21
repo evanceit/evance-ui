@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvCode, EvHeading, EvText } from "@/components";
 
 const meta: Meta<typeof EvCode> = {
-    title: "Typography/EvCode",
+    title: "Components/Typography/EvCode",
     component: EvCode,
     argTypes: {
         text: {
@@ -35,17 +35,17 @@ export const Primary: Story = {
             <p>
                 <ev-code v-bind="args" />
             </p>
-            
+
             <ev-text>
                 Example inside the
                 <ev-code text="<ev-text>" />
                 component
             </ev-text>
-            
+
             <ev-heading>
-                Example inside the 
-                <ev-code text="<ev-heading>" /> 
-                component 
+                Example inside the
+                <ev-code text="<ev-heading>" />
+                component
             </ev-heading>
         `,
     }),

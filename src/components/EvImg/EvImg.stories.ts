@@ -5,7 +5,7 @@ import { EvProgressCircular } from "@/components";
 
 const meta: Meta<typeof EvImg> = {
     component: EvImg,
-    title: "Components/EvImg",
+    title: "Components/Content/EvImg",
     argTypes: {
         alt: {
             control: "text",

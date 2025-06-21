@@ -15,7 +15,7 @@ import {
 
 const meta: Meta<typeof EvFieldHelp> = {
     component: EvFieldHelp,
-    title: "Forms/EvFieldHelp",
+    title: "Components/Forms/EvFieldHelp",
     argTypes: {
         breakpoint: {
             control: "select",

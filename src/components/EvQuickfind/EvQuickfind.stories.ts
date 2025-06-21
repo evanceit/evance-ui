@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvQuickfind } from "../EvQuickfind";
 
 const meta: Meta<typeof EvQuickfind> = {
-    title: "Typography/EvQuickfind",
+    title: "Components/Typography/EvQuickfind",
     component: EvQuickfind,
     argTypes: {
         modelValue: {

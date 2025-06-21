@@ -5,7 +5,7 @@ import { Appearance, Variant } from "@/util";
 import { CheckIcon, ChevronDownIcon } from "@/icons";
 
 const meta: Meta<typeof EvLozenge> = {
-    title: "Typography/EvLozenge",
+    title: "Components/Typography/EvLozenge",
     component: EvLozenge,
     argTypes: {
         default: {

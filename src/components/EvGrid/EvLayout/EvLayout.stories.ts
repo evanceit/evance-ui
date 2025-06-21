@@ -6,7 +6,7 @@ import { EvSurface } from "../../EvSurface";
 
 const meta: Meta<typeof EvLayout> = {
     component: EvLayout,
-    title: "Components/EvGrid/EvLayout",
+    title: "Components/Layout/EvLayout",
     argTypes: {
         align: {
             control: "select",

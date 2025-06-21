@@ -12,7 +12,7 @@ const getIcons = (iconList: {}) => {
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
-    title: "Icon Library",
+    title: "Icons/Icon Library",
 };
 
 export default meta;

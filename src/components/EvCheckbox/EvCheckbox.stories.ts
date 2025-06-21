@@ -4,7 +4,7 @@ import { EvCheckbox } from "../EvCheckbox";
 
 const meta: Meta<typeof EvCheckbox> = {
     component: EvCheckbox,
-    title: "Forms/EvCheckbox",
+    title: "Components/Forms/EvCheckbox",
     argTypes: {
         // Form Field Attributes
         disabled: {

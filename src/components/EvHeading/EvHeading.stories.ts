@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvHeading } from "../EvHeading";
 
 const meta: Meta<typeof EvHeading> = {
-    title: "Typography/EvHeading",
+    title: "Components/Typography/EvHeading",
     component: EvHeading,
     argTypes: {
         size: {

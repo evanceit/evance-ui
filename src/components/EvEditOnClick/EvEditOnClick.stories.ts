@@ -3,6 +3,7 @@ import { EvEditOnClick } from "@/components/EvEditOnClick";
 
 const meta: Meta<typeof EvEditOnClick> = {
     component: EvEditOnClick,
+    title: "Components/Forms/EvEditOnClick",
     argTypes: {
         editing: {
             control: "boolean",

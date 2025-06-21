@@ -5,6 +5,7 @@ import { ArrowContinueIcon, CheckIcon, PlusIcon, SaveIcon } from "../../icons";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,
+    title: "Components/Actions/EvButton",
     argTypes: {
         default: {
             control: "text",

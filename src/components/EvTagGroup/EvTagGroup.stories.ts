@@ -5,6 +5,7 @@ import { EvTagGroup } from "../EvTagGroup";
 
 const meta: Meta<typeof EvTagGroup> = {
     component: EvTagGroup,
+    title: "Components/Data/EvTagGroup",
     argTypes: {
         column: {
             control: "boolean",

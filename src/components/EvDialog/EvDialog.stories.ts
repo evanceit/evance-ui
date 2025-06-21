@@ -10,7 +10,7 @@ import { omit } from "@/util";
 
 const meta: Meta<typeof EvDialog> = {
     component: EvDialog,
-    title: "Overlays/EvDialog",
+    title: "Components/Overlays/EvDialog",
     argTypes: {
         closeable: {
             control: "boolean",
@@ -345,7 +345,7 @@ export const CustomContainer: Story = {
                                 <ev-button :icon-end="ArrowContinueIcon" appearance="primary" @click="close">Hell yeah, continue</ev-button>
                             </div>
                         </div>
-                            
+
                     </ev-surface>
                 </template>
             </ev-dialog>

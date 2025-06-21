@@ -11,6 +11,7 @@ import {
 
 const meta: Meta<typeof EvIcon> = {
     component: EvIcon,
+    title: "Components/Content/EvIcon",
     argTypes: {
         appearance: {
             control: "select",

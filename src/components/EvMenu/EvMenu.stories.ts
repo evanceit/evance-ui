@@ -7,6 +7,7 @@ import { EvSurface } from "../EvSurface";
 
 const meta: Meta<typeof EvMenu> = {
     component: EvMenu,
+    title: "Components/Navigation/EvMenu",
     argTypes: {},
     args: {},
     tags: ["autodocs"],

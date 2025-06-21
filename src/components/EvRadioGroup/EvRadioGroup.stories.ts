@@ -5,7 +5,7 @@ import { EvRadio } from "../EvRadio";
 
 const meta: Meta<typeof EvRadioGroup> = {
     component: EvRadioGroup,
-    title: "Forms/EvRadioGroup",
+    title: "Components/Forms/EvRadioGroup",
     argTypes: {
         // Form Field Attributes
         disabled: {

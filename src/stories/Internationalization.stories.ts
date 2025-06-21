@@ -5,6 +5,7 @@ import { useLocaleFunctions, useLocaleManager } from "@/composables";
 
 const meta: Meta<typeof EvButton> = {
     component: EvButton,
+    title: "Internationalization/Language Packs",
     argTypes: {},
     args: {},
     tags: ["autodocs"],
@@ -35,13 +36,13 @@ export const Primary: Story = {
             return { args, t, changeLocale, currentLocale };
         },
         template: `
-            
+
             <p>Current Locale: {{ currentLocale }}</p>
-            
+
             <p>{{ t('greeting', { name: 'Geoff' }) }}</p>
-            
+
             <ev-button @click="changeLocale('en-GB')">en-GB</ev-button>
-            
+
             <ev-button @click="changeLocale('fr-FR')">fr-FR</ev-button>
         `,
     }),

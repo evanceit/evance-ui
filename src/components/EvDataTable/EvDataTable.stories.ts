@@ -22,6 +22,7 @@ import { EllipsisIcon, PlusIcon } from "@/icons";
 
 const meta: Meta<typeof EvDataTable> = {
     component: EvDataTable,
+    title: "Components/Data/EvDataTable",
     argTypes: {
         filters: {
             control: false,
@@ -75,8 +76,8 @@ const meta: Meta<typeof EvDataTable> = {
             <p>The load event provides the following parameters:</p>
             <ul>
                 <li><code>page</code> - the pagination page expected to load.</li>
-                <li><code>setPageItems</code> - a function to provide the next array of <code>items</code>. 
-                This automatically handles loading state, current page updates, 
+                <li><code>setPageItems</code> - a function to provide the next array of <code>items</code>.
+                This automatically handles loading state, current page updates,
                 scroll position, end of list state and empty state.</li>
             </ul>`,
         },
@@ -472,7 +473,7 @@ export const Primary: Story = {
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-button :icon="PlusIcon" @click="onClickCreate">Create</ev-button>
                 <ev-data-table
-                    v-bind="args" 
+                    v-bind="args"
                     v-model:items="items"
                     v-model:selected="selected"
                     v-model:sort="sort"
@@ -509,7 +510,7 @@ export const Primary: Story = {
                                 </div>
                             </ev-surface>
                         </ev-menu>
-                        
+
                         <ev-filter-button id="assigneeMenu" title="Assignee" v-model="filters.assignee" filter-title="name" />
                         <ev-menu activator="#assigneeMenu" :close-on-content-click="false" position="bottom-end">
                             <ev-surface elevation="overlay" width="250">

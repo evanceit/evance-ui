@@ -6,6 +6,7 @@ import { EvLayout } from "@/components/EvGrid";
 
 const meta: Meta<typeof EvEmptyState> = {
     component: EvEmptyState,
+    title: "Components/Feedback/EvEmptyState",
     argTypes: {
         actions: {
             control: false,
@@ -90,7 +91,7 @@ export const Primary: Story = {
 
                 </ev-empty-state>
             </ev-layout>
-                
+
         `,
     }),
 };

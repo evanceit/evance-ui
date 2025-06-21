@@ -5,6 +5,7 @@ import { ref } from "vue";
 
 const meta: Meta<typeof EvList> = {
     component: EvList,
+    title: "Components/Data/EvList",
     argTypes: {
         disabled: {
             control: "boolean",

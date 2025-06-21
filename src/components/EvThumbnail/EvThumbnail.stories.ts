@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvThumbnail } from "../EvThumbnail";
 
-import EvImgStories from "@/components/EvImg/EvImg.stories";
+import EvImgStories from "../EvImg/EvImg.stories";
 
 const meta: Meta<typeof EvThumbnail> = {
     component: EvThumbnail,
+    title: "Components/Content/EvThumbnail",
     argTypes: {
         ...EvImgStories.argTypes,
         rounded: {

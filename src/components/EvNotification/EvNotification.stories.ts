@@ -6,7 +6,7 @@ import EvMessageStories from "../EvMessage/EvMessage.stories";
 
 const meta: Meta<typeof EvNotification> = {
     component: EvNotification,
-    title: "Overlays/EvNotification",
+    title: "Components/Overlays/EvNotification",
     argTypes: {
         timeout: {
             control: "number",
@@ -35,7 +35,7 @@ export const Primary: Story = {
         },
         template: `
             <ev-notification v-bind="args">{{ args.default }}</ev-notification>
-            
+
             <div v-if="!args.modelValue">
                 <ev-button :icon="ReloadIcon" @click="args.modelValue = true">Reset</ev-button>
             </div>`,

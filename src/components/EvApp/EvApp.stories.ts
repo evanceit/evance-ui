@@ -3,6 +3,7 @@ import { EvApp } from "../EvApp";
 
 const meta: Meta<typeof EvApp> = {
     component: EvApp,
+    title: "Components/Layout/EvApp",
     argTypes: {
         theme: {
             control: "select",

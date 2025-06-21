@@ -7,6 +7,7 @@ import { ComponentExposed } from "vue-component-type-helpers";
 
 const meta: Meta<typeof EvInfiniteScroll> = {
     component: EvInfiniteScroll,
+    title: "Components/Data/EvInfiniteScroll",
     argTypes: {
         disabled: {
             control: "boolean",

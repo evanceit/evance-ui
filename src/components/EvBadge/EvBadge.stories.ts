@@ -6,6 +6,7 @@ import { EvBlock, EvIcon, EvLayout } from "@/components";
 
 const meta: Meta<typeof EvBadge> = {
     component: EvBadge,
+    title: "Components/Feedback/EvBadge",
     argTypes: {
         appearance: {
             control: "select",
@@ -113,7 +114,7 @@ export const Primary: Story = {
                 <ev-badge v-bind="args" />
             </ev-block>
         </ev-layout>
-        
+
         `,
     }),
 };

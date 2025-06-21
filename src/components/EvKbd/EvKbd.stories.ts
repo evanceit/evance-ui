@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvKbd } from "../EvKbd";
 
 const meta: Meta<typeof EvKbd> = {
-    title: "Typography/EvKbd",
+    title: "Components/Typography/EvKbd",
     component: EvKbd,
     argTypes: {
         size: {

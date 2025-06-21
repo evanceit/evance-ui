@@ -5,6 +5,7 @@ import { HelpIcon, ShieldIcon } from "@/icons";
 
 const meta: Meta<typeof EvCardContent> = {
     component: EvCardContent,
+    title: "Components/Layout/EvCard/EvCardContent",
     argTypes: {
         appearance: {
             control: "select",

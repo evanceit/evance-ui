@@ -5,7 +5,7 @@ import { EvDivider, EvLayout } from "@/components";
 
 const meta: Meta<typeof EvBlock> = {
     component: EvBlock,
-    title: "Components/EvGrid/EvBlock",
+    title: "Components/Layout/EvBlock",
     argTypes: {
         alignSelf: {
             control: "select",

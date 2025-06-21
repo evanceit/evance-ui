@@ -4,7 +4,7 @@ import { EvTooltip, EvButton } from "../../components";
 
 const meta: Meta<typeof EvTooltip> = {
     component: EvTooltip,
-    title: "Overlays/EvTooltip",
+    title: "Components/Overlays/EvTooltip",
     argTypes: {
         modelValue: {
             control: "boolean",

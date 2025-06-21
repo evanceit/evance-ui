@@ -5,6 +5,7 @@ import { Appearance } from "@/util";
 
 const meta: Meta<typeof EvDivider> = {
     component: EvDivider,
+    title: "Components/Layout/EvDivider",
     argTypes: {
         appearance: {
             control: "select",

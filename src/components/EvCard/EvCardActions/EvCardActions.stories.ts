@@ -6,6 +6,7 @@ import { ArrowContinueIcon } from "@/icons";
 
 const meta: Meta<typeof EvCardActions> = {
     component: EvCardActions,
+    title: "Components/Layout/EvCard/EvCardActions",
     argTypes: {
         justify: {
             control: "select",

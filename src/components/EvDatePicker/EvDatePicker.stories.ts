@@ -4,6 +4,7 @@ import { EvDatePicker } from "../EvDatePicker";
 
 const meta: Meta<typeof EvDatePicker> = {
     component: EvDatePicker,
+    title: "Components/Actions/EvDatePicker",
     argTypes: {
         min: {
             control: "text",
