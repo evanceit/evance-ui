@@ -1,13 +1,17 @@
 import { Meta } from '@storybook/blocks';
 import EvanceUiLogo from './assets/evance-ui-logo.svg?url';
+import { version } from '../../.storybook/version';
 
 <Meta title="Introduction" />
 
-
 <img src={EvanceUiLogo} width="120" />
+
+Version <code>{version}</code>
 
 # Evance UI Library &amp; Design System
 
-Evance UI was created to help us build products for our customers more efficiently.
+Evance UI is a Vue.js component library created by Azexis for the Evance platform and for future embedded apps.
 
-Eventually we will host this on `storybook.evance.dev` but for now this is a work in progress.
+```sh
+npm i @evance/evance-ui
+```

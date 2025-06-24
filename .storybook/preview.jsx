@@ -107,6 +107,12 @@ const preview = {
                     <DocsContainer {...props} theme={isDark ? darkTheme : lightTheme} />
                 );
             }
+        },
+        options: {
+            storySort: {
+                order: ['Introduction', 'Components', 'Icons', 'Services'],
+                method: 'alphabetical',
+            }
         }
     },
 };
