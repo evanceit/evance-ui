@@ -29,6 +29,8 @@ export { default as ColumnMoveRightIcon } from "./glyph/ColumnMoveRightIcon.svg"
 export { default as ColumnsIcon } from "./glyph/ColumnsIcon.svg";
 export { default as ComponentFillIcon } from "./glyph/ComponentFillIcon.svg";
 export { default as ComponentIcon } from "./glyph/ComponentIcon.svg";
+export { default as CurlyBracketsIcon } from "./glyph/CurlyBracketsIcon.svg";
+export { default as DesignIcon } from "./glyph/DesignIcon.svg";
 export { default as DesktopIcon } from "./glyph/DesktopIcon.svg";
 export { default as DevicesIcon } from "./glyph/DevicesIcon.svg";
 export { default as DimensionAngleIcon } from "./glyph/DimensionAngleIcon.svg";

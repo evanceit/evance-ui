@@ -6,7 +6,9 @@
 */
 export { default as AddressFillIcon } from "./glyph/AddressFillIcon.svg";
 export { default as AddressIcon } from "./glyph/AddressIcon.svg";
+export { default as AjaxIcon } from "./glyph/AjaxIcon.svg";
 export { default as AlarmIcon } from "./glyph/AlarmIcon.svg";
+export { default as ApiIcon } from "./glyph/ApiIcon.svg";
 export { default as AppsAddIcon } from "./glyph/AppsAddIcon.svg";
 export { default as AppsFillIcon } from "./glyph/AppsFillIcon.svg";
 export { default as AppsIcon } from "./glyph/AppsIcon.svg";
@@ -270,5 +272,6 @@ export { default as VisibilityIcon } from "./glyph/VisibilityIcon.svg";
 export { default as VisibilityOffIcon } from "./glyph/VisibilityOffIcon.svg";
 export { default as WalletIcon } from "./glyph/WalletIcon.svg";
 export { default as WarningIcon } from "./glyph/WarningIcon.svg";
+export { default as WebhookIcon } from "./glyph/WebhookIcon.svg";
 export { default as WorkflowIcon } from "./glyph/WorkflowIcon.svg";
 export { default as ZipArchiveIcon } from "./glyph/ZipArchiveIcon.svg";
