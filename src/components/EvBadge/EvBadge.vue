@@ -36,7 +36,7 @@ const content = computed(() => {
 });
 
 const { positionStyles } = usePosition(props, true, (side) => {
-    const base = props.floating ? (props.dot ? 2 : 4) : props.dot ? 8 : 12;
+    const base = props.floating ? (props.dot ? 2 : 4) : props.dot ? 8 : 16;
 
     return (
         base +

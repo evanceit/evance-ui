@@ -6,7 +6,6 @@ import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
 } from "@/composables/router";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
 import { useList, useNestedListItem } from "@/composables/lists";
 import { useIcon, EvIcon } from "@/components/EvIcon";
 
@@ -29,8 +28,6 @@ const id = computed(() =>
     props.value === undefined ? link.href.value : props.value,
 );
 const { select, isSelected } = useNestedListItem(id, false);
-const hasSuffixSlot = hasSlotWithContent(slots, "suffix");
-const hasPrefixSlot = hasSlotWithContent(slots, "prefix");
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (
@@ -112,13 +109,13 @@ const hasClickListener = computed(
         <div v-if="iconStart" class="ev-list-item--icon-start">
             <ev-icon :glyph="iconStart" />
         </div>
-        <div v-if="hasPrefixSlot" class="ev-list-item--prefix">
+        <div v-if="slots.prefix" class="ev-list-item--prefix">
             <slot name="prefix" />
         </div>
         <div class="ev-list-item--content">
             <slot name="default">{{ props.title }}</slot>
         </div>
-        <div v-if="hasSuffixSlot" class="ev-list-item--suffix">
+        <div v-if="slots.suffix" class="ev-list-item--suffix">
             <slot name="suffix" />
         </div>
         <div v-if="iconEnd" class="ev-list-item--icon-end">
