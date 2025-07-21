@@ -2,8 +2,11 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvListItem } from "../EvListItem";
 import { ChevronRightIcon, DotIcon } from "@/icons";
+import { EvAvatar } from "../EvAvatar";
+import {EvButton} from "../EvButton";
 
 const meta: Meta<typeof EvListItem> = {
+    components: {EvButton},
     component: EvListItem,
     title: "Components/Data/EvListItem",
     argTypes: {
@@ -11,7 +14,7 @@ const meta: Meta<typeof EvListItem> = {
             control: "boolean",
             description: "Controls the active state of the item.",
         },
-        activeExact: {
+        exact: {
             control: "boolean",
             description: "Works with router links.",
         },
@@ -57,15 +60,20 @@ const meta: Meta<typeof EvListItem> = {
         title: {
             control: "text",
         },
+        subtitle: {
+            control: "text",
+        },
     },
     args: {
         active: false,
+        exact: undefined,
         disabled: false,
-        href: "",
+        href: undefined,
         iconStart: undefined,
         iconEnd: undefined,
         to: "",
         title: "Example list item",
+        subtitle: undefined,
     },
     tags: ["autodocs"],
 };
@@ -76,13 +84,31 @@ type Story = StoryObj<typeof EvListItem>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvListItem },
+        components: { EvListItem, EvAvatar, EvButton },
         setup() {
             return { args, DotIcon, ChevronRightIcon };
         },
         template: `
-            <ev-list-item v-bind="args">
-                {{ args.title }}
+            <ev-list-item v-bind="args" />
+            
+            <ev-list-item 
+                :icon-start="ChevronRightIcon" 
+                href="#" 
+                :icon-end="ChevronRightIcon" 
+                title="Testing with prefix" subtitle="Hello this is a subtitle">
+                <template #prefix>
+                    <ev-avatar>G</ev-avatar>
+                </template>
+                <template #suffix>World</template>
+            </ev-list-item>
+            
+            <ev-list-item title="Testing icon start slot" href="#">
+                <template #prefix>
+                    <ev-avatar>G</ev-avatar>
+                </template>
+                <template #iconStart>
+                    <ev-button :icon="ChevronRightIcon" size="x-small" variant="subtle" />
+                </template>
             </ev-list-item>
         `,
     }),

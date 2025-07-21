@@ -3,11 +3,8 @@
  * # EvSlideGroup
  */
 import "./EvSlideGroup.scss";
-import {
-    EvButton,
-    EvSlideGroupSlot,
-    makeEvSlideGroupProps,
-} from "@/components";
+import { makeEvSlideGroupProps, EvSlideGroupSlot } from "./EvSlideGroup";
+import { EvButton } from "@/components/EvButton";
 import { useDisplayRuleClasses } from "@/composables/display";
 import { computed, shallowRef, watch } from "vue";
 import { Browser, clamp, focusableChildren, isBoolean } from "@/util";

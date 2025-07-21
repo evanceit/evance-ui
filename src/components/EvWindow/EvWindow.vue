@@ -13,7 +13,7 @@ import { useLocaleFunctions, useRtl } from "@/composables/locale";
 import { GroupProps, useGroup } from "@/composables/group";
 import { computed, provide, ref, shallowRef, watch } from "vue";
 import { TouchHandlers, Touch } from "@/directives";
-import { EvButton } from "@/components";
+import { EvButton } from "@/components/EvButton";
 import { IconValue } from "@/composables/icons";
 
 const props = defineProps({

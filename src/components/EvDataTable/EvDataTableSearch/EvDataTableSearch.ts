@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { makeDataTableSortProps } from "../composables/sort";
 import { PropType } from "vue";
-import { EvButtonProps } from "@/components";
+import { EvButtonProps } from "@/components/EvButton";
 
 export const makeEvDataTableSearchProps = propsFactory(
     {

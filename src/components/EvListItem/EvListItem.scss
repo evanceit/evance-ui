@@ -3,52 +3,186 @@
 $indicator-width: 3px;
 
 .ev-list-item {
+    --list-item-height: var(--input-height-medium);
+    display: grid;
+    grid-template-areas: "icon-start prefix content suffix actions icon-end";
+    grid-template-columns: minmax(0, auto) minmax(0, auto) 1fr minmax(0, auto) minmax(0, auto) minmax(0, auto);
+    grid-template-rows: 1fr;
+    user-select: none;
     align-items: center;
-    border-radius: var(--input-radius);
-    display: flex;
-    gap: 8px;
-    min-height: var(--input-height-medium);
-    outline: 0;
-    padding: 8px 12px;
-    position: relative;
     margin: 2px;
+    gap: 4px;
+    min-height: var(--list-item-height);
+    border-radius: var(--input-radius);
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+    outline: 0;
 
-    @at-root a#{&} {
+    a:link,
+    a:visited,
+    a:active {
         color: inherit;
         font-weight: var(--text-weight);
         text-decoration: none;
     }
 
+    &.is-clickable {
+        &:hover {
+            color: inherit;
+            background: var(--fill-neutral);
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+    }
+
     > * {
-        display: flex;
-        flex: 0 0 auto;
         width: min-content;
     }
-}
-
-.ev-list-item--content {
-    flex: 1 0 auto;
-    padding-inline: 4px;
-    width: max-content;
 }
 
 .ev-list-item {
     &.is-clickable {
         cursor: pointer;
+    }
+}
 
-        &:focus-visible,
-        &:hover {
-            color: inherit;
-            background: var(--fill-neutral);
+.ev-list-item {
+    &[disabled],
+    &.is-disabled {
+        @include mixins.is-disabled;
+    }
+}
+
+.ev-list-item {
+    > *:nth-child(2) {
+        &:has(.ev-button) {
+            margin-left: 4px;
+            margin-right: -8px;
         }
-
-        &:focus-visible {
-            outline: 2px solid var(--stroke-focused);
-            outline-offset: 2px;
+    }
+    > *:last-child {
+        &:has(.ev-button) {
+            margin-right: 0;
         }
     }
 }
+
+.ev-list-item {
+
+    &.is-active {
+        color: var(--text-selected);
+
+        &.is-clickable {
+            &:hover {
+                color: var(--text-selected);
+                background: var(--fill-selected);
+            }
+        }
+    }
+
+    &.is-active--exact {
+        color: var(--text-selected);
+        background: var(--fill-selected);
+
+        &.is-clickable {
+            &:hover {
+                color: var(--text-selected);
+                background: var(--fill-selected-hovered);
+            }
+        }
+
+        .ev-list-item--indicator {
+            opacity: 1;
+            &:before {
+                transform: translateX(0);
+            }
+        }
+    }
+}
+
+.ev-list-item {
+    &--icon-start,
+    &--prefix {
+        display: inline-flex;
+        margin-left: 8px;
+        margin-right: -4px;
+        min-height: var(--list-item-height);
+        align-items: center;
+
+        &:not(:has(button, a)) {
+            pointer-events: none;
+        }
+    }
+}
+
+.ev-list-item--icon-start {
+    grid-area: icon-start;
+}
+
+.ev-list-item--prefix {
+    grid-area: prefix;
+}
+
+.ev-list-item--button {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: center;
+    grid-template-rows: subgrid;
+    grid-template-columns: subgrid;
+    position: relative;
+    border-radius: var(--input-radius);
+    padding-block: 8px;
+
+    &:focus-visible {
+        color: inherit;
+        background: var(--fill-neutral);
+        text-decoration: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--stroke-focused);
+        outline-offset: 2px;
+    }
+}
+
+.ev-list-item--content {
+    grid-area: content;
+    margin-inline: 8px;
+    min-width: 0;
+}
+
+.ev-list-item {
+    &--suffix,
+    &--actions,
+    &--icon-end {
+        display: inline-flex;
+        margin-left: -4px;
+        margin-right: 8px;
+        min-height: var(--list-item-height);
+        align-items: center;
+
+        &:not(:has(button, a)) {
+            pointer-events: none;
+        }
+    }
+}
+
+.ev-list-item--suffix {
+    grid-area: suffix;
+}
+
+.ev-list-item--actions {
+    grid-area: actions;
+}
+
+.ev-list-item--icon-end {
+    grid-area: icon-end;
+}
+
+
 
 .ev-list-item--indicator {
     position: absolute;
@@ -75,26 +209,5 @@ $indicator-width: 3px;
         top: 0;
         left: 0;
         will-change: transform;
-    }
-}
-
-.ev-list-item {
-    &.is-active {
-        background: var(--fill-selected);
-        color: var(--text-selected);
-
-        .ev-list-item--indicator {
-            opacity: 1;
-            &:before {
-                transform: translateX(0);
-            }
-        }
-    }
-}
-
-.ev-list-item {
-    &[disabled],
-    &.is-disabled {
-        @include mixins.is-disabled;
     }
 }

@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import "./EvListItem.scss";
 import { makeEvListItemProps } from "./EvListItem";
-import { computed, useAttrs } from "vue";
+import { computed, mergeProps, toDisplayString, useAttrs } from "vue";
 import {
     RouterLinkOrHrefProps,
     useRouterLinkOrHref,
 } from "@/composables/router";
 import { useList, useNestedListItem } from "@/composables/lists";
-import { useIcon, EvIcon } from "@/components/EvIcon";
+import { EvIcon } from "@/components/EvIcon";
+import { EvButton } from "@/components/EvButton";
+import { EvButtonGroup } from "@/components/EvButtonGroup";
+import { EllipsisIcon, PlusIcon } from "@/icons";
+import { EvText } from "@/components/EvText";
 
 // Emit
 const emit = defineEmits(["click"]);
@@ -17,6 +21,8 @@ const props = defineProps({
 });
 const slots = defineSlots<{
     default(): never;
+    iconStart(): never;
+    iconEnd(): never;
     prefix(): never;
     suffix(): never;
 }>();
@@ -39,24 +45,20 @@ const isClickable = computed(() => {
     );
 });
 const isActive = computed(() => {
-    return (
-        props.active !== false &&
-        (props.active || link.isActive?.value || isSelected.value)
-    );
+    return props.active !== false && (props.active || link.isActive?.value);
 });
 const isActiveExact = computed(() => {
-    return props.exact !== false && (props.exact || link.isExactActive?.value);
+    return (
+        props.exact !== false &&
+        (props.exact || link.isExactActive?.value || isSelected.value)
+    );
 });
-const iconStart = useIcon(props, "iconStart");
-const iconEnd = useIcon(props, "iconEnd");
-
-function getComponentElement() {
+const itemElement = computed(() => {
     return isLink.value ? "a" : props.tag;
-}
-
-function getTabIndex() {
+});
+const tabIndex = computed(() => {
     return isClickable.value ? (list ? -2 : 0) : null;
-}
+});
 
 /**
  * # onClick Handler
@@ -85,11 +87,42 @@ function onKeyDown(e: KeyboardEvent): void {
 const hasClickListener = computed(
     () => !!link.isClickable.value || !!props.onClick,
 );
+
+/**
+ * @todo: I'd like to change how this component works:
+ * - add actions
+ * - add actions on hover
+ * - Should start icon be within the prefix?
+ * - should end icon be within the suffix?
+ *
+ */
+
+const titleProps = computed(() => {
+    return mergeProps(
+        {
+            truncate: 1,
+            text: toDisplayString(props.title),
+        },
+        props.titleProps,
+    );
+});
+
+const subtitleProps = computed(() => {
+    return mergeProps(
+        {
+            appearance: "subtle",
+            size: "small",
+            truncate: 1,
+            text: toDisplayString(props.subtitle),
+        },
+        props.subtitleProps,
+    );
+});
 </script>
 
 <template>
-    <component
-        :is="getComponentElement()"
+    <div
+        role="listitem"
         :class="[
             'ev-list-item',
             {
@@ -100,27 +133,55 @@ const hasClickListener = computed(
             },
             props.class,
         ]"
-        :style="props.style"
-        :href="link.href.value"
-        :tabindex="getTabIndex()"
-        @click="onClick"
-        @keydown.enter="onKeyDown"
-        @keydown.space="onKeyDown">
-        <div v-if="iconStart" class="ev-list-item--icon-start">
-            <ev-icon :glyph="iconStart" />
+        :style="props.style">
+        <component
+            :is="itemElement"
+            :href="link.href.value"
+            :tabindex="tabIndex"
+            class="ev-list-item--button"
+            @click="onClick"
+            @keydown.enter="onKeyDown"
+            @keydown.space="onKeyDown">
+            <div class="ev-list-item--content">
+                <slot name="default">
+                    <ev-text
+                        tag="div"
+                        class="ev-list-item--title"
+                        v-bind="titleProps" />
+                    <ev-text
+                        v-if="props.subtitle"
+                        tag="div"
+                        class="ev-list-item--subtitle"
+                        v-bind="subtitleProps" />
+                </slot>
+            </div>
+            <div aria-hidden="true" class="ev-list-item--indicator"></div>
+        </component>
+        <div
+            v-if="slots.iconStart || props.iconStart"
+            class="ev-list-item--icon-start">
+            <slot name="iconStart">
+                <ev-icon :glyph="props.iconStart" />
+            </slot>
         </div>
         <div v-if="slots.prefix" class="ev-list-item--prefix">
             <slot name="prefix" />
         </div>
-        <div class="ev-list-item--content">
-            <slot name="default">{{ props.title }}</slot>
-        </div>
         <div v-if="slots.suffix" class="ev-list-item--suffix">
             <slot name="suffix" />
         </div>
-        <div v-if="iconEnd" class="ev-list-item--icon-end">
-            <ev-icon :glyph="iconEnd" />
+        <div class="ev-list-item--actions">
+            <ev-button-group size="x-small" variant="subtle">
+                <ev-button :icon="PlusIcon" />
+                <ev-button :icon="EllipsisIcon" />
+            </ev-button-group>
         </div>
-        <div class="ev-list-item--indicator"></div>
-    </component>
+        <div
+            v-if="slots.iconEnd || props.iconEnd"
+            class="ev-list-item--icon-end">
+            <slot name="iconEnd">
+                <ev-icon :glyph="props.iconEnd" />
+            </slot>
+        </div>
+    </div>
 </template>

@@ -6,7 +6,7 @@ import {
     useGroupItem,
 } from "@/composables/groupItem.ts";
 import { computed, UnwrapRef } from "vue";
-import { EvSlideGroupSymbol } from "@/components";
+import { EvSlideGroupSymbol } from "./EvSlideGroup";
 
 type EvSlideGroupItemSlots = {
     default: {

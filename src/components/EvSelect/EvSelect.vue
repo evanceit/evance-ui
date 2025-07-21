@@ -664,8 +664,7 @@ const isPlaceholder = computed(
                         <slot
                             v-if="!displayItems.length && !props.hideItemsEmpty"
                             name="items-empty">
-                            <ev-list-item
-                                :title="t(props.itemsEmptyText)"></ev-list-item>
+                            <ev-list-item :title="t(props.itemsEmptyText)" />
                         </slot>
 
                         <ev-virtual-scroll

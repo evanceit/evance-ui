@@ -1,7 +1,7 @@
 import { InjectionKey, PropType } from "vue";
 import { GroupProvide } from "@/composables/group";
 import { InputSizeProp, propsFactory } from "@/util";
-import { makeEvSlideGroupProps } from "@/components";
+import { makeEvSlideGroupProps } from "@/components/EvSlideGroup";
 import { makeTagProps } from "@/composables/tag";
 
 export const EvTabsSymbol: InjectionKey<GroupProvide> = Symbol.for("ev:tabs");

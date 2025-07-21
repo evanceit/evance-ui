@@ -16,7 +16,8 @@ import { makeEvMessageProps } from "./EvMessage";
 import { useLocaleFunctions } from "@/composables/locale";
 import { EvButtonProps } from "@/components/EvButton";
 import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
-import { EvButtonGroup, EvHeading } from "@/components";
+import { EvButtonGroup } from "@/components/EvButtonGroup";
+import { EvHeading } from "@/components/EvHeading";
 
 const props = defineProps({
     ...makeEvMessageProps(),
