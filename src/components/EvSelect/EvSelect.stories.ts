@@ -272,20 +272,18 @@ export const CustomItem: Story = {
                 </template>
                 <template #item="{item, index, props}">
                     <ev-list-item v-bind="props">
-                        <ev-layout align="center" gutter="100">
-                            <ev-block size="auto">
-                                <ev-avatar :image="item.raw.image"></ev-avatar>
-                            </ev-block>
-                            <ev-block size="grow">
-                                <span class="text-large">{{ item.raw.title }}</span>
-                                <br />
-                                SKU: {{ item.raw.sku }}
-                                <ev-quickfind v-model="item.raw.id"></ev-quickfind>
-                            </ev-block>
-                            <ev-block size="auto">
-                                <ev-lozenge appearance="success">Active</ev-lozenge>
-                            </ev-block>
-                        </ev-layout>
+                        <template #prefix>
+                            <ev-avatar :image="item.raw.image"></ev-avatar>
+                        </template>
+                        <template #default>
+                            <span class="text-large">{{ item.raw.title }}</span>
+                            <br />
+                            SKU: {{ item.raw.sku }}
+                            <ev-quickfind v-model="item.raw.id"></ev-quickfind>
+                        </template>
+                        <template #suffix>
+                            <ev-lozenge appearance="success">Active</ev-lozenge>
+                        </template>
                     </ev-list-item>
                 </template>
             </ev-select>

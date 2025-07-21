@@ -11,7 +11,6 @@ $indicator-width: 3px;
     user-select: none;
     align-items: center;
     margin: 2px;
-    gap: 4px;
     min-height: var(--list-item-height);
     border-radius: var(--input-radius);
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -56,15 +55,15 @@ $indicator-width: 3px;
 }
 
 .ev-list-item {
+    > *:last-child {
+        &:has(.ev-button) {
+            margin-right: 6px;
+        }
+    }
     > *:nth-child(2) {
         &:has(.ev-button) {
             margin-left: 4px;
             margin-right: -8px;
-        }
-    }
-    > *:last-child {
-        &:has(.ev-button) {
-            margin-right: 0;
         }
     }
 }
@@ -150,7 +149,7 @@ $indicator-width: 3px;
 
 .ev-list-item--content {
     grid-area: content;
-    margin-inline: 8px;
+    margin-inline: 16px;
     min-width: 0;
 }
 
@@ -176,6 +175,24 @@ $indicator-width: 3px;
 
 .ev-list-item--actions {
     grid-area: actions;
+
+    .is-show-on-hover {
+        display: none;
+
+        .ev-list-item:hover & {
+            display: inline-flex;
+        }
+    }
+}
+
+.ev-list-item {
+    &.is-actions-on-hover  {
+        &:hover {
+            .ev-list-item--suffix{
+                display: none;
+            }
+        }
+    }
 }
 
 .ev-list-item--icon-end {

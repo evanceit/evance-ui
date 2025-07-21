@@ -6,10 +6,13 @@ import {
 import { IconProp, IconValue } from "@/composables/icons";
 import { ComponentProps, makeComponentProps } from "@/composables/component";
 import { EvTextProps } from "@/components/EvText";
+import { EvButtonProps } from "@/components/EvButton";
 import { PropType } from "vue";
 
 export interface EvListItemProps extends ComponentProps, RouterLinkOrHrefProps {
     active?: boolean;
+    actions?: EvButtonProps[];
+    actionsOnHover?: EvButtonProps[];
     disabled?: boolean;
     iconEnd?: IconValue;
     iconStart?: IconValue;
@@ -25,6 +28,14 @@ export const makeEvListItemProps = propsFactory(
         active: {
             type: Boolean,
             default: undefined,
+        },
+        actions: {
+            type: Array as PropType<readonly EvButtonProps[]>,
+            default: () => [],
+        },
+        actionsOnHover: {
+            type: Array as PropType<readonly EvButtonProps[]>,
+            default: () => [],
         },
         disabled: Boolean,
         iconEnd: IconProp,

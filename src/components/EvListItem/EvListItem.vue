@@ -10,8 +10,8 @@ import { useList, useNestedListItem } from "@/composables/lists";
 import { EvIcon } from "@/components/EvIcon";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
-import { EllipsisIcon, PlusIcon } from "@/icons";
 import { EvText } from "@/components/EvText";
+import { getNextId } from "@/util";
 
 // Emit
 const emit = defineEmits(["click"]);
@@ -100,7 +100,7 @@ const hasClickListener = computed(
 const titleProps = computed(() => {
     return mergeProps(
         {
-            truncate: 1,
+            truncate: true,
             text: toDisplayString(props.title),
         },
         props.titleProps,
@@ -112,12 +112,27 @@ const subtitleProps = computed(() => {
         {
             appearance: "subtle",
             size: "small",
-            truncate: 1,
+            truncate: true,
             text: toDisplayString(props.subtitle),
         },
         props.subtitleProps,
     );
 });
+
+const parsedActions = computed(() =>
+    props.actions.map((action) => ({
+        props: action,
+        id: getNextId(),
+    })),
+);
+const hasActions = computed(() => !!parsedActions.value.length);
+const parsedActionsOnHover = computed(() =>
+    props.actionsOnHover.map((action) => ({
+        props: action,
+        id: getNextId(),
+    })),
+);
+const hasActionsOnHover = computed(() => !!parsedActionsOnHover.value.length);
 </script>
 
 <template>
@@ -130,6 +145,7 @@ const subtitleProps = computed(() => {
                 'is-active--exact': isActiveExact,
                 'is-clickable': isClickable || hasClickListener,
                 'is-disabled': props.disabled,
+                'is-actions-on-hover': hasActionsOnHover,
             },
             props.class,
         ]"
@@ -170,10 +186,19 @@ const subtitleProps = computed(() => {
         <div v-if="slots.suffix" class="ev-list-item--suffix">
             <slot name="suffix" />
         </div>
-        <div class="ev-list-item--actions">
+        <div
+            v-if="hasActions || hasActionsOnHover"
+            class="ev-list-item--actions">
             <ev-button-group size="x-small" variant="subtle">
-                <ev-button :icon="PlusIcon" />
-                <ev-button :icon="EllipsisIcon" />
+                <ev-button
+                    v-for="action in parsedActionsOnHover"
+                    :key="action.id"
+                    v-bind="action.props"
+                    class="is-show-on-hover" />
+                <ev-button
+                    v-for="action in parsedActions"
+                    :key="action.id"
+                    v-bind="action.props" />
             </ev-button-group>
         </div>
         <div

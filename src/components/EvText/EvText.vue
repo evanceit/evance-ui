@@ -43,9 +43,8 @@ const appearanceClass = computed(() => {
         return undefined;
     }
     const { appearanceClass } = useAppearance(props as AppearanceProps);
-    return appearanceClass;
+    return appearanceClass.value;
 });
-
 </script>
 
 <template>
