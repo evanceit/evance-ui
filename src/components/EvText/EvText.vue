@@ -2,7 +2,13 @@
 import "./EvText.scss";
 import { EvTextSizeClass, makeEvTextProps } from "./EvText";
 import { computed } from "vue";
-import { AppearanceProps, isBoolean, isNumber, makeClassName, useAppearance } from "@/util";
+import {
+    AppearanceProps,
+    isBoolean,
+    isNumber,
+    makeClassName,
+    useAppearance,
+} from "@/util";
 import { useDefaults } from "@/composables";
 
 const definedProps = defineProps({ ...makeEvTextProps() });
@@ -32,7 +38,13 @@ const weightClass = computed(() => {
         : undefined;
 });
 
-const { appearanceClass } = useAppearance(props as AppearanceProps);
+const appearanceClass = computed(() => {
+    if (!props.appearance) {
+        return undefined;
+    }
+    const { appearanceClass } = useAppearance(props as AppearanceProps);
+    return appearanceClass;
+});
 
 </script>
 
