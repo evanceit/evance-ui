@@ -92,31 +92,9 @@ export const Primary: Story = {
         template: `
             <ev-list-item v-bind="args" />
 
-            <ev-list-item title="Testing icon start slot" href="#">
-                <template #iconStart>
-                    <ev-button :icon="ChevronRightIcon" size="x-small" variant="subtle" />
-                </template>
-            </ev-list-item>
-            
-            <ev-list-item 
-                :icon-start="ChevronRightIcon" 
-                href="#" 
-                :icon-end="ChevronRightIcon" 
-                title="Testing with prefix" subtitle="Hello this is a subtitle">
-                <template #prefix>
-                    <ev-avatar>G</ev-avatar>
-                </template>
-                <template #suffix>World</template>
-            </ev-list-item>
-            
-            <ev-list-item title="Testing icon start slot" href="#">
-                <template #prefix>
-                    <ev-avatar>G</ev-avatar>
-                </template>
-                <template #iconStart>
-                    <ev-button :icon="ChevronRightIcon" size="x-small" variant="subtle" />
-                </template>
-            </ev-list-item>
+            <ev-list-item
+                title="List item example (actionsOnHover)"
+                :actions-on-hover="[{ icon: PlusIcon }]" />
             
             <ev-list-item
                 title="List item example (actions)" 

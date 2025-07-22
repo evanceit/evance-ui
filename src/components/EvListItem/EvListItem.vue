@@ -88,15 +88,6 @@ const hasClickListener = computed(
     () => !!link.isClickable.value || !!props.onClick,
 );
 
-/**
- * @todo: I'd like to change how this component works:
- * - add actions
- * - add actions on hover
- * - Should start icon be within the prefix?
- * - should end icon be within the suffix?
- *
- */
-
 const titleProps = computed(() => {
     return mergeProps(
         {

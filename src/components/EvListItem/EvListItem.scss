@@ -69,39 +69,6 @@ $indicator-width: 3px;
 }
 
 .ev-list-item {
-
-    &.is-active {
-        color: var(--text-selected);
-
-        &.is-clickable {
-            &:hover {
-                color: var(--text-selected);
-                background: var(--fill-selected);
-            }
-        }
-    }
-
-    &.is-active--exact {
-        color: var(--text-selected);
-        background: var(--fill-selected);
-
-        &.is-clickable {
-            &:hover {
-                color: var(--text-selected);
-                background: var(--fill-selected-hovered);
-            }
-        }
-
-        .ev-list-item--indicator {
-            opacity: 1;
-            &:before {
-                transform: translateX(0);
-            }
-        }
-    }
-}
-
-.ev-list-item {
     &--icon-start,
     &--prefix {
         display: inline-flex;
@@ -199,8 +166,6 @@ $indicator-width: 3px;
     grid-area: icon-end;
 }
 
-
-
 .ev-list-item--indicator {
     position: absolute;
     width: $indicator-width;
@@ -226,5 +191,39 @@ $indicator-width: 3px;
         top: 0;
         left: 0;
         will-change: transform;
+    }
+}
+
+.ev-list-item {
+
+    &.is-active {
+        color: var(--text-selected);
+
+        &.is-clickable {
+            &:hover {
+                color: var(--text-selected);
+                background: var(--fill-selected);
+            }
+        }
+    }
+
+    &.is-active--exact {
+        color: var(--text-selected);
+        background: var(--fill-selected);
+
+        &.is-clickable {
+            &:hover {
+                color: var(--text-selected);
+                background: var(--fill-selected-hovered);
+            }
+        }
+
+        .ev-list-item--indicator {
+            opacity: 1;
+
+            &:before {
+                transform: translateX(0);
+            }
+        }
     }
 }
