@@ -35,6 +35,7 @@ export function connectedPositionStrategy(
     data: PositionStrategyData,
     props: PositionStrategyProps,
     contentStyles: Ref<StyleProp>,
+    pointerStyles: Ref<StyleProp>,
 ) {
     // When the position anchor contains auto information, we need to calculate the preferred anchor
     // If the origin anchor contains auto information, we need to calculate the preferred anchor
@@ -43,7 +44,12 @@ export function connectedPositionStrategy(
     // If the `side` of the anchor is set to 'auto' then we need to choose the side with most space
     // for the content. We should have a preference stack which is calculated based on
     // rtl, and whether the content fits the side.
-    const manager = new ConnectedPosition(data, props, contentStyles);
+    const manager = new ConnectedPosition(
+        data,
+        props,
+        contentStyles,
+        pointerStyles,
+    );
     return {
         updatePosition: manager.updatePosition.bind(manager),
     };
@@ -70,6 +76,7 @@ class ConnectedPosition {
         public data: PositionStrategyData,
         public props: PositionStrategyProps,
         public contentStyles: Ref<StyleProp>,
+        public pointerStyles: Ref<StyleProp>,
     ) {
         this.resolveFixedActivator();
         this.minWidth = this.computedNumericProp("minWidth");
@@ -228,6 +235,15 @@ class ConnectedPosition {
     }
 
     /**
+     * ## Get Pointer Rect
+     * @private
+     */
+    private getPointerDimensions(): { width: number; height: number } | null {
+        const el = this.data.pointerEl.value;
+        return el ? { width: el.clientWidth, height: el.clientHeight } : null;
+    }
+
+    /**
      * ## Get Content Scroll Parents
      * @private
      */
@@ -352,7 +368,31 @@ class ConnectedPosition {
         // Now we need to calculate the position of the content element within the zone.
         placement.position = zone.position;
         placement.origin = placement.position.flipSide();
+        const { x, y } = this.calculateContentCoords(zone, placement);
+        this.calculateContentStyles(zone, placement, x, y);
+        this.calculatePointerStyles(placement, x, y);
 
+        this.data.contentEl.value?.setAttribute(
+            "data-position",
+            placement.position.toString(),
+        );
+
+        return {
+            zoneRect: zone.rect,
+            contentRect: this.contentRect,
+        };
+    }
+
+    /**
+     *
+     * @param zone
+     * @param placement
+     * @private
+     */
+    private calculateContentCoords(
+        zone: Zone,
+        placement: { position: Anchor; origin: Anchor }
+    ): { x: number; y: number } {
         let { x, y } = zone.rect;
 
         if (placement.position.side === "center") {
@@ -371,12 +411,12 @@ class ConnectedPosition {
                     y =
                         this.targetRect.y +
                         (this.targetRect.height - this.contentRect.height) /
-                            divider;
+                        divider;
                 } else {
                     x =
                         this.targetRect.x +
                         (this.targetRect.width - this.contentRect.width) /
-                            divider;
+                        divider;
                 }
             }
         }
@@ -389,7 +429,23 @@ class ConnectedPosition {
             x = this.viewportRect.x;
         }
 
-        // @todo: RTL
+        return { x, y };
+    }
+
+    /**
+     * @todo: RTL
+     * @param zone
+     * @param placement
+     * @param x
+     * @param y
+     * @private
+     */
+    private calculateContentStyles(
+        zone: Zone,
+        placement: { position: Anchor; origin: Anchor },
+        x: number,
+        y: number,
+    ) {
         Object.assign(this.contentStyles.value, {
             "--ev-overlay-position": placement.position.toCssValue(),
             transformOrigin: placement.origin.toCssValue(),
@@ -423,16 +479,68 @@ class ConnectedPosition {
                 ),
             ),
         });
+    }
 
-        this.data.contentEl.value?.setAttribute(
-            "data-position",
-            placement.position.toString(),
-        );
+    /**
+     *
+     * @param placement
+     * @param x
+     * @param y
+     * @private
+     */
+    private calculatePointerStyles(
+        placement: { position: Anchor; origin: Anchor },
+        x: number,
+        y: number,
+    ) {
+        const pointerDimensions = this.getPointerDimensions();
+        if (
+            !pointerDimensions ||
+            (placement.position.side === "center" && placement.position.alignment === "center")
+        ) {
+            Object.assign(this.pointerStyles.value, {
+                left: null,
+                top: null,
+            });
+            return;
+        }
 
-        return {
-            zoneRect: zone.rect,
-            contentRect: this.contentRect,
-        };
+        let pointerOffsetX: null | number = null;
+        let pointerOffsetY: null | number = null;
+        let rotation = 0;
+
+        if (placement.position.axis === "y") {
+            if (x > this.targetRect.x) {
+                pointerOffsetX = 0 - pointerDimensions.width / 2;
+            } else {
+                pointerOffsetX = this.targetRect.x - x - pointerDimensions.width / 2;
+            }
+            pointerOffsetX +=
+                Math.min(this.targetRect.width, this.contentRect.width) / 2;
+            pointerOffsetY =
+                placement.position.side === "bottom"
+                    ? 0 - pointerDimensions.height
+                    : this.contentRect.height;
+            rotation = placement.position.side === "bottom" ? 180 : 0;
+        } else {
+            if (y > this.targetRect.y) {
+                pointerOffsetY = 0 - pointerDimensions.height / 2;
+            } else {
+                pointerOffsetY = this.targetRect.y - y - pointerDimensions.height / 2;
+            }
+            pointerOffsetY += Math.min(this.targetRect.height, this.contentRect.height) / 2;
+            pointerOffsetX =
+                placement.position.side === "right"
+                    ? 0 - pointerDimensions.width
+                    : this.data.contentEl.value.clientWidth;
+            rotation = placement.position.side === "right" ? 90 : 270;
+        }
+
+        Object.assign(this.pointerStyles.value, {
+            left: toWebUnit(pixelRound(pointerOffsetX)),
+            top: toWebUnit(pixelRound(pointerOffsetY)),
+            transform: `rotate(${rotation}deg)`,
+        });
     }
 
     private getAutoZone(position: Anchor, zones: Zone[]): Zone {

@@ -67,6 +67,9 @@ const activatorProps = computed(() => {
         :activator-props="activatorProps"
         absolute
         disable-global-stack>
+        <template #pointer>
+            <div class="ev-tooltip--pointer"></div>
+        </template>
         <slot>{{ props.text }}</slot>
     </ev-overlay>
 </template>

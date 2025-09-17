@@ -68,5 +68,3 @@ export const makeEvOverlayProps = propsFactory(
     },
     "EvOverlay",
 );
-
-

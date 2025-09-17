@@ -9,9 +9,14 @@ const meta: Meta<typeof EvTooltip> = {
         modelValue: {
             control: "boolean",
         },
+        position: {
+            control: "select",
+            options: ["top", "bottom", "left", "right"],
+        },
     },
     args: {
         modelValue: false,
+        position: "top",
     },
     tags: ["autodocs"],
 };
@@ -28,23 +33,8 @@ export const Primary: Story = {
         },
         template: `
             <ev-button>
-                Left
-                <ev-tooltip activator="parent" position="left"><code>position="left"</code></ev-tooltip>
-            </ev-button>
-            &nbsp;
-            <ev-button>
-                Top
-                <ev-tooltip activator="parent" v-bind="args"><code>position="top"</code> (default)</ev-tooltip>
-            </ev-button>
-            &nbsp;
-            <ev-button>
-                Bottom
-                <ev-tooltip activator="parent" position="bottom"><code>position="bottom"</code></ev-tooltip>
-            </ev-button>
-            &nbsp;
-            <ev-button>
-                Right
-                <ev-tooltip activator="parent" position="right"><code>position="right"</code></ev-tooltip>
+                Activator
+                <ev-tooltip activator="parent" v-bind="args"><code>position="{{ args.position }}"</code></ev-tooltip>
             </ev-button>
         `,
     }),

@@ -51,11 +51,13 @@ const attrs = useAttrs();
 const slots = defineSlots<{
     activator(props: { isActive: boolean; props: any }): any;
     default(): never;
+    pointer(): never;
 }>();
 const router = useRouter();
 const model = useModelProxy(props, "modelValue");
 const containerEl = ref<HTMLElement | undefined>(undefined);
 const contentEl = ref<HTMLElement | undefined>(undefined);
+const pointerEl = ref<HTMLElement | undefined>(undefined);
 const contentTransition = useEvTransition(props);
 const dimensions = useDimensions(props);
 const { scopeId } = useScopeId();
@@ -86,12 +88,16 @@ const teleportTarget = useTeleport(
 );
 const { rtlClasses, isRtl } = useRtl();
 
-const { contentStyles, updatePosition } = usePositionStrategies(props, {
-    isRtl,
-    contentEl,
-    activatorEl,
-    isActive: isActiveContent,
-});
+const { contentStyles, updatePosition, pointerStyles } = usePositionStrategies(
+    props,
+    {
+        isRtl,
+        contentEl,
+        activatorEl,
+        pointerEl,
+        isActive: isActiveContent,
+    },
+);
 
 useScrollStrategies(props, {
     containerEl,
@@ -113,7 +119,7 @@ defineExpose({
 });
 
 /**
- * When disabled update the model value via the isActive computed prop
+ * When disabled, update the model value via the isActive computed prop
  */
 watch(
     () => props.disabled,
@@ -335,6 +341,13 @@ const overlayAttributes = {
                     :class="[props.contentClass]"
                     :style="[dimensions, contentStyles]"
                     v-bind="contentAttributes">
+                    <div
+                        v-if="slots.pointer && !props.veil"
+                        ref="pointerEl"
+                        class="ev-overlay--pointer"
+                        :style="[pointerStyles]">
+                        <slot name="pointer" />
+                    </div>
                     <slot />
                 </div>
             </ev-transition>

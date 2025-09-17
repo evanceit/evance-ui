@@ -9,6 +9,7 @@ import { useToggleScope } from "@/composables/toggleScope";
 export interface PositionStrategyData {
     contentEl: Ref<HTMLElement | undefined>;
     activatorEl: Ref<HTMLElement | undefined>;
+    pointerEl: Ref<HTMLElement | undefined>;
     isActive: Ref<boolean>;
     isRtl: Ref<boolean>;
 }
@@ -17,6 +18,7 @@ type PositionStrategyFn = (
     data: PositionStrategyData,
     props: PositionStrategyProps,
     contentStyles: Ref<Record<string, string>>,
+    pointerStyles: Ref<Record<string, string>>,
 ) => undefined | { updatePosition: (e: Event) => void };
 
 const positionStrategies = {
@@ -71,6 +73,7 @@ export function usePositionStrategies(
     data: PositionStrategyData,
 ) {
     const contentStyles = ref({});
+    const pointerStyles = ref({});
     const updatePosition = ref<(e: Event) => void>();
 
     /**
@@ -104,6 +107,7 @@ export function usePositionStrategies(
                     data,
                     props,
                     contentStyles,
+                    pointerStyles,
                 )?.updatePosition;
             },
         );
@@ -119,5 +123,6 @@ export function usePositionStrategies(
     return {
         contentStyles,
         updatePosition,
+        pointerStyles,
     };
 }
