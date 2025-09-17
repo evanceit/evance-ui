@@ -523,15 +523,17 @@ class ConnectedPosition {
                     : this.contentRect.height;
             rotation = placement.position.side === "bottom" ? 180 : 0;
         } else {
+            // Note, the width/height dimensions of the pointer are rotated
+            // so they seem wrong but should be correct if not square (needs to be tested)
             if (y > this.targetRect.y) {
-                pointerOffsetY = 0 - pointerDimensions.height / 2;
+                pointerOffsetY = 0 - pointerDimensions.width / 2;
             } else {
-                pointerOffsetY = this.targetRect.y - y - pointerDimensions.height / 2;
+                pointerOffsetY = this.targetRect.y - y - pointerDimensions.width / 2;
             }
             pointerOffsetY += Math.min(this.targetRect.height, this.contentRect.height) / 2;
             pointerOffsetX =
                 placement.position.side === "right"
-                    ? 0 - pointerDimensions.width
+                    ? 0 - pointerDimensions.height
                     : this.data.contentEl.value.clientWidth;
             rotation = placement.position.side === "right" ? 90 : 270;
         }
