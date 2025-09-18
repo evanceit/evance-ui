@@ -1,8 +1,8 @@
-.ev-date-picker-months {
+
+.ev-time-picker--hours {
     align-items: center;
     display: grid;
     flex: 1 1;
-    height: 336px;
     justify-content: space-around;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
