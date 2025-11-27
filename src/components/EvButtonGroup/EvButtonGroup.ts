@@ -31,6 +31,7 @@ export const makeEvButtonGroupProps = propsFactory(
             type: String as PropType<ButtonGroupGap>,
             default: "auto",
         },
+        grow: Boolean,
         rounded: Boolean,
         size: String as PropType<InputSizeProp>,
         variant: {

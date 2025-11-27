@@ -35,6 +35,9 @@ const meta: Meta<typeof EvButtonGroup> = {
                 "x-large",
             ],
         },
+        grow: {
+            control: "boolean",
+        },
         size: {
             control: "select",
             options: ["x-small", "small", "medium", "large", "x-large"],
@@ -52,6 +55,7 @@ const meta: Meta<typeof EvButtonGroup> = {
         appearance: "default",
         variant: "default",
         gap: "auto",
+        grow: false,
         size: "medium",
         rounded: false,
     },

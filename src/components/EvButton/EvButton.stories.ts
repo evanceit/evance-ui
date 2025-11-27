@@ -103,6 +103,9 @@ const meta: Meta<typeof EvButton> = {
             description:
                 "Puts the button into a loading state, effectively disabling it.",
         },
+        readonly: {
+            control: "boolean",
+        },
         rounded: {
             control: "boolean",
         },
@@ -145,6 +148,7 @@ const meta: Meta<typeof EvButton> = {
         size: "medium",
         fullWidth: false,
         loading: false,
+        readonly: undefined,
         rounded: false,
     },
     tags: ["autodocs"],

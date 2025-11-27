@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import { EvButtonToggle } from "../EvButtonToggle";
+import { EvSelectButton } from "../EvSelectButton";
 import { EvButton } from "@/components";
 import { shallowRef } from "vue";
 
-const meta: Meta<typeof EvButtonToggle> = {
-    component: EvButtonToggle,
-    title: "Components/Actions/EvButtonToggle",
+const meta: Meta<typeof EvSelectButton> = {
+    component: EvSelectButton,
+    title: "Components/Actions/EvSelectButton",
     argTypes: {
         appearance: {
             control: "select",
@@ -53,40 +53,44 @@ const meta: Meta<typeof EvButtonToggle> = {
             control: "select",
             options: ["x-small", "small", "medium", "large", "x-large"],
         },
+        grow: {
+            control: "boolean",
+        },
         selectedClass: {
             description: "The",
         },
     },
     args: {
-        appearance: "default",
-        variant: "outlined",
-        selectedAppearance: "primary",
-        selectedVariant: "outlined",
+        appearance: undefined,
+        variant: undefined,
+        selectedAppearance: undefined,
+        selectedVariant: undefined,
         disabled: false,
         mandatory: false,
         multiple: false,
         size: "medium",
+        grow: false,
     },
     tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof EvButtonToggle>;
+type Story = StoryObj<typeof EvSelectButton>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvButtonToggle, EvButton },
+        components: { EvSelectButton, EvButton },
         setup() {
             const selected = shallowRef();
             return { args, selected };
         },
         template: `
-    <ev-button-toggle v-bind="args" v-model="selected">
+    <ev-select-button v-bind="args" v-model="selected">
         <ev-button>Button 1</ev-button>
         <ev-button>Button 2</ev-button>
         <ev-button>Button 3</ev-button>
         <ev-button>Button 4</ev-button>
-    </ev-button-toggle>`,
+    </ev-select-button>`,
     }),
 };

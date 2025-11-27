@@ -4,7 +4,7 @@ import { computed, shallowRef } from "vue";
 import { useDate, useLocaleManager, useModelProxy } from "@/composables";
 import { EvButton } from "@/components/EvButton";
 import { makeEvTimePickerProps } from "./EvTimePicker";
-import { EvButtonToggle } from "@/components/EvButtonToggle";
+import { EvSelectButton } from "@/components/EvSelectButton";
 import { EvTimePickerHours } from "./EvTimePickerHours";
 import { EvTimePickerMinutes } from "./EvTimePickerMinutes";
 import { ArrowBackIcon } from "@/icons";
@@ -68,14 +68,14 @@ function onClickPeriod() {
                 <ev-text v-else weight="semibold">Select time</ev-text>
             </ev-block>
 
-            <ev-button-toggle
+            <ev-select-button
                 v-model="period"
                 mandatory
                 size="small"
                 selected-variant="bold">
                 <ev-button value="am" text="AM" @click="onClickPeriod" />
                 <ev-button value="pm" text="PM" @click="onClickPeriod" />
-            </ev-button-toggle>
+            </ev-select-button>
         </ev-layout>
 
         <ev-time-picker-hours

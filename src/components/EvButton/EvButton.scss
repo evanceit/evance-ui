@@ -222,3 +222,10 @@
         }
     }
 }
+
+
+.ev-button {
+    &.is-readonly {
+        pointer-events: none;
+    }
+}

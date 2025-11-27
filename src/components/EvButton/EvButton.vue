@@ -179,13 +179,14 @@ const iconEnd = computed(() => {
                 'is-icon': isIconLike,
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
+                'is-readonly': props.readonly,
                 'is-rounded': props.rounded,
                 'is-clickable': isClickable,
             },
             props.class,
         ]"
         :style="props.style"
-        tabindex="0"
+        :tabindex="props.readonly ? -1 : 0"
         :disabled="isDisabled || undefined"
         :value="valueAttr"
         @click="onClick">

@@ -64,6 +64,7 @@ const gapClass = computed(() => {
             gapClass,
             {
                 'is-rounded': props.rounded,
+                'is-grow': props.grow,
             },
             props.class,
         ]"

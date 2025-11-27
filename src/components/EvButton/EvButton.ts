@@ -12,7 +12,7 @@ import {
 } from "@/composables/router";
 import { PropType } from "vue";
 import { makeComponentProps } from "@/composables/component";
-import { EvButtonToggleSymbol } from "@/components/EvButtonToggle/EvButtonToggle";
+import { EvSelectButtonSymbol } from "@/components/EvSelectButton/EvSelectButton";
 import { makeGroupItemProps } from "@/composables/groupItem";
 
 /**
@@ -50,7 +50,7 @@ export const makeEvButtonProps = propsFactory(
         },
         symbol: {
             type: null,
-            default: EvButtonToggleSymbol,
+            default: EvSelectButtonSymbol,
         },
         appearance: {
             type: String as PropType<ButtonAppearanceProp>,
@@ -64,6 +64,7 @@ export const makeEvButtonProps = propsFactory(
         rounded: Boolean,
         size: String as PropType<InputSizeProp>,
         fullWidth: Boolean,
+        readonly: Boolean,
         selectedIcon: IconProp,
         selectedIconStart: IconProp,
         selectedIconEnd: IconProp,

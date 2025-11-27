@@ -136,3 +136,15 @@
         --gap: var(--spacer-300);
     }
 }
+
+.ev-button-group {
+    &.is-grow {
+        flex-grow: 1;
+        display: flex;
+
+        .ev-button {
+            flex: 1 0 auto;
+            max-width: none;
+        }
+    }
+}
