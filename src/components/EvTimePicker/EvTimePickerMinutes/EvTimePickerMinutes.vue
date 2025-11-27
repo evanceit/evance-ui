@@ -14,16 +14,19 @@ const dateAdapter = useDate();
 const modelValue = useModelProxy(props, "modelValue", undefined);
 
 const displayMinutes = computed(() => {
+    const is24Hour = props.hourFormat === 24;
     const value = modelValue.value
         ? (dateAdapter.date(modelValue.value) as Date)
+        : undefined;
+    const hours = value
+        ? String(
+              is24Hour ? value.getHours() : value.getHours() % 12 || 12,
+          ).padStart(2, "0")
         : undefined;
 
     return [0, 15, 30, 45].map((minute) => {
         const isSelected = value?.getMinutes() === minute;
         const minutes = String(minute).padStart(2, "0");
-        const hours = value
-            ? String(value.getHours()).padStart(2, "0")
-            : undefined;
         const text = hours ? `${hours}:${minutes}` : minutes;
 
         return {

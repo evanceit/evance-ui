@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvTimePicker.scss";
-import { shallowRef, watch } from "vue";
-import { useDate, useModelProxy } from "@/composables";
+import { computed, shallowRef } from "vue";
+import { useDate, useLocaleManager, useModelProxy } from "@/composables";
 import { EvButton } from "@/components/EvButton";
 import { makeEvTimePickerProps } from "./EvTimePicker";
 import { EvButtonToggle } from "@/components/EvButtonToggle";
@@ -9,21 +9,31 @@ import { EvTimePickerHours } from "./EvTimePickerHours";
 import { EvTimePickerMinutes } from "./EvTimePickerMinutes";
 import { ArrowBackIcon } from "@/icons";
 import { EvLayout, EvBlock } from "@/components/EvGrid";
-import {EvText} from "@/components";
+import { EvText } from "@/components/EvText";
 
 const props = defineProps({
     ...makeEvTimePickerProps(),
 });
 defineEmits(["update:modelValue"]);
+const locale = useLocaleManager();
 const dateAdapter = useDate();
 const period = shallowRef("am");
-const is24Hour = shallowRef(true);
 const viewMode = shallowRef("hours");
+const modelValue = useModelProxy(props, "modelValue", undefined, (value) => {
+    console.log(dateAdapter.date(value));
+    return dateAdapter.date(value);
+}
 
-const modelValue = useModelProxy(props, "modelValue", undefined);
-
-watch(modelValue, (newValue, oldValue) => {
-    console.log("modelValue", newValue, oldValue);
+);
+const hourFormat = computed<12 | 24>(() => {
+    if (props.hourFormat) {
+        return props.hourFormat;
+    }
+    const formatter = new Intl.DateTimeFormat(locale.currentLocale.value, {
+        hour: "numeric",
+    });
+    const options = formatter.resolvedOptions();
+    return ["h11", "h12"].includes(options.hourCycle) ? 12 : 24;
 });
 
 function onClickHour() {
@@ -43,9 +53,6 @@ function onClickPeriod() {
 </script>
 
 <template>
-
-    <p>Model value: {{ modelValue }}</p>
-
     <div class="ev-time-picker">
 
         <ev-layout align="center" class="mb-200" gap="100">
@@ -75,11 +82,13 @@ function onClickPeriod() {
             v-if="viewMode === 'hours'"
             v-model="modelValue"
             :period="period"
+            :hour-format="hourFormat"
             @click:hour="onClickHour" />
 
         <ev-time-picker-minutes
             v-else
             v-model="modelValue"
+            :hour-format="hourFormat"
             @click:back="viewMode = 'hours'" />
     </div>
 </template>

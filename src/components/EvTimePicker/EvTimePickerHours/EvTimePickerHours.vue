@@ -9,12 +9,11 @@ const props = defineProps({
     ...makeEvTimePickerHoursProps(),
 });
 const emit = defineEmits(["update:modelValue", "click:hour"]);
-
 const dateAdapter = useDate();
 const modelValue = useModelProxy(props, "modelValue", undefined);
 
-const is24Hour = true;
 const hoursInDay = computed(() => {
+    const is24Hour = props.hourFormat === 24;
     const value = modelValue.value
         ? (dateAdapter.date(modelValue.value) as Date)
         : undefined;
@@ -33,7 +32,9 @@ const hoursInDay = computed(() => {
 
         // Display text depends on 24-hour setting,
         // but the order remains sequential for 12h
-        const text = is24Hour ? String(value24).padStart(2, "0") : displayHour;
+        const text = is24Hour
+            ? String(value24).padStart(2, "0")
+            : String(displayHour);
         const isSelected = value?.getHours() === value24;
 
         return {
@@ -70,7 +71,7 @@ function onClickHour(hour: Hour) {
     <div class="ev-time-picker--hours">
         <ev-button
             v-for="hour in hoursInDay"
-            :key="hour.value"
+            :key="String(hour.value)"
             class="ev-time-picker--hour"
             :text="hour.text"
             :appearance="getAppearance(hour)"

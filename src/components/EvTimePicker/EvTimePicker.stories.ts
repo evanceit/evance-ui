@@ -6,7 +6,10 @@ const meta: Meta<typeof EvTimePicker> = {
     component: EvTimePicker,
     title: "Components/Actions/EvTimePicker",
     argTypes: {
-
+        hourFormat: {
+            control: "select",
+            options: [undefined, 12, 24],
+        },
     },
     args: {
 
@@ -24,7 +27,14 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-time-picker
-            v-bind="args" />`,
+        data() {
+            return {
+                modelValue: null,
+            };
+        },
+        template: `
+            <p>Model value: {{ modelValue }}</p>
+            <button @click="modelValue = '10:45'">Set time to 10:45</button>
+            <ev-time-picker v-bind="args" v-model="modelValue" />`,
     }),
 };
