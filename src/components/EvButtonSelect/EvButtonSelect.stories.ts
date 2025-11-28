@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import { EvSelectButton } from "../EvSelectButton";
+import { EvButtonSelect } from "../EvButtonSelect";
 import { EvButton } from "@/components";
 import { shallowRef } from "vue";
 
-const meta: Meta<typeof EvSelectButton> = {
-    component: EvSelectButton,
-    title: "Components/Actions/EvSelectButton",
+const meta: Meta<typeof EvButtonSelect> = {
+    component: EvButtonSelect,
+    title: "Components/Actions/EvButtonSelect",
     argTypes: {
         appearance: {
             control: "select",
@@ -76,21 +76,21 @@ const meta: Meta<typeof EvSelectButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof EvSelectButton>;
+type Story = StoryObj<typeof EvButtonSelect>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvSelectButton, EvButton },
+        components: { EvButtonSelect, EvButton },
         setup() {
             const selected = shallowRef();
             return { args, selected };
         },
         template: `
-    <ev-select-button v-bind="args" v-model="selected">
+    <ev-button-select v-bind="args" v-model="selected">
         <ev-button>Button 1</ev-button>
         <ev-button>Button 2</ev-button>
         <ev-button>Button 3</ev-button>
         <ev-button>Button 4</ev-button>
-    </ev-select-button>`,
+    </ev-button-select>`,
     }),
 };

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import "./EvSwitchButton.scss";
+import "./EvButtonSwitch.scss";
 import {
-    EvSwitchButtonSymbol,
-    makeEvSwitchButtonProps,
-} from "./EvSwitchButton";
+    EvButtonSwitchSymbol,
+    makeEvButtonSwitchProps,
+} from "./EvButtonSwitch";
 import { GroupProps, useGroup } from "@/composables/group";
 import { EvButton } from "@/components/EvButton";
 import { useModelProxy } from "@/composables";
 import { computed, ref, watch } from "vue";
 
 const props = defineProps({
-    ...makeEvSwitchButtonProps(),
+    ...makeEvButtonSwitchProps(),
 });
 
 defineEmits(["update:modelValue"]);
@@ -32,7 +32,7 @@ useGroup(
         multiple: false,
         mandatory: false,
     } as any as GroupProps,
-    EvSwitchButtonSymbol,
+    EvButtonSwitchSymbol,
 );
 
 watch(selection, (newValue, oldValue) => {
@@ -59,6 +59,6 @@ const label = computed(() => {
     <ev-button
         v-bind="props"
         :value="true"
-        :symbol="EvSwitchButtonSymbol"
+        :symbol="EvButtonSwitchSymbol"
         :text="label" />
 </template>

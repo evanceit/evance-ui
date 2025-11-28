@@ -12,17 +12,17 @@ export type SelectButtonSlotProps =
 export interface DefaultSelectButtonSlot
     extends Pick<GroupProvide, SelectButtonSlotProps> {}
 
-export const EvSelectButtonSymbol: InjectionKey<GroupProvide> =
-    Symbol.for("ev:select-button");
+export const EvButtonSelectSymbol: InjectionKey<GroupProvide> =
+    Symbol.for("ev:button-select");
 
-export type EvSelectButtonSlots = {
+export type EvButtonSelectSlots = {
     default: DefaultSelectButtonSlot;
 };
 
 /**
- * # makeEvSelectButtonProps
+ * # makeEvButtonSelectProps
  */
-export const makeEvSelectButtonProps = propsFactory(
+export const makeEvButtonSelectProps = propsFactory(
     {
         ...makeEvButtonGroupProps({
             gap: "none",
@@ -34,5 +34,5 @@ export const makeEvSelectButtonProps = propsFactory(
             selectedVariant: "outlined",
         }),
     },
-    "EvSelectButton",
+    "EvButtonSelect",
 );

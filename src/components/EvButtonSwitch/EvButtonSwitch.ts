@@ -3,10 +3,10 @@ import { InjectionKey } from "vue";
 import { GroupProvide, makeGroupProps } from "@/composables/group";
 import { makeEvButtonProps } from "@/components/EvButton";
 
-export const EvSwitchButtonSymbol: InjectionKey<GroupProvide> =
+export const EvButtonSwitchSymbol: InjectionKey<GroupProvide> =
     Symbol.for("ev:switch-button");
 
-export const makeEvSwitchButtonProps = propsFactory(
+export const makeEvButtonSwitchProps = propsFactory(
     {
         ...makeEvButtonProps(),
         ...omit(
@@ -18,5 +18,5 @@ export const makeEvSwitchButtonProps = propsFactory(
         ),
         selectedText: String,
     },
-    "EvSwitchButton",
+    "EvButtonSwitch",
 );

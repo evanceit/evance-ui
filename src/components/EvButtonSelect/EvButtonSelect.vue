@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import "./EvSelectButton.scss";
+import "./EvButtonSelect.scss";
 import {
-    EvSelectButtonSlots,
-    EvSelectButtonSymbol,
-    makeEvSelectButtonProps,
-} from "./EvSelectButton";
+    EvButtonSelectSlots,
+    EvButtonSelectSymbol,
+    makeEvButtonSelectProps,
+} from "./EvButtonSelect";
 import { EvButtonGroup } from "../EvButtonGroup";
 import { GroupProps, useGroup } from "@/composables/group";
 import { filterComponentProps } from "@/util";
 import { computed } from "vue";
 
 const props = defineProps({
-    ...makeEvSelectButtonProps(),
+    ...makeEvButtonSelectProps(),
 });
 
 defineEmits(["update:modelValue"]);
 
-defineSlots<EvSelectButtonSlots>();
+defineSlots<EvButtonSelectSlots>();
 
 const { isSelected, next, previous, select, selected } = useGroup(
     props as any as GroupProps,
-    EvSelectButtonSymbol,
+    EvButtonSelectSymbol,
 );
 
 defineExpose({

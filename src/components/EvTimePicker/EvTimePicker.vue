@@ -4,7 +4,7 @@ import { computed, shallowRef } from "vue";
 import { useDate, useLocaleManager, useModelProxy } from "@/composables";
 import { EvButton } from "@/components/EvButton";
 import { makeEvTimePickerProps } from "./EvTimePicker";
-import { EvSelectButton } from "@/components/EvSelectButton";
+import { EvButtonSelect } from "@/components/EvButtonSelect";
 import { EvTimePickerHours } from "./EvTimePickerHours";
 import { EvTimePickerMinutes } from "./EvTimePickerMinutes";
 import { ArrowBackIcon } from "@/icons";
