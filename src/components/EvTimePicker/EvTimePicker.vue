@@ -149,7 +149,9 @@ const numberFormat = {
 
         <div class="ev-time-picker--controls">
             <ev-heading size="x-large" tag="div" class="mb-0">
-                <ev-number :value="hours" :format="numberFormat" />:<ev-number :value="minutes" :format="numberFormat" />
+                <ev-number :value="hours" :format="numberFormat" />:<ev-number
+                    :value="minutes"
+                    :format="numberFormat" />
             </ev-heading>
 
             <ev-button-select

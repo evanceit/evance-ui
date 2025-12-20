@@ -58,6 +58,7 @@ export * from "./EvText";
 export * from "./EvTextarea";
 export * from "./EvTextfield";
 export * from "./EvThumbnail";
+export * from "./EvTimeField";
 export * from "./EvTimePicker";
 export * from "./EvToolbar";
 export * from "./EvTooltip";
