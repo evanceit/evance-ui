@@ -1,3 +1,17 @@
 .ev-time-picker {
-    width: 336px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: fit-content;
+}
+
+.ev-time-picker--options {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.ev-time-picker--controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

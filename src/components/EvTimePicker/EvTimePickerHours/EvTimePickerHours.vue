@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import "./EvTimePickerHours.scss";
 import { computed } from "vue";
-import { useDate, useModelProxy } from "@/composables";
+import { useDate, useLocaleFunctions, useModelProxy } from "@/composables";
 import { EvButton } from "@/components/EvButton";
 import { Hour, makeEvTimePickerHoursProps } from "./EvTimePickerHours";
+import { EvEyebrow } from "@/components/EvEyebrow";
 
 const props = defineProps({
     ...makeEvTimePickerHoursProps(),
@@ -11,6 +12,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue", "click:hour"]);
 const dateAdapter = useDate();
 const modelValue = useModelProxy(props, "modelValue", undefined);
+const { t } = useLocaleFunctions();
 
 const hoursInDay = computed(() => {
     const is24Hour = props.hourFormat === 24;
@@ -69,10 +71,15 @@ function onClickHour(hour: Hour) {
 
 <template>
     <div class="ev-time-picker--hours">
+        <ev-eyebrow tag="div" class="ev-time-picker--heading">
+            {{ t("time.hours.title") }}
+        </ev-eyebrow>
         <ev-button
             v-for="hour in hoursInDay"
             :key="String(hour.value)"
             class="ev-time-picker--hour"
+            icon
+            rounded
             :text="hour.text"
             :appearance="getAppearance(hour)"
             :variant="getVariant(hour)"

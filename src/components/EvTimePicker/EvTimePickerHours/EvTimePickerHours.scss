@@ -4,5 +4,12 @@
     display: grid;
     flex: 1 1;
     justify-content: space-around;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.ev-time-picker--hours {
+    > .ev-time-picker--heading {
+        grid-column: span 3;
+    }
 }

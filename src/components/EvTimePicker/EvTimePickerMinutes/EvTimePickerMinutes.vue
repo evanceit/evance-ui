@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import "./EvTimePickerMinutes.scss";
 import { makeEvTimePickerMinutesProps, Minutes } from "./EvTimePickerMinutes";
-import { useDate, useModelProxy } from "@/composables";
+import { useDate, useLocaleFunctions, useModelProxy } from "@/composables";
 import { computed } from "vue";
 import { EvButton } from "@/components/EvButton";
+import { EvEyebrow } from "@/components/EvEyebrow";
 
 const props = defineProps({
     ...makeEvTimePickerMinutesProps(),
@@ -12,22 +13,17 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 const dateAdapter = useDate();
 const modelValue = useModelProxy(props, "modelValue", undefined);
+const { t } = useLocaleFunctions();
 
 const displayMinutes = computed(() => {
-    const is24Hour = props.hourFormat === 24;
     const value = modelValue.value
         ? (dateAdapter.date(modelValue.value) as Date)
-        : undefined;
-    const hours = value
-        ? String(
-              is24Hour ? value.getHours() : value.getHours() % 12 || 12,
-          ).padStart(2, "0")
         : undefined;
 
     return [0, 15, 30, 45].map((minute) => {
         const isSelected = value?.getMinutes() === minute;
         const minutes = String(minute).padStart(2, "0");
-        const text = hours ? `${hours}:${minutes}` : minutes;
+        const text = minutes;
 
         return {
             value: String(minute).padStart(2, "0"),
@@ -60,10 +56,15 @@ function onClickMinutes(minutes: Minutes) {
 
 <template>
     <div class="ev-time-picker--minutes">
+        <ev-eyebrow tag="div" class="ev-time-picker--heading">
+            {{ t("time.minutes.title") }}
+        </ev-eyebrow>
         <ev-button
             v-for="minutes in displayMinutes"
             :key="minutes.value"
             class="ev-time-picker--minute"
+            icon
+            rounded
             :text="minutes.text"
             :appearance="getAppearance(minutes)"
             :variant="getVariant(minutes)"

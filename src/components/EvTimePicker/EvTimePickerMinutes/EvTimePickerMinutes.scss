@@ -1,7 +1,6 @@
 .ev-time-picker--minutes {
     align-items: center;
-    display: grid;
-    flex: 1 1;
-    justify-content: space-around;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }

@@ -35,6 +35,50 @@ export default {
     table: {
         empty: "No results",
     },
+    time: {
+        years: {
+            title: "Years",
+            value: {
+                one: "{ value } year",
+                other: "{ value } years",
+            },
+        },
+        months: {
+            title: "Months",
+            value: {
+                one: "{ value } month",
+                other: "{ value } months",
+            },
+        },
+        days: {
+            title: "Days",
+            value: {
+                one: "{ value } day",
+                other: "{ value } days",
+            },
+        },
+        hours: {
+            title: "Hours",
+            value: {
+                one: "{ value } hour",
+                other: "{ value } hours",
+            },
+        },
+        minutes: {
+            title: "Minutes",
+            value: {
+                one: "{ value } minute",
+                other: "{ value } minutes",
+            },
+        },
+        seconds: {
+            title: "Seconds",
+            value: {
+                one: "{ value } second",
+                other: "{ value } seconds",
+            },
+        },
+    },
     months: {
         one: "{ value } month",
         other: "{ value } months",
