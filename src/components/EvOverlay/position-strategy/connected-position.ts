@@ -505,8 +505,8 @@ class ConnectedPosition {
             return;
         }
 
-        let pointerOffsetX: null | number = null;
-        let pointerOffsetY: null | number = null;
+        let pointerOffsetX: null | number | string = null;
+        let pointerOffsetY: null | number | string = null;
         let rotation = 0;
 
         if (placement.position.axis === "y") {
@@ -520,7 +520,7 @@ class ConnectedPosition {
             pointerOffsetY =
                 placement.position.side === "bottom"
                     ? 0 - pointerDimensions.height
-                    : this.contentRect.height;
+                    : "100%";
             rotation = placement.position.side === "bottom" ? 180 : 0;
         } else {
             // Note, the width/height dimensions of the pointer are rotated
@@ -534,13 +534,17 @@ class ConnectedPosition {
             pointerOffsetX =
                 placement.position.side === "right"
                     ? 0 - pointerDimensions.height
-                    : this.data.contentEl.value.clientWidth;
+                    : "100%";
             rotation = placement.position.side === "right" ? 90 : 270;
         }
 
         Object.assign(this.pointerStyles.value, {
-            left: toWebUnit(pixelRound(pointerOffsetX)),
-            top: toWebUnit(pixelRound(pointerOffsetY)),
+            left: typeof pointerOffsetX === 'string'
+                ? pointerOffsetX
+                : toWebUnit(pixelRound(pointerOffsetX)),
+            top: typeof pointerOffsetY === 'string'
+                ? pointerOffsetY
+                : toWebUnit(pixelRound(pointerOffsetY)),
             transform: `rotate(${rotation}deg)`,
         });
     }
