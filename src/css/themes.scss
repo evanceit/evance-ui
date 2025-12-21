@@ -188,7 +188,7 @@
     /* Surfaces */
     --surface-default: #{settings.token('dark-neutral.100')};
     --surface-overlay: #{settings.token('dark-neutral.300')};
-    --surface-overlay-shadow: inset 0px 0px 0px 1px #BCD6F01F, 0px 8px 12px #0304045C, 0px 0px 1px #03040480;
+    --surface-overlay-shadow: 0px 8px 12px #0304045C, 0px 0px 1px #03040480;
     --surface-panel: #{settings.token('dark-neutral.200')};
     --surface-sunken: #{settings.token('dark-neutral.0')};
 
@@ -244,7 +244,7 @@
     --fill-warning-bold: #{settings.token('orange.400')};
     --fill-warning-bold-hovered: #{settings.token('orange.300')};
     --fill-warning-bold-pressed: #{settings.token('orange.200')};
-    --fill-veil: #0B0B1499;
+    --fill-veil: #0E0E1199;
     --fill-inverse: #{settings.token('dark-neutral.500A')};
     --fill-inverse-hovered: #{settings.token('neutral.100')};
     --fill-inverse-pressed: #{settings.token('neutral.200')};

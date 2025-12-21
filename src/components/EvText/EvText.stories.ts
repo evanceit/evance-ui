@@ -70,6 +70,8 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-text v-bind="args" />`,
+        template: `
+            <ev-text v-bind="args" />
+        `,
     }),
 };

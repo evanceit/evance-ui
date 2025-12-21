@@ -17,6 +17,8 @@ const brandTheme = {
     fontCode: 'ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace',
 }
 
+
+
 /**
  * Light Mode Theme
  * ---
@@ -24,17 +26,17 @@ const brandTheme = {
 const lightTheme = {
     ...themes.light,
     ...brandTheme,
-    appBg: '#EFF2F9',
+    appBg: '#E8E9ED',
     appBorderColor: '#0A14331F',
-    appContentBg: '#EFF2F9',
-    appPreviewBg: '#EFF2F9',
-    barBg: '#EFF2F9',
+    appContentBg: '#E8E9ED',
+    appPreviewBg: '#E8E9ED',
+    barBg: 'inherit',
     barHoverColor: '#814EFA',
     barSelectedColor: '#814EFA',
-    barTextColor: '#535A74',
+    barTextColor: 'inherit',
     colorPrimary: '#814EFA',
     colorSecondary: '#814EFA',
-    textColor: '#353B4E',
+    textColor: '#363845',
     textMutedColor: '#696F87'
 };
 
@@ -45,17 +47,17 @@ const lightTheme = {
 const darkTheme = {
     ...themes.dark,
     ...brandTheme,
-    appBg: '#131321',
+    appBg: '#121317',
     appBorderColor: '#A3A7CC29',
-    appContentBg: '#131321',
-    appPreviewBg: '#131321',
-    barBg: '#131321',
+    appContentBg: '#121317',
+    appPreviewBg: '#121317',
+    barBg: 'inherit',
     barHoverColor: '#9873FF',
     barSelectedColor: '#9873FF',
-    barTextColor: '#A0A6BC',
+    barTextColor: 'inherit',
     colorPrimary: '#9772FF',
     colorSecondary: '#9772FF',
-    textColor: '#BCC4DB',
+    textColor: '#B8BAC7',
     textMutedColor: '#848DAA',
 };
 
