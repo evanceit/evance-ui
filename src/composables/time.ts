@@ -67,3 +67,7 @@ export function serializeDateToTime(
     }
     return null;
 }
+
+export function displayTimeFromDate(date: Date | null) {
+    return date ? date.toTimeString().slice(0, 5) : "";
+}
