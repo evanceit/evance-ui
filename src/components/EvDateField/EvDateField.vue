@@ -136,8 +136,8 @@ watch(modelValue, () => {
         @blur="onFieldBlur"
         @click:clear="onClearInput"
         @input="onInput">
-        <template v-if="props.label || slots.label" #label>
-            <slot name="label">{{ props.label }}</slot>
+        <template v-if="slots.label" #label>
+            <slot name="label" />
         </template>
         <template #default>
             <ev-menu
