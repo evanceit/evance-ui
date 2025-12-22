@@ -2,13 +2,6 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-
-    > .ev-list-item {
-        > .ev-list-item--icon-start {
-            margin-left: 4px;
-            margin-right: -8px;
-        }
-    }
 }
 
 .ev-list-group__expander {

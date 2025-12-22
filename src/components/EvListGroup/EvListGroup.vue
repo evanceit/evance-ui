@@ -1,25 +1,42 @@
 <script setup lang="ts">
 import "./EvListGroup.scss";
+import { makeEvListGroupProps } from "./EvListGroup";
 import { EvButton } from "@/components/EvButton";
 import { EvIcon } from "@/components/EvIcon";
 import { EvProgressCircular } from "@/components/EvProgressCircular";
-import { ChevronRightIcon, DotIcon, HomeIcon } from "@/icons";
+import { ChevronRightIcon } from "@/icons";
 import { EvListItem } from "@/components/EvListItem";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { EvTransition } from "@/components/EvTransition";
 import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
+import { filterComponentProps, omit } from "@/util";
+
+const props = defineProps({
+    ...makeEvListGroupProps(),
+});
+const slots = defineSlots<{
+    default(): never;
+    iconStart(): never;
+    iconEnd(): never;
+    prefix(): never;
+    suffix(): never;
+}>();
 
 /**
  * @todo: I need a compact version and a default version
  * In the compact mode the chevron shows on hover in place of the icon if present.
  * In the expanded mode the chevron and the icon are visible
+ *
+ * @todo: Implement props
  */
 
 const isExpanded = ref(false);
-const hasChildren = ref(true);
 const isLoading = ref(false);
-
 const transition = ExpandTransitionGenerator("", false);
+
+const evListItemProps = computed(() => {
+    return omit(filterComponentProps(EvListItem, props), ["modelValue"]);
+});
 
 </script>
 
@@ -28,17 +45,16 @@ const transition = ExpandTransitionGenerator("", false);
         role="listitem"
         :class="[
             'ev-list-group',
-            {
-                'is-leaf': !hasChildren,
-            },
         ]">
-        <ev-list-item @click="isExpanded = !isExpanded">
+        <ev-list-item
+            v-bind="evListItemProps"
+            @click="isExpanded = !isExpanded">
             <template #iconStart>
 
                 <div class="ev-list-group__indicator">
                     <ev-progress-circular v-if="isLoading" indeterminate />
                     <ev-button
-                        v-else-if="hasChildren"
+                        v-else
                         icon
                         :class="[
                             'ev-list-group__expander',
@@ -53,17 +69,18 @@ const transition = ExpandTransitionGenerator("", false);
                             :glyph="ChevronRightIcon"
                             class="is-expander-chevron" />
                     </ev-button>
-                    <ev-icon v-else :glyph="DotIcon" />
                 </div>
-
-                <ev-icon :glyph="HomeIcon" />
+                <template v-if="slots.iconStart || props.iconStart">
+                    <slot name="iconStart">
+                        <ev-icon :glyph="props.iconStart" />
+                    </slot>
+                </template>
             </template>
-            Hello
         </ev-list-item>
 
         <ev-transition name="ev-list-group-transition" v-bind="transition">
             <div v-show="isExpanded" role="list" class="ev-list-group__items">
-                <slot />
+                <slot name="default" />
             </div>
         </ev-transition>
     </div>

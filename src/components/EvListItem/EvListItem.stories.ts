@@ -4,7 +4,7 @@ import { EvListItem } from "../EvListItem";
 import { ChevronRightIcon, DotIcon } from "@/icons";
 import { EvAvatar } from "../EvAvatar";
 import { EvButton } from "../EvButton";
-import { EllipsisIcon, HomeIcon, PlusIcon } from "../../icons";
+import { EllipsisIcon, HomeIcon, PlusIcon, ArrowContinueIcon } from "../../icons";
 import { EvLozenge } from "../EvLozenge";
 
 const meta: Meta<typeof EvListItem> = {
@@ -31,20 +31,22 @@ const meta: Meta<typeof EvListItem> = {
         },
         iconStart: {
             control: "select",
-            options: ["none", "ChevronRightIcon", "DotIcon"],
+            options: ["none", "ChevronRightIcon", "DotIcon", "HomeIcon"],
             mapping: {
                 none: null,
                 ChevronRightIcon: ChevronRightIcon,
                 DotIcon: DotIcon,
+                HomeIcon: HomeIcon,
             },
         },
         iconEnd: {
             control: "select",
-            options: ["none", "ChevronRightIcon", "DotIcon"],
+            options: ["none", "ChevronRightIcon", "DotIcon", "ArrowContinueIcon"],
             mapping: {
                 none: null,
                 ChevronRightIcon: ChevronRightIcon,
                 DotIcon: DotIcon,
+                ArrowContinueIcon: ArrowContinueIcon,
             },
         },
         link: {
