@@ -1,7 +1,10 @@
 @use "../../css/mixins";
 
 .ev-list {
-
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px;
 }
 
 .ev-list {

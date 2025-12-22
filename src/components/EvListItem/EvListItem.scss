@@ -10,7 +10,6 @@ $indicator-width: 3px;
     grid-template-rows: 1fr;
     user-select: none;
     align-items: center;
-    margin: 2px;
     min-height: var(--list-item-height);
     border-radius: var(--input-radius);
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;

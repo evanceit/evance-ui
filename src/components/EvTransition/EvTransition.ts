@@ -80,14 +80,14 @@ export const EvTransition: FunctionalComponent = (
     { slots },
 ) => {
     const { transition, disabled, ...remainingProps } = props;
-    const { component: transitionComponent = Transition, ...customProps } =
+    const { component = Transition, ...customProps } =
         isObject(transition) ? transition : {};
     const transitionProps = isString(transition)
         ? { name: disabled ? "" : transition }
         : (customProps as any);
 
     return h(
-        transitionComponent,
+        component,
         mergeProps(transitionProps, remainingProps as any, { disabled }),
         slots,
     );

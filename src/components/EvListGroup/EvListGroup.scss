@@ -1,4 +1,8 @@
 .ev-list-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
     > .ev-list-item {
         > .ev-list-item--icon-start {
             margin-left: 4px;
@@ -8,15 +12,13 @@
 }
 
 .ev-list-group__expander {
-
-    > .ev-icon {
+    .ev-icon {
         &.is-expander-chevron {
             transition: transform 0.2s ease-in-out;
         }
     }
-
     &.is-expanded {
-        > .ev-icon {
+        .ev-icon {
             &.is-expander-chevron {
                 transform: rotate(90deg);
             }
@@ -34,4 +36,8 @@
 
 .ev-list-group__items {
     transition: height 0.25s ease-in-out;
+    padding-inline-start: var(--spacer-200);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }

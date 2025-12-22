@@ -6,7 +6,6 @@ import { EvProgressCircular } from "@/components/EvProgressCircular";
 import { ChevronRightIcon, DotIcon, HomeIcon } from "@/icons";
 import { EvListItem } from "@/components/EvListItem";
 import { ref } from "vue";
-import { EvCheckbox } from "@/components/EvCheckbox";
 import { EvTransition } from "@/components/EvTransition";
 import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
 
@@ -16,8 +15,6 @@ import ExpandTransitionGenerator from "@/components/EvTransition/transitions/exp
  * In the expanded mode the chevron and the icon are visible
  */
 
-const hasIconStart = ref(true);
-const isCompact = ref(true);
 const isExpanded = ref(false);
 const hasChildren = ref(true);
 const isLoading = ref(false);
@@ -66,15 +63,8 @@ const transition = ExpandTransitionGenerator("", false);
 
         <ev-transition name="ev-list-group-transition" v-bind="transition">
             <div v-show="isExpanded" role="list" class="ev-list-group__items">
-                List items go here
+                <slot />
             </div>
         </ev-transition>
     </div>
-
-    <br />
-    <br />
-    <p>Options</p>
-    <ev-checkbox v-model="isLoading" label="Is loading" />
-    <ev-checkbox v-model="isExpanded" label="Is expanded" />
-    <ev-checkbox v-model="hasChildren" label="Has children" />
 </template>
