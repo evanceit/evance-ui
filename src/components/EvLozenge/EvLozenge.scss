@@ -29,4 +29,23 @@
     color: var(--lozenge-appearance-color, currentColor);
 
     @include mixins.generate-appearances(lozenge, false);
+
+    /* Inverse */
+    &.is-appearance-inverse {
+        --lozenge-appearance-background: var(--fill-inverse);
+        --lozenge-appearance-color: var(--text-inverse);
+
+        &.is-variant-bold {
+            --lozenge-appearance-background: var(--fill-inverse-bold);
+        }
+
+        &.is-variant-outlined {
+            --lozenge-appearance-background: transparent;
+            --lozenge-appearance-border: 1px solid var(--fill-inverse-bold);
+            --lozenge-appearance-color: var(--fill-inverse-bold);
+        }
+        &.is-variant-subtle {
+            --lozenge-appearance-background: transparent;
+        }
+    }
 }

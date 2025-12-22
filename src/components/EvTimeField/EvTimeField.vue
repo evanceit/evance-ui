@@ -5,11 +5,16 @@ import { EvMenu } from "@/components/EvMenu";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvSurface } from "@/components/EvSurface";
 import { EvTimePicker } from "@/components/EvTimePicker";
-import {computed, nextTick, ref, shallowRef, watch} from "vue";
+import { computed, ref, shallowRef, watch } from "vue";
 import { filterComponentProps, omit } from "@/util";
-import {FocusEvent, KeyboardEvent} from "react";
+import { FocusEvent, KeyboardEvent } from "react";
 import { useModelProxy } from "@/composables";
-import {displayTimeFromDate, inferTimeFormat, normalizeTimeToDate, serializeDateToTime} from "@/composables/time";
+import {
+    displayTimeFromDate,
+    inferTimeFormat,
+    normalizeTimeToDate,
+    serializeDateToTime,
+} from "@/composables/time";
 
 const props = defineProps({
     ...makeEvTimeFieldProps(),
@@ -107,7 +112,6 @@ function onFieldBlur(e: FocusEvent) {
 function onDatePickerFocusIn(e: FocusEvent) {
     isFocused.value = true;
 }
-
 
 function normalizeTimeInput(raw: string): string {
     let value = raw.replace(/[^\d:]/g, "");
