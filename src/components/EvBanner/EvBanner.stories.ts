@@ -83,14 +83,13 @@ export const Primary: Story = {
     }),
 };
 
-
 export const IconSlot: Story = {
     render: () => ({
         components: { EvBanner, EvLozenge, EvButton },
         template: `<ev-banner appearance="primary" text="Editor 2.0 now available">
-            <template #icon><ev-lozenge appearance="inverse" variant="tonal" class="ev-theme-light">New</ev-lozenge></template>
+            <template #icon><ev-lozenge appearance="inverse" variant="tonal" theme="light">New</ev-lozenge></template>
             <template #actions>
-                <ev-button appearance="inverse" variant="tonal" text="Try" size="small" class="ev-theme-light" />
+                <ev-button appearance="inverse" variant="tonal" text="Try" size="small" theme="light" />
             </template>
     </ev-banner>`,
     }),

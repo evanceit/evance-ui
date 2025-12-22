@@ -14,6 +14,7 @@ import { PropType } from "vue";
 import { makeComponentProps } from "@/composables/component";
 import { EvButtonSelectSymbol } from "@/components/EvButtonSelect/EvButtonSelect";
 import { makeGroupItemProps } from "@/composables/groupItem";
+import { makeThemeProps } from "@/composables/theme";
 
 /**
  * ## Button Appearance
@@ -74,6 +75,7 @@ export const makeEvButtonProps = propsFactory(
             type: String as PropType<ButtonVariantProp>,
             default: "default",
         },
+        ...makeThemeProps(),
         ...makeComponentProps(),
         ...makeRouterLinkOrHrefProps(),
         ...makeGroupItemProps(),

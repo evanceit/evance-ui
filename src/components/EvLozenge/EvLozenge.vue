@@ -9,6 +9,7 @@ import { makeEvLozengeProps } from "./EvLozenge";
 import { isIntegerish, useAppearance } from "@/util";
 import { computed } from "vue";
 import { EvIcon } from "../EvIcon";
+import { provideTheme } from "@/composables/theme";
 
 const props = defineProps({
     ...makeEvLozengeProps(),
@@ -32,12 +33,19 @@ const maxWidthOuter = computed(() => {
 });
 
 const { appearanceClass, variantClass } = useAppearance(props);
+const { themeClasses } = provideTheme(props);
 </script>
 
 <template>
     <component
         :is="props.tag"
-        :class="['ev-lozenge', appearanceClass, variantClass, props.class]"
+        :class="[
+            'ev-lozenge',
+            themeClasses,
+            appearanceClass,
+            variantClass,
+            props.class,
+        ]"
         :style="[{ 'max-width': maxWidthOuter }, props.style]">
         <ev-icon v-if="props.iconStart" :glyph="props.iconStart" size="small" />
         <span class="ev-lozenge--label">

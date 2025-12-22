@@ -22,6 +22,7 @@ import {
 import { useDefaults } from "@/composables/defaults";
 import { useGroupItem } from "@/composables/groupItem";
 import { useSelectLink } from "@/composables/selectLink";
+import { provideTheme } from "@/composables/theme";
 
 const definedProps = defineProps({
     ...makeEvButtonProps(),
@@ -130,6 +131,7 @@ const { appearanceClass, variantClass } = useAppearance(
     isActive,
     Variant.bold,
 );
+const { themeClasses } = provideTheme(props);
 
 const valueAttr = computed(() => {
     if (props.value === undefined || typeof props.value === "symbol") {
@@ -170,6 +172,7 @@ const iconEnd = computed(() => {
         :class="[
             'ev-button',
             group?.selectedClass.value,
+            themeClasses,
             appearanceClass,
             variantClass,
             sizeModifier(props.size as string, [InputSize.default]),

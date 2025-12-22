@@ -2,6 +2,7 @@ import { makeAppearanceProps, propsFactory } from "@/util";
 import { IconProp } from "@/composables/icons";
 import { makeComponentProps } from "@/composables/component";
 import { makeTagProps } from "@/composables/tag";
+import { makeThemeProps } from "@/composables/theme";
 
 export const makeEvLozengeProps = propsFactory(
     {
@@ -13,6 +14,7 @@ export const makeEvLozengeProps = propsFactory(
         },
 
         ...makeAppearanceProps(),
+        ...makeThemeProps(),
         ...makeComponentProps(),
         ...makeTagProps({
             tag: "span",
