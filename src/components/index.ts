@@ -1,6 +1,7 @@
 export * from "./EvApp";
 export * from "./EvAvatar";
 export * from "./EvBadge";
+export * from "./EvBanner";
 export * from "./EvButton";
 export * from "./EvButtonGroup";
 export * from "./EvButtonSelect";

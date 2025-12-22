@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import "./EvListItemGroup.scss";
+import "./EvListGroup.scss";
 import { EvButton } from "@/components/EvButton";
 import { EvIcon } from "@/components/EvIcon";
-import {ChevronRightIcon, DotIcon, HomeIcon} from "@/icons";
+import { EvProgressCircular } from "@/components/EvProgressCircular";
+import { ChevronRightIcon, DotIcon, HomeIcon } from "@/icons";
 import { EvListItem } from "@/components/EvListItem";
 import { ref } from "vue";
-import {EvButtonGroup, EvCheckbox, EvLozenge, EvProgressCircular} from "@/components";
+import { EvCheckbox } from "@/components/EvCheckbox";
+import { EvTransition } from "@/components/EvTransition";
+import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
 
 /**
  * @todo: I need a compact version and a default version
@@ -19,13 +22,15 @@ const isExpanded = ref(false);
 const hasChildren = ref(true);
 const isLoading = ref(false);
 
+const transition = ExpandTransitionGenerator("", false);
+
 </script>
 
 <template>
     <div
-        role="list"
+        role="listitem"
         :class="[
-            'ev-list-item-group',
+            'ev-list-group',
             {
                 'is-leaf': !hasChildren,
             },
@@ -33,13 +38,13 @@ const isLoading = ref(false);
         <ev-list-item @click="isExpanded = !isExpanded">
             <template #iconStart>
 
-                <div class="ev-list-item-group__indicator">
+                <div class="ev-list-group__indicator">
                     <ev-progress-circular v-if="isLoading" indeterminate />
                     <ev-button
                         v-else-if="hasChildren"
                         icon
                         :class="[
-                            'ev-list-item-group__expander',
+                            'ev-list-group__expander',
                             {
                                 'is-expanded': isExpanded,
                             },
@@ -56,10 +61,14 @@ const isLoading = ref(false);
 
                 <ev-icon :glyph="HomeIcon" />
             </template>
-
-            List Item Group
+            Hello
         </ev-list-item>
 
+        <ev-transition name="ev-list-group-transition" v-bind="transition">
+            <div v-show="isExpanded" role="list" class="ev-list-group__items">
+                List items go here
+            </div>
+        </ev-transition>
     </div>
 
     <br />
