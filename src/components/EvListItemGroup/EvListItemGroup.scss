@@ -1,3 +1,31 @@
 .ev-list-item-group {
-    /** todo */
+    .ev-list-item {
+        > .ev-list-item--icon-start {
+            margin-left: 4px;
+            margin-right: -8px;
+        }
+    }
+}
+
+.ev-list-item-group__expander {
+
+    .ev-icon {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    &.is-expanded {
+        .ev-icon {
+            &.is-expander-chevron {
+                transform: rotate(90deg);
+            }
+        }
+    }
+}
+
+.ev-list-item-group__indicator {
+    display: inline-flex;
+    width: var(--input-height-x-small);
+    height: var(--input-height-x-small);
+    align-items: center;
+    justify-content: center;
 }

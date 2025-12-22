@@ -85,6 +85,7 @@ $indicator-width: 3px;
 
 .ev-list-item--icon-start {
     grid-area: icon-start;
+    align-items: center;
 }
 
 .ev-list-item--prefix {
