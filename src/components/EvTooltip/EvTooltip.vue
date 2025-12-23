@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const slots = defineSlots<{
-    activator(): never;
+    activator(props: { isActive: boolean; props: any }): never;
     default(): never;
 }>();
 
