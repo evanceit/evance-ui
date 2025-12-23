@@ -36,6 +36,17 @@ export const Primary: Story = {
                 Activator
                 <ev-tooltip activator="parent" v-bind="args"><code>position="{{ args.position }}"</code></ev-tooltip>
             </ev-button>
+            
+            <br />
+            <br />
+            <p>
+                Using the activator slot:
+            </p>
+            <ev-tooltip text="Tooltip">
+                <template #activator="{ props }">
+                    <ev-button v-bind="props">Button internally</ev-button>
+                </template>
+            </ev-tooltip>
         `,
     }),
 };

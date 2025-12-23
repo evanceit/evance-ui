@@ -10,6 +10,11 @@ const props = defineProps({
     ...makeEvTooltipProps(),
 });
 
+const slots = defineSlots<{
+    activator(): never;
+    default(): never;
+}>();
+
 const isActive = useModelProxy(props, "modelValue");
 const uid = getNextId();
 
@@ -67,9 +72,12 @@ const activatorProps = computed(() => {
         :activator-props="activatorProps"
         absolute
         disable-global-stack>
+        <template v-if="slots.activator" #activator="activatorSlotProps">
+            <slot name="activator" v-bind="activatorSlotProps" />
+        </template>
         <template #pointer>
             <div class="ev-tooltip--pointer"></div>
         </template>
-        <slot>{{ props.text }}</slot>
+        <slot name="default">{{ props.text }}</slot>
     </ev-overlay>
 </template>
