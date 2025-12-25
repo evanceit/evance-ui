@@ -14,6 +14,7 @@ import { ListItemProps } from "@/components/EvList";
  * # List Item
  */
 export interface ListItem<T = any> {
+    type?: string;
     key: number;
     title: string;
     value: any;
@@ -117,6 +118,7 @@ export function transformItem(
     props: Omit<ListItemProps, "items">,
     item: any,
 ): ListItem {
+    const type = getPropertyValue(item, props.itemType, "item");
     const title = getPropertyValue(item, props.itemTitle, item);
     const value = getPropertyValue(item, props.itemValue, title);
     const children = getPropertyValue(item, props.itemChildren);
@@ -136,6 +138,7 @@ export function transformItem(
     };
 
     return {
+        type,
         key: ++lastItemKey,
         title: String(transformedItemProps.title ?? ""),
         value: transformedItemProps.value,

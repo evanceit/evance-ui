@@ -133,8 +133,8 @@ defineExpose({
         @focus="onFocus"
         @focusin="onFocusIn"
         @focusout="onFocusOut">
-        <ev-list-children :items="items">
-            <slot />
+        <ev-list-children :items="items" :return-object="props.returnObject">
+            <slot name="default" />
         </ev-list-children>
     </component>
 </template>

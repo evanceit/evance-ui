@@ -32,6 +32,7 @@ export * from "./EvKbd";
 export * from "./EvLabel";
 export * from "./EvLink";
 export * from "./EvList";
+export * from "./EvListGroup";
 export * from "./EvListItem";
 export * from "./EvLozenge";
 export * from "./EvMenu";

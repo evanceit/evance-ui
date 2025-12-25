@@ -33,7 +33,7 @@ const list = useList();
 const id = computed(() =>
     props.value === undefined ? link.href.value : props.value,
 );
-const { select, isSelected } = useNestedListItem(id, false);
+const { select, isSelected, isLeaf } = useNestedListItem(id, false);
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (

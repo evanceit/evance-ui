@@ -39,8 +39,39 @@ export const Primary: Story = {
                     value: 1,
                 },
                 {
+                    type: "divider",
+                },
+                {
+                    type: "subheader",
+                    title: "Subheading",
+                },
+                {
                     title: "Example 2",
                     value: 2,
+                    children: [
+                        {
+                            title: "Example 2.1",
+                            value: 2.1,
+                        },
+                        {
+                            title: "Example 2.2",
+                            value: 2.2,
+                            children: [
+                                {
+                                    title: "Example 2.2.1",
+                                    value: "2.2.1",
+                                },
+                                {
+                                    title: "Example 2.2.2",
+                                    value: "2.2.2",
+                                },
+                            ],
+                        },
+                        {
+                            title: "Example 2.3",
+                            value: 2.3,
+                        },
+                    ],
                 },
                 {
                     title: "Example 3",
