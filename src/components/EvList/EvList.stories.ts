@@ -44,6 +44,12 @@ export const Primary: Story = {
                 {
                     type: "subheader",
                     title: "Subheading",
+                    children: [
+                        {
+                            title: "Example 2",
+                            value: "2-heading",
+                        },
+                    ],
                 },
                 {
                     title: "Example 2",

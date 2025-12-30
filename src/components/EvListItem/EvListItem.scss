@@ -3,10 +3,26 @@
 $indicator-width: 3px;
 
 .ev-list-item {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ev-list-item-children {
+    padding:0;
+    margin:0;
+    transition: height 0.25s ease-in-out;
+    padding-inline-start: var(--spacer-200);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ev-list-item-content {
     --list-item-height: var(--input-height-medium);
     display: grid;
-    grid-template-areas: "icon-start prefix content suffix actions icon-end";
-    grid-template-columns: minmax(0, auto) minmax(0, auto) 1fr minmax(0, auto) minmax(0, auto) minmax(0, auto);
+    grid-template-areas: "caret icon-start prefix content suffix actions icon-end";
+    grid-template-columns: minmax(0, auto) minmax(0, auto) minmax(0, auto) 1fr minmax(0, auto) minmax(0, auto) minmax(0, auto);
     grid-template-rows: 1fr;
     user-select: none;
     align-items: center;
@@ -14,6 +30,7 @@ $indicator-width: 3px;
     border-radius: var(--input-radius);
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
     outline: 0;
+    padding-inline: 5px;
 
     a:link,
     a:visited,
@@ -40,13 +57,13 @@ $indicator-width: 3px;
     }
 }
 
-.ev-list-item {
+.ev-list-item-content {
     &.is-clickable {
         cursor: pointer;
     }
 }
 
-.ev-list-item {
+.ev-list-item-content {
     &[disabled],
     &.is-disabled {
         @include mixins.is-disabled;
@@ -54,30 +71,34 @@ $indicator-width: 3px;
 }
 
 .ev-list-item {
-    > *:last-child {
-        &:has(.ev-button) {
-            margin-right: 6px;
-        }
-    }
-    > *:nth-child(2) {
-        &:has(.ev-button) {
-            margin-left: 4px;
-            margin-right: -8px;
-        }
-    }
-}
-
-.ev-list-item {
+    &--caret,
     &--icon-start,
     &--prefix {
         display: inline-flex;
-        margin-left: 8px;
-        margin-right: -4px;
         min-height: var(--list-item-height);
         align-items: center;
 
         &:not(:has(button, a)) {
             pointer-events: none;
+        }
+    }
+}
+
+.ev-list-item--caret {
+    grid-area: caret;
+    align-items: center;
+}
+.ev-list-item-content {
+    > .ev-list-item--caret {
+        .ev-icon {
+            transition: transform 0.25s ease-in-out;
+        }
+    }
+    &.is-open {
+        > .ev-list-item--caret {
+            .ev-icon {
+                transform: rotate(90deg);
+            }
         }
     }
 }
@@ -100,7 +121,8 @@ $indicator-width: 3px;
     grid-template-columns: subgrid;
     position: relative;
     border-radius: var(--input-radius);
-    padding-block: 8px;
+    padding: 8px;
+    margin-inline: -5px;
 
     &:focus-visible {
         color: inherit;
@@ -114,9 +136,9 @@ $indicator-width: 3px;
     }
 }
 
-.ev-list-item--content {
+.ev-list-item--label {
     grid-area: content;
-    margin-inline: 16px;
+    margin-inline: 12px;
     min-width: 0;
 }
 
@@ -125,8 +147,6 @@ $indicator-width: 3px;
     &--actions,
     &--icon-end {
         display: inline-flex;
-        margin-left: -4px;
-        margin-right: 8px;
         min-height: var(--list-item-height);
         align-items: center;
 
@@ -152,7 +172,7 @@ $indicator-width: 3px;
     }
 }
 
-.ev-list-item {
+.ev-list-item-content {
     &.is-actions-on-hover  {
         &:hover {
             .ev-list-item--suffix{
@@ -194,7 +214,7 @@ $indicator-width: 3px;
     }
 }
 
-.ev-list-item {
+.ev-list-item-content {
 
     &.is-active {
         color: var(--text-selected);
@@ -227,3 +247,4 @@ $indicator-width: 3px;
         }
     }
 }
+

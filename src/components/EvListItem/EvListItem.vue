@@ -11,7 +11,13 @@ import { EvIcon } from "@/components/EvIcon";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvText } from "@/components/EvText";
+import { EvProgressCircular } from "@/components/EvProgressCircular";
 import { getNextId } from "@/util";
+import { ChevronRightIcon, DotIcon } from "@/icons";
+import { useModelProxy } from "@/composables";
+import EvListChildren from "@/components/EvList/EvListChildren.vue";
+import { EvTransition } from "@/components/EvTransition";
+import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
 
 // Emit
 const emit = defineEmits(["click"]);
@@ -25,6 +31,7 @@ const slots = defineSlots<{
     iconEnd(): never;
     prefix(): never;
     suffix(): never;
+    children(): never;
 }>();
 
 const attrs = useAttrs();
@@ -33,7 +40,8 @@ const list = useList();
 const id = computed(() =>
     props.value === undefined ? link.href.value : props.value,
 );
-const { select, isSelected, isLeaf } = useNestedListItem(id, false);
+const isLoading = useModelProxy(props, "loading");
+const { select, isSelected, isLeaf, isOpen, open } = useNestedListItem(id, false);
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (
@@ -124,80 +132,122 @@ const parsedActionsOnHover = computed(() =>
     })),
 );
 const hasActionsOnHover = computed(() => !!parsedActionsOnHover.value.length);
+
+
+const transition = ExpandTransitionGenerator("", false);
+const hasChildren = computed(() => {
+    return !!slots.children || !!props.children;
+});
+const showCaret = computed(() => {
+    return isLoading.value || hasChildren.value;
+});
+
+function onClickOpener(e: Event) {
+    open(!isOpen.value, e);
+}
+
 </script>
 
 <template>
-    <div
-        role="listitem"
-        :class="[
-            'ev-list-item',
-            {
-                'is-active': isActive,
-                'is-active--exact': isActiveExact,
-                'is-clickable': isClickable || hasClickListener,
-                'is-disabled': props.disabled,
-                'is-actions-on-hover': hasActionsOnHover,
-            },
-            props.class,
-        ]"
-        :style="props.style">
-        <component
-            :is="itemElement"
-            :href="link.href.value"
-            :tabindex="tabIndex"
-            class="ev-list-item--button"
-            @click="onClick"
-            @keydown.enter="onKeyDown"
-            @keydown.space="onKeyDown">
-            <div class="ev-list-item--content">
-                <slot name="default">
-                    <ev-text
-                        tag="div"
-                        class="ev-list-item--title"
-                        v-bind="titleProps" />
-                    <ev-text
-                        v-if="props.subtitle"
-                        tag="div"
-                        class="ev-list-item--subtitle"
-                        v-bind="subtitleProps" />
+    <li class="ev-list-item">
+        <div
+            role="listitem"
+            :class="[
+                'ev-list-item-content',
+                {
+                    'is-active': isActive,
+                    'is-active--exact': isActiveExact,
+                    'is-clickable': isClickable || hasClickListener,
+                    'is-disabled': props.disabled,
+                    'is-actions-on-hover': hasActionsOnHover,
+                    'is-open': isOpen,
+                },
+                props.class,
+            ]"
+            :style="props.style">
+            <component
+                :is="itemElement"
+                :href="link.href.value"
+                :tabindex="tabIndex"
+                class="ev-list-item--button"
+                @click="onClick"
+                @keydown.enter="onKeyDown"
+                @keydown.space="onKeyDown">
+                <div class="ev-list-item--label">
+                    <slot name="default">
+                        <ev-text
+                            tag="div"
+                            class="ev-list-item--title"
+                            v-bind="titleProps" />
+                        <ev-text
+                            v-if="props.subtitle"
+                            tag="div"
+                            class="ev-list-item--subtitle"
+                            v-bind="subtitleProps" />
+                    </slot>
+                </div>
+                <div aria-hidden="true" class="ev-list-item--indicator"></div>
+            </component>
+            <!-- todo: change caret to nest -->
+            <div v-if="showCaret" class="ev-list-item--caret">
+                <ev-progress-circular v-if="isLoading" indeterminate />
+                <ev-button
+                    icon
+                    size="x-small"
+                    variant="subtle"
+                    :icon-start="ChevronRightIcon"
+                    @click="onClickOpener" />
+                <ev-icon :glyph="DotIcon" />
+                <!-- todo: handle loading, and leaf (if wanted) -->
+            </div>
+            <div
+                v-if="slots.iconStart || props.iconStart"
+                class="ev-list-item--icon-start">
+                <slot name="iconStart">
+                    <ev-icon :glyph="props.iconStart" />
                 </slot>
             </div>
-            <div aria-hidden="true" class="ev-list-item--indicator"></div>
-        </component>
-        <div
-            v-if="slots.iconStart || props.iconStart"
-            class="ev-list-item--icon-start">
-            <slot name="iconStart">
-                <ev-icon :glyph="props.iconStart" />
-            </slot>
+            <div v-if="slots.prefix" class="ev-list-item--prefix">
+                <slot name="prefix" />
+            </div>
+            <div v-if="slots.suffix" class="ev-list-item--suffix">
+                <slot name="suffix" />
+            </div>
+            <div
+                v-if="hasActions || hasActionsOnHover"
+                class="ev-list-item--actions">
+                <ev-button-group size="x-small" variant="subtle">
+                    <ev-button
+                        v-for="action in parsedActionsOnHover"
+                        :key="action.id"
+                        v-bind="action.props"
+                        class="is-show-on-hover" />
+                    <ev-button
+                        v-for="action in parsedActions"
+                        :key="action.id"
+                        v-bind="action.props" />
+                </ev-button-group>
+            </div>
+            <div
+                v-if="slots.iconEnd || props.iconEnd"
+                class="ev-list-item--icon-end">
+                <slot name="iconEnd">
+                    <ev-icon :glyph="props.iconEnd" />
+                </slot>
+            </div>
         </div>
-        <div v-if="slots.prefix" class="ev-list-item--prefix">
-            <slot name="prefix" />
-        </div>
-        <div v-if="slots.suffix" class="ev-list-item--suffix">
-            <slot name="suffix" />
-        </div>
-        <div
-            v-if="hasActions || hasActionsOnHover"
-            class="ev-list-item--actions">
-            <ev-button-group size="x-small" variant="subtle">
-                <ev-button
-                    v-for="action in parsedActionsOnHover"
-                    :key="action.id"
-                    v-bind="action.props"
-                    class="is-show-on-hover" />
-                <ev-button
-                    v-for="action in parsedActions"
-                    :key="action.id"
-                    v-bind="action.props" />
-            </ev-button-group>
-        </div>
-        <div
-            v-if="slots.iconEnd || props.iconEnd"
-            class="ev-list-item--icon-end">
-            <slot name="iconEnd">
-                <ev-icon :glyph="props.iconEnd" />
-            </slot>
-        </div>
-    </div>
+
+        <template v-if="hasChildren">
+            <ev-transition name="ev-list-group-transition" v-bind="transition">
+                <ul
+                    v-show="isOpen"
+                    class="ev-list-item-children"
+                    role="group">
+                    <slot name="children">
+                        <ev-list-children :items="props.children" />
+                    </slot>
+                </ul>
+            </ev-transition>
+        </template>
+    </li>
 </template>

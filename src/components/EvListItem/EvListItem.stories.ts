@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
+import { EvList } from "../EvList";
 import { EvListItem } from "../EvListItem";
 import { ChevronRightIcon, DotIcon } from "@/icons";
 import { EvAvatar } from "../EvAvatar";
@@ -54,6 +55,9 @@ const meta: Meta<typeof EvListItem> = {
             description:
                 "Manually designate the component as a link. Using `href` or `to` will do this automatically.",
         },
+        loading: {
+            control: "boolean",
+        },
         to: {
             control: "text",
             description:
@@ -74,6 +78,7 @@ const meta: Meta<typeof EvListItem> = {
         href: undefined,
         iconStart: undefined,
         iconEnd: undefined,
+        loading: false,
         to: "",
         title: "Example list item",
         subtitle: undefined,
@@ -87,76 +92,86 @@ type Story = StoryObj<typeof EvListItem>;
 
 export const Primary: Story = {
     render: (args: any) => ({
-        components: { EvListItem, EvAvatar, EvButton, EvLozenge },
+        components: { EvListItem, EvAvatar, EvButton, EvLozenge, EvList },
         setup() {
             return { args, DotIcon, ChevronRightIcon, EllipsisIcon, PlusIcon, HomeIcon };
         },
         template: `
-            <ev-list-item v-bind="args" />
-
-            <ev-list-item
-                title="List item example (actionsOnHover)"
-                :actions-on-hover="[{ icon: PlusIcon }]" />
-            
-            <ev-list-item
-                title="List item example (actions)" 
-                :actions="[{ icon: EllipsisIcon }]" />
-            
-            <ev-list-item 
-                title="List item example (actions + actionsOnHover)" 
-                :actions-on-hover="[{ icon: PlusIcon }]"
-                :actions="[{ icon: EllipsisIcon }]" />
-
-            <ev-list-item
-                href="#"
-                title="List item example (suffix + actions + actionsOnHover)"
-                :actions-on-hover="[{ icon: PlusIcon }]"
-                :actions="[{ icon: EllipsisIcon }]">
-                <template #suffix>
-                    <ev-lozenge>Suffix</ev-lozenge>
-                </template>
-            </ev-list-item>
-            
-            <ev-list-item
-                href="#"
-                title="List item example (icon)"
-                :icon-start="HomeIcon" />
-
-            <ev-list-item
-                href="#"
-                title="List item example (icon + suffix)" 
-                :icon-start="HomeIcon">
-                <template #suffix>
-                    <ev-lozenge>Suffix</ev-lozenge>
-                </template>
-            </ev-list-item>
-
-            <ev-list-item
-                href="#"
-                title="List item example (icon + suffix)">
-                <template #iconStart>
-                    <ev-button :icon="HomeIcon" size="x-small" variant="subtle" />
-                </template>
-                <template #suffix>
-                    <ev-lozenge>Suffix</ev-lozenge>
-                </template>
-            </ev-list-item>
-
-            <ev-list-item
-                href="#"
-                title="List item example (prefix)">
-                <template #prefix>
-                    <ev-avatar size="x-small" text="G" />
-                </template>
-            </ev-list-item>
-
-            <ev-list-item
-                href="#"
-                title="List item example (prefix + subtitle)" subtitle="This is a subtitle">
-                <template #prefix>
-                    <ev-avatar size="small" text="G" />
-                </template>
-            </ev-list-item>
+            <ev-list>
+                <ev-list-item v-bind="args" />
+    
+                <ev-list-item
+                    title="List item example (actionsOnHover)"
+                    :actions-on-hover="[{ icon: PlusIcon }]" />
+                
+                <ev-list-item
+                    title="List item example (actions)" 
+                    :actions="[{ icon: EllipsisIcon }]" />
+                
+                <ev-list-item 
+                    title="List item example (actions + actionsOnHover)" 
+                    :actions-on-hover="[{ icon: PlusIcon }]"
+                    :actions="[{ icon: EllipsisIcon }]" />
+    
+                <ev-list-item
+                    href="#"
+                    title="List item example (suffix + actions + actionsOnHover)"
+                    :actions-on-hover="[{ icon: PlusIcon }]"
+                    :actions="[{ icon: EllipsisIcon }]">
+                    <template #suffix>
+                        <ev-lozenge>Suffix</ev-lozenge>
+                    </template>
+                </ev-list-item>
+                
+                <ev-list-item
+                    href="#"
+                    title="List item example (icon)"
+                    :icon-start="HomeIcon" />
+    
+                <ev-list-item
+                    href="#"
+                    title="List item example (icon + suffix)" 
+                    :icon-start="HomeIcon">
+                    <template #suffix>
+                        <ev-lozenge>Suffix</ev-lozenge>
+                    </template>
+                </ev-list-item>
+    
+                <ev-list-item
+                    href="#"
+                    title="List item example (icon + suffix)">
+                    <template #iconStart>
+                        <ev-button :icon="HomeIcon" size="x-small" variant="subtle" />
+                    </template>
+                    <template #suffix>
+                        <ev-lozenge>Suffix</ev-lozenge>
+                    </template>
+                </ev-list-item>
+    
+                <ev-list-item
+                    href="#"
+                    title="List item example (prefix)">
+                    <template #prefix>
+                        <ev-avatar size="x-small" text="G" />
+                    </template>
+                </ev-list-item>
+    
+                <ev-list-item
+                    href="#"
+                    title="List item example (prefix + subtitle)" subtitle="This is a subtitle">
+                    <template #prefix>
+                        <ev-avatar size="small" text="G" />
+                    </template>
+                </ev-list-item>
+                
+                <ev-list-item title="List item example (children)">
+                    <template #children>
+                        <ev-list-item title="Child item 1" subtitle="This is a subtitle" />
+                        <ev-list-item title="Child item 2" subtitle="This is a subtitle" />
+                        <ev-list-item title="Child item 3" subtitle="This is a subtitle" />
+                    </template>
+                </ev-list-item>
+            </ev-list>
         `,
     }),
 };

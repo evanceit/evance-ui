@@ -12,7 +12,6 @@ import { ListItem, makeEvListChildrenProps } from "./EvList";
 import { createList } from "@/composables/lists";
 import { EvDivider } from "@/components/EvDivider";
 import { EvSection } from "@/components/EvSection";
-import { EvListGroup } from "@/components/EvListGroup";
 
 const props = defineProps({
     ...makeEvListChildrenProps(),
@@ -41,16 +40,21 @@ createList();
                 v-else-if="item.type === 'subheader'"
                 name="subheader"
                 v-bind="{ props: item.props }">
-                <ev-section v-bind="item.props" />
+                <ev-section v-bind="item.props">
+                    <ev-list-children :items="item.children">
+                        <template v-if="slots.item" #item="{ item, props }">
+                            <slot name="item" v-bind="{ item, props }" />
+                        </template>
+                    </ev-list-children>
+                </ev-section>
             </slot>
-            <template v-else-if="item.children">
-                <ev-list-group v-bind="item.props">
-                    <ev-list-children :items="item.children" />
-                </ev-list-group>
+            <template v-else>
+                <slot name="item" v-bind="{ item, props: item.props }">
+                    <ev-list-item
+                        v-bind="item.props"
+                        :children="item.children" />
+                </slot>
             </template>
-            <slot v-else name="item" v-bind="{ item, props: item.props }">
-                <ev-list-item v-bind="item.props" />
-            </slot>
         </template>
     </slot>
 </template>
