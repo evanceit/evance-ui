@@ -41,7 +41,10 @@ const id = computed(() =>
     props.value === undefined ? link.href.value : props.value,
 );
 const isLoading = useModelProxy(props, "loading");
-const { select, isSelected, isLeaf, isOpen, open } = useNestedListItem(id, false);
+const hasChildren = computed(() => {
+    return !!slots.children || !!props.children;
+});
+const { select, isSelected, isOpen, open, root } = useNestedListItem(id, hasChildren.value);
 const isLink = computed(() => props.link !== false && link.isLink.value);
 const isClickable = computed(() => {
     return (
@@ -133,13 +136,9 @@ const parsedActionsOnHover = computed(() =>
 );
 const hasActionsOnHover = computed(() => !!parsedActionsOnHover.value.length);
 
-
 const transition = ExpandTransitionGenerator("", false);
-const hasChildren = computed(() => {
-    return !!slots.children || !!props.children;
-});
 const showCaret = computed(() => {
-    return isLoading.value || hasChildren.value;
+    return isLoading.value || hasChildren.value || root.isNested.value;
 });
 
 function onClickOpener(e: Event) {
@@ -192,13 +191,13 @@ function onClickOpener(e: Event) {
             <div v-if="showCaret" class="ev-list-item--caret">
                 <ev-progress-circular v-if="isLoading" indeterminate />
                 <ev-button
+                    v-else-if="hasChildren"
                     icon
                     size="x-small"
                     variant="subtle"
                     :icon-start="ChevronRightIcon"
                     @click="onClickOpener" />
-                <ev-icon :glyph="DotIcon" />
-                <!-- todo: handle loading, and leaf (if wanted) -->
+                <ev-icon v-else :glyph="DotIcon" />
             </div>
             <div
                 v-if="slots.iconStart || props.iconStart"
@@ -239,10 +238,7 @@ function onClickOpener(e: Event) {
 
         <template v-if="hasChildren">
             <ev-transition name="ev-list-group-transition" v-bind="transition">
-                <ul
-                    v-show="isOpen"
-                    class="ev-list-item-children"
-                    role="group">
+                <ul v-show="isOpen" class="ev-list-item-children" role="group">
                     <slot name="children">
                         <ev-list-children :items="props.children" />
                     </slot>

@@ -39,7 +39,6 @@ export interface NestedProps extends SelectStrategyProps, OpenStrategyProps {}
 
 type NestedProvide = {
     id: Ref<unknown>;
-    isGroupActivator?: boolean;
     root: {
         children: Ref<Map<unknown, unknown[]>>;
         parents: Ref<Map<unknown, unknown>>;
@@ -51,6 +50,7 @@ type NestedProvide = {
         unregister: (id: unknown) => void;
         open: (id: unknown, value: boolean, event?: Event) => void;
         openOnSelect: (id: unknown, value: boolean, event?: Event) => void;
+        isNested: Ref<boolean>;
     };
 };
 
@@ -73,6 +73,7 @@ export const emptyNestedList: NestedProvide = {
         unregister: () => null,
         open: () => null,
         openOnSelect: () => null,
+        isNested: ref(false),
     },
 };
 
@@ -226,6 +227,7 @@ export const useNestedList = (props: NestedProps) => {
                 });
                 newOpened && (opened.value = newOpened);
             },
+            isNested: computed(() => parents.value.size > 0),
         },
     };
 
@@ -272,12 +274,10 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
         isLeaf: computed(() => {
             return !parent.root.children.value.get(idComputed.value);
         }),
-        isGroupActivator: parent.isGroupActivator,
     };
-    !parent.isGroupActivator &&
-        parent.root.register(idComputed.value, parent.id.value, isGroup);
+    parent.root.register(idComputed.value, parent.id.value, isGroup);
     onBeforeUnmount(() => {
-        !parent.isGroupActivator && parent.root.unregister(idComputed.value);
+        parent.root.unregister(idComputed.value);
     });
     if (isGroup) {
         provide(EvNestedSymbol, item);
@@ -285,10 +285,3 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
     return item;
 };
 
-/**
- *
- */
-export const useNestedGroupActivator = () => {
-    const parent = inject(EvNestedSymbol, emptyNestedList);
-    provide(EvNestedSymbol, { ...parent, isGroupActivator: true });
-};

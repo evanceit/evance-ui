@@ -46,8 +46,8 @@ export const Primary: Story = {
                     title: "Subheading",
                     children: [
                         {
-                            title: "Example 2",
-                            value: "2-heading",
+                            title: "Example 4",
+                            value: 4,
                         },
                     ],
                 },

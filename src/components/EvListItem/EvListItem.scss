@@ -6,6 +6,9 @@ $indicator-width: 3px;
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .ev-list-item-children {
@@ -87,6 +90,8 @@ $indicator-width: 3px;
 .ev-list-item--caret {
     grid-area: caret;
     align-items: center;
+    justify-content: center;
+    min-width: var(--input-height-x-small, 32px);
 }
 .ev-list-item-content {
     > .ev-list-item--caret {
@@ -128,9 +133,6 @@ $indicator-width: 3px;
         color: inherit;
         background: var(--fill-neutral);
         text-decoration: none;
-    }
-
-    &:focus-visible {
         outline: 2px solid var(--stroke-focused);
         outline-offset: 2px;
     }
