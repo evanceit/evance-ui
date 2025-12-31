@@ -1,0 +1,75 @@
+import {Canvas, Meta, Controls} from '@storybook/blocks';
+
+import * as EvListStories from './EvList.stories';
+
+<Meta of={EvListStories} />
+
+# EvList
+
+The `<ev-list>` component may be used to display flat or nested list items (`<ev-list-item>`).
+
+<Canvas of={EvListStories.Primary} />
+<Controls />
+
+
+## Flat lists
+
+```html
+<ev-list>
+    <ev-list-item title="Item 1" />
+    <ev-list-item title="Item 2" />
+    <ev-list-item title="Item 3" />
+</ev-list>
+```
+
+Renders as:
+
+<Canvas of={EvListStories.FlatLists} />
+
+
+## Nested lists
+
+The `<ev-list-item>` component may contain a `<template #children>` slot to render nested lists.
+
+```html
+<ev-list>
+    <ev-list-item title="Item 1">
+        <template #children>
+            <ev-list-item title="Item 1.1" />
+            <ev-list-item title="Item 1.2">
+                <template #children>
+                    <ev-list-item title="Item 1.2.1" />
+                </template>
+            </ev-list-item>
+            <ev-list-item title="Item 1.3" />
+        </template>
+    </ev-list-item>
+    <ev-list-item title="Item 2" />
+    <ev-list-item title="Item 3" />
+</ev-list>
+```
+
+This may also be done by passing an array of items to the `items` prop:
+
+```ts
+const items = [
+    {
+        title: 'Item 1',
+        children: [
+            { title: 'Item 1.1' },
+            { title: 'Item 1.2', children: [{ title: 'Item 1.2.1' }] },
+            { title: 'Item 1.3' },
+        ]
+    },
+    { title: 'Item 2' },
+    { title: 'Item 3' },
+];
+```
+
+Renders as:
+
+<Canvas of={EvListStories.NestedLists} />
+
+
+## Lazy loading
+

@@ -5,7 +5,12 @@ import { EvListItem } from "../EvListItem";
 import { ChevronRightIcon, DotIcon } from "@/icons";
 import { EvAvatar } from "../EvAvatar";
 import { EvButton } from "../EvButton";
-import { EllipsisIcon, HomeIcon, PlusIcon, ArrowContinueIcon } from "../../icons";
+import {
+    EllipsisIcon,
+    HomeIcon,
+    PlusIcon,
+    ArrowContinueIcon,
+} from "../../icons";
 import { EvLozenge } from "../EvLozenge";
 
 const meta: Meta<typeof EvListItem> = {
@@ -42,7 +47,12 @@ const meta: Meta<typeof EvListItem> = {
         },
         iconEnd: {
             control: "select",
-            options: ["none", "ChevronRightIcon", "DotIcon", "ArrowContinueIcon"],
+            options: [
+                "none",
+                "ChevronRightIcon",
+                "DotIcon",
+                "ArrowContinueIcon",
+            ],
             mapping: {
                 none: null,
                 ChevronRightIcon: ChevronRightIcon,
@@ -83,7 +93,6 @@ const meta: Meta<typeof EvListItem> = {
         title: "Example list item",
         subtitle: undefined,
     },
-    tags: ["autodocs"],
 };
 
 export default meta;
@@ -94,7 +103,14 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvListItem, EvAvatar, EvButton, EvLozenge, EvList },
         setup() {
-            return { args, DotIcon, ChevronRightIcon, EllipsisIcon, PlusIcon, HomeIcon };
+            return {
+                args,
+                DotIcon,
+                ChevronRightIcon,
+                EllipsisIcon,
+                PlusIcon,
+                HomeIcon,
+            };
         },
         template: `
             <ev-list>

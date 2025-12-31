@@ -36,7 +36,7 @@ export const makeEvListProps = propsFactory(
         disabled: Boolean,
         tag: {
             type: String,
-            default: "div",
+            default: "ul",
         },
         itemType: {
             type: String,

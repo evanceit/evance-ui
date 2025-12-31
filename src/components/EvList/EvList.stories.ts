@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvList } from "../EvList";
 import { ref } from "vue";
+import { EvListItem } from "../EvListItem";
 
 const meta: Meta<typeof EvList> = {
     component: EvList,
@@ -15,14 +16,21 @@ const meta: Meta<typeof EvList> = {
         },
         selectStrategy: {
             control: "select",
-            options: [undefined, "single-any", "multi-any"],
+            options: [
+                undefined,
+                "single-any",
+                "single-leaf",
+                "multi-any",
+                "multi-leaf",
+                "cascade-leaf",
+            ],
+            description: "",
         },
     },
     args: {
         disabled: false,
         required: false,
     },
-    tags: ["autodocs"],
 };
 
 export default meta;
@@ -91,5 +99,44 @@ export const Primary: Story = {
         },
         template:
             '<ev-list v-bind="args" :items="items" v-model:selected="selected" /> {{ selected }}',
+    }),
+};
+
+
+export const FlatLists: Story = {
+    render: (args: any) => ({
+        components: { EvList, EvListItem },
+        setup() {
+            return {};
+        },
+        template: `<ev-list>
+                <ev-list-item title="Item 1" />
+                <ev-list-item title="Item 2" />
+                <ev-list-item title="Item 3" />
+            </ev-list>`,
+    }),
+};
+
+export const NestedLists: Story = {
+    render: (args: any) => ({
+        components: { EvList, EvListItem },
+        setup() {
+            return {};
+        },
+        template: `<ev-list>
+                <ev-list-item title="Item 1">
+                    <template #children>
+                        <ev-list-item title="Item 1.1" />
+                        <ev-list-item title="Item 1.2">
+                            <template #children>
+                                <ev-list-item title="Item 1.2.1" />
+                            </template>
+                        </ev-list-item>
+                        <ev-list-item title="Item 1.3" />
+                    </template>
+                </ev-list-item>
+                <ev-list-item title="Item 2" />
+                <ev-list-item title="Item 3" />
+            </ev-list>`,
     }),
 };
