@@ -14,6 +14,9 @@ const meta: Meta<typeof EvList> = {
         required: {
             control: "boolean",
         },
+        returnObject: {
+            control: "boolean",
+        },
         selectStrategy: {
             control: "select",
             options: [
@@ -30,6 +33,7 @@ const meta: Meta<typeof EvList> = {
     args: {
         disabled: false,
         required: false,
+        returnObject: false,
     },
 };
 
@@ -93,7 +97,7 @@ export const Primary: Story = {
                 },
             ];
 
-            const selected = ref([1]);
+            const selected = ref([]);
 
             return { args, items, selected };
         },
@@ -138,5 +142,43 @@ export const NestedLists: Story = {
                 <ev-list-item title="Item 2" />
                 <ev-list-item title="Item 3" />
             </ev-list>`,
+    }),
+};
+
+export const LazyLoading: Story = {
+    render: (args: any) => ({
+        components: { EvList },
+        setup() {
+            const items = ref([
+                {
+                    title: "Example 1",
+                    value: 1,
+                    children: [],
+                },
+                {
+                    title: "Example 2",
+                    value: 2,
+                    children: [],
+                },
+                {
+                    title: "Example 3",
+                    value: 3,
+                    children: [],
+                },
+            ]);
+            return { items };
+        },
+        methods: {
+            loadChildren(item: any) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve([
+                            {}
+                        ]);
+                    });
+                });
+            },
+        },
+        template: `<ev-list :items="items" :load-children="loadChildren" />`,
     }),
 };

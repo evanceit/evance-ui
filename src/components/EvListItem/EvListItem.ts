@@ -48,17 +48,18 @@ export const makeEvListItemProps = propsFactory(
             default: undefined,
         },
         loading: Boolean,
+        returnObject: Boolean,
+        subtitle: [String, Number, Boolean],
+        subtitleProps: {
+            type: Object as PropType<EvTextProps>,
+            default: () => ({}),
+        },
         tag: {
             type: String,
             default: "div",
         },
         title: [String, Number, Boolean],
         titleProps: {
-            type: Object as PropType<EvTextProps>,
-            default: () => ({}),
-        },
-        subtitle: [String, Number, Boolean],
-        subtitleProps: {
             type: Object as PropType<EvTextProps>,
             default: () => ({}),
         },

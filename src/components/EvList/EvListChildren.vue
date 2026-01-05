@@ -3,15 +3,13 @@
  * # EvListChildren
  *
  * A management component for rendering child items recursively.
- *
- * @todo: nested children + groups
- *        v-for="{ children, props: itemProps, type, raw: item } in props.items"
  */
 import EvListItem from "../EvListItem/EvListItem.vue";
 import { ListItem, makeEvListChildrenProps } from "./EvList";
 import { createList } from "@/composables/lists";
 import { EvDivider } from "@/components/EvDivider";
 import { EvSection } from "@/components/EvSection";
+import { toRaw } from "vue";
 
 const props = defineProps({
     ...makeEvListChildrenProps(),
@@ -41,7 +39,9 @@ createList();
                 name="subheader"
                 v-bind="{ props: item.props }">
                 <ev-section v-bind="item.props">
-                    <ev-list-children :items="item.children">
+                    <ev-list-children
+                        :items="item.children"
+                        :return-object="props.returnObject">
                         <template v-if="slots.item" #item="{ item, props }">
                             <slot name="item" v-bind="{ item, props }" />
                         </template>
@@ -52,6 +52,12 @@ createList();
                 <slot name="item" v-bind="{ item, props: item.props }">
                     <ev-list-item
                         v-bind="item.props"
+                        :value="
+                            props.returnObject
+                                ? toRaw(item.raw)
+                                : item.props.value
+                        "
+                        :return-object="props.returnObject"
                         :children="item.children" />
                 </slot>
             </template>

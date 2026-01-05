@@ -17,6 +17,7 @@ import {
     ref,
     shallowRef,
     toRaw,
+    toValue,
 } from "vue";
 import { getCurrentComponent, getNextId, propsFactory } from "@/util";
 import { useModelProxy } from "../modelProxy";
@@ -123,7 +124,11 @@ export const useNestedList = (props: NestedProps) => {
         "opened",
         props.opened,
         (values) => {
-            return new Set(values);
+            return new Set(
+                Array.isArray(values)
+                    ? values.map((value) => toRaw(value))
+                    : values,
+            );
         },
         (values) => {
             return [...values.values()];
@@ -244,7 +249,8 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
     const parent = inject(EvNestedSymbol, emptyNestedList);
     const idSymbol = Symbol(getNextId());
     const idComputed = computed(() => {
-        return id.value !== undefined ? id.value : idSymbol;
+        const idValue = toRaw(toValue(id));
+        return idValue !== undefined ? idValue : idSymbol;
     });
     const item = {
         ...parent,
@@ -255,7 +261,11 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
         openOnSelect: (open: boolean, e?: Event) => {
             parent.root.openOnSelect(idComputed.value, open, e);
         },
-        isOpen: computed(() => parent.root.opened.value.has(idComputed.value)),
+        isOpen: computed(() => {
+            console.log(idComputed.value);
+            console.log(parent.root.opened.value);
+            return parent.root.opened.value.has(idComputed.value);
+        }),
         parent: computed(() => parent.root.parents.value.get(idComputed.value)),
         select: (selected: boolean, e?: Event) => {
             return parent.root.select(idComputed.value, selected, e);

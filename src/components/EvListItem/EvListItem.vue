@@ -11,7 +11,6 @@ import { EvIcon } from "@/components/EvIcon";
 import { EvButton } from "@/components/EvButton";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvText } from "@/components/EvText";
-import { EvProgressCircular } from "@/components/EvProgressCircular";
 import { getNextId } from "@/util";
 import { ChevronRightIcon, DotIcon } from "@/icons";
 import { useModelProxy } from "@/composables";
@@ -187,14 +186,13 @@ function onClickOpener(e: Event) {
                 </div>
                 <div aria-hidden="true" class="ev-list-item--indicator"></div>
             </component>
-            <!-- todo: change caret to nest -->
             <div v-if="showCaret" class="ev-list-item--caret">
-                <ev-progress-circular v-if="isLoading" indeterminate />
                 <ev-button
-                    v-else-if="hasChildren"
+                    v-if="hasChildren"
                     icon
                     size="x-small"
                     variant="subtle"
+                    :loading="isLoading"
                     :icon-start="ChevronRightIcon"
                     @click="onClickOpener" />
                 <ev-icon v-else :glyph="DotIcon" />
@@ -240,7 +238,9 @@ function onClickOpener(e: Event) {
             <ev-transition name="ev-list-group-transition" v-bind="transition">
                 <ul v-show="isOpen" class="ev-list-item-children" role="group">
                     <slot name="children">
-                        <ev-list-children :items="props.children" />
+                        <ev-list-children
+                            :items="props.children"
+                            :return-object="props.returnObject" />
                     </slot>
                 </ul>
             </ev-transition>
