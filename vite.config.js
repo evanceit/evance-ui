@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => ({
         port: +(process.env.PORT ?? 8090),
     },
     build: {
+        assetsInlineLimit: 0,
         emptyOutDir: false,
         sourcemap: true,
         minify: mode === "minify",
