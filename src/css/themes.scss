@@ -29,7 +29,7 @@
     --color-primary: #814EFA;
 
     /* Surfaces */
-    --surface-default: #{settings.token('neutral.0')};
+    --surface-default: #{settings.token('neutral.50')};
     --surface-overlay: #{settings.token('neutral.0')};
     --surface-overlay-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F;
     --surface-panel: #{settings.token('neutral.0')};
@@ -186,11 +186,11 @@
     --color-primary: #9772FF;
 
     /* Surfaces */
-    --surface-default: #{settings.token('dark-neutral.200')};
+    --surface-default: #{settings.token('dark-neutral.100')};
     --surface-overlay: #{settings.token('dark-neutral.300')};
     --surface-overlay-shadow: 0px 8px 12px #0304045C, 0px 0px 1px #03040480;
     --surface-panel: #{settings.token('dark-neutral.200')};
-    --surface-sunken: #{settings.token('dark-neutral.100')};
+    --surface-sunken: #{settings.token('dark-neutral.50')};
 
     /* Backgrounds */
     --fill-brand: #{settings.token('purple.200A')};

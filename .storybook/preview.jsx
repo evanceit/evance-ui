@@ -9,15 +9,14 @@ import {DARK_MODE_EVENT_NAME} from "storybook-dark-mode";
 import {DocsContainer} from "@storybook/blocks";
 
 import '../src/css/core.scss';
+import '../src/css/runtime.scss';
 
 const brandTheme = {
     brandTitle: 'Evance UI',
     brandImage: '/assets/evance-ui-logo.svg',
-    fontBase: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif',
-    fontCode: 'ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace',
+    fontBase: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif',
+    fontCode: '"JetBrains Mono", ui-monospace, Menlo, Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Ubuntu Monospace", "Courier New", monospace',
 }
-
-
 
 /**
  * Light Mode Theme
@@ -26,18 +25,18 @@ const brandTheme = {
 const lightTheme = {
     ...themes.light,
     ...brandTheme,
-    appBg: '#FFFFFF',
+    appBg: '#f4f4f6',
     appBorderColor: '#0A14331F',
-    appContentBg: '#FFFFFF',
-    appPreviewBg: '#FFFFFF',
-    barBg: '#FFFFFF',
+    appContentBg: '#f4f4f6',
+    appPreviewBg: '#f4f4f6',
+    barBg: '#f4f4f6',
     barHoverColor: '#814EFA',
     barSelectedColor: '#814EFA',
     barTextColor: '#363845',
     colorPrimary: '#814EFA',
     colorSecondary: '#814EFA',
-    textColor: '#363845',
-    textMutedColor: '#696F87'
+    textColor: '#363945',
+    textMutedColor: '#5c6075'
 };
 
 /**
@@ -47,18 +46,18 @@ const lightTheme = {
 const darkTheme = {
     ...themes.dark,
     ...brandTheme,
-    appBg: '#1B1C22',
+    appBg: '#121317',
     appBorderColor: '#A3A7CC29',
-    appContentBg: '#1B1C22',
-    appPreviewBg: '#1B1C22',
-    barBg: '#1B1C22',
+    appContentBg: '#121317',
+    appPreviewBg: '#121317',
+    barBg: '#121317',
     barHoverColor: '#9873FF',
     barSelectedColor: '#9873FF',
     barTextColor: '#B8BAC7',
     colorPrimary: '#9772FF',
     colorSecondary: '#9772FF',
-    textColor: '#B8BAC7',
-    textMutedColor: '#848DAA',
+    textColor: '#b8bbc7',
+    textMutedColor: '#7c8198',
 };
 
 const channel = addons.getChannel();
