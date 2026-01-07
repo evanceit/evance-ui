@@ -33,7 +33,7 @@ $indicator-width: 3px;
     border-radius: var(--input-radius);
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
     outline: 0;
-    padding-inline: 5px;
+    padding-inline: 8px;
 
     a:link,
     a:visited,
@@ -127,7 +127,7 @@ $indicator-width: 3px;
     position: relative;
     border-radius: var(--input-radius);
     padding: 8px;
-    margin-inline: -5px;
+    margin-inline: -8px;
 
     &:focus-visible {
         color: inherit;
