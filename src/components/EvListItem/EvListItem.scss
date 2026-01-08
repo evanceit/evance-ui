@@ -91,7 +91,10 @@ $indicator-width: 3px;
     grid-area: caret;
     align-items: center;
     justify-content: center;
-    min-width: var(--input-height-x-small, 32px);
+
+    > .ev-button {
+        margin: -3px;
+    }
 }
 .ev-list-item-content {
     > .ev-list-item--caret {
