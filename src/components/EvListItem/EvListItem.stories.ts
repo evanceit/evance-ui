@@ -21,6 +21,15 @@ const meta: Meta<typeof EvListItem> = {
             control: "boolean",
             description: "Controls the active state of the item.",
         },
+        actions: {
+            description:
+                "Add action buttons at the end of the list item. Accepts an array of `EvButton` props. " +
+                "Actions appear before `icon-end`.",
+        },
+        actionsOnHover: {
+            description: "Add actions that appear on hover. Accepts an array of `EvButton` props. " +
+                "Actions on hover will appear before `actions` and will visually replace the `suffix` on hover.",
+        },
         exact: {
             control: "boolean",
             description: "Works with router links.",

@@ -262,8 +262,6 @@ export const useNestedListItem = (id: Ref<unknown>, isGroup: boolean) => {
             parent.root.openOnSelect(idComputed.value, open, e);
         },
         isOpen: computed(() => {
-            console.log(idComputed.value);
-            console.log(parent.root.opened.value);
             return parent.root.opened.value.has(idComputed.value);
         }),
         parent: computed(() => parent.root.parents.value.get(idComputed.value)),

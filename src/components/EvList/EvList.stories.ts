@@ -125,23 +125,45 @@ export const NestedLists: Story = {
     render: (args: any) => ({
         components: { EvList, EvListItem },
         setup() {
-            return {};
+            const items = [
+                {
+                    title: "Item 1",
+                    children: [
+                        { title: "Item 1.1" },
+                        {
+                            title: "Item 1.2",
+                            children: [{ title: "Item 1.2.1" }],
+                        },
+                        { title: "Item 1.3" },
+                    ],
+                },
+                {
+                    title: "Item 2",
+                    children: [
+                        { title: "Item 2.1" },
+                        {
+                            title: "Item 2.2",
+                            children: [{ title: "Item 2.2.1" }],
+                        },
+                        { title: "Item 2.3" },
+                    ],
+                },
+                {
+                    title: "Item 3",
+                    children: [
+                        { title: "Item 3.1" },
+                        {
+                            title: "Item 3.2",
+                            children: [{ title: "Item 3.2.1" }],
+                        },
+                        { title: "Item 3.3" },
+                    ],
+                },
+            ];
+
+            return { items };
         },
-        template: `<ev-list>
-                <ev-list-item title="Item 1">
-                    <template #children>
-                        <ev-list-item title="Item 1.1" />
-                        <ev-list-item title="Item 1.2">
-                            <template #children>
-                                <ev-list-item title="Item 1.2.1" />
-                            </template>
-                        </ev-list-item>
-                        <ev-list-item title="Item 1.3" />
-                    </template>
-                </ev-list-item>
-                <ev-list-item title="Item 2" />
-                <ev-list-item title="Item 3" />
-            </ev-list>`,
+        template: `<ev-list :items="items" />`,
     }),
 };
 

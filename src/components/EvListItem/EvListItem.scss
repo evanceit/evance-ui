@@ -15,7 +15,7 @@ $indicator-width: 3px;
     padding:0;
     margin:0;
     transition: height 0.25s ease-in-out;
-    padding-inline-start: var(--spacer-200);
+    padding-inline-start: var(--spacer-300);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -66,7 +66,7 @@ $indicator-width: 3px;
     }
 }
 
-.ev-list-item-content {
+.ev-list-item {
     &[disabled],
     &.is-disabled {
         @include mixins.is-disabled;
@@ -88,24 +88,30 @@ $indicator-width: 3px;
 }
 
 .ev-list-item--caret {
+    --caret-size: var(--icon-size-medium);
     grid-area: caret;
     align-items: center;
     justify-content: center;
+    width: var(--caret-size);
 
     > .ev-button {
-        margin: -3px;
+        margin: calc(0 - ((var(--button-size) - var(--caret-size)) / 2));
     }
 }
-.ev-list-item-content {
-    > .ev-list-item--caret {
+
+.ev-list-item {
+    > .ev-list-item-content {
         .ev-icon {
             transition: transform 0.25s ease-in-out;
         }
     }
+
     &.is-open {
-        > .ev-list-item--caret {
-            .ev-icon {
-                transform: rotate(90deg);
+        > .ev-list-item-content {
+            > .ev-list-item--caret {
+                .ev-icon {
+                    transform: rotate(90deg);
+                }
             }
         }
     }
@@ -171,7 +177,7 @@ $indicator-width: 3px;
     .is-show-on-hover {
         display: none;
 
-        .ev-list-item:hover & {
+        .ev-list-item-content:hover & {
             display: inline-flex;
         }
     }

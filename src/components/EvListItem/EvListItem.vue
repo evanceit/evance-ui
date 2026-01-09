@@ -147,7 +147,15 @@ function onClickOpener(e: Event) {
 </script>
 
 <template>
-    <li class="ev-list-item">
+    <li
+        :class="[
+            'ev-list-item',
+            {
+                'is-disabled': props.disabled,
+                'is-open': isOpen,
+            },
+            props.class,
+        ]">
         <div
             role="listitem"
             :class="[
@@ -156,11 +164,8 @@ function onClickOpener(e: Event) {
                     'is-active': isActive,
                     'is-active--exact': isActiveExact,
                     'is-clickable': isClickable || hasClickListener,
-                    'is-disabled': props.disabled,
                     'is-actions-on-hover': hasActionsOnHover,
-                    'is-open': isOpen,
                 },
-                props.class,
             ]"
             :style="props.style">
             <component
