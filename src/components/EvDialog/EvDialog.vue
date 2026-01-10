@@ -350,7 +350,7 @@ onBeforeUnmount(() => {
         <ev-surface
             v-else
             class="ev-dialog--surface"
-            elevation="overlay"
+            elevation="panel"
             rounded="small">
             <ev-dialog-header
                 v-if="!props.hideHeader"

@@ -25,18 +25,18 @@ const brandTheme = {
 const lightTheme = {
     ...themes.light,
     ...brandTheme,
-    appBg: '#f4f4f6',
-    appBorderColor: '#0A14331F',
-    appContentBg: '#f4f4f6',
-    appPreviewBg: '#f4f4f6',
-    barBg: '#f4f4f6',
+    appBg: '#eff2f9',
+    appBorderColor: '#0414661f',
+    appContentBg: '#eff2f9',
+    appPreviewBg: '#eff2f9',
+    barBg: '#eff2f9',
     barHoverColor: '#814EFA',
     barSelectedColor: '#814EFA',
-    barTextColor: '#363845',
+    barTextColor: '#3f4355',
     colorPrimary: '#814EFA',
     colorSecondary: '#814EFA',
-    textColor: '#363945',
-    textMutedColor: '#5c6075'
+    textColor: '#3f4355',
+    textMutedColor: '#545A7D'
 };
 
 /**
@@ -46,18 +46,18 @@ const lightTheme = {
 const darkTheme = {
     ...themes.dark,
     ...brandTheme,
-    appBg: '#121317',
-    appBorderColor: '#A3A7CC29',
-    appContentBg: '#121317',
-    appPreviewBg: '#121317',
-    barBg: '#121317',
+    appBg: '#131321',
+    appBorderColor: '#a2a9cd29',
+    appContentBg: '#131321',
+    appPreviewBg: '#131321',
+    barBg: '#131321',
     barHoverColor: '#9873FF',
     barSelectedColor: '#9873FF',
-    barTextColor: '#B8BAC7',
+    barTextColor: '#bcc4db',
     colorPrimary: '#9772FF',
     colorSecondary: '#9772FF',
-    textColor: '#b8bbc7',
-    textMutedColor: '#7c8198',
+    textColor: '#bcc4db',
+    textMutedColor: '#737AA1',
 };
 
 const channel = addons.getChannel();

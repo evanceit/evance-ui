@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvLozenge } from "../EvLozenge";
 import { Appearance, Variant } from "@/util";
-import { CheckIcon, ChevronDownIcon } from "@/icons";
+import { CheckIcon, ChevronDownIcon, QuickfindIcon } from "@/icons";
 
 const meta: Meta<typeof EvLozenge> = {
     title: "Components/Typography/EvLozenge",
@@ -30,10 +30,11 @@ const meta: Meta<typeof EvLozenge> = {
         },
         iconStart: {
             control: "select",
-            options: ["None", "CheckIcon"],
+            options: ["None", "CheckIcon", "QuickfindIcon"],
             mapping: {
                 None: undefined,
                 CheckIcon: CheckIcon,
+                QuickfindIcon: QuickfindIcon,
             },
         },
         iconEnd: {
