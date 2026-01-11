@@ -1,15 +1,20 @@
 .ev-quickfind {
     align-items: center;
     background-color: var(--fill-brand);
-    border-radius: 999px;
+    border-radius: 99px;
     color: var(--text-brand);
     display: inline-flex;
     font-weight: var(--font-weight-medium);
+    font-family: var(--typeface-monospace, ui-monospace);
     height: var(--icon-size-medium);
     letter-spacing: 0.025em;
     line-height: 1;
-    padding: 0 0.7em 0 0.3em;
-    gap: 0.1em;
+    padding-inline: var(--spacer-50, 4px);
+    vertical-align: middle;
+}
+
+.ev-quickfind--code {
+    padding-inline: var(--spacer-50, 4px);
 }
 
 .ev-quickfind {
