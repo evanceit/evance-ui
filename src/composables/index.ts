@@ -28,3 +28,4 @@ export { useModelProxy } from "./modelProxy";
 export { useNotification } from "./notification";
 export { makeTagProps } from "./tag";
 export { useTheme } from "./theme";
+export { useHotkey } from "./hotkey";
