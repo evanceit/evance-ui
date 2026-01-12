@@ -3,11 +3,16 @@
  * # `<ev-kbd>`
  */
 import "./EvKbd.scss";
-import { makeEvKbdProps } from "./EvKbd";
-import { InputSize, sizeModifier } from "@/util";
+import { KbdVariant, makeEvKbdProps } from "./EvKbd";
+import { variantModifier } from "@/util";
+import { computed } from "vue";
 
 const props = defineProps({
     ...makeEvKbdProps(),
+});
+
+const variantClass = computed(() => {
+    return variantModifier(props.variant ?? KbdVariant.default, ["default"]);
 });
 </script>
 
@@ -16,7 +21,7 @@ const props = defineProps({
         :class="[
             'ev-kbd',
             props.class,
-            sizeModifier(props.size, [InputSize.default]),
+            variantClass,
         ]"
         :style="props.style">
         <slot>{{ props.value }}</slot>

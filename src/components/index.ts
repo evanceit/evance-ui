@@ -25,6 +25,7 @@ export * from "./EvForm";
 export * from "./EvFormHelp";
 export * from "./EvGrid";
 export * from "./EvHeading";
+export * from "./EvHotkey";
 export * from "./EvIcon";
 export * from "./EvImg";
 export * from "./EvInfiniteScroll";

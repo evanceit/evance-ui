@@ -1,21 +1,43 @@
 .ev-kbd {
     border-radius: var(--input-radius);
     display: inline-flex;
-    font-family: var(--typeface-monospace), monospace;
-    font-weight: var(--font-weight-regular);
+    font-family: var(--typeface, ui-sans-serif, system-ui, sans-serif);
+    font-weight: var(--font-weight-medium);
     padding: 0.125em 0.425em;
-    font-size: 85%;
+    font-size: 0.85em;
     border: 1px solid var(--stroke);
-    border-bottom-width: 2px;
     background: var(--fill-neutral);
 }
 
 .ev-kbd {
-    &.is-size-small {
-        font-size: 0.75em;
+    &.is-variant-tonal {
+        background: var(--fill-neutral);
+        border: 0;
+        padding: calc(0.125em + 1px) calc(0.425em + 1px);
     }
 
-    &.is-size-large {
+    &.is-variant-bold {
+        background: var(--fill-neutral-bold);
+        color: var(--text-inverse);
+        border: 0;
+        padding: calc(0.125em + 1px) calc(0.425em + 1px);
+    }
+
+    &.is-variant-outlined {
+        background: none;
+        border: 1px solid var(--fill-neutral-bold);
+    }
+
+    &.is-variant-text {
+        padding: 0;
+        border: 0;
+        background: none;
         font-size: 1em;
+    }
+}
+
+.ev-kbd {
+    > .ev-icon {
+        width: 1.5em;
     }
 }

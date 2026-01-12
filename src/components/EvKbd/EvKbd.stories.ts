@@ -6,18 +6,16 @@ const meta: Meta<typeof EvKbd> = {
     title: "Components/Typography/EvKbd",
     component: EvKbd,
     argTypes: {
-        size: {
-            control: "select",
-            description: "The size of the item",
-            options: ["small", "medium", "large"],
-        },
         value: {
             control: "text",
             description: "The text to display as a keyboard item",
         },
+        variant: {
+            control: "select",
+            options: ["default", "tonal", "outlined", "bold", "text"],
+        },
     },
     args: {
-        size: undefined,
         value: "Ctrl",
     },
     tags: ["autodocs"],

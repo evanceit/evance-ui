@@ -1,0 +1,22 @@
+.ev-hotkey {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    line-height: inherit;
+}
+.ev-hotkey-combination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+}
+
+.ev-hotkey-divider {
+    display: inline-flex;
+    align-items: center;
+}
+
+.ev-hotkey {
+    &.is-variant-text {
+        vertical-align: inherit;
+    }
+}
