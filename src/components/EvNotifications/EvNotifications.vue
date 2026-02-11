@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import "./EvNotifications.scss";
 import { EvNotification } from "../EvNotification";
-import { computed, shallowRef } from "vue";
+import { computed } from "vue";
 import { useTeleport } from "@/composables/teleport";
 import { injectNotifications } from "@/composables/notification";
 import { getLastZIndex } from "@/composables/stack";
+import { getCurrentComponent } from "@/util";
 
-const teleportTarget = useTeleport(shallowRef(false));
+const component = getCurrentComponent("EvNotifications");
+const teleportTarget = useTeleport(() => {
+    const rootNode = component.proxy?.$el?.getRootNode();
+    return rootNode instanceof ShadowRoot ? rootNode : false;
+});
 const service = injectNotifications();
 const notifications = service.notifications;
 

@@ -1,7 +1,7 @@
-import { computed, Ref } from "vue";
-import { Browser, isString } from "../util";
+import { computed } from "vue";
+import { Browser } from "../util";
 
-export type TeleportTarget = boolean | string | Element;
+export type TeleportTarget = boolean | string | ParentNode;
 
 /**
  * # Use Teleport
@@ -13,31 +13,30 @@ export type TeleportTarget = boolean | string | Element;
  * @param container
  */
 export function useTeleport(
-    target: Ref<TeleportTarget>,
+    target: () => TeleportTarget,
     container: string = ".ev-teleport",
 ) {
     return computed(() => {
-        const targetValue = target.value;
+        const targetValue = target();
         if (targetValue === true || !Browser.hasWindow) {
-            return null;
+            return undefined;
         }
 
-        let targetElement: HTMLElement | null;
-        if (targetValue instanceof Element) {
-            targetElement = targetValue as HTMLElement;
-        } else if (isString(targetValue)) {
-            targetElement = document.querySelector(targetValue);
-        } else {
-            targetElement = document.body;
-        }
+        const targetElement =
+            targetValue === false
+                ? document.body
+                : typeof targetValue === "string"
+                  ? document.querySelector(targetValue)
+                  : targetValue;
+
         if (!targetElement) {
             console.warn(
                 `useTeleport() unable to resolve target "${targetValue}"`,
             );
         }
 
-        let containerElement = targetElement?.querySelector(
-            `:scope > ${container}`,
+        let containerElement = [...targetElement.children].find((el) =>
+            el.matches(container),
         );
         if (!containerElement) {
             containerElement = document.createElement("div");
