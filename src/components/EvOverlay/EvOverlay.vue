@@ -246,7 +246,6 @@ watch(
 /**
  * Integrate with Back button for single page apps.
  */
-/*
 useToggleScope(
     () => props.closeOnBack,
     () => {
@@ -260,7 +259,6 @@ useToggleScope(
         });
     },
 );
-*/
 
 /**
  * Calculate the `top` position
