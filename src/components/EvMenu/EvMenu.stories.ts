@@ -40,7 +40,7 @@ export const Primary: Story = {
             return { args, items, ExampleMenuRef };
         },
         template: `<ev-button ref="ExampleMenuRef">Menu</ev-button>
-            <ev-menu v-bind="args" :activator="ExampleMenuRef?.$el">
+            <ev-menu v-bind="args" :activator="ExampleMenuRef">
                 <ev-list :items="items"></ev-list>
             </ev-menu>`,
     }),

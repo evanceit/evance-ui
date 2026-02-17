@@ -278,10 +278,6 @@ class Activator {
         selector: ActivatorSelector | undefined = this.props.activator,
     ) {
         let activator;
-        console.log("activator selector", selector);
-        console.log("$el", selector.$el);
-        console.log("$el nodeType", selector.$el?.nodeType);
-        console.log("$el instanceof HTMLElement", selector.$el instanceof HTMLElement);
         if (selector) {
             if (selector === "parent") {
                 let el = this.component?.proxy?.$el?.parentNode;
@@ -450,7 +446,6 @@ class Activator {
      */
     private watchActivatorEl() {
         watchEffect(() => {
-            console.log("watching activatorEl");
             if (!this.activatorRef.value) {
                 return;
             }
@@ -514,15 +509,13 @@ class ActivatorWatcher {
 
     private watchActivator() {
         watch(
-            () => this.activator.props.activator,
-            (value, oldValue) => {
-                if (oldValue && value !== oldValue) {
-                    const activator = this.activator.getActivatorEl(oldValue);
-                    activator &&
-                        this.removeActivatorPropsEventListeners(activator);
+            () => this.activator.getActivatorEl(),
+            (el, oldEl) => {
+                if (oldEl) {
+                    this.removeActivatorPropsEventListeners(oldEl);
                 }
-                if (value) {
-                    nextTick(() => this.addActivatorPropsEventListeners());
+                if (el) {
+                    this.addActivatorPropsEventListeners(el);
                 }
             },
             { immediate: true },
