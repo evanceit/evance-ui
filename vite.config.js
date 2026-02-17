@@ -6,7 +6,6 @@ import dts from "vite-plugin-dts";
 import Components from "unplugin-vue-components/vite";
 import { peerDependencies, version } from "./package.json";
 import tsconfigPaths from "vite-tsconfig-paths";
-import babel from "@rollup/plugin-babel";
 import { getComponents } from ".scripts/utils.mjs";
 
 const bannerTxt = `/*! Evance UI v${version} | MIT License */`;
@@ -20,7 +19,7 @@ const entries = {
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
     root: __dirname,
     resolve: {
         alias: {
@@ -33,14 +32,17 @@ export default defineConfig(({ mode }) => ({
     },
     build: {
         assetsInlineLimit: 0,
-        emptyOutDir: false,
+        emptyOutDir: true,
         sourcemap: true,
         lib: {
             name: "evance-ui",
             entry: entries,
         },
         rollupOptions: {
-            external: [...Object.keys(peerDependencies)],
+            external: (id) =>
+                Object.keys(peerDependencies).some(
+                    (pkg) => id === pkg || id.startsWith(pkg + "/"),
+                ),
             output: {
                 format: "esm",
                 dir: "dist/esm",
@@ -48,16 +50,8 @@ export default defineConfig(({ mode }) => ({
                 chunkFileNames: "chunks/[name]-[hash].mjs",
                 preserveModules: true,
                 banner: bannerTxt,
-                globals: {
-                    vue: "Vue",
-                },
+                exports: "named",
             },
-            // rollup plugins
-            plugins: [
-                babel({
-                    babelHelpers: "bundled",
-                }),
-            ],
         },
     },
     plugins: [
@@ -77,4 +71,4 @@ export default defineConfig(({ mode }) => ({
             globs: ["src/components/**/Ev*.vue"],
         }),
     ],
-}));
+});
