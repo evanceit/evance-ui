@@ -1,6 +1,6 @@
 {
     "name": "@evance/evance-ui",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "description": "Evance UI Component Library based on Vuetify",
     "private": false,
     "author": "Geoff Willings <geoff@evance.io>",
@@ -11,8 +11,7 @@
         "dev": "vite",
         "build": "rimraf dist && npm run test:ts && npm run build:vue",
         "build:watch": "npm link && npm run build:vue:watch",
-        "build:vue-uncompressed": "rimraf dist && vite build && npm run gen:dts",
-        "build:vue": "rimraf dist && vite build && vite build --mode minify && npm run gen:dts",
+        "build:vue": "rimraf dist && vite build && npm run gen:dts",
         "build:vue:watch": "vite build --mode minify --watch",
         "gen:icons": "node .scripts/gen-icons.mjs --bundle --platform=node",
         "gen:dts": "node .scripts/transform-dts.mjs --bundle --platform=node",
@@ -23,34 +22,33 @@
         "test:ts": "vue-tsc --noEmit --skipLibCheck",
         "types": "vue-tsc"
     },
-    "main": "./dist/cjs/index.cjs",
-    "module": "./dist/esm/index.mjs",
-    "unpkg": "./dist/evance-ui.js",
-    "types": "./dist/types/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/types/index.d.ts",
             "import": "./dist/esm/index.mjs",
-            "require": "./dist/cjs/index.cjs"
+            "default": "./dist/esm/index.mjs"
         },
         "./icons": {
             "types": "./dist/types/icons/index.d.ts",
             "import": "./dist/esm/icons.mjs",
-            "require": "./dist/cjs/icons.cjs"
+            "default": "./dist/esm/icons.mjs"
         },
         "./icons/editor": {
             "types": "./dist/types/icons/editor/index.d.ts",
             "import": "./dist/esm/icons/editor.mjs",
-            "require": "./dist/cjs/icons/editor.cjs"
+            "default": "./dist/esm/icons/editor.mjs"
         },
         "./icons/brand": {
             "types": "./dist/types/icons/brand/index.d.ts",
             "import": "./dist/esm/icons/brand.mjs",
-            "require": "./dist/cjs/icons/brand.cjs"
+            "default": "./dist/esm/icons/brand.mjs"
         },
         "./styles": {
             "default": "./dist/evance-ui.css"
         }
+    },
+    "engines": {
+        "node": ">=18"
     },
     "files": [
         "dist",

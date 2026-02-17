@@ -291,6 +291,10 @@ class Activator {
             } else if ("$el" in selector) {
                 // Component (ref)
                 activator = selector.$el;
+                console.log("activator selector", selector);
+                console.log("$el", selector.$el);
+                console.log("$el nodeType", selector.$el?.nodeType);
+                console.log("$el instanceof HTMLElement", selector.$el instanceof HTMLElement);
             } else {
                 // HTMLElement | Element
                 activator = selector;
@@ -446,6 +450,7 @@ class Activator {
      */
     private watchActivatorEl() {
         watchEffect(() => {
+            console.log("watching activatorEl");
             if (!this.activatorRef.value) {
                 return;
             }

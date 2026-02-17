@@ -4,6 +4,7 @@ import { EvMenu } from "../EvMenu";
 import { EvButton } from "../EvButton";
 import { EvList } from "../EvList";
 import { EvSurface } from "../EvSurface";
+import {ref} from "vue";
 
 const meta: Meta<typeof EvMenu> = {
     component: EvMenu,
@@ -35,10 +36,11 @@ export const Primary: Story = {
                     value: 3,
                 },
             ];
-            return { args, items };
+            const ExampleMenuRef = ref(null);
+            return { args, items, ExampleMenuRef };
         },
-        template: `<ev-button id="ExampleMenu">Menu</ev-button>
-            <ev-menu v-bind="args" activator="#ExampleMenu">
+        template: `<ev-button ref="ExampleMenuRef">Menu</ev-button>
+            <ev-menu v-bind="args" :activator="ExampleMenuRef?.$el">
                 <ev-list :items="items"></ev-list>
             </ev-menu>`,
     }),
