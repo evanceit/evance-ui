@@ -34,11 +34,9 @@ export default defineConfig({
         assetsInlineLimit: 0,
         emptyOutDir: true,
         sourcemap: true,
-        lib: {
-            name: "evance-ui",
-            entry: entries,
-        },
         rollupOptions: {
+            input: entries,
+            preserveEntrySignatures: "exports-only",
             external: (id) =>
                 Object.keys(peerDependencies).some(
                     (pkg) => id === pkg || id.startsWith(pkg + "/"),
