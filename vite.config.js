@@ -50,7 +50,6 @@ export default defineConfig({
                 chunkFileNames: "chunks/[name]-[hash].mjs",
                 preserveModules: true,
                 banner: bannerTxt,
-                exports: "named",
             },
         },
     },
