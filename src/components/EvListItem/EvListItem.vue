@@ -18,9 +18,6 @@ import EvListChildren from "@/components/EvList/EvListChildren.vue";
 import { EvTransition } from "@/components/EvTransition";
 import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
 
-// Emit
-const emit = defineEmits(["click"]);
-
 const props = defineProps({
     ...makeEvListItemProps(),
 });
@@ -31,6 +28,29 @@ const slots = defineSlots<{
     prefix(): never;
     suffix(): never;
     children(): never;
+}>();
+
+const emit = defineEmits<{
+    (e: "click", event: MouseEvent): void;
+    (
+        e: "click:open",
+        payload: {
+            id: unknown;
+            value: boolean;
+            path: unknown[];
+            event: Event;
+        },
+    ): void;
+    (
+        e: "click:select",
+        payload: {
+            id: unknown;
+            value: boolean;
+            path: unknown[];
+            event: Event;
+        },
+    ): void;
+    (e: "update:opened", items: unknown[]): void;
 }>();
 
 const attrs = useAttrs();
