@@ -281,7 +281,7 @@ class Activator {
         if (selector) {
             if (selector === "parent") {
                 let el = this.component?.proxy?.$el?.parentNode;
-                while (el?.hasAttribute("data-no-activator")) {
+                while (el.hasAttribute("data-no-activator")) {
                     el = el.parentNode;
                 }
                 activator = el;
@@ -446,7 +446,6 @@ class Activator {
      */
     private watchActivatorEl() {
         watchEffect(() => {
-            console.log("watching activatorEl");
             if (!this.activatorRef.value) {
                 return;
             }
@@ -510,13 +509,15 @@ class ActivatorWatcher {
 
     private watchActivator() {
         watch(
-            () => this.activator.getActivatorEl(),
-            (el, oldEl) => {
-                if (oldEl) {
-                    this.removeActivatorPropsEventListeners(oldEl);
+            () => this.activator.props.activator,
+            (value, oldValue) => {
+                if (oldValue && value !== oldValue) {
+                    const activator = this.activator.getActivatorEl(oldValue);
+                    activator &&
+                        this.removeActivatorPropsEventListeners(activator);
                 }
-                if (el) {
-                    this.addActivatorPropsEventListeners(el);
+                if (value) {
+                    nextTick(() => this.addActivatorPropsEventListeners());
                 }
             },
             { immediate: true },
