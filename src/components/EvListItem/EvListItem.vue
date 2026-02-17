@@ -163,6 +163,7 @@ const showCaret = computed(() => {
 function onClickOpener(e: Event) {
     open(!isOpen.value, e);
 }
+
 </script>
 
 <template>

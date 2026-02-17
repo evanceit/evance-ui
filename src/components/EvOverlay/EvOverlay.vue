@@ -17,12 +17,7 @@ import {
 import { useTeleport } from "@/composables/teleport";
 import { useEvTransition, EvTransition } from "@/components/EvTransition";
 import { useDimensions } from "@/composables/dimensions";
-import {
-    clickBlockedAnimation,
-    getCurrentComponent,
-    getScrollParent,
-    toWebUnit,
-} from "@/util";
+import { clickBlockedAnimation, getScrollParent, toWebUnit } from "@/util";
 import { useStack } from "@/composables/stack";
 import { useRouter } from "vue-router";
 import { useToggleScope } from "@/composables/toggleScope";
@@ -58,7 +53,6 @@ const slots = defineSlots<{
     default(): never;
     pointer(): never;
 }>();
-const component = getCurrentComponent("EvOverlay");
 const router = useRouter();
 const model = useModelProxy(props, "modelValue");
 const containerEl = ref<HTMLElement | undefined>(undefined);
@@ -87,14 +81,11 @@ const {
     contentEvents,
     veilEvents,
 } = useActivator(props as ActivatorProps, isActiveContent, isTopLocal);
-const teleportTarget = useTeleport(() => {
-    const target = props.attach || props.contained;
-    if (target) return target;
-    const rootNode =
-        activatorEl?.value?.getRootNode() ||
-        component.proxy?.$el?.getRootNode();
-    return rootNode instanceof ShadowRoot ? rootNode : false;
-});
+const teleportTarget = useTeleport(
+    computed(() => {
+        return props.attach || props.contained;
+    }),
+);
 const { rtlClasses, isRtl } = useRtl();
 
 const { contentStyles, updatePosition, pointerStyles } = usePositionStrategies(
