@@ -278,6 +278,10 @@ class Activator {
         selector: ActivatorSelector | undefined = this.props.activator,
     ) {
         let activator;
+        console.log("activator selector", selector);
+        console.log("$el", selector.$el);
+        console.log("$el nodeType", selector.$el?.nodeType);
+        console.log("$el instanceof HTMLElement", selector.$el instanceof HTMLElement);
         if (selector) {
             if (selector === "parent") {
                 let el = this.component?.proxy?.$el?.parentNode;
@@ -291,10 +295,6 @@ class Activator {
             } else if ("$el" in selector) {
                 // Component (ref)
                 activator = selector.$el;
-                console.log("activator selector", selector);
-                console.log("$el", selector.$el);
-                console.log("$el nodeType", selector.$el?.nodeType);
-                console.log("$el instanceof HTMLElement", selector.$el instanceof HTMLElement);
             } else {
                 // HTMLElement | Element
                 activator = selector;
