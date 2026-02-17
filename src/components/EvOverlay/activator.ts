@@ -281,7 +281,7 @@ class Activator {
         if (selector) {
             if (selector === "parent") {
                 let el = this.component?.proxy?.$el?.parentNode;
-                while (el.hasAttribute("data-no-activator")) {
+                while (el?.hasAttribute("data-no-activator")) {
                     el = el.parentNode;
                 }
                 activator = el;
@@ -446,6 +446,7 @@ class Activator {
      */
     private watchActivatorEl() {
         watchEffect(() => {
+            console.log("watching activatorEl");
             if (!this.activatorRef.value) {
                 return;
             }
