@@ -34,6 +34,7 @@ export default defineConfig({
         assetsInlineLimit: 0,
         emptyOutDir: true,
         sourcemap: true,
+        cssCodeSplit: false,
         rollupOptions: {
             input: entries,
             preserveEntrySignatures: "exports-only",
@@ -48,6 +49,12 @@ export default defineConfig({
                 chunkFileNames: "chunks/[name]-[hash].mjs",
                 preserveModules: true,
                 banner: bannerTxt,
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name?.endsWith(".css")) {
+                        return "evance-ui.css";
+                    }
+                    return "[name].[hash][extname]";
+                },
             },
         },
     },
