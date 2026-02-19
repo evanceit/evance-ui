@@ -84,6 +84,7 @@ export { default as CurrencyPoundIcon } from "./glyph/CurrencyPoundIcon.svg";
 export { default as CurrencyYenIcon } from "./glyph/CurrencyYenIcon.svg";
 export { default as CycleIcon } from "./glyph/CycleIcon.svg";
 export { default as DangerIcon } from "./glyph/DangerIcon.svg";
+export { default as DashboardIcon } from "./glyph/DashboardIcon.svg";
 export { default as DeleteFillIcon } from "./glyph/DeleteFillIcon.svg";
 export { default as DeleteIcon } from "./glyph/DeleteIcon.svg";
 export { default as DiscountFillIcon } from "./glyph/DiscountFillIcon.svg";
