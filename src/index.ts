@@ -18,4 +18,4 @@ export * from "./components";
 export * from "./directives";
 export * from "./services";
 export * from "./util";
-export * from "./components.d";
+export * from "./global-components.d";
