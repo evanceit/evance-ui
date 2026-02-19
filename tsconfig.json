@@ -69,5 +69,8 @@
         "**/*.stories.js",
         "**/*.stories.jsx",
         "**/*.stories.mdx"
-    ]
+    ],
+    "vueCompilerOptions": {
+        "target": 3
+    }
 }
