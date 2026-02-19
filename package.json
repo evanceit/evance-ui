@@ -1,6 +1,6 @@
 {
     "name": "@evance/evance-ui",
-    "version": "1.1.22",
+    "version": "1.1.23",
     "description": "Evance UI Component Library based on Vuetify",
     "private": false,
     "author": "Geoff Willings <geoff@evance.io>",
@@ -53,9 +53,9 @@
     "files": [
         "dist",
         "dist/types",
-        "dist/types/**/*.d.ts",
-        "components.d.ts"
+        "dist/types/**/*.d.ts"
     ],
+    "types": "./dist/types/index.d.ts",
     "sideEffects": [
         "*.css",
         "*.scss"
