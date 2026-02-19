@@ -73,7 +73,7 @@ export default defineConfig({
             svgo: false,
         }),
         Components({
-            dts: "src/global-components.d.ts",
+            dts: "src/types/global-components.d.ts",
             globs: ["src/components/**/Ev*.vue"],
         }),
     ],
