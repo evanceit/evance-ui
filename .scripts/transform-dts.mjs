@@ -11,6 +11,8 @@ const dtsPath = path.resolve(__dirname, '../dist/types/types/global-components.d
 
 // Read the components.d.ts file
 fs.readFile(dtsPath, 'utf8', (err, data) => {
+    return;
+
     if (err) {
         console.error(`Error reading ${dtsPath}:`, err);
         return;
