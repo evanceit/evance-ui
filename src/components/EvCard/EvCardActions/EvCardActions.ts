@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component";
 import { PropType } from "vue";
-import { EvButtonProps } from "@/components/EvButton/EvButton";
+import { EvButtonProps } from "@/components/EvButton";
 import { JustifyContentValue } from "@/components/EvGrid/EvLayout";
 import { EvCardContentSize } from "@/components/EvCard/EvCardContent";
 

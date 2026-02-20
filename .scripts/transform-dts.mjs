@@ -11,7 +11,6 @@ const dtsPath = path.resolve(__dirname, '../dist/types/types/global-components.d
 
 // Read the components.d.ts file
 fs.readFile(dtsPath, 'utf8', (err, data) => {
-    return;
 
     if (err) {
         console.error(`Error reading ${dtsPath}:`, err);
@@ -19,6 +18,7 @@ fs.readFile(dtsPath, 'utf8', (err, data) => {
     }
 
     // Replace import statements to match the desired format
+    /*
     let transformedData = data.replace(
         /import\('.*?'\)\['default'\]/g,
         (match) => {
@@ -30,8 +30,10 @@ fs.readFile(dtsPath, 'utf8', (err, data) => {
             return match;
         }
     );
+    */
+    // let transformedData = data.replace(/\.vue/g, '');
 
-    transformedData = transformedData.replace(/RouterLink:.*\n/g, '')
+    let transformedData = data.replace(/RouterLink:.*\n/g, '')
         .replace(/RouterView:.*\n/g, '');
 
     // Write the transformed data back to the components.d.ts file

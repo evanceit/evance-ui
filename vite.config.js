@@ -67,14 +67,14 @@ export default defineConfig({
             respectExternal: true, // Ensures module imports are resolved correctly
             outDir: "./dist/types",
             exclude: ["**/*.stories.ts", "**/*.test.ts"],
-            include: ["src/**/*.ts", "src/**/*.d.ts"],
+            include: ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
         }),
         svgLoader({
             svgo: false,
         }),
-        // Components({
-        //    dts: "src/types/global-components.d.ts",
-        //    globs: ["src/components/**/Ev*.vue"],
-        // }),
+        Components({
+            dts: "src/types/global-components.d.ts",
+            globs: ["src/components/**/Ev*.vue"],
+        }),
     ],
 });
