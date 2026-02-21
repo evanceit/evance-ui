@@ -1,0 +1,20 @@
+.ev-expansion-panel-content {
+    display: flex;
+    transition: height 250ms var(--easing-standard);
+}
+
+.ev-expansion-panel-content__wrapper {
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    flex: 1;
+    padding: 1rem;
+}
+
+.ev-expansion-panel-content {
+    &.is-no-padding {
+        > .ev-expansion-panel-content__wrapper {
+            padding: 0;
+        }
+    }
+}
