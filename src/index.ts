@@ -1,6 +1,5 @@
 import "./css/core.scss";
 import "./css/runtime.scss";
-
 import * as components from "./components";
 import * as directives from "./directives";
 import * as services from "./services";
@@ -19,3 +18,4 @@ export * from "./components";
 export * from "./directives";
 export * from "./services";
 export * from "./util";
+// export * from "./types/global-components.d";

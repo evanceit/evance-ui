@@ -30,6 +30,7 @@ export const makeEvSurfaceProps = propsFactory(
             type: String as PropType<SurfaceElevation>,
             default: "default",
         },
+        grow: Boolean,
         // Rounded
         rounded: {
             type: [String, Number, Boolean],

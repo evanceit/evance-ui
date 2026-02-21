@@ -62,16 +62,18 @@ export default defineConfig({
         tsconfigPaths(),
         vue(),
         dts({
+            copyDtsFiles: true,
             insertTypesEntry: true,
             respectExternal: true, // Ensures module imports are resolved correctly
             outDir: "./dist/types",
             exclude: ["**/*.stories.ts", "**/*.test.ts"],
+            include: ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
         }),
         svgLoader({
             svgo: false,
         }),
         Components({
-            dts: true,
+            dts: "src/types/global-components.d.ts",
             globs: ["src/components/**/Ev*.vue"],
         }),
     ],

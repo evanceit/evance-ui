@@ -10,6 +10,11 @@ const meta: Meta<typeof EvSurface> = {
             control: "select",
             options: ["default", "panel", "overlay", "sunken"],
         },
+        grow: {
+            control: "boolean",
+            description:
+                "Use `grow` to fill flex container's available, width and height",
+        },
         rounded: {
             control: "select",
             options: ["false", "true", "small", "medium", "large"],
@@ -32,6 +37,7 @@ const meta: Meta<typeof EvSurface> = {
     },
     args: {
         elevation: "default",
+        grow: false,
         rounded: false,
         scrollable: undefined,
     },

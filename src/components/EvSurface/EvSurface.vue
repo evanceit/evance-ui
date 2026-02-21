@@ -54,6 +54,9 @@ function makeScrollableClass(scrollable?: string | boolean) {
         :is="props.tag"
         :class="[
             'ev-surface',
+            {
+                'is-grow': props.grow,
+            },
             makeElevationClass(props.elevation),
             makeRoundedClass(props.rounded),
             makeScrollableClass(props.scrollable),

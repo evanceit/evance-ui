@@ -41,7 +41,6 @@
         "experimentalDecorators": true,           /* Enables experimental support for ES7 decorators. */
         "emitDecoratorMetadata": true,             /* Enables experimental support for emitting type metadata for decorators. */
 
-        "types": ["node", "vite/client", "vue"],
         "paths": {
             "@/*": [
                 "src/*"
@@ -69,5 +68,8 @@
         "**/*.stories.js",
         "**/*.stories.jsx",
         "**/*.stories.mdx"
-    ]
+    ],
+    "vueCompilerOptions": {
+        "target": 3
+    }
 }
