@@ -232,7 +232,11 @@ function onClickOpener(e: Event) {
             <div v-if="slots.prefix" class="ev-list-item--prefix">
                 <slot name="prefix" />
             </div>
-            <div v-if="slots.suffix" class="ev-list-item--suffix">
+            <div v-if="slots.suffix"
+                 :class="[
+                     'ev-list-item--suffix',
+                     { 'is-hide-on-hover': hasActionsOnHover }
+                     ]">
                 <slot name="suffix" />
             </div>
             <div

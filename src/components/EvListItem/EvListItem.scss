@@ -173,24 +173,6 @@ $indicator-width: 3px;
 
 .ev-list-item--actions {
     grid-area: actions;
-
-    .is-show-on-hover {
-        display: none;
-
-        .ev-list-item-content:hover & {
-            display: inline-flex;
-        }
-    }
-}
-
-.ev-list-item-content {
-    &.is-actions-on-hover  {
-        &:hover {
-            .ev-list-item--suffix{
-                display: none;
-            }
-        }
-    }
 }
 
 .ev-list-item--icon-end {

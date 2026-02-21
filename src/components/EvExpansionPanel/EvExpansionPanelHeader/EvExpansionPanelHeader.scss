@@ -71,20 +71,3 @@
 .ev-expansion-panel-header__actions {
     grid-area: actions;
 }
-
-.ev-expansion-panel-header {
-    &.is-actions-on-hover {
-        .is-show-on-hover {
-            display: none;
-        }
-        &:hover,
-        &:focus-within {
-            .ev-expansion-panel-header__suffix{
-                display: none;
-            }
-            .is-show-on-hover {
-                display: inline-flex;
-            }
-        }
-    }
-}

@@ -81,7 +81,10 @@ function onClickHeader() {
             <slot name="prefix" />
         </div>
         <div v-if="slots.suffix"
-             class="ev-expansion-panel-header__suffix">
+             :class="[
+                 'ev-expansion-panel-header__suffix',
+                 { 'is-hide-on-hover': hasActionsOnHover }
+                 ]">
             <slot name="suffix" />
         </div>
         <div

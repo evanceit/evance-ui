@@ -140,3 +140,23 @@ html, body {
 .is-rounded-pill {
     border-radius: var(--rounded-pill) !important;
 }
+
+
+.is-actions-on-hover {
+    .is-show-on-hover {
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:hover,
+    &:has(:focus-visible) {
+        .is-hide-on-hover {
+            display: none;
+        }
+        .is-show-on-hover {
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+}
