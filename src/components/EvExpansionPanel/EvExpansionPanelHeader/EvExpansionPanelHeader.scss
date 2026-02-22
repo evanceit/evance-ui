@@ -24,7 +24,7 @@
     color: inherit;
     font: inherit;
     text-align: start;
-    border-radius: inherit;
+    border-radius: var(--expansion-panel-radius);
     transition: background-color 0.25s var(--easing-standard);
 
     &:hover,
@@ -38,7 +38,7 @@
     grid-area: title;
     display: flex;
     min-width: 0;
-    padding-inline: 0.5rem;
+    padding-inline: 6px;
 }
 
 .ev-expansion-panel-header__icon {

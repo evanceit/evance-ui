@@ -7,3 +7,58 @@
     width: 100%;
     position: relative;
 }
+
+.ev-expansion-panels {
+    > .ev-expansion-panel {
+
+        &.is-variant-accordion {
+            &:first-child:not(:last-child) {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            &:last-child:not(:first-child) {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            &:not(:first-child):not(:last-child) {
+                border-radius: 0;
+            }
+        }
+
+        &:not(.is-variant-accordion) {
+
+            &:not(.is-active) {
+                &:not(:first-child):not(:last-child) {
+                    &:not(.is-before-active) {
+                        border-bottom-left-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                    &:not(.is-after-active) {
+                        border-top-left-radius: 0;
+                        border-top-right-radius: 0;
+                    }
+                }
+                &:first-child:not(:last-child) {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                &:last-child:not(:first-child) {
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+
+            &.is-active {
+                &:not(:first-child),
+                + .ev-expansion-panel {
+                    margin-top: 1rem;
+                }
+
+                &:before,
+                + .ev-expansion-panel:before {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}
