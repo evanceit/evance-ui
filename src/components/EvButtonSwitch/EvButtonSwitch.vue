@@ -15,7 +15,7 @@ const props = defineProps({
 
 defineEmits(["update:modelValue"]);
 
-const slots = defineSlots<{
+defineSlots<{
     default(): never;
 }>();
 

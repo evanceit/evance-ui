@@ -120,8 +120,8 @@ function normalizeTimeInput(raw: string): string {
     if (parts.length > 2) {
         value = parts[0] + ":" + parts.slice(1).join("");
     }
-    const [hoursRaw, minutesRaw = ""] = value.split(":");
-    // Auto insert colon after 2 digits IF user hasn't typed one
+    const [hoursRaw] = value.split(":");
+    // Auto-insert colon after 2 digits IF the user hasn't typed one
     if (!value.includes(":") && hoursRaw.length >= 2) {
         value = hoursRaw.slice(0, 2) + ":" + hoursRaw.slice(2);
     }

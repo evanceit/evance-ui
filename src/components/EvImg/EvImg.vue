@@ -17,7 +17,14 @@ import {
     shallowRef,
     watch,
 } from "vue";
-import {Browser, filterComponentProps, isObject, makeClassName, toWebUnit} from "@/util";
+import {
+    Browser,
+    filterComponentProps,
+    isObject,
+    makeClassName,
+    toWebUnit,
+} from "@/util";
+import { calculateDisplayRuleValue } from "@/composables";
 
 const props = defineProps({
     ...makeEvImgProps(),
@@ -256,6 +263,7 @@ const imgProps = computed(() => ({
 }));
 
 const stateClass = computed(() => makeClassName(state.value, "is-state"));
+const width = computed(() => calculateDisplayRuleValue(props.width));
 </script>
 
 <template>
@@ -274,9 +282,7 @@ const stateClass = computed(() => makeClassName(state.value, "is-state"));
         ]"
         :style="[
             {
-                width: toWebUnit(
-                    props.width === 'auto' ? naturalWidth : props.width,
-                ),
+                width: toWebUnit(props.width === 'auto' ? naturalWidth : width),
             },
             props.style,
         ]"

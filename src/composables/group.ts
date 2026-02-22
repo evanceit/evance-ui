@@ -36,7 +36,7 @@ export interface GroupProps {
     selectedClass: string | undefined;
     selectedAppearance: string | undefined;
     selectedVariant: string | undefined;
-    "onUpdate:modelValue": EventProp<[unknown]> | undefined;
+    "onUpdate:modelValue"?: EventProp<[unknown]> | undefined;
 }
 
 /**

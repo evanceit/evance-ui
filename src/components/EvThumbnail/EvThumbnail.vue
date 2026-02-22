@@ -9,6 +9,7 @@ import { DangerIcon, ImageIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
 import { EvSkeleton } from "@/components/EvSkeleton";
 import { parseAspectRatio } from "@/composables/aspectRatio";
+import { calculateDisplayRuleValue } from "@/composables";
 
 const props = defineProps({ ...makeEvThumbnailProps() });
 const slots = defineSlots<{
@@ -26,10 +27,9 @@ const computedProps = computed(() => {
     if (!combined.width && combined.aspectRatio && combined.height) {
         const aspectRatio = parseAspectRatio(combined.aspectRatio);
         if (aspectRatio && isFinite(aspectRatio)) {
-            const numericHeight =
-                typeof combined.height === "string"
-                    ? parseFloat(combined.height)
-                    : combined.height;
+            const numericHeight = parseFloat(
+                calculateDisplayRuleValue(combined.height),
+            );
             const width = Math.round(numericHeight * aspectRatio);
             return { ...combined, width };
         }
@@ -43,8 +43,6 @@ const imgProps = computed(() =>
 const roundedClasses = computed(
     () => useRounded(computedProps.value).roundedClasses.value,
 );
-
-
 </script>
 
 <template>

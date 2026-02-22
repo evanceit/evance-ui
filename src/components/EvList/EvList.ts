@@ -58,7 +58,7 @@ export const makeEvListProps = propsFactory(
  */
 export const makeEvListChildrenProps = propsFactory(
     {
-        items: Array as PropType<readonly ListItem[]>,
+        items: Array as PropType<DefaultListItemProps["items"]>,
         returnObject: Boolean,
     },
     "EvListChildren",

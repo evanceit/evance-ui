@@ -3,7 +3,7 @@ import { makeEvVirtualScrollProps } from "./EvVirtualScroll";
 import { getCurrentComponent, getScrollParent, toWebUnit } from "@/util";
 import { useDimensions } from "@/composables/dimensions";
 import { onMounted, onScopeDispose, Ref, toRef } from "vue";
-import { useVirtual } from "@/composables/virtual";
+import { useVirtual, VirtualProps } from "@/composables/virtual";
 import { useToggleScope } from "@/composables/toggleScope";
 import EvVirtualScrollItem from "./EvVirtualScrollItem.vue";
 
@@ -23,7 +23,7 @@ const {
     paddingTop,
     paddingBottom,
     computedItems,
-} = useVirtual(props, toRef(props, "items"));
+} = useVirtual(props as VirtualProps, toRef(props, "items"));
 
 useToggleScope(
     () => props.renderless,

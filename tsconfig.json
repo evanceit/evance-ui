@@ -42,15 +42,13 @@
         "emitDecoratorMetadata": true,             /* Enables experimental support for emitting type metadata for decorators. */
 
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
-            "types": [
-                "jest",
-                "node",
-                "vue-router"
-            ]
-        }
+            "@/*": ["src/*"]
+        },
+        "types": [
+            "vite/client",
+            "node",
+            "vue-router"
+        ]
     },
     "include": [
         "src/**/*.ts",

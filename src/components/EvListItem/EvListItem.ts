@@ -9,6 +9,7 @@ import { EvTextProps } from "@/components/EvText";
 import { EvButtonProps } from "@/components/EvButton";
 import { PropType } from "vue";
 import { ListItem } from "@/composables/lists";
+import {ListItemProps} from "@/components";
 
 export interface EvListItemProps extends ComponentProps, RouterLinkOrHrefProps {
     active?: boolean;
@@ -39,7 +40,7 @@ export const makeEvListItemProps = propsFactory(
             type: Array as PropType<readonly EvButtonProps[]>,
             default: () => [],
         },
-        children: Array as PropType<readonly ListItem[]>,
+        children: Array as PropType<ListItemProps["items"]>,
         disabled: Boolean,
         iconEnd: IconProp,
         iconStart: IconProp,

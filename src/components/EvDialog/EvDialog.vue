@@ -88,7 +88,7 @@ const emit = defineEmits<{
 /**
  * ## Width
  *
- * We want to standardise dialog sizes. So we can intercept the `width` prop.
+ * We want to standardize dialog sizes. So we can intercept the `width` prop.
  *
  * - 'small'
  * - 'medium'
@@ -97,20 +97,20 @@ const emit = defineEmits<{
  */
 const width = computed(() => {
     const size = props.width ?? DialogSizeToWidth[DialogSize.medium];
-    return DialogSizeToWidth[size] ?? size;
+    return DialogSizeToWidth[size as string] ?? size;
 });
 
 /**
  * ## onFocusin
  *
- * When the user opens the dialog and presses tab (for example)
+ * When the user opens the dialog and presses tab (for example),
  * we can apply focus to the first available and focusable element.
  *
  * 1. The dialog MUST be the top-most open dialog.
  * 2. The target element MUST be the document nor the content of the dialog.
  * 3. The target element isn't within the dialog content.
  *
- * If the conditions above are met then we can refocus the user into the
+ * If the conditions above are met, then we can refocus the user into the
  * first/last available focusable element.
  *
  * @param e
@@ -141,7 +141,7 @@ function onFocusin(e: FocusEvent) {
 }
 
 /**
- * If the browser window is available (not SSR)
+ * If the browser window is available (not SSR),
  * then we need to add the focusin event listen when the dialog is open
  * and then remove the event listener when it is closed.
  */
@@ -163,7 +163,7 @@ if (Browser.hasWindow) {
 
 /**
  * Watch for changes to the `modelValue` when the dialog is opened
- * focus on the content element. When it is closed revert focus
+ * focus on the content element. When it is closed, revert focus
  * to the activator element if it is available.
  */
 watch(isActive, async (value) => {
@@ -240,7 +240,7 @@ function bindGlobalListeners() {
 }
 
 function bindDocumentDragListener() {
-    documentDragListener = (event) => {
+    documentDragListener = (event: MouseEvent) => {
         const container = overlayRef.value?.contentEl;
         if (dragging && container) {
             const width = getOuterWidth(container);
@@ -316,7 +316,6 @@ function unbindDocumentDragEndListener() {
 onBeforeUnmount(() => {
     unbindGlobalListeners();
 });
-
 </script>
 
 <template>

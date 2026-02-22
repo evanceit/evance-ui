@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvExpansionPanels.scss"
 import { makeEvExpansionPanelsProps } from "./EvExpansionPanels";
-import { useGroup } from "@/composables/group";
+import {GroupProps, useGroup} from "@/composables/group";
 import { EvExpansionPanelSymbol } from "./EvExpansionPanel";
 import { computed } from "vue";
 
@@ -14,7 +14,7 @@ const slots = defineSlots<{
 }>();
 
 const { next, previous, selectAll, selected } = useGroup(
-    props,
+    props as GroupProps,
     EvExpansionPanelSymbol,
 );
 

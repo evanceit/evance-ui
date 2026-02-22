@@ -222,7 +222,7 @@ function onFieldChange(e: Event) {
             (item) => item.title === (e.target as HTMLInputElement).value,
         );
         if (item) {
-            select(item);
+            select(item as ListItem);
         }
     }
 }
@@ -290,9 +290,9 @@ function onFieldKeydown(e: KeyboardEvent) {
 
     if (["Enter", "Tab"].includes(e.key)) {
         if (highlightFirst.value) {
-            select(displayItems.value[0]);
+            select(displayItems.value[0] as ListItem);
         } else if (!props.multiple && props.behavior === "combobox") {
-            select(transformItem(props as any, search.value));
+            select(transformItem(props as any, search.value) as ListItem);
         }
     }
 
@@ -368,7 +368,7 @@ function onFieldKeydown(e: KeyboardEvent) {
         search.value
     ) {
         e.preventDefault();
-        select(transformItem(props as any, search.value));
+        select(transformItem(props as any, search.value) as ListItem);
         search.value = "";
     }
 }

@@ -155,13 +155,9 @@ const accessibleLabel = computed(() => {
         :aria-label="accessibleLabel"
         :class="['ev-hotkey', variantClass, props.class]"
         :style="props.style">
-        <template
-            v-for="(combination, combinationIndex) in keyCombinations"
-            :key="combinationIndex">
+        <template v-for="combination in keyCombinations" :key="combination">
             <span class="ev-hotkey-combination">
-                <template
-                    v-for="(key, keyIndex) in combination"
-                    :key="keyIndex">
+                <template v-for="key in combination" :key="key">
                     <span
                         v-if="isDivider(key)"
                         class="ev-hotkey-divider"

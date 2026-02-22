@@ -19,7 +19,7 @@ const DOWN = 1;
 /** Determines how large each batch of items should be */
 const BUFFER_PX = 100;
 
-type VirtualProps = {
+export type VirtualProps = {
     itemHeight?: number | string;
     height?: number | string;
 };

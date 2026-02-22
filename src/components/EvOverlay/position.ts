@@ -5,6 +5,7 @@ import {
 } from "./position-strategy";
 import { AnchorSelector, Browser, isFunction, propsFactory } from "@/util";
 import { useToggleScope } from "@/composables/toggleScope";
+import { DisplayRuleProp } from "@/composables/display";
 
 export interface PositionStrategyData {
     contentEl: Ref<HTMLElement | undefined>;
@@ -31,10 +32,10 @@ export interface PositionStrategyProps {
     position?: AnchorSelector;
     origin?: AnchorSelector | "overlap";
     offset?: number | string | number[];
-    maxHeight?: number | string;
-    maxWidth?: number | string;
-    minHeight?: number | string;
-    minWidth?: number | string;
+    maxHeight?: DisplayRuleProp;
+    maxWidth?: DisplayRuleProp;
+    minHeight?: DisplayRuleProp;
+    minWidth?: DisplayRuleProp;
 }
 
 /**
