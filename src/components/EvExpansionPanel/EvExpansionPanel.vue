@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import "./EvExpansionPanel.scss";
-import { EvExpansionPanelSymbol, makeEvExpansionPanelProps } from "./EvExpansionPanel";
+import {
+    EvExpansionPanelSymbol,
+    makeEvExpansionPanelProps,
+} from "./EvExpansionPanel";
 import { EvExpansionPanelHeader } from "./EvExpansionPanelHeader";
 import { EvExpansionPanelContent } from "./EvExpansionPanelContent";
 import { filterComponentProps } from "@/util";
@@ -8,7 +11,7 @@ import { computed, provide, toRef } from "vue";
 import { useGroupItem } from "@/composables/groupItem";
 
 const props = defineProps({
-    ...makeEvExpansionPanelProps()
+    ...makeEvExpansionPanelProps(),
 });
 
 const slots = defineSlots<{
@@ -19,8 +22,12 @@ const slots = defineSlots<{
     content(): never;
 }>();
 
-const headerProps = computed(() => filterComponentProps(EvExpansionPanelHeader, props));
-const contentProps = computed(() => filterComponentProps(EvExpansionPanelContent, props));
+const headerProps = computed(() =>
+    filterComponentProps(EvExpansionPanelHeader, props),
+);
+const contentProps = computed(() =>
+    filterComponentProps(EvExpansionPanelContent, props),
+);
 const groupItem = useGroupItem(props, EvExpansionPanelSymbol);
 const isDisabled = toRef(() => groupItem?.disabled.value || props.disabled);
 
@@ -32,19 +39,30 @@ const selectedIndices = computed(() => {
 });
 
 const isBeforeSelected = computed(() => {
-    const index = groupItem.group.items.value.findIndex(item => item.id === groupItem.id);
-    return !groupItem.isSelected.value &&
-        selectedIndices.value.some(selectedIndex => selectedIndex - index === 1);
-})
+    const index = groupItem.group.items.value.findIndex(
+        (item) => item.id === groupItem.id,
+    );
+    return (
+        !groupItem.isSelected.value &&
+        selectedIndices.value.some(
+            (selectedIndex) => selectedIndex - index === 1,
+        )
+    );
+});
 
 const isAfterSelected = computed(() => {
-    const index = groupItem.group.items.value.findIndex(item => item.id === groupItem.id);
-    return !groupItem.isSelected.value &&
-        selectedIndices.value.some(selectedIndex => selectedIndex - index === -1);
-})
+    const index = groupItem.group.items.value.findIndex(
+        (item) => item.id === groupItem.id,
+    );
+    return (
+        !groupItem.isSelected.value &&
+        selectedIndices.value.some(
+            (selectedIndex) => selectedIndex - index === -1,
+        )
+    );
+});
 
 provide(EvExpansionPanelSymbol, groupItem);
-
 </script>
 
 <template>
@@ -58,14 +76,17 @@ provide(EvExpansionPanelSymbol, groupItem);
                 'is-after-active': isAfterSelected,
                 'is-disabled': isDisabled,
             },
-            props.class
+            props.class,
         ]"
         :style="props.style">
-
         <slot name="header">
             <ev-expansion-panel-header v-bind="headerProps">
-                <template #prefix v-if="slots['header-prefix']"><slot name="header-prefix" /></template>
-                <template #suffix v-if="slots['header-suffix']"><slot name="header-suffix" /></template>
+                <template v-if="slots['header-prefix']" #prefix>
+                    <slot name="header-prefix" />
+                </template>
+                <template v-if="slots['header-suffix']" #suffix>
+                    <slot name="header-suffix" />
+                </template>
             </ev-expansion-panel-header>
         </slot>
 
@@ -74,6 +95,5 @@ provide(EvExpansionPanelSymbol, groupItem);
                 <slot name="default" />
             </ev-expansion-panel-content>
         </slot>
-
     </component>
 </template>

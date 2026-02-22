@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvExpansionPanelHeader.scss";
-import { ChevronDownIcon } from "@/icons";
+import {ChevronDownIcon, ChevronUpIcon} from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
 import { makeEvExpansionPanelHeaderProps } from "./EvExpansionPanelHeader";
 import { EvButton } from "@/components/EvButton";
@@ -20,7 +20,9 @@ const slots = defineSlots<{
 
 const expansionPanel = inject(EvExpansionPanelSymbol);
 if (!expansionPanel) {
-    throw new Error("Evance UI: `ev-expansion-panel-content` MUST be inside `ev-expansion-panel`");
+    throw new Error(
+        "Evance UI: `ev-expansion-panel-content` MUST be inside `ev-expansion-panel`",
+    );
 }
 
 const parsedActions = computed(() =>
@@ -42,25 +44,32 @@ function onClickHeader() {
     expansionPanel.toggle();
 }
 
+const caretIcon = computed(() =>
+    expansionPanel.isSelected.value ? ChevronUpIcon : ChevronDownIcon,
+);
 </script>
 
 <template>
-    <header :class="[
-        'ev-expansion-panel-header',
-        {
-            'is-active': expansionPanel.isSelected.value,
-            'is-actions-on-hover': hasActionsOnHover,
-        },
-        props.class,
+    <header
+        :class="[
+            'ev-expansion-panel-header',
+            {
+                'is-active': expansionPanel.isSelected.value,
+                'is-actions-on-hover': hasActionsOnHover,
+            },
+            props.class,
         ]"
-            :style="props.style">
-        <button class="ev-expansion-panel-header__button"
-                type="button"
-                @click="onClickHeader"
-                :tabindex="expansionPanel.disabled.value ? -1 : undefined"
-                :disabled="expansionPanel.disabled.value"
-                :aria-expanded="expansionPanel.isSelected.value">
-            <span v-if="props.iconStart" class="ev-expansion-panel-header__icon">
+        :style="[props.style]">
+        <button
+            class="ev-expansion-panel-header__button"
+            type="button"
+            :tabindex="expansionPanel.disabled.value ? -1 : undefined"
+            :disabled="expansionPanel.disabled.value"
+            :aria-expanded="expansionPanel.isSelected.value"
+            @click="onClickHeader">
+            <span
+                v-if="props.iconStart"
+                class="ev-expansion-panel-header__icon">
                 <ev-icon :glyph="props.iconStart" />
             </span>
             <span class="ev-expansion-panel-header__title">
@@ -73,23 +82,25 @@ function onClickHeader() {
                 </slot>
             </span>
             <span class="ev-expansion-panel-header__caret">
-                <ev-icon :glyph="ChevronDownIcon" />
+                <ev-icon :glyph="caretIcon" />
             </span>
         </button>
-        <div v-if="slots.prefix"
-             :class="[
-                 'ev-expansion-panel-header__prefix',
-                 {
-                     'ps-0': !props.iconStart,
-                 },
-             ]">
+        <div
+            v-if="slots.prefix"
+            :class="[
+                'ev-expansion-panel-header__prefix',
+                {
+                    'ps-0': !props.iconStart,
+                },
+            ]">
             <slot name="prefix" />
         </div>
-        <div v-if="slots.suffix"
-             :class="[
-                 'ev-expansion-panel-header__suffix',
-                 { 'is-hide-on-hover': hasActionsOnHover }
-                 ]">
+        <div
+            v-if="slots.suffix"
+            :class="[
+                'ev-expansion-panel-header__suffix',
+                { 'is-hide-on-hover': hasActionsOnHover },
+            ]">
             <slot name="suffix" />
         </div>
         <div

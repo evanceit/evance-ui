@@ -5,8 +5,8 @@
     grid-template-columns: minmax(0, auto) minmax(0, auto) 1fr minmax(0, auto) minmax(0, auto) minmax(0, auto);
     grid-template-rows: 1fr;
     align-items: center;
-    border-radius: inherit;
-    padding: 0.5rem;
+    border-radius: var(--expansion-panel-radius);
+    padding: 8px;
 }
 
 .ev-expansion-panel-header__button {
@@ -16,8 +16,8 @@
     align-items: center;
     grid-template-rows: subgrid;
     grid-template-columns: subgrid;
-    padding: 0.5rem;
-    margin: -0.5rem;
+    padding: 6px;
+    margin: -6px;
     cursor: pointer;
     background: var(--fill-neutral-subtle);
     border: none;
@@ -34,15 +34,15 @@
     }
 }
 
-.ev-expansion-panel-header__icon {
-    grid-area: icon-start;
-}
-
 .ev-expansion-panel-header__title {
     grid-area: title;
     display: flex;
     min-width: 0;
     padding-inline: 0.5rem;
+}
+
+.ev-expansion-panel-header__icon {
+    grid-area: icon-start;
 }
 
 .ev-expansion-panel-header__caret {
@@ -60,16 +60,22 @@
 
 .ev-expansion-panel-header__prefix {
     grid-area: prefix;
-    min-width: 0;
-    padding-inline: 0.5rem;
 }
 
 .ev-expansion-panel-header__suffix {
     grid-area: suffix;
-    min-width: 0;
-    padding-inline: 0.5rem;
 }
 
 .ev-expansion-panel-header__actions {
     grid-area: actions;
+}
+
+.ev-expansion-panel-header__prefix,
+.ev-expansion-panel-header__suffix,
+.ev-expansion-panel-header__actions {
+    display: inline-flex;
+    min-width: 0;
+    padding-inline: 6px;
+    align-items: center;
+    justify-content: center;
 }
