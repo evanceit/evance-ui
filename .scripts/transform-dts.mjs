@@ -7,6 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the path to the components.d.ts file
+const originalDtsPath = path.resolve(__dirname, '../src/types/global-components.d.ts');
 const dtsPath = path.resolve(__dirname, '../dist/types/types/global-components.d.ts');
 
 // Read the components.d.ts file
@@ -16,22 +17,6 @@ fs.readFile(dtsPath, 'utf8', (err, data) => {
         console.error(`Error reading ${dtsPath}:`, err);
         return;
     }
-
-    // Replace import statements to match the desired format
-    /*
-    let transformedData = data.replace(
-        /import\('.*?'\)\['default'\]/g,
-        (match) => {
-            const componentNameMatch = match.match(/import\('.*?\/([^/]+)\.vue'\)\['default'\]/);
-            if (componentNameMatch) {
-                const componentName = componentNameMatch[1];
-                return `import('@evance/evance-ui')['${componentName}']`;
-            }
-            return match;
-        }
-    );
-    */
-    // let transformedData = data.replace(/\.vue/g, '');
 
     let transformedData = data.replace(/RouterLink:.*\n/g, '')
         .replace(/RouterView:.*\n/g, '');
@@ -45,3 +30,5 @@ fs.readFile(dtsPath, 'utf8', (err, data) => {
         console.log(`Transformed ${dtsPath} successfully.`);
     });
 });
+
+fs.rm(originalDtsPath, { force: true }, () => {});
