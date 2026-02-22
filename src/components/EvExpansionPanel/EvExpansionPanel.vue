@@ -14,6 +14,8 @@ const props = defineProps({
 const slots = defineSlots<{
     default(): never;
     header(): never;
+    "header-prefix"(): never;
+    "header-suffix"(): never;
     content(): never;
 }>();
 
@@ -61,7 +63,10 @@ provide(EvExpansionPanelSymbol, groupItem);
         :style="props.style">
 
         <slot name="header">
-            <ev-expansion-panel-header v-bind="headerProps" />
+            <ev-expansion-panel-header v-bind="headerProps">
+                <template #prefix v-if="slots['header-prefix']"><slot name="header-prefix" /></template>
+                <template #suffix v-if="slots['header-suffix']"><slot name="header-suffix" /></template>
+            </ev-expansion-panel-header>
         </slot>
 
         <slot name="content">

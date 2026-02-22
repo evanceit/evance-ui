@@ -61,11 +61,13 @@
 .ev-expansion-panel-header__prefix {
     grid-area: prefix;
     min-width: 0;
+    padding-inline: 0.5rem;
 }
 
 .ev-expansion-panel-header__suffix {
     grid-area: suffix;
     min-width: 0;
+    padding-inline: 0.5rem;
 }
 
 .ev-expansion-panel-header__actions {

@@ -77,7 +77,12 @@ function onClickHeader() {
             </span>
         </button>
         <div v-if="slots.prefix"
-             class="ev-expansion-panel-header__prefix">
+             :class="[
+                 'ev-expansion-panel-header__prefix',
+                 {
+                     'ps-0': !props.iconStart,
+                 },
+             ]">
             <slot name="prefix" />
         </div>
         <div v-if="slots.suffix"
