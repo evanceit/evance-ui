@@ -9,40 +9,36 @@ const meta: Meta<typeof EvContainer> = {
     component: EvContainer,
     title: "Components/Layout/EvContainer",
     argTypes: {
-        fluid: {
+        centered: {
             control: "boolean",
-        },
-        fill: {
-            control: "boolean",
+            description:
+                "Center the container horizontally. Defaults to `true`.",
         },
         tag: {
             description: "",
         },
         height: {
             control: "select",
-            options: ["", "auto", "300"],
+            options: [undefined, "auto", "300"],
             description:
                 "Set an explicit height to the block. Behaves similar to `width`.",
         },
         width: {
             control: "select",
-            options: ["", "25%", "50%", "100%"],
+            options: [undefined, "25%", "50%", "100%"],
         },
         hidden: {
             control: "select",
             options: [
-                "",
-                "true",
-                "false",
+                undefined,
+                true,
+                false,
                 "xs-only",
                 "xs-only lg-up",
                 "['xs-only', 'lg-up']",
                 "{ xs: 'only', lg: 'up' }",
             ],
             mapping: {
-                "": undefined,
-                true: true,
-                false: false,
                 "xs-only": "xs-only",
                 "xs-only lg-up": "xs-only lg-up",
                 "['xs-only', 'lg-up']": ["xs-only", "lg-up"],
@@ -51,10 +47,22 @@ const meta: Meta<typeof EvContainer> = {
             description:
                 "Accepts a boolean, string or a display rule list as an array or object. ",
         },
+        size: {
+            control: "select",
+            options: [undefined, "small", "medium", "large", "readable"],
+            description:
+                "Containers are used to constrain the width of centered page content. " +
+                "Use the `size` prop in favour of `width` to set pre-defined maximum widths: " +
+                "<ul>" +
+                "<li>`medium` – typically used for form-based content with no aside or from helpers.</li>" +
+                "<li>`large` – used for page content inside panels or forms with helper aside.</li>" +
+                "<li>`readable` – a special size used to constrain blocks of text to a readable width.</li>" +
+                "</ul>",
+        },
     },
     args: {
-        fluid: false,
-        fill: false,
+        centered: true,
+        size: undefined,
     },
     tags: ["autodocs"],
 };

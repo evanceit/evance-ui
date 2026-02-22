@@ -232,5 +232,5 @@ input, textarea {
 }
 
 .text-width-readable {
-    max-width: 65ch;
+    max-width: var(--text-width-readable, 60ch);
 }

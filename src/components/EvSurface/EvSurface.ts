@@ -18,7 +18,7 @@ export type SurfaceElevation = "default" | "panel" | "overlay" | "sunken";
  * # Make Elevation Class
  */
 export function makeElevationClass(elevation: string) {
-    return makeClassName(elevation, "elevation");
+    return makeClassName(elevation, "is-elevation");
 }
 
 /**

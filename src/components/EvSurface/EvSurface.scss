@@ -7,20 +7,20 @@
     border-radius: inherit;
     background-color: var(--current-surface-fill);
 
-    &.elevation-default {
+    &.is-elevation-default {
         --current-surface-fill: var(--surface-default);
     }
 
-    &.elevation-overlay {
+    &.is-elevation-overlay {
         --current-surface-fill: var(--surface-overlay);
         box-shadow: var(--surface-overlay-shadow);
     }
 
-    &.elevation-panel {
+    &.is-elevation-panel {
         --current-surface-fill: var(--surface-panel);
     }
 
-    &.elevation-sunken  {
+    &.is-elevation-sunken  {
         --current-surface-fill: var(--surface-sunken);
     }
 

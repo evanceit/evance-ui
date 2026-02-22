@@ -1,45 +1,26 @@
 <script setup lang="ts">
 import "./EvContainer.scss";
 import { makeEvContainerProps } from "./EvContainer";
-import {
-    calculateDisplayRuleValue,
-    useDisplayRuleClasses,
-} from "@/composables/display";
+import { useDisplayRuleClasses } from "@/composables/display";
 import { computed } from "vue";
-import { isBoolean, isEmpty } from "@/util";
+import { isBoolean } from "@/util";
+import { useDimensions } from "@/composables";
 
 const props = defineProps({
     ...makeEvContainerProps(),
 });
-
-/**
- * Hidden
- */
+const dimensions = useDimensions(props);
 const hiddenClasses = useDisplayRuleClasses(props, "hidden", "hidden");
 const hiddenAttribute = computed(() => {
     return isBoolean(props.hidden) && props.hidden;
 });
 
-/**
- * Height
- */
-const heightStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.height);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return { height: value + " !important" };
+const sizeClass = computed(() => {
+    return props.size ? `is-size-${props.size}` : undefined;
 });
 
-/**
- * Width
- */
-const widthStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.width);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return value === "grow" ? { width: "100%" } : { width: value };
+const centeredClass = computed(() => {
+    return props.centered ? "is-centered" : undefined;
 });
 </script>
 
@@ -48,14 +29,12 @@ const widthStyles = computed(() => {
         :is="props.tag"
         :class="[
             'ev-container',
-            {
-                'is-fluid': props.fluid,
-                'fill-height': props.fill,
-            },
+            centeredClass,
+            sizeClass,
             ...hiddenClasses,
             props.class,
         ]"
-        :style="[props.style, widthStyles, heightStyles]"
+        :style="[props.style, dimensions]"
         :hidden="hiddenAttribute">
         <slot />
     </component>

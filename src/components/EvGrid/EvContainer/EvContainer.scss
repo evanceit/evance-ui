@@ -1,34 +1,28 @@
 @use "../../../css/settings";
 
-/**
-    # .ev-container
-
-    Can be used for a center focused page:
-
-    1. Non-fluid containers are limited in width.
- */
 .ev-container {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 
-    &.is-fluid {
-        max-width: 100%;
+    &.is-centered {
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    &.fill-height {
-        display: flex;
-        flex-wrap: wrap;
-    }
-}
-
-@each $breakpoint in map_keys(settings.$grid-breakpoints) {
-    @if $breakpoint != 'xs' {
-        /* 1 */
-        @media only screen and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
-            .ev-container {
-                max-width: map-get(settings.$grid-breakpoints, $breakpoint) * 0.9375;
-            }
+    &.is-size {
+        &-small {
+            max-width: 600px;
+        }
+        &-medium {
+            max-width: 900px;
+        }
+        &-large {
+            max-width: 1288px;
+        }
+        &-readable {
+            max-width: var(--text-width-readable, 65ch);
         }
     }
 }

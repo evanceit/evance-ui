@@ -85,12 +85,16 @@ html, body {
     &,
     &-x,
     &-y {
+        scrollbar-gutter: stable;
+
         &::-webkit-scrollbar-thumb {
-            background-color: transparent;
+            opacity: 0;
+            transition: opacity 0.2s ease 0.4s; // delay on hide
         }
+
         &:hover {
             &::-webkit-scrollbar-thumb {
-                background-color: var(--scrollbar-thumb);
+                opacity: 1;
             }
         }
     }

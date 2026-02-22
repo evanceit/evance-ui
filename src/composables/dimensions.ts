@@ -1,16 +1,20 @@
-import { propsFactory, toWebUnit } from "../util";
-import { computed } from "vue";
+import { propsFactory } from "../util";
+import { computed, PropType } from "vue";
+import {
+    calculateDisplayRuleValue,
+    DisplayRuleProp,
+} from "@/composables/display";
 
 /**
  * # Dimensions Props
  */
 export interface DimensionsProps {
-    height?: number | string;
-    maxHeight?: number | string;
-    maxWidth?: number | string;
-    minHeight?: number | string;
-    minWidth?: number | string;
-    width?: number | string;
+    height?: DisplayRuleProp;
+    maxHeight?: DisplayRuleProp;
+    maxWidth?: DisplayRuleProp;
+    minHeight?: DisplayRuleProp;
+    minWidth?: DisplayRuleProp;
+    width?: DisplayRuleProp;
 }
 
 /**
@@ -18,27 +22,28 @@ export interface DimensionsProps {
  */
 export const makeDimensionsProps = propsFactory(
     {
-        height: [Number, String],
-        maxHeight: [Number, String],
-        maxWidth: [Number, String],
-        minHeight: [Number, String],
-        minWidth: [Number, String],
-        width: [Number, String],
+        height: [String, Number, Object] as PropType<DisplayRuleProp>,
+        maxHeight: [String, Number, Object] as PropType<DisplayRuleProp>,
+        maxWidth: [String, Number, Object] as PropType<DisplayRuleProp>,
+        minHeight: [String, Number, Object] as PropType<DisplayRuleProp>,
+        minWidth: [String, Number, Object] as PropType<DisplayRuleProp>,
+        width: [String, Number, Object] as PropType<DisplayRuleProp>,
     },
     "dimensions",
 );
 
 /**
  * # Use Dimensions
+ *
  * @param props
  */
 export function useDimensions(props: DimensionsProps) {
     return computed(() => ({
-        height: toWebUnit(props.height),
-        maxHeight: toWebUnit(props.maxHeight),
-        maxWidth: toWebUnit(props.maxWidth),
-        minHeight: toWebUnit(props.minHeight),
-        minWidth: toWebUnit(props.minWidth),
-        width: toWebUnit(props.width),
+        height: calculateDisplayRuleValue(props.height),
+        maxHeight: calculateDisplayRuleValue(props.maxHeight),
+        maxWidth: calculateDisplayRuleValue(props.maxWidth),
+        minHeight: calculateDisplayRuleValue(props.minHeight),
+        minWidth: calculateDisplayRuleValue(props.minWidth),
+        width: calculateDisplayRuleValue(props.width),
     }));
 }
