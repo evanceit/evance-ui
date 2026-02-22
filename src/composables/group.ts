@@ -46,6 +46,7 @@ export interface GroupProvide {
     register: (item: GroupItem, cmp: ComponentInternalInstance) => void;
     unregister: (id: number) => void;
     select: (id: number, value: boolean) => void;
+    selectAll: (value: boolean) => void;
     selected: Ref<Readonly<number[]>>;
     isSelected: (id: number) => boolean;
     previous: () => void;
@@ -210,6 +211,13 @@ export function useGroup(
         isUnmounted = true;
     });
 
+    function selectAll(value?: boolean) {
+        value = value !== undefined ? value : true;
+        if (props.multiple) {
+            items.forEach((item) => select(item.id, value));
+        }
+    }
+
     function select(id: number, value?: boolean) {
         const item = items.find((item) => item.id === id);
         if (value && item?.disabled) {
@@ -289,6 +297,7 @@ export function useGroup(
         unregister,
         selected,
         select,
+        selectAll,
         disabled: toRef(props, "disabled"),
         previous: () => step(items.length - 1),
         next: () => step(1),
