@@ -43,6 +43,7 @@ export * from "./EvNotifications";
 export * from "./EvNumber";
 export * from "./EvNumberField";
 export * from "./EvOverlay";
+export * from "./EvPage";
 export * from "./EvProgress";
 export * from "./EvProgressCircular";
 export * from "./EvQuickfind";

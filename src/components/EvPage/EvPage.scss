@@ -2,4 +2,10 @@
 
 .ev-page {
     padding: #{tools.scalable(1rem, 3rem)};
+
+    > .ev-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
 }

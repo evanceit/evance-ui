@@ -6,10 +6,20 @@ const meta: Meta<typeof EvPage> = {
     component: EvPage,
     title: "Components/Layout/EvPage",
     argTypes: {
-
+        inlineSize: {
+            description: "The size of the page container",
+            control: "select",
+            options: [undefined, "small", "medium", "large"],
+        },
+        sunken: {
+            description:
+                "The `<ev-page>` component uses `<ev-surface>` as its base and is scrollable by default, " +
+                "but only supports the `default` or `sunken` elevation.",
+            control: "boolean",
+        },
     },
     args: {
-
+        sunken: false,
     },
     tags: ["autodocs"],
 };

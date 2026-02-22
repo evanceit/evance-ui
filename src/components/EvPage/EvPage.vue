@@ -3,22 +3,28 @@ import "./EvPage.scss";
 import { makeEvPageProps } from "./EvPage";
 import { EvSurface } from "@/components/EvSurface";
 import { EvContainer } from "@/components/EvGrid";
+import { computed } from "vue";
 
 const props = defineProps({
     ...makeEvPageProps(),
 });
+
+const slots = defineSlots<{
+    default(): never;
+}>();
+
+const elevation = computed(() => (props.sunken ? "sunken" : "default"));
 </script>
 
 <template>
     <ev-surface
         grow
-        elevation="sunken"
+        :elevation="elevation"
         :scrollable="true"
         :class="['ev-page', props.class]"
         :style="props.style">
-        <ev-container size="small">
-            <h1>Example Page</h1>
-            <p class="text-subtitle">Some content</p>
+        <ev-container :size="props.inlineSize">
+            <slot name="default" />
         </ev-container>
     </ev-surface>
 </template>

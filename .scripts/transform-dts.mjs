@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the path to the components.d.ts file
-const originalDtsPath = path.resolve(__dirname, '../src/types/global-components.d.ts');
+// const originalDtsPath = path.resolve(__dirname, '../src/types/global-components.d.ts');
 const dtsPath = path.resolve(__dirname, '../dist/types/types/global-components.d.ts');
 
 // Read the components.d.ts file
@@ -31,4 +31,4 @@ fs.readFile(dtsPath, 'utf8', (err, data) => {
     });
 });
 
-fs.rm(originalDtsPath, { force: true }, () => {});
+// fs.rm(originalDtsPath, { force: true }, () => {});
