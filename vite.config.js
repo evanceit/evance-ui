@@ -34,6 +34,7 @@ function stripVue2VirtualModules() {
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
+    base: "./",
     root: __dirname,
     resolve: {
         alias: {
@@ -64,10 +65,16 @@ export default defineConfig({
                 preserveModules: true,
                 banner: bannerTxt,
                 assetFileNames: (assetInfo) => {
-                    if (assetInfo.name?.endsWith(".css")) {
+                    const name = assetInfo.name ?? "";
+                    // CSS
+                    if (name.endsWith(".css")) {
                         return "evance-ui.css";
                     }
-                    return "[name].[hash][extname]";
+                    // Fonts
+                    if (/\.(woff2?|ttf|otf|eot)$/.test(name)) {
+                        return "fonts/[name].[hash][extname]";
+                    }
+                    return "assets/[name].[hash][extname]";
                 },
             },
         },
