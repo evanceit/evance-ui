@@ -2,7 +2,7 @@
 import "./EvExpansionPanels.scss"
 import { makeEvExpansionPanelsProps } from "./EvExpansionPanels";
 import { useGroup } from "@/composables/group";
-import { EvExpansionPanelSymbol } from "@/components/EvExpansionPanel";
+import { EvExpansionPanelSymbol } from "./EvExpansionPanel";
 import { computed } from "vue";
 
 const props = defineProps({

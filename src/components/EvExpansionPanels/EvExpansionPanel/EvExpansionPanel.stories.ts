@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvExpansionPanel } from "../EvExpansionPanel";
-import { CheckIcon, EllipsisIcon, SettingsIcon } from "../../icons";
-import { EvButtonProps } from "../EvButton";
-import { EvExpansionPanels } from "./EvExpansionPanels";
-import { EvLozenge } from "../EvLozenge";
-import { EvThumbnail } from "../EvThumbnail";
-import { EvCode } from "../EvCode";
+import { CheckIcon, EllipsisIcon, SettingsIcon } from "@/icons";
+import {
+    EvButtonProps,
+    EvExpansionPanels,
+    EvLozenge,
+    EvThumbnail,
+    EvCode,
+} from "@/components";
 
 const meta: Meta<typeof EvExpansionPanel> = {
     component: EvExpansionPanel,
@@ -19,12 +21,12 @@ const meta: Meta<typeof EvExpansionPanel> = {
             control: "select",
             options: [undefined, "SettingsIcon"],
             mapping: {
-                "SettingsIcon": SettingsIcon,
-            }
+                SettingsIcon: SettingsIcon,
+            },
         },
         noPadding: {
             control: "boolean",
-        }
+        },
     },
     args: {
         title: "My panel",
@@ -40,7 +42,13 @@ type Story = StoryObj<typeof EvExpansionPanel>;
 
 export const Primary: Story = {
     render: (args) => ({
-        components: { EvExpansionPanel, EvExpansionPanels, EvLozenge, EvThumbnail, EvCode },
+        components: {
+            EvExpansionPanel,
+            EvExpansionPanels,
+            EvLozenge,
+            EvThumbnail,
+            EvCode,
+        },
         setup() {
 
             const actions: EvButtonProps[] = [
@@ -58,7 +66,7 @@ export const Primary: Story = {
             return { args, actions, actionsOnHover };
         },
         template: `
-            <ev-expansion-panels variant="spaced">
+            <ev-expansion-panels>
                 <ev-expansion-panel v-bind="args">
 
                     This is some test content

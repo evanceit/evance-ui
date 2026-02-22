@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./EvExpansionPanelHeader.scss";
-import {ChevronDownIcon, ChevronUpIcon} from "@/icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
 import { makeEvExpansionPanelHeaderProps } from "./EvExpansionPanelHeader";
 import { EvButton } from "@/components/EvButton";
@@ -8,7 +8,7 @@ import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvText } from "@/components/EvText";
 import { computed, inject } from "vue";
 import { getNextId } from "@/util";
-import { EvExpansionPanelSymbol } from "@/components/EvExpansionPanel";
+import { EvExpansionPanelSymbol } from "../EvExpansionPanel";
 
 const props = defineProps({ ...makeEvExpansionPanelHeaderProps() });
 

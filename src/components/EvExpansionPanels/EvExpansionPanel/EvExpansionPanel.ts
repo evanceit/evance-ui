@@ -1,7 +1,7 @@
 import { propsFactory } from "@/util";
 import { makeComponentProps, makeTagProps } from "@/composables";
-import { makeEvExpansionPanelHeaderProps } from "./EvExpansionPanelHeader";
-import { makeEvExpansionPanelContentProps } from "./EvExpansionPanelContent";
+import { makeEvExpansionPanelHeaderProps } from "../EvExpansionPanelHeader";
+import { makeEvExpansionPanelContentProps } from "../EvExpansionPanelContent";
 import { InjectionKey } from "vue";
 import { GroupItemProvide, makeGroupItemProps } from "@/composables/groupItem";
 

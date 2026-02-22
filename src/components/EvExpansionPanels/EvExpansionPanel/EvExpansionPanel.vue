@@ -4,8 +4,8 @@ import {
     EvExpansionPanelSymbol,
     makeEvExpansionPanelProps,
 } from "./EvExpansionPanel";
-import { EvExpansionPanelHeader } from "./EvExpansionPanelHeader";
-import { EvExpansionPanelContent } from "./EvExpansionPanelContent";
+import { EvExpansionPanelHeader } from "../EvExpansionPanelHeader";
+import { EvExpansionPanelContent } from "../EvExpansionPanelContent";
 import { filterComponentProps } from "@/util";
 import { computed, provide, toRef } from "vue";
 import { useGroupItem } from "@/composables/groupItem";
