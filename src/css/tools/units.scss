@@ -1,0 +1,10 @@
+@use 'sass:math' as math;
+
+/*
+    # Strip Unit
+
+    Remove units from a string like '10px', converting to a number (10).
+ */
+@function strip-unit($value) {
+    @return math.div($value,  ($value * 0 + 1));
+}

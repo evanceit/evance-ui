@@ -1,0 +1,5 @@
+@use "@/css/tools" as tools;
+
+.ev-page {
+    padding: #{tools.scalable(1rem, 3rem)};
+}

@@ -1,32 +1,6 @@
-@use 'sass:list' as list;
 @use 'sass:map' as map;
-@use 'sass:math' as math;
 @use 'sass:meta' as meta;
-
-/**
-    # Breakpoint Min
- */
-@function breakpoint-min($name, $breakpoints) {
-    $min: map.get($breakpoints, $name);
-    @if (strip-unit($min) != 0) {
-        @return $min;
-    } @else {
-        @return null;
-    }
-}
-
-
-/*
-    # Breakpoint Infix
- */
-@function breakpoint-infix($name, $breakpoints) {
-    @if (breakpoint-min($name, $breakpoints) == null) {
-        @return "";
-    } @else {
-        @return "-#{$name}";
-    }
-}
-
+@use 'sass:list' as list;
 
 /**
     # Map Deep Get
@@ -109,42 +83,4 @@
     }
 
     @return $result
-}
-
-
-/**
-    # Round Even
- */
-@function roundEven($val) {
-    @return 2 * math.round($val * .5);
-}
-
-
-/**
-    # Scalable
-
-    Calculate a clamp() function to offer scaling between
-    the smallest size ($min) from the smallest screen size ($minAt)
-    and the largest size ($max) at the largest screen size ($maxAt).
-
-    The calculation should look like this:
-
-    clamp(min, calc(min + (max - min) * ((100vw - minAt) / divider)), max);
- */
-@function scalable($min, $max, $minAt, $maxAt) {
-    @if ($min == $max) {
-        @return $max;
-    }
-    $divider: math.div(($maxAt - $minAt), $maxAt) * 100;
-    @return clamp(#{$min}, calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$minAt}) / #{strip-unit($divider)})), #{$max});
-}
-
-
-/*
-    # Strip Unit
-
-    Remove units from a string like '10px', converting to a number (10).
- */
-@function strip-unit($value) {
-    @return math.div($value,  ($value * 0 + 1));
 }

@@ -1,0 +1,26 @@
+@use "sass:map";
+@use "@/css/tools/units" as units;
+
+/**
+    # Breakpoint Min
+ */
+@function breakpoint-min($name, $breakpoints) {
+    $min: map.get($breakpoints, $name);
+    @if (units.strip-unit($min) != 0) {
+        @return $min;
+    } @else {
+        @return null;
+    }
+}
+
+
+/*
+    # Breakpoint Infix
+ */
+@function breakpoint-infix($name, $breakpoints) {
+    @if (breakpoint-min($name, $breakpoints) == null) {
+        @return "";
+    } @else {
+        @return "-#{$name}";
+    }
+}

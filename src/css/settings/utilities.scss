@@ -1,10 +1,11 @@
 @use 'sass:map' as map;
+@use "@/css/tools/mapping" as mapping;
 @use "./variables";
-@use '../tools/functions' as *;
+
 
 $utilities: () !default;
 @if ($utilities != false) {
-    $utilities: map-deep-merge(
+    $utilities: mapping.map-deep-merge(
         (
             // Display utilities
             "overflow": (

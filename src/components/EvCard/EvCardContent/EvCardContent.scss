@@ -1,4 +1,4 @@
-@use "@/css/tools/functions" as *;
+@use "@/css/tools" as tools;
 @use "@/css/settings";
 
 .ev-card-content {
@@ -23,7 +23,7 @@
         padding: var(--padding-medium);
 
         .ev-card-content--icon {
-            padding-top: scalable(0rem, 0.125rem, settings.$scale-from, settings.$scale-to);
+            padding-top: tools.scalable(0rem, 0.125rem);
         }
     }
 
@@ -31,7 +31,7 @@
         padding: var(--padding-large);
 
         .ev-card-content--icon {
-            padding-top: scalable(0rem, 0.25rem, settings.$scale-from, settings.$scale-to);
+            padding-top: tools.scalable(0rem, 0.25rem);
         }
     }
 
@@ -39,7 +39,7 @@
         padding: var(--padding-x-large);
 
         .ev-card-content--icon {
-            padding-top: scalable(0.125rem, 0.5rem, settings.$scale-from, settings.$scale-to);
+            padding-top: tools.scalable(0.125rem, 0.5rem);
         }
     }
 }

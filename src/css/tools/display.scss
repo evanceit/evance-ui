@@ -1,5 +1,5 @@
-@use "functions" as *;
-@use "../settings";
+@use "../settings" as settings;
+@use "../tools/breakpoints" as breakpoints;
 
 @mixin visually-hidden {
     position: absolute !important;
@@ -11,8 +11,11 @@
     display: initial;
 }
 
-@mixin media-breakpoint-up($name, $breakpoints: settings.$grid-breakpoints) {
-    $min: breakpoint-min($name, $breakpoints);
+@mixin media-breakpoint-up(
+    $name,
+    $breakpoints: settings.$grid-breakpoints
+) {
+    $min: breakpoints.breakpoint-min($name, $breakpoints);
     @if $min {
         @media (min-width: $min) {
             @content;

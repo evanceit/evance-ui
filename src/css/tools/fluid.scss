@@ -1,0 +1,27 @@
+@use 'sass:math' as math;
+@use './units' as units;
+@use "../settings";
+
+/**
+    # Scalable
+
+    Calculate a clamp() function to offer scaling between
+    the smallest size ($min) from the smallest screen size ($minAt)
+    and the largest size ($max) at the largest screen size ($maxAt).
+
+    The calculation should look like this:
+
+    clamp(min, calc(min + (max - min) * ((100vw - minAt) / divider)), max);
+ */
+@function scalable(
+    $min,
+    $max,
+    $minAt: settings.$scale-from,
+    $maxAt: settings.$scale-to
+) {
+    @if ($min == $max) {
+        @return $max;
+    }
+    $divider: math.div(($maxAt - $minAt), $maxAt) * 100;
+    @return clamp(#{$min}, calc(#{$min} + #{units.strip-unit($max - $min)} * ((100vw - #{$minAt}) / #{units.strip-unit($divider)})), #{$max});
+}

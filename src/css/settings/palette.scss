@@ -1,5 +1,5 @@
-@use '../tools/functions' as *;
 @use "sass:map";
+@use "@/css/tools/mapping" as mapping;
 
 /**
     # Colors
@@ -7,7 +7,7 @@
     Note, HEXA values are quoted to prevent SASS outputting values as RGBA.
  */
 $colors: () !default;
-$colors: map-deep-merge(
+$colors: mapping.map-deep-merge(
     (
         'purple': (
             '100': #ECE5FF,

@@ -1,0 +1,8 @@
+@use 'sass:math' as math;
+
+/**
+    # Round Even
+ */
+@function roundEven($val) {
+    @return 2 * math.round($val * .5);
+}

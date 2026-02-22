@@ -1,6 +1,5 @@
-
 @use "@/css/settings";
-@use "@/css/tools/functions" as *;
+@use "@/css/tools/fluid" as fluid;
 
 :root {
 
@@ -68,12 +67,12 @@
     @each $key, $value in settings.$headings {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --heading-size-#{$key}: #{scalable($min, $max, settings.$scale-from, settings.$scale-to)};
+        --heading-size-#{$key}: #{fluid.scalable($min, $max)};
     }
     @each $key, $value in settings.$text {
         $min: map-get($value, min);
         $max: map-get($value, max);
-        --text-size-#{$key}: #{scalable($min, $max, settings.$scale-from, settings.$scale-to)};
+        --text-size-#{$key}: #{fluid.scalable($min, $max)};
     }
     --text-eyebrow-transform: uppercase;
     --text-eyebrow-typeface: var(--typeface);
@@ -90,9 +89,9 @@
     --easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
 
 
-    --padding-x-large: #{scalable(1.5rem, 3rem, settings.$scale-from, settings.$scale-to)};
-    --padding-large: #{scalable(1.5rem, 2rem, settings.$scale-from, settings.$scale-to)};
-    --padding-medium: #{scalable(1rem, 1.5rem, settings.$scale-from, settings.$scale-to)};
+    --padding-x-large: #{fluid.scalable(1.5rem, 3rem)};
+    --padding-large: #{fluid.scalable(1.5rem, 2rem)};
+    --padding-medium: #{fluid.scalable(1rem, 1.5rem)};
     --padding-small: 1rem;
 }
 
