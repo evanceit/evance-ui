@@ -1,5 +1,5 @@
 .ev-expansion-panel {
-    --expansion-panel-radius: var(--rounded-small);
+    --expansion-panel-radius: calc(var(--rounded-small) + 2px);
     background: var(--surface-panel);
     border-radius: var(--expansion-panel-radius);
     flex: 1 0 100%;

@@ -5,7 +5,6 @@
     grid-template-columns: minmax(0, auto) minmax(0, auto) 1fr minmax(0, auto) minmax(0, auto) minmax(0, auto);
     grid-template-rows: 1fr;
     align-items: center;
-    border-radius: var(--expansion-panel-radius);
     padding: 8px;
 }
 
@@ -24,7 +23,7 @@
     color: inherit;
     font: inherit;
     text-align: start;
-    border-radius: var(--expansion-panel-radius);
+    border-radius: var(--rounded-small);
     transition: background-color 0.25s var(--easing-standard);
 
     &:hover,
