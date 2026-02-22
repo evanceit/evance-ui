@@ -3,7 +3,7 @@ import { makeComponentProps, makeTagProps } from "@/composables";
 import { makeGroupProps } from "@/composables/group";
 import { PropType } from "vue";
 
-const allowedVariants = ["default", "accordion"] as const;
+const allowedVariants = ["default", "accordion", "spaced"] as const;
 
 type ExpansionPanelsVariant = (typeof allowedVariants)[number];
 

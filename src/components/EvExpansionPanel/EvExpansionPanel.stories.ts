@@ -4,9 +4,9 @@ import { EvExpansionPanel } from "../EvExpansionPanel";
 import { CheckIcon, EllipsisIcon, SettingsIcon } from "../../icons";
 import { EvButtonProps } from "../EvButton";
 import { EvExpansionPanels } from "./EvExpansionPanels";
-import {EvLozenge} from "../EvLozenge";
-import {EvThumbnail} from "../EvThumbnail";
-import {EvCode} from "../EvCode";
+import { EvLozenge } from "../EvLozenge";
+import { EvThumbnail } from "../EvThumbnail";
+import { EvCode } from "../EvCode";
 
 const meta: Meta<typeof EvExpansionPanel> = {
     component: EvExpansionPanel,
@@ -58,7 +58,7 @@ export const Primary: Story = {
             return { args, actions, actionsOnHover };
         },
         template: `
-            <ev-expansion-panels>
+            <ev-expansion-panels variant="spaced">
                 <ev-expansion-panel v-bind="args">
 
                     This is some test content
