@@ -197,17 +197,20 @@ const maxlengthProgress = computed(() => {
     if (!props.maxlength) {
         return 0;
     }
-    return Math.min(100, Math.round((formField.value.length / props.maxlength) * 100));
+    return Math.min(
+        100,
+        Math.round((formField.value.length / props.maxlength) * 100),
+    );
 });
 
 const maxLengthAppearance = computed(() => {
     if (!formField.isFocused || !props.maxlength) {
         return undefined;
     }
-    if (maxlengthProgress.value >= 100) {
+    const charactersRemaining = props.maxlength - formField.value.length;
+    if (charactersRemaining <= 0) {
         return Appearance.danger;
     }
-    const charactersRemaining = props.maxlength - formField.value.length;
     const warningThreshold = Math.min(10, Math.ceil(props.maxlength * 0.25));
     if (charactersRemaining <= warningThreshold) {
         return Appearance.warning;
