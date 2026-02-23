@@ -320,10 +320,25 @@ export class FormField {
         }
     }
 
+    public shape(): unknown {
+        if (!this.props.shapers?.length) {
+            return;
+        }
+        const shapedValue = this.props.shapers.reduce(
+            (value, shaper) => shaper(value),
+            this.model.value,
+        );
+        if (shapedValue !== this.model.value) {
+            this.model.value = shapedValue;
+        }
+        return this.model.value;
+    }
+
     /**
      * ## Validate
      */
     public async validate(silent = false) {
+        this.shape();
         const results: string[] = [];
         this.validating.value = true;
         for (const validator of this.props.validators) {

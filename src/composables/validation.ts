@@ -26,6 +26,8 @@ export type Validator<T = any> = (
     value: T,
 ) => ValidationResult | Promise<ValidationResult>;
 
+export type Shaper<T = unknown> = (value: T) => T;
+
 /**
  * # Validate On Event
  */
@@ -42,6 +44,7 @@ export interface FormFieldProps {
     focused?: boolean;
     name?: string;
     readonly?: boolean;
+    shapers?: Shaper[];
     validators: Validator[];
     modelValue?: any;
     validateOn?:
@@ -63,6 +66,10 @@ export const makeFormFieldProps = propsFactory(
         errorMessages: Array as PropType<FormFieldProps["errorMessages"]>,
         name: String,
         readonly: Boolean,
+        shapers: {
+            type: Array as PropType<FormFieldProps["shapers"]>,
+            default: [],
+        },
         validators: {
             type: Array as PropType<FormFieldProps["validators"]>,
             default: [],

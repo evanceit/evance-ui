@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { EvTextfield } from "../EvTextfield";
 import { SearchIcon } from "@/icons";
 import { InputAppearance, InputSize } from "@/util";
+import { Shapers } from "../../validation";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
@@ -83,6 +84,12 @@ const meta: Meta<typeof EvTextfield> = {
                 "An array of validator functions, which evaluate an input value " +
                 "as an argument and must return either true or a string containing an error message. " +
                 "The input field will enter an error state if a function returns",
+        },
+        shapers: {
+            description:
+                "An array of shaper functions, which evaluate an input value " +
+                "as an argument and must return a modified version of the input value. " +
+                "The input field will use the modified value for display and validation.",
         },
         // End
 
@@ -218,8 +225,10 @@ export const Primary: Story = {
                 return value === "Hello" ? true : 'Please enter "Hello"';
             };
 
-            return { args, requiredValidator, helloValidator };
+            return { args, requiredValidator, helloValidator, Shapers };
         },
-        template: `<ev-textfield v-bind="args" :validators="[requiredValidator, helloValidator]" />`,
+        template: `
+            <ev-textfield v-bind="args" :validators="[requiredValidator, helloValidator]" />
+        `,
     }),
 };
