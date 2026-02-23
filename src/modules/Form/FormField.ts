@@ -327,10 +327,9 @@ export class FormField {
         const results: string[] = [];
         this.validating.value = true;
         for (const validator of this.props.validators) {
-            const validatorFn = isFunction(validator)
-                ? validator
-                : () => validator;
-            const result = await validatorFn(this.validationModel.value);
+            const result = await (isFunction(validator)
+                ? validator(this.validationModel.value)
+                : validator);
             if (result === true) {
                 continue;
             }

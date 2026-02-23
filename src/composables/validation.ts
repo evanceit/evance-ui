@@ -17,16 +17,14 @@ export interface ValidationError {
 /**
  * # Validation Result
  */
-export type ValidationResult = string | boolean;
+export type ValidationResult = string | true;
 
 /**
  * # Validator
  */
-export type Validator =
-    | ValidationResult
-    | PromiseLike<ValidationResult>
-    | ((value: any) => ValidationResult)
-    | ((value: any) => PromiseLike<ValidationResult>);
+export type Validator<T = any> = (
+    value: T,
+) => ValidationResult | Promise<ValidationResult>;
 
 /**
  * # Validate On Event
