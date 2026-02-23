@@ -17,20 +17,6 @@ const entries = {
     "icons/brand": path.resolve(__dirname, "./src/icons/brand/index.ts"),
 };
 
-function stripVue2VirtualModules() {
-    return {
-        name: "strip-vue2-virtual-modules",
-        generateBundle(_, bundle) {
-            for (const fileName of Object.keys(bundle)) {
-                // these are the leaked virtual modules (e.g. Foo.vue2.mjs)
-                if (fileName.includes(".vue2.")) {
-                    delete bundle[fileName];
-                }
-            }
-        },
-    };
-}
-
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
@@ -97,6 +83,5 @@ export default defineConfig({
             dts: "src/types/global-components.d.ts",
             globs: ["src/components/**/Ev*.vue"],
         }),
-        stripVue2VirtualModules(),
     ],
 });
