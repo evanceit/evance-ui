@@ -194,7 +194,7 @@ onMounted(() => {
 const vAutofocus = useAutofocus(props);
 
 const maxlengthProgress = computed(() => {
-    if (!props.maxlength) {
+    if (!props.maxlength || !formField.value?.length) {
         return 0;
     }
     return Math.min(
@@ -204,7 +204,7 @@ const maxlengthProgress = computed(() => {
 });
 
 const maxLengthAppearance = computed(() => {
-    if (!formField.isFocused || !props.maxlength) {
+    if (!formField.isFocused || !props.maxlength || !formField.value?.length) {
         return undefined;
     }
     const charactersRemaining = props.maxlength - formField.value.length;
@@ -223,7 +223,7 @@ const maxlengthCharacterCount = computed(() => {
         return "";
     }
     return t("textarea.characters", {
-        value: formField.value.length,
+        value: formField.value?.length ?? 0,
         maxlength: props.maxlength,
     });
 });
