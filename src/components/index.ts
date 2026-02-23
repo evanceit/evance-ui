@@ -55,6 +55,7 @@ export * from "./EvSelect";
 export * from "./EvSlideGroup";
 export * from "./EvSurface";
 export * from "./EvSwitch";
+export * from "./EvT";
 export * from "./EvTabs";
 export * from "./EvTag";
 export * from "./EvTagGroup";

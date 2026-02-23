@@ -93,3 +93,23 @@ Ordinal pluralization needs to be represented using an ```ordinal: true``` prope
 ```
 23rd
 ```
+
+## HTML/Component support
+
+There may be times such as `Hi { name }, press { hotkey } to submit` where you need to use HTML or a component within a translation.
+Intead of using the `t()` function directly, use the `<ev-t>` component.
+
+```html
+<ev-t keypath="myreference" :variables="{ name: 'Geoff' }">
+    <template #hotkey>
+        <ev-hotkey keys="enter" />
+    </template>
+</ev-t>
+```
+
+This would result in the following output:
+
+```html
+Hi Geoff, press <ev-hotkey ...output /> to submit
+```
+

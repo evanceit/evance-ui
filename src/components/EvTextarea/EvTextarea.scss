@@ -4,26 +4,25 @@
     # EvTextarea
  */
 .ev-textarea--control {
-    align-items: flex-start;
     background: var(--input-background);
     border: var(--input-border);
     border-radius: var(--input-radius);
     display: flex;
     flex-wrap: nowrap;
+    flex-direction: column;
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
     will-change: border-color, box-shadow, background;
-
-    > * {
-        flex: 0 0 auto;
-        display: flex;
-        width: min-content;
-    }
 }
 
 /** Input */
+.ev-textarea--input-wrapper {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+}
 .ev-textarea--input {
-    align-self: stretch;
     flex: 1 0 auto;
 
     > textarea {
@@ -56,7 +55,7 @@
     .ev-textarea--clearable {
         opacity: 0;
         transition: opacity 0.25s ease-in-out;
-        padding: var(--spacer-150);
+        padding: var(--spacer-50);
     }
 
     &:hover,
@@ -197,4 +196,33 @@
 /** Errors */
 .ev-textarea--errors {
     margin-top: 0.5rem;
+}
+
+.ev-textarea-control--footer {
+    padding: var(--spacer-100) var(--spacer-150);
+    border-top: 1px solid var(--fill-neutral);
+    color: var(--text-subtle);
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    > .ev-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+    }
+}
+.ev-textarea {
+    &.is-focused {
+        .ev-textarea-control--footer {
+            border-top: 1px solid var(--fill-neutral-hovered);
+
+            > .ev-progress {
+                opacity: 1;
+            }
+        }
+
+    }
 }

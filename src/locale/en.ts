@@ -103,4 +103,8 @@ export default {
         one: "{ value } month",
         other: "{ value } months",
     },
+    textarea: {
+        autosubmit: "Press { hotkey } to submit",
+        characters: "{ value } / { maxlength } characters",
+    },
 };

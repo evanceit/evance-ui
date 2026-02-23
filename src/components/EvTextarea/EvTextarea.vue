@@ -14,10 +14,13 @@ import {
 import { useAutofocus } from "@/composables/focus";
 import { CancelIcon } from "@/icons";
 import { EvProgress } from "@/components/EvProgress";
-import { EvIcon } from "@/components/EvIcon";
 import { EvErrors } from "@/components/EvErrors";
 import { EvLabel } from "@/components/EvLabel";
+import { EvText } from "@/components/EvText";
+import { EvHotkey } from "@/components/EvHotkey";
+import { EvT } from "@/components/EvT";
 import { useFormField } from "@/composables/validation";
+import { useLocaleFunctions } from "@/composables";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -51,6 +54,7 @@ const formField = useFormField(props);
 const isClearable = computed(() => {
     return props.clearable && !!formField.value;
 });
+const { t } = useLocaleFunctions();
 
 /**
  * ## Get Input Element
@@ -147,6 +151,7 @@ function onKeyupEnter(e: Event) {
     // Use the autosubmit callback if present
     if (props.autosubmit) {
         props.autosubmit();
+        e.preventDefault();
     }
 }
 
@@ -187,6 +192,38 @@ onMounted(() => {
  * ## Directive `v-autofocus`
  */
 const vAutofocus = useAutofocus(props);
+
+const maxlengthProgress = computed(() => {
+    if (!props.maxlength) {
+        return 0;
+    }
+    return Math.min(100, Math.round((formField.value.length / props.maxlength) * 100));
+});
+
+const maxLengthAppearance = computed(() => {
+    if (!formField.isFocused || !props.maxlength) {
+        return undefined;
+    }
+    if (maxlengthProgress.value >= 100) {
+        return Appearance.danger;
+    }
+    const charactersRemaining = props.maxlength - formField.value.length;
+    const warningThreshold = Math.min(10, Math.ceil(props.maxlength * 0.25));
+    if (charactersRemaining <= warningThreshold) {
+        return Appearance.warning;
+    }
+    return undefined;
+});
+
+const maxlengthCharacterCount = computed(() => {
+    if (!props.maxlength) {
+        return "";
+    }
+    return t("textarea.characters", {
+        value: formField.value.length,
+        maxlength: props.maxlength,
+    });
+});
 
 /**
  * ## Expose stuff
@@ -233,32 +270,62 @@ defineExpose({
             ]"
             @click="onControlClick"
             @mousedown="onControlMousedown">
-            <div class="ev-textarea--input">
-                <textarea
-                    :id="formField.id"
-                    ref="inputRef"
-                    v-model="formField.value"
-                    v-autofocus
-                    :name="formField.name"
-                    :disabled="formField.isDisabled"
-                    :readonly="formField.isReadonly"
-                    :placeholder="placeholder"
-                    :autofocus="autofocus"
-                    v-bind="inputAttrs"
-                    @focus="onFocus"
-                    @blur="formField.blur"
-                    @keydown="onKeydown"
-                    @keyup="onKeyup"
-                    @keyup.enter="onKeyupEnter"></textarea>
-            </div>
-            <transition name="slide-fade">
-                <div v-if="isClearable" class="ev-textarea--clearable">
-                    <ev-icon
-                        :glyph="CancelIcon"
-                        @click="onClearableClick"
-                        @mousedown="onClearableMousedown" />
+            <div class="ev-textarea--input-wrapper">
+                <div class="ev-textarea--input">
+                    <textarea
+                        :id="formField.id"
+                        ref="inputRef"
+                        v-model="formField.value"
+                        v-autofocus
+                        :name="formField.name"
+                        :disabled="formField.isDisabled"
+                        :readonly="formField.isReadonly"
+                        :placeholder="placeholder"
+                        :autofocus="autofocus"
+                        :maxlength="props.maxlength"
+                        v-bind="inputAttrs"
+                        @focus="onFocus"
+                        @blur="formField.blur"
+                        @keydown="onKeydown"
+                        @keyup="onKeyup"
+                        @keydown.enter="onKeyupEnter"></textarea>
                 </div>
-            </transition>
+                <transition name="slide-fade">
+                    <div v-if="isClearable" class="ev-textarea--clearable">
+                        <ev-button
+                            variant="subtle"
+                            :icon="CancelIcon"
+                            size="small"
+                            @click="onClearableClick"
+                            @mousedown="onClearableMousedown" />
+                    </div>
+                </transition>
+            </div>
+            <div
+                v-if="props.maxlength || props.autosubmit"
+                class="ev-textarea-control--footer">
+                <ev-progress
+                    v-if="props.maxlength"
+                    :size="1"
+                    :percentage="maxlengthProgress"
+                    :appearance="maxLengthAppearance" />
+                <ev-text
+                    v-if="props.maxlength"
+                    tag="span"
+                    class="ev-textarea-control--characters"
+                    :appearance="maxLengthAppearance">
+                    {{ maxlengthCharacterCount }}
+                </ev-text>
+                <div
+                    v-if="props.autosubmit"
+                    class="ev-textarea-control--autosubmit">
+                    <ev-t keypath="textarea.autosubmit">
+                        <template #hotkey>
+                            <ev-hotkey keys="enter" />
+                        </template>
+                    </ev-t>
+                </div>
+            </div>
             <div v-if="loading" class="ev-textarea--loader">
                 <ev-progress
                     indeterminate

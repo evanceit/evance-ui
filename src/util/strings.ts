@@ -103,8 +103,7 @@ export function createStringTemplate(
         return template.replaceAll(variablePattern, (match, raw): string => {
             const variable = raw.trim();
             if (dictionary[variable] === undefined) {
-                console.warn(`Unrecognized template variable '${variable}'.`);
-                return `"${variable}"`;
+                return `{ ${variable} }`;
             }
             return dictionary[variable] as string;
         });

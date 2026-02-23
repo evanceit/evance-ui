@@ -15,6 +15,7 @@ export const makeEvTextareaProps = propsFactory(
         clearable: Boolean,
         loading: Boolean,
         placeholder: String,
+        maxlength: Number,
 
         ...makeLabelProps(),
         ...makeFormFieldProps(),

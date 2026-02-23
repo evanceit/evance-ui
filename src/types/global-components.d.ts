@@ -92,6 +92,7 @@ declare module 'vue' {
     EvSurface: typeof import('./../components/EvSurface/EvSurface.vue')['default']
     EvSwatch: typeof import('./../components/EvSwatch/EvSwatch.vue')['default']
     EvSwitch: typeof import('./../components/EvSwitch/EvSwitch.vue')['default']
+    EvT: typeof import('./../components/EvT/EvT.vue')['default']
     EvTab: typeof import('./../components/EvTabs/EvTab/EvTab.vue')['default']
     EvTabs: typeof import('./../components/EvTabs/EvTabs.vue')['default']
     EvTag: typeof import('./../components/EvTag/EvTag.vue')['default']

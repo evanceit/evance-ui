@@ -80,6 +80,18 @@ const meta: Meta<typeof EvTextarea> = {
             description:
                 "When `autoselect` is `true` any text within the input is selected on focus.",
         },
+        autosubmit: {
+            control: "select",
+            options: [undefined, "() => { console.log('submitted') }"],
+            mapping: {
+                undefined: undefined,
+                "() => { console.log('submitted') }": () => {
+                    console.log("submitted");
+                },
+            },
+            description:
+                "Supply a function to `autosubmit` to intercept the enter key being pressed and execute the supplied function.",
+        },
         clearable: {
             control: "boolean",
         },
@@ -89,6 +101,12 @@ const meta: Meta<typeof EvTextarea> = {
                 "When `loading` is `true` a linear progress bar is added to the bottom of the textfield " +
                 "in an indeterminate state. However, if an `icon` has been set, a circular progress progress bar " +
                 "is used instead.",
+        },
+        maxlength: {
+            control: "number",
+            description:
+                "The maximum string length (measured in UTF-16 code units) that the user can enter. " +
+                "If this value isn't specified, the user can enter an unlimited number of characters.",
         },
     },
     args: {
