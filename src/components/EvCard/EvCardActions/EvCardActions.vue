@@ -19,7 +19,10 @@ const sizeClass = computed(() => sizeModifier(props.size));
     <div
         :class="['ev-card-actions', justifyClass, sizeClass, props.class]"
         :style="props.style">
-        <ev-button-group :size="props.size" :items="props.items">
+        <ev-button-group
+            :grow="props.grow"
+            :size="props.size"
+            :items="props.items">
             <slot />
         </ev-button-group>
     </div>

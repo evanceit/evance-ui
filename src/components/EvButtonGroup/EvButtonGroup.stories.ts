@@ -18,10 +18,13 @@ const meta: Meta<typeof EvButtonGroup> = {
                 "success",
                 "warning",
             ],
+            description: "The default appearance of buttons within the group",
         },
         variant: {
             control: "select",
             options: ["default", "bold", "outlined", "subtle", "tonal", "link"],
+            description:
+                "The default appearance variant of buttons in the group",
         },
         gap: {
             control: "select",
@@ -33,17 +36,33 @@ const meta: Meta<typeof EvButtonGroup> = {
                 "medium",
                 "large",
                 "x-large",
+                0,
+                50,
+                100,
+                150,
+                200,
             ],
+            description:
+                "Defines the gap between the buttons which can be a recognised size key, " +
+                "a numeric spacer value e.g. 100, or breakpoint rules. Setting the gap to `auto` " +
+                "chooses a gap appropriate to `size` prop. A value of `none` is the same as `0`.",
         },
         grow: {
             control: "boolean",
+            description:
+                "By default a button group renders inline - allowing it to be justified. " +
+                "When grow is set to true, the button group will stretch to fill the available space, " +
+                "and stretch the buttons to fill the group.",
         },
         size: {
             control: "select",
             options: ["x-small", "small", "medium", "large", "x-large"],
+            description: "The default size of buttons in the group",
         },
         rounded: {
             control: "boolean",
+            description:
+                "Defaults all buttons in the goup to a rounded pill shape",
         },
         items: {
             control: "object",

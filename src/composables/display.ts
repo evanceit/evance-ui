@@ -12,7 +12,7 @@ import {
 import {
     Browser,
     consoleWarn,
-    isBoolean,
+    isBoolean, isEmpty,
     isObject,
     isString,
     mergeDeep,
@@ -458,7 +458,7 @@ export function useBreakpointClasses<
 ) {
     return computed(() => {
         const prop = props[propName] as ResponsiveProp;
-        if (!prop) {
+        if (isEmpty(prop)) {
             return [];
         }
         const classes = [];

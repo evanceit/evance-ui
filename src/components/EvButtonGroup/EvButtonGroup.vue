@@ -3,16 +3,17 @@
  * # EvButtonGroup
  */
 import "./EvButtonGroup.scss";
-import { makeEvButtonGroupProps } from "./EvButtonGroup";
+import  {evButtonGroupGaps, makeEvButtonGroupProps } from "./EvButtonGroup";
 import { provideDefaults, useDefaults } from "@/composables/defaults";
 import { computed, toRef } from "vue";
 import {
     appearanceModifier,
-    getNextId,
+    getNextId, isString,
     makeClassName,
     variantModifier,
 } from "@/util";
 import { EvButton } from "../EvButton";
+import {useBreakpointClasses} from "@/composables";
 
 const definedProps = defineProps({
     ...makeEvButtonGroupProps(),
@@ -47,10 +48,11 @@ const appearanceClass = computed(() => appearanceModifier(props.appearance));
 const variantClass = computed(() => variantModifier(props.variant));
 const gapClass = computed(() => {
     const buttonSize = props.size ?? "medium";
-    if (props.gap === "auto") {
-        return makeClassName(buttonSize, "is-gap");
+    let gap = props.gap === "auto" ? buttonSize : props.gap;
+    if (isString(gap)) {
+        gap = evButtonGroupGaps[gap] ?? gap;
     }
-    return makeClassName(props.gap, "is-gap");
+    return useBreakpointClasses({ gap }, "gap", "ga").value;
 });
 </script>
 
@@ -61,7 +63,6 @@ const gapClass = computed(() => {
             'ev-button-group',
             appearanceClass,
             variantClass,
-            gapClass,
             {
                 'is-rounded': props.rounded,
                 'is-grow': props.grow,
@@ -69,7 +70,7 @@ const gapClass = computed(() => {
             props.class,
         ]"
         :style="props.style">
-        <div class="ev-button-group--container">
+        <div :class="['ev-button-group--container', gapClass]">
             <slot>
                 <ev-button
                     v-for="item in parsedItems"

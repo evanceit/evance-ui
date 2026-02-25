@@ -27,8 +27,8 @@
 }
 
 
-.ev-button-group {
-    &.is-gap-none {
+.ev-button-group--container {
+    &.ga-0 {
         .ev-button:first-child {
             border-start-start-radius: inherit;
             border-end-start-radius: inherit;
@@ -77,27 +77,29 @@
 }
 
 .ev-button-group {
-    &.is-gap-none {
-        &.is-variant-tonal,
-        &.is-variant-bold,
-        &.is-variant-default {
-            .ev-button {
-                &:has(+ .ev-button) {
-                    border-start-end-radius: 0;
-                    border-end-end-radius: 0;
-                }
+    &.is-variant-tonal,
+    &.is-variant-bold,
+    &.is-variant-default {
+        .ev-button-group--container {
+            &.ga-0 {
+                .ev-button {
+                    &:has(+ .ev-button) {
+                        border-start-end-radius: 0;
+                        border-end-end-radius: 0;
+                    }
 
-                + .ev-button {
-                    border-start-start-radius: 0;
-                    border-end-start-radius: 0;
+                    + .ev-button {
+                        border-start-start-radius: 0;
+                        border-end-start-radius: 0;
+                    }
                 }
             }
         }
     }
 }
 
-.ev-button-group {
-    &.is-gap-none {
+.ev-button-group--container {
+    &.ga-0 {
         .ev-button {
             &.is-active {
                 border-radius: inherit;
@@ -115,25 +117,6 @@
                 }
             }
         }
-    }
-}
-
-
-.ev-button-group {
-    &.is-gap-x-small {
-        --gap: var(--spacer-25);
-    }
-    &.is-gap-small {
-        --gap: var(--spacer-50);
-    }
-    &.is-gap-medium {
-        --gap: var(--spacer-100);
-    }
-    &.is-gap-large {
-        --gap: var(--spacer-150);
-    }
-    &.is-gap-x-large {
-        --gap: var(--spacer-300);
     }
 }
 

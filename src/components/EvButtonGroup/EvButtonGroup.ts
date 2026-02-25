@@ -7,6 +7,16 @@ import {
     ButtonVariantProp,
     EvButtonProps,
 } from "@/components/EvButton";
+import { SpacerProp } from "@/components/EvGrid/EvLayout";
+
+export const evButtonGroupGaps = {
+    none: 0,
+    "x-small": 25,
+    small: 50,
+    medium: 100,
+    large: 150,
+    "x-large": 300,
+} as const;
 
 export type ButtonGroupGap =
     | "none"
@@ -15,7 +25,8 @@ export type ButtonGroupGap =
     | "small"
     | "medium"
     | "large"
-    | "x-large";
+    | "x-large"
+    | SpacerProp;
 
 export const makeEvButtonGroupProps = propsFactory(
     {
@@ -28,7 +39,7 @@ export const makeEvButtonGroupProps = propsFactory(
             default: Appearance.default,
         },
         gap: {
-            type: String as PropType<ButtonGroupGap>,
+            type: [String, Number, Object] as PropType<ButtonGroupGap>,
             default: "auto",
         },
         grow: Boolean,

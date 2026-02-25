@@ -1,16 +1,11 @@
-import { propsFactory } from "@/util";
-import { makeComponentProps } from "@/composables/component";
+import { omit, propsFactory } from "@/util";
 import { PropType } from "vue";
-import { EvButtonProps } from "@/components/EvButton";
 import { JustifyContentValue } from "@/components/EvGrid/EvLayout";
 import { EvCardContentSize } from "@/components/EvCard/EvCardContent";
+import { makeEvButtonGroupProps } from "@/components/EvButtonGroup";
 
 export const makeEvCardActionsProps = propsFactory(
     {
-        items: {
-            type: Array as PropType<readonly EvButtonProps[]>,
-            default: () => [],
-        },
         justify: {
             type: String as PropType<JustifyContentValue>,
             default: "end",
@@ -19,7 +14,8 @@ export const makeEvCardActionsProps = propsFactory(
             type: String as PropType<EvCardContentSize>,
             default: "medium",
         },
-        ...makeComponentProps(),
+
+        ...omit(makeEvButtonGroupProps(), ["tag", "size"]),
     },
     "EvCardActions",
 );

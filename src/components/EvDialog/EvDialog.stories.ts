@@ -144,8 +144,6 @@ const meta: Meta<typeof EvDialog> = {
         noPadding: false,
         title: undefined,
         width: undefined,
-
-
         ...omit(EvOverlayStories.args as any, [
             "offset",
             "origin",
@@ -212,7 +210,7 @@ export const Primary: Story = {
 
 export const ScrollingBody: Story = {
     render: () => ({
-        components: { EvDialog, EvButton, ExpandIcon },
+        components: { EvDialog, EvButton },
         setup() {
             const modelValue = shallowRef(false);
             const fullscreen = shallowRef(false);

@@ -350,7 +350,7 @@ onBeforeUnmount(() => {
             v-else
             class="ev-dialog--surface"
             elevation="panel"
-            rounded="small">
+            rounded="medium">
             <ev-dialog-header
                 v-if="!props.hideHeader"
                 v-model="isActive"
@@ -361,7 +361,7 @@ onBeforeUnmount(() => {
                 </template>
             </ev-dialog-header>
             <ev-dialog-body v-bind="bodyProps">
-                <slot />
+                <slot name="default" />
             </ev-dialog-body>
             <ev-dialog-footer v-if="slots.footer">
                 <slot name="footer" />
