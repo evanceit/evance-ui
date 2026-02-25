@@ -1,9 +1,18 @@
 import { AppearanceProp, propsFactory } from "@/util";
-import { IconProp } from "@/composables/icons";
+import { IconProp, IconValue } from "@/composables/icons";
 import { PropType } from "vue";
 import { makeComponentProps } from "@/composables/component";
 
 export type EvCardContentSize = "small" | "medium" | "large" | "x-large";
+
+export interface EvCardContentProps {
+    appearance?: AppearanceProp;
+    eyebrow?: string;
+    icon?: IconValue;
+    size?: EvCardContentSize;
+    text?: string | string[];
+    title?: string;
+}
 
 export const makeEvCardContentProps = propsFactory(
     {

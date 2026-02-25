@@ -6,7 +6,9 @@ import { computed } from "vue";
 import { makeClassName, sizeModifier } from "@/util";
 import { useDefaults } from "@/composables";
 
-const definedProps = defineProps({ ...makeEvCardActionsProps() });
+const definedProps = defineProps({
+    ...makeEvCardActionsProps(),
+});
 const props = useDefaults(definedProps);
 const slots = defineSlots<{
     default(): never;
@@ -16,14 +18,15 @@ const sizeClass = computed(() => sizeModifier(props.size));
 </script>
 
 <template>
-    <div
+    <component
+        :is="props.tag"
         :class="['ev-card-actions', justifyClass, sizeClass, props.class]"
         :style="props.style">
         <ev-button-group
             :grow="props.grow"
             :size="props.size"
             :items="props.items">
-            <slot />
+            <slot name="default" />
         </ev-button-group>
-    </div>
+    </component>
 </template>

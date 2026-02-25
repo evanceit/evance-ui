@@ -87,7 +87,8 @@ const isAdjustEnd = computed(() => {
 </script>
 
 <template>
-    <div
+    <component
+        :is="props.tag"
         :class="[
             'ev-toolbar',
             {
@@ -151,5 +152,5 @@ const isAdjustEnd = computed(() => {
                     @click="onCloseClick" />
             </div>
         </div>
-    </div>
+    </component>
 </template>

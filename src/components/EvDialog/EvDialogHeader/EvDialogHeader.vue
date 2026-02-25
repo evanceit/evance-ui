@@ -1,27 +1,10 @@
-<script lang="ts">
-import { propsFactory } from "@/util";
-import { makeEvToolbarProps } from "@/components/EvToolbar";
-
-export const makeEvDialogHeaderProps = propsFactory(
-    {
-        modelValue: Boolean,
-        closeable: {
-            type: Boolean,
-            default: true,
-        },
-        ...makeEvToolbarProps({
-            size: "large",
-        }),
-    },
-    "EvDialogHeader",
-);
-</script>
-
 <script setup lang="ts">
+import "./EvDialogHeader.scss";
 import { useModelProxy } from "@/composables/modelProxy";
 import { EvToolbar } from "@/components/EvToolbar";
 import { computed } from "vue";
-import { filterComponentProps } from "@/util";
+import { filterComponentProps, omit } from "@/util";
+import { makeEvDialogHeaderProps } from "./EvDialogHeader";
 
 const props = defineProps({
     ...makeEvDialogHeaderProps(),
@@ -46,20 +29,24 @@ function close() {
 const closeable = computed(() => (props.closeable ? close : undefined));
 
 const toolbarProps = computed(() => {
-    return filterComponentProps(EvToolbar, props);
+    const p = {
+        ...omit(filterComponentProps(EvToolbar, props), ["tag"]),
+    };
+    return p;
 });
 </script>
 
 <template>
-    <div
+    <header
         v-if="slots.default"
-        :class="['ev-dialog--header', props.class]"
+        :class="['ev-dialog-header', props.class]"
         :style="props.style">
-        <slot />
-    </div>
+        <slot name="default" />
+    </header>
     <ev-toolbar
         v-else
-        :class="['ev-dialog--header', { 'is-untitled': !props.title }]"
         v-bind="toolbarProps"
+        tag="header"
+        :class="['ev-dialog-header', { 'is-untitled': !props.title }]"
         @click:close="closeable" />
 </template>

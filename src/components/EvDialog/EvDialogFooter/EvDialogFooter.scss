@@ -1,0 +1,9 @@
+.ev-dialog-footer {
+    flex: 0;
+    padding: var(--padding-medium);
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: flex-end;
+    gap: var(--spacer-200, 1rem);
+}

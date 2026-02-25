@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-import { EvDialog } from "../EvDialog";
+import { EvDialog, EvDialogProps } from "../EvDialog";
 import { shallowRef } from "vue";
 import { CollapseIcon, ExpandIcon, ArrowContinueIcon, CartIcon } from "@/icons";
 import DialogHeaderExample from "@/stories/assets/dialog-header-example.png?url";
 import { EvSurface, EvButton } from "@/components";
 import EvOverlayStories from "../EvOverlay/EvOverlay.stories";
 import { omit } from "@/util";
+import { DangerIcon } from "../../icons";
+import { Appearance } from "../../util";
 
 const meta: Meta<typeof EvDialog> = {
     component: EvDialog,
@@ -345,6 +347,54 @@ export const CustomContainer: Story = {
                         </div>
 
                     </ev-surface>
+                </template>
+            </ev-dialog>
+        `,
+    }),
+};
+
+
+export const Programmatic: Story = {
+    render: () => ({
+        components: { EvDialog, EvButton, EvSurface },
+        setup() {
+            const modelValue = shallowRef(false);
+
+            function close() {
+                modelValue.value = false;
+            }
+
+            const props: EvDialogProps = {
+                width: "small",
+                hideHeader: true,
+                bodyProps: {
+                    icon: DangerIcon,
+                    appearance: Appearance.danger,
+                    title: "Are you sure?",
+                    text: [
+                        "This is paragraph 1",
+                        "This is paragraph 2",
+                    ],
+                },
+                footerActions: [
+                    {
+                        text: "Hell yeah, continue",
+                        appearance: Appearance.danger,
+                        variant: "tonal",
+                        onClick: close,
+                    },
+                ],
+            };
+
+            return {
+                modelValue,
+                props,
+            };
+        },
+        template: `
+            <ev-dialog v-model="modelValue" v-bind="props">
+                <template #activator="{ isActive, props }">
+                    <ev-button v-bind="props">Open</ev-button>
                 </template>
             </ev-dialog>
         `,

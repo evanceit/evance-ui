@@ -5,7 +5,8 @@ import { IconProp, IconValue } from "@/composables/icons";
 import { PropType, Slot, Slots } from "vue";
 import { EvButtonProps } from "@/components/EvButton";
 import { EvToolbarProps } from "@/components/EvToolbar";
-import { EvDialogBodyProps } from "./EvDialogBody.vue";
+import { EvDialogBodyProps } from "./EvDialogBody";
+import { EvDialogFooterProps } from "./EvDialogFooter";
 
 export interface EvDialogProps extends EvOverlayProps {
     bodyProps?: EvDialogBodyProps;
@@ -23,6 +24,8 @@ export interface EvDialogProps extends EvOverlayProps {
     retainFocus?: boolean;
     scrollable?: boolean;
     title?: string;
+    footerActions?: EvButtonProps[];
+    footerProps?: EvDialogFooterProps;
 }
 
 export interface EvDialogSlots extends Slots {
@@ -67,6 +70,8 @@ export const makeEvDialogProps = propsFactory(
         },
         scrollable: Boolean,
         title: String,
+        footerActions: Array as PropType<readonly EvButtonProps[]>,
+        footerProps: Object as PropType<EvDialogFooterProps>,
 
         ...makeEvOverlayProps({
             origin: "center center" as const,

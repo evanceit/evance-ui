@@ -23,9 +23,9 @@ import {
     getViewport,
 } from "@/util";
 import { useModelProxy } from "@/composables/modelProxy";
-import EvDialogBody from "@/components/EvDialog/EvDialogBody.vue";
-import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
-import EvDialogHeader from "@/components/EvDialog/EvDialogHeader.vue";
+import { EvDialogBody } from "./EvDialogBody";
+import { EvDialogFooter } from "./EvDialogFooter";
+import { EvDialogHeader } from "./EvDialogHeader";
 import { provideDialog } from "@/composables/dialog";
 
 const props = defineProps({
@@ -316,6 +316,16 @@ function unbindDocumentDragEndListener() {
 onBeforeUnmount(() => {
     unbindGlobalListeners();
 });
+
+const isShowFooter = computed(() => {
+    return !!slots.footer || !!props.footerActions?.length;
+});
+const footerProps = computed(() => {
+    return {
+        ...props.footerProps,
+        actions: props.footerProps?.actions ?? props.footerActions,
+    };
+});
 </script>
 
 <template>
@@ -348,7 +358,7 @@ onBeforeUnmount(() => {
         <slot v-if="slots.container" name="container" />
         <ev-surface
             v-else
-            class="ev-dialog--surface"
+            class="ev-dialog__surface"
             elevation="panel"
             rounded="medium">
             <ev-dialog-header
@@ -360,11 +370,17 @@ onBeforeUnmount(() => {
                     <slot name="header" />
                 </template>
             </ev-dialog-header>
+
             <ev-dialog-body v-bind="bodyProps">
-                <slot name="default" />
+                <template v-if="slots.default" #default>
+                    <slot name="default" />
+                </template>
             </ev-dialog-body>
-            <ev-dialog-footer v-if="slots.footer">
-                <slot name="footer" />
+
+            <ev-dialog-footer v-if="isShowFooter" v-bind="footerProps">
+                <template v-if="slots.footer" #default>
+                    <slot name="footer" />
+                </template>
             </ev-dialog-footer>
         </ev-surface>
     </ev-overlay>

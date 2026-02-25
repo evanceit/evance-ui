@@ -4,6 +4,7 @@ import { IconProp, IconValue } from "@/composables/icons";
 import { PropType } from "vue";
 import { EvTabProps } from "@/components/EvTabs";
 import { EvButtonProps } from "@/components/EvButton";
+import { makeTagProps } from "@/composables";
 
 export type EvToolbarSize = "small" | "medium" | "large";
 
@@ -31,6 +32,7 @@ export const makeEvToolbarProps = propsFactory(
         tabs: Array as PropType<readonly EvTabProps[]>,
         title: String,
         ...makeComponentProps(),
+        ...makeTagProps(),
     },
     "EvToolbar",
 );

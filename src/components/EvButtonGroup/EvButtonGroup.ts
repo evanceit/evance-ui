@@ -28,6 +28,16 @@ export type ButtonGroupGap =
     | "x-large"
     | SpacerProp;
 
+export interface EvButtonGroupProps {
+    items: EvButtonProps[];
+    appearance?: ButtonAppearanceProp;
+    gap?: ButtonGroupGap;
+    grow?: boolean;
+    rounded?: boolean;
+    size?: InputSizeProp;
+    variant?: ButtonVariantProp;
+}
+
 export const makeEvButtonGroupProps = propsFactory(
     {
         items: {
