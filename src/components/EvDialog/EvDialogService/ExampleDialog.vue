@@ -16,11 +16,14 @@ const dynamicComponent = defineAsyncComponent(
 );
 
 function open() {
+
+    const props = reactive({
+        width: "small",
+    });
+
     dialog
         .open({
-            props: {
-                width: "small",
-            },
+            props,
             slots: {
                 default: dynamicComponent,
             },
@@ -40,6 +43,12 @@ function save() {
         });
     }
 }
+
+function makeBigger() {
+    if (dialogRef.props) {
+        dialogRef.props.width = "large";
+    }
+}
 </script>
 
 <template>
@@ -52,6 +61,7 @@ function save() {
         {{ data.greeting }}
     </p>
     <ev-dialog-footer>
+        <ev-button @click="makeBigger">bigger</ev-button>
         <ev-button @click="open">Open another</ev-button>
         <ev-button v-if="dialogRef?.data" @click="save">Say Goodbye</ev-button>
     </ev-dialog-footer>
