@@ -9,14 +9,6 @@
 }
 
 .ev-dialog {
-    &:has(.ev-dialog-footer) {
-        .ev-dialog-body {
-            &:not(.ev-card-content) {
-                padding-bottom: 0;
-            }
-        }
-    }
-
     &:has(.ev-dialog-header.is-untitled) {
         .ev-dialog-body {
             padding-top: 0;
