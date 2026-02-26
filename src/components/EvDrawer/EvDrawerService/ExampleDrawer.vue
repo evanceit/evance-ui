@@ -2,7 +2,7 @@
 import { injectDrawer, useDrawer } from "@/composables/drawer";
 import { EvButton } from "@/components";
 import { defineAsyncComponent, reactive } from "vue";
-import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
+import { EvDialogFooter } from "@/components/EvDialog/EvDialogFooter";
 
 const drawer = useDrawer();
 const drawerRef = injectDrawer();

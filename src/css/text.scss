@@ -84,14 +84,29 @@ h6, .heading-6 {
     font-style: var(--heading-style);
     line-height: var(--heading-lineheight);
     color: var(--heading-default);
-    margin: 0 0 0.25em 0; /* 1 */
+    margin: 0 0 var(--spacing-paragraph) 0; /* 1 */
     text-wrap: balance;
 
     b,
     strong {
         font-weight: var(--heading-weight-bold);
     }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
+* {
+    + h1, + .heading-1,
+    + h2, + .heading-2,
+    + h3, + .heading-3,
+    + h4, + .heading-4,
+    + h5, + .heading-5,
+    + h6, + .heading-6 {
+        margin-top: var(--spacing-heading, 2.625rem);
+    }
+}
+
 h1, .heading-1 {
     font-size: var(--heading-size-1);
 }
@@ -125,8 +140,23 @@ h6, .heading-6 {
     font-style: normal;
     font-weight: var(--text-eyebrow-weight);
     text-transform: var(--text-eyebrow-transform);
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
     letter-spacing: 0.05em;
+
+    * + & {
+        margin-top: var(--spacing-heading, 2.625rem);
+    }
+
+    & {
+        + h1, + .heading-1,
+        + h2, + .heading-2,
+        + h3, + .heading-3,
+        + h4, + .heading-4,
+        + h5, + .heading-5,
+        + h6, + .heading-6 {
+            margin-top: 0;
+        }
+    }
 }
 
 

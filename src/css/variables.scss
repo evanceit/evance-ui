@@ -57,6 +57,8 @@
     @each $key in map_keys(settings.$negative-spacers) {
         --spacer-#{$key}: #{map-get(settings.$negative-spacers, $key)};
     }
+    --spacing-paragraph: 1rem;
+    --spacing-heading: 2.625rem;
 
     /* Text */
     --heading-lineheight: 1.25em;

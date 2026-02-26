@@ -2,7 +2,7 @@
 import { injectDialog, useDialog } from "@/composables/dialog";
 import { EvButton } from "@/components";
 import { defineAsyncComponent, reactive } from "vue";
-import EvDialogFooter from "@/components/EvDialog/EvDialogFooter.vue";
+import { EvDialogFooter } from "@/components/EvDialog/EvDialogFooter";
 
 const dialog = useDialog();
 const dialogRef = injectDialog();
