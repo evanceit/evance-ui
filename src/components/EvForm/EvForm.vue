@@ -20,6 +20,8 @@ defineSlots<{
 
 defineExpose({
     form,
+    requestSubmit: () => formRef.value?.requestSubmit(),
+    submit: () => formRef.value?.submit(),
 });
 
 /**
