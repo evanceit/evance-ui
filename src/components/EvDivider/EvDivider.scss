@@ -7,6 +7,7 @@
     gap: var(--spacer-100);
     justify-content: center;
     margin: 0;
+    align-self: stretch;
 
     @at-root hr#{&},
     & .ev-divider--line {

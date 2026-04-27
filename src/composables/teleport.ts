@@ -1,7 +1,7 @@
 import { computed, Ref } from "vue";
 import { Browser, isString } from "../util";
 
-export type TeleportTarget = boolean | string | Element;
+export type TeleportTarget = boolean | string | Element | ShadowRoot;
 
 /**
  * # Use Teleport

@@ -31,8 +31,16 @@ import {
 import { EvMenuSymbol } from "../EvMenu/shared";
 
 type ActivatorSelector = "parent" | string | Element | ComponentPublicInstance;
+type TargetSelector =
+    | "cursor"
+    | "parent"
+    | string
+    | Element
+    | ComponentPublicInstance
+    | [x: number, y: number];
 
 export interface ActivatorProps extends DelayOpenCloseProps {
+    target?: TargetSelector;
     activator?: ActivatorSelector;
     activatorProps?: Record<string, any>;
     openOnClick?: boolean;
@@ -43,6 +51,7 @@ export interface ActivatorProps extends DelayOpenCloseProps {
 
 export const makeActivatorProps = propsFactory(
     {
+        target: [String, Object] as PropType<ActivatorProps["target"]>,
         activator: [String, Object] as PropType<ActivatorProps["activator"]>,
         activatorProps: {
             type: Object as PropType<ActivatorProps["activatorProps"]>,
@@ -117,10 +126,14 @@ class Activator {
     public readonly availableEvents: ActivatorEvents;
     public readonly component: ComponentInternalInstance;
     public readonly contentEvents: ComputedRef<Partial<ContentEvents>>;
+    public readonly cursorTarget = ref<[x: number, y: number]>();
     public readonly delayClose: () => Promise<boolean>;
     public readonly delayOpen: () => Promise<boolean>;
     public readonly openOnClick: ComputedRef<boolean>;
     public readonly openOnFocus: ComputedRef<boolean>;
+    public readonly target: ComputedRef;
+    public readonly targetEl: ComputedRef<HTMLElement | undefined>;
+    public readonly targetRef = ref();
     public readonly veilEvents: ComputedRef<Partial<VeilEvents>>;
 
     public isHovered = false;
@@ -155,6 +168,21 @@ class Activator {
         this.activatorEvents = this.createActivatorEvents();
         this.contentEvents = this.createContentEvents();
         this.veilEvents = this.createVeilEvents();
+        this.target = computed(() => {
+            if (props.target === "cursor" && this.cursorTarget.value) {
+                return this.cursorTarget.value;
+            }
+            if (this.targetRef.value) {
+                return this.targetRef.value;
+            }
+            return this.getTarget(props.target) || this.activatorEl.value;
+        });
+        this.targetEl = computed(() => {
+            return Array.isArray(this.target.value)
+                ? undefined
+                : this.target.value;
+        });
+        this.watchIsActive();
         this.watchIsTopOfStack();
         this.watchActivatorEl();
         this.watchActivatorProp();
@@ -277,26 +305,31 @@ class Activator {
     public getActivatorEl(
         selector: ActivatorSelector | undefined = this.props.activator,
     ) {
-        let activator;
-        if (selector) {
-            if (selector === "parent") {
-                let el = this.component?.proxy?.$el?.parentNode;
-                while (el.hasAttribute("data-no-activator")) {
-                    el = el.parentNode;
-                }
-                activator = el;
-            } else if (typeof selector === "string") {
-                // Selector
-                activator = document.querySelector(selector);
-            } else if ("$el" in selector) {
-                // Component (ref)
-                activator = selector.$el;
-            } else {
-                // HTMLElement | Element
-                activator = selector;
+        return this.setActivatorEl(this.getTarget(selector));
+    }
+
+    /**
+     * @param selector
+     */
+    public getTarget<T extends TargetSelector>(
+        selector: T,
+    ) {
+        if (selector === "parent") {
+            let el = this.component?.proxy?.$el?.parentNode;
+            while (el.hasAttribute("data-no-activator")) {
+                el = el.parentNode;
             }
+            return el;
+        } else if (typeof selector === "string") {
+            // Selector
+            return document.querySelector(selector) as HTMLElement | undefined;
+        } else if (typeof selector === "object" && "$el" in selector) {
+            // Component (ref)
+            return selector.$el;
+        } else {
+            // HTMLElement | Element | [x, y]
+            return selector;
         }
-        return this.setActivatorEl(activator);
     }
 
     /**
@@ -359,6 +392,9 @@ class Activator {
     public onClick(e: MouseEvent) {
         e.stopPropagation();
         this.activatorEl.value = (e.currentTarget || e.target) as HTMLElement;
+        if (!this.isActive.value) {
+            this.cursorTarget.value = [e.clientX, e.clientY];
+        }
         this.isActive.value = !this.isActive.value;
     }
 
@@ -373,8 +409,8 @@ class Activator {
         ) {
             return;
         }
-        e.stopPropagation();
         this.isFocused = true;
+        e.stopPropagation();
         this.activatorEl.value = (e.currentTarget || e.target) as HTMLElement;
         this.delayOpen();
     }
@@ -453,6 +489,22 @@ class Activator {
                 this.activatorEl.value = refElement(this.activatorRef.value);
             });
         });
+    }
+
+    /**
+     * ## Watch for changes in `isActive`
+     * @private
+     */
+    private watchIsActive() {
+        watch(
+            this.isActive,
+            (value) => {
+                setTimeout(() => {
+                    this.cursorTarget.value = undefined;
+                });
+            },
+            { flush: "post" },
+        );
     }
 
     /**

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import "./EvSkeleton.scss";
-import {
-    makeEvSkeletonProps,
-    skeletonPresets,
-} from "./EvSkeleton";
+import { makeEvSkeletonProps, skeletonPresets } from "./EvSkeleton";
 import { useRounded } from "@/composables/rounded";
 import { useDimensions } from "@/composables";
 import { computed } from "vue";

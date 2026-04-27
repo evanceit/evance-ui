@@ -9,7 +9,7 @@ import { DisplayRuleProp } from "@/composables/display";
 
 export interface PositionStrategyData {
     contentEl: Ref<HTMLElement | undefined>;
-    activatorEl: Ref<HTMLElement | undefined>;
+    target: Ref<HTMLElement | [x: number, y: number] | undefined>;
     pointerEl: Ref<HTMLElement | undefined>;
     isActive: Ref<boolean>;
     isRtl: Ref<boolean>;

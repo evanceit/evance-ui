@@ -1,4 +1,8 @@
-import { ScrollStrategyData, ScrollStrategyProps } from "../scroll";
+import {
+    getTargetEl,
+    ScrollStrategyData,
+    ScrollStrategyProps,
+} from "../scroll";
 import { getScrollParents, hasScrollbar, toWebUnit } from "@/util";
 import { onScopeDispose } from "vue";
 
@@ -12,10 +16,11 @@ export function blockScrollStrategy(
     props: ScrollStrategyProps,
 ) {
     const offsetParent = data.containerEl.value?.offsetParent;
+    const target = getTargetEl(data.target.value, data.contentEl.value);
     const scrollElements = [
         ...new Set([
             ...getScrollParents(
-                data.activatorEl.value,
+                target,
                 props.contained ? offsetParent : undefined,
             ),
             ...getScrollParents(

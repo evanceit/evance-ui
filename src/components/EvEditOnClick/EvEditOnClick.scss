@@ -1,3 +1,13 @@
+.ev-edit-on-click {
+    position: relative;
+    width: 200px;
+
+    > * {
+        opacity: 1;
+        transition: opacity 0.25s ease-in-out;
+    }
+}
+
 .ev-edit-on-click--clickable {
     align-items: center;
     border: 1px solid transparent;
@@ -13,4 +23,41 @@
         background: var(--current-surface-fill);
         border: var(--input-border);
     }
+
+    &:focus-visible {
+        outline: 2px solid var(--stroke-focused);
+        outline-offset: 2px;
+    }
+}
+
+.ev-edit-on-click--buttons {
+    display: inline-flex;
+    gap: var(--spacer-50);
+}
+
+.ev-edit-on-click {
+    &.is-loading {
+        pointer-events: none;
+
+        > * {
+            opacity: 0;
+        }
+
+        > .ev-edit-on-click--loading {
+            opacity: 1;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.ev-edit-on-click--errors {
+    align-self: center;
+    align-items: flex-start;
+    display: flex;
+    gap: var(--spacer-100);
+    padding: var(--spacer-50) var(--spacer-150) var(--spacer-50) var(--spacer-50);
 }

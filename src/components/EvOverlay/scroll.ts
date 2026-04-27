@@ -17,7 +17,8 @@ import {
 export interface ScrollStrategyData {
     containerEl: Ref<HTMLElement | undefined>;
     contentEl: Ref<HTMLElement | undefined>;
-    activatorEl: Ref<HTMLElement | undefined>;
+    targetEl: Ref<HTMLElement | undefined>;
+    target: Ref<HTMLElement | [x: number, y: number] | undefined>;
     isActive: Ref<boolean>;
     updatePosition: Ref<((e: Event) => void) | undefined>;
 }
@@ -97,4 +98,15 @@ export function useScrollStrategies(
     onScopeDispose(() => {
         scope?.stop();
     });
+}
+
+export function getTargetEl(
+    target: HTMLElement | [x: number, y: number] | undefined,
+    contentEl: HTMLElement | undefined,
+) {
+    return Array.isArray(target)
+        ? document
+              .elementsFromPoint(...target)
+              .find((el) => !contentEl?.contains(el))
+        : target ?? contentEl;
 }

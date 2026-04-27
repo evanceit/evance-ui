@@ -8,7 +8,7 @@ const dialog = useDialog();
 const dialogRef = injectDialog();
 
 const data = reactive({
-    greeting: "Hello, I am waiting for a resposne.",
+    greeting: "Hello, I am waiting for a response.",
 });
 
 const dynamicComponent = defineAsyncComponent(

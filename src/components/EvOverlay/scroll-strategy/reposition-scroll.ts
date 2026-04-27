@@ -1,4 +1,8 @@
-import { ScrollStrategyData, ScrollStrategyProps } from "../scroll";
+import {
+    getTargetEl,
+    ScrollStrategyData,
+    ScrollStrategyProps,
+} from "../scroll";
 import { EffectScope, onScopeDispose } from "vue";
 import { addScrollEventListener, requestNewFrame } from "@/util";
 
@@ -33,7 +37,7 @@ export function repositionScrollStrategy(
     )(() => {
         scope.run(() => {
             addScrollEventListener(
-                data.activatorEl.value ?? data.contentEl.value,
+                getTargetEl(data.target.value, data.contentEl.value),
                 (e) => {
                     if (slow) {
                         // If the position calculation is slow,

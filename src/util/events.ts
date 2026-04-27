@@ -169,7 +169,7 @@ export function hasEventListener(
  * @param onScroll
  */
 export function addScrollEventListener(
-    el: HTMLElement | undefined,
+    el: Element | undefined,
     onScroll: (e: Event) => void,
 ) {
     const scrollElements = [document, ...getScrollParents(el)];

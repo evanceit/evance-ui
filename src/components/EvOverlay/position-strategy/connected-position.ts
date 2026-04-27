@@ -24,6 +24,7 @@ import {
     AnchorSide,
     AnchorAlignment,
     RectProps,
+    isDeepEqual,
 } from "@/util";
 
 /**
@@ -78,7 +79,7 @@ class ConnectedPosition {
         public contentStyles: Ref<StyleProp>,
         public pointerStyles: Ref<StyleProp>,
     ) {
-        this.resolveFixedActivator();
+        this.resolveFixedTarget();
         this.minWidth = this.computedNumericProp("minWidth");
         this.maxWidth = this.computedNumericProp("maxWidth");
         this.minHeight = this.computedNumericProp("minHeight");
@@ -106,27 +107,29 @@ class ConnectedPosition {
         });
 
         watch(
-            [this.data.activatorEl, this.data.contentEl],
-            (
-                [newActivatorEl, newContentEl],
-                [oldActivatorEl, oldContentEl],
-            ) => {
-                if (oldActivatorEl) {
-                    this.observer?.unobserve(oldActivatorEl);
+            this.data.target,
+            (newTarget, oldTarget) => {
+                if (oldTarget && !Array.isArray(oldTarget)) {
+                    this.observer?.unobserve(oldTarget);
                 }
-                if (newActivatorEl) {
-                    this.observer?.observe(newActivatorEl);
-                }
-                if (oldContentEl) {
-                    this.observer?.unobserve(oldContentEl);
-                }
-                if (newContentEl) {
-                    this.observer?.observe(newContentEl);
+                if (!Array.isArray(newTarget)) {
+                    if (newTarget) {
+                        this.observer?.observe(newTarget);
+                    }
+                } else if (!isDeepEqual(newTarget, oldTarget)) {
+                    this.updatePosition();
                 }
             },
-            {
-                immediate: true,
+            { immediate: true },
+        );
+
+        watch(
+            this.data.contentEl,
+            (newContentEl, oldContentEl) => {
+                if (oldContentEl) this.observer.unobserve(oldContentEl);
+                if (newContentEl) this.observer.observe(newContentEl);
             },
+            { immediate: true },
         );
 
         onScopeDispose(() => {
@@ -310,14 +313,29 @@ class ConnectedPosition {
     }
 
     /**
-     * ## Resolve Fixed Activator
+     * ## Resolve Fixed Target
      * @private
      */
-    private resolveFixedActivator() {
-        const isActivatorFixed = isFixedPosition(this.data.activatorEl.value);
-        if (isActivatorFixed) {
+    private resolveFixedTarget() {
+        const isTargetFixed =
+            Array.isArray(this.data.target.value) ||
+            isFixedPosition(this.data.target.value);
+        if (isTargetFixed) {
             toFixedPosition(this.contentStyles.value, this.data.isRtl.value);
         }
+    }
+
+    /**
+     * ## Get Target Rect
+     * @param target
+     */
+    public getTargetRect(target: HTMLElement | [x: number, y: number]) {
+        if (Array.isArray(target)) {
+            const pageScale = document.body.currentCSSZoom ?? 1;
+            const factor = 1 + (1 - pageScale) / pageScale;
+            return new Rect(target[0] * factor, target[1] * factor, 0, 0);
+        }
+        return Rect.fromElement(target);
     }
 
     /**
@@ -330,11 +348,19 @@ class ConnectedPosition {
             requestAnimationFrame(() => (this.observe = true));
         });
 
-        if (!this.data.activatorEl.value || !this.data.contentEl.value) {
+        if (!this.data.target.value || !this.data.contentEl.value) {
             return;
         }
 
-        this.targetRect = Rect.fromElement(this.data.activatorEl.value);
+        if (
+            Array.isArray(this.data.target.value) ||
+            this.data.target.value.offsetParent ||
+            this.data.target.value.getClientRects().length
+        ) {
+            this.targetRect = this.getTargetRect(this.data.target.value);
+        } else {
+            this.targetRect = new Rect(0, 0, 0, 0);
+        }
         this.contentRect = this.getContentRect();
         this.contentScrollParents = this.getContentScrollParents();
         this.viewportRect = this.getViewportRect();
@@ -391,7 +417,7 @@ class ConnectedPosition {
      */
     private calculateContentCoords(
         zone: Zone,
-        placement: { position: Anchor; origin: Anchor }
+        placement: { position: Anchor; origin: Anchor },
     ): { x: number; y: number } {
         let { x, y } = zone.rect;
 
@@ -411,12 +437,12 @@ class ConnectedPosition {
                     y =
                         this.targetRect.y +
                         (this.targetRect.height - this.contentRect.height) /
-                        divider;
+                            divider;
                 } else {
                     x =
                         this.targetRect.x +
                         (this.targetRect.width - this.contentRect.width) /
-                        divider;
+                            divider;
                 }
             }
         }
@@ -496,7 +522,8 @@ class ConnectedPosition {
         const pointerDimensions = this.getPointerDimensions();
         if (
             !pointerDimensions ||
-            (placement.position.side === "center" && placement.position.alignment === "center")
+            (placement.position.side === "center" &&
+                placement.position.alignment === "center")
         ) {
             Object.assign(this.pointerStyles.value, {
                 left: null,
@@ -513,7 +540,8 @@ class ConnectedPosition {
             if (x > this.targetRect.x) {
                 pointerOffsetX = 0 - pointerDimensions.width / 2;
             } else {
-                pointerOffsetX = this.targetRect.x - x - pointerDimensions.width / 2;
+                pointerOffsetX =
+                    this.targetRect.x - x - pointerDimensions.width / 2;
             }
             pointerOffsetX +=
                 Math.min(this.targetRect.width, this.contentRect.width) / 2;
@@ -523,14 +551,16 @@ class ConnectedPosition {
                     : "100%";
             rotation = placement.position.side === "bottom" ? 180 : 0;
         } else {
-            // Note, the width/height dimensions of the pointer are rotated
+            // Note, the width/height dimensions of the pointer are rotated,
             // so they seem wrong but should be correct if not square (needs to be tested)
             if (y > this.targetRect.y) {
                 pointerOffsetY = 0 - pointerDimensions.width / 2;
             } else {
-                pointerOffsetY = this.targetRect.y - y - pointerDimensions.width / 2;
+                pointerOffsetY =
+                    this.targetRect.y - y - pointerDimensions.width / 2;
             }
-            pointerOffsetY += Math.min(this.targetRect.height, this.contentRect.height) / 2;
+            pointerOffsetY +=
+                Math.min(this.targetRect.height, this.contentRect.height) / 2;
             pointerOffsetX =
                 placement.position.side === "right"
                     ? 0 - pointerDimensions.height
@@ -539,12 +569,14 @@ class ConnectedPosition {
         }
 
         Object.assign(this.pointerStyles.value, {
-            left: typeof pointerOffsetX === 'string'
-                ? pointerOffsetX
-                : toWebUnit(pixelRound(pointerOffsetX)),
-            top: typeof pointerOffsetY === 'string'
-                ? pointerOffsetY
-                : toWebUnit(pixelRound(pointerOffsetY)),
+            left:
+                typeof pointerOffsetX === "string"
+                    ? pointerOffsetX
+                    : toWebUnit(pixelRound(pointerOffsetX)),
+            top:
+                typeof pointerOffsetY === "string"
+                    ? pointerOffsetY
+                    : toWebUnit(pixelRound(pointerOffsetY)),
             transform: `rotate(${rotation}deg)`,
         });
     }

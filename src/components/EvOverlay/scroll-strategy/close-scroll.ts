@@ -1,4 +1,4 @@
-import { ScrollStrategyData } from "../scroll";
+import { getTargetEl, ScrollStrategyData } from "../scroll";
 import { addScrollEventListener } from "@/util";
 
 /**
@@ -10,7 +10,7 @@ export function closeScrollStrategy(data: ScrollStrategyData) {
         data.isActive.value = false;
     }
     addScrollEventListener(
-        data.activatorEl.value ?? data.contentEl.value,
+        getTargetEl(data.target.value, data.contentEl.value),
         onScroll,
     );
 }

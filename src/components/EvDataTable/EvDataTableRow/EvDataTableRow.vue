@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvDataTableRow.scss";
 import { makeEvDataTableRowProps } from "./EvDataTableRow";
-import {computed, toRaw} from "vue";
+import { computed, toRaw } from "vue";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select";
