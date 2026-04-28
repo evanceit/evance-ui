@@ -6,6 +6,8 @@
     will-change: background-color, box-shadow;
     border-radius: inherit;
     background-color: var(--current-surface-fill);
+    min-width: 0;
+    min-height: 0;
 
     &.is-elevation-default {
         --current-surface-fill: var(--surface-default);

@@ -16,6 +16,7 @@ export * from "./EvDefaultsProvider";
 export * from "./EvDialog";
 export * from "./EvDivider";
 export * from "./EvDrawer";
+export * from "./EvEditOnClick";
 export * from "./EvEmptyState";
 export * from "./EvErrors";
 export * from "./EvExpansionPanels";
