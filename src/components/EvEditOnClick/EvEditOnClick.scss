@@ -30,6 +30,13 @@
     }
 }
 
+
+.ev-edit-on-click {
+    &.is-disabled {
+        pointer-events: none;
+    }
+}
+
 .ev-edit-on-click--buttons {
     display: inline-flex;
     gap: var(--spacer-50);

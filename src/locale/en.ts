@@ -1,4 +1,8 @@
 export default {
+    action: {
+        cancel: "Cancel",
+        confirm: "Confirm",
+    },
     carousel: {
         next: "Next",
         previous: "Previous",

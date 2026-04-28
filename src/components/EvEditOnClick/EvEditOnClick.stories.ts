@@ -5,10 +5,24 @@ const meta: Meta<typeof EvEditOnClick> = {
     component: EvEditOnClick,
     title: "Components/Forms/EvEditOnClick",
     argTypes: {
+        disabled: {
+            control: "boolean",
+            description: "Disables the component and prevents editing. ",
+        },
         editing: {
             control: "boolean",
             description: "Allows you to manually enter the component into an editing state. " +
                 "Use `v-model:editing` for bidirectional updates, or listen to `@update:editing`."
+        },
+        field: {
+            description:
+                "The field slot allows you to customize the field used for editing. Slot props include:" +
+                "<ul>" +
+                "<li>`confirm`: Function to confirm the edited value and close the edit view.</li>" +
+                "<li>`cancel`: Function to cancel the edit and revert to the original value.</li>" +
+                "<li>`value`: The editing value of the field.</li>" +
+                "<li>`error`: Whether the field is in an error state.</li>" +
+                "</ul>",
         },
         modelValue: {
             control: "text",
@@ -34,11 +48,24 @@ const meta: Meta<typeof EvEditOnClick> = {
         placeholder: {
             control: "text",
             description:
-                "The placeholder text to display when the model value is empty. " +
+                "Use the `placeholder` prop to display a value when the model value is empty. " +
                 "Use the `placeholder` slot to customize the placeholder.",
+        },
+        default: {
+            control: false,
+            description:
+                "The default slot content to display when the component is not in edit mode. " +
+                "If not provided, the model value will be displayed.",
+        },
+        onConfirm: {
+            control: false,
+            description:
+                "Use the `onConfirm` prop to supply a `EvEditOnClickConfirm` function to handle the confirmation of the edited value asynchronously" +
+                ", such as saving changes to a database or validating user input.",
         },
     },
     args: {
+        disabled: false,
         editing: false,
         loading: false,
         modelValue: "test value",
@@ -50,7 +77,6 @@ export default meta;
 
 type Story = StoryObj<typeof EvEditOnClick>;
 
-
 export const Primary: Story = {
     render: (args) => ({
         components: { EvEditOnClick },
@@ -60,20 +86,29 @@ export const Primary: Story = {
 
             const confirmHandler = async (context) => {
                 await sleep(750);
-                if (context.value.length > 0) {
+                if (context.value.length >= 3) {
                     return true;
                 }
                 return {
                     valid: false,
-                    errors: ["Required", "Should be a minimum of 3 characters"],
+                    errors: ["Should be a minimum of 3 characters"],
                 };
             };
-            return { args, confirmHandler };
+
+            const required = (value) => {
+                if (!value.length) {
+                    return "Required";
+                }
+                return true;
+            };
+
+            return { args, confirmHandler, required };
         },
         template: `
-            <ev-edit-on-click v-bind="args" @confirm="confirmHandler" :autoselect="true">
-
-            </ev-edit-on-click>
+            <ev-edit-on-click 
+                v-bind="args"
+                :validators="[required]"
+                @confirm="confirmHandler" />
         `,
     }),
 };

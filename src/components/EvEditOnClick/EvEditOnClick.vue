@@ -9,16 +9,18 @@ import { EvTextfield } from "@/components/EvTextfield";
 import { EvSkeleton } from "@/components/EvSkeleton";
 import { CancelIcon, CheckIcon, DangerIcon } from "@/icons";
 import { filterComponentProps, omit } from "@/util";
+import { useLocaleFunctions } from "@/composables";
+import { FormField } from "@/modules/Form/FormField";
 
 const props = defineProps({ ...makeEvEditOnClickProps() });
 const slots = defineSlots<{
-    editable(props: {
+    field(props: {
         confirm: () => void;
         cancel: () => void;
         value: any;
         error: boolean;
     }): never;
-    clickable(): never;
+    default(): never;
     loading(): never;
     placeholder(): never;
 }>();
@@ -26,11 +28,11 @@ const emit = defineEmits<{
     (e: "update:editing", value: boolean): void;
     (e: "update:loading", value: boolean): void;
     (e: "update:modelValue", value: any): void;
-    (e: "confirm", value: any): void;
     (e: "confirmed", value: any): void;
     (e: "cancel"): void;
     (e: "error", error: unknown): void;
 }>();
+const { t } = useLocaleFunctions();
 const isEditing = useModelProxy(props, "editing");
 const isLoading = useModelProxy(props, "loading");
 const modelValue = useModelProxy(props, "modelValue");
@@ -68,8 +70,16 @@ const textfieldProps = computed(() => {
         "modelValue",
         "appearance",
         "rounded",
+        "shapers",
+        "validators",
     ]);
 });
+
+const formFieldProps = {
+    ...props,
+    modelValue: editableValue,
+};
+const formField = new FormField(null, formFieldProps);
 
 watch(modelValue, () => {
     editableValue.value = modelValue.value;
@@ -94,6 +104,9 @@ function onOverlayLeave() {
 }
 
 function onClick() {
+    if (props.disabled) {
+        return;
+    }
     isEditing.value = true;
     requestAnimationFrame(() => {
         const input = editableRef.value.querySelector(
@@ -107,6 +120,13 @@ async function confirm() {
     if (isLoading.value) {
         return;
     }
+
+    const fieldErrors = await formField.validate();
+    if (fieldErrors.length > 0) {
+        errors.value = fieldErrors;
+        return;
+    }
+
     const nextValue = editableValue.value;
     const previousValue = modelValue.value;
 
@@ -183,6 +203,7 @@ function normalizeConfirmError(error: unknown): string[] {
             {
                 'is-editing': isEditing,
                 'is-loading': isLoading,
+                'is-disabled': props.disabled,
             },
             props.class,
         ]"
@@ -193,7 +214,7 @@ function normalizeConfirmError(error: unknown): string[] {
             ref="editableRef"
             class="ev-edit-on-click--editable">
             <slot
-                name="editable"
+                name="field"
                 v-bind="{
                     confirm,
                     cancel,
@@ -213,10 +234,10 @@ function normalizeConfirmError(error: unknown): string[] {
             ref="clickableRef"
             role="button"
             class="ev-edit-on-click--clickable"
-            tabindex="0"
+            :tabindex="props.disabled ? -1 : 0"
             @click="onClick"
             @keyup.enter="onClick">
-            <slot v-if="!isEmptyValue" name="clickable">{{ modelValue }}</slot>
+            <slot v-if="!isEmptyValue" name="default">{{ modelValue }}</slot>
             <slot v-else name="placeholder">
                 <ev-text appearance="subtle" :text="props.placeholder" />
             </slot>
@@ -243,7 +264,8 @@ function normalizeConfirmError(error: unknown): string[] {
         offset="8"
         :close-on-back="true"
         :disable-global-stack="true"
-        :close-on-content-click="false" @after-leave="onOverlayLeave">
+        :close-on-content-click="false"
+        @after-leave="onOverlayLeave">
         <ev-surface
             class="ev-edit-on-click--buttons pa-50"
             elevation="overlay"
@@ -256,8 +278,14 @@ function normalizeConfirmError(error: unknown): string[] {
                 <ev-divider vertical />
             </template>
             <ev-button-group size="small" variant="subtle">
-                <ev-button :icon="CancelIcon" @click="cancel" />
-                <ev-button :icon="CheckIcon" @click="confirm" />
+                <ev-button
+                    :aria-label="t('action.cancel')"
+                    :icon="CancelIcon"
+                    @click="cancel" />
+                <ev-button
+                    :aria-label="t('action.confirm')"
+                    :icon="CheckIcon"
+                    @click="confirm" />
             </ev-button-group>
         </ev-surface>
     </ev-overlay>
