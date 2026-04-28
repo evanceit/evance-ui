@@ -3,17 +3,17 @@
  * # EvButtonGroup
  */
 import "./EvButtonGroup.scss";
-import  {evButtonGroupGaps, makeEvButtonGroupProps } from "./EvButtonGroup";
+import { evButtonGroupGaps, makeEvButtonGroupProps } from "./EvButtonGroup";
 import { provideDefaults, useDefaults } from "@/composables/defaults";
 import { computed, toRef } from "vue";
 import {
     appearanceModifier,
-    getNextId, isString,
-    makeClassName,
+    getNextId,
+    isString,
     variantModifier,
 } from "@/util";
 import { EvButton } from "../EvButton";
-import {useBreakpointClasses} from "@/composables";
+import { useBreakpointClasses } from "@/composables";
 
 const definedProps = defineProps({
     ...makeEvButtonGroupProps(),

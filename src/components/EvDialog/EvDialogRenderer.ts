@@ -7,7 +7,6 @@ import {
     shallowReactive,
     shallowRef,
     VNode,
-    VNodeProps,
     watch,
 } from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
@@ -21,7 +20,6 @@ import { EvDialogSlots } from "./EvDialog";
 export class EvDialogRenderer {
     private app: App;
     public readonly id: number;
-    private instance?: ComponentPublicInstance | null;
     private hostInstance?: ComponentPublicInstance | null;
     private container?: HTMLDivElement;
     private modelValue = shallowRef(false);
@@ -150,7 +148,6 @@ export class EvDialogRenderer {
         this.container!.remove();
         this.isRendered = false;
         this.hostInstance = null;
-        this.instance = null;
     }
 
     /**
@@ -183,9 +180,6 @@ export class EvDialogRenderer {
         render(vnode, this.container!);
 
         this.hostInstance = vnode.component?.proxy ?? null;
-
-        const subTree = vnode.component?.subTree;
-        this.instance = subTree?.component?.proxy ?? null;
         this.isRendered = true;
     }
 }

@@ -87,7 +87,6 @@ const {
     contentEvents,
     target,
     targetEl,
-    targetRef,
     veilEvents,
 } = useActivator(props as ActivatorProps, isActiveContent, isTopLocal);
 const teleportTarget = useTeleport(
