@@ -8,7 +8,7 @@ import { EvTextfield } from "@/components/EvTextfield";
 import { EvMenu } from "@/components/EvMenu";
 import { EvDatePicker } from "@/components/EvDatePicker";
 import { EvSurface } from "@/components/EvSurface";
-import { computed, ref, shallowRef, watch } from "vue";
+import {computed, onMounted, ref, shallowRef, watch} from "vue";
 import { FocusEvent } from "react";
 import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
@@ -118,7 +118,7 @@ function onInput(e: Event) {
     }
 }
 
-watch(modelValue, (newValue, oldValue) => {
+function updateDisplayValue() {
     const date = modelValue.value[0] ?? null;
     if (!date || !dateAdapter.isValid(date)) {
         displayValue.value = null;
@@ -128,6 +128,14 @@ watch(modelValue, (newValue, oldValue) => {
             "displayDate",
         );
     }
+}
+
+watch(modelValue, () => {
+    updateDisplayValue();
+});
+
+onMounted(() => {
+    updateDisplayValue();
 });
 
 watch(isFocused, (newValue, oldValue) => {

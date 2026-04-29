@@ -26,7 +26,7 @@ export const Primary: Story = {
         },
         data() {
             return {
-                modelValue: null,
+                modelValue: new Date(),
             };
         },
         template: `

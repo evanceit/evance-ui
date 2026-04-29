@@ -35,7 +35,7 @@ export const Primary: Story = {
         },
         data() {
             return {
-                modelValue: ref(),
+                modelValue: ref("2025-12-20"),
             };
         },
         template: `
