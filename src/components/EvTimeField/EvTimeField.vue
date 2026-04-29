@@ -21,6 +21,10 @@ const props = defineProps({
 const slots = defineSlots<{
     label(): never;
 }>();
+const emit = defineEmits<{
+    (e: "update:modelValue", value: Date | string | null): void;
+    (e: "select", value: Date | string | null): void;
+}>();
 
 let inferredFormat: ParseDateTimeValue | null = null;
 const modelValue = useModelProxy(
@@ -140,9 +144,10 @@ function normalizeTimeInput(raw: string): string {
     return value.includes(":") ? `${hours}:${minutes}` : hours;
 }
 
-function onUpdatePickerValue(value) {
-    console.log(value);
+function onPickerSelect(value: unknown) {
     modelValue.value = value;
+    const v = inferredFormat.transformOut(modelValue.value);
+    emit("select", v as unknown as Date | string | null);
 }
 
 function onFieldKeydown(e: KeyboardEvent) {
@@ -246,7 +251,7 @@ function onFieldInput(e: Event) {
                         ref="timePickerRef"
                         v-model="pickerValue"
                         @focusin="onDatePickerFocusIn"
-                        @update:model-value="onUpdatePickerValue" />
+                        @update:model-value="onPickerSelect" />
                 </ev-surface>
             </ev-menu>
         </template>

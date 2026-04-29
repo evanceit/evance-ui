@@ -41,7 +41,7 @@ export const Primary: Story = {
         template: `
             <p>Selected date: "{{ modelValue }}"</p>
             
-            <ev-date-field v-bind="args" v-model="modelValue" />
+            <ev-date-field v-bind="args" v-model="modelValue" @select="(v) => console.log(v)" />
 
             <br />
             <ev-button-group class="mb-200">

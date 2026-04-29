@@ -8,7 +8,7 @@ import { EvTextfield } from "@/components/EvTextfield";
 import { EvMenu } from "@/components/EvMenu";
 import { EvDatePicker } from "@/components/EvDatePicker";
 import { EvSurface } from "@/components/EvSurface";
-import {computed, onMounted, ref, shallowRef, watch} from "vue";
+import { computed, onMounted, ref, shallowRef, watch } from "vue";
 import { FocusEvent } from "react";
 import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
@@ -21,6 +21,10 @@ const props = defineProps({
 });
 const slots = defineSlots<{
     label(): never;
+}>();
+const emit = defineEmits<{
+    (e: "update:modelValue", value: Date | string | null): void;
+    (e: "select", value: Date | string | null): void;
 }>();
 
 // Text Field
@@ -90,8 +94,10 @@ function onDatePickerFocusIn(e: FocusEvent) {
     isFocused.value = true;
 }
 
-function onUpdateModelValue() {
+function onPickerSelect() {
     isMenuOpen.value = false;
+    const v = inferredFormat.transformOut(modelValue.value[0] ?? null);
+    emit("select", v as unknown as Date | string | null);
 }
 
 function onClearInput() {
@@ -175,7 +181,7 @@ watch(isFocused, (newValue, oldValue) => {
                         v-bind="datePickerProps"
                         v-model="modelValue"
                         @focusin="onDatePickerFocusIn"
-                        @update:model-value="onUpdateModelValue()" />
+                        @update:model-value="onPickerSelect" />
                 </ev-surface>
             </ev-menu>
         </template>

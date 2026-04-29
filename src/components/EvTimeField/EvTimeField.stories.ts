@@ -32,7 +32,7 @@ export const Primary: Story = {
         template: `
             <p>Model value: {{ modelValue }}</p>
             
-            <ev-time-field v-bind="args" v-model="modelValue" />
+            <ev-time-field v-bind="args" v-model="modelValue" @select="(v) => console.log('Selected time:', v)" />
 
             <br />
             <ev-button-group class="mb-200">
