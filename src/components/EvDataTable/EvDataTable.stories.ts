@@ -484,9 +484,6 @@ export const Primary: Story = {
             };
         },
         template: `
-            
-            {{ items[0] }}
-
             <ev-button-group class="mb-200">
                 <ev-button :icon="PlusIcon" @click="onClickCreate">Create</ev-button>
                 <ev-button @click="modifyItem">Modify First Item</ev-button>
