@@ -15,6 +15,7 @@ import {
     EvLozenge,
     EvDivider,
     EvSection,
+    EvButtonGroup,
 } from "@/components";
 import { ref } from "vue";
 import { SortOption } from "@/components/EvDataTable/composables/sort";
@@ -220,6 +221,7 @@ export const Primary: Story = {
             EvDataTable,
             EvDataTableRow,
             EvButton,
+            EvButtonGroup,
             EvCode,
             EvFilterButton,
             EvMenu,
@@ -452,6 +454,17 @@ export const Primary: Story = {
                 items.value.splice(0, 0, item);
             }
 
+            function modifyItem() {
+                if (items.value.length > 0) {
+                    const firstItem = items.value[0];
+                    firstItem.name = `Modified ${firstItem.name}`;
+                    const data = items.value;
+                    data.splice(0, 1, firstItem);
+                    items.value = data;
+                    console.log(items.value);
+                }
+            }
+
             return {
                 args,
                 headers,
@@ -467,11 +480,20 @@ export const Primary: Story = {
                 onClickRow,
                 PlusIcon,
                 onClickCreate,
+                modifyItem,
             };
         },
         template: `
-            <ev-surface scrollable height="600" elevation="panel" rounded="small">
+            
+            {{ items[0] }}
+
+            <ev-button-group class="mb-200">
                 <ev-button :icon="PlusIcon" @click="onClickCreate">Create</ev-button>
+                <ev-button @click="modifyItem">Modify First Item</ev-button>
+            </ev-button-group>
+            
+            
+            <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-data-table
                     v-bind="args"
                     v-model:items="items"
@@ -525,9 +547,14 @@ export const Primary: Story = {
                     </template>
                     <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
                     <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
+                    <template #item.name="{ item }">{{ item.name }}</template>
                     <template #item.price="{ value }">£{{ value }}</template>
                     <template #item.actions="props">
-                        <ev-button size="small" :icon="EllipsisIcon" variant="subtle" rounded @click.stop="console.log(props)"  />
+                        <ev-button 
+                            size="small" 
+                            :icon="EllipsisIcon" 
+                            variant="subtle" 
+                            @click.stop="console.log(props)" />
                     </template>
                 </ev-data-table>
             </ev-surface>

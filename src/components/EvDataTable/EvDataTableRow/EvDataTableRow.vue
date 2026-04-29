@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./EvDataTableRow.scss";
 import { makeEvDataTableRowProps } from "./EvDataTableRow";
-import { computed, toRaw } from "vue";
+import { computed, toRaw, watch } from "vue";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select";
@@ -113,12 +113,12 @@ defineExpose({
                             index,
                             item: item.raw,
                             internalItem: item,
-                            value: getPropertyValue(item.columns, column.key),
+                            value: getPropertyValue(item.raw, column.key),
                             column: column,
                             isSelected,
                             toggleSelect,
                         }">
-                        {{ getPropertyValue(item.columns, column.key) }}
+                        {{ getPropertyValue(item.raw, column.key) }}
                     </slot>
                 </ev-data-table-cell>
             </template>
