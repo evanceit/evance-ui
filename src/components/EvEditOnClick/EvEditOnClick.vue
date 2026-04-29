@@ -18,6 +18,7 @@ const slots = defineSlots<{
         confirm: () => void;
         cancel: () => void;
         value: any;
+        updateValue: (value: any) => void;
         error: boolean;
     }): never;
     default(): never;
@@ -219,6 +220,7 @@ function normalizeConfirmError(error: unknown): string[] {
                     confirm,
                     cancel,
                     value: editableValue,
+                    updateValue: (value) => (editableValue = value),
                     error,
                 }">
                 <ev-textfield
