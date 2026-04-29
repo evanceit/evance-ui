@@ -55,7 +55,10 @@ const modelValue = useModelProxy(
     },
     (value: any) => {
         const v = value[0] ?? null;
-        return inferredFormat.transformOut(v);
+        return inferredFormat.transformOut(v) as unknown as
+            | Date
+            | string
+            | null;
     },
 );
 const displayValue = shallowRef<string | null>(null);
