@@ -12,8 +12,7 @@ import { useModelProxy } from "@/composables";
 import {
     displayTimeFromDate,
     inferTimeFormat,
-    normalizeTimeToDate,
-    serializeDateToTime,
+    ParseDateTimeValue,
 } from "@/composables/time";
 
 const props = defineProps({
@@ -23,28 +22,24 @@ const slots = defineSlots<{
     label(): never;
 }>();
 
-let inferredFormat = null;
+let inferredFormat: ParseDateTimeValue | null = null;
 const modelValue = useModelProxy(
     props,
     "modelValue",
     undefined,
     (value) => {
-        inferredFormat = inferTimeFormat(value);
-        const date = normalizeTimeToDate(value);
-        if (!date) {
-            return null;
-        }
-        date.setSeconds(0, 0);
-        return date;
+        const handler = inferTimeFormat(value);
+        inferredFormat = handler.parse(value);
+        inferredFormat.date?.setSeconds(0, 0);
+        return inferredFormat.date;
     },
     (value) => {
-        return serializeDateToTime(value, inferredFormat ?? "time");
+        return inferredFormat.transformOut(value);
     },
 );
 
 const displayValue = ref("");
 const pickerValue = ref(null);
-
 watch(
     modelValue,
     (value) => {
@@ -87,7 +82,7 @@ function onFieldBlur(e: FocusEvent) {
     if (!timePickerRef.value?.$el.contains(e.relatedTarget as HTMLElement)) {
         isMenuOpen.value = false;
         if (displayValue.value.length === 0) {
-            if (inferredFormat === "time") {
+            if (inferredFormat.format === "time") {
                 modelValue.value = null;
             } else {
                 const date = modelValue.value;
@@ -104,7 +99,7 @@ function onFieldBlur(e: FocusEvent) {
             minutes *= 10;
         }
         date.setHours(Number(parts[0]), minutes, 0, 0);
-        modelValue.value = normalizeTimeToDate(date);
+        modelValue.value = date;
         displayValue.value = displayTimeFromDate(date);
     }
 }
@@ -146,7 +141,8 @@ function normalizeTimeInput(raw: string): string {
 }
 
 function onUpdatePickerValue(value) {
-    modelValue.value = normalizeTimeToDate(value);
+    console.log(value);
+    modelValue.value = value;
 }
 
 function onFieldKeydown(e: KeyboardEvent) {
@@ -198,7 +194,7 @@ function onFieldInput(e: Event) {
     displayValue.value = normalizeTimeInput(raw);
 
     if (displayValue.value.length === 0) {
-        if (inferredFormat === "time") {
+        if (inferredFormat.format === "time") {
             modelValue.value = null;
         } else {
             const date = modelValue.value;
@@ -216,7 +212,7 @@ function onFieldInput(e: Event) {
         minutes *= 10;
     }
     date.setHours(Number(parts[0]), minutes, 0, 0);
-    pickerValue.value = normalizeTimeToDate(date);
+    pickerValue.value = date;
 }
 </script>
 

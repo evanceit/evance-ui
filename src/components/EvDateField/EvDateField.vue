@@ -13,6 +13,7 @@ import { FocusEvent } from "react";
 import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { useDate } from "@/composables/date/date";
+import { inferDateFormat, ParseDateTimeValue } from "@/composables/time";
 
 const dateAdapter = useDate();
 const props = defineProps({
@@ -38,13 +39,19 @@ const datePickerProps = computed(() => {
 
 // Menu
 const isMenuOpen = shallowRef(false);
+let inferredFormat: ParseDateTimeValue | null = null;
 const modelValue = useModelProxy(
     props,
     "modelValue",
     undefined,
-    (value) => wrapInArray(value),
+    (value) => {
+        const handler = inferDateFormat(value);
+        inferredFormat = handler.parse(value, { preserveTime: true });
+        return wrapInArray(inferredFormat.date);
+    },
     (value: any) => {
-        return value[0] ?? null;
+        const v = value[0] ?? null;
+        return inferredFormat.transformOut(v);
     },
 );
 const displayValue = shallowRef<string | null>(null);
@@ -111,7 +118,7 @@ function onInput(e: Event) {
     }
 }
 
-watch(modelValue, () => {
+watch(modelValue, (newValue, oldValue) => {
     const date = modelValue.value[0] ?? null;
     if (!date || !dateAdapter.isValid(date)) {
         displayValue.value = null;
@@ -120,6 +127,12 @@ watch(modelValue, () => {
             modelValue.value[0],
             "displayDate",
         );
+    }
+});
+
+watch(isFocused, (newValue, oldValue) => {
+    if (newValue) {
+        onFieldFocus();
     }
 });
 </script>

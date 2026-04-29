@@ -238,6 +238,9 @@ export class DefaultDateAdapter implements DateAdapter<Date> {
             return value;
         }
         if (isString(value)) {
+            if (value.trim() === "") {
+                return new Date();
+            }
             if (this.isISO(value)) {
                 return this.parseISO(value);
             }

@@ -10,11 +10,7 @@ import { EvButtonSelect } from "@/components/EvButtonSelect";
 import { EvNumber } from "@/components/EvNumber";
 import { EvDivider } from "@/components/EvDivider";
 import { EvHeading } from "@/components/EvHeading";
-import {
-    inferTimeFormat,
-    normalizeTimeToDate,
-    serializeDateToTime,
-} from "@/composables/time";
+import { inferTimeFormat } from "@/composables/time";
 
 const props = defineProps({
     ...makeEvTimePickerProps(),
@@ -29,8 +25,9 @@ const modelValue = useModelProxy(
     "modelValue",
     undefined,
     (value) => {
-        inferredFormat = inferTimeFormat(value);
-        const date = normalizeTimeToDate(value);
+        const handler = inferTimeFormat(value);
+        inferredFormat = handler.parse(value);
+        const date = inferredFormat.date;
         if (!date) {
             return null;
         }
@@ -39,7 +36,7 @@ const modelValue = useModelProxy(
         return date;
     },
     (value) => {
-        return serializeDateToTime(value, inferredFormat ?? "time");
+        return inferredFormat.transformOut(value);
     },
 );
 
