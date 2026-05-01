@@ -152,7 +152,7 @@ $colors: mapping.map-deep-merge(
             // @todo Remove the comment - just being used to track progress
             @return map.get($color-map, $variant) '/*' $color-name '*/';
         } @else {
-            @error "Variant '#{$variant}'' not found in palette color '#{$prefix}'.";
+            @error "Variant '#{$variant}' not found in palette color '#{$prefix}'.";
         }
     } @else {
         @error "Palette color '#{$prefix}' not found.";
