@@ -72,6 +72,7 @@ defineExpose({
             {
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label,
+                'is-loading': props.loading,
             },
             formField.classes,
             props.class,
@@ -97,6 +98,21 @@ defineExpose({
                 @input="onInput"
                 @focus="formField.focus"
                 @blur="formField.blur" />
+            <svg
+                v-if="props.loading"
+                class="ev-switch-loading"
+                width="48"
+                height="32"
+                viewBox="0 0 48 32">
+                <rect
+                    class="ev-switch-loading--stroke"
+                    x="1"
+                    y="1"
+                    width="46"
+                    height="30"
+                    rx="15"
+                    ry="15" />
+            </svg>
         </div>
 
         <div

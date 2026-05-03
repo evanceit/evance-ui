@@ -24,6 +24,10 @@
     }
 }
 
+.ev-select--placeholder {
+    flex: 1;
+}
+
 .ev-select {
     &.is-focused {
         .ev-select--placeholder {

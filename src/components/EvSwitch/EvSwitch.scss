@@ -4,6 +4,7 @@
     EvSwitch
  */
 .ev-switch {
+    --switch-color: var(--stroke-input);
     display: inline-flex;
     outline: none;
     position: relative;
@@ -94,6 +95,8 @@
 /** Checked state modifier */
 .ev-switch {
     &.is-checked {
+        --switch-color: var(--color-primary);
+
         .ev-switch--track {
             &:after {
                 transform: translateX(100%);
@@ -138,9 +141,11 @@
 /** Focus visible state modifier */
 .ev-switch {
     &.is-focused-visible {
-        .ev-switch--track {
-            outline: 2px solid var(--stroke-focused);
-            outline-offset: 2px;
+        &:not(.is-loading) {
+            .ev-switch--track {
+                outline: 2px solid var(--stroke-focused);
+                outline-offset: 2px;
+            }
         }
     }
 }
@@ -157,11 +162,15 @@
 /** Error modifier */
 .ev-switch {
     &.is-error {
+        --switch-color: var(--stroke-danger);
 
+        &:not(.is-loading) {
+            .ev-switch--track {
+                outline: 2px solid var(--stroke-danger);
+                outline-offset: 2px;
+            }
+        }
         .ev-switch--track {
-            outline: 2px solid var(--stroke-danger);
-            outline-offset: 2px;
-
             &:after {
                 background: var(--fill-danger-bold);
             }
@@ -184,4 +193,45 @@
 /** Errors */
 .ev-switch--errors {
     padding-left: 1rem;
+}
+
+.ev-switch {
+    &.is-loading {
+        pointer-events: none;
+    }
+}
+
+.ev-switch-loading {
+    position: absolute;
+    top: calc(50% - 16px);
+    left: -4px;
+    pointer-events: none;
+}
+
+.ev-switch-loading--stroke {
+    fill: none;
+    stroke-width: 2;
+    stroke: var(--switch-color);
+    stroke-linecap: round;
+    animation:
+        switch-loader-run 0.75s linear infinite,
+        switch-loader-grow 0.75s ease-in-out infinite;
+}
+
+@keyframes switch-loader-run {
+    to {
+        stroke-dashoffset: -126.25;
+    }
+}
+
+@keyframes switch-loader-grow {
+    0% {
+        stroke-dasharray: 12 114.25;
+    }
+    50% {
+        stroke-dasharray: 40 86.25;
+    }
+    100% {
+        stroke-dasharray: 12 114.25;
+    }
 }

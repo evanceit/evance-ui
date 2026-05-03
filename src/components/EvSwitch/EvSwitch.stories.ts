@@ -20,6 +20,10 @@ const meta: Meta<typeof EvSwitch> = {
             description:
                 "The ID associated with the form field and the component wrapper",
         },
+        loading: {
+            control: "boolean",
+            description: "Places the switch into loading mode",
+        },
         modelValue: {
             control: "boolean",
             description:
@@ -90,6 +94,7 @@ const meta: Meta<typeof EvSwitch> = {
         disabled: false,
         error: false,
         id: undefined,
+        loading: false,
         modelValue: false,
         name: undefined,
         readonly: false,
@@ -116,7 +121,7 @@ export const Primary: Story = {
         components: { EvSwitch },
         setup() {
             const requiredValidator = (value: any) => {
-                return value ? true : "Required";
+                return true; // value ? true : "Required";
             };
 
             return { args, requiredValidator };
