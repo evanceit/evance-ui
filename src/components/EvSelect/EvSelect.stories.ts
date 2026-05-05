@@ -323,53 +323,148 @@ export const ItemsEmpty: Story = {
 /**
  * ## Async Items
  */
-export const AsyncItems: Story = {
+export const ServerSideAutocompleteWithSelectionCache: Story = {
     render: (args: any) => ({
         components: { EvSelect, EvListItem, EvButton },
-        data() {
-            return {
-                selected: null,
-            };
-        },
+
         setup() {
-            const items = ref([]);
-            const isLoading = shallowRef(false);
-            const menuOpen = shallowRef(false);
-            let isLoaded = false;
-
-            const loadItems = async () => {
-                isLoading.value = true;
-                const response = await fetch(
-                    "https://api.publicapis.org/entries",
-                );
-
-                const data = await response.json();
-                items.value = data.entries;
-                isLoading.value = false;
-                isLoaded = true;
+            type User = {
+                id: number;
+                name: string;
+                email: string;
             };
 
-            const onMenuOpen = (isOpen: boolean) => {
-                if (!isOpen || isLoaded) {
+            const database: User[] = [
+                { id: 1, name: "John Smith", email: "john@example.com" },
+                { id: 2, name: "Sarah Jones", email: "sarah@example.com" },
+                { id: 3, name: "Michael Brown", email: "michael@example.com" },
+                { id: 4, name: "Emma Wilson", email: "emma@example.com" },
+                { id: 5, name: "Olivia Taylor", email: "olivia@example.com" },
+                { id: 6, name: "James Anderson", email: "james@example.com" },
+                { id: 7, name: "Sophia Thomas", email: "sophia@example.com" },
+                { id: 8, name: "William Jackson", email: "william@example.com" },
+                { id: 9, name: "Isabella White", email: "isabella@example.com" },
+                { id: 10, name: "Benjamin Harris", email: "benjamin@example.com" },
+            ];
+
+            /**
+             * Pretend this came from an edit form.
+             *
+             * The model only stores IDs.
+             */
+            const selected = ref<number[]>([1, 4]);
+
+            /**
+             * Initial items contain only the selected records.
+             *
+             * This lets EvSelect cache the selected items before the async
+             * server-side result list replaces the items array.
+             */
+            const items = ref<User[]>([
+                database[0], // John Smith
+                database[3], // Emma Wilson
+            ]);
+
+            const search = ref("");
+            const menuOpen = shallowRef(false);
+            const isLoading = shallowRef(false);
+            const hasLoadedFirstPage = shallowRef(false);
+
+            function fakeApiSearch(query = "") {
+                return new Promise<User[]>((resolve) => {
+                    window.setTimeout(() => {
+                        const normalized = query.trim().toLowerCase();
+
+                        let results = database;
+
+                        if (normalized) {
+                            results = database.filter((user) => {
+                                return (
+                                    user.name.toLowerCase().includes(normalized) ||
+                                    user.email.toLowerCase().includes(normalized)
+                                );
+                            });
+                        }
+
+                        /**
+                         * Simulate paged server-side results.
+                         *
+                         * Important: this deliberately excludes some selected
+                         * items depending on search/page.
+                         */
+                        resolve(results.slice(0, 5));
+                    }, 600);
+                });
+            }
+
+            async function loadItems(query = "") {
+                isLoading.value = true;
+
+                try {
+                    items.value = await fakeApiSearch(query);
+                } finally {
                     isLoading.value = false;
+                    hasLoadedFirstPage.value = true;
+                }
+            }
+
+            async function onMenuOpen(value: boolean) {
+                menuOpen.value = value;
+
+                if (!value || hasLoadedFirstPage.value) {
                     return;
                 }
-                loadItems();
-                menuOpen.value = true;
-            };
 
-            return { items, PlusIcon, onMenuOpen, isLoading, menuOpen };
+                await loadItems("");
+            }
+
+            let searchTimer: number | undefined;
+
+            function onSearch(value: string) {
+                search.value = value;
+
+                window.clearTimeout(searchTimer);
+
+                searchTimer = window.setTimeout(() => {
+                    loadItems(value);
+                }, 250);
+            }
+
+            return {
+                args,
+                items,
+                selected,
+                search,
+                menuOpen,
+                isLoading,
+                onMenuOpen,
+                onSearch,
+            };
         },
+
         template: `
-            <ev-select
-                :hide-items-empty="true"
-                :items="items"
-                item-title="API"
-                item-value="Link"
-                :loading="isLoading"
-                v-model:menuOpen="menuOpen"
-                @update:focused="onMenuOpen"
-            ></ev-select>
-            `,
+            <div style="max-width: 420px;">
+                <ev-select
+                    v-bind="args"
+                    v-model="selected"
+                    :items="items"
+                    :search="search"
+                    :menu-open="menuOpen"
+                    item-title="name"
+                    item-value="id"
+                    behavior="autocomplete"
+                    multiple
+                    tags
+                    :loading="isLoading"
+                    :hide-items-empty="false"
+                    items-empty-text="No matching users"
+                    @update:menu-open="onMenuOpen"
+                    @update:search="onSearch"
+                />
+
+                <pre style="margin-top: 16px;">selected: {{ selected }}</pre>
+                <pre>items: {{ items.map(item => item.name) }}</pre>
+            </div>
+        `,
     }),
 };

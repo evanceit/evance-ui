@@ -127,11 +127,11 @@ const model = useModelProxy(
 );
 
 const selections = computed(() => {
-    return model.value.map((value: any) => {
+    return model.value.map((item: ListItem) => {
         return (
-            findItemByValue(items.value as ListItem[], value) ||
-            findCachedSelection(value) ||
-            value
+            findItemByValue(items.value as ListItem[], item.value) ||
+            findCachedSelection(item.value) ||
+            item
         );
     });
 });
@@ -177,13 +177,15 @@ function uncacheSelection(item: ListItem) {
 }
 
 function findItemByValue(source: ListItem[], value: any) {
-    return source.find((item) => props.valueComparator(item.value, value));
+    return source.find((item) => {
+        return props.valueComparator(item.value, value);
+    });
 }
 
 function findCachedSelection(value: any) {
-    return Array.from(selectionCache.value.values()).find((item) =>
-        props.valueComparator(item.value, value),
-    );
+    return Array.from(selectionCache.value.values()).find((item) => {
+        return props.valueComparator(item.value, value);
+    });
 }
 
 /**
@@ -777,4 +779,6 @@ const isPlaceholder = computed(
             <slot name="suffix" />
         </template>
     </ev-textfield>
+
+    {{ selectionCache }}
 </template>
