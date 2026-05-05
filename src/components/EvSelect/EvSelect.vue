@@ -529,7 +529,7 @@ function itemProps(
     return mergeProps(item.props, {
         ref: itemRef,
         key: index,
-        onClick: () => select(item),
+        onClick: () => select(item, null),
     });
 }
 
