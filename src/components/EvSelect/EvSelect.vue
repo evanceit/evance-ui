@@ -779,6 +779,4 @@ const isPlaceholder = computed(
             <slot name="suffix" />
         </template>
     </ev-textfield>
-
-    {{ selectionCache }}
 </template>
