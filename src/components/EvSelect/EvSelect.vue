@@ -47,18 +47,13 @@ defineSlots<{
     label(): any;
     "list-prefix"(): any;
     "list-suffix"(): any;
-    item(props: {
-        item: any;
-        index: number;
-        props: any;
-        deselect: () => void;
-    }): any;
+    item(props: { item: any; index: number; props: any }): any;
     "items-empty"(): any;
     "items-prefix"(): any;
     "items-suffix"(): any;
     placeholder(): any;
     prefix(): any;
-    selection(item: any, index: number): any;
+    selection(props: { item: any; index: number; deselect: () => void }): any;
     suffix(): any;
 }>();
 
@@ -691,8 +686,12 @@ const isPlaceholder = computed(
                     <span v-else class="ev-select--selected-text">
                         {{ item.title }}
                         <span
-                            v-if="props.multiple && index < selections.length - 1"
-                            class="ev-select--selected-comma">,</span>
+                            v-if="
+                                props.multiple && index < selections.length - 1
+                            "
+                            class="ev-select--selected-comma"
+                            >,</span
+                        >
                     </span>
                 </slot>
             </div>
