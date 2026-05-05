@@ -564,15 +564,20 @@ watch(
     ([nextItems, nextModel]) => {
         const cache = new Map(selectionCache.value);
         let changed = false;
-        for (const selection of nextModel) {
+        for (const nextModelItem of nextModel) {
+            const key = getItemKey(nextModelItem);
+            if (cache.has(key)) {
+                continue;
+            }
             const matchedItem = findItemByValue(
                 nextItems as ListItem[],
-                selection.value,
+                nextModelItem.value,
             );
-            if (matchedItem) {
-                cache.set(getItemKey(matchedItem), matchedItem);
-                changed = true;
+            if (!matchedItem) {
+                continue;
             }
+            cache.set(key, matchedItem);
+            changed = true;
         }
         if (changed) {
             selectionCache.value = cache;
@@ -580,6 +585,23 @@ watch(
     },
     { immediate: true },
 );
+
+watch(model, (nextModel) => {
+    const cache = new Map(selectionCache.value);
+    let changed = false;
+    for (const cachedItem of cache.values()) {
+        const stillSelected = nextModel.some((selection: ListItem) =>
+            props.valueComparator(selection.value, cachedItem.value),
+        );
+        if (!stillSelected) {
+            cache.delete(getItemKey(cachedItem));
+            changed = true;
+        }
+    }
+    if (changed) {
+        selectionCache.value = cache;
+    }
+});
 
 /**
  * Watch Search
