@@ -47,7 +47,12 @@ defineSlots<{
     label(): any;
     "list-prefix"(): any;
     "list-suffix"(): any;
-    item(props: { item: any; index: number; props: any }): any;
+    item(props: {
+        item: any;
+        index: number;
+        props: any;
+        deselect: () => void;
+    }): any;
     "items-empty"(): any;
     "items-prefix"(): any;
     "items-suffix"(): any;
@@ -671,7 +676,13 @@ const isPlaceholder = computed(
                         'is-selected': index === selectionIndex,
                     },
                 ]">
-                <slot name="selection" v-bind="{ item, index }">
+                <slot
+                    name="selection"
+                    v-bind="{
+                        item,
+                        index,
+                        deselect: () => select(item, false),
+                    }">
                     <ev-tag
                         v-if="props.tags"
                         :closable="props.multiple"
