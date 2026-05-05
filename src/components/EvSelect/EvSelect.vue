@@ -129,9 +129,8 @@ const model = useModelProxy(
 const selections = computed(() => {
     return model.value.map((item: ListItem) => {
         return (
-            findItemByValue(items.value as ListItem[], item.value) ||
-            findCachedSelection(item.value) ||
-            item
+            // findItemByValue(items.value as ListItem[], item.value) ||
+            findCachedSelection(item.value) || item
         );
     });
 });
@@ -688,7 +687,7 @@ const isPlaceholder = computed(
         <template #default>
             <div
                 v-for="(item, index) in selections"
-                :key="item.key"
+                :key="getItemKey(item)"
                 :class="[
                     'ev-select--selected',
                     {
