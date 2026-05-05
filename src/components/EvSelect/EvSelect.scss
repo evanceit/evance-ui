@@ -10,7 +10,6 @@
             width: 100%;
             transition: none;
             top: 0;
-            line-height: 1.1;
         }
     }
 
@@ -118,7 +117,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: var(--input-font-size);
-    line-height: 1.1;
     padding-inline: var(--spacer-50);
 }
 
