@@ -76,6 +76,7 @@ const isPristine = shallowRef(true);
 const isSearchable = computed(() => props.behavior !== "select");
 const listHasFocus = shallowRef(false);
 const isSelecting = shallowRef(false);
+const selectionCache = shallowRef<Map<any, ListItem>>(new Map());
 
 // Menu
 const evMenuRef = ref<typeof EvMenu>();
@@ -124,12 +125,13 @@ const model = useModelProxy(
         return props.multiple ? transformed : transformed[0] ?? null;
     },
 );
+
 const selections = computed(() => {
     return model.value.map((value: any) => {
         return (
-            items.value.find((item) => {
-                return props.valueComparator(item.value, value.value);
-            }) || value
+            findItemByValue(items.value as ListItem[], value) ||
+            findCachedSelection(value) ||
+            value
         );
     });
 });
@@ -154,6 +156,35 @@ const highlightFirst = computed(() => {
 
 const form = useForm();
 const { t } = useLocaleFunctions();
+
+function getItemKey(item: ListItem): string {
+    const { value } = item;
+    return typeof value === "object" && value !== null
+        ? JSON.stringify(value)
+        : value;
+}
+
+function cacheSelection(item: ListItem) {
+    const cache = new Map(selectionCache.value);
+    cache.set(getItemKey(item), item);
+    selectionCache.value = cache;
+}
+
+function uncacheSelection(item: ListItem) {
+    const cache = new Map(selectionCache.value);
+    cache.delete(getItemKey(item));
+    selectionCache.value = cache;
+}
+
+function findItemByValue(source: ListItem[], value: any) {
+    return source.find((item) => props.valueComparator(item.value, value));
+}
+
+function findCachedSelection(value: any) {
+    return Array.from(selectionCache.value.values()).find((item) =>
+        props.valueComparator(item.value, value),
+    );
+}
 
 /**
  * ## On Menu After Leave
@@ -430,15 +461,23 @@ function select(item: ListItem, set: boolean | null = true) {
         const add = set == null ? !~index : set;
 
         if (~index) {
-            const value = add ? [...model.value, item] : [...model.value];
-            value.splice(index, 1);
+            const value = [...model.value];
+            if (!add) {
+                value.splice(index, 1);
+                uncacheSelection(item);
+            }
             model.value = value;
         } else if (add) {
+            cacheSelection(item);
             model.value = [...model.value, item];
         }
         search.value = "";
     } else {
         const add = set !== false;
+        selectionCache.value = new Map();
+        if (add) {
+            cacheSelection(item);
+        }
         model.value = add ? [item] : [];
         search.value = item.title;
 
@@ -518,6 +557,28 @@ function createTagProps(item: ListItem) {
     };
 }
 
+watch(
+    [items, model],
+    ([nextItems, nextModel]) => {
+        const cache = new Map(selectionCache.value);
+        let changed = false;
+        for (const selection of nextModel) {
+            const matchedItem = findItemByValue(
+                nextItems as ListItem[],
+                selection.value,
+            );
+            if (matchedItem) {
+                cache.set(getItemKey(matchedItem), matchedItem);
+                changed = true;
+            }
+        }
+        if (changed) {
+            selectionCache.value = cache;
+        }
+    },
+    { immediate: true },
+);
+
 /**
  * Watch Search
  */
@@ -594,8 +655,8 @@ const isPlaceholder = computed(
         @keydown="onFieldKeydown"
         @mousedown:control="onFieldMousedown"
         @update:model-value="onModelValueUpdate">
-        <template v-if="props.label || slots.label" #label>
-            <slot name="label">{{ props.label }}</slot>
+        <template v-if="slots.label" #label>
+            <slot name="label" />
         </template>
         <template v-if="slots.prefix" #prefix>
             <slot name="prefix" />

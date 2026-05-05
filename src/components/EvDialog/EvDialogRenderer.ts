@@ -1,6 +1,7 @@
 import {
     App,
-    ComponentPublicInstance, defineComponent,
+    ComponentPublicInstance,
+    defineComponent,
     h,
     isReactive,
     render,
