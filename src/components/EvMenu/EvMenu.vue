@@ -118,6 +118,7 @@ const activatorProps = computed(() => {
 defineExpose({
     id,
     openChildren,
+    contentEl: computed(() => overlay.value?.contentEl),
 });
 
 const overlayProps = computed(() => filterComponentProps(EvOverlay, props));

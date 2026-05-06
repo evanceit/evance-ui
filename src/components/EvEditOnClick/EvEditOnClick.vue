@@ -8,7 +8,7 @@ import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvSkeleton } from "@/components/EvSkeleton";
 import { CancelIcon, CheckIcon, DangerIcon } from "@/icons";
-import { filterComponentProps, omit } from "@/util";
+import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { useLocaleFunctions } from "@/composables";
 import { FormField } from "@/modules/Form/FormField";
 
@@ -46,7 +46,14 @@ const clickOutsideDirectiveArgs = computed(() => {
     return {
         handler: onClickOutside,
         condition: clickOutsideCondition,
-        include: () => [overlayRef.value?.contentEl],
+        include: () => {
+            const includes =
+                typeof props.clickOutsideInclude === "function"
+                    ? props.clickOutsideInclude()
+                    : wrapInArray(props.clickOutsideInclude);
+            includes.push(overlayRef.value?.contentEl);
+            return includes.filter(Boolean);
+        },
     };
 });
 const showButtons = computed(() => {

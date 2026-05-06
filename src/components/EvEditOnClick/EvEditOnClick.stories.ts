@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { EvEditOnClick } from "@/components/EvEditOnClick";
+import { EvEditOnClick, EvDateField } from "@/components";
+import { ref } from "vue";
 
 const meta: Meta<typeof EvEditOnClick> = {
     component: EvEditOnClick,
@@ -109,6 +110,39 @@ export const Primary: Story = {
                 v-bind="args"
                 :validators="[required]"
                 @confirm="confirmHandler" />
+        `,
+    }),
+};
+
+export const ExampleWithPicker: Story = {
+    render: (args) => ({
+        components: { EvEditOnClick, EvDateField },
+        setup() {
+            const date = ref("2026-05-06");
+            const dateField = ref(null);
+
+            return { date, dateField };
+        },
+        template: `
+            <ev-edit-on-click 
+                v-model="date"
+                :hide-actions="true"
+                placeholder="Never" 
+                :click-outside-include="() => [dateField?.overlayEl]">
+                <template #field="{ value, error, confirm, cancel, updateValue }">
+                    <ev-date-field
+                        ref="dateField"
+                        icon-start=""
+                        :autoselect="true"
+                        :error="error"
+                        :model-value="value"
+                        placeholder="Never"
+                        @keyup.enter="confirm"
+                        @keyup.esc="cancel"
+                        @update:model-value="updateValue"
+                        @select="confirm" />
+                </template>
+            </ev-edit-on-click>
         `,
     }),
 };

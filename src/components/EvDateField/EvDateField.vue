@@ -152,6 +152,10 @@ watch(isFocused, (newValue, oldValue) => {
         onFieldFocus();
     }
 });
+
+defineExpose({
+    overlayEl: computed(() => evMenuRef.value?.contentEl),
+});
 </script>
 
 <template>
