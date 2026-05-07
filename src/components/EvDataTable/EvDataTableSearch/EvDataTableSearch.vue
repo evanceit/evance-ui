@@ -15,7 +15,7 @@ import { EvSurface } from "@/components/EvSurface";
 import { EvTextfield } from "@/components/EvTextfield";
 import { EvTooltip } from "@/components/EvTooltip";
 import { FilterIcon, SearchIcon } from "@/icons";
-import { computed, onMounted, onUnmounted, ref, shallowRef } from "vue";
+import {computed, onMounted, onUnmounted, ref, shallowRef, watch} from "vue";
 import { useLocaleFunctions } from "@/composables";
 import {
     SortProps,
@@ -129,6 +129,12 @@ onMounted(() => {
 
 onUnmounted(() => {
     window.removeEventListener("resize", onResize);
+});
+
+watch(search, (newValue, oldValue) => {
+    if (newValue !== oldValue && newValue != searchInternal.value) {
+        searchInternal.value = props.search;
+    }
 });
 </script>
 

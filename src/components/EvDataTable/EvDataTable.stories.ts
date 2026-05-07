@@ -487,8 +487,8 @@ export const Primary: Story = {
             <ev-button-group class="mb-200">
                 <ev-button :icon="PlusIcon" @click="onClickCreate">Create</ev-button>
                 <ev-button @click="modifyItem">Modify First Item</ev-button>
+                <ev-button @click="args.search = ''">Clear Search</ev-button>
             </ev-button-group>
-            
             
             <ev-surface scrollable height="600" elevation="panel" rounded="small">
                 <ev-data-table

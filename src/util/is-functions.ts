@@ -106,6 +106,9 @@ export function isElement(el: unknown): el is Element {
 
 /**
  * # Is Empty
+ *
+ * Returns `true` if the value provided is `null`, `undefined`, or an empty string after trimming.
+ *
  * @param value
  */
 export function isEmpty(value: any): boolean {
