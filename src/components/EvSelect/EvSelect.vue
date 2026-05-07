@@ -33,10 +33,12 @@ import {
     isComposingIgnoreKey,
     KeyLogger,
     matchesSelector,
+    omit,
     wrapInArray,
 } from "@/util";
 import { FocusEvent, MouseEvent } from "react";
 import { useFilter } from "@/composables/filter";
+import { useFormField } from "@/composables/validation";
 
 // Props
 const props = defineProps({
@@ -69,7 +71,10 @@ const slots = useSlots();
 // TextField
 const evTextfieldRef = ref();
 const evTextfieldProps = computed(() => {
-    return filterComponentProps(EvTextfield, props);
+    return omit(filterComponentProps(EvTextfield, props), [
+        "modelValue",
+        "name",
+    ]);
 });
 const isFocused = shallowRef(false);
 const isPristine = shallowRef(true);
@@ -115,17 +120,16 @@ const displayItems = computed(() => {
     return filteredItems.value;
 });
 
-const model = useModelProxy(
+const formField = useFormField(
     props,
-    "modelValue",
-    [],
+    undefined,
     (value) => transformIn(value === null ? [null] : wrapInArray(value)),
     (value) => {
         const transformed = transformOut(value);
         return props.multiple ? transformed : transformed[0] ?? null;
     },
 );
-
+const model = formField.model;
 const selections = computed(() => {
     return model.value.map((item: ListItem) => {
         return (
@@ -646,7 +650,7 @@ watch(isMenuOpen, () => {
     });
 });
 
-const validationValue = computed(() => model.externalValue);
+const validationValue = computed(() => model.value);
 const isPlaceholder = computed(
     () => !selections.value.length && !!slots.placeholder,
 );

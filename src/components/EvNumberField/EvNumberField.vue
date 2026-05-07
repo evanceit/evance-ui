@@ -12,6 +12,7 @@ import { EvButton } from "@/components/EvButton";
 import { MinusIcon, PlusIcon } from "@/icons";
 import { useLocaleManager } from "@/composables/locale";
 import { KeyboardEvent } from "react";
+import {useFormField} from "@/composables/validation";
 
 const localeManager = useLocaleManager();
 const props = defineProps({
@@ -26,7 +27,10 @@ const slots = defineSlots<{
 // EvTextfield
 const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
-    return omit(filterComponentProps(EvTextfield, props), ["modelValue"]);
+    return omit(filterComponentProps(EvTextfield, props), [
+        "modelValue",
+        "name",
+    ]);
 });
 
 const numberParser = new NumberParser(localeManager, props);
@@ -38,7 +42,8 @@ const numberParser = new NumberParser(localeManager, props);
  *
  * Whenever the `modelValue` changes we need to ensure the `inputValue` is updated.
  */
-const modelValue = useModelProxy(props, "modelValue");
+const formField = useFormField(props);
+const modelValue = formField.model;
 
 const inputValue: Ref<string | null | undefined> = shallowRef();
 inputValue.value = numberParser.formatValue(modelValue.value);
@@ -352,6 +357,7 @@ const hasSuffix = computed(() => {
         ref="evTextfieldRef"
         v-bind="evTextfieldProps"
         v-model="inputValue"
+        :validation-value="modelValue"
         class="ev-number-field"
         type="text"
         @paste="onPaste"

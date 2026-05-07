@@ -14,7 +14,8 @@ import {
     EvLayout,
     EvQuickfind,
 } from "@/components";
-import { ref, shallowRef } from "vue";
+import {reactive, ref, shallowRef} from "vue";
+import {EvForm} from "../EvForm";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -325,7 +326,7 @@ export const ItemsEmpty: Story = {
  */
 export const ServerSideAutocompleteWithSelectionCache: Story = {
     render: (args: any) => ({
-        components: { EvSelect, EvListItem, EvButton },
+        components: { EvSelect, EvListItem, EvButton, EvForm },
 
         setup() {
             type User = {
@@ -333,6 +334,10 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
                 name: string;
                 email: string;
             };
+
+            const formData = reactive({
+                users: [1, 4],
+            });
 
             const database: User[] = [
                 { id: 1, name: "John Smith", email: "john@example.com" },
@@ -346,13 +351,6 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
                 { id: 9, name: "Isabella White", email: "isabella@example.com" },
                 { id: 10, name: "Benjamin Harris", email: "benjamin@example.com" },
             ];
-
-            /**
-             * Pretend this came from an edit form.
-             *
-             * The model only stores IDs.
-             */
-            const selected = ref<number[]>([1, 4]);
 
             /**
              * Initial items contain only the selected records.
@@ -433,38 +431,40 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
             return {
                 args,
                 items,
-                selected,
                 search,
                 menuOpen,
                 isLoading,
                 onMenuOpen,
                 onSearch,
+                formData,
             };
         },
 
         template: `
-            <div style="max-width: 420px;">
-                <ev-select
-                    v-bind="args"
-                    v-model="selected"
-                    :items="items"
-                    :search="search"
-                    :menu-open="menuOpen"
-                    item-title="name"
-                    item-value="id"
-                    behavior="autocomplete"
-                    multiple
-                    tags
-                    :loading="isLoading"
-                    :hide-items-empty="false"
-                    items-empty-text="No matching users"
-                    @update:menu-open="onMenuOpen"
-                    @update:search="onSearch"
-                />
-
-                <pre style="margin-top: 16px;">selected: {{ selected }}</pre>
-                <pre>items: {{ items.map(item => item.name) }}</pre>
-            </div>
+            <ev-form :data="formData">
+                <div style="max-width: 420px;">
+                    <ev-select
+                        v-bind="args"
+                        name="users"
+                        :items="items"
+                        :search="search"
+                        :menu-open="menuOpen"
+                        item-title="name"
+                        item-value="id"
+                        behavior="autocomplete"
+                        multiple
+                        tags
+                        :loading="isLoading"
+                        :hide-items-empty="false"
+                        items-empty-text="No matching users"
+                        @update:menu-open="onMenuOpen"
+                        @update:search="onSearch"
+                    />
+    
+                    <pre style="margin-top: 16px;">formData: {{ formData }}</pre>
+                    <pre>items: {{ items.map(item => item.name) }}</pre>
+                </div>
+            </ev-form>
         `,
     }),
 };

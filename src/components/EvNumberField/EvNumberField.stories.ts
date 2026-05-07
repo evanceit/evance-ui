@@ -4,6 +4,9 @@ import { EvNumberField } from "../EvNumberField";
 import { omit } from "@/util";
 
 import EvTextfieldStories from "../EvTextfield/EvTextfield.stories";
+import {EvDateField} from "../EvDateField";
+import {EvForm} from "../EvForm";
+import {reactive} from "vue";
 
 const meta: Meta<typeof EvNumberField> = {
     component: EvNumberField,
@@ -90,5 +93,26 @@ export const Primary: Story = {
             return { args };
         },
         template: `<ev-number-field v-bind="args" />`,
+    }),
+};
+
+export const ExampleInForm: Story = {
+    render: (args: any) => ({
+        components: { EvNumberField, EvForm },
+        setup() {
+
+            const formData = reactive({
+                expires: null,
+            });
+
+            return { formData };
+        },
+        template: `
+            <ev-form :data="formData">
+                <ev-number-field name="expires" mode="currency" currency="GBP" />
+            </ev-form>
+            
+            {{ formData }}
+        `,
     }),
 };
