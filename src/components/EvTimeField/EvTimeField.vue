@@ -14,6 +14,7 @@ import {
     inferTimeFormat,
     ParseDateTimeValue,
 } from "@/composables/time";
+import { useFormField } from "@/composables/validation";
 
 const props = defineProps({
     ...makeEvTimeFieldProps(),
@@ -27,9 +28,8 @@ const emit = defineEmits<{
 }>();
 
 let inferredFormat: ParseDateTimeValue | null = null;
-const modelValue = useModelProxy(
+const formField = useFormField(
     props,
-    "modelValue",
     undefined,
     (value) => {
         const handler = inferTimeFormat(value);
@@ -41,7 +41,7 @@ const modelValue = useModelProxy(
         return inferredFormat.transformOut(value);
     },
 );
-
+const modelValue = formField.model;
 const displayValue = ref("");
 const pickerValue = ref(null);
 watch(

@@ -14,6 +14,7 @@ import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { useDate } from "@/composables/date/date";
 import { inferDateFormat, ParseDateTimeValue } from "@/composables/time";
+import {useFormField} from "@/composables/validation";
 
 const dateAdapter = useDate();
 const props = defineProps({
@@ -31,7 +32,10 @@ const emit = defineEmits<{
 const evMenuRef = ref<typeof EvMenu>();
 const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
-    return omit(filterComponentProps(EvTextfield, props), ["modelValue"]);
+    return omit(filterComponentProps(EvTextfield, props), [
+        "modelValue",
+        "name",
+    ]);
 });
 const isFocused = shallowRef(false);
 
@@ -41,19 +45,18 @@ const datePickerProps = computed(() => {
     return omit(filterComponentProps(EvDatePicker, props), ["modelValue"]);
 });
 
-// Menu
-const isMenuOpen = shallowRef(false);
 let inferredFormat: ParseDateTimeValue | null = null;
-const modelValue = useModelProxy(
+
+const isMenuOpen = shallowRef(false);
+const formField = useFormField(
     props,
-    "modelValue",
     undefined,
     (value) => {
         const handler = inferDateFormat(value);
         inferredFormat = handler.parse(value, { preserveTime: true });
         return wrapInArray(inferredFormat.date);
     },
-    (value: any) => {
+    (value) => {
         const v = value[0] ?? null;
         return inferredFormat.transformOut(v) as unknown as
             | Date
@@ -61,6 +64,7 @@ const modelValue = useModelProxy(
             | null;
     },
 );
+const modelValue = formField.model;
 const displayValue = shallowRef<string | null>(null);
 
 /**

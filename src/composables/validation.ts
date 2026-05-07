@@ -85,13 +85,13 @@ export const makeFormFieldProps = propsFactory(
 
 /**
  * # Use Form Field
- * @param props
- * @param group
  */
 export function useFormField(
     props: FormFieldProps,
     group: FormField | undefined = undefined,
+    transformIn: (modelValue: any) => any = (value: any) => value,
+    transformOut: (modelValue: any) => any = (value: any) => value,
 ) {
     const form = useForm();
-    return new FormField(form, props, group);
+    return new FormField(form, props, group, transformIn, transformOut);
 }

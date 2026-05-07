@@ -6,7 +6,7 @@ import {
     onMounted,
     Ref,
     ref,
-    shallowRef,
+    shallowRef, toRaw,
     watch,
 } from "vue";
 import { FormFieldProps, Validator } from "@/composables/validation";
@@ -45,36 +45,55 @@ export class FormField {
         public readonly form: Form | null,
         private props: FormFieldProps,
         private group: FormField | undefined = undefined,
+        transformIn: (modelValue: any) => any = (value: any) => value,
+        transformOut: (modelValue: any) => any = (value: any) => value,
     ) {
         const component = getCurrentComponent("FormField");
-        const internalModel = ref(props.modelValue);
+        const rawModel = ref(props.modelValue);
 
         watch(
             () => props.modelValue,
             (value) => {
-                internalModel.value = value;
+                rawModel.value = value;
             },
         );
 
         this.model = computed({
             get() {
+                let externalValue: any;
                 if (group) {
-                    return group.model.value;
-                }
-                if (form?.data.value && props.name) {
-                    return getPropertyValueByPath(form.data.value, props.name);
-                }
-                return internalModel.value;
-            },
-            set(value) {
-                if (group) {
-                    group.model.value = value;
+                    externalValue = group.model.value;
                 } else if (form?.data.value && props.name) {
-                    setPropertyValueByPath(form.data.value, props.name, value);
+                    externalValue = getPropertyValueByPath(
+                        form.data.value,
+                        props.name,
+                    );
                 } else {
-                    internalModel.value = value;
+                    externalValue = rawModel.value;
                 }
-                component.emit("update:modelValue", value);
+                return transformIn(externalValue);
+            },
+            set(internalValue) {
+                const newValue = transformOut(internalValue);
+                const value = toRaw(props.modelValue);
+                if (
+                    value === newValue ||
+                    transformIn(value) === internalValue
+                ) {
+                    return;
+                }
+                if (group) {
+                    group.model.value = newValue;
+                } else if (form?.data.value && props.name) {
+                    setPropertyValueByPath(
+                        form.data.value,
+                        props.name,
+                        newValue,
+                    );
+                } else {
+                    rawModel.value = newValue;
+                }
+                component.emit("update:modelValue", newValue);
             },
         });
 

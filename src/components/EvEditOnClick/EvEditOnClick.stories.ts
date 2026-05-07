@@ -124,6 +124,8 @@ export const ExampleWithPicker: Story = {
             return { date, dateField };
         },
         template: `
+
+            {{ dateField }}
             <ev-edit-on-click 
                 v-model="date"
                 :hide-actions="true"

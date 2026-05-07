@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvDateField } from "../EvDateField";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { omit } from "@/util";
 
 import EvTextfieldStories from "@/components/EvTextfield/EvTextfield.stories";
 import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvButton } from "@/components/EvButton";
+import { EvForm } from "../EvForm";
 
 const meta: Meta<typeof EvDateField> = {
     component: EvDateField,
@@ -51,6 +52,27 @@ export const Primary: Story = {
                 <ev-button @click="modelValue = '2026-04-26T15:10:58+01:00'">2026-04-26T15:10:58+01:00</ev-button>
                 <ev-button @click="modelValue = null">Clear</ev-button>
             </ev-button-group>
+        `,
+    }),
+};
+
+export const ExampleInForm: Story = {
+    render: (args: any) => ({
+        components: { EvDateField, EvForm },
+        setup() {
+
+            const formData = reactive({
+                expires: null,
+            });
+
+            return { formData };
+        },
+        template: `
+            <ev-form :data="formData">
+                <ev-date-field name="expires" />
+            </ev-form>
+            
+            {{ formData }}
         `,
     }),
 };

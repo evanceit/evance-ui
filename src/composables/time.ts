@@ -1,3 +1,5 @@
+import {isDate} from "@/util";
+
 export type DateTimeFormat =
     | "time"
     | "date"
@@ -37,8 +39,8 @@ export const timeHandler: DateTimeFormatHandler<string | null> = {
         return {
             format: "time",
             date,
-            transformOut: (date: Date | null) => {
-                return date ? formatTime(date) : null;
+            transformOut: (date: Date | string | null) => {
+                return isDate(date) ? formatTime(date) : date;
             },
         };
     },
