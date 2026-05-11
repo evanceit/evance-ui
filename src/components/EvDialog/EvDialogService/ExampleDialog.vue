@@ -52,14 +52,16 @@ function makeBigger() {
 </script>
 
 <template>
-    <h3>Example Dialog #{{ dialogRef?.id }}</h3>
-    <p>
-        This is an example dialog component with an initial title waiting to be
-        updated by a child dialog:
-    </p>
-    <p>
-        {{ data.greeting }}
-    </p>
+    <ev-dialog-body>
+        <h3>Example Dialog #{{ dialogRef?.id }}</h3>
+        <p>
+            This is an example dialog component with an initial title waiting to be
+            updated by a child dialog:
+        </p>
+        <p>
+            {{ data.greeting }}
+        </p>
+    </ev-dialog-body>
     <ev-dialog-footer>
         <ev-button @click="makeBigger">bigger</ev-button>
         <ev-button @click="open">Open another</ev-button>

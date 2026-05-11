@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import "./EvForm.scss";
 import { ref } from "vue";
 import { makeEvFormProps } from "./EvForm";
 import { createForm, SubmitEventPromise } from "@/composables/form";
 import type { Form } from "@/modules/Form/Form";
+import { useBreakpointClasses } from "@/composables";
 
 const formRef = ref<HTMLFormElement>();
 const props = defineProps({
@@ -23,6 +25,8 @@ defineExpose({
     requestSubmit: () => formRef.value?.requestSubmit(),
     submit: () => formRef.value?.submit(),
 });
+
+const gapClasses = useBreakpointClasses(props, "gap", "ga");
 
 /**
  * ## On Reset
@@ -63,7 +67,11 @@ function onSubmit($event: Event) {
     <form
         ref="formRef"
         novalidate
-        :class="['ev-form', props.class]"
+        :class="[
+            'ev-form',
+            ...gapClasses,
+            props.class
+        ]"
         :style="[props.style]"
         @reset="onReset"
         @submit="onSubmit">

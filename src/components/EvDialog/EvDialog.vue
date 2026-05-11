@@ -34,9 +34,10 @@ const props = defineProps({
 const slots = defineSlots<{
     activator(): never;
     container(): never;
-    default(): never;
-    footer(): never;
     header(): never;
+    default(): never;
+    body(): never;
+    footer(): never;
 }>();
 const overlayRef = ref();
 const isActive = useModelProxy(props, "modelValue");
@@ -371,17 +372,21 @@ const footerProps = computed(() => {
                 </template>
             </ev-dialog-header>
 
-            <ev-dialog-body v-bind="bodyProps">
-                <template v-if="slots.default" #default>
-                    <slot name="default" />
-                </template>
-            </ev-dialog-body>
+            <slot v-if="slots.default" name="default" />
 
-            <ev-dialog-footer v-if="isShowFooter" v-bind="footerProps">
-                <template v-if="slots.footer" #default>
-                    <slot name="footer" />
-                </template>
-            </ev-dialog-footer>
+            <template v-else>
+                <ev-dialog-body v-bind="bodyProps">
+                    <template v-if="slots.body" #default>
+                        <slot name="body" />
+                    </template>
+                </ev-dialog-body>
+
+                <ev-dialog-footer v-if="isShowFooter" v-bind="footerProps">
+                    <template v-if="slots.footer" #default>
+                        <slot name="footer" />
+                    </template>
+                </ev-dialog-footer>
+            </template>
         </ev-surface>
     </ev-overlay>
 </template>

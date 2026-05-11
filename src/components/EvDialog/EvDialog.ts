@@ -32,6 +32,7 @@ export interface EvDialogSlots extends Slots {
     container?: Slot;
     default?: Slot;
     header?: Slot;
+    body?: Slot;
     footer?: Slot;
 }
 

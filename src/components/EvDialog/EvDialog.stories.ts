@@ -9,6 +9,9 @@ import EvOverlayStories from "../EvOverlay/EvOverlay.stories";
 import { omit } from "@/util";
 import { DangerIcon } from "../../icons";
 import { Appearance } from "../../util";
+import { EvForm } from "../EvForm";
+import { EvDialogFooter } from "./EvDialogFooter";
+import { EvDialogBody } from "./EvDialogBody";
 
 const meta: Meta<typeof EvDialog> = {
     component: EvDialog,
@@ -189,7 +192,7 @@ export const Primary: Story = {
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>
-                <template #default>
+                <template #body>
                     <h3>Example dialog</h3>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
@@ -237,7 +240,7 @@ export const ScrollingBody: Story = {
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>
-                <template #default>
+                <template #body>
                     <h3>Hello</h3>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
@@ -396,6 +399,104 @@ export const Programmatic: Story = {
                 <template #activator="{ isActive, props }">
                     <ev-button v-bind="props">Open</ev-button>
                 </template>
+            </ev-dialog>
+        `,
+    }),
+};
+
+export const LongFormExample: Story = {
+    render: () => ({
+        components: {
+            EvDialog,
+            EvForm,
+            EvButton,
+            EvDialogBody,
+            EvDialogFooter,
+        },
+        setup() {
+            const modelValue = shallowRef(false);
+
+            return {
+                modelValue,
+            };
+        },
+        template: `
+            <ev-dialog v-model="modelValue">
+                <template #activator="{ isActive, props }">
+                    <ev-button v-bind="props">Open</ev-button>
+                </template>
+                
+                <ev-form>
+                    <ev-dialog-body scrollable>
+                        <h3>Hello</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices dapibus tortor ac rutrum.
+                            Integer elementum mauris nisi, ut vestibulum est auctor vitae. Proin sodales odio augue,
+                            sed porta ante molestie in. Etiam consectetur sed nisi quis vehicula. Vivamus semper massa
+                            sed dapibus dignissim. Aliquam erat volutpat. In libero dolor, tincidunt quis elementum in,
+                            luctus ut purus. Nunc quis cursus nisi, ut sollicitudin eros. Aliquam ac nisi ac turpis consequat
+                            vehicula eu eu tellus. Donec eros nisl, luctus in nunc sit amet, tristique dictum odio.
+                            Curabitur rhoncus blandit sodales.
+                        </p>
+                    </ev-dialog-body>
+                    <ev-dialog-footer>
+                        <ev-button  @click.prevent="modelValue = false">Close</ev-button>
+                    </ev-dialog-footer>
+                </ev-form>
             </ev-dialog>
         `,
     }),

@@ -38,7 +38,7 @@ export const Primary: Story = {
     <template #activator="{ props }">
         <ev-button v-bind="props">Click me</ev-button>
     </template>
-    <template #default>
+    <template #body>
         Hello World!
     </template>
 </ev-drawer>

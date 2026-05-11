@@ -24,7 +24,7 @@ export const Primary: Story = {
             function open() {
                 drawer.open({
                     slots: {
-                        default: drawerComponent,
+                        body: drawerComponent,
                     },
                 });
             }

@@ -15,6 +15,47 @@ const meta: Meta<typeof EvForm> = {
                 "An object representation of your FormData provides the values to the form fields mapped by their `name` attribute. " +
                 "It is recommended that the structure also maps to any server-side validation responses. See 'Reactive form data` below.",
         },
+        gap: {
+            control: "select",
+            options: [
+                "",
+                0,
+                25,
+                50,
+                75,
+                100,
+                150,
+                200,
+                250,
+                300,
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1200,
+                1600,
+                "{ xs: 100, md: 200, xl: 300 }",
+            ],
+            mapping: {
+                "": undefined,
+                0: 0,
+                25: 25,
+                50: 50,
+                75: 75,
+                100: 100,
+                150: 150,
+                200: 200,
+                300: 300,
+                400: 400,
+                600: 600,
+                800: 800,
+                "{ xs: 100, md: 200, xl: 300 }": { xs: 100, md: 200, xl: 300 },
+            },
+            description:
+                "Control the space between children using the `gap` prop. " +
+                "Accepts a numeric spacer value e.g. `100`, or breakpoint rules. Defaults to `300`."
+        },
         disabled: {
             control: "boolean",
             description:
