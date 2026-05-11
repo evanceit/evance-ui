@@ -153,7 +153,6 @@
     --stroke-success: #{settings.token('green.600')};
 
     /* Input */
-    --input-fill: var(--current-surface-fill);
     --input-fill-focused: var(--surface-panel);
     --input-shadow-error: 0 0 0 5px rgba(240,65,65,0.1), 0 0 0 1px rgba(240,65,65,0.75);
     --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
@@ -310,7 +309,6 @@
     --stroke-success: #{settings.token('green.500')};
 
     /* Input */
-    --input-fill: var(--current-surface-fill);
     --input-fill-focused: var(--surface-panel);
     --input-shadow-error: 0 0 0 5px rgba(255,97,97,0.1), 0 0 0 1px rgba(255,97,97,0.75);
     --input-shadow-focus: 0 0 0 5px rgba(129,78,250,0.1), 0 0 0 1px rgba(129,78,250,0.75);
