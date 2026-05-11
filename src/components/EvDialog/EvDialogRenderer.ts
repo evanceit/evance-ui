@@ -27,6 +27,7 @@ export class EvDialogRenderer {
     public readonly options: EvDialogServiceOptions;
     private promiseResolver?: (value: unknown) => void;
     private isRendered = false;
+    private isClosed = false;
 
     private dialogInstance = new EvDialogInstance(this);
 
@@ -60,8 +61,13 @@ export class EvDialogRenderer {
      * ## close
      * @param response
      */
-    public close(response: any) {
+    public close(response?: unknown) {
+        if (this.isClosed) {
+            return;
+        }
+        this.isClosed = true;
         this.promiseResolver?.(response);
+        this.promiseResolver = undefined;
         this.modelValue.value = false;
     }
 

@@ -10,11 +10,10 @@ import { EvDatePicker } from "@/components/EvDatePicker";
 import { EvSurface } from "@/components/EvSurface";
 import { computed, onMounted, ref, shallowRef, watch } from "vue";
 import { FocusEvent } from "react";
-import { useModelProxy } from "@/composables/modelProxy";
 import { filterComponentProps, omit, wrapInArray } from "@/util";
 import { useDate } from "@/composables/date/date";
 import { inferDateFormat, ParseDateTimeValue } from "@/composables/time";
-import {useFormField} from "@/composables/validation";
+import { useFormField } from "@/composables/validation";
 
 const dateAdapter = useDate();
 const props = defineProps({

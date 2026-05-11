@@ -7,12 +7,11 @@ import { makeEvNumberFieldProps, NumberParser } from "./EvNumberField";
 import { EvTextfield } from "@/components/EvTextfield";
 import { computed, nextTick, Ref, ref, shallowRef, watch } from "vue";
 import { filterComponentProps, isEmpty, omit } from "@/util";
-import { useModelProxy } from "@/composables/modelProxy";
 import { EvButton } from "@/components/EvButton";
 import { MinusIcon, PlusIcon } from "@/icons";
 import { useLocaleManager } from "@/composables/locale";
 import { KeyboardEvent } from "react";
-import {useFormField} from "@/composables/validation";
+import { useFormField } from "@/composables/validation";
 
 const localeManager = useLocaleManager();
 const props = defineProps({

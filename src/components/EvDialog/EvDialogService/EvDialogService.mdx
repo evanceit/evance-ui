@@ -14,8 +14,8 @@ Dialogs can be created programmatically with any component supplied to the `EvDi
 The `EvDialogService` needs to be installed as an application plugin.
 
 ```ts
-import {createApp} from 'vue';
-import {EvDialogService} from "@evance/amethyst/services";
+import { createApp } from 'vue';
+import { EvDialogService } from "@evance/amethyst/services";
 
 // Import the root component App from a single-file component & create the App
 import App from './App.vue'
@@ -166,3 +166,35 @@ function close() {
 The Example below is a recursive dialog, which can open and receive data from each successive component.
 
 <Canvas of={EvDialogServiceStories.Primary} />
+
+
+# Advanced control
+Use `dialog.create()` to create a new dialog instance which returns an `EvDialogController` offering better access
+to the dialog's lifecycle with dialog's `id` and its `open()`, `close(response?)`, and `dismiss()` functions.
+
+```ts
+export interface EvDialogController<TResult = unknown> {
+    id: number;
+    open: () => Promise<TResult | undefined>;
+    close: (result?: TResult) => void;
+    dismiss: () => void;
+}
+```
+
+For example,
+```ts
+const dialog = useDialog();
+
+const { open, close } = dialog.create();
+
+await response = open({
+    ...
+    footerActions: [
+        {
+            text: "Cancel",
+            onClick: () => close(),
+        },
+        ...
+    ]
+});
+
