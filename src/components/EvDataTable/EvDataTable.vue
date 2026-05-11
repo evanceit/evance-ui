@@ -234,7 +234,9 @@ onMounted(() => {
             <table class="ev-data-table--native">
                 <slot name="colgroup">
                     <colgroup>
-                        <col v-if="props.showSelect" />
+                        <col
+                            v-if="props.showSelect"
+                            class="ev-data-table-cell--checkbox" />
                         <col
                             v-for="(column, colIndex) of columns"
                             :key="colIndex"
@@ -247,12 +249,16 @@ onMounted(() => {
                     role="rowgroup">
                     <tr v-for="(row, rowIndex) of headers" :key="rowIndex">
                         <ev-data-table-cell
-                            v-if="showSelectAll && rowIndex === 0"
+                            v-if="
+                                (showSelectAll || props.showSelect) &&
+                                rowIndex === 0
+                            "
                             tag="th"
                             :colspan="1"
                             :rowspan="headers.length"
                             class="ev-data-table-cell--checkbox">
                             <ev-checkbox
+                                v-if="showSelectAll"
                                 :model-value="allSelected"
                                 :indeterminate="someSelected && !allSelected"
                                 @update:model-value="selectAll" />
