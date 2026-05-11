@@ -5,7 +5,7 @@
  */
 .ev-textfield--control {
     align-items: center;
-    background: var(--input-background);
+    background: var(--input-fill);
     border: 1px solid var(--stroke-input);
     border-radius: var(--input-radius);
     display: flex;
@@ -148,10 +148,6 @@
         &:hover {
             background-color: var(--fill-neutral-hovered);
         }
-
-        &.is-focused {
-            background-color: var(--fill-neutral-hovered);
-        }
     }
 
     &.is-appearance-subtle {
@@ -179,6 +175,7 @@
         .ev-textfield--control {
             border-color: var(--stroke-focused);
             box-shadow: var(--input-shadow-focus);
+            background-color: var(--input-fill-focused);
         }
     }
 }
