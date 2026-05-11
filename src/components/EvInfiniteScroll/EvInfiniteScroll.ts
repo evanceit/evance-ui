@@ -1,12 +1,18 @@
 import { propsFactory } from "@/util";
 import { makeTagProps } from "@/composables/tag";
 import { makeDimensionsProps } from "@/composables/dimensions";
-import { PropType } from "vue";
+import { ComponentPublicInstance, PropType } from "vue";
 
 export type InfiniteScrollSide = "start" | "end" | "both";
 export type InfiniteScrollMode = "intersect" | "manual";
 export type InfiniteScrollDirection = "vertical" | "horizontal";
 export type InfiniteScrollStatus = "ok" | "finished" | "loading" | "error";
+export type InfiniteScrollTarget =
+    | "parent"
+    | "window"
+    | HTMLElement
+    | ComponentPublicInstance
+    | undefined;
 
 export const makeEvInfiniteScrollProps = propsFactory(
     {
@@ -25,6 +31,18 @@ export const makeEvInfiniteScrollProps = propsFactory(
             type: String as PropType<InfiniteScrollMode>,
             default: "intersect",
             validator: (v: any) => ["intersect", "manual"].includes(v),
+        },
+        scrollTarget: {
+            type: [String, Object] as PropType<InfiniteScrollTarget>,
+            default: undefined,
+            validator: (v: any) => {
+                return (
+                    v === undefined ||
+                    v === "parent" ||
+                    v === "window" ||
+                    typeof v === "object"
+                );
+            },
         },
         showFinished: {
             type: Boolean,

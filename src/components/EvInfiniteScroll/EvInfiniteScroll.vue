@@ -7,7 +7,12 @@ import {
 } from "./EvInfiniteScroll";
 import { useDimensions } from "@/composables/dimensions";
 import { computed, nextTick, onMounted, ref, shallowRef, toRef } from "vue";
-import { debounce, toWebUnit } from "@/util";
+import {
+    debounce,
+    getScrollParent,
+    isComponentPublicInstance,
+    toWebUnit,
+} from "@/util";
 import EvInfiniteScrollSide from "@/components/EvInfiniteScroll/EvInfiniteScrollSide.vue";
 import EvInfiniteScrollIntersect from "@/components/EvInfiniteScroll/EvInfiniteScrollIntersect.vue";
 
@@ -55,31 +60,48 @@ const intersectMode = computed(() => {
     return props.mode === "intersect";
 });
 
+const scrollEl = computed(() => {
+    const axis = props.direction === "vertical" ? "y" : "x";
+    if (props.scrollTarget === "parent" && rootEl.value) {
+        return getScrollParent(rootEl.value.parentElement, true, axis);
+    }
+    if (props.scrollTarget instanceof HTMLElement) {
+        return getScrollParent(props.scrollTarget, true, axis);
+    }
+    if (
+        isComponentPublicInstance(props.scrollTarget) &&
+        props.scrollTarget.$el instanceof HTMLElement
+    ) {
+        return getScrollParent(props.scrollTarget.$el, true, axis);
+    }
+    return rootEl.value;
+});
+
 function getContainerSize() {
-    if (!rootEl.value) {
+    if (!scrollEl.value) {
         return 0;
     }
     const property =
         props.direction === "vertical" ? "clientHeight" : "clientWidth";
-    return rootEl.value[property];
+    return scrollEl.value[property];
 }
 
 function getScrollAmount() {
-    if (!rootEl.value) {
+    if (!scrollEl.value) {
         return 0;
     }
     const property =
         props.direction === "vertical" ? "scrollTop" : "scrollLeft";
-    return rootEl.value[property];
+    return scrollEl.value[property];
 }
 
 function getScrollSize() {
-    if (!rootEl.value) {
+    if (!scrollEl.value) {
         return 0;
     }
     const property =
         props.direction === "vertical" ? "scrollHeight" : "scrollWidth";
-    return rootEl.value[property];
+    return scrollEl.value[property];
 }
 
 function getStatus(side: string) {
@@ -109,7 +131,7 @@ function intersecting(side: InfiniteScrollSide) {
         return;
     }
     const status = getStatus(side);
-    if (!rootEl.value || ["finished", "loading"].includes(status)) {
+    if (!scrollEl.value || ["finished", "loading"].includes(status)) {
         return;
     }
     previousScrollSize = getScrollSize();
@@ -149,12 +171,12 @@ function intersecting(side: InfiniteScrollSide) {
 }
 
 function setScrollAmount(amount: number) {
-    if (!rootEl.value) {
+    if (!scrollEl.value) {
         return;
     }
     const property =
         props.direction === "vertical" ? "scrollTop" : "scrollLeft";
-    rootEl.value[property] = amount;
+    scrollEl.value[property] = amount;
 }
 
 function setStatus(side: InfiniteScrollSide, status: InfiniteScrollStatus) {
@@ -170,7 +192,7 @@ onMounted(() => {
 });
 
 function reset(status: InfiniteScrollStatus = "ok") {
-    if (!rootEl.value) {
+    if (!scrollEl.value) {
         return;
     }
     isIntersecting.value = false;
@@ -194,6 +216,7 @@ const sideProps = computed(() => ({
 defineExpose({
     reset,
     rootElement: rootEl,
+    scrollTarget: scrollEl,
 });
 </script>
 
@@ -232,20 +255,20 @@ defineExpose({
         </ev-infinite-scroll-side>
 
         <ev-infinite-scroll-intersect
-            v-if="rootEl && hasStartIntersect && intersectMode && !isDisabled"
+            v-if="scrollEl && hasStartIntersect && intersectMode && !isDisabled"
             key="start"
             side="start"
-            :root-ref="rootEl"
+            :root-ref="scrollEl"
             :root-margin="margin"
             @intersect="handleIntersect" />
 
         <slot name="default" />
 
         <ev-infinite-scroll-intersect
-            v-if="rootEl && hasEndIntersect && intersectMode && !isDisabled"
+            v-if="scrollEl && hasEndIntersect && intersectMode && !isDisabled"
             key="end"
             side="end"
-            :root-ref="rootEl"
+            :root-ref="scrollEl"
             :root-margin="margin"
             @intersect="handleIntersect" />
 

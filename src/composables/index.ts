@@ -22,7 +22,7 @@ export {
 } from "./display";
 export { useDrawer, injectDrawer } from "./drawer";
 export type { SubmitEventPromise, FormValidationResult } from "./form";
-export { IconProp, type IconValue } from "./icons";
+export { IconProp, type IconValue, appearanceIcon } from "./icons";
 export { useLocaleManager, useLocaleFunctions } from "./locale";
 export { useModelProxy } from "./modelProxy";
 export { useNotification } from "./notification";

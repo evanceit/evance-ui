@@ -8,6 +8,7 @@ import { makeDataTableSelectProps } from "./composables/select";
 import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 import { DataTableItem } from "@/components/EvDataTable/composables/types";
 import { PropType } from "vue";
+import { InfiniteScrollMode, InfiniteScrollTarget } from "@/components";
 
 export const makeEvDataTableProps = propsFactory(
     {
@@ -19,7 +20,15 @@ export const makeEvDataTableProps = propsFactory(
             type: Boolean,
             default: false,
         },
-
+        infiniteScrollMode: {
+            type: String as PropType<InfiniteScrollMode>,
+            default: "intersect",
+            validator: (v: any) => ["intersect", "manual"].includes(v),
+        },
+        infiniteScrollTarget: [
+            String,
+            Object,
+        ] as PropType<InfiniteScrollTarget>,
         "onClick:row": Function as PropType<
             (event: PointerEvent, item: DataTableItem) => void
         >,

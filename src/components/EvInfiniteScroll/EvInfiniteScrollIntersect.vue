@@ -9,7 +9,7 @@ const props = defineProps({
         required: true,
     },
     rootRef: {
-        type: Object as PropType<HTMLDivElement>,
+        type: Object as PropType<HTMLElement>,
         default: null,
     },
     rootMargin: {

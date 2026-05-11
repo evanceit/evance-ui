@@ -19,11 +19,14 @@ export const Primary: Story = {
             const dialog = useDialog();
 
             function open() {
-                dialog.open({
+                const props = {
                     slots: {
                         default: ExampleDialog,
                     },
-                });
+                };
+
+                const { open } = dialog.create(props);
+                open();
             }
 
             return { args, open };

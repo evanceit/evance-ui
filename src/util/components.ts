@@ -1,4 +1,8 @@
-import { ComponentInternalInstance, getCurrentInstance } from "vue";
+import {
+    ComponentInternalInstance,
+    ComponentPublicInstance,
+    getCurrentInstance,
+} from "vue";
 
 /**
  * # Get Current Component
@@ -13,4 +17,10 @@ export function getCurrentComponent(callee: string): ComponentInternalInstance {
         throw new Error(`Evance UI: ${callee} requires a component instance`);
     }
     return component;
+}
+
+export function isComponentPublicInstance(
+    value: unknown,
+): value is ComponentPublicInstance {
+    return !!value && typeof value === "object" && "$el" in value;
 }

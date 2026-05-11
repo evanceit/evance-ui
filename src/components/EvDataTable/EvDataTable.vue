@@ -6,7 +6,7 @@ import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual";
 import {
     filterComponentProps,
-    getPrefixedEventHandlers,
+    getPrefixedEventHandlers, getScrollParent,
     omit,
     toWebUnit,
 } from "@/util";
@@ -70,6 +70,7 @@ const pageModel = useModelProxy(props, "page");
 const dimensions = useDimensions(props);
 const { columns, headers } = createHeaders(props);
 const { items } = useDataTableItems(itemsModel, props, columns);
+const rootEl = ref<HTMLDivElement>();
 
 const { allSelected, selectAll, showSelectAll, someSelected } =
     provideSelection(props, items);
@@ -105,6 +106,13 @@ const searchProps = computed(() => {
 
 const spaceAbove = computed(() => toWebUnit(paddingTop.value));
 const spaceBelow = computed(() => toWebUnit(paddingBottom.value));
+
+const scrollEl = computed(() => {
+    if (rootEl.value && props.infiniteScrollTarget === "parent") {
+        return getScrollParent(rootEl.value.parentElement, true, "y");
+    }
+    return props.infiniteScrollTarget;
+});
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
@@ -187,6 +195,7 @@ onMounted(() => {
 
 <template>
     <div
+        ref="rootEl"
         :class="['ev-data-table', props.class]"
         :style="[dimensions, props.style]">
         <ev-data-table-search
@@ -212,7 +221,9 @@ onMounted(() => {
             v-else
             ref="infiniteScrollRef"
             class="ev-data-table--wrapper"
+            :mode="infiniteScrollMode"
             :disabled="infiniteScrollDisabled"
+            :scroll-target="scrollEl"
             :show-finished="props.showFinished"
             @load="onInfiniteScrollLoad"
             @scroll.passive="handleScroll"

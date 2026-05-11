@@ -40,8 +40,20 @@ const meta: Meta<typeof EvDataTable> = {
         },
         height: {
             control: "select",
-            options: [null, 400, 500, "100%"],
+            options: [undefined, 400, 500, "100%"],
             description: "Optional height of the overall table",
+        },
+        infiniteScrollMode: {
+            control: "select",
+            options: ["intersect", "manual"],
+            description:
+                "Determines how infinite scrolling is handled. 'intersect' uses intersection observer, 'manual' requires manual triggering of load events.",
+        },
+        infiniteScrollTarget: {
+            control: "select",
+            options: [undefined, "parent", "window"],
+            description:
+                "Determines the target element for infinite scrolling. 'parent' uses the table's closest parent scrolling element, 'window' uses the window object.",
         },
         items: {
             control: false,
@@ -185,7 +197,9 @@ const meta: Meta<typeof EvDataTable> = {
     args: {
         filters: undefined,
         headers: undefined,
-        height: "100%",
+        height: undefined,
+        infiniteScrollMode: "intersect",
+        infiniteScrollTarget: "parent",
         items: undefined,
         itemsPerPage: undefined,
         itemValue: "id",
@@ -347,7 +361,7 @@ export const Primary: Story = {
                     year: 2022,
                 },
             ];
-            const boatsMax = 5;
+            const boatsMax = 100;
             const sort = ref(["quickfind:desc"]);
             const sortOptions: SortOption[] = [
                 {
@@ -386,7 +400,7 @@ export const Primary: Story = {
                     value: "relevance:desc",
                 },
             ];
-            const itemsPerPage = 5;
+            const itemsPerPage = 25;
 
             function generateItems(from: number, limit: number) {
                 return [...Array(limit).keys()].map((i) => {
@@ -490,7 +504,7 @@ export const Primary: Story = {
                 <ev-button @click="args.search = ''">Clear Search</ev-button>
             </ev-button-group>
             
-            <ev-surface scrollable height="600" elevation="panel" rounded="small">
+            <ev-surface elevation="panel" rounded="small">
                 <ev-data-table
                     v-bind="args"
                     v-model:items="items"
