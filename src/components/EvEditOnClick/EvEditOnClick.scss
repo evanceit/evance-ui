@@ -21,7 +21,7 @@
 
     &:hover {
         background: var(--current-surface-fill);
-        border: var(--input-border);
+        border-color: var(--stroke-input);
     }
 
     &:focus-visible {

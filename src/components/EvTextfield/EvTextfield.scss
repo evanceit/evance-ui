@@ -6,7 +6,7 @@
 .ev-textfield--control {
     align-items: center;
     background: var(--input-background);
-    border: var(--input-border);
+    border: 1px solid var(--stroke-input);
     border-radius: var(--input-radius);
     display: flex;
     flex-wrap: nowrap;
