@@ -116,10 +116,6 @@
         &:hover {
             background-color: var(--fill-neutral-hovered);
         }
-
-        &.is-focused {
-            background-color: var(--fill-neutral-hovered);
-        }
     }
 
     &.is-appearance-subtle {
@@ -147,6 +143,7 @@
         .ev-textarea--control {
             border-color: var(--stroke-focused);
             box-shadow: var(--input-shadow-focus);
+            background-color: var(--input-fill-focused);
         }
     }
 }
