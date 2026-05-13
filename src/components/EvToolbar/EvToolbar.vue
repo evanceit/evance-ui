@@ -3,12 +3,23 @@ import "./EvToolbar.scss";
 import { makeEvToolbarProps } from "./EvToolbar";
 import { EvButton } from "@/components/EvButton";
 import { EvIcon } from "@/components/EvIcon";
+import { EvMenu } from "@/components/EvMenu";
+import { EvList } from "@/components/EvList";
+import { EvListItem } from "@/components/EvListItem";
 import { EvTabs } from "@/components/EvTabs";
+import { EvTooltip } from "@/components/EvTooltip";
 import { EvButtonGroup } from "@/components/EvButtonGroup";
-import { ArrowBackIcon, CancelIcon } from "@/icons";
-import { computed, getCurrentInstance } from "vue";
+import {
+    ArrowBackIcon,
+    BelowRightIcon,
+    CancelIcon,
+    ChevronDownIcon,
+} from "@/icons";
+import { computed, getCurrentInstance, Ref, ref } from "vue";
 import { useModelProxy } from "@/composables/modelProxy";
 import { sizeModifier } from "@/util";
+import { DisplayInstance, IconValue, useDisplay } from "@/composables";
+import { toDisplayStateKey } from "@/composables/display";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
@@ -21,6 +32,7 @@ const slots = defineSlots<{
 }>();
 
 const instance = getCurrentInstance();
+const display = useDisplay();
 
 const emit = defineEmits(["click:back", "click:close", "update:tab"]);
 
@@ -84,6 +96,31 @@ const isAdjustEnd = computed(() => {
     return hasCloseButton.value || (hasActions && variant === "subtle");
 });
 
+const crumbsButton = ref();
+const hasBreadcrumbs = computed(() => !!props.breadcrumbs?.length);
+const currentTab = computed(() => {
+    return tabs.value.find((item) => item.value === tab.value);
+});
+
+const tabs = computed(() => {
+    let index = -1;
+    return props.tabs?.map((tab) => ({
+        ...tab,
+        value: ++index,
+        icon: undefined,
+        selectedIcon: undefined,
+        iconStart: tab.iconStart ?? (tab.icon as IconValue),
+        selectedIconStart: tab.selectedIconStart ?? tab.selectedIcon,
+    }));
+});
+
+const showTabs = computed(() => {
+    const displayKey = toDisplayStateKey(props.tabsBreakpoint);
+    const showable = display[
+        displayKey as keyof DisplayInstance
+    ] as Ref<boolean>;
+    return showable.value;
+});
 </script>
 
 <template>
@@ -101,7 +138,47 @@ const isAdjustEnd = computed(() => {
         :style="props.style">
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
-                <div v-if="hasBackButton" class="ev-toolbar--back" data-no-drag>
+
+                <div
+                    v-if="hasBreadcrumbs"
+                    class="ev-toolbar--crumbs"
+                    data-no-drag>
+                    <ev-button
+                        ref="crumbsButton"
+                        variant="subtle"
+                        :icon="ChevronDownIcon"
+                        :size="actionSize" />
+                    <ev-tooltip
+                        :activator="crumbsButton"
+                        text="Show navigation path"
+                        position="top" />
+                    <ev-menu
+                        min-width="280"
+                        max-width="320"
+                        :activator="crumbsButton">
+                        <ev-list>
+                            <ev-list-item
+                                v-for="breadcrumb in props.breadcrumbs"
+                                :key="breadcrumb.title"
+                                :href="breadcrumb.href"
+                                :to="breadcrumb.to"
+                                :title="breadcrumb.title">
+                                <template #iconStart>
+                                    <ev-icon
+                                        :glyph="
+                                            breadcrumb.icon ?? BelowRightIcon
+                                        "
+                                        appearance="subtle" />
+                                </template>
+                            </ev-list-item>
+                        </ev-list>
+                    </ev-menu>
+                </div>
+
+                <div
+                    v-else-if="hasBackButton"
+                    class="ev-toolbar--back"
+                    data-no-drag>
                     <ev-button
                         variant="subtle"
                         :icon="ArrowBackIcon"
@@ -125,10 +202,30 @@ const isAdjustEnd = computed(() => {
                 data-no-drag>
                 <slot name="start">
                     <ev-tabs
+                        v-if="showTabs"
                         v-model="tab"
                         class="ev-toolbar--tabs"
                         :size="tabSize"
-                        :items="props.tabs" />
+                        :items="tabs" />
+
+                    <ev-menu v-else>
+                        <template #activator="{ props }">
+                            <ev-button
+                                v-bind="props"
+                                variant="subtle"
+                                class="ev-toolbar--menu-button"
+                                :size="actionSize"
+                                :icon-end="ChevronDownIcon"
+                                :text="currentTab?.text"/>
+                        </template>
+                        <ev-list
+                            :selected="[tab]"
+                            select-strategy="single-any"
+                            :items="tabs"
+                            item-title="text"
+                            @update:selected="tab = $event[0]">
+                        </ev-list>
+                    </ev-menu>
                 </slot>
             </div>
         </div>

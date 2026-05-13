@@ -8,8 +8,6 @@ export function useIntersectionObserver(
     const intersectionRef = ref<HTMLElement>();
     const isIntersecting = shallowRef(false);
 
-    console.log(options);
-
     if (Browser.supportsIntersection) {
         const observer = new IntersectionObserver(
             (entries: IntersectionObserverEntry[]) => {

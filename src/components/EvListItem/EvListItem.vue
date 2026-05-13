@@ -160,6 +160,18 @@ const showCaret = computed(() => {
     return isLoading.value || hasChildren.value || root.isNested.value;
 });
 
+const iconStart = computed(() => {
+    return isActiveExact.value
+        ? props.selectedIconStart ?? props.iconStart
+        : props.iconStart;
+});
+
+const iconEnd = computed(() => {
+    return isActiveExact.value
+        ? props.selectedIconEnd ?? props.iconEnd
+        : props.iconEnd;
+});
+
 function onClickOpener(e: Event) {
     open(!isOpen.value, e);
 }
@@ -223,20 +235,21 @@ function onClickOpener(e: Event) {
                 <ev-icon v-else :glyph="DotIcon" />
             </div>
             <div
-                v-if="slots.iconStart || props.iconStart"
+                v-if="slots.iconStart || iconStart"
                 class="ev-list-item--icon-start">
                 <slot name="iconStart">
-                    <ev-icon :glyph="props.iconStart" />
+                    <ev-icon :glyph="iconStart" />
                 </slot>
             </div>
             <div v-if="slots.prefix" class="ev-list-item--prefix">
                 <slot name="prefix" />
             </div>
-            <div v-if="slots.suffix"
-                 :class="[
-                     'ev-list-item--suffix',
-                     { 'is-hide-on-hover': hasActionsOnHover }
-                     ]">
+            <div
+                v-if="slots.suffix"
+                :class="[
+                    'ev-list-item--suffix',
+                    { 'is-hide-on-hover': hasActionsOnHover },
+                ]">
                 <slot name="suffix" />
             </div>
             <div
@@ -255,10 +268,10 @@ function onClickOpener(e: Event) {
                 </ev-button-group>
             </div>
             <div
-                v-if="slots.iconEnd || props.iconEnd"
+                v-if="slots.iconEnd || iconEnd"
                 class="ev-list-item--icon-end">
                 <slot name="iconEnd">
-                    <ev-icon :glyph="props.iconEnd" />
+                    <ev-icon :glyph="iconEnd" />
                 </slot>
             </div>
         </div>

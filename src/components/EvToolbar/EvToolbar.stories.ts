@@ -133,6 +133,13 @@ export const Primary: Story = {
                 ];
             });
 
+            const breadcrumbs = [
+                {
+                    title: "Home",
+                    href: "/",
+                },
+            ];
+
             const onClickBack = () => {
                 console.log("Back button was clicked");
             };
@@ -141,10 +148,18 @@ export const Primary: Story = {
                 console.log("Close button was clicked");
             };
 
-            return { args, tabs, actions, onClickBack, onClickClose };
+            return {
+                args,
+                tabs,
+                actions,
+                onClickBack,
+                onClickClose,
+                breadcrumbs,
+            };
         },
         template: `<ev-toolbar
             v-bind="args"
+            :breadcrumbs="breadcrumbs"
             :tabs="tabs"
             :actions="actions" />`,
     }),

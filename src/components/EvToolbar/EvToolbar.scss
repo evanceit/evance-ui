@@ -40,6 +40,7 @@
 }
 
 .ev-toolbar--back,
+.ev-toolbar--crumbs,
 .ev-toolbar--icon,
 .ev-toolbar--close {
     display: inline-flex;
@@ -68,6 +69,9 @@
 
 .ev-toolbar--tabs {
     align-self: flex-end;
+}
+.ev-toolbar--menu-button {
+    align-self: center;
 }
 
 .ev-toolbar--actions {

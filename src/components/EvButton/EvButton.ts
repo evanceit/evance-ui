@@ -26,6 +26,7 @@ export type ButtonVariantProp = VariantProp | "link";
  * # EvButtonProps
  */
 export interface EvButtonProps extends RouterLinkOrHrefProps {
+    active?: boolean;
     appearance?: ButtonAppearanceProp;
     disabled?: boolean;
     icon?: IconValue | boolean;
@@ -34,6 +35,9 @@ export interface EvButtonProps extends RouterLinkOrHrefProps {
     rounded?: boolean;
     size?: InputSizeProp;
     fullWidth?: boolean;
+    selectedIcon?: IconValue;
+    selectedIconStart?: IconValue;
+    selectedIconEnd?: IconValue;
     text?: string;
     loading?: boolean;
     onClick?: () => void;
