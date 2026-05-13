@@ -21,7 +21,7 @@ export interface EvToolbarProps {
     title?: string;
 }
 
-interface EvToolbarBreadcrumb {
+export interface EvToolbarBreadcrumb {
     title: string;
     href?: string;
     to?: string;
