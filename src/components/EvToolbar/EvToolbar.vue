@@ -17,7 +17,7 @@ import {
 } from "@/icons";
 import { computed, getCurrentInstance, Ref, ref } from "vue";
 import { useModelProxy } from "@/composables/modelProxy";
-import { sizeModifier } from "@/util";
+import { omit, sizeModifier } from "@/util";
 import { DisplayInstance, IconValue, useDisplay } from "@/composables";
 import { toDisplayStateKey } from "@/composables/display";
 
@@ -99,18 +99,28 @@ const isAdjustEnd = computed(() => {
 const crumbsButton = ref();
 const hasBreadcrumbs = computed(() => !!props.breadcrumbs?.length);
 const currentTab = computed(() => {
-    return tabs.value.find((item) => item.value === tab.value);
+    return tabs.value.find((item) => item.index === tab.value);
 });
 
 const tabs = computed(() => {
     let index = -1;
     return props.tabs?.map((tab) => ({
         ...tab,
-        value: ++index,
+        index: ++index,
         icon: undefined,
         selectedIcon: undefined,
         iconStart: tab.iconStart ?? (tab.icon as IconValue),
         selectedIconStart: tab.selectedIconStart ?? tab.selectedIcon,
+    }));
+});
+
+const menuItems = computed(() => {
+    return tabs.value.map((tab) => ({
+        props: {
+            ...omit(tab, ["index"]),
+        },
+        title: tab.text,
+        index: tab.index,
     }));
 });
 
@@ -121,6 +131,10 @@ const showTabs = computed(() => {
     ] as Ref<boolean>;
     return showable.value;
 });
+
+function selectListItem(selected) {
+    tab.value = selected[0].index;
+}
 </script>
 
 <template>
@@ -216,14 +230,13 @@ const showTabs = computed(() => {
                                 class="ev-toolbar--menu-button"
                                 :size="actionSize"
                                 :icon-end="ChevronDownIcon"
-                                :text="currentTab?.text"/>
+                                :text="currentTab?.text" />
                         </template>
                         <ev-list
-                            :selected="[tab]"
                             select-strategy="single-any"
-                            :items="tabs"
-                            item-title="text"
-                            @update:selected="tab = $event[0]">
+                            return-object
+                            :items="menuItems"
+                            @update:selected="selectListItem">
                         </ev-list>
                     </ev-menu>
                 </slot>
