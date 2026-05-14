@@ -17,6 +17,7 @@ import { useModelProxy } from "@/composables";
 import EvListChildren from "@/components/EvList/EvListChildren.vue";
 import { EvTransition } from "@/components/EvTransition";
 import ExpandTransitionGenerator from "@/components/EvTransition/transitions/expandTransition";
+import { useSelectLink } from "@/composables/selectLink";
 
 const props = defineProps({
     ...makeEvListItemProps(),
@@ -65,6 +66,7 @@ const hasChildren = computed(() => {
 });
 const { select, isSelected, isOpen, open, root } = useNestedListItem(id, hasChildren.value);
 const isLink = computed(() => props.link !== false && link.isLink.value);
+useSelectLink(link, select);
 const isClickable = computed(() => {
     return (
         !props.disabled &&
