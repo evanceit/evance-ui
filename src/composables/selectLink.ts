@@ -14,9 +14,9 @@ export function useSelectLink(
     watch(
         () => link.isActive?.value,
         (isActive) => {
-            if (link.isLink.value && select) {
+            if (link.isLink.value && select && isActive) {
                 nextTick(() => {
-                    select(isActive);
+                    select(true);
                 });
             }
         },

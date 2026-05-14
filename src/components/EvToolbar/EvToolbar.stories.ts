@@ -10,7 +10,8 @@ import {
     SalesQuotationIcon,
     SalesEnquiryIcon,
 } from "@/icons";
-import { computed } from "vue";
+import { computed, getCurrentInstance, ref } from "vue";
+import { createRouter, createWebHistory, RouterView } from "vue-router";
 
 /**
  * `EvToolbar` is designed for most use-cases in Evance screens, which follow a similar pattern.
@@ -163,4 +164,80 @@ export const Primary: Story = {
             :tabs="tabs"
             :actions="actions" />`,
     }),
+};
+
+
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: "/access/members",
+            component: {
+                template: `<div>Members area</div>`,
+            },
+        },
+        {
+            path: "/access/permissions",
+            component: {
+                template: `<div>Permissions area</div>`,
+            },
+        },
+        {
+            path: "/access/details",
+            component: {
+                template: `<div>Details area</div>`,
+            },
+        },
+    ],
+});
+
+export const RoutedTabs: Story = {
+    render: (args: any) => ({
+        components: { EvToolbar, RouterView },
+        setup() {
+            const tabs = ref([
+                {
+                    text: "Members",
+                    to: "/access/members",
+                },
+                {
+                    text: "Permissions",
+                    to: "/access/permissions",
+                },
+                {
+                    text: "Details",
+                    to: "/access/details",
+                },
+            ]);
+
+            return { tabs };
+        },
+        template: `
+        <div>
+            <ev-toolbar :tabs="tabs" />
+
+            <div style="margin-top: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px;">
+                <strong>Current route output:</strong>
+                <router-view />
+            </div>
+        </div>
+        `,
+    }),
+    decorators: [
+        (story) => ({
+            components: { story },
+            setup() {
+                const instance = getCurrentInstance();
+
+                if (instance) {
+                    instance.appContext.app.use(router);
+                    router.push("/");
+                }
+
+                return {};
+            },
+            template: `<story />`,
+        }),
+    ],
 };

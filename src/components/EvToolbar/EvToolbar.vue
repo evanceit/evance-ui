@@ -133,7 +133,10 @@ const showTabs = computed(() => {
 });
 
 function selectListItem(selected) {
-    tab.value = selected[0].index;
+    const selectedItem = selected[0]?.index ?? undefined;
+    if (selectedItem !== undefined) {
+        tab.value = selected[0]?.index;
+    }
 }
 </script>
 
@@ -150,6 +153,8 @@ function selectListItem(selected) {
             props.class,
         ]"
         :style="props.style">
+        <p>Tab
+            {{ tab }}</p>
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
 
