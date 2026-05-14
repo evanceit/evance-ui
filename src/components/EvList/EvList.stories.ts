@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { EvList } from "../EvList";
-import { ref } from "vue";
+import {getCurrentInstance, ref} from "vue";
 import { EvListItem } from "../EvListItem";
+import {createMemoryHistory, createRouter, createWebHistory, RouterView} from "vue-router";
 
 const meta: Meta<typeof EvList> = {
     component: EvList,
@@ -205,3 +206,78 @@ export const LazyLoading: Story = {
     }),
 };
 
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: "/",
+            component: {
+                template: `<div>Home route</div>`,
+            },
+        },
+        {
+            path: "/test-link-1",
+            component: {
+                template: `<div>Test link 1 route</div>`,
+            },
+        },
+        {
+            path: "/test-link-2",
+            component: {
+                template: `<div>Test link 2 route</div>`,
+            },
+        },
+    ],
+});
+
+export const RoutedListItems: Story = {
+    render: (args: any) => ({
+        components: { EvList, RouterView },
+        setup() {
+            const items = ref([
+                {
+                    title: "Home route",
+                    to: "/",
+                },
+                {
+                    title: "Test link 1 route",
+                    to: "/test-link-1",
+                },
+                {
+                    title: "Test link 2 route",
+                    to: "/test-link-2",
+                },
+            ]);
+
+            const selected = ref([]);
+            return { items, selected };
+        },
+        template: `
+        <div>
+            <ev-list v-model:selected="selected" :item-props="true" :items="items" />
+
+            <div style="margin-top: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px;">
+                <strong>Current route output:</strong>
+                <router-view />
+            </div>
+        </div>
+        `,
+    }),
+    decorators: [
+        (story) => ({
+            components: { story },
+            setup() {
+                const instance = getCurrentInstance();
+
+                if (instance) {
+                    instance.appContext.app.use(router);
+                    router.push("/");
+                }
+
+                return {};
+            },
+            template: `<story />`,
+        }),
+    ],
+};

@@ -102,7 +102,7 @@ function onClick(e: MouseEvent): void {
         return;
     }
     link.navigate?.(e);
-    if (props.value != null) {
+    if (props.value != null && !isLink.value) {
         select(!isSelected.value, e);
     }
 }
