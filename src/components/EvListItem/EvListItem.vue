@@ -69,7 +69,7 @@ const { select, isSelected, isOpen, open, root } = useNestedListItem(
     hasChildren.value,
 );
 const isLink = computed(() => props.link !== false && link.isLink.value);
-useSelectLink(link, select);
+useSelectLink(link, select, true);
 const isClickable = computed(() => {
     return (
         !props.disabled &&
