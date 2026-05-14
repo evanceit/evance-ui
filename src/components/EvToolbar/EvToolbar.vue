@@ -20,6 +20,7 @@ import { useModelProxy } from "@/composables/modelProxy";
 import { omit, sizeModifier } from "@/util";
 import { DisplayInstance, IconValue, useDisplay } from "@/composables";
 import { toDisplayStateKey } from "@/composables/display";
+import { isRouterLinkOrHref, useRouterLinkOrHref } from "@/composables/router";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
@@ -99,8 +100,18 @@ const isAdjustEnd = computed(() => {
 const crumbsButton = ref();
 const hasBreadcrumbs = computed(() => !!props.breadcrumbs?.length);
 const currentTab = computed(() => {
-    return tabs.value.find((item) => item.index === tab.value);
+    const linkResult = tabs.value.find((item) => {
+        return isRouterLinkOrHref(item).value
+            ? isTabActive(item)
+            : item.index === tab.value;
+    });
+    return linkResult ?? tabs.value.find((item) => item.index === tab.value);
 });
+
+function isTabActive(item: any) {
+    const link = useRouterLinkOrHref(item, {});
+    return link.isLink.value && link.isActive?.value;
+}
 
 const tabs = computed(() => {
     let index = -1;
@@ -138,6 +149,8 @@ function selectListItem(selected) {
         tab.value = selected[0]?.index;
     }
 }
+
+
 </script>
 
 <template>
@@ -153,11 +166,8 @@ function selectListItem(selected) {
             props.class,
         ]"
         :style="props.style">
-        <p>Tab
-            {{ tab }}</p>
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
-
                 <div
                     v-if="hasBreadcrumbs"
                     class="ev-toolbar--crumbs"
