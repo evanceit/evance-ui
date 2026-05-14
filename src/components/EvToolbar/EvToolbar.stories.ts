@@ -59,6 +59,10 @@ const meta: Meta<typeof EvToolbar> = {
                 "Tabs may be supplied as an array of `EvTab` props. " +
                 "If you would like more control you can use the `start` slot.",
         },
+        tabsDisplay: {
+            control: "select",
+            options: ["auto", "tabs", "menu"],
+        },
         actions: {
             description:
                 "Actions may be supplied as an array of `EvButton` props. " +
@@ -83,6 +87,7 @@ const meta: Meta<typeof EvToolbar> = {
         icon: "InboxFillIcon",
         title: "Sales Desk",
         size: "medium",
+        tabsDisplay: "auto",
     },
     tags: ["autodocs"],
 };
@@ -158,11 +163,29 @@ export const Primary: Story = {
                 breadcrumbs,
             };
         },
-        template: `<ev-toolbar
-            v-bind="args"
-            :breadcrumbs="breadcrumbs"
-            :tabs="tabs"
-            :actions="actions" />`,
+        template: `
+            <ev-toolbar
+                v-bind="args"
+                :tabs="tabs"
+                :actions="actions" />
+            
+            <br />
+            <p>Toolbar with breadcrumbs</p>
+            <ev-toolbar
+                v-bind="args"
+                :breadcrumbs="breadcrumbs"
+                :tabs="tabs"
+                :actions="actions" />
+            
+            <br />
+            <p>Toolbar with back & close button</p>
+            <ev-toolbar
+                v-bind="args"
+                :tabs="tabs"
+                :actions="actions" 
+                @click:back="() => console.log('back')" 
+                @click:close="() => console.log('close')" />
+        `,
     }),
 };
 

@@ -1,8 +1,8 @@
 .ev-toolbar {
-    --toolbar-margin: 16px;
-    --toolbar-margin-adjusted: 8px;
+    --toolbar-padding: 8px;
     --toolbar-height: 52px;
     --toolbar-weight: var(--text-weight-medium);
+    --toolbar-action-size: 36px;
 
     align-items: stretch;
     border-bottom: 1px solid var(--stroke);
@@ -10,7 +10,7 @@
     gap: 2rem;
     justify-content: space-between;
     min-height: var(--toolbar-height);
-    padding-inline: var(--toolbar-margin);
+    padding-inline: var(--toolbar-padding);
     max-width: 100%;
 }
 
@@ -25,7 +25,6 @@
 
 .ev-toolbar--section-start {
     min-width: 0;
-    gap: 2rem;
 }
 .ev-toolbar--section-end {
     gap: 0.5rem;
@@ -35,7 +34,6 @@
 }
 
 .ev-toolbar--prefix {
-    gap: 0.75rem;
     min-width: 0;
 }
 
@@ -48,12 +46,11 @@
     justify-content: center;
 }
 
-.ev-toolbar {
-    &.is-adjust-start {
-        padding-inline-start: var(--toolbar-margin-adjusted);
-    }
-    &.is-adjust-end {
-        padding-inline-end: var(--toolbar-margin-adjusted);
+.ev-toolbar--icon {
+    width: var(--toolbar-action-size);
+
+    + .ev-toolbar--title {
+        margin-inline-start: calc(0px - (var(--toolbar-action-size) - 34px) / 2);
     }
 }
 
@@ -65,6 +62,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     align-self: center;
+    padding-inline: 10px 2rem;
 }
 
 .ev-toolbar--tabs {
@@ -86,39 +84,35 @@
 
 .ev-toolbar {
     &.is-size-large {
-        --toolbar-margin: 24px;
-        --toolbar-margin-adjusted: 13px;
+        /* Action size is 42px */
+        --toolbar-action-size: 42px;
         --toolbar-height: 68px;
+        --toolbar-padding: 13px;
         --toolbar-weight: var(--text-weight-semibold);
 
-        .ev-toolbar--prefix {
-            gap: 0.75rem;
+        .ev-toolbar--title {
+            padding-inline: 12px 2rem;
         }
     }
 
     &.is-size-medium {
-        --toolbar-margin: 16px;
-        --toolbar-margin-adjusted: 8px;
+        /* Action size is 36px */
+        --toolbar-action-size: 36px;
         --toolbar-height: 52px;
+        --toolbar-padding: 8px;
         --toolbar-weight: var(--text-weight-medium);
-
-        .ev-toolbar--prefix {
-            gap: 0.625rem;
-        }
     }
 
     &.is-size-small {
-        --toolbar-margin: 16px;
-        --toolbar-margin-adjusted: 7px;
-        --toolbar-height: 46px;
+        /* Action size is 32px */
+        --toolbar-action-size: 32px;
+        --toolbar-height: 44px;
+        --toolbar-padding: 6px;
         --toolbar-weight: var(--text-weight-medium);
-
-        .ev-toolbar--prefix {
-            gap: 0.5rem;
-        }
 
         .ev-toolbar--title {
             font-size: var(--text-size-medium);
+            padding-inline: 6px 2rem;
         }
     }
 }

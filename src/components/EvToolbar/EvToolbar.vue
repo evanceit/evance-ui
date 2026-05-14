@@ -14,13 +14,14 @@ import {
     BelowRightIcon,
     CancelIcon,
     ChevronDownIcon,
+    ChevronUpIcon,
 } from "@/icons";
 import { computed, getCurrentInstance, Ref, ref } from "vue";
 import { useModelProxy } from "@/composables/modelProxy";
 import { omit, sizeModifier } from "@/util";
 import { DisplayInstance, IconValue, useDisplay } from "@/composables";
 import { toDisplayStateKey } from "@/composables/display";
-import { isRouterLinkOrHref, useRouterLinkOrHref } from "@/composables/router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
     ...makeEvToolbarProps(),
@@ -34,6 +35,8 @@ const slots = defineSlots<{
 
 const instance = getCurrentInstance();
 const display = useDisplay();
+const route = useRoute();
+const router = useRouter();
 
 const emit = defineEmits(["click:back", "click:close", "update:tab"]);
 
@@ -46,7 +49,9 @@ const hasCloseButton = computed(() => {
 });
 
 const hasPrefix = computed(() => {
-    return hasBackButton.value || props.icon || props.title;
+    return (
+        hasBreadcrumbs.value || hasBackButton.value || props.icon || props.title
+    );
 });
 
 function onBackClick($event: MouseEvent) {
@@ -87,30 +92,25 @@ const actionSize = computed(() => {
     }
 });
 
-const isAdjustStart = computed(() => {
-    return hasBackButton.value;
-});
-
-const isAdjustEnd = computed(() => {
-    const hasActions = !!props.actions?.length;
-    const variant = props.actions?.at(-1)?.variant ?? "subtle";
-    return hasCloseButton.value || (hasActions && variant === "subtle");
-});
-
 const crumbsButton = ref();
 const hasBreadcrumbs = computed(() => !!props.breadcrumbs?.length);
 const currentTab = computed(() => {
-    const linkResult = tabs.value.find((item) => {
-        return isRouterLinkOrHref(item).value
-            ? isTabActive(item)
-            : item.index === tab.value;
-    });
+    const linkResult = tabs.value.find((item) => isTabActiveLink(item));
     return linkResult ?? tabs.value.find((item) => item.index === tab.value);
 });
 
-function isTabActive(item: any) {
-    const link = useRouterLinkOrHref(item, {});
-    return link.isLink.value && link.isActive?.value;
+function isTabActiveLink(item: any) {
+    if (!item.to) {
+        return false;
+    }
+    const resolved = router.resolve(item.to);
+    if (item.exact) {
+        return resolved.path === route.path;
+    }
+    return (
+        route.path === resolved.path ||
+        route.path.startsWith(resolved.path + "/")
+    );
 }
 
 const tabs = computed(() => {
@@ -132,10 +132,21 @@ const menuItems = computed(() => {
         },
         title: tab.text,
         index: tab.index,
+        value: tab.index,
     }));
+});
+const menuItemSelected = computed(() => {
+    return [menuItems.value[currentTab.value.index]];
 });
 
 const showTabs = computed(() => {
+    if (props.tabsDisplay === "tabs") {
+        return true;
+    }
+    if (props.tabsDisplay === "menu") {
+        return false;
+    }
+    // Auto
     const displayKey = toDisplayStateKey(props.tabsBreakpoint);
     const showable = display[
         displayKey as keyof DisplayInstance
@@ -143,28 +154,18 @@ const showTabs = computed(() => {
     return showable.value;
 });
 
-function selectListItem(selected) {
+function selectMenuItem(selected) {
     const selectedItem = selected[0]?.index ?? undefined;
     if (selectedItem !== undefined) {
         tab.value = selected[0]?.index;
     }
 }
-
-
 </script>
 
 <template>
     <component
         :is="props.tag"
-        :class="[
-            'ev-toolbar',
-            {
-                'is-adjust-start': isAdjustStart,
-                'is-adjust-end': isAdjustEnd,
-            },
-            sizeClass,
-            props.class,
-        ]"
+        :class="['ev-toolbar', sizeClass, props.class]"
         :style="props.style">
         <div class="ev-toolbar--section-start">
             <div v-if="hasPrefix" class="ev-toolbar--prefix">
@@ -238,20 +239,27 @@ function selectListItem(selected) {
                         :items="tabs" />
 
                     <ev-menu v-else>
-                        <template #activator="{ props }">
+                        <template #activator="{ props, isActive }">
                             <ev-button
                                 v-bind="props"
-                                variant="subtle"
                                 class="ev-toolbar--menu-button"
+                                :appearance="isActive ? 'primary' : 'default'"
+                                :variant="isActive ? 'tonal' : 'subtle'"
                                 :size="actionSize"
-                                :icon-end="ChevronDownIcon"
+                                :icon-start="
+                                    currentTab?.selectedIconStart ?? currentTab?.iconStart
+                                "
+                                :icon-end="
+                                    isActive ? ChevronUpIcon : ChevronDownIcon
+                                "
                                 :text="currentTab?.text" />
                         </template>
                         <ev-list
                             select-strategy="single-any"
                             return-object
                             :items="menuItems"
-                            @update:selected="selectListItem">
+                            :selected="menuItemSelected"
+                            @update:selected="selectMenuItem">
                         </ev-list>
                     </ev-menu>
                 </slot>

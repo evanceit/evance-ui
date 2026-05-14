@@ -64,7 +64,10 @@ const isLoading = useModelProxy(props, "loading");
 const hasChildren = computed(() => {
     return !!slots.children || !!props.children;
 });
-const { select, isSelected, isOpen, open, root } = useNestedListItem(id, hasChildren.value);
+const { select, isSelected, isOpen, open, root } = useNestedListItem(
+    id,
+    hasChildren.value,
+);
 const isLink = computed(() => props.link !== false && link.isLink.value);
 useSelectLink(link, select);
 const isClickable = computed(() => {
