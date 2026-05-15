@@ -283,9 +283,6 @@ export const Primary: Story = {
                     key: "actions",
                     align: "end",
                     width: 52,
-                    cellProps: {
-                        class: "py-0",
-                    },
                 },
             ];
             const selected = ref([]);
