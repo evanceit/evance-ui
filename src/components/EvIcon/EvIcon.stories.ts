@@ -57,6 +57,6 @@ export const Primary: Story = {
         setup() {
             return { EvanceIcon, args };
         },
-        template: `<ev-icon :glyph="EvanceIcon" v-bind="args" />`,
+        template: `<ev-icon :glyph="EvanceIcon" v-bind="args" /> -  With text inline`,
     }),
 };

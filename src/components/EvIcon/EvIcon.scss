@@ -4,6 +4,7 @@
     line-height: 1;
     width: var(--icon-size-medium);
     color: var(--icon-color, currentColor);
+    vertical-align: middle;
 
     > svg {
         width: auto;
