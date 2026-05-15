@@ -4,16 +4,16 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: var(--padding-medium);
+    padding: var(--spacing-medium);
     gap: var(--spacer-400);
     flex: 1;
 }
 
 .ev-empty-state {
     &.is-size-small {
-        padding: var(--padding-small);
+        padding: var(--spacing-small);
     }
     &.is-size-large {
-        padding: var(--padding-large);
+        padding: var(--spacing-large);
     }
 }

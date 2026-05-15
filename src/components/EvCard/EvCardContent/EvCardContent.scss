@@ -16,7 +16,7 @@
 
 .ev-card-content {
     &.is-size-small {
-        padding: var(--padding-small);
+        padding: var(--spacing-small);
 
         .ev-card-content--detail {
             padding-top: 0.125rem;
@@ -24,7 +24,7 @@
     }
 
     &.is-size-medium {
-        padding: var(--padding-medium);
+        padding: var(--spacing-medium);
 
         .ev-card-content--icon {
             padding-top: tools.scalable(0rem, 0.125rem);
@@ -32,7 +32,7 @@
     }
 
     &.is-size-large {
-        padding: var(--padding-large);
+        padding: var(--spacing-large);
 
         .ev-card-content--icon {
             padding-top: tools.scalable(0rem, 0.25rem);
@@ -40,7 +40,7 @@
     }
 
     &.is-size-x-large {
-        padding: var(--padding-x-large);
+        padding: var(--spacing-x-large);
 
         .ev-card-content--icon {
             padding-top: tools.scalable(0.125rem, 0.625rem);

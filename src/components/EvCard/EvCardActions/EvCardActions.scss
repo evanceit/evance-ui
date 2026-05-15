@@ -12,18 +12,18 @@
 
 .ev-card-actions {
     &.is-size-small {
-        padding: var(--padding-small);
+        padding: var(--spacing-small);
     }
 
     &.is-size-medium {
-        padding: var(--padding-medium);
+        padding: var(--spacing-medium);
     }
 
     &.is-size-large {
-        padding: var(--padding-large);
+        padding: var(--spacing-large);
     }
 
     &.is-size-x-large {
-        padding: var(--padding-x-large);
+        padding: var(--spacing-x-large);
     }
 }

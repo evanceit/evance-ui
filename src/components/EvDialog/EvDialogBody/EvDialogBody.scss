@@ -1,6 +1,6 @@
 .ev-dialog-body {
     flex: 1;
-    padding: var(--padding-medium);
+    padding: var(--spacing-medium);
 
     &:not(.ev-card-content) {
         display: flex;

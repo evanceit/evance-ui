@@ -59,6 +59,12 @@
     --spacing-paragraph: 1rem;
     --spacing-heading: 2.625rem;
 
+    --spacing-x-large: #{fluid.scalable(1.5rem, 3rem)};
+    --spacing-large: #{fluid.scalable(1.5rem, 2rem)};
+    --spacing-medium: #{fluid.scalable(1rem, 1.5rem)};
+    --spacing-small: 1rem;
+    --spacing-x-small: 0.5rem;
+
     /* Text */
     --heading-lineheight: 1.25em;
     --heading-style: normal;
@@ -90,9 +96,5 @@
     --easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
 
 
-    --padding-x-large: #{fluid.scalable(1.5rem, 3rem)};
-    --padding-large: #{fluid.scalable(1.5rem, 2rem)};
-    --padding-medium: #{fluid.scalable(1rem, 1.5rem)};
-    --padding-small: 1rem;
 }
 

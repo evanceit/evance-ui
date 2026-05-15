@@ -98,7 +98,12 @@ $spacers: (
     800: 4rem,
     1000: 5rem,
     1200: 6rem,
-    1600: 8rem
+    1600: 8rem,
+    'x-large': var(--spacing-x-large),
+    'large': var(--spacing-large),
+    'medium': var(--spacing-medium),
+    'small': var(--spacing-small),
+    'x-small': var(--spacing-x-small),
 ) !default;
 
 $negative-spacers: () !default;
