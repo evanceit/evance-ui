@@ -192,7 +192,8 @@ function selectMenuItem(selected) {
                                 :key="breadcrumb.title"
                                 :href="breadcrumb.href"
                                 :to="breadcrumb.to"
-                                :title="breadcrumb.title">
+                                :title="breadcrumb.title"
+                                :active="false">
                                 <template #iconStart>
                                     <ev-icon
                                         :glyph="
