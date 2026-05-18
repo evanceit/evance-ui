@@ -35,10 +35,10 @@ const isClickable = computed(() => {
 });
 
 const surfaceClass = computed(() => {
-    if (!props.surface) {
+    if (props.surface === undefined) {
         return undefined;
     }
-    return isString(props.surface)
+    return isString(props.surface) && props.surface.length
         ? `is-surface-${props.surface}`
         : "is-surface-panel";
 });

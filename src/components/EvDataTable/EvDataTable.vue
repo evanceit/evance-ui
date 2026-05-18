@@ -98,7 +98,7 @@ const sortModel = useModelProxy(props, "sort");
 const searchModel = useModelProxy(props, "search");
 const infiniteScrollRef = ref<ComponentExposed<typeof EvInfiniteScroll>>();
 const infiniteScrollDisabled = computed(() => isLoading.value);
-const isEmpty = computed(() => !itemsModel.value?.length);
+const isItemsEmpty = computed(() => !itemsModel.value?.length);
 const searchProps = computed(() => {
     return omit(filterComponentProps(EvDataTableSearch, props), [
         "loading",
@@ -119,10 +119,10 @@ const scrollEl = computed(() => {
 
 const { roundedClasses } = useRounded(props);
 const surfaceClass = computed(() => {
-    if (!props.surface) {
+    if (props.surface === undefined) {
         return undefined;
     }
-    return isString(props.surface)
+    return isString(props.surface) && props.surface.length
         ? `is-surface-${props.surface}`
         : "is-surface-panel";
 });
@@ -230,7 +230,7 @@ onMounted(() => {
                 <slot name="filters" />
             </template>
         </ev-data-table-search>
-        <div v-if="isEmpty" class="ev-data-table--empty">
+        <div v-if="isItemsEmpty" class="ev-data-table--empty">
             <slot name="empty">{{ t("table.empty") }}</slot>
         </div>
         <ev-infinite-scroll
