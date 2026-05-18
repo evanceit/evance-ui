@@ -126,6 +126,9 @@ const surfaceClass = computed(() => {
         ? `is-surface-${props.surface}`
         : "is-surface-panel";
 });
+const noHeaderBorder = computed(() => {
+    return !!props.rowSurface;
+});
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
@@ -258,7 +261,10 @@ onMounted(() => {
                 </slot>
                 <thead
                     v-if="props.showHeaders"
-                    class="ev-data-table--thead"
+                    :class="[
+                        'ev-data-table--thead',
+                        { 'is-borderless': noHeaderBorder },
+                    ]"
                     role="rowgroup">
                     <tr v-for="(row, rowIndex) of headers" :key="rowIndex">
                         <ev-data-table-cell
