@@ -7,7 +7,7 @@ import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select";
 import { useHeaders } from "@/components/EvDataTable/composables/headers";
 import { ItemSlot } from "@/components/EvDataTable/composables/types";
-import { getPropertyValue } from "@/util";
+import {getPropertyValue, isString} from "@/util";
 
 const props = defineProps({ ...makeEvDataTableRowProps() });
 const slots = defineSlots<{
@@ -32,6 +32,15 @@ const isClickable = computed(() => {
         props.onDblclick ||
         (!showSelect.value && isItemSelectable.value)
     );
+});
+
+const surfaceClass = computed(() => {
+    if (!props.surface) {
+        return undefined;
+    }
+    return isString(props.surface)
+        ? `is-surface-${props.surface}`
+        : "is-surface-panel";
 });
 
 function onCheckboxClick(e: MouseEvent) {
@@ -76,6 +85,7 @@ defineExpose({
                 'is-selected': isItemSelected,
                 'is-indicated': !showSelect && selectStrategy.selectable,
             },
+            surfaceClass,
         ]"
         @mousedown="onMouseDown"
         @mouseup="onMouseUp"

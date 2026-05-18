@@ -14,7 +14,7 @@
     width: 100%;
     border-spacing: 0 2px;
     border-collapse: separate;
-    padding: 2px;
+    padding-inline: 2px;
     table-layout: fixed;
 }
 
@@ -35,5 +35,19 @@
     th {
         box-shadow: inset 0 -1px 0 var(--stroke);
         background-color: var(--current-surface-fill);
+    }
+}
+
+.ev-data-table {
+    &.is-surface-panel {
+        background-color: var(--current-surface-fill);
+        --current-surface-fill: var(--surface-panel);
+    }
+}
+
+.ev-data-table--spacer-above,
+.ev-data-table--spacer-below {
+    > td {
+        padding: 0;
     }
 }

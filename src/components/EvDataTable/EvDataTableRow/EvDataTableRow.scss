@@ -1,3 +1,14 @@
+
+
+.ev-data-table-row {
+    &.is-surface-panel {
+        > td {
+            background-color: var(--current-surface-fill);
+            --current-surface-fill: var(--surface-panel);
+        }
+    }
+}
+
 .ev-data-table-row {
 
     > td {

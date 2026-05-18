@@ -95,26 +95,29 @@
 /* Enter and leave animations */
 .ev-textfield {
 
-    .slide-fade {
+    .clearable-fade {
         &-enter-active {
-            transition: all 0.25s ease-out;
+            transition: all 0.25s var(--easing-standard);
         }
         &-leave-active {
-            transition: all 0.25s cubic-bezier(1, 0.5, 0.8, 1);
+            transition: all 0.25s var(--easing-standard);
+        }
+        &-enter-to,
+        &-leave-from {
+            opacity: 1;
         }
         &-enter-from,
         &-leave-to {
             opacity: 0;
-            transform: translateX(20px);
         }
     }
 
     .fade-in-out {
         &-enter-active {
-            transition: opacity 0.25s ease-out;
+            transition: opacity 0.25s var(--easing-standard);
         }
         &-leave-active {
-            transition: opacity 0.25s cubic-bezier(1, 0.5, 0.8, 1);
+            transition: opacity 0.25s var(--easing-standard);
         }
         &-enter-from,
         &-leave-to {

@@ -109,6 +109,12 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "Maintains a list of selected item values (see `item-value`), or the item objects when `return-object` is `true`.",
         },
+        surface: {
+            control: "select",
+            options: [undefined, true, "panel"],
+            description:
+                "Sets the surface style of the table. Can be `true`, or 'panel'.",
+        },
         page: {
             control: false,
             description:
@@ -121,6 +127,18 @@ const meta: Meta<typeof EvDataTable> = {
             description:
                 "An exposed method allowing you to manually trigger the `load` event - forcing load to page `1`. " +
                 "This is useful if you have additional external parameters affecting table data.",
+        },
+        rowSurface: {
+            control: "select",
+            options: [undefined, true, "panel"],
+            description:
+                "Sets the surface style of the table rows. Can be `true`, or 'panel'.",
+        },
+        rounded: {
+            control: "select",
+            options: [undefined, true, "small", "medium", "large"],
+            description:
+                "Sets the border radius of the table. Can be `undefined`, `true`, `small`, `medium`, or `large`.",
         },
         returnObject: {
             control: "boolean",
@@ -210,6 +228,7 @@ const meta: Meta<typeof EvDataTable> = {
         reload: undefined,
         returnObject: undefined,
         required: false,
+        rounded: undefined,
         search: "",
         searchDelay: undefined,
         searchPlaceholder: undefined,
@@ -220,6 +239,8 @@ const meta: Meta<typeof EvDataTable> = {
         showSelect: false,
         sort: undefined,
         sortOptions: undefined,
+        surface: undefined,
+        rowSurface: undefined,
     },
 };
 
@@ -501,71 +522,69 @@ export const Primary: Story = {
                     <ev-button @click="args.search = ''">Clear Search</ev-button>
                 </ev-button-group>
 
-                <ev-surface scrollable grow elevation="panel" rounded="small" height="800">
-                    <ev-data-table
-                        v-bind="args"
-                        v-model:items="items"
-                        v-model:selected="selected"
-                        v-model:sort="sort"
-                        v-model:search="args.search"
-                        :headers="headers"
-                        :select-actions="selectActions"
-                        :sort-options="sortOptions"
-                        :items-per-page="itemsPerPage"
-                        :filters="filters"
-                        data-foo="bar"
-                        @update:selected="console.log('selection change')"
-                        @load="load">
-                        <template #filters>
-                            <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />
-                            <ev-menu activator="#statusMenu" :close-on-content-click="false" position="bottom-end">
-                                <ev-surface elevation="overlay" width="250">
-                                    <ev-section title="Status">
-                                        <div class="px-100">
-                                            <ev-checkbox :value="{ title: 'Pending', value: 'pending', id: 1 }" v-model="filters.status">
-                                                <template #label>
-                                                    <ev-lozenge>Pending</ev-lozenge>
-                                                </template>
-                                            </ev-checkbox>
-                                            <ev-checkbox :value="{ title: 'Active', value: 'active', id: 2 }" v-model="filters.status">
-                                                <template #label>
-                                                    <ev-lozenge appearance="success">Active</ev-lozenge>
-                                                </template>
-                                            </ev-checkbox>
-                                        </div>
-                                    </ev-section>
-                                    <ev-divider />
-                                    <div v-if="filters.status.length" class="pa-50">
-                                        <ev-button variant="subtle" full-width @click="filters.status = []">Clear all</ev-button>
+                <ev-data-table
+                    v-bind="args"
+                    v-model:items="items"
+                    v-model:selected="selected"
+                    v-model:sort="sort"
+                    v-model:search="args.search"
+                    :headers="headers"
+                    :select-actions="selectActions"
+                    :sort-options="sortOptions"
+                    :items-per-page="itemsPerPage"
+                    :filters="filters"
+                    data-foo="bar"
+                    @update:selected="console.log('selection change')"
+                    @load="load">
+                    <template #filters>
+                        <ev-filter-button id="statusMenu" title="Status" v-model="filters.status" />
+                        <ev-menu activator="#statusMenu" :close-on-content-click="false" position="bottom-end">
+                            <ev-surface elevation="overlay" width="250">
+                                <ev-section title="Status">
+                                    <div class="px-100">
+                                        <ev-checkbox :value="{ title: 'Pending', value: 'pending', id: 1 }" v-model="filters.status">
+                                            <template #label>
+                                                <ev-lozenge>Pending</ev-lozenge>
+                                            </template>
+                                        </ev-checkbox>
+                                        <ev-checkbox :value="{ title: 'Active', value: 'active', id: 2 }" v-model="filters.status">
+                                            <template #label>
+                                                <ev-lozenge appearance="success">Active</ev-lozenge>
+                                            </template>
+                                        </ev-checkbox>
                                     </div>
-                                </ev-surface>
-                            </ev-menu>
+                                </ev-section>
+                                <ev-divider />
+                                <div v-if="filters.status.length" class="pa-50">
+                                    <ev-button variant="subtle" full-width @click="filters.status = []">Clear all</ev-button>
+                                </div>
+                            </ev-surface>
+                        </ev-menu>
 
-                            <ev-filter-button id="assigneeMenu" title="Assignee" v-model="filters.assignee" filter-title="name" />
-                            <ev-menu activator="#assigneeMenu" :close-on-content-click="false" position="bottom-end">
-                                <ev-surface elevation="overlay" width="250">
-                                    <ev-section title="Users">
-                                        <div class="px-100">
-                                            <ev-checkbox :value="{ name: 'Current user', id: 123 }" v-model="filters.assignee" label="Current user" />
-                                            <ev-checkbox :value="{ name: 'Locale manager', id: 124 }" v-model="filters.assignee" label="Locale manager" />
-                                        </div>
-                                    </ev-section>
-                                </ev-surface>
-                            </ev-menu>
-                        </template>
-                        <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
-                        <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
-                        <template #item.name="{ item }">{{ item.name }}</template>
-                        <template #item.price="{ value }">£{{ value }}</template>
-                        <template #item.actions="props">
-                            <ev-button
-                                size="small"
-                                :icon="EllipsisIcon"
-                                variant="subtle"
-                                @click.stop="console.log(props)" />
-                        </template>
-                    </ev-data-table>
-                </ev-surface>
+                        <ev-filter-button id="assigneeMenu" title="Assignee" v-model="filters.assignee" filter-title="name" />
+                        <ev-menu activator="#assigneeMenu" :close-on-content-click="false" position="bottom-end">
+                            <ev-surface elevation="overlay" width="250">
+                                <ev-section title="Users">
+                                    <div class="px-100">
+                                        <ev-checkbox :value="{ name: 'Current user', id: 123 }" v-model="filters.assignee" label="Current user" />
+                                        <ev-checkbox :value="{ name: 'Locale manager', id: 124 }" v-model="filters.assignee" label="Locale manager" />
+                                    </div>
+                                </ev-section>
+                            </ev-surface>
+                        </ev-menu>
+                    </template>
+                    <template #header.speed="{ header }">Speed <ev-code>km/h</ev-code></template>
+                    <template #header.length="{ header }">Length <ev-code>m</ev-code></template>
+                    <template #item.name="{ item }">{{ item.name }}</template>
+                    <template #item.price="{ value }">£{{ value }}</template>
+                    <template #item.actions="props">
+                        <ev-button
+                            size="small"
+                            :icon="EllipsisIcon"
+                            variant="subtle"
+                            @click.stop="console.log(props)" />
+                    </template>
+                </ev-data-table>
         `,
     }),
 };

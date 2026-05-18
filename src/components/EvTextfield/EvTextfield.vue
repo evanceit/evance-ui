@@ -242,7 +242,7 @@ const dataFormTypeProp = computed(() => {
                     @focus="onFocus"
                     @blur="formField.blur" />
             </div>
-            <transition name="slide-fade">
+            <transition name="clearable-fade">
                 <div v-if="isClearable" class="ev-textfield--clearable">
                     <ev-icon
                         :glyph="CancelIcon"

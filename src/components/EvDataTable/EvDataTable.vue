@@ -6,7 +6,9 @@ import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useVirtual } from "@/composables/virtual";
 import {
     filterComponentProps,
-    getPrefixedEventHandlers, getScrollParent,
+    getPrefixedEventHandlers,
+    getScrollParent,
+    isString,
     omit,
     toWebUnit,
 } from "@/util";
@@ -31,6 +33,7 @@ import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
 import { calculateDisplayRuleValue } from "@/composables/display";
 import { EvCheckbox } from "@/components/EvCheckbox";
+import { useRounded } from "@/composables/rounded";
 
 const props = defineProps({ ...makeEvDataTableProps() });
 const slots = defineSlots<{
@@ -112,6 +115,16 @@ const scrollEl = computed(() => {
         return getScrollParent(rootEl.value.parentElement, true, "y");
     }
     return props.infiniteScrollTarget;
+});
+
+const { roundedClasses } = useRounded(props);
+const surfaceClass = computed(() => {
+    if (!props.surface) {
+        return undefined;
+    }
+    return isString(props.surface)
+        ? `is-surface-${props.surface}`
+        : "is-surface-panel";
 });
 
 watch(
@@ -196,7 +209,7 @@ onMounted(() => {
 <template>
     <div
         ref="rootEl"
-        :class="['ev-data-table', props.class]"
+        :class="['ev-data-table', surfaceClass, roundedClasses, props.class]"
         :style="[dimensions, props.style]">
         <ev-data-table-search
             v-bind="searchProps"
@@ -298,6 +311,7 @@ onMounted(() => {
                         <template #default="{ itemRef }">
                             <ev-data-table-row
                                 v-bind="{
+                                    surface: props.rowSurface,
                                     ref: itemRef,
                                     item: displayItem.raw,
                                     index: displayItem.index,

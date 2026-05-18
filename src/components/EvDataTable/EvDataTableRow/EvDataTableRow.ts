@@ -4,6 +4,7 @@ import {
     CellProps,
     DataTableItem,
 } from "@/components/EvDataTable/composables/types.ts";
+import { EvDataTableSurface } from "../../EvDataTable/EvDataTable";
 
 export const makeEvDataTableRowProps = propsFactory(
     {
@@ -14,6 +15,7 @@ export const makeEvDataTableRowProps = propsFactory(
         onClick: EventProp<[MouseEvent]>(),
         onContextmenu: EventProp<[MouseEvent]>(),
         onDblclick: EventProp<[MouseEvent]>(),
+        surface: [String, Boolean] as PropType<EvDataTableSurface>,
     },
     "EvDataTableRow",
 );

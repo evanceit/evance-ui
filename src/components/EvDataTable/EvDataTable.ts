@@ -9,17 +9,13 @@ import { makeEvDataTableSearchProps } from "./EvDataTableSearch";
 import { DataTableItem } from "@/components/EvDataTable/composables/types";
 import { PropType } from "vue";
 import { InfiniteScrollMode, InfiniteScrollTarget } from "@/components";
+import { makeRoundedProps } from "@/composables/rounded";
+
+export type EvDataTableSurface = true | "panel" | undefined;
 
 export const makeEvDataTableProps = propsFactory(
     {
-        loading: Boolean,
-        page: { type: Number, default: 1 },
         itemsPerPage: { type: Number, default: 50 },
-        showHeaders: Boolean,
-        showFinished: {
-            type: Boolean,
-            default: false,
-        },
         infiniteScrollMode: {
             type: String as PropType<InfiniteScrollMode>,
             default: "intersect",
@@ -29,6 +25,15 @@ export const makeEvDataTableProps = propsFactory(
             String,
             Object,
         ] as PropType<InfiniteScrollTarget>,
+        loading: Boolean,
+        page: { type: Number, default: 1 },
+        showFinished: {
+            type: Boolean,
+            default: false,
+        },
+        showHeaders: Boolean,
+        surface: [String, Boolean] as PropType<EvDataTableSurface>,
+        rowSurface: [String, Boolean] as PropType<EvDataTableSurface>,
         "onClick:row": Function as PropType<
             (event: PointerEvent, item: DataTableItem) => void
         >,
@@ -39,6 +44,7 @@ export const makeEvDataTableProps = propsFactory(
             (event: PointerEvent, item: DataTableItem) => void
         >,
 
+        ...makeRoundedProps(),
         ...makeEvDataTableSearchProps(),
         ...makeDataTableHeaderProps(),
         ...makeDataTableItemsProps(),
