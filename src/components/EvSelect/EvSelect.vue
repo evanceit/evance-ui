@@ -74,6 +74,7 @@ const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
         "name",
+        "iconEnd",
     ]);
 });
 const isFocused = shallowRef(false);
@@ -86,17 +87,23 @@ const selectionCache = shallowRef<Map<any, ListItem>>(new Map());
 // Menu
 const evMenuRef = ref<typeof EvMenu>();
 const menuOpenProxy = useModelProxy(props, "menuOpen");
+const isMenuDisabled = computed(() => {
+    return (props.hideItemsEmpty && !items.value.length) || !!props.readonly;
+});
 const isMenuOpen = computed({
     get: () => menuOpenProxy.value,
     set: (value) => {
         if (menuOpenProxy.value && !value && evMenuRef.value?.openChildren) {
             return;
         }
+        if (value && isMenuDisabled.value) {
+            return;
+        }
         menuOpenProxy.value = value;
     },
 });
-const isMenuDisabled = computed(() => {
-    return (props.hideItemsEmpty && !items.value.length) || !!props.readonly;
+const iconEnd = computed(() => {
+    return !isMenuDisabled.value ? props.iconEnd : undefined;
 });
 
 // List
@@ -671,6 +678,7 @@ const isPlaceholder = computed(
                 'is-placeholder': isPlaceholder,
             },
         ]"
+        :icon-end="iconEnd"
         :model-value="fieldValue"
         :readonly="!isSearchable || props.readonly"
         :placeholder="model.length ? undefined : props.placeholder"

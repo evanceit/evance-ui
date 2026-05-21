@@ -14,8 +14,8 @@ import {
     EvLayout,
     EvQuickfind,
 } from "@/components";
-import {reactive, ref, shallowRef} from "vue";
-import {EvForm} from "../EvForm";
+import { reactive, ref, shallowRef } from "vue";
+import { EvForm } from "../EvForm";
 
 const meta: Meta<typeof EvSelect> = {
     component: EvSelect,
@@ -305,10 +305,13 @@ export const ItemsEmpty: Story = {
         },
         setup() {
             const items: any[] = [];
-            return { items, PlusIcon };
+            const hideMenu = ref(false);
+            return { items, PlusIcon, hideMenu };
         },
         template: `
-            <ev-select :items="items">
+            <ev-button @click="hideMenu = !hideMenu">Hide items empty {{ hideMenu }}</ev-button>
+            
+            <ev-select tags multiple :items="items" :hide-items-empty="hideMenu" behavior="combobox">
                 <template #items-empty>
                     <div style="padding: 2rem; text-align: center">
                         <h4>Oops, no items</h4>
