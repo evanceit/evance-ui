@@ -64,7 +64,7 @@ const gapClass = computed(() => {
             appearanceClass,
             variantClass,
             {
-                'is-rounded': props.rounded,
+                'is-rounded-pill': props.rounded,
                 'is-grow': props.grow,
             },
             props.class,

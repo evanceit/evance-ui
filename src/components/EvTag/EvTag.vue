@@ -133,7 +133,7 @@ const { appearanceClass, variantClass } = useAppearance(
                 'is-clickable': isClickable,
                 'is-disabled': props.disabled,
                 'is-filter': hasFilter,
-                'is-rounded': props.rounded,
+                'is-rounded-pill': props.rounded,
             },
             group?.selectedClass.value,
             appearanceClass,

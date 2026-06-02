@@ -194,7 +194,7 @@ const dataFormTypeProp = computed(() => {
             :class="[
                 'ev-textfield--control',
                 {
-                    'is-rounded': props.rounded,
+                    'is-rounded-pill': props.rounded,
                     'is-monospace': !!props.monospace,
                 },
                 appearanceModifier(props.appearance, [InputAppearance.default]),

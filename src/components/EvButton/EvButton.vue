@@ -183,7 +183,7 @@ const iconEnd = computed(() => {
                 'is-fullwidth': props.fullWidth,
                 'is-loading': props.loading,
                 'is-readonly': props.readonly,
-                'is-rounded': props.rounded,
+                'is-rounded-pill': props.rounded,
                 'is-clickable': isClickable,
             },
             props.class,

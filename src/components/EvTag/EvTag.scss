@@ -85,13 +85,3 @@
 
     @include mixins.generate-appearances(tag, true);
 }
-
-
-/**
-    ## Rounded modifier
-*/
-.ev-tag {
-    &.is-rounded {
-        border-radius: 999px;
-    }
-}
