@@ -56,7 +56,9 @@ watch(
 const evMenuRef = ref<typeof EvMenu>();
 const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
-    return omit(filterComponentProps(EvTextfield, props), ["modelValue"]);
+    return omit(filterComponentProps(EvTextfield, props), [
+        "modelValue",
+    ]);
 });
 const isFocused = shallowRef(false);
 
@@ -225,10 +227,11 @@ function onFieldInput(e: Event) {
         ref="evTextfieldRef"
         v-bind="evTextfieldProps"
         v-model:focused="isFocused"
-        class="ev-time-field"
+        :class="['ev-time-field', formField.classes, props.class]"
         inputmode="numeric"
         pattern="[0-9:]*"
         :model-value="displayValue"
+        :error-messages="formField.errorMessages"
         @click:control="onFieldFocus"
         @blur="onFieldBlur"
         @keydown="onFieldKeydown"

@@ -42,6 +42,22 @@ async function onSubmit($event) {
                 name: "user[gender]",
                 message: "Error from server",
             },
+            {
+                name: "user[expires]",
+                message: "Error from server",
+            },
+            {
+                name: "user[expires_time]",
+                message: "Error from server",
+            },
+            {
+                name: "user[rating]",
+                message: "Error from server",
+            },
+            {
+                name: "user[type]",
+                message: "Error from server",
+            },
         ]);
     }
 }
@@ -64,8 +80,7 @@ const isValid = ref(null);
             <ev-textfield
                 class="mb-300"
                 label="Username"
-                name="user[name]"
-                :validators="[required]" />
+                name="user[name]"  />
 
             <ev-textfield
                 v-for="(_, attributeIndex) in data.attributes"
@@ -82,6 +97,18 @@ const isValid = ref(null);
                 <ev-radio value="male" label="Male" />
                 <ev-radio value="female" label="Female" />
             </ev-radio-group>
+
+            <ev-date-field label="Expiry date" name="user[expires]" />
+
+            <ev-time-field label="Expiry time" name="user[expires_time]" />
+
+            <ev-number-field
+                show-buttons
+                align="center"
+                label="Rating 1 to 5"
+                name="user[rating]" />
+
+            <ev-select label="Type" name="user[type]" />
 
             <ev-button-group class="mb-300">
                 <ev-button

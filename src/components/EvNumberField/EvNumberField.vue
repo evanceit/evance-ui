@@ -28,7 +28,6 @@ const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
-        "name",
     ]);
 });
 
@@ -357,15 +356,16 @@ const hasSuffix = computed(() => {
         v-bind="evTextfieldProps"
         v-model="inputValue"
         :validation-value="modelValue"
-        class="ev-number-field"
+        :class="['ev-number-field', formField.classes, props.class]"
+        :error-messages="formField.errorMessages"
         type="text"
         @paste="onPaste"
         @blur="onBlur"
         @focus="onFocus"
         @keydown="onInputKeydown"
         @keyup="onInputKeyup">
-        <template v-if="props.label || slots.label" #label>
-            <slot name="label">{{ props.label }}</slot>
+        <template v-if="slots.label" #label>
+            <slot name="label" />
         </template>
         <template v-if="hasPrefix" #prefix>
             <ev-button

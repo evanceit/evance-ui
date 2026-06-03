@@ -73,7 +73,6 @@ const evTextfieldRef = ref();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
-        "name",
         "iconEnd",
     ]);
 });
@@ -677,12 +676,15 @@ const isPlaceholder = computed(
                 'is-selecting': selectionIndex > -1,
                 'is-placeholder': isPlaceholder,
             },
+            formField.classes,
+            props.class,
         ]"
         :icon-end="iconEnd"
         :model-value="fieldValue"
         :readonly="!isSearchable || props.readonly"
         :placeholder="model.length ? undefined : props.placeholder"
         :validation-value="validationValue"
+        :error-messages="formField.errorMessages"
         @blur="onFieldBlur"
         @change="onFieldChange"
         @click:clear="onFieldClear"
