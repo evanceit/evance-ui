@@ -168,6 +168,7 @@ defineExpose({
         v-model="displayValue"
         v-model:focused="isFocused"
         class="ev-date-field"
+        :error-messages="formField.errorMessages"
         :validation-value="modelValue"
         @click:control="onFieldFocus"
         @blur="onFieldBlur"
