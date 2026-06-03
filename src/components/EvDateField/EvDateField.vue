@@ -55,7 +55,7 @@ const formField = useFormField(
         return wrapInArray(inferredFormat.date);
     },
     (value) => {
-        const v = value[0] ?? null;
+        const v = value ? value[0] ?? null : null;
         return inferredFormat.transformOut(v) as unknown as
             | Date
             | string

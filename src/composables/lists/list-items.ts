@@ -200,6 +200,9 @@ export function useItems(props: any) {
     }
 
     function transformOut(value: ListItem[]): any[] {
+        if (!value) {
+            return [];
+        }
         return props.returnObject
             ? value.map(({ raw }) => raw)
             : value.map(({ value }) => value);
