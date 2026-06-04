@@ -431,6 +431,13 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
                 }, 250);
             }
 
+            function required(value: [] | null) {
+                if (!value?.length) {
+                    return "Minimum of 1 required";
+                }
+                return true;
+            }
+
             return {
                 args,
                 items,
@@ -440,6 +447,7 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
                 onMenuOpen,
                 onSearch,
                 formData,
+                required,
             };
         },
 
@@ -462,6 +470,7 @@ export const ServerSideAutocompleteWithSelectionCache: Story = {
                         items-empty-text="No matching users"
                         @update:menu-open="onMenuOpen"
                         @update:search="onSearch"
+                        :validators="[required]"
                     />
     
                     <pre style="margin-top: 16px;">formData: {{ formData }}</pre>

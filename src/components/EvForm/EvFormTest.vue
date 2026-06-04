@@ -10,6 +10,7 @@ import {
     EvTextfield,
 } from "@/components";
 import { PlusIcon, ReloadIcon } from "@/icons";
+import { Validators } from "@/validation";
 
 const data = reactive({
     user: {
@@ -62,9 +63,7 @@ async function onSubmit($event) {
     }
 }
 
-const required = (value) => {
-    return value ? true : "Required";
-};
+const required = Validators.required();
 
 const isValid = ref(null);
 </script>
@@ -78,37 +77,47 @@ const isValid = ref(null);
             v-model:data="data"
             @submit.prevent="onSubmit">
             <ev-textfield
-                class="mb-300"
                 label="Username"
-                name="user[name]"  />
+                name="user[name]"
+                :validators="[required]"  />
 
             <ev-textfield
                 v-for="(_, attributeIndex) in data.attributes"
                 :key="attributeIndex"
                 autofocus
                 clearable
-                class="mb-300"
                 label="Attribute title"
                 :validators="[required]"
                 :name="`attributes[${attributeIndex}][title]`"
                 @click:clear="removeAttribute(attributeIndex)" />
 
-            <ev-radio-group name="user[gender]" label="Gender" class="mb-300">
+            <ev-radio-group name="user[gender]" label="Gender">
                 <ev-radio value="male" label="Male" />
                 <ev-radio value="female" label="Female" />
             </ev-radio-group>
 
-            <ev-date-field label="Expiry date" name="user[expires]" />
+            <ev-date-field
+                label="Expiry date"
+                name="user[expires]"
+                :validators="[required]" />
 
-            <ev-time-field label="Expiry time" name="user[expires_time]" />
+            <ev-time-field
+                label="Expiry time"
+                name="user[expires_time]"
+                :validators="[required]" />
 
             <ev-number-field
                 show-buttons
                 align="center"
                 label="Rating 1 to 5"
-                name="user[rating]" />
+                name="user[rating]"
+                :validators="[required]" />
 
-            <ev-select label="Type" name="user[type]" />
+            <ev-select
+                label="Type"
+                name="user[type]"
+                :validators="[required]"
+                :items="['', 'option 1', 'option 2']" />
 
             <ev-button-group class="mb-300">
                 <ev-button

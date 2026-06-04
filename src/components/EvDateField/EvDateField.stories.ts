@@ -9,6 +9,7 @@ import EvDatePickerStories from "@/components/EvDatePicker/EvDatePicker.stories"
 import { EvButtonGroup } from "@/components/EvButtonGroup";
 import { EvButton } from "@/components/EvButton";
 import { EvForm } from "../EvForm";
+import { Validators } from "@/validation";
 
 const meta: Meta<typeof EvDateField> = {
     component: EvDateField,
@@ -32,7 +33,8 @@ export const Primary: Story = {
     render: (args: any) => ({
         components: { EvDateField, EvButtonGroup, EvButton },
         setup() {
-            return { args };
+            const required = Validators.required();
+            return { args, required };
         },
         data() {
             return {
@@ -42,7 +44,11 @@ export const Primary: Story = {
         template: `
             <p>Selected date: "{{ modelValue }}"</p>
             
-            <ev-date-field v-bind="args" v-model="modelValue" @select="(v) => console.log(v)" />
+            <ev-date-field 
+                v-bind="args" 
+                v-model="modelValue" 
+                @select="(v) => console.log(v)" 
+                :validators="[required]" />
 
             <br />
             <ev-button-group class="mb-200">

@@ -6,7 +6,8 @@ import {
     onMounted,
     Ref,
     ref,
-    shallowRef, toRaw,
+    shallowRef,
+    toRaw,
     watch,
 } from "vue";
 import { FormFieldProps, Validator } from "@/composables/validation";
@@ -58,12 +59,19 @@ export class FormField {
             },
         );
 
+        const useFormModel = computed(() => {
+            if (props.modelSource === "model") {
+                return false;
+            }
+            return !!form?.data.value && !!props.name;
+        });
+
         this.model = computed({
             get() {
                 let externalValue: any;
                 if (group) {
                     externalValue = group.model.value;
-                } else if (form?.data.value && props.name) {
+                } else if (useFormModel.value) {
                     externalValue = getPropertyValueByPath(
                         form.data.value,
                         props.name,
@@ -84,7 +92,7 @@ export class FormField {
                 }
                 if (group) {
                     group.model.value = newValue;
-                } else if (form?.data.value && props.name) {
+                } else if (useFormModel.value) {
                     setPropertyValueByPath(
                         form.data.value,
                         props.name,
@@ -103,7 +111,7 @@ export class FormField {
         // We use a computed() Ref here for a valid watch()
         this.validationModel = computed(() => {
             return this.props.validationValue === undefined
-                ? this.model.value
+                ? transformOut(this.model.value)
                 : this.props.validationValue;
         });
 
@@ -124,7 +132,7 @@ export class FormField {
         useToggleScope(
             () => this.validateOn.input,
             () => {
-                watch(this.validationModel, () => {
+                watch(this.validationModel, (newValue, oldValue) => {
                     if (this.validationModel.value != null) {
                         this.validate();
                     } else if (this.isFocused) {
@@ -228,17 +236,12 @@ export class FormField {
         if (this.props.error) {
             return false;
         }
-        if (!this.props.validators.length) {
-            // @todo: determine if this is needed
-            // I commented it out since it prevents server-side errors from being added
-            // return true;
-        }
         if (this.isPristine) {
-            return this.messages.value.length || this.validateOn.lazy
+            return this.errorMessages.length || this.validateOn.lazy
                 ? null
                 : true;
         } else {
-            return !this.messages.value.length;
+            return !this.errorMessages.length;
         }
     }
 

@@ -58,6 +58,8 @@ const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
+        "shapers",
+        "validators",
     ]);
 });
 const isFocused = shallowRef(false);
@@ -231,6 +233,7 @@ function onFieldInput(e: Event) {
         inputmode="numeric"
         pattern="[0-9:]*"
         :model-value="displayValue"
+        model-source="model"
         :error-messages="formField.errorMessages"
         @click:control="onFieldFocus"
         @blur="onFieldBlur"

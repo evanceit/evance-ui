@@ -18,20 +18,12 @@ export interface ValidationError {
  * # Validation Result
  */
 export type ValidationResult = string | true;
-
-/**
- * # Validator
- */
 export type Validator<T = any> = (
     value: T,
 ) => ValidationResult | Promise<ValidationResult>;
-
 export type Shaper<T = unknown> = (value: T) => T;
-
-/**
- * # Validate On Event
- */
 export type ValidateOnEvent = "blur" | "input" | "submit";
+export type ModelSource = "auto" | "form" | "model";
 
 /**
  * # Form Field Props
@@ -47,6 +39,7 @@ export interface FormFieldProps {
     shapers?: Shaper[];
     validators: Validator[];
     modelValue?: any;
+    modelSource?: ModelSource;
     validateOn?:
         | ValidateOnEvent
         | `${ValidateOnEvent} lazy`
@@ -75,6 +68,10 @@ export const makeFormFieldProps = propsFactory(
             default: [],
         },
         modelValue: null,
+        modelSource: {
+            type: String as PropType<FormFieldProps["modelSource"]>,
+            default: "auto",
+        },
         validateOn: String as PropType<FormFieldProps["validateOn"]>,
         validationValue: null,
 

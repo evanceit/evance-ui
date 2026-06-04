@@ -72,8 +72,10 @@ const slots = useSlots();
 const evTextfieldRef = ref();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
-        "modelValue",
         "iconEnd",
+        "modelValue",
+        "shapers",
+        "validators",
     ]);
 });
 const isFocused = shallowRef(false);
@@ -656,7 +658,6 @@ watch(isMenuOpen, () => {
     });
 });
 
-const validationValue = computed(() => model.value);
 const isPlaceholder = computed(
     () => !selections.value.length && !!slots.placeholder,
 );
@@ -681,9 +682,9 @@ const isPlaceholder = computed(
         ]"
         :icon-end="iconEnd"
         :model-value="fieldValue"
+        model-source="model"
         :readonly="!isSearchable || props.readonly"
         :placeholder="model.length ? undefined : props.placeholder"
-        :validation-value="validationValue"
         :error-messages="formField.errorMessages"
         @blur="onFieldBlur"
         @change="onFieldChange"

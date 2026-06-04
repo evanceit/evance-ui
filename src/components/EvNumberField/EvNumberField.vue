@@ -28,6 +28,8 @@ const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
+        "shapers",
+        "validators",
     ]);
 });
 
@@ -355,7 +357,7 @@ const hasSuffix = computed(() => {
         ref="evTextfieldRef"
         v-bind="evTextfieldProps"
         v-model="inputValue"
-        :validation-value="modelValue"
+        model-source="model"
         :class="['ev-number-field', formField.classes, props.class]"
         :error-messages="formField.errorMessages"
         type="text"

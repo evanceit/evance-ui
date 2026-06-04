@@ -6,14 +6,18 @@
     justify-content: space-around;
 }
 
+.ev-date-picker-month--weekday {
+    color: var(--text-subtle);
+}
+
 .ev-date-picker-month--day,
 .ev-date-picker-month--weekday {
     align-items: center;
     display: flex;
     justify-content: center;
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
 }
 
 .ev-date-picker-month--day {

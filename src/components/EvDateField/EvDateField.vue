@@ -33,6 +33,8 @@ const evTextfieldRef = ref<typeof EvTextfield>();
 const evTextfieldProps = computed(() => {
     return omit(filterComponentProps(EvTextfield, props), [
         "modelValue",
+        "shapers",
+        "validators",
     ]);
 });
 const isFocused = shallowRef(false);
@@ -168,7 +170,7 @@ defineExpose({
         v-model:focused="isFocused"
         :class="['ev-date-field', formField.classes, props.class]"
         :error-messages="formField.errorMessages"
-        :validation-value="modelValue"
+        model-source="model"
         @click:control="onFieldFocus"
         @blur="onFieldBlur"
         @click:clear="onClearInput"
