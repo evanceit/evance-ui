@@ -13,6 +13,12 @@ export type InfiniteScrollTarget =
     | HTMLElement
     | ComponentPublicInstance
     | undefined;
+export interface InfiniteScrollLoadEvent {
+    side: InfiniteScrollSide;
+    done: () => void;
+    error: () => void;
+    next: () => void;
+}
 
 export const makeEvInfiniteScrollProps = propsFactory(
     {

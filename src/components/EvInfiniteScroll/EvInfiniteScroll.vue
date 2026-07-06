@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import "./EvInfiniteScroll.scss";
 import {
+    InfiniteScrollLoadEvent,
     InfiniteScrollSide,
     InfiniteScrollStatus,
     makeEvInfiniteScrollProps,
@@ -28,15 +29,7 @@ const slots = defineSlots<{
     }): never;
 }>();
 const emit = defineEmits<{
-    (
-        e: "load",
-        options: {
-            side: InfiniteScrollSide;
-            done: () => void;
-            error: () => void;
-            next: () => void;
-        },
-    ): true;
+    (e: "load", options: InfiniteScrollLoadEvent): true;
 }>();
 const dimensions = useDimensions(props);
 const rootEl = ref<HTMLDivElement>();
