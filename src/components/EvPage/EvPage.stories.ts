@@ -11,15 +11,16 @@ const meta: Meta<typeof EvPage> = {
             control: "select",
             options: [undefined, "small", "medium", "large"],
         },
-        sunken: {
+        elevation: {
             description:
                 "The `<ev-page>` component uses `<ev-surface>` as its base and is scrollable by default, " +
-                "but only supports the `default` or `sunken` elevation.",
-            control: "boolean",
+                "with a default elevation of `sunken`. This allows panels to stand out more on a page's backdrop.",
+            control: "select",
+            options: [undefined, "default", "sunken"],
         },
     },
     args: {
-        sunken: false,
+        elevation: undefined,
     },
     tags: ["autodocs"],
 };
