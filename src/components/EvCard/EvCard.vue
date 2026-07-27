@@ -109,7 +109,7 @@ function onClick(e: MouseEvent): void {
             </ev-card-content>
             <slot name="default" />
             <ev-card-actions
-                v-if="slots.actions || props.actions"
+                v-if="slots.actions || props.actions?.length"
                 v-bind="actionProps">
                 <slot name="actions" />
             </ev-card-actions>

@@ -172,6 +172,8 @@ export const Primary: Story = {
 
             return { args, actions };
         },
-        template: `<ev-card v-bind="args" :actions="actions" />`,
+        template: `
+            <ev-card v-bind="args" :actions="actions" />
+        `,
     }),
 };
