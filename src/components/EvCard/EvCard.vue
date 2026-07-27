@@ -50,11 +50,8 @@ const isClickable = computed(() => link.isClickable.value);
 const componentElement = computed(() => {
     return link.isLink.value ? "a" : props.tag;
 });
-const hasActions = computed(() => {
-    return props.actions || slots.actions;
-});
-const hasContent = computed(() => {
-    return slots.text || props.text || props.title || props.eyebrow;
+const hasContentProps = computed(() => {
+    return props.text || props.title || props.eyebrow;
 });
 const isDisabled = computed(() => props.disabled);
 const isLink = computed(() => link.isLink.value);
@@ -102,14 +99,18 @@ function onClick(e: MouseEvent): void {
             <slot name="prefix" />
         </div>
         <div class="ev-card--body">
-            <ev-card-content v-if="hasContent" v-bind="contentProps">
+            <ev-card-content
+                v-if="slots.text || hasContentProps"
+                v-bind="contentProps">
                 <template v-if="slots.icon" #icon>
                     <slot name="icon" />
                 </template>
                 <slot name="text" />
             </ev-card-content>
             <slot name="default" />
-            <ev-card-actions v-if="hasActions" v-bind="actionProps">
+            <ev-card-actions
+                v-if="slots.actions || props.actions"
+                v-bind="actionProps">
                 <slot name="actions" />
             </ev-card-actions>
         </div>
