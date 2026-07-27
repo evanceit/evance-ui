@@ -56,6 +56,23 @@ const hasActions = computed(() => {
 const hasContent = computed(() => {
     return slots.text || props.text || props.title || props.eyebrow;
 });
+const isDisabled = computed(() => props.disabled);
+const isLink = computed(() => link.isLink.value);
+
+function onClick(e: MouseEvent): void {
+    if (
+        isDisabled.value ||
+        (isLink.value &&
+            (e.metaKey ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.button !== 0 ||
+                attrs.target === "_blank"))
+    ) {
+        return;
+    }
+    link.navigate?.(e);
+}
 </script>
 
 <template>
@@ -76,7 +93,8 @@ const hasContent = computed(() => {
         :elevation="props.elevation"
         :rounded="props.rounded"
         :style="props.style"
-        :tabindex="isClickable ? 0 : undefined">
+        :tabindex="isClickable ? 0 : undefined"
+        @click="onClick">
         <div v-if="slots.header" class="ev-card--header">
             <slot name="header" />
         </div>
