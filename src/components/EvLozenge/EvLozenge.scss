@@ -1,6 +1,7 @@
 @use "@/css/mixins";
 
 .ev-lozenge {
+    --lozenge-font-weight: var(--font-weight-medium, 700);
     align-items: center;
     border-radius: 3px;
     display: inline-flex;
@@ -10,14 +11,13 @@
 }
 
 .ev-lozenge--label {
-    font-size: 0.6875rem;
-    font-weight: var(--font-weight-bold, 700);
+    font-size: 0.75rem;
+    font-weight: var(--lozenge-font-weight, 700);
     line-height: 1.375rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05rem;
     overflow: hidden;
     padding-inline: var(--spacer-50, 4px);
     text-overflow: ellipsis;
-    text-transform: uppercase;
     white-space: nowrap;
 }
 
@@ -48,5 +48,9 @@
         &.is-variant-subtle {
             --lozenge-appearance-background: transparent;
         }
+    }
+
+    &.is-variant-bold {
+        --lozenge-font-weight: var(--font-weight-semibold, 700);
     }
 }

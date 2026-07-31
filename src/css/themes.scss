@@ -58,9 +58,9 @@
     --fill-neutral: #{settings.token('neutral.200A')};
     --fill-neutral-hovered: #{settings.token('neutral.300A')};
     --fill-neutral-pressed: #{settings.token('neutral.400A')};
-    --fill-neutral-bold: #{settings.token('neutral.500')};
-    --fill-neutral-bold-hovered: #{settings.token('neutral.600')};
-    --fill-neutral-bold-pressed: #{settings.token('neutral.700')};
+    --fill-neutral-bold: #{settings.token('neutral.700')};
+    --fill-neutral-bold-hovered: #{settings.token('neutral.800')};
+    --fill-neutral-bold-pressed: #{settings.token('neutral.900')};
     --fill-neutral-subtle: transparent;
     --fill-neutral-subtle-hovered: #{settings.token('neutral.200A')};
     --fill-neutral-subtle-pressed: #{settings.token('neutral.300A')};
@@ -216,9 +216,9 @@
     --fill-neutral: #{settings.token('dark-neutral.200A')};
     --fill-neutral-hovered: #{settings.token('dark-neutral.300A')};
     --fill-neutral-pressed: #{settings.token('dark-neutral.400A')};
-    --fill-neutral-bold: #{settings.token('dark-neutral.500')};
-    --fill-neutral-bold-hovered: #{settings.token('dark-neutral.600')};
-    --fill-neutral-bold-pressed: #{settings.token('dark-neutral.700')};
+    --fill-neutral-bold: #{settings.token('dark-neutral.700')};
+    --fill-neutral-bold-hovered: #{settings.token('dark-neutral.800')};
+    --fill-neutral-bold-pressed: #{settings.token('dark-neutral.900')};
     --fill-neutral-subtle: transparent;
     --fill-neutral-subtle-hovered: #{settings.token('dark-neutral.200A')};
     --fill-neutral-subtle-pressed: #{settings.token('dark-neutral.300A')};
