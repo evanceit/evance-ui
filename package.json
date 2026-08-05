@@ -1,6 +1,6 @@
 {
     "name": "@evance/evance-ui",
-    "version": "1.1.70",
+    "version": "1.1.71",
     "description": "Evance UI Component Library based on Vuetify",
     "private": false,
     "author": "Geoff Willings <geoff@evance.io>",

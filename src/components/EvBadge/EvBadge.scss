@@ -9,7 +9,7 @@
     align-items: center;
     border-radius: 1rem;
     display: inline-flex;
-    font-weight: var(--font-weight-bold, 700);
+    font-weight: var(--font-weight-semibold, 600);
     font-size: 0.75rem;
     height: 1.25rem;
     justify-content: center;
@@ -40,10 +40,10 @@
 .ev-badge {
     &.is-inline {
         align-items: center;
-        padding: 0 0.25rem;
 
         .ev-badge--content {
             position: relative;
+            margin-inline-start: 0.5em;
         }
     }
 }
