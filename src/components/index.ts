@@ -53,6 +53,7 @@ export * from "./EvRadioGroup";
 export * from "./EvResponsive";
 export * from "./EvSection";
 export * from "./EvSelect";
+export * from "./EvSkeleton";
 export * from "./EvSlideGroup";
 export * from "./EvSurface";
 export * from "./EvSwitch";
