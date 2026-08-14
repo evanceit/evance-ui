@@ -4,6 +4,7 @@ import { EvTextfield } from "../EvTextfield";
 import { SearchIcon } from "@/icons";
 import { InputAppearance, InputSize } from "@/util";
 import { Shapers } from "../../validation";
+import { ref } from "vue";
 
 const meta: Meta<typeof EvTextfield> = {
     component: EvTextfield,
@@ -237,6 +238,7 @@ const meta: Meta<typeof EvTextfield> = {
         size: InputSize.default,
         suffix: "",
         type: "text",
+        mask: undefined,
     },
     tags: ["autodocs"],
 };
@@ -280,7 +282,11 @@ export const InputMaskStory: Story = {
                 { format: "#### #### ####", match: /^30|^36|^38/ }, // Diners (14 digits)
                 { format: "#### #### #### ####" }, // Visa/MC/etc. — catch-all
             ];
-            return { args, masking };
+
+            const expiryDateMask = { format: "##/##", emit: "masked" };
+            const panValue = ref("");
+            const expValue = ref("");
+            return { args, masking, expiryDateMask, panValue, expValue };
         },
         template: `
             
@@ -293,7 +299,18 @@ export const InputMaskStory: Story = {
                 </code>
             </p>
             
-            <ev-textfield :mask="masking" />
+            <ev-textfield :mask="masking" label="Example credit/debit card format" v-model="panValue" />
+            <p>
+                {{ panValue }}
+            </p>
+
+            <br />
+            
+            <ev-textfield label="Example expiry date format" :mask="expiryDateMask" placeholder="mm/yy" v-model="expValue" />
+
+            <p>
+                {{ expValue }}
+            </p>
         `,
     }),
 };
