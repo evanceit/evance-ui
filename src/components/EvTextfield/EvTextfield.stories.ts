@@ -47,7 +47,8 @@ const meta: Meta<typeof EvTextfield> = {
         },
         hint: {
             control: "text",
-            description: "Add a description to the label in smaller/lighter text",
+            description:
+                "Add a description to the label in smaller/lighter text",
         },
         modelValue: {
             control: "text",
@@ -173,25 +174,25 @@ const meta: Meta<typeof EvTextfield> = {
                 "The `v-model` value is always the **raw** (unformatted) string — spaces and " +
                 "other literals inserted by the mask are stripped before emitting.\n\n" +
                 "**Shorthand** — pass a format string directly:\n\n" +
-                "```\nmask=\"#### #### #### ####\"\n```\n\n" +
+                '```\nmask="#### #### #### ####"\n```\n\n' +
                 "**Config object** — for full control:\n\n" +
                 "```js\n" +
-                ":mask=\"{\n" +
+                ':mask="{\n' +
                 "  format:      '#### #### #### ####', // required\n" +
                 "  placeholder: '_',                   // char shown for unfilled positions (omit for lazy mode)\n" +
                 "  emit:        'raw',                 // 'raw' (default) | 'masked'\n" +
                 "  match:       /^4/,                  // RegExp or (raw) => boolean, used for multi-mask selection\n" +
                 "  tokens:      { '#': { pattern: /\\d/, transform: v => v } } // override default tokens\n" +
-                "}\"\n" +
+                '}"\n' +
                 "```\n\n" +
                 "**Multiple masks** — pass an array; the first mask whose `match` predicate " +
                 "tests `true` against the current raw value is used. Masks without `match` act " +
                 "as catch-all fallbacks:\n\n" +
                 "```js\n" +
-                ":mask=\"[\n" +
+                ':mask="[\n' +
                 "  { format: '#### ###### #####', match: /^3[47]/ }, // Amex\n" +
                 "  { format: '#### #### #### ####' }                 // catch-all\n" +
-                "]\"\n" +
+                ']"\n' +
                 "```\n\n" +
                 "**Default tokens:**\n\n" +
                 "| Token | Accepts |\n" +
@@ -269,7 +270,6 @@ export const Primary: Story = {
         `,
     }),
 };
-
 
 export const InputMaskStory: Story = {
     render: (args: any) => ({
