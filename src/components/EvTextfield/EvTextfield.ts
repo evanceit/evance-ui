@@ -9,6 +9,7 @@ import { makeFormFieldProps } from "@/composables/validation";
 import { makeComponentProps } from "@/composables/component";
 import { makeLabelProps } from "@/components/EvLabel";
 import { PropType } from "vue";
+import { MaskInput } from "@/composables/useInputMask";
 
 export type AutocompleteToken =
     | "on"
@@ -110,6 +111,10 @@ export const makeEvTextfieldProps = propsFactory(
             default: "text",
         },
         monospace: Boolean,
+        mask: {
+            type: [String, Object, Array] as PropType<MaskInput>,
+            default: undefined,
+        },
 
         ...makeLabelProps(),
         ...makeTextAlignProps(),

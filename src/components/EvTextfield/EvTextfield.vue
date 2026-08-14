@@ -5,6 +5,7 @@
 import "./EvTextfield.scss";
 import { makeEvTextfieldProps } from "./EvTextfield";
 import { computed, nextTick, ref, useAttrs } from "vue";
+import { useInputMask } from "@/composables/useInputMask";
 import { EvIcon, useIcon } from "@/components/EvIcon";
 import { CancelIcon } from "@/icons";
 import {
@@ -58,6 +59,20 @@ const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const formField = useFormField(props);
+
+const isMasked = computed(() => !!props.mask);
+const maskProp = computed(() => props.mask);
+const fieldValueRef = computed({
+    get: () => formField.value as string | null | undefined,
+    set: (v) => { formField.value = v; },
+});
+const inputMask = useInputMask(
+    maskProp,
+    fieldValueRef,
+    (v) => { formField.value = v; },
+    inputRef,
+);
+
 const isClearable = computed(() => {
     return props.clearable && !!formField.value;
 });
@@ -227,7 +242,6 @@ const dataFormTypeProp = computed(() => {
                 <input
                     :id="formField.id"
                     ref="inputRef"
-                    v-model="formField.value"
                     v-autofocus
                     class="ev-textfield--input-native"
                     :type="props.type"
@@ -238,7 +252,23 @@ const dataFormTypeProp = computed(() => {
                     :placeholder="props.placeholder"
                     :autocomplete="autocompleteProp"
                     :data-form-type="dataFormTypeProp"
+                    :value="
+                        isMasked
+                            ? inputMask.displayValue.value
+                            : formField.value
+                    "
                     v-bind="inputAttrs"
+                    @input="
+                        isMasked
+                            ? inputMask.onInput($event)
+                            : (formField.value = (
+                                  $event.target as HTMLInputElement
+                              ).value)
+                    "
+                    @keydown="
+                        isMasked ? inputMask.onKeydown($event) : undefined
+                    "
+                    @paste="isMasked ? inputMask.onPaste($event) : undefined"
                     @focus="onFocus"
                     @blur="formField.blur" />
             </div>
