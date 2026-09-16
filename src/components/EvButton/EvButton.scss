@@ -11,7 +11,7 @@
     display: inline-flex;
     font-size: var(--text-size-medium);
     font-weight: var(--font-weight-semibold);
-    height: var(--button-size);
+    min-height: var(--button-size);
     line-height: 1.15;
     justify-content: center;
     padding-inline: calc((var(--button-size) - var(--icon-size-medium)) / 2);

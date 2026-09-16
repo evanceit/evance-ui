@@ -1,0 +1,156 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Utilities / debounce" />
+
+# `debounce`
+
+Creates a debounced version of a function. The wrapped function runs only after
+it has stopped being called for the configured delay.
+
+This is useful for events that may fire rapidly, such as search input, window
+resizing, scrolling, or validation while typing.
+
+## Import
+
+```ts
+import { debounce } from "@evance/evance-ui";
+```
+
+## Parameters
+
+| Parameter | Type               | Description                                                                              |
+|-----------|--------------------|------------------------------------------------------------------------------------------|
+| `fn`      | `T`                | The function to debounce.                                                                |
+| `delay`   | `MaybeRef<number>` | The delay in milliseconds. This can be either a number or a Vue ref containing a number. |
+
+## Return value
+
+Returns a debounced function that accepts the same arguments as `fn`. It also
+provides two additional methods:
+
+| Method               | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `clear()`            | Cancels the currently scheduled invocation, if one exists.             |
+| `immediate(...args)` | Calls the original function immediately, bypassing the debounce delay. |
+
+## Basic usage
+
+```ts
+const search = debounce((query: string) => {
+    console.log(`Searching for: ${query}`);
+}, 300);
+
+search('cam');
+search('camera');
+search('camera lens');
+```
+
+Each call resets the timer. In this example, only the final call is executed,
+300 milliseconds after the last invocation:
+
+```text
+Searching for: camera lens
+```
+
+
+## Using a reactive delay
+
+The delay can be supplied as a Vue ref. Its current value is read whenever the
+debounced function is called.
+
+```ts
+import { ref } from 'vue';
+
+const delay = ref(300);
+
+const save = debounce((value: string) => {
+    console.log('Saving:', value);
+}, delay);
+
+save('Draft');
+
+delay.value = 500;
+save('Updated draft');
+```
+
+The second call resets the pending invocation and schedules it using the new
+500 millisecond delay.
+
+## Cancelling a pending invocation
+
+Use `clear()` when the scheduled call is no longer required, such as when a
+component is unmounted.
+
+```ts
+const updateResults = debounce((query: string) => {
+    // Fetch results...
+}, 300);
+
+updateResults('example');
+updateResults.clear();
+```
+
+With Vue, it can be cleaned up as follows:
+
+```ts
+import { onUnmounted } from 'vue';
+
+onUnmounted(() => {
+    updateResults.clear();
+});
+```
+
+## Calling the function immediately
+
+Use `immediate()` to bypass the delay and invoke the original function
+directly:
+
+```ts
+const validate = debounce((value: string) => {
+    return value.length > 0;
+}, 300);
+
+validate('Example');
+
+const isValid = validate.immediate('Example');
+```
+
+Calling `immediate()` does not cancel an invocation already scheduled by the
+debounced function. Call `clear()` first if the pending invocation should not
+also run:
+
+```ts
+validate.clear();
+const isValid = validate.immediate('Example');
+```
+
+## Behaviour notes
+
+- Execution occurs on the trailing edge of the delay.
+- Repeated calls reset the timer and only the most recent arguments are used.
+- `clear()` is safe to call when no invocation is pending.
+- The debounced call does not return the value produced by `fn`, because `fn`
+runs asynchronously after the delay.
+- `immediate()` is the original function and therefore returns its value
+normally.
+- The wrapper does not preserve a dynamic `this` context. Prefer passing a
+bound function or using an arrow function when context is required.
+
+## Example in a Vue component
+
+```ts
+import { onUnmounted, ref } from 'vue';
+
+const query = ref('');
+const results = ref<SearchResult[]>([]);
+
+const runSearch = debounce(async (value: string) => {
+    results.value = await searchApi(value);
+}, 300);
+
+function onQueryInput(): void {
+    runSearch(query.value);
+}
+
+onUnmounted(runSearch.clear);
+```
