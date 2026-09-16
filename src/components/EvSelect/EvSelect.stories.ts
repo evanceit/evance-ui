@@ -152,7 +152,9 @@ export const Primary: Story = {
 
             return { args, items, requiredValidator };
         },
-        template: `<ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />`,
+        template: `
+            <ev-select v-bind="args" v-model="selected" :items="items" :validators="[requiredValidator]" />
+        `,
     }),
 };
 

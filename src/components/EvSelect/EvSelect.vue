@@ -250,6 +250,9 @@ function onFieldBlur(e: FocusEvent) {
         isMenuOpen.value = false;
     }
     selectionIndex.value = -1;
+    if (props.behavior === "combobox" && !!search.value) {
+        select(transformItem(props as any, search.value) as ListItem);
+    }
 }
 
 /**
@@ -289,6 +292,9 @@ function onFieldClear(e: MouseEvent) {
  */
 function onFieldInput(e: InputEvent) {
     search.value = (e.target as HTMLInputElement).value;
+    if (!props.multiple && props.behavior === "combobox") {
+        model.value = [transformItem(props as any, search.value)];
+    }
 }
 
 /**
