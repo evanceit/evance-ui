@@ -481,3 +481,7 @@ export function applyDefaults<T extends Record<string, any>>(
     }
     return result as T;
 }
+
+export const prefersReducedMotion = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
