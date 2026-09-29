@@ -163,12 +163,17 @@ const iconEnd = computed(() => {
         ? props.selectedIconEnd ?? props.iconEnd
         : props.iconEnd;
 });
+
+const buttonType = computed(() => {
+    return componentElement.value === "button" ? "button" : undefined;
+});
 </script>
 
 <template>
     <component
         :is="componentElement"
         :href="link.href.value"
+        :type="buttonType"
         :class="[
             'ev-button',
             group?.selectedClass.value,
@@ -188,6 +193,7 @@ const iconEnd = computed(() => {
             },
             props.class,
         ]"
+        :aria-busy="props.loading ? 'true' : undefined"
         :style="props.style"
         :tabindex="props.readonly ? -1 : 0"
         :disabled="isDisabled || undefined"

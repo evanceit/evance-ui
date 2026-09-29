@@ -13,6 +13,7 @@
     position: relative;
     transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.25s ease-in-out;
     will-change: border-color, box-shadow, background;
+    scroll-margin-block: 1.5rem;
 }
 
 /** Input */

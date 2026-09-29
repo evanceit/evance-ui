@@ -196,7 +196,7 @@ function onLeave(el: Element) {
                 :icon="ChevronDownIcon"
                 size="small"
                 variant="subtle"
-                @click="expand" />
+                @click.prevent="expand" />
         </div>
         <transition name="transition-fade">
             <div v-if="props.dismissible" class="ev-message--dismiss">
@@ -206,7 +206,7 @@ function onLeave(el: Element) {
                     :icon="CancelIcon"
                     size="small"
                     variant="subtle"
-                    @click="dismiss" />
+                    @click.prevent="dismiss" />
             </div>
         </transition>
     </component>
