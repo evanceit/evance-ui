@@ -119,7 +119,7 @@ const scrollEl = computed(() => {
 
 const { roundedClasses } = useRounded(props);
 const surfaceClass = computed(() => {
-    if (props.surface === undefined) {
+    if (props.surface === undefined || !props.surface) {
         return undefined;
     }
     return isString(props.surface) && props.surface.length

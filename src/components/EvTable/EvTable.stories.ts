@@ -68,7 +68,7 @@ export const Primary: Story = {
             };
         },
         template: `
-                <ev-table
+                <ev-table hoverable
                     v-bind="args">
                     <thead>
                     <tr>

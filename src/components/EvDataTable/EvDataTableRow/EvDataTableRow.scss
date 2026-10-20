@@ -10,10 +10,12 @@
 }
 
 .ev-data-table-row {
+    --row-hover-background: var(--fill-neutral-subtle-hovered);
 
     > td {
         transition: background 0.25s var(--easing-standard);
         background: transparent;
+        position: relative;
 
         &:first-child {
             border-top-left-radius: var(--input-radius);
@@ -26,20 +28,42 @@
     }
 
     &:hover {
+        > td:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 4px);
+            pointer-events: none;
+            background-color: var(--row-hover-background);
+        }
+
         > td {
-            background: var(--fill-neutral-subtle-hovered);
+            &:first-child {
+                &:after {
+                    left: 2px;
+                    width: calc(100% - 2px);
+                    border-top-left-radius: var(--input-radius);
+                    border-bottom-left-radius: var(--input-radius);
+                }
+
+            }
+            &:last-child {
+                &:after {
+                    width: calc(100% - 2px);
+                    border-top-right-radius: var(--input-radius);
+                    border-bottom-right-radius: var(--input-radius);
+                }
+            }
         }
     }
 
     &.is-selected {
+        --row-hover-background: var(--fill-selected-hovered);
+
         > td {
             background: var(--fill-selected);
-        }
-
-        &:hover {
-            > td {
-                background: var(--fill-selected-hovered);
-            }
         }
     }
 }

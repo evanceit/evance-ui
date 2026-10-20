@@ -111,7 +111,7 @@ const meta: Meta<typeof EvDataTable> = {
         },
         surface: {
             control: "select",
-            options: [undefined, false, true, "panel"],
+            options: [undefined, false, true, "panel", "sunken"],
             description:
                 "Sets the surface style of the table. Can be `true`, or 'panel'.",
         },

@@ -15,7 +15,13 @@ const slots = defineSlots<{
 <template>
     <component
         :is="props.tag"
-        :class="['ev-table', props.class]"
+        :class="[
+            'ev-table',
+            {
+                'is-hoverable': props.hoverable,
+            },
+            props.class,
+        ]"
         :style="props.style">
         <slot name="top" />
         <div class="ev-table__wrapper">

@@ -62,3 +62,48 @@
         }
     }
 }
+
+.ev-table {
+    &.is-hoverable {
+        .ev-table__wrapper {
+            > table {
+                > tbody {
+                    > tr {
+                        > td {
+                            position: relative;
+                        }
+                        &:hover > td {
+                            &:after {
+                                content: '';
+                                position: absolute;
+                                top: 2px;
+                                left: 0;
+                                width: 100%;
+                                height: calc(100% - 4px);
+                                pointer-events: none;
+                                background-color: var(--fill-neutral-subtle-hovered);
+                            }
+
+                            &:first-child {
+                                &:after {
+                                    left: 2px;
+                                    width: calc(100% - 2px);
+                                    border-top-left-radius: var(--input-radius);
+                                    border-bottom-left-radius: var(--input-radius);
+                                }
+
+                            }
+                            &:last-child {
+                                &:after {
+                                    width: calc(100% - 2px);
+                                    border-top-right-radius: var(--input-radius);
+                                    border-bottom-right-radius: var(--input-radius);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
