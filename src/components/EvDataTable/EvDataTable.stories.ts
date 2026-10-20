@@ -111,7 +111,7 @@ const meta: Meta<typeof EvDataTable> = {
         },
         surface: {
             control: "select",
-            options: [undefined, true, "panel"],
+            options: [undefined, false, true, "panel"],
             description:
                 "Sets the surface style of the table. Can be `true`, or 'panel'.",
         },
@@ -130,7 +130,7 @@ const meta: Meta<typeof EvDataTable> = {
         },
         rowSurface: {
             control: "select",
-            options: [undefined, true, "panel"],
+            options: [undefined, false, true, "panel"],
             description:
                 "Sets the surface style of the table rows. Can be `true`, or 'panel'.",
         },
