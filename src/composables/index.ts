@@ -29,3 +29,8 @@ export { useNotification } from "./notification";
 export { makeTagProps } from "./tag";
 export { useTheme } from "./theme";
 export { useHotkey } from "./hotkey";
+export {
+    provideContainer,
+    useContainer,
+    type ContainerState,
+} from "./container";

@@ -2,9 +2,9 @@
 import "./EvContainer.scss";
 import { makeEvContainerProps } from "./EvContainer";
 import { useDisplayRuleClasses } from "@/composables/display";
-import { computed } from "vue";
+import { computed, shallowRef } from "vue";
 import { isBoolean } from "@/util";
-import { useDimensions } from "@/composables";
+import { provideContainer, useDimensions } from "@/composables";
 
 const props = defineProps({
     ...makeEvContainerProps(),
@@ -19,22 +19,33 @@ const sizeClass = computed(() => {
     return props.size ? `is-size-${props.size}` : undefined;
 });
 
-const centeredClass = computed(() => {
-    return props.centered ? "is-centered" : undefined;
+const containerName = computed(() => {
+    return props.contain && props.name
+        ? { containerName: props.name }
+        : undefined;
 });
+const el = shallowRef<HTMLElement | null>(null);
+
+if (props.contain) {
+    provideContainer(el, { thresholds: props.thresholds });
+}
 </script>
 
 <template>
     <component
         :is="props.tag"
+        ref="el"
         :class="[
             'ev-container',
-            centeredClass,
+            {
+                'is-contain': props.contain,
+                'is-centered': props.centered,
+            },
             sizeClass,
             ...hiddenClasses,
             props.class,
         ]"
-        :style="[props.style, dimensions]"
+        :style="[props.style, dimensions, containerName]"
         :hidden="hiddenAttribute">
         <slot />
     </component>

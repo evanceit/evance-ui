@@ -1,4 +1,6 @@
 @use 'sass:map' as map;
+@use 'sass:math';
+@use 'sass:list';
 @use "@/css/tools/mapping" as mapping;
 
 /*
@@ -74,8 +76,6 @@ $display-breakpoints: mapping.map-deep-merge(
 
 $scale-from: $breakpoint-sm;
 $scale-to: $breakpoint-xl;
-
-
 
 /*
     ## Spacers
@@ -177,3 +177,48 @@ $borders: mapping.map-deep-merge(
         ($key: $border $border-style-root $border-color-root)
     )
 }
+
+
+$container-scale: 0.6 !default;
+$container-thresholds: ();
+@each $bp, $value in $grid-breakpoints {
+    $container-thresholds: map.merge(
+            $container-thresholds,
+            ($bp: math.round($value * $container-scale))
+    );
+}
+
+// Query strings: *-only, *-up, *-down
+$_container-generated: ();
+$_keys: map.keys($container-thresholds);
+$_count: list.length($_keys);
+
+@for $i from 1 through $_count {
+    $bp: list.nth($_keys, $i);
+    $min: map.get($container-thresholds, $bp);
+    $next: null;
+
+    @if $i < $_count {
+        $next: map.get($container-thresholds, list.nth($_keys, $i + 1));
+    }
+
+    // *-only
+    @if $i == 1 {
+        $_container-generated: map.set($_container-generated, '#{$bp}-only', '(width < #{$next})');
+    } @else if $next {
+        $_container-generated: map.set($_container-generated, '#{$bp}-only', '(#{$min} <= width < #{$next})');
+    } @else {
+        $_container-generated: map.set($_container-generated, '#{$bp}-only', '(width >= #{$min})');
+    }
+
+    // *-up
+    $_container-generated: map.set($_container-generated, '#{$bp}-up', '(width >= #{$min})');
+
+    // *-down (skipped for the first and last breakpoints, matching your display map)
+    @if $i > 1 and $next {
+        $_container-generated: map.set($_container-generated, '#{$bp}-down', '(width < #{$next})');
+    }
+}
+
+$container-breakpoints: () !default;
+$container-breakpoints: mapping.map-deep-merge($_container-generated, $container-breakpoints);

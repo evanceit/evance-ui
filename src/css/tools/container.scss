@@ -1,0 +1,12 @@
+@use "../settings" as settings;
+@use 'sass:map';
+
+@mixin container($query, $name: null) {
+    $condition: map.get(settings.$container-breakpoints, $query);
+    @if not $condition {
+        @error 'Unknown container breakpoint "#{$query}". Expected one of: #{map.keys(settings.$container-breakpoints)}';
+    }
+    @container #{$name} #{$condition} {
+        @content;
+    }
+}

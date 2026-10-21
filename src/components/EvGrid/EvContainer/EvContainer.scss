@@ -11,6 +11,10 @@
         margin-right: auto;
     }
 
+    &.is-contain {
+        container-type: inline-size;
+    }
+
     &.is-size {
         &-small {
             max-width: 600px;

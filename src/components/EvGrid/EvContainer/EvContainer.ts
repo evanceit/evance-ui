@@ -2,7 +2,7 @@ import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component";
 import { makeTagProps } from "@/composables/tag";
 import { PropType } from "vue";
-import { VisibilityRuleProp } from "@/composables/display";
+import {DisplayThresholds, VisibilityRuleProp} from "@/composables/display";
 import { makeDimensionsProps } from "@/composables";
 
 export const ContainerSize = {
@@ -26,6 +26,12 @@ export const makeEvContainerProps = propsFactory(
             type: Boolean,
             default: true,
         },
+        contain: {
+            type: Boolean,
+            default: true,
+        },
+        name: String,
+        thresholds: Object as PropType<Partial<DisplayThresholds>>,
 
         ...makeDimensionsProps(),
         ...makeComponentProps(),

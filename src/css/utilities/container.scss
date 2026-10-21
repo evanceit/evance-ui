@@ -1,0 +1,13 @@
+@use 'sass:map';
+@use "@/css/settings";
+@use "@/css/tools";
+
+@each $size in map.keys(settings.$container-breakpoints) {
+    @if $size != 'xs-up' {
+        .cq-hidden-#{$size} {
+            @include tools.container($size) {
+                display: none !important;
+            }
+        }
+    }
+}

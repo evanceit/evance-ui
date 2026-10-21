@@ -14,6 +14,10 @@ const meta: Meta<typeof EvContainer> = {
             description:
                 "Center the container horizontally. Defaults to `true`.",
         },
+        contain: {
+            control: "boolean",
+            description: "Use CSS containment. Defaults to `true`.",
+        },
         tag: {
             description: "",
         },
@@ -22,6 +26,10 @@ const meta: Meta<typeof EvContainer> = {
             options: [undefined, "auto", "300"],
             description:
                 "Set an explicit height to the block. Behaves similar to `width`.",
+        },
+        name: {
+            control: "text",
+            description: "Adds a `conatiner-name` when `contain` is set to `true`.",
         },
         width: {
             control: "select",
@@ -62,6 +70,7 @@ const meta: Meta<typeof EvContainer> = {
     },
     args: {
         centered: true,
+        contain: true,
         size: undefined,
     },
     tags: ["autodocs"],

@@ -12,7 +12,8 @@ import {
 import {
     Browser,
     consoleWarn,
-    isBoolean, isEmpty,
+    isBoolean,
+    isEmpty,
     isObject,
     isString,
     mergeDeep,
@@ -35,7 +36,7 @@ export type Breakpoint = (typeof breakpoints)[number];
 export type DisplayBreakpoint = "xs" | Breakpoint;
 
 export type DisplayThresholds = {
-    [key in DisplayBreakpoint]: number;
+    [key in DisplayBreakpoint]?: number;
 };
 
 export interface DisplayOptions {
