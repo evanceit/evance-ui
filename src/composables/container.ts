@@ -34,7 +34,6 @@ export const defaultContainerOptions: ContainerOptions = {
         ]),
     ),
 };
-console.log(defaultContainerOptions);
 
 type R<T> = Readonly<Ref<T>>;
 

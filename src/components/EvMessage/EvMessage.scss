@@ -10,6 +10,8 @@
 
     > * {
         flex: 0 0 auto;
+        width: auto;
+        max-width: none;
     }
 }
 
@@ -150,9 +152,9 @@
 
 
 .ev-message--content {
-    flex: 1 0 auto;
     padding-top: 2px;
-    width: min-content;
+    flex-basis: 0;
+    flex-grow: 1;
 }
 
 .ev-message--icon {

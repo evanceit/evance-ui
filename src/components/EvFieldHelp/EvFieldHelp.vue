@@ -25,7 +25,6 @@ provideDefaults({
 });
 
 const isShow = computed(() => {
-    console.log(breakpoint.value);
     const displayRule = `${breakpoint.value}Up`;
     return display[displayRule]?.value ?? false;
 });
