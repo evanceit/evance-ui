@@ -4,12 +4,23 @@
     display: inline-flex;
     align-items: flex-start;
     gap: var(--spacer-50);
+    font-weight: 500;
+
 }
 
 .ev-link {
     &[disabled],
     &.is-disabled {
         @include mixins.is-disabled;
+    }
+}
+
+.ev-link.is-appearance-default {
+    color: var(--link-default);
+
+    &:focus-visible,
+    &:hover {
+        color: var(--link-hovered);
     }
 }
 

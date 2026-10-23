@@ -61,6 +61,9 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template: `<ev-link v-bind="args" />`,
+        template: `
+            <ev-link v-bind="args" />
+            or  <a href="#">this is a normal link</a>
+        `,
     }),
 };

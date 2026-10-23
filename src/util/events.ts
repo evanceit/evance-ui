@@ -204,3 +204,35 @@ export function getPrefixedEventHandlers<T extends `:${string}`>(
             {} as Record<`${string}${T}`, EventHandler>,
         );
 }
+
+
+/**
+ * Elements which handle their own clicks and should not trigger a row click.
+ */
+export const interactiveElements = [
+    "a[href]",
+    "button",
+    "input",
+    "select",
+    "textarea",
+    "label",
+    "summary",
+    "[contenteditable]:not([contenteditable='false'])",
+    "[role='button']",
+    "[role='link']",
+    "[role='checkbox']",
+    "[role='switch']",
+    "[role='menuitem']",
+    "[role='option']",
+    "[role='tab']",
+].join(",");
+
+export function isInteractiveTarget(e: MouseEvent): boolean {
+    const row = e.currentTarget as HTMLElement | null;
+    if (!row || !(e.target instanceof Element)) {
+        return false;
+    }
+    const interactive = e.target.closest(interactiveElements);
+    // Only consider elements within the row, not ancestors of the table.
+    return !!interactive && interactive !== row && row.contains(interactive);
+}

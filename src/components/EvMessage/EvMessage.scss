@@ -173,7 +173,7 @@
 .ev-message--expandable {
     display: flex;
     flex-direction: column;
-    gap: var(--spacer-100, 0.5rem);
+    gap: var(--spacing-paragraph, 1rem);
 }
 
 .ev-message--description {

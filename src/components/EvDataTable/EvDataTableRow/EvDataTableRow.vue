@@ -7,7 +7,7 @@ import { EvCheckbox } from "@/components/EvCheckbox";
 import { useSelection } from "@/components/EvDataTable/composables/select";
 import { useHeaders } from "@/components/EvDataTable/composables/headers";
 import { ItemSlot } from "@/components/EvDataTable/composables/types";
-import {getPropertyValue, isString} from "@/util";
+import { getPropertyValue, isInteractiveTarget, isString } from "@/util";
 
 const props = defineProps({ ...makeEvDataTableRowProps() });
 const slots = defineSlots<{
@@ -48,6 +48,9 @@ function onCheckboxClick(e: MouseEvent) {
 }
 
 function onClick(e: MouseEvent) {
+    if (isInteractiveTarget(e)) {
+        return;
+    }
     if (!showSelect.value && isItemSelectable.value) {
         toggleSelect(item, e.shiftKey);
     }

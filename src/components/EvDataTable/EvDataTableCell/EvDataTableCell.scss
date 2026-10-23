@@ -2,6 +2,12 @@
     padding: var(--spacer-100);
 }
 
+tbody {
+    .ev-data-table-cell {
+        height: 52px;
+    }
+}
+
 /**
     # Checkbox
 
