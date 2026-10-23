@@ -49,7 +49,7 @@ const { themeClasses } = provideTheme(props);
         :style="[{ 'max-width': maxWidthOuter }, props.style]">
         <ev-icon v-if="props.iconStart" :glyph="props.iconStart" size="small" />
         <span class="ev-lozenge--label">
-            <slot />
+            <slot>{{ props.text }}</slot>
         </span>
         <ev-icon v-if="props.iconEnd" :glyph="props.iconEnd" size="small" />
     </component>

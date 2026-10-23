@@ -45,6 +45,11 @@ const meta: Meta<typeof EvLozenge> = {
                 ChevronDownIcon: ChevronDownIcon,
             },
         },
+        text: {
+            control: "text",
+            description:
+                "The text to display. You can also use the `default` slot.",
+        },
     },
     args: {
         default: "Example",

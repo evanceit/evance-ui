@@ -12,6 +12,7 @@ export const makeEvLozengeProps = propsFactory(
             type: [String, Number],
             default: 200,
         },
+        text: String,
 
         ...makeAppearanceProps(),
         ...makeThemeProps(),

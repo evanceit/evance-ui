@@ -28,6 +28,22 @@ const iconEnd = computed(() => {
     }
     return props.iconEnd;
 });
+
+function onClick(e: MouseEvent): void {
+    if (
+        props.disabled ||
+        (link.isLink.value &&
+            (e.metaKey ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.button !== 0 ||
+                attrs.target === "_blank"))
+    ) {
+        return;
+    }
+    link.navigate?.(e);
+}
+
 </script>
 
 <template>
@@ -41,7 +57,8 @@ const iconEnd = computed(() => {
             props.class,
         ]"
         :style="props.style"
-        :href="link.href.value">
+        :href="link.href.value"
+        @click="onClick">
         <ev-icon
             v-if="props.iconStart"
             :glyph="props.iconStart"
