@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import "./EvTable.scss";
 import { makeEvTableProps } from "./EvTable";
+import { computed } from "vue";
 
 const props = defineProps({ ...makeEvTableProps() });
 
@@ -10,6 +11,20 @@ const slots = defineSlots<{
     bottom: () => void;
 }>();
 
+const gridlinesVariant = computed<"none" | "horizontal" | "vertical" | "all">(
+    () => {
+        if (props.gridlines === false) {
+            return "none";
+        }
+        if (props.gridlines === true) {
+            return "all";
+        }
+        return props.gridlines;
+    },
+);
+const densityVariant = computed(() => {
+    return props.density ?? "default";
+});
 </script>
 
 <template>
@@ -17,8 +32,10 @@ const slots = defineSlots<{
         :is="props.tag"
         :class="[
             'ev-table',
+            `ev-table--density-${densityVariant}`,
+            `ev-table--gridlines-${gridlinesVariant}`,
             {
-                'is-hoverable': props.hoverable,
+                'is-hover': props.hover,
             },
             props.class,
         ]"

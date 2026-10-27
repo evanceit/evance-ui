@@ -22,7 +22,7 @@ export type BlockNumberProp =
 /** Block Size Props **/
 export type BlockSizePropValue = "auto" | "grow" | BlockNumberPropValue;
 export type BlockSizePropObject = {
-    [key in DisplayBreakpoint]: BlockSizePropValue;
+    [key in DisplayBreakpoint]?: BlockSizePropValue;
 };
 export type BlockSizeProp = BlockSizePropValue | BlockSizePropObject;
 

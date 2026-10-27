@@ -1,6 +1,8 @@
 .ev-table {
     --table-row-height: 52px;
     --table-header-height: 56px;
+    --gridlines-horizontal: none;
+    --gridlines-vertical: none;
 
     max-width: 100%;
     display: flex;
@@ -24,6 +26,10 @@
                 > td,
                 > th {
                     padding: var(--spacer-100);
+
+                    &:not(:last-child) {
+                        border-right: var(--gridlines-vertical);
+                    }
                 }
 
                 > td {
@@ -39,24 +45,25 @@
         > thead {
             > tr {
                 > th {
-                    border-bottom: 1px solid var(--stroke);
+                    border-bottom: var(--gridlines-horizontal);
                 }
             }
         }
-
         > tbody {
             > tr {
                 &:not(:last-child) {
-                    border-bottom: 1px solid var(--stroke);
+                    > td,
+                    > th {
+                        border-bottom: var(--gridlines-horizontal);
+                    }
                 }
             }
         }
-
         > tfoot {
             > tr {
                 > td,
                 > th {
-                    border-top: 1px solid var(--stroke);
+                    border-top: var(--gridlines-horizontal);
                 }
             }
         }
@@ -64,7 +71,7 @@
 }
 
 .ev-table {
-    &.is-hoverable {
+    &.is-hover {
         .ev-table__wrapper {
             > table {
                 > tbody {
@@ -105,5 +112,33 @@
                 }
             }
         }
+    }
+}
+
+
+.ev-table {
+    &--gridlines-horizontal {
+        --gridlines-horizontal: 1px solid var(--stroke);
+        --gridlines-vertical: none;
+    }
+    &--gridlines-vertical {
+        --gridlines-horizontal: none;
+        --gridlines-vertical: 1px solid var(--stroke);
+    }
+    &--gridlines-all {
+        --gridlines-horizontal: 1px solid var(--stroke);
+        --gridlines-vertical: 1px solid var(--stroke);
+    }
+}
+
+.ev-table {
+    &--density-compact {
+        --table-row-height: 36px;
+        --table-header-height: 40px;
+    }
+
+    &--density-comfortable {
+        --table-row-height: 44px;
+        --table-header-height: 48px;
     }
 }

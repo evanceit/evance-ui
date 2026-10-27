@@ -5,7 +5,19 @@ import { EvTable } from "@/components/EvTable";
 const meta: Meta<typeof EvTable> = {
     component: EvTable,
     title: "Components/Data/EvTable",
-    argTypes: {},
+    argTypes: {
+        density: {
+            options: ["default", "compact", "comfortable"],
+            control: "select",
+        },
+        gridlines: {
+            options: ["none", "horizontal", "vertical", "all"],
+            control: "select",
+        },
+        hover: {
+            control: "boolean",
+        },
+    },
     args: {},
 };
 
