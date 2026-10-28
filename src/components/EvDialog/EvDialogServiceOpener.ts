@@ -1,9 +1,17 @@
 import { EvDialogRenderer } from "@/components/EvDialog/EvDialogRenderer";
 import { EvDialogProps, EvDialogSlots } from "./EvDialog";
 import { App, Component } from "vue";
+import { ComponentProps } from "vue-component-type-helpers";
+
+export interface EvDialogServiceSlotDefinition<P = Record<string, any>> {
+    component: Component;
+    props?: P;
+}
+
+export type EvDialogServiceSlot = Component | EvDialogServiceSlotDefinition;
 
 export interface EvDialogServiceSlots
-    extends Partial<Record<keyof EvDialogSlots, Component>> {}
+    extends Partial<Record<keyof EvDialogSlots, EvDialogServiceSlot>> {}
 
 export interface EvDialogServiceOptions {
     props?: EvDialogProps;
@@ -62,5 +70,20 @@ export class EvDialogServiceOpener {
         );
         renderer.render();
         return renderer.open();
+    }
+
+    /**
+     * ## slot
+     * @param component
+     * @param props
+     */
+    public slot<C extends Component>(
+        component: C,
+        props?: Partial<ComponentProps<C>>,
+    ): EvDialogServiceSlotDefinition {
+        return {
+            component,
+            props,
+        };
     }
 }

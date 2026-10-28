@@ -1,5 +1,5 @@
 import {
-    App,
+    App, Component,
     ComponentPublicInstance,
     defineComponent,
     h,
@@ -12,7 +12,11 @@ import {
 } from "vue";
 import EvDialog from "@/components/EvDialog/EvDialog.vue";
 import { EvDialogInstance } from "@/components/EvDialog/EvDialogInstance";
-import { EvDialogServiceOptions } from "./EvDialogServiceOpener";
+import {
+    EvDialogServiceOptions,
+    EvDialogServiceSlot,
+    EvDialogServiceSlotDefinition,
+} from "./EvDialogServiceOpener";
 import { EvDialogSlots } from "./EvDialog";
 
 /**
@@ -132,16 +136,36 @@ export class EvDialogRenderer {
      */
     private createSlots() {
         const internalSlots = this.options.slots ?? {};
-        const renderedSlots: {
-            [key: string]: (props: any, slots: any) => VNode;
-        } = {};
+        const renderedSlots: Record<string, (scope: any) => VNode> = {};
+
         for (const key in internalSlots) {
-            const component = internalSlots[key as keyof EvDialogSlots];
-            renderedSlots[key] = (props, slots) => {
-                return h(component!, props, slots);
-            };
+            const slot = internalSlots[key as keyof EvDialogSlots];
+            if (!slot) continue;
+            const { component, props } = this.normaliseSlot(slot);
+
+            // Keep one reactive object for the renderer's lifetime so updates
+            // flow through without remounting the slot (no form resets).
+            const slotProps = props
+                ? isReactive(props)
+                    ? props
+                    : shallowReactive(props)
+                : undefined;
+
+            renderedSlots[key] = (scope) =>
+                h(component, { ...slotProps, ...scope });
         }
         return renderedSlots;
+    }
+
+    private normaliseSlot(
+        slot: EvDialogServiceSlot,
+    ): EvDialogServiceSlotDefinition {
+        // Component option objects can have a `props` key themselves,
+        // so discriminate on `component`, not `props`.
+        if (typeof slot === "object" && slot !== null && "component" in slot) {
+            return slot as EvDialogServiceSlotDefinition;
+        }
+        return { component: slot as Component };
     }
 
     /**

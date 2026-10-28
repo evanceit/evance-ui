@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { injectDialog, useDialog } from "@/composables/dialog";
 import { EvButton } from "@/components";
-import { defineAsyncComponent, reactive } from "vue";
+import { defineAsyncComponent, MaybeRef, reactive } from "vue";
 import { EvDialogFooter } from "@/components/EvDialog/EvDialogFooter";
+import type ExampleDialog from "@/components/EvDialog/EvDialogService/ExampleDialog.vue";
+import { useModelProxy } from "@/composables";
+import { PlusIcon } from "@/icons";
 
 const dialog = useDialog();
 const dialogRef = injectDialog();
@@ -11,12 +14,16 @@ const data = reactive({
     greeting: "Hello, I am waiting for a response.",
 });
 
-const dynamicComponent = defineAsyncComponent(
+const dynamicComponent = defineAsyncComponent<typeof ExampleDialog>(
     () => import("@/components/EvDialog/EvDialogService/ExampleDialog.vue"),
 );
 
-function open() {
+const props = defineProps<{
+    number?: MaybeRef<number>;
+}>();
+const myNumber = useModelProxy(props, "number");
 
+function open() {
     const props = reactive({
         width: "small",
     });
@@ -25,7 +32,7 @@ function open() {
         .open({
             props,
             slots: {
-                default: dynamicComponent,
+                default: dialog.slot(dynamicComponent, { number: myNumber }),
             },
             data,
         })
@@ -49,6 +56,10 @@ function makeBigger() {
         dialogRef.props.width = "large";
     }
 }
+
+function incrementNumber() {
+    myNumber.value = (myNumber.value ?? 0) + 1;
+}
 </script>
 
 <template>
@@ -58,9 +69,28 @@ function makeBigger() {
             This is an example dialog component with an initial title waiting to be
             updated by a child dialog:
         </p>
-        <p>
-            {{ data.greeting }}
-        </p>
+        <ev-list-item>
+            <template #prefix>
+                <ev-code>greeting</ev-code>
+            </template>
+            <template #default>
+                {{ data.greeting }}
+            </template>
+        </ev-list-item>
+        <ev-list-item>
+            <template #prefix>
+                <ev-code>props.number</ev-code>
+            </template>
+            <template #default>
+                {{ myNumber }}
+            </template>
+            <template #suffix>
+                <ev-button
+                    size="x-small"
+                    :icon="PlusIcon"
+                    @click="incrementNumber" />
+            </template>
+        </ev-list-item>
     </ev-dialog-body>
     <ev-dialog-footer>
         <ev-button @click="makeBigger">bigger</ev-button>
