@@ -12,6 +12,7 @@
     &.is-labelled {
         display: flex;
         align-items: start;
+        gap: 1rem;
     }
 }
 
@@ -185,7 +186,7 @@
 
     label {
         display: block;
-        padding: 0.5rem 0.5rem 0.5rem 1rem;
+        padding-block: 0.5rem;
     }
 }
 
