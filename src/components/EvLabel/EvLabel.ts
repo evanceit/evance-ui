@@ -1,6 +1,8 @@
 import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component";
 
+export type LabelPosition = "start" | "end";
+
 export const makeLabelProps = propsFactory(
     {
         label: String,

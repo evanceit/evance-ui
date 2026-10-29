@@ -62,6 +62,11 @@ const meta: Meta<typeof EvSwitch> = {
             description:
                 "Optional label - may be supplied as a prop or within a slot.",
         },
+        labelPosition: {
+            control: "select",
+            options: [undefined, "start", "end"],
+            description: "Position of the label relative to the checkbox",
+        },
         hint: {
             control: "text",
             description:

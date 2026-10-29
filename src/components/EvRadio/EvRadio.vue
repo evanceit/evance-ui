@@ -9,6 +9,7 @@ import EvLabel from "@/components/EvLabel/EvLabel.vue";
 import { EvRadioGroupSymbol } from "@/components/EvRadioGroup";
 import { makeEvRadioProps } from "./EvRadio";
 import { useFormField } from "@/composables/validation";
+import { useDefaults } from "@/composables";
 
 /**
  * We want to pass attributes not defined as 'props'
@@ -19,9 +20,10 @@ defineOptions({
 });
 
 // Props & slots
-const props = defineProps({
+const definedProps = defineProps({
     ...makeEvRadioProps(),
 });
+const props = useDefaults(definedProps);
 const slots = defineSlots<{
     label(): never;
 }>();
@@ -117,6 +119,7 @@ defineExpose({
             {
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label,
+                'flex-row-reverse': props.labelPosition === 'start',
             },
             formField.classes,
             props.class,

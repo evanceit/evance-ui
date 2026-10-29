@@ -2,10 +2,11 @@
 import "./EvRadioGroup.scss";
 import EvLabel from "@/components/EvLabel/EvLabel.vue";
 import { EvRadioGroupSymbol, makeEvRadioGroupProps } from "./EvRadioGroup";
-import { computed, provide } from "vue";
+import { computed, provide, toRef } from "vue";
 import { getNextId } from "@/util";
 import { useFormField } from "@/composables/validation";
 import EvErrors from "@/components/EvErrors/EvErrors.vue";
+import { provideDefaults } from "@/composables/defaults";
 
 defineOptions({
     inheritAttrs: false,
@@ -26,6 +27,12 @@ defineEmits(["update:modelValue"]);
 const uid = getNextId();
 const id = computed(() => {
     return props.id || `radio-group-${uid}`;
+});
+
+provideDefaults({
+    EvRadio: {
+        labelPosition: toRef(props, "labelPosition"),
+    },
 });
 
 const formField = useFormField(props);

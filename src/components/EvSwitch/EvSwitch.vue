@@ -73,6 +73,7 @@ defineExpose({
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label,
                 'is-loading': props.loading,
+                'flex-row-reverse': props.labelPosition === 'start',
             },
             formField.classes,
             props.class,

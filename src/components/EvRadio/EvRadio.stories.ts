@@ -59,6 +59,11 @@ const meta: Meta<typeof EvRadio> = {
             description:
                 "Optional label - may be supplied as a prop or within a slot.",
         },
+        labelPosition: {
+            control: "select",
+            options: [undefined, "start", "end"],
+            description: "Position of the label relative to the checkbox",
+        },
         hint: {
             control: "text",
             description: "Optional hint, appears below the lable title small/lighter",

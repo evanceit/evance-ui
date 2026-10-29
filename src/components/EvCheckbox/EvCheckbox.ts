@@ -2,7 +2,7 @@ import { isDeepEqual, propsFactory, wrapInArray } from "@/util";
 import { makeFormFieldProps } from "@/composables/validation";
 import { makeComponentProps } from "@/composables/component";
 import { computed, ExtractPropTypes, PropType, Ref } from "vue";
-import { makeLabelProps } from "@/components/EvLabel";
+import { LabelPosition, makeLabelProps } from "@/components/EvLabel";
 
 /**
  * # Make EvCheckbox Props
@@ -17,6 +17,7 @@ export const makeEvCheckboxProps = propsFactory(
             type: Function as PropType<typeof isDeepEqual>,
             default: isDeepEqual,
         },
+        labelPosition: String as PropType<LabelPosition>,
 
         ...makeLabelProps(),
         ...makeFormFieldProps(),

@@ -33,7 +33,6 @@ const slots = defineSlots<{
 defineEmits(["update:focused", "update:modelValue", "update:indeterminate"]);
 
 const attrs = useAttrs();
-const containerRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const [containerAttrs, inputAttrs] = splitInputAttrs(attrs);
 const formField = useFormField(props);
@@ -72,13 +71,13 @@ defineExpose({
 
 <template>
     <div
-        ref="containerRef"
         :class="[
             'ev-checkbox',
             {
                 'is-checked': isChecked,
                 'is-labelled': props.label || slots.label,
                 'is-indeterminate': indeterminate,
+                'flex-row-reverse': props.labelPosition === 'start',
             },
             formField.classes,
             props.class,

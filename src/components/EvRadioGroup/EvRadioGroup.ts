@@ -1,9 +1,9 @@
 import { propsFactory } from "@/util";
 import { makeComponentProps } from "@/composables/component";
 import { makeFormFieldProps } from "@/composables/validation";
-import { InjectionKey } from "vue";
+import { InjectionKey, PropType } from "vue";
 import { FormField } from "@/modules/Form/FormField";
-import { makeLabelProps } from "@/components/EvLabel";
+import { LabelPosition, makeLabelProps } from "@/components/EvLabel";
 
 export interface EvRadioGroupContext extends FormField {}
 
@@ -13,6 +13,7 @@ export const EvRadioGroupSymbol: InjectionKey<EvRadioGroupContext> =
 export const makeEvRadioGroupProps = propsFactory(
     {
         inline: Boolean,
+        labelPosition: String as PropType<LabelPosition>,
 
         ...makeLabelProps(),
         ...makeFormFieldProps(),
