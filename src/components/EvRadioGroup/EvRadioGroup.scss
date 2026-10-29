@@ -1,6 +1,10 @@
-.ev-radio-group--label {
-    margin-bottom: var(--spacer-100);
+.ev-radio-group {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    gap: 0.5rem;
 }
+
 .ev-radio-group {
     &.is-inline {
 

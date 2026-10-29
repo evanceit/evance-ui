@@ -126,7 +126,7 @@ export const Primary: Story = {
         components: { EvSwitch },
         setup() {
             const requiredValidator = (value: any) => {
-                return true; // value ? true : "Required";
+                return value ? true : "Required";
             };
 
             return { args, requiredValidator };
