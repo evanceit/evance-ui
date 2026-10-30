@@ -246,7 +246,7 @@ export const CustomItem: Story = {
                 placeholder="Search for a product"
                 >
                 <template #placeholder>
-                    <ev-layout align="center" gutter="100">
+                    <ev-layout align="center" gap="100">
                         <ev-block size="auto">
                             <ev-avatar :icon="ProductsIcon"></ev-avatar>
                         </ev-block>
@@ -258,7 +258,7 @@ export const CustomItem: Story = {
                     </ev-layout>
                 </template>
                 <template #selection="{ item, index }">
-                    <ev-layout align="center" gutter="100">
+                    <ev-layout align="center" gap="100">
                         <ev-block size="auto">
                             <ev-avatar :image="item.raw.image"></ev-avatar>
                         </ev-block>

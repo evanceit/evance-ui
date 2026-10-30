@@ -24,14 +24,28 @@ const alignSelfClasses = useBreakpointClasses(props, "alignSelf", "align-self");
 /**
  * Width
  */
+const sizeModes = { hug: "hug", auto: "hug", fill: "fill", grow: "fill" };
+const widthValue = computed(() => calculateDisplayRuleValue(props.width));
+const widthClass = computed(
+    () => sizeModes[widthValue.value] && `w-${sizeModes[widthValue.value]}`,
+);
 const widthStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.width);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return value === "grow"
-        ? { flex: "1 0 auto", maxWidth: "100%" }
-        : { flex: `0 0 ${value}`, maxWidth: value };
+    return isEmpty(widthValue.value) || !!widthClass.value
+        ? undefined
+        : { flex: `0 0 ${widthValue.value}`, maxWidth: widthValue.value };
+});
+
+/**
+ * Height
+ */
+const heightValue = computed(() => calculateDisplayRuleValue(props.height));
+const heightClass = computed(
+    () => sizeModes[heightValue.value] && `h-${sizeModes[heightValue.value]}`,
+);
+const heightStyles = computed(() => {
+    return isEmpty(heightValue.value) || !!heightClass.value
+        ? undefined
+        : { height: heightValue.value };
 });
 
 /**
@@ -43,15 +57,30 @@ const hiddenAttribute = computed(() => {
 });
 
 /**
- * Height
+ * Grid spans
  */
-const heightStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.height);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return { height: value };
-});
+const gridColSpanValue = computed(() =>
+    calculateDisplayRuleValue(props.gridColSpan, false),
+);
+const gridColSpanClass = computed(() =>
+    isEmpty(gridColSpanValue.value) ? undefined : "grid-col-span",
+);
+const gridColSpanStyle = computed(() =>
+    isEmpty(gridColSpanValue.value)
+        ? undefined
+        : { gridColumn: `span ${gridColSpanValue.value}` },
+);
+const gridRowSpanValue = computed(() =>
+    calculateDisplayRuleValue(props.gridRowSpan, false),
+);
+const gridRowSpanClass = computed(() =>
+    isEmpty(gridRowSpanValue.value) ? undefined : "grid-row-span",
+);
+const gridRowSpanStyle = computed(() =>
+    isEmpty(gridColSpanValue.value)
+        ? undefined
+        : { gridRow: `span ${gridRowSpanValue.value}` },
+);
 </script>
 
 <template>
@@ -62,6 +91,10 @@ const heightStyles = computed(() => {
             {
                 'is-scrollable': props.scrollable,
             },
+            widthClass,
+            heightClass,
+            gridColSpanClass,
+            gridRowSpanClass,
             ...sizeClasses,
             ...orderClasses,
             ...offsetClasses,
@@ -69,7 +102,13 @@ const heightStyles = computed(() => {
             ...hiddenClasses,
             props.class,
         ]"
-        :style="[props.style, widthStyles, heightStyles]"
+        :style="[
+            props.style,
+            widthStyles,
+            heightStyles,
+            gridColSpanStyle,
+            gridRowSpanStyle,
+        ]"
         :hidden="hiddenAttribute">
         <slot />
     </component>

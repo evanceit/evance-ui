@@ -20,7 +20,6 @@ const alignContentClasses = useBreakpointClasses(
     "align-content",
 );
 const justifyContentClasses = useBreakpointClasses(props, "justify", "justify");
-const gutterClasses = useBreakpointClasses(props, "gutter", "gutter");
 const gapClasses = useBreakpointClasses(props, "gap", "ga");
 
 /**
@@ -54,6 +53,21 @@ const widthStyles = computed(() => {
         ? { flex: "1 0 auto", maxWidth: "100%", width: "100%" }
         : { flex: `0 0 ${value}`, maxWidth: value, width: value };
 });
+
+const flowClass = computed(() => {
+    if (props.column || props.flow === "vertical") {
+        return "flex-column";
+    }
+    return props.flow === "grid" ? "grid" : "flex-row";
+});
+
+const gridColumns = computed(() => {
+    const value = calculateDisplayRuleValue(props.gridColumns, false);
+    if (isEmpty(value)) {
+        return undefined;
+    }
+    return `--ev-layout-grid-cols: ${value}`;
+});
 </script>
 
 <template>
@@ -61,19 +75,15 @@ const widthStyles = computed(() => {
         :is="props.tag"
         :class="[
             'ev-layout',
-            {
-                'is-column': props.column,
-                'is-nowrap': props.nowrap,
-            },
+            flowClass,
             ...alignItemsClasses,
             ...alignContentClasses,
             ...justifyContentClasses,
             ...gapClasses,
-            ...gutterClasses,
             ...hiddenClasses,
             props.class,
         ]"
-        :style="[props.style, widthStyles, heightStyles]"
+        :style="[props.style, widthStyles, heightStyles, gridColumns]"
         :hidden="hiddenAttribute">
         <slot />
     </component>

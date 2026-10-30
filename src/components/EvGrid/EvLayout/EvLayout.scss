@@ -1,9 +1,3 @@
-@use 'sass:math' as math;
-@use 'sass:map' as map;
-@use "sass:meta";
-@use "../../../css/settings";
-@use "../../../css/tools";
-
 /**
     # .ev-layout
 
@@ -16,48 +10,14 @@
     flex: 1 1 auto;
     max-width: 100%;
 
-    &.is-column {
-        flex-direction: column;
+    &.flex-column {
         min-height: 0;
-    }
-
-    &.is-row {
-        flex-direction: row;
-    }
-
-    &.is-nowrap {
-        flex-wrap: nowrap;
     }
 }
 
-
-/**
-    # Gutters
- */
-@each $breakpoint in map.keys(settings.$grid-breakpoints) {
-
-    // Generate media query if needed
-    @include tools.media-breakpoint-up($breakpoint) {
-        $infix: tools.breakpoint-infix($breakpoint, settings.$grid-breakpoints);
-
-        .ev-layout {
-            @each $size, $spacer in settings.$spacers {
-                @if meta.type-of($spacer) == "number" {
-                    &.gutter#{$infix}-#{$size} {
-                        > .ev-block {
-                            padding: (math.div($spacer, 2));
-                        }
-
-                        &:only-child {
-                            margin: 0 - (math.div($spacer, 2));
-                        }
-
-                        &:not(:only-child) {
-                            margin: auto (0 - (math.div($spacer, 2)));
-                        }
-                    }
-                }
-            }
-        }
-    }
+.grid {
+    --ev-layout-grid-cols: 2;
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(var(--ev-layout-grid-cols), minmax(0, 1fr));
 }

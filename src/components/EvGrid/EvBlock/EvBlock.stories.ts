@@ -10,7 +10,7 @@ const meta: Meta<typeof EvBlock> = {
         alignSelf: {
             control: "select",
             options: [
-                "",
+                undefined,
                 "auto",
                 "start",
                 "end",
@@ -20,13 +20,6 @@ const meta: Meta<typeof EvBlock> = {
                 "{ xs: 'center', md: 'end', xl: 'start' }",
             ],
             mapping: {
-                "": undefined,
-                auto: "auto",
-                start: "start",
-                end: "end",
-                center: "center",
-                baseline: "baseline",
-                stretch: "stretch",
                 "{ xs: 'center', md: 'end', xl: 'start' }": {
                     xs: "center",
                     md: "end",
@@ -58,7 +51,7 @@ const meta: Meta<typeof EvBlock> = {
         size: {
             control: "select",
             options: [
-                "",
+                undefined,
                 "auto",
                 "grow",
                 1,
@@ -76,21 +69,6 @@ const meta: Meta<typeof EvBlock> = {
                 "{ xs: 1, md: 3, xl: 6 }",
             ],
             mapping: {
-                "": undefined,
-                auto: "auto",
-                grow: "grow",
-                1: 1,
-                2: 2,
-                3: 3,
-                4: 4,
-                5: 5,
-                6: 6,
-                7: 7,
-                8: 8,
-                9: 9,
-                10: 10,
-                11: 11,
-                12: 12,
                 "{ xs: 1, md: 3, xl: 6 }": { xs: 1, md: 3, xl: 6 },
             },
             description:
@@ -106,19 +84,15 @@ const meta: Meta<typeof EvBlock> = {
         width: {
             control: "select",
             options: [
-                "",
-                "auto",
+                undefined,
+                "hug",
+                "fill",
                 "20%",
-                "200",
+                200,
                 "300px",
                 "{ xs: 200, md: 400, xl: '100%' }",
             ],
             mapping: {
-                "": undefined,
-                auto: "auto",
-                "20%": "20%",
-                "200": 200,
-                "300px": "300px",
                 "{ xs: 200, md: 400, xl: '100%' }": {
                     xs: 200,
                     md: 400,
@@ -128,7 +102,7 @@ const meta: Meta<typeof EvBlock> = {
             description:
                 "Set an explicit width to the block as an alternative to `size`. " +
                 "Accepts a number - pixels are assumed as the units. " +
-                "Accepts a string representing a number and units (e.g. `20%`), `auto` or `grow`. " +
+                "Accepts a string representing a number and units (e.g. `20%`), `hug` (previously `auto`) or `fill` (previously `grow`). " +
                 "These values are also accepted as values within a display rule object where the keys may be one of " +
                 "`xs`, `sm`, `md`, `lg`, `xl`, `xxl` (breakpoints are the equivalent of `...Up` rules) " +
                 "`xsOnly`, `smOnly`, `mdOnly`, `lgOnly`, `xlOnly`, `xxlOnly` " +
@@ -137,31 +111,55 @@ const meta: Meta<typeof EvBlock> = {
                 "For example: `{ xs: 'auto', sm: '20%', mdUp: 300 }`.",
         },
         height: {
+            control: "select",
+            options: [
+                undefined,
+                "hug",
+                "fill",
+                "20%",
+                200,
+                "300px",
+                "{ xs: 200, md: 400, xl: '100%' }",
+            ],
+            mapping: {
+                "{ xs: 200, md: 400, xl: '100%' }": {
+                    xs: 200,
+                    md: 400,
+                    xl: "100%",
+                },
+            },
             description:
                 "Set an explicit height to the block. Behaves similar to `width`.",
         },
         hidden: {
             control: "select",
             options: [
-                "",
-                "true",
-                "false",
+                undefined,
+                true,
+                false,
                 "xs-only",
                 "xs-only lg-up",
                 "['xs-only', 'lg-up']",
                 "{ xs: 'only', lg: 'up' }",
             ],
             mapping: {
-                "": undefined,
-                true: true,
-                false: false,
-                "xs-only": "xs-only",
-                "xs-only lg-up": "xs-only lg-up",
                 "['xs-only', 'lg-up']": ["xs-only", "lg-up"],
                 "{ xs: 'only', lg: 'up' }": { xs: "only", lg: "up" },
             },
             description:
                 "Accepts a boolean, string or a display rule list as an array or object. ",
+        },
+        gridColSpan: {
+            control: "number",
+            description:
+                "Sets the column span of the block when in an `EvLayout` with a flow of `grid`. " +
+                "Accepts a number or a breakpoint object.",
+        },
+        gridRowSpan: {
+            control: "number",
+            description:
+                "Sets the row span of the block in an `EvLayout` with a flow of `grid`." +
+                "Accepts a number or a breakpoint object.",
         },
     },
     args: {

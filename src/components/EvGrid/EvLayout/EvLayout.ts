@@ -59,6 +59,12 @@ export type SpacerObject = {
     [key in DisplayBreakpoint]: SpacerValue;
 };
 export type SpacerProp = SpacerValue | SpacerObject | undefined;
+export type LayoutFlow = "horizontal" | "vertical" | "grid";
+
+export type GridNumbersObject = {
+    [key in DisplayBreakpoint]: number;
+};
+export type GridNumbersProp = number | GridNumbersObject | undefined;
 
 /**
  * # makeEvLayoutProps
@@ -68,8 +74,12 @@ export const makeEvLayoutProps = propsFactory(
         align: [String, Object] as PropType<AlignItemsProp>,
         alignContent: [String, Object] as PropType<AlignContentProp>,
         column: Boolean,
+        flow: {
+            type: String as PropType<LayoutFlow>,
+            default: "horizontal",
+        },
         gap: [String, Number, Object] as PropType<SpacerProp>,
-        gutter: [String, Number, Object] as PropType<SpacerProp>,
+        gridColumns: [Number, Object] as PropType<GridNumbersProp>,
         justify: [String, Object] as PropType<JustifyContentProp>,
         nowrap: Boolean,
         hidden: [Boolean, String, Array] as PropType<VisibilityRuleProp>,

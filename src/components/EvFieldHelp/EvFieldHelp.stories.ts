@@ -65,7 +65,7 @@ export const Primary: Story = {
         template: `<ev-field-help v-bind="args">
             <template #field>
                 <ev-label class="mb-100" for="my-field" title="Discount code" hint="Customers must enter this code at checkout" />
-                <ev-layout gutter="200">
+                <ev-layout gap="200">
                     <ev-block>
                         <ev-textfield id="my-field" />
                     </ev-block>

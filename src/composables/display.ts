@@ -356,19 +356,21 @@ export type VisibilityRuleProp = DisplayRuleListProp | boolean;
  * # calculateDisplayRuleValue
  *
  * @param rules
+ * @param useWebUnits
  */
 export function calculateDisplayRuleValue(
     rules?: DisplayRuleObject | DisplayRuleValue,
+    useWebUnits: boolean = true,
 ) {
     if (!isObject(rules)) {
-        return toWebUnit(rules);
+        return useWebUnits ? toWebUnit(rules) : rules;
     }
     const display = useDisplay();
     for (const ruleKey of displayRules) {
         const displayKey = toDisplayStateKey(ruleKey);
         const displayState = display[displayKey as keyof DisplayInstance];
         if (isRef(displayState) && displayState.value && !!rules[ruleKey]) {
-            return toWebUnit(rules[ruleKey]);
+            return useWebUnits ? toWebUnit(rules[ruleKey]) : rules[ruleKey];
         }
     }
     return undefined;
