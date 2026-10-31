@@ -68,7 +68,7 @@ const gridColSpanClass = computed(() =>
 const gridColSpanStyle = computed(() =>
     isEmpty(gridColSpanValue.value)
         ? undefined
-        : { gridColumn: `span ${gridColSpanValue.value}` },
+        : { "--grid-col-span": gridColSpanValue.value },
 );
 const gridRowSpanValue = computed(() =>
     calculateDisplayRuleValue(props.gridRowSpan, false),
@@ -79,7 +79,7 @@ const gridRowSpanClass = computed(() =>
 const gridRowSpanStyle = computed(() =>
     isEmpty(gridColSpanValue.value)
         ? undefined
-        : { gridRow: `span ${gridRowSpanValue.value}` },
+        : { "--grid-row-span": gridRowSpanValue.value },
 );
 </script>
 

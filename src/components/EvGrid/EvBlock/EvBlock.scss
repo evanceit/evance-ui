@@ -34,6 +34,14 @@
     > .h-hug { align-self: start; height: fit-content; }
 }
 
+.grid-col-span {
+    grid-column: span var(--grid-col-span, 1);
+}
+
+.grid-row-span {
+    grid-row: span var(--grid-row-span, 1);
+}
+
 @each $breakpoint in map_keys(settings.$grid-breakpoints) {
     @media all and (min-width: map-get(settings.$grid-breakpoints, $breakpoint)) {
         .ev-block {

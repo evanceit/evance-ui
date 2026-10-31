@@ -51,23 +51,25 @@
 .ev-card {
     display: grid;
     grid-template-columns: max-content auto max-content; /* Define 3 columns: prefix, core, suffix */
-    grid-template-rows: auto; /* The header takes up one row */
+    grid-template-rows: auto 1fr; /* header hugs content (0 when absent), body takes the rest */
     grid-template-areas:
         "header header header" /* Header spans all columns */
         "prefix body suffix";   /* Prefix, core, and suffix in their respective columns */
-    align-items: center;
+    align-items: start;
 }
 .ev-card--header {
     grid-area: header;
 }
 .ev-card--prefix {
     grid-area: prefix;
+    align-self: center;
 }
 .ev-card--body {
     grid-area: body;
 }
 .ev-card--suffix {
     grid-area: suffix;
+    align-self: center;
 }
 
 .ev-card-content + .ev-card-actions {

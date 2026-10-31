@@ -53,10 +53,12 @@ html {
 
 /**
  * 1. Use a more readable tab size (opinionated).
+ * 2. Use a container query to target the root element (opinionated).
  */
 :root {
     -moz-tab-size: 4;
     tab-size: 4;
+    container: root / inline-size;
 }
 
 
