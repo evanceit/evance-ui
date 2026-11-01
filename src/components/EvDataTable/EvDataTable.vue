@@ -24,14 +24,17 @@ import {
     DataTableItem,
     ItemSlot,
 } from "@/components/EvDataTable/composables/types";
-import { useContainer, useLocaleFunctions } from "@/composables";
+import {
+    calculateDisplayRuleValue,
+    useContainer,
+    useLocaleFunctions,
+} from "@/composables";
 import {
     EvInfiniteScroll,
     InfiniteScrollStatus,
 } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
-import { useDisplayRuleValue } from "@/composables/display";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { useRounded } from "@/composables/rounded";
 
@@ -191,9 +194,9 @@ function resetScroll(status: InfiniteScrollStatus = "ok") {
 
 function colStyle(column: DataTableHeader) {
     return {
-        width: useDisplayRuleValue(column.width, containerState),
-        minWidth: useDisplayRuleValue(column.minWidth, containerState),
-        maxWidth: useDisplayRuleValue(column.maxWidth, containerState),
+        width: calculateDisplayRuleValue(containerState, column.width),
+        minWidth: calculateDisplayRuleValue(containerState, column.minWidth),
+        maxWidth: calculateDisplayRuleValue(containerState, column.maxWidth),
     };
 }
 

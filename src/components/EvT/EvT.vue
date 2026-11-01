@@ -23,7 +23,7 @@ const parts = computed(() =>
 </script>
 
 <template>
-    <template v-for="(part, index) in parts" :key="index">
+    <template v-for="(part, _index) in parts" :key="_index">
         <template v-if="part.type === 'text'">
             {{ part.value }}
         </template>

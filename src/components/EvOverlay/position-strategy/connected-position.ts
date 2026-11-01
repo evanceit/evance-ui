@@ -331,7 +331,10 @@ class ConnectedPosition {
      */
     public getTargetRect(target: HTMLElement | [x: number, y: number]) {
         if (Array.isArray(target)) {
-            const pageScale = document.body.currentCSSZoom ?? 1;
+            // local polyfill for older TS
+            const pageScale =
+                (document.body as HTMLElement & { currentCSSZoom?: number })
+                    .currentCSSZoom ?? 1;
             const factor = 1 + (1 - pageScale) / pageScale;
             return new Rect(target[0] * factor, target[1] * factor, 0, 0);
         }
