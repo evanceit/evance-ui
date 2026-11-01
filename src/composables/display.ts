@@ -344,6 +344,7 @@ export function calculateDisplayRuleValue(
     rules?: DisplayRuleObject | DisplayRuleValue,
     useWebUnits: boolean = true,
 ) {
+    console.log("prop", rules);
     if (!isObject(rules)) {
         return useWebUnits ? toWebUnit(rules) : rules;
     }

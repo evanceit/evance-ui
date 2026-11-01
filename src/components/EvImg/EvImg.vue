@@ -265,7 +265,7 @@ const imgProps = computed(() => ({
 }));
 
 const stateClass = computed(() => makeClassName(state.value, "is-state"));
-const width = useDisplayRuleValue(props.width, containerState);
+const width = useDisplayRuleValue(() => props.width, containerState);
 </script>
 
 <template>

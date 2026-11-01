@@ -35,17 +35,17 @@ const hiddenAttribute = computed(() => {
 /**
  * Height
  */
-const height = useDisplayRuleValue(props.height, containerState);
+const heightValue = useDisplayRuleValue(() => props.height, containerState);
 const heightStyles = computed(() =>
-    isEmpty(height.value) ? undefined : { height: height.value },
+    isEmpty(heightValue.value) ? undefined : { height: heightValue.value },
 );
 
 /**
  * Width
  */
-const width = useDisplayRuleValue(props.width, containerState);
+const widthValue = useDisplayRuleValue(() => props.width, containerState);
 const widthStyles = computed(() => {
-    const value = width.value;
+    const value = widthValue.value;
     if (isEmpty(value)) {
         return undefined;
     }
@@ -61,15 +61,15 @@ const flowClass = computed(() => {
     return props.flow === "grid" ? "grid" : "flex-row";
 });
 
-const gridColumns = useDisplayRuleValue(
-    props.gridColumns,
+const gridCols = useDisplayRuleValue(
+    () => props.gridColumns,
     containerState,
     false,
 );
 const gridColumnsStyles = computed(() => {
-    return isEmpty(gridColumns.value)
+    return isEmpty(gridCols.value)
         ? undefined
-        : `--ev-layout-grid-cols: ${gridColumns.value}`;
+        : `--ev-layout-grid-cols: ${gridCols.value}`;
 });
 </script>
 

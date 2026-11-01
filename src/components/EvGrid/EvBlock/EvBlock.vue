@@ -27,7 +27,7 @@ const alignSelfClasses = useBreakpointClasses(props, "alignSelf", "align-self");
  * Width
  */
 const sizeModes = { hug: "hug", auto: "hug", fill: "fill", grow: "fill" };
-const widthValue = useDisplayRuleValue(props.width, containerState);
+const widthValue = useDisplayRuleValue(() => props.width, containerState);
 const widthClass = computed(
     () => sizeModes[widthValue.value] && `w-${sizeModes[widthValue.value]}`,
 );
@@ -40,7 +40,7 @@ const widthStyles = computed(() => {
 /**
  * Height
  */
-const heightValue = useDisplayRuleValue(props.height, containerState);
+const heightValue = useDisplayRuleValue(() => props.height, containerState);
 const heightClass = computed(
     () => sizeModes[heightValue.value] && `h-${sizeModes[heightValue.value]}`,
 );
@@ -62,7 +62,7 @@ const hiddenAttribute = computed(() => {
  * Grid spans
  */
 const gridColSpanValue = useDisplayRuleValue(
-    props.gridColSpan,
+    () => props.gridColSpan,
     containerState,
     false,
 );
@@ -75,7 +75,7 @@ const gridColSpanStyle = computed(() =>
         : { "--grid-col-span": gridColSpanValue.value },
 );
 const gridRowSpanValue = useDisplayRuleValue(
-    props.gridRowSpan,
+    () => props.gridRowSpan,
     containerState,
     false,
 );

@@ -28,7 +28,10 @@ const computedProps = computed(() => {
     if (!combined.width && combined.aspectRatio && combined.height) {
         const aspectRatio = parseAspectRatio(combined.aspectRatio);
         if (aspectRatio && isFinite(aspectRatio)) {
-            const height = useDisplayRuleValue(combined.height, containerState);
+            const height = useDisplayRuleValue(
+                () => combined.height,
+                containerState,
+            );
             const numericHeight = parseFloat(height.value as string);
             const width = Math.round(numericHeight * aspectRatio);
             return { ...combined, width };
