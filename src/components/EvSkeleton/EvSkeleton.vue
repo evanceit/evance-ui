@@ -26,9 +26,7 @@ const computedProps = computed(() => {
 const roundedClasses = computed(
     () => useRounded(computedProps.value).roundedClasses.value,
 );
-const dimensionStyles = computed(
-    () => useDimensions(computedProps.value).value,
-);
+const dimensionStyles = useDimensions(computedProps.value);
 const sizeClass = computed(() => sizeModifier(size.value));
 const typeClass = computed(() => makeClassName(props.type, "is-type"));
 const aspectStyles = computed(() => {

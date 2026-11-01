@@ -404,3 +404,11 @@ iframe {
 table {
     border-collapse: collapse;
 }
+
+ul {
+    margin-block: var(--spacing-paragraph, 1.125rem);
+    padding-inline-start: 1.25em;
+}
+li {
+    margin-block: 0.625em;
+}

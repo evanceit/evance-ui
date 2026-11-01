@@ -83,9 +83,18 @@ const meta: Meta<typeof EvLayout> = {
         },
         gridColumns: {
             control: "select",
-            options: [undefined, 1, 2, 3, 4, "{xs: 1, sm: 2, md: 3, lg: 4}"],
+            options: [
+                undefined,
+                1,
+                2,
+                3,
+                4,
+                "{ mdDown: 1, lgUp: 3 }",
+                "{ xs: 1, sm: 2, md: 3, lg: 4 }",
+            ],
             mapping: {
-                "{xs: 1, sm: 2, md: 3, lg: 4}": { xs: 1, sm: 2, md: 3, lg: 4 },
+                "{ mdDown: 1, lgUp: 3 }": { mdDown: 1, lgUp: 3 },
+                "{ xs: 1, sm: 2, md: 3, lg: 4 }": { xs: 1, sm: 2, md: 3, lg: 4 },
             },
             description: "",
         },

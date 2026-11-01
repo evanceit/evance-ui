@@ -9,12 +9,13 @@ import { DangerIcon, ImageIcon } from "@/icons";
 import { EvIcon } from "@/components/EvIcon";
 import { EvSkeleton } from "@/components/EvSkeleton";
 import { parseAspectRatio } from "@/composables/aspectRatio";
-import { calculateDisplayRuleValue } from "@/composables";
+import { useContainer, useDisplayRuleValue } from "@/composables";
 
 const props = defineProps({ ...makeEvThumbnailProps() });
 const slots = defineSlots<{
     default(): never;
 }>();
+const containerState = useContainer();
 
 const computedProps = computed(() => {
     if (!props.size) {
@@ -27,9 +28,8 @@ const computedProps = computed(() => {
     if (!combined.width && combined.aspectRatio && combined.height) {
         const aspectRatio = parseAspectRatio(combined.aspectRatio);
         if (aspectRatio && isFinite(aspectRatio)) {
-            const numericHeight = parseFloat(
-                calculateDisplayRuleValue(combined.height),
-            );
+            const height = useDisplayRuleValue(combined.height, containerState);
+            const numericHeight = parseFloat(height.value as string);
             const width = Math.round(numericHeight * aspectRatio);
             return { ...combined, width };
         }

@@ -24,7 +24,8 @@ import {
     makeClassName,
     toWebUnit,
 } from "@/util";
-import { calculateDisplayRuleValue } from "@/composables";
+import { useContainer } from "@/composables";
+import { useDisplayRuleValue } from "@/composables/display";
 
 const props = defineProps({
     ...makeEvImgProps(),
@@ -46,6 +47,7 @@ const state = shallowRef<"idle" | "loading" | "loaded" | "error">(
 const naturalWidth = shallowRef<number>();
 const naturalHeight = shallowRef<number>();
 const transition = useEvTransition(props);
+const containerState = useContainer();
 
 const normalisedSrc: ComputedRef<EvImgSrcObject> = computed(() => {
     const imgSrc = props as EvImgSrcObject | { src: EvImgSrcObject };
@@ -263,7 +265,7 @@ const imgProps = computed(() => ({
 }));
 
 const stateClass = computed(() => makeClassName(state.value, "is-state"));
-const width = computed(() => calculateDisplayRuleValue(props.width));
+const width = useDisplayRuleValue(props.width, containerState);
 </script>
 
 <template>

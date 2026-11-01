@@ -2,16 +2,18 @@
 import "./EvLayout.scss";
 import { makeEvLayoutProps } from "./EvLayout";
 import {
-    calculateDisplayRuleValue,
     useBreakpointClasses,
     useDisplayRuleClasses,
+    useDisplayRuleValue,
 } from "@/composables/display";
 import { computed } from "vue";
 import { isBoolean, isEmpty } from "@/util";
+import { useContainer } from "@/composables";
 
 const props = defineProps({
     ...makeEvLayoutProps(),
 });
+const containerState = useContainer();
 
 const alignItemsClasses = useBreakpointClasses(props, "align", "align");
 const alignContentClasses = useBreakpointClasses(
@@ -33,19 +35,17 @@ const hiddenAttribute = computed(() => {
 /**
  * Height
  */
-const heightStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.height);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return { height: value };
-});
+const height = useDisplayRuleValue(props.height, containerState);
+const heightStyles = computed(() =>
+    isEmpty(height.value) ? undefined : { height: height.value },
+);
 
 /**
  * Width
  */
+const width = useDisplayRuleValue(props.width, containerState);
 const widthStyles = computed(() => {
-    const value = calculateDisplayRuleValue(props.width);
+    const value = width.value;
     if (isEmpty(value)) {
         return undefined;
     }
@@ -61,12 +61,15 @@ const flowClass = computed(() => {
     return props.flow === "grid" ? "grid" : "flex-row";
 });
 
-const gridColumns = computed(() => {
-    const value = calculateDisplayRuleValue(props.gridColumns, false);
-    if (isEmpty(value)) {
-        return undefined;
-    }
-    return `--ev-layout-grid-cols: ${value}`;
+const gridColumns = useDisplayRuleValue(
+    props.gridColumns,
+    containerState,
+    false,
+);
+const gridColumnsStyles = computed(() => {
+    return isEmpty(gridColumns.value)
+        ? undefined
+        : `--ev-layout-grid-cols: ${gridColumns.value}`;
 });
 </script>
 
@@ -83,7 +86,7 @@ const gridColumns = computed(() => {
             ...hiddenClasses,
             props.class,
         ]"
-        :style="[props.style, widthStyles, heightStyles, gridColumns]"
+        :style="[props.style, widthStyles, heightStyles, gridColumnsStyles]"
         :hidden="hiddenAttribute">
         <slot />
     </component>

@@ -3,15 +3,17 @@ import "./EvBlock.scss";
 import { makeEvBlockProps } from "./EvBlock";
 import { computed } from "vue";
 import {
-    calculateDisplayRuleValue,
     useBreakpointClasses,
     useDisplayRuleClasses,
+    useDisplayRuleValue,
 } from "@/composables/display.ts";
 import { isBoolean, isEmpty } from "@/util";
+import { useContainer } from "@/composables";
 
 const props = defineProps({
     ...makeEvBlockProps(),
 });
+const containerState = useContainer();
 
 /**
  * # Size Classes
@@ -25,7 +27,7 @@ const alignSelfClasses = useBreakpointClasses(props, "alignSelf", "align-self");
  * Width
  */
 const sizeModes = { hug: "hug", auto: "hug", fill: "fill", grow: "fill" };
-const widthValue = computed(() => calculateDisplayRuleValue(props.width));
+const widthValue = useDisplayRuleValue(props.width, containerState);
 const widthClass = computed(
     () => sizeModes[widthValue.value] && `w-${sizeModes[widthValue.value]}`,
 );
@@ -38,7 +40,7 @@ const widthStyles = computed(() => {
 /**
  * Height
  */
-const heightValue = computed(() => calculateDisplayRuleValue(props.height));
+const heightValue = useDisplayRuleValue(props.height, containerState);
 const heightClass = computed(
     () => sizeModes[heightValue.value] && `h-${sizeModes[heightValue.value]}`,
 );
@@ -59,8 +61,10 @@ const hiddenAttribute = computed(() => {
 /**
  * Grid spans
  */
-const gridColSpanValue = computed(() =>
-    calculateDisplayRuleValue(props.gridColSpan, false),
+const gridColSpanValue = useDisplayRuleValue(
+    props.gridColSpan,
+    containerState,
+    false,
 );
 const gridColSpanClass = computed(() =>
     isEmpty(gridColSpanValue.value) ? undefined : "grid-col-span",
@@ -70,8 +74,10 @@ const gridColSpanStyle = computed(() =>
         ? undefined
         : { "--grid-col-span": gridColSpanValue.value },
 );
-const gridRowSpanValue = computed(() =>
-    calculateDisplayRuleValue(props.gridRowSpan, false),
+const gridRowSpanValue = useDisplayRuleValue(
+    props.gridRowSpan,
+    containerState,
+    false,
 );
 const gridRowSpanClass = computed(() =>
     isEmpty(gridRowSpanValue.value) ? undefined : "grid-row-span",

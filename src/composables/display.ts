@@ -1,12 +1,13 @@
 import {
-    computed,
+    computed, ComputedRef,
     inject,
     InjectionKey,
-    isRef,
+    isRef, MaybeRefOrGetter,
     reactive,
     Ref,
     shallowRef,
-    toRefs,
+    toRef,
+    toRefs, toValue,
     watchEffect,
 } from "vue";
 import {
@@ -24,6 +25,7 @@ import {
     trimEnd,
 } from "@/util";
 import { ResponsiveProp, ResponsivePropObject } from "@/components";
+import { ContainerState } from "@/composables/container";
 
 /**
  * # Breakpoints
@@ -72,35 +74,13 @@ export interface DisplayPlatform {
     ssr: boolean;
 }
 
-export interface DisplayInstance {
-    xs: Ref<boolean>;
-    sm: Ref<boolean>;
-    md: Ref<boolean>;
-    lg: Ref<boolean>;
-    xl: Ref<boolean>;
-    xxl: Ref<boolean>;
-    xsUp: Ref<boolean>;
-    smUp: Ref<boolean>;
-    mdUp: Ref<boolean>;
-    lgUp: Ref<boolean>;
-    xlUp: Ref<boolean>;
-    xxlUp: Ref<boolean>;
-    smDown: Ref<boolean>;
-    mdDown: Ref<boolean>;
-    lgDown: Ref<boolean>;
-    xlDown: Ref<boolean>;
-    name: Ref<DisplayBreakpoint>;
-    height: Ref<number>;
-    width: Ref<number>;
+export interface DisplayInstance extends ContainerState {
     mobile: Ref<boolean>;
     mobileBreakpoint: Ref<number | DisplayBreakpoint>;
     platform: Ref<DisplayPlatform>;
-    thresholds: Ref<DisplayThresholds>;
 
     /** @internal */
     ssr: boolean;
-
-    hasActiveRule(rules: DisplayRuleListProp): boolean;
 
     update(): void;
 }
@@ -173,7 +153,6 @@ export function createDisplay(
     ssr?: SSROptions,
 ): DisplayInstance {
     const { thresholds, mobileBreakpoint } = parseDisplayOptions(options);
-
     const height = shallowRef(getClientHeight(ssr));
     const platform = shallowRef(getPlatform(ssr));
     const state = reactive({} as DisplayInstance);
@@ -269,6 +248,7 @@ export function createDisplay(
         ...toRefs(state),
         update,
         hasActiveRule,
+        ready: toRef(true),
         ssr: !!ssr,
     };
 }
@@ -355,25 +335,37 @@ export type VisibilityRuleProp = DisplayRuleListProp | boolean;
 /**
  * # calculateDisplayRuleValue
  *
+ * @param display
  * @param rules
  * @param useWebUnits
  */
 export function calculateDisplayRuleValue(
+    display: ContainerState,
     rules?: DisplayRuleObject | DisplayRuleValue,
     useWebUnits: boolean = true,
 ) {
     if (!isObject(rules)) {
         return useWebUnits ? toWebUnit(rules) : rules;
     }
-    const display = useDisplay();
     for (const ruleKey of displayRules) {
         const displayKey = toDisplayStateKey(ruleKey);
-        const displayState = display[displayKey as keyof DisplayInstance];
+        const displayState = display[displayKey as keyof ContainerState];
         if (isRef(displayState) && displayState.value && !!rules[ruleKey]) {
             return useWebUnits ? toWebUnit(rules[ruleKey]) : rules[ruleKey];
         }
     }
     return undefined;
+}
+
+export function useDisplayRuleValue(
+    rules?: MaybeRefOrGetter<DisplayRuleObject | DisplayRuleValue | undefined>,
+    display?: ContainerState,
+    useWebUnits: boolean = true,
+): ComputedRef<DisplayRuleValue | undefined> {
+    const containerState = display ?? useDisplay();
+    return computed(() =>
+        calculateDisplayRuleValue(containerState, toValue(rules), useWebUnits),
+    );
 }
 
 /**

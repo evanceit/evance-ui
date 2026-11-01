@@ -3,7 +3,9 @@ import { computed, PropType } from "vue";
 import {
     calculateDisplayRuleValue,
     DisplayRuleProp,
+    useDisplay,
 } from "@/composables/display";
+import { ContainerState } from "@/composables/container";
 
 /**
  * # Dimensions Props
@@ -36,14 +38,19 @@ export const makeDimensionsProps = propsFactory(
  * # Use Dimensions
  *
  * @param props
+ * @param containerState
  */
-export function useDimensions(props: DimensionsProps) {
+export function useDimensions(
+    props: DimensionsProps,
+    containerState?: ContainerState,
+) {
+    const display = containerState ?? useDisplay();
     return computed(() => ({
-        height: calculateDisplayRuleValue(props.height),
-        maxHeight: calculateDisplayRuleValue(props.maxHeight),
-        maxWidth: calculateDisplayRuleValue(props.maxWidth),
-        minHeight: calculateDisplayRuleValue(props.minHeight),
-        minWidth: calculateDisplayRuleValue(props.minWidth),
-        width: calculateDisplayRuleValue(props.width),
+        height: calculateDisplayRuleValue(display, props.height),
+        maxHeight: calculateDisplayRuleValue(display, props.maxHeight),
+        maxWidth: calculateDisplayRuleValue(display, props.maxWidth),
+        minHeight: calculateDisplayRuleValue(display, props.minHeight),
+        minWidth: calculateDisplayRuleValue(display, props.minWidth),
+        width: calculateDisplayRuleValue(display, props.width),
     }));
 }

@@ -2,7 +2,11 @@ import {
     breakpoints,
     defaultDisplayOptions,
     DisplayBreakpoint,
+    DisplayRuleListProp,
     DisplayThresholds,
+    isDisplayRule,
+    toDisplayRuleArray,
+    toDisplayStateKey,
     useDisplay,
 } from "@/composables/display";
 import {
@@ -15,10 +19,11 @@ import {
     provide,
     readonly,
     Ref,
-    shallowRef,
+    shallowRef, toRef,
     toValue,
     watch,
 } from "vue";
+import { consoleWarn, isString } from "@/util";
 
 export interface ContainerOptions {
     thresholds?: Partial<DisplayThresholds>;
@@ -42,7 +47,7 @@ export interface ContainerState {
     height: R<number>;
     ready: R<boolean>;
     name: R<DisplayBreakpoint>;
-    thresholds: DisplayThresholds;
+    thresholds: R<DisplayThresholds>;
     xs: R<boolean>;
     sm: R<boolean>;
     md: R<boolean>;
@@ -59,6 +64,7 @@ export interface ContainerState {
     mdDown: R<boolean>;
     lgDown: R<boolean>;
     xlDown: R<boolean>;
+    hasActiveRule(rules: DisplayRuleListProp): boolean;
 }
 
 type Target = Element | ComponentPublicInstance | null | undefined;
@@ -151,13 +157,7 @@ function buildState(
         return computed(() => index.value <= thresholdKeys.indexOf(bp));
     };
 
-    return {
-        width: readonly(width),
-        height: readonly(height),
-        ready: readonly(ready),
-        name,
-        thresholds,
-
+    const displayRuleStates = {
         xs: is("xs"),
         sm: is("sm"),
         md: is("md"),
@@ -176,6 +176,38 @@ function buildState(
         mdDown: down("md"),
         lgDown: down("lg"),
         xlDown: down("xl"),
+    };
+
+    function hasActiveRule(rules: DisplayRuleListProp): boolean {
+        const rulesInternal = toDisplayRuleArray(rules);
+        for (const rule of rulesInternal) {
+            if (!isString(rule)) {
+                continue;
+            }
+            if (!isDisplayRule(rule)) {
+                consoleWarn(
+                    `The display rule '${rule}' is not valid and will be ignored.`,
+                );
+                continue;
+            }
+            const displayKey = toDisplayStateKey(rule);
+            const displayState =
+                displayRuleStates[displayKey as keyof ContainerState];
+            if (displayState.value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return {
+        width: readonly(width),
+        height: readonly(height),
+        ready: readonly(ready),
+        name,
+        thresholds: toRef(thresholds),
+        ...displayRuleStates,
+        hasActiveRule,
     };
 }
 
@@ -222,33 +254,7 @@ function createContainer(
 }
 
 function fromViewport(): ContainerState {
-    const d = useDisplay();
-    return {
-        width: d.width,
-        height: d.height,
-        ready: shallowRef(true),
-        name: d.name as R<DisplayBreakpoint>,
-        thresholds: d.thresholds.value as DisplayThresholds,
-
-        xs: d.xs,
-        sm: d.sm,
-        md: d.md,
-        lg: d.lg,
-        xl: d.xl,
-        xxl: d.xxl,
-
-        xsUp: d.xsUp,
-        smUp: d.smUp,
-        mdUp: d.mdUp,
-        lgUp: d.lgUp,
-        xlUp: d.xlUp,
-        xxlUp: d.xxlUp,
-
-        smDown: d.smDown,
-        mdDown: d.mdDown,
-        lgDown: d.lgDown,
-        xlDown: d.xlDown,
-    };
+    return useDisplay();
 }
 
 /**

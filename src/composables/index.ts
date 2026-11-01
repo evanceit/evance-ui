@@ -16,6 +16,7 @@ export {
     useDisplay,
     useBreakpointClasses,
     useDisplayRuleClasses,
+    useDisplayRuleValue,
     type DisplayBreakpoint,
     type DisplayInstance,
     type DisplayThresholds,

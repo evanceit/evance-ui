@@ -24,14 +24,14 @@ import {
     DataTableItem,
     ItemSlot,
 } from "@/components/EvDataTable/composables/types";
-import { useLocaleFunctions } from "@/composables";
+import { useContainer, useLocaleFunctions } from "@/composables";
 import {
     EvInfiniteScroll,
     InfiniteScrollStatus,
 } from "@/components/EvInfiniteScroll";
 import { ComponentExposed } from "vue-component-type-helpers";
 import { EvDataTableCell } from "@/components/EvDataTable/EvDataTableCell";
-import { calculateDisplayRuleValue } from "@/composables/display";
+import { useDisplayRuleValue } from "@/composables/display";
 import { EvCheckbox } from "@/components/EvCheckbox";
 import { useRounded } from "@/composables/rounded";
 
@@ -80,7 +80,6 @@ const { allSelected, selectAll, showSelectAll, someSelected } =
 
 const {
     containerRef,
-    markerRef,
     paddingTop,
     paddingBottom,
     computedItems,
@@ -129,6 +128,7 @@ const surfaceClass = computed(() => {
 const noHeaderBorder = computed(() => {
     return !!props.rowSurface;
 });
+const containerState = useContainer(rootEl);
 
 watch(
     () => infiniteScrollRef.value?.rootElement,
@@ -191,9 +191,9 @@ function resetScroll(status: InfiniteScrollStatus = "ok") {
 
 function colStyle(column: DataTableHeader) {
     return {
-        width: calculateDisplayRuleValue(column.width),
-        minWidth: calculateDisplayRuleValue(column.minWidth),
-        maxWidth: calculateDisplayRuleValue(column.maxWidth),
+        width: useDisplayRuleValue(column.width, containerState),
+        minWidth: useDisplayRuleValue(column.minWidth, containerState),
+        maxWidth: useDisplayRuleValue(column.maxWidth, containerState),
     };
 }
 
