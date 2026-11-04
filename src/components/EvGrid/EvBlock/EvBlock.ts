@@ -13,7 +13,7 @@ import { GridNumbersProp } from "../EvLayout";
 export type BlockNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export type BlockNumberPropValue = BlockNumber | `${BlockNumber}`;
 export type BlockNumberPropObject = {
-    [key in DisplayBreakpoint]: BlockNumberPropValue;
+    [key in DisplayBreakpoint]?: BlockNumberPropValue;
 };
 export type BlockNumberProp =
     | BlockNumberPropValue
@@ -30,7 +30,7 @@ export type BlockSizeProp = BlockSizePropValue | BlockSizePropObject;
 /** Responsive Props */
 export type ResponsivePropValue = string | number | boolean;
 export type ResponsivePropObject = {
-    [key in DisplayBreakpoint]: ResponsivePropValue;
+    [key in DisplayBreakpoint]?: ResponsivePropValue;
 };
 export type ResponsiveProp =
     | ResponsivePropValue
@@ -46,7 +46,7 @@ export type AlignSelfPropValue =
     | "baseline"
     | "stretch";
 export type AlignSelfPropObject = {
-    [key in DisplayBreakpoint]: AlignSelfPropValue;
+    [key in DisplayBreakpoint]?: AlignSelfPropValue;
 };
 export type AlignSelfProp =
     | AlignSelfPropValue

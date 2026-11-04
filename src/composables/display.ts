@@ -1,8 +1,10 @@
 import {
-    computed, ComputedRef,
+    computed,
+    ComputedRef,
     inject,
     InjectionKey,
-    isRef, MaybeRefOrGetter,
+    isRef,
+    MaybeRefOrGetter,
     reactive,
     Ref,
     shallowRef,
@@ -344,7 +346,6 @@ export function calculateDisplayRuleValue(
     rules?: DisplayRuleObject | DisplayRuleValue,
     useWebUnits: boolean = true,
 ) {
-    console.log("prop", rules);
     if (!isObject(rules)) {
         return useWebUnits ? toWebUnit(rules) : rules;
     }

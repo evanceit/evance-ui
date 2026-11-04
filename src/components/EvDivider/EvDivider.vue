@@ -5,8 +5,7 @@
  * `<ev-divider />`
  */
 import "./EvDivider.scss";
-import { computed, useSlots } from "vue";
-import { hasSlotWithContent } from "@/composables/hasSlotWithContent";
+import { computed } from "vue";
 import {
     Appearance,
     appearanceModifier,
@@ -38,8 +37,9 @@ const props = withDefaults(defineProps<DividerProps>(), {
     vertical: false,
 });
 
-const slots = useSlots();
-const hasDefaultSlot = hasSlotWithContent(slots, "default");
+const slots = defineSlots<{
+    default(): never;
+}>();
 
 const borderColor = computed(() => {
     return props.appearance !== "default"
@@ -81,12 +81,12 @@ const classNames = computed(() => {
 
 <template>
     <div
-        v-if="hasDefaultSlot"
+        v-if="slots.default"
         class="ev-divider"
         role="separator"
         :class="classNames">
         <hr class="ev-divider--line" />
-        <div class="ev-divider--content"><slot /></div>
+        <div class="ev-divider--content"><slot name="default" /></div>
         <hr class="ev-divider--line" />
     </div>
     <hr v-else class="ev-divider" role="separator" :class="classNames" />

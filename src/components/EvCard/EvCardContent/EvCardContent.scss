@@ -5,6 +5,7 @@
     display: flex;
     flex-wrap: nowrap;
     gap: var(--spacer-150);
+    flex: 1 0 auto;
 }
 .ev-card-content--icon {
     flex: 0;

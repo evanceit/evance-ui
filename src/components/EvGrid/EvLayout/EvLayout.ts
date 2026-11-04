@@ -16,7 +16,7 @@ export type AlignItemsValue =
     | "baseline"
     | "stretch";
 export type AlignItemsObject = {
-    [key in DisplayBreakpoint]: AlignItemsValue;
+    [key in DisplayBreakpoint]?: AlignItemsValue;
 };
 export type AlignItemsProp = AlignItemsValue | AlignItemsObject | undefined;
 
@@ -30,7 +30,7 @@ export type AlignContentValue =
     | "space-around"
     | "space-evenly";
 export type AlignContentObject = {
-    [key in DisplayBreakpoint]: AlignContentValue;
+    [key in DisplayBreakpoint]?: AlignContentValue;
 };
 export type AlignContentProp =
     | AlignContentValue
@@ -46,7 +46,7 @@ export type JustifyContentValue =
     | "space-around"
     | "space-evenly";
 export type JustifyContentObject = {
-    [key in DisplayBreakpoint]: JustifyContentValue;
+    [key in DisplayBreakpoint]?: JustifyContentValue;
 };
 export type JustifyContentProp =
     | JustifyContentValue
@@ -56,13 +56,13 @@ export type JustifyContentProp =
 /** Spacers **/
 export type SpacerValue = number | string | undefined;
 export type SpacerObject = {
-    [key in DisplayBreakpoint]: SpacerValue;
+    [key in DisplayBreakpoint]?: SpacerValue;
 };
 export type SpacerProp = SpacerValue | SpacerObject | undefined;
 export type LayoutFlow = "horizontal" | "vertical" | "grid";
 
 export type GridNumbersObject = {
-    [key in DisplayBreakpoint]: number;
+    [key in DisplayBreakpoint]?: number;
 };
 export type GridNumbersProp = number | GridNumbersObject | undefined;
 

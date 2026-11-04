@@ -66,6 +66,9 @@
 }
 .ev-card--body {
     grid-area: body;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
 }
 .ev-card--suffix {
     grid-area: suffix;

@@ -57,9 +57,9 @@ export const Primary: Story = {
         setup() {
             return { args };
         },
-        template:
-            '<div style="height: 200px; display: flex; align-items: center; justify-content: center">' +
-            '<ev-divider v-bind="args">{{ args.default }}</ev-divider>' +
-            "</div>",
+        template: `<div style="height: 200px; display: flex; align-items: center; justify-content: center">
+                <ev-divider v-if="args.default" v-bind="args">{{ args.default }}</ev-divider>
+                <ev-divider v-else v-bind="args" />
+            </div>`,
     }),
 };
