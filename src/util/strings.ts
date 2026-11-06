@@ -85,7 +85,7 @@ export type TemplateFunction = (variables?: TemplateVariables) => string;
  *
  * This is inspired by the output tags of EVML and behaves similarly. However, unlike EVML
  * which is compiled this is a simple find and replace template format and variables are only
- * wrapped within single curly brackets e.g. 'Hello { name }'.
+ * wrapped within single curly brackets e.g. 'Hello { name }' also supports `Hello {{ name }}`.
  *
  * @param template
  * @param defaultVariables
@@ -94,19 +94,30 @@ export function createStringTemplate(
     template: string,
     defaultVariables: TemplateVariables = {},
 ): TemplateFunction {
-    /** Variable lookup pattern */
-    const variablePattern = /{([\s\S]+?)}/g;
+    /**
+     * Variable lookup pattern, tried in order:
+     *  1. {{ name }} – server-style variable
+     *  2. { name }   – UI-style variable
+     */
+    const variablePattern = /{{([^{}]+)}}|{([^{}]+)}/g;
 
     return (variables: TemplateVariables = {}) => {
         const dictionary = { ...defaultVariables, ...variables };
 
-        return template.replaceAll(variablePattern, (match, raw): string => {
-            const variable = raw.trim();
-            if (dictionary[variable] === undefined) {
-                return `{ ${variable} }`;
-            }
-            return dictionary[variable] as string;
-        });
+        return template.replaceAll(
+            variablePattern,
+            (_match, double?: string, single?: string): string => {
+                const variable = (double ?? single ?? "").trim();
+                const value = dictionary[variable];
+                if (value === undefined) {
+                    // Keep the delimiter style the template used
+                    return double !== undefined
+                        ? `{{ ${variable} }}`
+                        : `{ ${variable} }`;
+                }
+                return String(value);
+            },
+        );
     };
 }
 
